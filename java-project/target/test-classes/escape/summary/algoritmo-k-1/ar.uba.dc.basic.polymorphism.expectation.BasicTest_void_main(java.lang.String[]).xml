@@ -1,0 +1,147 @@
+<summary id="1" className="ar.uba.dc.basic.polymorphism.expectation.BasicTest" methodSignature="void main(java.lang.String[])">
+  <points-to-graph id="2">
+    <graph>
+      <nodes>
+        <param id="3" index="0"/>
+        <statement id="4" inside="true">
+          <statement-id id="5">
+            <method id="6">
+              <class>ar.uba.dc.basic.polymorphism.expectation.BasicTest</class>
+              <signature>ar.uba.dc.basic.polymorphism.expectation.BasicTest getInstance(boolean)</signature>
+            </method>
+            <value>tmp = new ar.uba.dc.basic.polymorphism.expectation.BasicTest</value>
+            <line-number>29</line-number>
+            <bytecode-offset>4</bytecode-offset>
+          </statement-id>
+          <context sensitivity="1">
+            <call id="7">
+              <method id="8">
+                <class>ar.uba.dc.basic.polymorphism.expectation.BasicTest</class>
+                <signature>void main(java.lang.String[])</signature>
+              </method>
+              <value>$r0 = staticinvoke &lt;ar.uba.dc.basic.polymorphism.expectation.BasicTest: ar.uba.dc.basic.polymorphism.expectation.BasicTest getInstance(boolean)&gt;($z0)</value>
+              <line-number>20</line-number>
+              <bytecode-offset>1</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <statement id="9" inside="true">
+          <statement-id id="10">
+            <method reference="6"/>
+            <value>tmp = new ar.uba.dc.basic.polymorphism.expectation.BasicExtension</value>
+            <line-number>29</line-number>
+            <bytecode-offset>14</bytecode-offset>
+          </statement-id>
+          <context sensitivity="1">
+            <call reference="7"/>
+          </context>
+        </statement>
+        <statement id="11" inside="true">
+          <statement-id id="12">
+            <method id="13">
+              <class>ar.uba.dc.basic.polymorphism.expectation.BasicExtension</class>
+              <signature>java.lang.Integer[] buildArray()</signature>
+            </method>
+            <value>$r2 = newarray (java.lang.Integer)[$b0]</value>
+            <line-number>69</line-number>
+            <bytecode-offset>1</bytecode-offset>
+          </statement-id>
+          <context sensitivity="1">
+            <call id="14">
+              <method reference="8"/>
+              <value>$r1 = virtualinvoke $r0.&lt;ar.uba.dc.basic.polymorphism.expectation.BasicTest: java.lang.Integer[] test()&gt;()</value>
+              <line-number>21</line-number>
+              <bytecode-offset>6</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <statement id="15" inside="true">
+          <statement-id id="16">
+            <method id="17">
+              <class>ar.uba.dc.basic.polymorphism.expectation.BasicTest</class>
+              <signature>java.lang.Integer[] buildArray()</signature>
+            </method>
+            <value>$r2 = newarray (java.lang.Integer)[$b0]</value>
+            <line-number>49</line-number>
+            <bytecode-offset>1</bytecode-offset>
+          </statement-id>
+          <context sensitivity="1">
+            <call reference="14"/>
+          </context>
+        </statement>
+        <statement id="18" inside="true">
+          <statement-id id="19">
+            <method id="20">
+              <class>ar.uba.dc.basic.polymorphism.expectation.BasicTest</class>
+              <signature>java.lang.Integer newInteger()</signature>
+            </method>
+            <value>$r0 = new java.lang.Integer</value>
+            <line-number>57</line-number>
+            <bytecode-offset>0</bytecode-offset>
+          </statement-id>
+          <context sensitivity="1">
+            <call reference="14"/>
+          </context>
+        </statement>
+      </nodes>
+      <edges>
+        <edge id="21" field="[]" inside="true">
+          <source>
+            <statement reference="15"/>
+          </source>
+          <target>
+            <statement reference="18"/>
+          </target>
+        </edge>
+        <edge id="22" field="[]" inside="true">
+          <source>
+            <statement reference="11"/>
+          </source>
+          <target>
+            <statement reference="18"/>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <variables>
+      <variable>
+        <name>args</name>
+        <type id="23" name="array" numDimensions="1">
+          <base id="24" name="ref" to="java.lang.String"/>
+        </type>
+        <points-to id="25">
+          <param reference="3"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r1</name>
+        <type id="26" name="array" numDimensions="1">
+          <base id="27" name="ref" to="java.lang.Integer"/>
+        </type>
+        <points-to id="28">
+          <statement reference="11"/>
+          <statement reference="15"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r0</name>
+        <type id="29" name="ref" to="ar.uba.dc.basic.polymorphism.expectation.BasicTest"/>
+        <points-to id="30">
+          <statement reference="4"/>
+          <statement reference="9"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>t</name>
+        <type reference="29"/>
+        <points-to id="31">
+          <statement reference="4"/>
+          <statement reference="9"/>
+        </points-to>
+      </variable>
+    </variables>
+    <returned id="32"/>
+    <escape-globaly id="33"/>
+  </points-to-graph>
+  <mutated-fields/>
+</summary>

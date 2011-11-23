@@ -1,0 +1,91 @@
+<summary id="1" className="ar.uba.dc.jolden.mst.Vertex" methodSignature="void &lt;init&gt;(ar.uba.dc.jolden.mst.Vertex,int)">
+  <heap>
+    <graph>
+      <nodes>
+        <param id="2" index="0"/>
+        <statement id="3" inside="true">
+          <statement-id id="4">
+            <method id="5">
+              <class>ar.uba.dc.jolden.mst.Hashtable</class>
+              <signature>void &lt;init&gt;(int)</signature>
+            </method>
+            <value>$r2 = newarray (ar.uba.dc.jolden.mst.HashEntry)[$i0]</value>
+            <line-number>21</line-number>
+            <bytecode-offset>14</bytecode-offset>
+          </statement-id>
+          <context>
+            <call id="6">
+              <method id="7">
+                <class>ar.uba.dc.jolden.mst.Vertex</class>
+                <signature>void &lt;init&gt;(ar.uba.dc.jolden.mst.Vertex,int)</signature>
+              </method>
+              <value>specialinvoke $r1.&lt;ar.uba.dc.jolden.mst.Hashtable: void &lt;init&gt;(int)&gt;($i1)</value>
+              <line-number>38</line-number>
+              <bytecode-offset>23</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <statement id="8" inside="true">
+          <statement-id id="9">
+            <method reference="7"/>
+            <value>$r3 = new ar.uba.dc.jolden.mst.Hashtable</value>
+            <line-number>38</line-number>
+            <bytecode-offset>16</bytecode-offset>
+          </statement-id>
+          <context/>
+        </statement>
+        <this id="10"/>
+      </nodes>
+      <edges>
+        <edge id="11" field="array" inside="true">
+          <source>
+            <statement reference="8"/>
+          </source>
+          <target>
+            <statement reference="3"/>
+          </target>
+        </edge>
+        <edge id="12" field="neighbors" inside="true">
+          <source>
+            <this reference="10"/>
+          </source>
+          <target>
+            <statement reference="8"/>
+          </target>
+        </edge>
+        <edge id="13" field="next" inside="true">
+          <source>
+            <this reference="10"/>
+          </source>
+          <target>
+            <param reference="2"/>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <returned/>
+    <escape-globaly/>
+  </heap>
+  <parameters>
+    <parameter>numvert</parameter>
+  </parameters>
+  <temporal>{ 0 }</temporal>
+  <residual>
+    <node>
+      <param reference="2"/>
+      <value>{ [[numvert] -&gt; []] -&gt; 0 : numvert &gt; 0 }</value>
+    </node>
+    <node>
+      <statement reference="3"/>
+      <value>{ [[numvert] -&gt; []] -&gt; numvert : numvert &gt;= 1 }</value>
+    </node>
+    <node>
+      <statement reference="8"/>
+      <value>{ [[numvert] -&gt; []] -&gt; 1 : numvert &gt;= 1 }</value>
+    </node>
+    <node>
+      <this reference="10"/>
+      <value>{ [[numvert] -&gt; []] -&gt; 0 : numvert &gt; 0 }</value>
+    </node>
+  </residual>
+</summary>

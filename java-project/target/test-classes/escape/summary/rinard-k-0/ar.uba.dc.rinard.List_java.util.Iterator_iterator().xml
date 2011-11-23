@@ -1,0 +1,90 @@
+<summary id="1" className="ar.uba.dc.rinard.List" methodSignature="java.util.Iterator iterator()">
+  <points-to-graph id="2">
+    <graph>
+      <nodes>
+        <statement id="3" inside="true">
+          <statement-id id="4">
+            <method id="5">
+              <class>ar.uba.dc.rinard.List</class>
+              <signature>java.util.Iterator iterator()</signature>
+            </method>
+            <value>$r0 = new ar.uba.dc.rinard.ListItr</value>
+            <line-number>25</line-number>
+            <bytecode-offset>0</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="6" inside="false">
+          <statement-id id="7">
+            <method reference="5"/>
+            <value>$r3 = $r2.&lt;ar.uba.dc.rinard.List: ar.uba.dc.rinard.Cell head&gt;</value>
+            <line-number>25</line-number>
+            <bytecode-offset>5</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <this id="8"/>
+      </nodes>
+      <edges>
+        <edge id="9" field="head" inside="false">
+          <source>
+            <this reference="8"/>
+          </source>
+          <target>
+            <statement reference="6"/>
+          </target>
+        </edge>
+        <edge id="10" field="cell" inside="true">
+          <source>
+            <statement reference="3"/>
+          </source>
+          <target>
+            <statement reference="6"/>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <variables>
+      <variable>
+        <name>$r3</name>
+        <type id="11" name="ref" to="ar.uba.dc.rinard.Cell"/>
+        <points-to id="12">
+          <statement reference="6"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>this</name>
+        <type id="13" name="ref" to="ar.uba.dc.rinard.List"/>
+        <points-to id="14">
+          <this reference="8"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r2</name>
+        <type reference="13"/>
+        <points-to id="15">
+          <this reference="8"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r1</name>
+        <type id="16" name="ref" to="ar.uba.dc.rinard.ListItr"/>
+        <points-to id="17">
+          <statement reference="3"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r0</name>
+        <type reference="16"/>
+        <points-to id="18">
+          <statement reference="3"/>
+        </points-to>
+      </variable>
+    </variables>
+    <returned id="19">
+      <statement reference="3"/>
+    </returned>
+    <escape-globaly id="20"/>
+  </points-to-graph>
+  <mutated-fields/>
+</summary>

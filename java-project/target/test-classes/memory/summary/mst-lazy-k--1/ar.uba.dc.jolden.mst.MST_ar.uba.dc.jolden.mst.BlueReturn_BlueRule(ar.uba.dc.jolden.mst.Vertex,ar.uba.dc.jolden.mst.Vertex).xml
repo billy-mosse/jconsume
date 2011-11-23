@@ -1,0 +1,600 @@
+<summary id="1" className="ar.uba.dc.jolden.mst.MST" methodSignature="ar.uba.dc.jolden.mst.BlueReturn BlueRule(ar.uba.dc.jolden.mst.Vertex,ar.uba.dc.jolden.mst.Vertex)">
+  <heap>
+    <graph>
+      <nodes>
+        <param id="2" index="0"/>
+        <param id="3" index="1"/>
+        <statement id="4" inside="false">
+          <statement-id id="5">
+            <method id="6">
+              <class>ar.uba.dc.jolden.mst.HashEntry</class>
+              <signature>java.lang.Object entry()</signature>
+            </method>
+            <value>$r1 = $r0.&lt;ar.uba.dc.jolden.mst.HashEntry: java.lang.Object entry&gt;</value>
+            <line-number>114</line-number>
+            <bytecode-offset>1</bytecode-offset>
+          </statement-id>
+          <context>
+            <call id="7">
+              <method id="8">
+                <class>ar.uba.dc.jolden.mst.MST</class>
+                <signature>ar.uba.dc.jolden.mst.BlueReturn BlueRule(ar.uba.dc.jolden.mst.Vertex,ar.uba.dc.jolden.mst.Vertex)</signature>
+              </method>
+              <value>$r5 = virtualinvoke $r4.&lt;ar.uba.dc.jolden.mst.Hashtable: java.lang.Object get(java.lang.Object)&gt;($r3)</value>
+              <line-number>159</line-number>
+              <bytecode-offset>150</bytecode-offset>
+            </call>
+            <call id="9">
+              <method id="10">
+                <class>ar.uba.dc.jolden.mst.Hashtable</class>
+                <signature>java.lang.Object get(java.lang.Object)</signature>
+              </method>
+              <value>$r4 = virtualinvoke $r3.&lt;ar.uba.dc.jolden.mst.HashEntry: java.lang.Object entry()&gt;()</value>
+              <line-number>47</line-number>
+              <bytecode-offset>40</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <ar.uba.dc.analysis.escape.graph.node.GlobalNode id="11"/>
+        <statement id="12" inside="false">
+          <statement-id id="13">
+            <method id="14">
+              <class>ar.uba.dc.jolden.mst.HashEntry</class>
+              <signature>ar.uba.dc.jolden.mst.HashEntry next()</signature>
+            </method>
+            <value>$r0 = $r0.&lt;ar.uba.dc.jolden.mst.HashEntry: ar.uba.dc.jolden.mst.HashEntry next&gt;</value>
+            <line-number>123</line-number>
+            <bytecode-offset>1</bytecode-offset>
+          </statement-id>
+          <context>
+            <call id="15">
+              <method reference="8"/>
+              <value>$r5 = virtualinvoke $r4.&lt;ar.uba.dc.jolden.mst.Hashtable: java.lang.Object get(java.lang.Object)&gt;($r3)</value>
+              <line-number>139</line-number>
+              <bytecode-offset>44</bytecode-offset>
+            </call>
+            <call id="16">
+              <method reference="10"/>
+              <value>$r3 = virtualinvoke $r3.&lt;ar.uba.dc.jolden.mst.HashEntry: ar.uba.dc.jolden.mst.HashEntry next()&gt;()</value>
+              <line-number>45</line-number>
+              <bytecode-offset>19</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <statement id="17" inside="false">
+          <statement-id id="18">
+            <method id="19">
+              <class>ar.uba.dc.jolden.mst.Vertex</class>
+              <signature>ar.uba.dc.jolden.mst.Hashtable neighbors()</signature>
+            </method>
+            <value>$r1 = $r0.&lt;ar.uba.dc.jolden.mst.Vertex: ar.uba.dc.jolden.mst.Hashtable neighbors&gt;</value>
+            <line-number>83</line-number>
+            <bytecode-offset>1</bytecode-offset>
+          </statement-id>
+          <context>
+            <call id="20">
+              <method reference="8"/>
+              <value>$r4 = virtualinvoke $r2.&lt;ar.uba.dc.jolden.mst.Vertex: ar.uba.dc.jolden.mst.Hashtable neighbors()&gt;()</value>
+              <line-number>138</line-number>
+              <bytecode-offset>36</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <statement id="21" inside="false">
+          <statement-id id="22">
+            <method reference="10"/>
+            <value>$r3 = $r2[$i1]</value>
+            <line-number>45</line-number>
+            <bytecode-offset>13</bytecode-offset>
+          </statement-id>
+          <context>
+            <call reference="7"/>
+          </context>
+        </statement>
+        <statement id="23" inside="false">
+          <statement-id id="24">
+            <method id="25">
+              <class>ar.uba.dc.jolden.mst.Vertex</class>
+              <signature>ar.uba.dc.jolden.mst.Vertex next()</signature>
+            </method>
+            <value>$r0 = $r0.&lt;ar.uba.dc.jolden.mst.Vertex: ar.uba.dc.jolden.mst.Vertex next&gt;</value>
+            <line-number>65</line-number>
+            <bytecode-offset>1</bytecode-offset>
+          </statement-id>
+          <context>
+            <call id="26">
+              <method reference="8"/>
+              <value>$r2 = virtualinvoke $r2.&lt;ar.uba.dc.jolden.mst.Vertex: ar.uba.dc.jolden.mst.Vertex next()&gt;()</value>
+              <line-number>151</line-number>
+              <bytecode-offset>100</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <statement id="27" inside="false">
+          <statement-id reference="18"/>
+          <context>
+            <call id="28">
+              <method reference="8"/>
+              <value>$r4 = virtualinvoke $r2.&lt;ar.uba.dc.jolden.mst.Vertex: ar.uba.dc.jolden.mst.Hashtable neighbors()&gt;()</value>
+              <line-number>157</line-number>
+              <bytecode-offset>135</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <statement id="29" inside="false">
+          <statement-id reference="24"/>
+          <context>
+            <call id="30">
+              <method reference="8"/>
+              <value>$r2 = virtualinvoke $r2.&lt;ar.uba.dc.jolden.mst.Vertex: ar.uba.dc.jolden.mst.Vertex next()&gt;()</value>
+              <line-number>154</line-number>
+              <bytecode-offset>119</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <statement id="31" inside="false">
+          <statement-id reference="5"/>
+          <context>
+            <call reference="15"/>
+            <call reference="9"/>
+          </context>
+        </statement>
+        <statement id="32" inside="false">
+          <statement-id id="33">
+            <method id="34">
+              <class>ar.uba.dc.jolden.mst.HashEntry</class>
+              <signature>java.lang.Object key()</signature>
+            </method>
+            <value>$r1 = $r0.&lt;ar.uba.dc.jolden.mst.HashEntry: java.lang.Object key&gt;</value>
+            <line-number>105</line-number>
+            <bytecode-offset>1</bytecode-offset>
+          </statement-id>
+          <context>
+            <call reference="7"/>
+            <call id="35">
+              <method reference="10"/>
+              <value>$r4 = virtualinvoke $r3.&lt;ar.uba.dc.jolden.mst.HashEntry: java.lang.Object key()&gt;()</value>
+              <line-number>45</line-number>
+              <bytecode-offset>28</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <statement id="36" inside="false">
+          <statement-id id="37">
+            <method reference="10"/>
+            <value>$r2 = $r0.&lt;ar.uba.dc.jolden.mst.Hashtable: ar.uba.dc.jolden.mst.HashEntry[] array&gt;</value>
+            <line-number>45</line-number>
+            <bytecode-offset>9</bytecode-offset>
+          </statement-id>
+          <context>
+            <call reference="7"/>
+          </context>
+        </statement>
+        <statement id="38" inside="false">
+          <statement-id reference="24"/>
+          <context>
+            <call id="39">
+              <method reference="8"/>
+              <value>$r2 = virtualinvoke $r2.&lt;ar.uba.dc.jolden.mst.Vertex: ar.uba.dc.jolden.mst.Vertex next()&gt;()</value>
+              <line-number>151</line-number>
+              <bytecode-offset>217</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <statement id="40" inside="false">
+          <statement-id reference="37"/>
+          <context>
+            <call reference="15"/>
+          </context>
+        </statement>
+        <statement id="41" inside="false">
+          <statement-id reference="13"/>
+          <context>
+            <call reference="7"/>
+            <call reference="16"/>
+          </context>
+        </statement>
+        <statement id="42" inside="false">
+          <statement-id reference="22"/>
+          <context>
+            <call reference="15"/>
+          </context>
+        </statement>
+        <statement id="43" inside="true">
+          <statement-id id="44">
+            <method reference="8"/>
+            <value>$r0 = new ar.uba.dc.jolden.mst.BlueReturn</value>
+            <line-number>128</line-number>
+            <bytecode-offset>0</bytecode-offset>
+          </statement-id>
+          <context/>
+        </statement>
+        <statement id="45" inside="false">
+          <statement-id reference="33"/>
+          <context>
+            <call reference="15"/>
+            <call reference="35"/>
+          </context>
+        </statement>
+      </nodes>
+      <edges>
+        <edge id="46" field="next" inside="false">
+          <source>
+            <param reference="3"/>
+          </source>
+          <target>
+            <statement reference="23"/>
+          </target>
+        </edge>
+        <edge id="47" field="neighbors" inside="false">
+          <source>
+            <param reference="3"/>
+          </source>
+          <target>
+            <statement reference="17"/>
+          </target>
+        </edge>
+        <edge id="48" field="next" inside="true">
+          <source>
+            <param reference="3"/>
+          </source>
+          <target>
+            <statement id="49" inside="false">
+              <statement-id reference="24"/>
+              <context>
+                <call id="50">
+                  <method reference="8"/>
+                  <value>$r2 = virtualinvoke $r2.&lt;ar.uba.dc.jolden.mst.Vertex: ar.uba.dc.jolden.mst.Vertex next()&gt;()</value>
+                  <line-number>154</line-number>
+                  <bytecode-offset>119</bytecode-offset>
+                </call>
+              </context>
+            </statement>
+          </target>
+        </edge>
+        <edge id="51" field="next" inside="false">
+          <source>
+            <statement reference="12"/>
+          </source>
+          <target>
+            <statement reference="12"/>
+          </target>
+        </edge>
+        <edge id="52" field="entry" inside="false">
+          <source>
+            <statement reference="12"/>
+          </source>
+          <target>
+            <statement reference="31"/>
+          </target>
+        </edge>
+        <edge id="53" field="key" inside="false">
+          <source>
+            <statement reference="12"/>
+          </source>
+          <target>
+            <statement reference="45"/>
+          </target>
+        </edge>
+        <edge id="54" field="entry" inside="false">
+          <source>
+            <statement reference="21"/>
+          </source>
+          <target>
+            <statement reference="4"/>
+          </target>
+        </edge>
+        <edge id="55" field="key" inside="false">
+          <source>
+            <statement reference="21"/>
+          </source>
+          <target>
+            <statement reference="32"/>
+          </target>
+        </edge>
+        <edge id="56" field="next" inside="false">
+          <source>
+            <statement reference="21"/>
+          </source>
+          <target>
+            <statement reference="41"/>
+          </target>
+        </edge>
+        <edge id="57" field="array" inside="false">
+          <source>
+            <statement reference="17"/>
+          </source>
+          <target>
+            <statement reference="40"/>
+          </target>
+        </edge>
+        <edge id="58" field="next" inside="false">
+          <source>
+            <statement reference="23"/>
+          </source>
+          <target>
+            <statement reference="49"/>
+          </target>
+        </edge>
+        <edge id="59" field="neighbors" inside="false">
+          <source>
+            <statement reference="23"/>
+          </source>
+          <target>
+            <statement reference="27"/>
+          </target>
+        </edge>
+        <edge id="60" field="next" inside="false">
+          <source>
+            <statement reference="23"/>
+          </source>
+          <target>
+            <statement reference="38"/>
+          </target>
+        </edge>
+        <edge id="61" field="next" inside="true">
+          <source>
+            <statement reference="23"/>
+          </source>
+          <target>
+            <statement reference="29"/>
+          </target>
+        </edge>
+        <edge id="62" field="array" inside="false">
+          <source>
+            <statement reference="27"/>
+          </source>
+          <target>
+            <statement reference="36"/>
+          </target>
+        </edge>
+        <edge id="63" field="next" inside="false">
+          <source>
+            <statement reference="29"/>
+          </source>
+          <target>
+            <statement reference="49"/>
+          </target>
+        </edge>
+        <edge id="64" field="neighbors" inside="false">
+          <source>
+            <statement reference="29"/>
+          </source>
+          <target>
+            <statement reference="27"/>
+          </target>
+        </edge>
+        <edge id="65" field="next" inside="true">
+          <source>
+            <statement reference="29"/>
+          </source>
+          <target>
+            <statement reference="29"/>
+          </target>
+        </edge>
+        <edge id="66" field="next" inside="false">
+          <source>
+            <statement reference="29"/>
+          </source>
+          <target>
+            <statement reference="38"/>
+          </target>
+        </edge>
+        <edge id="67" field="[]" inside="false">
+          <source>
+            <statement reference="36"/>
+          </source>
+          <target>
+            <statement reference="21"/>
+          </target>
+        </edge>
+        <edge id="68" field="next" inside="true">
+          <source>
+            <statement reference="38"/>
+          </source>
+          <target>
+            <statement reference="29"/>
+          </target>
+        </edge>
+        <edge id="69" field="next" inside="false">
+          <source>
+            <statement reference="38"/>
+          </source>
+          <target>
+            <statement reference="38"/>
+          </target>
+        </edge>
+        <edge id="70" field="next" inside="false">
+          <source>
+            <statement reference="38"/>
+          </source>
+          <target>
+            <statement reference="49"/>
+          </target>
+        </edge>
+        <edge id="71" field="neighbors" inside="false">
+          <source>
+            <statement reference="38"/>
+          </source>
+          <target>
+            <statement reference="27"/>
+          </target>
+        </edge>
+        <edge id="72" field="[]" inside="false">
+          <source>
+            <statement reference="40"/>
+          </source>
+          <target>
+            <statement reference="42"/>
+          </target>
+        </edge>
+        <edge id="73" field="key" inside="false">
+          <source>
+            <statement reference="41"/>
+          </source>
+          <target>
+            <statement reference="32"/>
+          </target>
+        </edge>
+        <edge id="74" field="next" inside="false">
+          <source>
+            <statement reference="41"/>
+          </source>
+          <target>
+            <statement reference="41"/>
+          </target>
+        </edge>
+        <edge id="75" field="entry" inside="false">
+          <source>
+            <statement reference="41"/>
+          </source>
+          <target>
+            <statement reference="4"/>
+          </target>
+        </edge>
+        <edge id="76" field="entry" inside="false">
+          <source>
+            <statement reference="42"/>
+          </source>
+          <target>
+            <statement reference="31"/>
+          </target>
+        </edge>
+        <edge id="77" field="next" inside="false">
+          <source>
+            <statement reference="42"/>
+          </source>
+          <target>
+            <statement reference="12"/>
+          </target>
+        </edge>
+        <edge id="78" field="key" inside="false">
+          <source>
+            <statement reference="42"/>
+          </source>
+          <target>
+            <statement reference="45"/>
+          </target>
+        </edge>
+        <edge id="79" field="vert" inside="true">
+          <source>
+            <statement reference="43"/>
+          </source>
+          <target>
+            <statement reference="38"/>
+          </target>
+        </edge>
+        <edge id="80" field="vert" inside="true">
+          <source>
+            <statement reference="43"/>
+          </source>
+          <target>
+            <statement reference="23"/>
+          </target>
+        </edge>
+        <edge id="81" field="vert" inside="true">
+          <source>
+            <statement reference="43"/>
+          </source>
+          <target>
+            <param reference="3"/>
+          </target>
+        </edge>
+        <edge id="82" field="vert" inside="true">
+          <source>
+            <statement reference="43"/>
+          </source>
+          <target>
+            <statement reference="29"/>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <returned>
+      <statement reference="43"/>
+    </returned>
+    <escape-globaly/>
+  </heap>
+  <parameters>
+    <parameter>vlist.size</parameter>
+  </parameters>
+  <temporal>{ 0 }</temporal>
+  <residual>
+    <node>
+      <param reference="2"/>
+      <value>{ [[vlist.size] -&gt; []] -&gt; 0 : vlist.size &gt; 0 }</value>
+    </node>
+    <node>
+      <param reference="3"/>
+      <value>{ [[vlist.size] -&gt; []] -&gt; 0 : vlist.size &gt; 0 }</value>
+    </node>
+    <node>
+      <statement reference="4"/>
+      <value>{ [[vlist.size] -&gt; []] -&gt; 0 : vlist.size &gt; 0 }</value>
+    </node>
+    <node>
+      <ar.uba.dc.analysis.escape.graph.node.GlobalNode reference="11"/>
+      <value>{ [[vlist.size] -&gt; []] -&gt; 0 : vlist.size &gt; 0 }</value>
+    </node>
+    <node>
+      <statement reference="12"/>
+      <value>{ [[vlist.size] -&gt; []] -&gt; 0 : vlist.size &gt; 0 }</value>
+    </node>
+    <node>
+      <statement reference="17"/>
+      <value>{ [[vlist.size] -&gt; []] -&gt; 0 : vlist.size &gt; 0 }</value>
+    </node>
+    <node>
+      <statement reference="21"/>
+      <value>{ [[vlist.size] -&gt; []] -&gt; 0 : vlist.size &gt; 0 }</value>
+    </node>
+    <node>
+      <statement reference="23"/>
+      <value>{ [[vlist.size] -&gt; []] -&gt; 0 : vlist.size &gt; 0 }</value>
+    </node>
+    <node>
+      <statement reference="27"/>
+      <value>{ [[vlist.size] -&gt; []] -&gt; 0 : vlist.size &gt; 0 }</value>
+    </node>
+    <node>
+      <statement reference="29"/>
+      <value>{ [[vlist.size] -&gt; []] -&gt; 0 : vlist.size &gt; 0 }</value>
+    </node>
+    <node>
+      <statement reference="31"/>
+      <value>{ [[vlist.size] -&gt; []] -&gt; 0 : vlist.size &gt; 0 }</value>
+    </node>
+    <node>
+      <statement reference="32"/>
+      <value>{ [[vlist.size] -&gt; []] -&gt; 0 : vlist.size &gt; 0 }</value>
+    </node>
+    <node>
+      <statement reference="36"/>
+      <value>{ [[vlist.size] -&gt; []] -&gt; 0 : vlist.size &gt; 0 }</value>
+    </node>
+    <node>
+      <statement reference="38"/>
+      <value>{ [[vlist.size] -&gt; []] -&gt; 0 : vlist.size &gt; 0 }</value>
+    </node>
+    <node>
+      <statement reference="40"/>
+      <value>{ [[vlist.size] -&gt; []] -&gt; 0 : vlist.size &gt; 0 }</value>
+    </node>
+    <node>
+      <statement reference="41"/>
+      <value>{ [[vlist.size] -&gt; []] -&gt; 0 : vlist.size &gt; 0 }</value>
+    </node>
+    <node>
+      <statement reference="42"/>
+      <value>{ [[vlist.size] -&gt; []] -&gt; 0 : vlist.size &gt; 0 }</value>
+    </node>
+    <node>
+      <statement reference="43"/>
+      <value>{ [[vlist.size] -&gt; []] -&gt; 1 : vlist.size &gt;= 1 }</value>
+    </node>
+    <node>
+      <statement reference="45"/>
+      <value>{ [[vlist.size] -&gt; []] -&gt; 0 : vlist.size &gt; 0 }</value>
+    </node>
+  </residual>
+</summary>

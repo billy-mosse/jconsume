@@ -1,0 +1,13 @@
+<summary id="1" className="ar.uba.dc.rinard.BasicTest" methodSignature="void constantParameterCall()">
+  <heap>
+    <graph>
+      <nodes/>
+      <edges/>
+    </graph>
+    <returned/>
+    <escape-globaly/>
+  </heap>
+  <parameters/>
+  <temporal>{ 46 }</temporal>
+  <residual/>
+</summary>

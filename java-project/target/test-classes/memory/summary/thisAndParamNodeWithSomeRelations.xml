@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<summary className="ar.uba.dc.simple.Tupla" methodSignature="void &lt;init&gt;()">
+	<heap>
+		<graph>
+			<nodes>
+				<this id="1"/>
+				<param index="0" id="2" />
+				<param index="1" id="3" />
+				<global />
+			</nodes>
+			<edges>
+				<edge inside="true" field="array">
+					<source>
+						<this reference="1"/>
+					</source>
+					<target>
+						<param reference="2" />
+					</target>
+				</edge>
+				<edge inside="false" field="z">
+					<source>
+						<param reference="2" />
+					</source>
+					<target>	
+						<this reference="1"/>
+					</target>
+				</edge>
+				<edge inside="false" field="next">
+					<source>
+						<this reference="1"/>
+					</source>
+					<target>
+						<this reference="1"/>
+					</target>
+				</edge>
+			</edges>
+		</graph>
+		<returned>
+			<param reference="2" />
+		</returned>
+		<escape-globaly>
+			<this reference="1" />
+		</escape-globaly>
+	</heap>
+	<parameters>
+		<parameter>$t.size</parameter>
+		<parameter>n</parameter>
+		<parameter>otherParameter</parameter>
+	</parameters>
+	<temporal>{ [$t.size] -> 2*$t.size^2 }</temporal>
+	<residual>
+		<node>
+			<param reference="3" />
+			<value>{ 45 }</value>
+		</node>
+		<node>
+			<this reference="1" />
+			<value>{ [n] -> n + 4 }</value>
+		</node>
+	</residual>
+</summary>

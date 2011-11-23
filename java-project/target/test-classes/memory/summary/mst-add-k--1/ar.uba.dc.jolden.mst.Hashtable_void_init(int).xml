@@ -1,0 +1,68 @@
+<summary id="1" className="ar.uba.dc.jolden.mst.Hashtable" methodSignature="void &lt;init&gt;(int)">
+  <heap>
+    <graph>
+      <nodes>
+        <statement id="2" inside="true">
+          <statement-id id="3">
+            <method id="4">
+              <class>ar.uba.dc.jolden.mst.Hashtable</class>
+              <signature>void &lt;init&gt;(int)</signature>
+            </method>
+            <value>$r2 = newarray (ar.uba.dc.jolden.mst.HashEntry)[$i0]</value>
+            <line-number>21</line-number>
+            <bytecode-offset>14</bytecode-offset>
+          </statement-id>
+          <context/>
+        </statement>
+        <statement id="5" inside="false">
+          <statement-id id="6">
+            <method reference="4"/>
+            <value>$r3 = $r0.&lt;ar.uba.dc.jolden.mst.Hashtable: ar.uba.dc.jolden.mst.HashEntry[] array&gt;</value>
+            <line-number>23</line-number>
+            <bytecode-offset>26</bytecode-offset>
+          </statement-id>
+          <context/>
+        </statement>
+        <this id="7"/>
+      </nodes>
+      <edges>
+        <edge id="8" field="array" inside="true">
+          <source>
+            <this reference="7"/>
+          </source>
+          <target>
+            <statement reference="2"/>
+          </target>
+        </edge>
+        <edge id="9" field="array" inside="false">
+          <source>
+            <this reference="7"/>
+          </source>
+          <target>
+            <statement reference="5"/>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <returned/>
+    <escape-globaly/>
+  </heap>
+  <parameters>
+    <parameter>size</parameter>
+  </parameters>
+  <temporal>{ 0 }</temporal>
+  <residual>
+    <node>
+      <statement reference="2"/>
+      <value>{ [[size] -&gt; []] -&gt; size : size &gt;= 1 }</value>
+    </node>
+    <node>
+      <statement reference="5"/>
+      <value>{ [[size] -&gt; []] -&gt; 0 : size &gt; 0 }</value>
+    </node>
+    <node>
+      <this reference="7"/>
+      <value>{ [[size] -&gt; []] -&gt; 0 : size &gt; 0 }</value>
+    </node>
+  </residual>
+</summary>

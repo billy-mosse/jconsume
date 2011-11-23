@@ -1,0 +1,22 @@
+<summary id="1" className="ar.uba.dc.jolden.mst.Graph" methodSignature="int computeDist(int,int,int)">
+  <points-to-graph id="2">
+    <graph>
+      <nodes>
+        <this id="3"/>
+      </nodes>
+      <edges/>
+    </graph>
+    <variables>
+      <variable>
+        <name>this</name>
+        <type id="4" name="ref" to="ar.uba.dc.jolden.mst.Graph"/>
+        <points-to id="5">
+          <this reference="3"/>
+        </points-to>
+      </variable>
+    </variables>
+    <returned id="6"/>
+    <escape-globaly id="7"/>
+  </points-to-graph>
+  <mutated-fields/>
+</summary>

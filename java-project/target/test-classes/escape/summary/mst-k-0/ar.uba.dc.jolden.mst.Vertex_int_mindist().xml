@@ -1,0 +1,29 @@
+<summary id="1" className="ar.uba.dc.jolden.mst.Vertex" methodSignature="int mindist()">
+  <points-to-graph id="2">
+    <graph>
+      <nodes>
+        <this id="3"/>
+      </nodes>
+      <edges/>
+    </graph>
+    <variables>
+      <variable>
+        <name>$r0</name>
+        <type id="4" name="ref" to="ar.uba.dc.jolden.mst.Vertex"/>
+        <points-to id="5">
+          <this reference="3"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>this</name>
+        <type reference="4"/>
+        <points-to id="6">
+          <this reference="3"/>
+        </points-to>
+      </variable>
+    </variables>
+    <returned id="7"/>
+    <escape-globaly id="8"/>
+  </points-to-graph>
+  <mutated-fields/>
+</summary>

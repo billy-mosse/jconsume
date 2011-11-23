@@ -1,0 +1,77 @@
+<summary id="1" className="ar.uba.dc.rinard.Point" methodSignature="void &lt;init&gt;(java.lang.Float,java.lang.Float)">
+  <points-to-graph id="2">
+    <graph>
+      <nodes>
+        <param id="3" index="0"/>
+        <param id="4" index="1"/>
+        <this id="5"/>
+      </nodes>
+      <edges>
+        <edge id="6" field="y" inside="true">
+          <source>
+            <this reference="5"/>
+          </source>
+          <target>
+            <param reference="4"/>
+          </target>
+        </edge>
+        <edge id="7" field="x" inside="true">
+          <source>
+            <this reference="5"/>
+          </source>
+          <target>
+            <param reference="3"/>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <variables>
+      <variable>
+        <name>$r1</name>
+        <type id="8" name="ref" to="java.lang.Float"/>
+        <points-to id="9">
+          <param reference="4"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>this</name>
+        <type id="10" name="ref" to="ar.uba.dc.rinard.Point"/>
+        <points-to id="11">
+          <this reference="5"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r0</name>
+        <type reference="10"/>
+        <points-to id="12">
+          <this reference="5"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>x</name>
+        <type reference="8"/>
+        <points-to id="13">
+          <param reference="3"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>y</name>
+        <type reference="8"/>
+        <points-to id="14">
+          <param reference="4"/>
+        </points-to>
+      </variable>
+    </variables>
+    <returned id="15"/>
+    <escape-globaly id="16"/>
+  </points-to-graph>
+  <mutated-fields>
+    <node>
+      <this reference="5"/>
+      <fields>
+        <field>y</field>
+        <field>x</field>
+      </fields>
+    </node>
+  </mutated-fields>
+</summary>

@@ -1,0 +1,163 @@
+<summary id="1" className="ar.uba.dc.tacas.Snippet01" methodSignature="java.lang.Integer[] toArray(ar.uba.dc.rinard.List)">
+  <heap>
+    <graph>
+      <nodes>
+        <param id="2" index="0"/>
+        <statement id="3" inside="true">
+          <statement-id id="4">
+            <method id="5">
+              <class>ar.uba.dc.tacas.Snippet01</class>
+              <signature>java.lang.Integer[] toArray(ar.uba.dc.rinard.List)</signature>
+            </method>
+            <value>$r1 = new java.lang.Integer</value>
+            <line-number>48</line-number>
+            <bytecode-offset>20</bytecode-offset>
+          </statement-id>
+          <context/>
+        </statement>
+        <statement id="6" inside="false">
+          <statement-id id="7">
+            <method id="8">
+              <class>ar.uba.dc.rinard.List</class>
+              <signature>java.util.Iterator iterator()</signature>
+            </method>
+            <value>$r3 = $r2.&lt;ar.uba.dc.rinard.List: ar.uba.dc.rinard.Cell head&gt;</value>
+            <line-number>25</line-number>
+            <bytecode-offset>5</bytecode-offset>
+          </statement-id>
+          <context>
+            <call id="9">
+              <method reference="5"/>
+              <value>$r5 = virtualinvoke $r0.&lt;ar.uba.dc.rinard.List: java.util.Iterator iterator()&gt;()</value>
+              <line-number>47</line-number>
+              <bytecode-offset>11</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <statement id="10" inside="false">
+          <statement-id id="11">
+            <method id="12">
+              <class>ar.uba.dc.rinard.ListItr</class>
+              <signature>java.lang.Object next()</signature>
+            </method>
+            <value>$r3 = $r2.&lt;ar.uba.dc.rinard.Cell: java.lang.Object data&gt;</value>
+            <line-number>33</line-number>
+            <bytecode-offset>4</bytecode-offset>
+          </statement-id>
+          <context>
+            <call id="13">
+              <method reference="5"/>
+              <value>$r6 = interfaceinvoke $r3.&lt;java.util.Iterator: java.lang.Object next()&gt;()</value>
+              <line-number>48</line-number>
+              <bytecode-offset>25</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <statement id="14" inside="false">
+          <statement-id id="15">
+            <method reference="12"/>
+            <value>$r4 = $r4.&lt;ar.uba.dc.rinard.Cell: ar.uba.dc.rinard.Cell next&gt;</value>
+            <line-number>34</line-number>
+            <bytecode-offset>13</bytecode-offset>
+          </statement-id>
+          <context>
+            <call reference="13"/>
+          </context>
+        </statement>
+        <statement id="16" inside="true">
+          <statement-id id="17">
+            <method reference="5"/>
+            <value>$r4 = newarray (java.lang.Integer)[$i1]</value>
+            <line-number>45</line-number>
+            <bytecode-offset>4</bytecode-offset>
+          </statement-id>
+          <context/>
+        </statement>
+      </nodes>
+      <edges>
+        <edge id="18" field="head" inside="false">
+          <source>
+            <param reference="2"/>
+          </source>
+          <target>
+            <statement reference="6"/>
+          </target>
+        </edge>
+        <edge id="19" field="next" inside="false">
+          <source>
+            <statement reference="14"/>
+          </source>
+          <target>
+            <statement reference="14"/>
+          </target>
+        </edge>
+        <edge id="20" field="data" inside="false">
+          <source>
+            <statement reference="14"/>
+          </source>
+          <target>
+            <statement reference="10"/>
+          </target>
+        </edge>
+        <edge id="21" field="next" inside="false">
+          <source>
+            <statement reference="6"/>
+          </source>
+          <target>
+            <statement reference="14"/>
+          </target>
+        </edge>
+        <edge id="22" field="data" inside="false">
+          <source>
+            <statement reference="6"/>
+          </source>
+          <target>
+            <statement reference="10"/>
+          </target>
+        </edge>
+        <edge id="23" field="[]" inside="true">
+          <source>
+            <statement reference="16"/>
+          </source>
+          <target>
+            <statement reference="3"/>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <returned>
+      <statement reference="16"/>
+    </returned>
+    <escape-globaly/>
+  </heap>
+  <parameters>
+    <parameter>list.size</parameter>
+  </parameters>
+  <temporal>{ [[list.size] -&gt; []] -&gt; 1 : list.size &gt;= 1 }</temporal>
+  <residual>
+    <node>
+      <param reference="2"/>
+      <value>{ [[list.size] -&gt; []] -&gt; 0 : list.size &gt; 0 }</value>
+    </node>
+    <node>
+      <statement reference="3"/>
+      <value>{ [[list.size] -&gt; []] -&gt; list.size : list.size &gt;= 1 }</value>
+    </node>
+    <node>
+      <statement reference="6"/>
+      <value>{ [[list.size] -&gt; []] -&gt; 0 : list.size &gt; 0 }</value>
+    </node>
+    <node>
+      <statement reference="10"/>
+      <value>{ [[list.size] -&gt; []] -&gt; 0 : list.size &gt; 0 }</value>
+    </node>
+    <node>
+      <statement reference="14"/>
+      <value>{ [[list.size] -&gt; []] -&gt; 0 : list.size &gt; 0 }</value>
+    </node>
+    <node>
+      <statement reference="16"/>
+      <value>{ [[list.size] -&gt; []] -&gt; list.size : list.size &gt;= 1 }</value>
+    </node>
+  </residual>
+</summary>

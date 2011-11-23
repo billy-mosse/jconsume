@@ -1,0 +1,20 @@
+<summary id="1" className="ar.uba.dc.jolden.mst.MST" methodSignature="void &lt;clinit&gt;()">
+  <heap>
+    <graph>
+      <nodes>
+        <ar.uba.dc.analysis.escape.graph.node.GlobalNode id="2"/>
+      </nodes>
+      <edges/>
+    </graph>
+    <returned/>
+    <escape-globaly/>
+  </heap>
+  <parameters/>
+  <temporal>{ 0 }</temporal>
+  <residual>
+    <node>
+      <ar.uba.dc.analysis.escape.graph.node.GlobalNode reference="2"/>
+      <value>{ 0 }</value>
+    </node>
+  </residual>
+</summary>

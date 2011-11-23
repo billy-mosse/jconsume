@@ -1,0 +1,113 @@
+<summary id="1" className="ar.uba.dc.basic.polymorphism.expectation.BasicTest" methodSignature="java.lang.Integer[] buildArray()">
+  <points-to-graph id="2">
+    <graph>
+      <nodes>
+        <statement id="3" inside="true">
+          <statement-id id="4">
+            <method id="5">
+              <class>ar.uba.dc.basic.polymorphism.expectation.BasicTest</class>
+              <signature>java.lang.Integer newInteger()</signature>
+            </method>
+            <value>$r0 = new java.lang.Integer</value>
+            <line-number>57</line-number>
+            <bytecode-offset>0</bytecode-offset>
+          </statement-id>
+          <context sensitivity="1">
+            <call id="6">
+              <method id="7">
+                <class>ar.uba.dc.basic.polymorphism.expectation.BasicTest</class>
+                <signature>java.lang.Integer[] buildArray()</signature>
+              </method>
+              <value>$r3 = virtualinvoke $r1.&lt;ar.uba.dc.basic.polymorphism.expectation.BasicTest: java.lang.Integer newInteger()&gt;()</value>
+              <line-number>49</line-number>
+              <bytecode-offset>7</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <statement id="8" inside="true">
+          <statement-id reference="4"/>
+          <context sensitivity="1">
+            <call id="9">
+              <method reference="7"/>
+              <value>$r3 = virtualinvoke $r1.&lt;ar.uba.dc.basic.polymorphism.expectation.BasicTest: java.lang.Integer newInteger()&gt;()</value>
+              <line-number>49</line-number>
+              <bytecode-offset>14</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <statement id="10" inside="true">
+          <statement-id id="11">
+            <method reference="7"/>
+            <value>$r2 = newarray (java.lang.Integer)[$b0]</value>
+            <line-number>49</line-number>
+            <bytecode-offset>1</bytecode-offset>
+          </statement-id>
+          <context sensitivity="1"/>
+        </statement>
+        <this id="12"/>
+      </nodes>
+      <edges>
+        <edge id="13" field="[]" inside="true">
+          <source>
+            <statement reference="10"/>
+          </source>
+          <target>
+            <statement reference="8"/>
+          </target>
+        </edge>
+        <edge id="14" field="[]" inside="true">
+          <source>
+            <statement reference="10"/>
+          </source>
+          <target>
+            <statement reference="3"/>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <variables>
+      <variable>
+        <name>$r0</name>
+        <type id="15" name="array" numDimensions="1">
+          <base id="16" name="ref" to="java.lang.Integer"/>
+        </type>
+        <points-to id="17">
+          <statement reference="10"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r1</name>
+        <type id="18" name="ref" to="ar.uba.dc.basic.polymorphism.expectation.BasicTest"/>
+        <points-to id="19">
+          <this reference="12"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r3</name>
+        <type reference="16"/>
+        <points-to id="20">
+          <statement reference="8"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r2</name>
+        <type reference="15"/>
+        <points-to id="21">
+          <statement reference="10"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>this</name>
+        <type reference="18"/>
+        <points-to id="22">
+          <this reference="12"/>
+        </points-to>
+      </variable>
+    </variables>
+    <returned id="23">
+      <statement reference="10"/>
+    </returned>
+    <escape-globaly id="24"/>
+  </points-to-graph>
+  <mutated-fields/>
+</summary>

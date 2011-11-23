@@ -1,0 +1,93 @@
+<summary id="1" className="ar.uba.dc.basic.polymorphism.expectation.BasicTest" methodSignature="java.lang.Integer[] buildArray()">
+  <heap>
+    <graph>
+      <nodes>
+        <statement id="2" inside="true">
+          <statement-id id="3">
+            <method id="4">
+              <class>ar.uba.dc.basic.polymorphism.expectation.BasicTest</class>
+              <signature>java.lang.Integer newInteger()</signature>
+            </method>
+            <value>$r0 = new java.lang.Integer</value>
+            <line-number>57</line-number>
+            <bytecode-offset>0</bytecode-offset>
+          </statement-id>
+          <context sensitivity="1">
+            <call id="5">
+              <method id="6">
+                <class>ar.uba.dc.basic.polymorphism.expectation.BasicTest</class>
+                <signature>java.lang.Integer[] buildArray()</signature>
+              </method>
+              <value>$r3 = virtualinvoke $r1.&lt;ar.uba.dc.basic.polymorphism.expectation.BasicTest: java.lang.Integer newInteger()&gt;()</value>
+              <line-number>49</line-number>
+              <bytecode-offset>7</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <statement id="7" inside="true">
+          <statement-id reference="3"/>
+          <context sensitivity="1">
+            <call id="8">
+              <method reference="6"/>
+              <value>$r3 = virtualinvoke $r1.&lt;ar.uba.dc.basic.polymorphism.expectation.BasicTest: java.lang.Integer newInteger()&gt;()</value>
+              <line-number>49</line-number>
+              <bytecode-offset>14</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <statement id="9" inside="true">
+          <statement-id id="10">
+            <method reference="6"/>
+            <value>$r2 = newarray (java.lang.Integer)[$b0]</value>
+            <line-number>49</line-number>
+            <bytecode-offset>1</bytecode-offset>
+          </statement-id>
+          <context sensitivity="1"/>
+        </statement>
+        <this id="11"/>
+      </nodes>
+      <edges>
+        <edge id="12" field="[]" inside="true">
+          <source>
+            <statement reference="9"/>
+          </source>
+          <target>
+            <statement reference="2"/>
+          </target>
+        </edge>
+        <edge id="13" field="[]" inside="true">
+          <source>
+            <statement reference="9"/>
+          </source>
+          <target>
+            <statement reference="7"/>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <returned>
+      <statement reference="9"/>
+    </returned>
+    <escape-globaly/>
+  </heap>
+  <parameters/>
+  <temporal>{ 0 }</temporal>
+  <residual>
+    <node>
+      <statement reference="2"/>
+      <value>{ 1 }</value>
+    </node>
+    <node>
+      <statement reference="7"/>
+      <value>{ 1 }</value>
+    </node>
+    <node>
+      <statement reference="9"/>
+      <value>{ 1 }</value>
+    </node>
+    <node>
+      <this reference="11"/>
+      <value>{ 0 }</value>
+    </node>
+  </residual>
+</summary>

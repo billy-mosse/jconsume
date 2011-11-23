@@ -1,0 +1,384 @@
+<summary id="1" className="ar.uba.dc.rinard.BasicTest" methodSignature="void sumNumbersUpToParameterUsingStaticList(java.lang.Integer)">
+  <heap>
+    <graph>
+      <nodes>
+        <param id="2" index="0"/>
+        <statement id="3" inside="false">
+          <statement-id id="4">
+            <method id="5">
+              <class>ar.uba.dc.rinard.BasicTest</class>
+              <signature>float sumX(ar.uba.dc.rinard.List)</signature>
+            </method>
+            <value>$r5 = $r0.&lt;ar.uba.dc.rinard.Point: java.lang.Float x&gt;</value>
+            <line-number>56</line-number>
+            <bytecode-offset>22</bytecode-offset>
+          </statement-id>
+          <context>
+            <call id="6">
+              <method id="7">
+                <class>ar.uba.dc.rinard.BasicTest</class>
+                <signature>void sumNumbersUpToParameterUsingStaticList(java.lang.Integer)</signature>
+              </method>
+              <value>$f1 = staticinvoke &lt;ar.uba.dc.rinard.BasicTest: float sumX(ar.uba.dc.rinard.List)&gt;($r0)</value>
+              <line-number>154</line-number>
+              <bytecode-offset>62</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <ar.uba.dc.analysis.escape.graph.node.GlobalNode id="8"/>
+        <method id="9">
+          <method-id id="10">
+            <class>java.lang.Float</class>
+            <signature>java.lang.Float valueOf(float)</signature>
+          </method-id>
+          <context>
+            <call id="11">
+              <method reference="7"/>
+              <value>$r4 = staticinvoke &lt;java.lang.Float: java.lang.Float valueOf(float)&gt;($f1)</value>
+              <line-number>150</line-number>
+              <bytecode-offset>11</bytecode-offset>
+            </call>
+          </context>
+        </method>
+        <statement id="12" inside="true">
+          <statement-id id="13">
+            <method id="14">
+              <class>ar.uba.dc.rinard.List</class>
+              <signature>void add(java.lang.Object)</signature>
+            </method>
+            <value>$r1 = new ar.uba.dc.rinard.Cell</value>
+            <line-number>15</line-number>
+            <bytecode-offset>1</bytecode-offset>
+          </statement-id>
+          <context>
+            <call id="15">
+              <method reference="7"/>
+              <value>virtualinvoke $r0.&lt;ar.uba.dc.rinard.List: void add(java.lang.Object)&gt;($r5)</value>
+              <line-number>151</line-number>
+              <bytecode-offset>33</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <method id="16">
+          <method-id reference="10"/>
+          <context>
+            <call id="17">
+              <method reference="7"/>
+              <value>$r6 = staticinvoke &lt;java.lang.Float: java.lang.Float valueOf(float)&gt;($f0)</value>
+              <line-number>151</line-number>
+              <bytecode-offset>27</bytecode-offset>
+            </call>
+          </context>
+        </method>
+        <statement id="18" inside="false">
+          <statement-id id="19">
+            <method id="20">
+              <class>ar.uba.dc.rinard.List</class>
+              <signature>java.util.Iterator iterator()</signature>
+            </method>
+            <value>$r3 = $r2.&lt;ar.uba.dc.rinard.List: ar.uba.dc.rinard.Cell head&gt;</value>
+            <line-number>25</line-number>
+            <bytecode-offset>5</bytecode-offset>
+          </statement-id>
+          <context>
+            <call reference="6"/>
+            <call id="21">
+              <method reference="5"/>
+              <value>$r2 = virtualinvoke $r1.&lt;ar.uba.dc.rinard.List: java.util.Iterator iterator()&gt;()</value>
+              <line-number>53</line-number>
+              <bytecode-offset>3</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <statement id="22" inside="true">
+          <statement-id id="23">
+            <method reference="7"/>
+            <value>$r0 = new ar.uba.dc.rinard.List</value>
+            <line-number>149</line-number>
+            <bytecode-offset>0</bytecode-offset>
+          </statement-id>
+          <context/>
+        </statement>
+        <statement id="24" inside="true">
+          <statement-id id="25">
+            <method reference="7"/>
+            <value>$r5 = new ar.uba.dc.rinard.Point</value>
+            <line-number>151</line-number>
+            <bytecode-offset>21</bytecode-offset>
+          </statement-id>
+          <context/>
+        </statement>
+        <statement id="26" inside="false">
+          <statement-id id="27">
+            <method reference="14"/>
+            <value>$r5 = $r4.&lt;ar.uba.dc.rinard.List: ar.uba.dc.rinard.Cell head&gt;</value>
+            <line-number>15</line-number>
+            <bytecode-offset>7</bytecode-offset>
+          </statement-id>
+          <context>
+            <call reference="15"/>
+          </context>
+        </statement>
+        <statement id="28" inside="false">
+          <statement-id id="29">
+            <method id="30">
+              <class>ar.uba.dc.rinard.ListItr</class>
+              <signature>java.lang.Object next()</signature>
+            </method>
+            <value>$r4 = $r4.&lt;ar.uba.dc.rinard.Cell: ar.uba.dc.rinard.Cell next&gt;</value>
+            <line-number>34</line-number>
+            <bytecode-offset>13</bytecode-offset>
+          </statement-id>
+          <context>
+            <call reference="6"/>
+            <call id="31">
+              <method reference="5"/>
+              <value>$r3 = interfaceinvoke $r2.&lt;java.util.Iterator: java.lang.Object next()&gt;()</value>
+              <line-number>55</line-number>
+              <bytecode-offset>11</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <method id="32">
+          <method-id reference="10"/>
+          <context>
+            <call id="33">
+              <method reference="7"/>
+              <value>$r4 = staticinvoke &lt;java.lang.Float: java.lang.Float valueOf(float)&gt;($f1)</value>
+              <line-number>150</line-number>
+              <bytecode-offset>42</bytecode-offset>
+            </call>
+          </context>
+        </method>
+        <statement id="34" inside="false">
+          <statement-id id="35">
+            <method reference="30"/>
+            <value>$r3 = $r2.&lt;ar.uba.dc.rinard.Cell: java.lang.Object data&gt;</value>
+            <line-number>33</line-number>
+            <bytecode-offset>4</bytecode-offset>
+          </statement-id>
+          <context>
+            <call reference="6"/>
+            <call reference="31"/>
+          </context>
+        </statement>
+      </nodes>
+      <edges>
+        <edge id="36" field="head" inside="false">
+          <source>
+            <ar.uba.dc.analysis.escape.graph.node.GlobalNode reference="8"/>
+          </source>
+          <target>
+            <statement reference="26"/>
+          </target>
+        </edge>
+        <edge id="37" field="head" inside="false">
+          <source>
+            <ar.uba.dc.analysis.escape.graph.node.GlobalNode reference="8"/>
+          </source>
+          <target>
+            <statement reference="18"/>
+          </target>
+        </edge>
+        <edge id="38" field="head" inside="true">
+          <source>
+            <ar.uba.dc.analysis.escape.graph.node.GlobalNode reference="8"/>
+          </source>
+          <target>
+            <statement reference="12"/>
+          </target>
+        </edge>
+        <edge id="39" field="data" inside="false">
+          <source>
+            <statement reference="28"/>
+          </source>
+          <target>
+            <statement reference="34"/>
+          </target>
+        </edge>
+        <edge id="40" field="next" inside="false">
+          <source>
+            <statement reference="28"/>
+          </source>
+          <target>
+            <statement reference="28"/>
+          </target>
+        </edge>
+        <edge id="41" field="next" inside="false">
+          <source>
+            <statement reference="12"/>
+          </source>
+          <target>
+            <statement reference="28"/>
+          </target>
+        </edge>
+        <edge id="42" field="data" inside="true">
+          <source>
+            <statement reference="12"/>
+          </source>
+          <target>
+            <statement reference="24"/>
+          </target>
+        </edge>
+        <edge id="43" field="next" inside="true">
+          <source>
+            <statement reference="12"/>
+          </source>
+          <target>
+            <statement reference="12"/>
+          </target>
+        </edge>
+        <edge id="44" field="next" inside="true">
+          <source>
+            <statement reference="12"/>
+          </source>
+          <target>
+            <statement reference="26"/>
+          </target>
+        </edge>
+        <edge id="45" field="data" inside="false">
+          <source>
+            <statement reference="12"/>
+          </source>
+          <target>
+            <statement reference="34"/>
+          </target>
+        </edge>
+        <edge id="46" field="x" inside="false">
+          <source>
+            <statement reference="34"/>
+          </source>
+          <target>
+            <statement reference="3"/>
+          </target>
+        </edge>
+        <edge id="47" field="next" inside="false">
+          <source>
+            <statement reference="18"/>
+          </source>
+          <target>
+            <statement reference="28"/>
+          </target>
+        </edge>
+        <edge id="48" field="data" inside="false">
+          <source>
+            <statement reference="18"/>
+          </source>
+          <target>
+            <statement reference="34"/>
+          </target>
+        </edge>
+        <edge id="49" field="y" inside="true">
+          <source>
+            <statement reference="24"/>
+          </source>
+          <target>
+            <method reference="16"/>
+          </target>
+        </edge>
+        <edge id="50" field="x" inside="true">
+          <source>
+            <statement reference="24"/>
+          </source>
+          <target>
+            <method reference="32"/>
+          </target>
+        </edge>
+        <edge id="51" field="x" inside="true">
+          <source>
+            <statement reference="24"/>
+          </source>
+          <target>
+            <method reference="9"/>
+          </target>
+        </edge>
+        <edge id="52" field="x" inside="false">
+          <source>
+            <statement reference="24"/>
+          </source>
+          <target>
+            <statement reference="3"/>
+          </target>
+        </edge>
+        <edge id="53" field="data" inside="false">
+          <source>
+            <statement reference="26"/>
+          </source>
+          <target>
+            <statement reference="34"/>
+          </target>
+        </edge>
+        <edge id="54" field="next" inside="false">
+          <source>
+            <statement reference="26"/>
+          </source>
+          <target>
+            <statement reference="28"/>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <returned/>
+    <escape-globaly>
+      <statement reference="22"/>
+    </escape-globaly>
+  </heap>
+  <parameters>
+    <parameter>upTo</parameter>
+  </parameters>
+  <temporal>{ 1 }</temporal>
+  <residual>
+    <node>
+      <param reference="2"/>
+      <value>{ 0 }</value>
+    </node>
+    <node>
+      <statement reference="3"/>
+      <value>{ 0 }</value>
+    </node>
+    <node>
+      <ar.uba.dc.analysis.escape.graph.node.GlobalNode reference="8"/>
+      <value>{ 0 }</value>
+    </node>
+    <node>
+      <method reference="9"/>
+      <value>{ 1 }</value>
+    </node>
+    <node>
+      <statement reference="12"/>
+      <value>{ [[upTo] -&gt; []] -&gt; upTo : upTo &gt;= 1 }</value>
+    </node>
+    <node>
+      <method reference="16"/>
+      <value>{ [[upTo] -&gt; []] -&gt; upTo : upTo &gt;= 1 }</value>
+    </node>
+    <node>
+      <statement reference="18"/>
+      <value>{ 0 }</value>
+    </node>
+    <node>
+      <statement reference="22"/>
+      <value>{ 1 }</value>
+    </node>
+    <node>
+      <statement reference="24"/>
+      <value>{ [[upTo] -&gt; []] -&gt; upTo : upTo &gt;= 1 }</value>
+    </node>
+    <node>
+      <statement reference="26"/>
+      <value>{ 0 }</value>
+    </node>
+    <node>
+      <statement reference="28"/>
+      <value>{ 0 }</value>
+    </node>
+    <node>
+      <method reference="32"/>
+      <value>{ [[upTo] -&gt; []] -&gt; upTo : upTo &gt;= 1 }</value>
+    </node>
+    <node>
+      <statement reference="34"/>
+      <value>{ 0 }</value>
+    </node>
+  </residual>
+</summary>

@@ -1,0 +1,101 @@
+<summary id="1" className="ar.uba.dc.jolden.mst.HashEntry" methodSignature="void &lt;init&gt;(java.lang.Object,java.lang.Object,ar.uba.dc.jolden.mst.HashEntry)">
+  <points-to-graph id="2">
+    <graph>
+      <nodes>
+        <param id="3" index="0"/>
+        <param id="4" index="1"/>
+        <param id="5" index="2"/>
+        <this id="6"/>
+      </nodes>
+      <edges>
+        <edge id="7" field="next" inside="true">
+          <source>
+            <this reference="6"/>
+          </source>
+          <target>
+            <param reference="5"/>
+          </target>
+        </edge>
+        <edge id="8" field="key" inside="true">
+          <source>
+            <this reference="6"/>
+          </source>
+          <target>
+            <param reference="3"/>
+          </target>
+        </edge>
+        <edge id="9" field="entry" inside="true">
+          <source>
+            <this reference="6"/>
+          </source>
+          <target>
+            <param reference="4"/>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <variables>
+      <variable>
+        <name>next</name>
+        <type id="10" name="ref" to="ar.uba.dc.jolden.mst.HashEntry"/>
+        <points-to id="11">
+          <param reference="5"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>entry</name>
+        <type id="12" name="ref" to="java.lang.Object"/>
+        <points-to id="13">
+          <param reference="4"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r0</name>
+        <type reference="10"/>
+        <points-to id="14">
+          <this reference="6"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r2</name>
+        <type reference="10"/>
+        <points-to id="15">
+          <param reference="5"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>key</name>
+        <type reference="12"/>
+        <points-to id="16">
+          <param reference="3"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>this</name>
+        <type reference="10"/>
+        <points-to id="17">
+          <this reference="6"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r1</name>
+        <type reference="12"/>
+        <points-to id="18">
+          <param reference="4"/>
+        </points-to>
+      </variable>
+    </variables>
+    <returned id="19"/>
+    <escape-globaly id="20"/>
+  </points-to-graph>
+  <mutated-fields>
+    <node>
+      <this reference="6"/>
+      <fields>
+        <field>key</field>
+        <field>entry</field>
+        <field>next</field>
+      </fields>
+    </node>
+  </mutated-fields>
+</summary>

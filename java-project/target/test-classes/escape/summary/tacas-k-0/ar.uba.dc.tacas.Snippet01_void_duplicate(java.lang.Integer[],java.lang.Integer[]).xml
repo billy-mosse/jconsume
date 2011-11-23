@@ -1,0 +1,103 @@
+<summary id="1" className="ar.uba.dc.tacas.Snippet01" methodSignature="void duplicate(java.lang.Integer[],java.lang.Integer[])">
+  <points-to-graph id="2">
+    <graph>
+      <nodes>
+        <param id="3" index="0"/>
+        <param id="4" index="1"/>
+        <statement id="5" inside="true">
+          <statement-id id="6">
+            <method id="7">
+              <class>ar.uba.dc.tacas.Snippet01</class>
+              <signature>java.lang.Integer[] multiyply(java.lang.Integer[],int)</signature>
+            </method>
+            <value>$r3 = new java.lang.Integer</value>
+            <line-number>77</line-number>
+            <bytecode-offset>19</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="8" inside="true">
+          <statement-id id="9">
+            <method reference="7"/>
+            <value>$r5 = new java.lang.Integer</value>
+            <line-number>78</line-number>
+            <bytecode-offset>31</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="10" inside="true">
+          <statement-id id="11">
+            <method reference="7"/>
+            <value>$r0 = newarray (java.lang.Integer)[$i3]</value>
+            <line-number>74</line-number>
+            <bytecode-offset>2</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="12" inside="false">
+          <statement-id id="13">
+            <method reference="7"/>
+            <value>$r3 = $r0[$i0]</value>
+            <line-number>76</line-number>
+            <bytecode-offset>13</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+      </nodes>
+      <edges>
+        <edge id="14" field="[]" inside="false">
+          <source>
+            <param reference="3"/>
+          </source>
+          <target>
+            <statement reference="12"/>
+          </target>
+        </edge>
+        <edge id="15" field="[]" inside="false">
+          <source>
+            <param reference="4"/>
+          </source>
+          <target>
+            <statement reference="12"/>
+          </target>
+        </edge>
+        <edge id="16" field="[]" inside="true">
+          <source>
+            <statement reference="10"/>
+          </source>
+          <target>
+            <statement reference="8"/>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <variables>
+      <variable>
+        <name>v2</name>
+        <type id="17" name="array" numDimensions="1">
+          <base id="18" name="ref" to="java.lang.Integer"/>
+        </type>
+        <points-to id="19">
+          <param reference="4"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>v1</name>
+        <type reference="17"/>
+        <points-to id="20">
+          <param reference="3"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r0</name>
+        <type reference="17"/>
+        <points-to id="21">
+          <statement reference="10"/>
+        </points-to>
+      </variable>
+    </variables>
+    <returned id="22"/>
+    <escape-globaly id="23"/>
+  </points-to-graph>
+  <mutated-fields/>
+</summary>

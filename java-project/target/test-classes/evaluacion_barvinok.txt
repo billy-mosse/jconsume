@@ -1,0 +1,176 @@
+# Este archivo contiene las pruebas realizadas sobre la version 0.32 de la calculadora de barvinok
+# para evaluar los operadores que utilizariamos y el comportamiento de la misma.
+# Las pruebas se agrupan por funcionalidad y/o necesidades
+
+# Necesitamos poder sumar polinomios y que los dominios se resuelvan "solos"
+
+#{1} + {7}; 						# { 8 }
+#[n] -> {[]-> n: n >=1 } + [n] -> {1}; 			# [n] -> { (1 + n) : n >= 1; 1 : n <= 0 }
+#[n] -> {[]-> n: n >=1 } + [n] -> {1: n <= 0};		# [n] -> { n : n >= 1; 1 : n <= 0 }
+#[n] -> {[]-> n} + [n] -> {1: n <= 0};			# [n] -> { (1 + n) : n <= 0; n : n >= 1 }
+#[n] -> {[]-> n: 0 <= n } + [n] -> {n^2: n <= 5};	# [n] -> { (n + n^2) : n >= 0 and n <= 5; n : n >= 6; n^2 : n <= -1 }
+
+#[n,m] -> {[]-> n: n >=1 } + [n,m] -> {3*m + 5: m >= 0};# [n, m] -> { ((5 + n) + 3 * m) : n >= 1 and m >= 0; n : n >= 1 and m <= -1; (5 + 3 * m) : m >= 0 and n <= 0 }
+#[n,m] -> {[]-> n: n >=1 } + [n,m] -> {m: n <= 0};	# [n, m] -> { n : n >= 1; m : n <= 0 }
+#[n,m] -> {[]-> n} + [n,m] -> {2*m^2 + 7: n <= 0};	# [n, m] -> { ((7 + n) + 2 * m^2) : n <= 0; n : n >= 1 }
+#[n,m] -> {[]-> n: 0 <= n } + [n,m] -> {m^2: n <= 5 and m = 5};	# [n, m] -> { (n + m^2) : m = 5 and n <= 5 and n >= 0; n : (n >= 0 and m <= 4) or (n >= 0 and m >= 6) or (m = 5 and n >= 6); m^2 : m = 5 and n <= -1 }
+
+
+# Necesitamos poder operar con el infinito
+#{1} + {infty}; 					# { infty }
+#[n] -> {[]-> infty: n >=1 } + [n] -> {1}; 		# [n] -> { infty : n >= 1; 1 : n <= 0 }
+#[n] -> {[]-> infty: n >=1 } + [n] -> {1: n <= 0};	# [n] -> { infty : n >= 1; 1 : n <= 0 }
+#[n] -> {[]-> infty} + [n] -> {1: n <= 0};		# [n] -> { infty : n <= 0; infty : n >= 1 }
+#[n] -> {[]-> infty: 0 <= n } + [n] -> {n^2: n <= 5};	# [n] -> { infty : n >= 0 and n <= 5; infty : n >= 6; n^2 : n <= -1 }
+
+
+# Necesitamos card
+#card [] -> {[i]: -3 <= i <= 4 };			# {8}
+#card [n] -> {[i]: 0 <= i <= n};			# [n] -> { (1 + n) : n >= 0 }
+#card [n] -> {[i]: n <= i <= 25};			# [n] -> { (26 - n) : n <= 25 }
+#card [n] -> {[i]: n <= i <= 25 and n >= 26};		# [n] -> {  }
+#card [n,m] -> {[i]: n <= i <= m};			# [n, m] -> { ((1 - n) + m) : m >= n }
+#card [n] -> {[i,j]: 0 <= i <= n and 0 <= j < i};	# [n] -> { (1/2 * n + 1/2 * n^2) : n >= 1 }
+
+# Necesitamos que el card pueda dar infinito
+#card [n] -> {[i]: 0 <= i};				# [n] -> { infty }
+#card [n] -> {[i, j]: 0 <= i <= n};			# [n] -> { infty : n >= 0 }
+#card [n, m] -> {[i, j]: 0 <= i <= n, j >= m};		# [n, m] -> { infty : m <= n and n >= 0 }
+
+
+# Necesitamos sum opere con infinito
+#sum [n] -> {[i] -> infty: 0 <= i <= n};						# Error
+#sum [n] -> {[i] -> infty: 0 <= i <= n and n = 0; [i] -> i: 0 <= i <= n and n > 0};	# Error
+
+
+# Necesitamos sum de parametrico
+#sum [n] -> {[i]-> i: 0 <= i <= n};			# [n] -> { (1/2 * n + 1/2 * n^2) : n >= 0 }
+#sum [k] -> {[i,tn]-> tn: 0 <= i <= k and tn=i};	# [k] -> { (1/2 * k + 1/2 * k^2) : k >= 0 }
+#sum [n] -> {[i]-> i: 0 <= i <= n and n < 0};		# [n] -> {  }
+
+
+# Necesitamos sum de constante
+#sum [k] -> {[i,tn]-> tn: 0 <= i <= k and tn=1};	# [k] -> { (1 + k) : k >= 0 }
+#sum [k] -> {[i,tn]-> tn: 0 <= i <= k and tn=5};	# [k] -> { (5 + 5*k) : k >= 0 }
+#sum [k] -> {[i,tn]-> tn: 0 <= i <= k and tn=i+10};	# [k] -> { (10 + 21/2 * k + 1/2 * k^2) : k >= 0 }
+
+
+# Necesitamos sum de infinito
+#sum [k] -> {[i,tn]-> tn: 0 <= i and tn=1};		# [k] -> { NaN }
+#sum [k] -> {[i]-> i: 0 <= i};				# [k] -> { NaN }
+
+
+# Necesitamos que ub opere con infinito
+#ub [n] -> {[i] -> infty: 0 <= i <= n};			# ([n] -> { max(infty) : n >= 0 }, True)
+#ub [n] -> {[i] -> infty: 0 <= i <= n and n = 0; [i] -> i: 0 <= i <= n and n > 0};	([n] -> { max(infty) : n = 0; max(n) : n >= 1 }, True)
+#ub [n,m] -> {[i] -> i*i: m <= i <= n; [] -> infty: n < m}; ([n, m] -> { max(infty) : m >= 1 + n; max(n * m, m^2, n^2) : m <= n }, False)
+
+# Necesitamos ub que de parametrico
+#ub [n] -> {[i] -> 0: 0 <= i <= n};			# ([n] -> {  }, True)
+#ub [n] -> {[i] -> 1: 0 <= i <= n};			# ([n] -> { max(1) : n >= 0 }, True)
+#ub [n] -> {[i] -> i*i: -3 <= i <= n};			# ([n] -> { max(9, n^2) : n >= -3 }, True)
+#ub [n,m] -> {[i] -> i*i: m <= i <= n};			# ([n, m] -> { max(n * m, m^2, n^2) : m <= n }, False)
+
+
+# Necesitamos ub que de constante
+#ub [n] -> {[i,tn] -> tn*tn: -3 <= i <= n and tn=5};	# ([n] -> { max(25) : n >= -3 }, True)
+
+
+# Necesitamos ub maneje rangos abiertos
+#ub [n] -> {[i] -> 1: 0 <= i};				# ([n] -> { max(1) : n >= 0; max(1) : n <= -1 }, True)
+#ub [n] -> {[i] -> 1: i <= n};				# ([n] -> { max(1) : n >= 0; max(1) : n <= -1 }, True)
+#ub [n] -> {[i] -> i: 0 <= i};				# ([n] -> { max(infty) : n >= 0; max(infty) : n <= -1 }, True)
+#ub [n] -> {[i] -> i: i <= n};				# ([n] -> { max(n) : n >= 0; max(n) : n <= -2; max(-1) : n = -1 }, True)
+
+
+# Necesitamos poder sumar polinomios con folds. El problema es que convierte todo en "max"
+
+#{ [m] -> max((-1 + 2 * m)) : m >= 1 } + { [m] -> m : m >= 1 };
+#{ [m] -> max((-1 + 2 * m), 3) : m >= 1 } + { [m] -> m }; // se puede sumar algo con un maximo, devuelve maximos eso...
+#{ [m] -> max((-1 + 2 * m), 3) : m >= 1 } + { [m] -> max((-1 + 2 * m), 3) : m >= 1 }; // no se pueden sumar maximos
+
+#{ [m] -> m : m >= 1 } + { [m] -> max((-1 + 2 * m)) : m >= 1 };
+
+#[m] -> { max((-1 + 2 * m), 3) : m >= 1 } + [m] -> { m*m };
+#[m] -> { max((-1 + 2 * m + m^2), (3 + m^2)) : m >= 1; max(m^2) : m <= 0 } + [m] -> { m*m };
+
+# Necesitamos poder hacer el sum de un fold
+# Necesitamos sumar folds
+# Necesitamos ub sobre ub
+
+# Permite "comparar" maximos. Esto nos sirve para hacer el max entre polinomios. Trabaja con inifinito
+
+#[m] -> { max((-1 + 2 * m), 3) : m >= 1 } . [m] -> { max(-2 + 2 * m, 71*m, 9) : m >= 0 };
+
+#{ [m] -> max((-1 + 2 * m), 3) : m >= 1 } . { [m] -> max(-2 + 2 * m, 71*m, 9) : m >= 0 }; # { [m] -> max(71 * m, 9) : m >= 1; [m] -> max((-2 + 2 * m), 71 * m, 9) : m = 0 }
+
+#{ [m] -> max((-1 + 2 * m), 3) } . { [m] -> max(-2 + 2 * m, 71*m, 9) }; # { [m] -> max((-1 + 2 * m), 71 * m, 9) }
+
+#{ [n, m] -> max(infty) : m >= 1 + n; [n, m] -> max(n * m, m^2, n^2) : m <= n } . { [n, m] -> max((-2 + 2 * m), 3, 71*m) : m >= 1 }; # { [n, m] -> max(infty) : m >= 1 + n and m >= 1; [n, m] -> max(infty) : m >= 1 + n and m <= 0; [n, m] -> max(n * m, m^2, n^2, 3, 71 * m) : m <= n and m >= 1; [n, m] -> max(n * m, m^2, n^2) : m <= n and m <= 0 }
+
+
+
+# PRUEBAS HECHAS SOBRE EL OPERADOR "."
+# ====================================
+
+# Si tengo mas variables que parametros me da vacio
+# ({ [m] -> [c,w] : -3 <= c <= m and w = c} . { [k] -> max((3 * k + k^2), 3) : k >= 1 })[0]; # {}
+
+# Hace el binding 1 a 1 de las variables
+# ({ [m] -> [c,w] : -3 <= c <= m and w = c} . { [k, j] -> max((3 * k + k^2), 3) : k >= 1 })[0]; # { [m] -> max((3 * m + m^2)) : m >= 1 }
+
+# No se soporta la sintaxis vieja
+# [m] -> { [c,w] : -3 <= c <= m and w = c} . [k, j] ->  { max((3 * k + k^2), 3) : k >= 1 }; # syntax error (7, 60): expecting other token got '.' (no soporta sintaxis vieja....)
+
+# Devuelve infinito si corresponde
+# {[n] -> [i, m]: 0 <= i and i = m } . { [i, m] -> max(-2 + 2 * m, 71*m, 9) : m >= 4 }; # ({ [n] -> max(infty) : n >= 0; [n] -> max(infty) : n <= -1 }, True)
+
+# Justo para el ejemplo da lo mismo rotar las variables...
+# {[n] -> [i, m]: 0 <= i and i = m } . { [m, i] -> max(-2 + 2 * m, 71*m, 9) : m >= 4 }; # ({ [n] -> max(infty) : n >= 0; [n] -> max(infty) : n <= -1 }, True)
+
+# Elimina candidatos y partes si corresponde 
+# {[k, j] -> [n, m]: k = n and j = m and k > j and j > 0} . {[n, m] -> max(infty) : m >= 1 + n; [n, m] -> max(n * m, m^2, n^2) : m <= n }; # ({ [k, j] -> max(k * j, k^2) : j <= -1 + k and j >= 1 }, True)
+
+# Puede generar nuevos candidatos si lo necesita
+# {[k, l] -> [n, m, i, j]: l <= i <= k and l <= j < i and i = n and j = m and l >= 0} . {[n, m, i, j] -> max(infty) : m >= 1 + n; [n, m, i, j] -> max(n * m, m^2, n^2) : m <= n }; # ({ [k, l] -> max(((-1/2 * k + 1/2 * k^2) + 1/2 * k * l), (k + k * l), k^2, (1 + 2 * l + l^2)) : l >= 0 and l <= -1 + k }, False)
+
+# Realmente resuelve candidatos si puede
+# {[k, l] -> [n, m, i, j]: 0 <= i <= k and 0 <= j < i and i = n and j = m} . {[n, m, i, j] -> max(infty) : m >= 1 + n; [n, m, i, j] -> max(n * m, m^2, n^2) : m <= n }; # ({ [k, l] -> max(k^2) : k >= 1 }, True)
+
+
+# La suma mezcla maximos y devuelve maximos y rangos.
+# { [m] -> max((-1 + 2 * m)) : m >= 1 } + { [m] -> m : m >= 1 }; # { [m] -> max((-1 + 3 * m)) : m >= 1 }
+# { [m] -> m : m >= 1 } + { [m] -> max((-1 + 2 * m)) : m >= 1 }; # { [m] -> max((-1 + 3 * m)) : m >= 1 }
+# { [m] -> max((-1 + 2 * m), 3) : m >= 1 } + { [m] -> m }; # { [m] -> max((-1 + 3 * m), (3 + m)) : m >= 1; [m] -> max(m) : m <= 0 }
+
+# No se pueden sumar maximos. Para eso esta el ".". Es razonable...
+# { [m] -> max((-1 + 2 * m), 3) : m >= 1 } + { [m] -> max((-1 + 2 * m), 3) : m >= 1 }; # iscc.c:1181: Assertion "op" failed
+
+# Se soporta la sintaxis vieja para sumar entre max y lo demas
+# [m] -> { max((-1 + 2 * m), 3) : m >= 1 } + [m] -> { m*m }; # [m] -> { max((-1 + 2 * m + m^2), (3 + m^2)) : m >= 1; max(m^2) : m <= 0 }
+# [m] -> { max((-1 + 2 * m + m^2), (3 + m^2)) : m >= 1; max(m^2) : m <= 0 } + [m] -> { m*m }; # [m] -> { max((-1 + 2 * m + 2 * m^2), (3 + 2 * m^2)) : m >= 1; max(2 * m^2) : m <= 0 }
+
+# Para "fucionar" maximos se puede usar la sintaxis vieja
+# [m] -> { max((-1 + 2 * m), 3) : m >= 1 } . [m] -> { max(-2 + 2 * m, 71*m, 9) : m >= 0 }; # [m] -> { max(71 * m, 9) : m >= 1; max((-2 + 2 * m), 71 * m, 9) : m = 0 }
+
+# Tambien podemos usar la sintaxis nueva
+#{ [m] -> max((-1 + 2 * m), 3) : m >= 1 } . { [m] -> max(-2 + 2 * m, 71*m, 9) : m >= 0 }; # { [m] -> max(71 * m, 9) : m >= 1; [m] -> max((-2 + 2 * m), 71 * m, 9) : m = 0 }
+
+# Al fucionar descarta candidatos que ya se saben no valen
+# { [m] -> max((-1 + 2 * m), 3) } . { [m] -> max(-2 + 2 * m, 71*m, 9) }; # { [m] -> max((-1 + 2 * m), 71 * m, 9) }
+
+# El . soporta infinito
+# { [n, m] -> max(infty) : m >= 1 + n; [n, m] -> max(n * m, m^2, n^2) : m <= n } . { [n, m] -> max((-2 + 2 * m), 3, 71*m) : m >= 1 }; # { [n, m] -> max(infty) : m >= 1 + n and m >= 1; [n, m] -> max(infty) : m >= 1 + n and m <= 0; [n, m] -> max(n * m, m^2, n^2, 3, 71 * m) : m <= n and m >= 1; [n, m] -> max(n * m, m^2, n^2) : m <= n and m <= 0 }
+
+
+# COSAS DESEABLES
+# ===============
+
+# Nos simplificaria si la calculadora podria tomar como input esto. Hoy no lo hace
+#[n,m] -> {[]-> n: 0 <= n and (m > 0 or n = 1) };	# Error de parsing. Las cosas son (a and b) or (b and d)
+
+# Seria deseable que la calculadora simplifique resultados. Hoy no lo hace
+#[n] -> {[]-> n: n =1 };				# [n] -> {[]-> n: n =1 };
+
+# Porque el sum devuelve NaN y no infinito?
+#sum [k] -> {[i]-> i: 0 <= i};				# [k] -> { NaN }

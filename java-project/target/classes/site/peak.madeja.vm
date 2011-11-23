@@ -1,0 +1,336 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+#macro ( link $href $name )
+  #if ( ( $href.toLowerCase().startsWith("http") || $href.toLowerCase().startsWith("https") ) )
+    <a href="$href" class="externalLink">$name</a>
+  #else
+    <a href="$href">$name</a>
+  #end
+#end
+
+#macro ( banner $banner $id )
+  #if ( $banner )
+    #if( $banner.href )
+      <a href="$banner.href" id="$id" #if( $banner.alt ) title="$banner.alt" #end >
+    #else
+        <div id="$id">
+    #end
+
+    #if( $banner.src )
+        #set ( $src = $banner.src )
+        #if ( ! ( $src.toLowerCase().startsWith("http") || $src.toLowerCase().startsWith("https") ) )
+            #set ( $src = $PathTool.calculateLink( $src, $relativePath ) )
+            #set ( $src = $src.replaceAll( "\\", "/" ) )
+        #end
+        #if ( $banner.alt )
+            #set ( $alt = $banner.alt )
+        #else
+            #set ( $alt = $banner.name )
+        #end
+        <img src="$src" alt="$alt" />
+    #else
+        $banner.name
+    #end
+
+    #if( $banner.href )
+        </a>
+    #else
+        </div>
+    #end
+  #end
+#end
+
+#macro ( links $links )
+  #set ( $counter = 0 )
+  #foreach( $item in $links )
+    #set ( $counter = $counter + 1 )
+    #set ( $currentItemHref = $PathTool.calculateLink( $item.href, $relativePath ) )
+    #set ( $currentItemHref = $currentItemHref.replaceAll( "\\", "/" ) )
+    #link( $currentItemHref $item.name )
+    #if ( $links.size() > $counter )
+      |
+    #end
+  #end
+#end
+
+#macro ( breadcrumbs $breadcrumbs )
+  #set ( $counter = 0 )
+  #foreach( $item in $breadcrumbs )
+    #set ( $counter = $counter + 1 )
+    #set ( $currentItemHref = $PathTool.calculateLink( $item.href, $relativePath ) )
+    #set ( $currentItemHref = $currentItemHref.replaceAll( "\\", "/" ) )
+
+    #if ( $currentItemHref == $alignedFileName || $currentItemHref == "" )
+      $item.name
+    #else
+      #link( $currentItemHref $item.name )
+    #end
+    #if ( $breadcrumbs.size() > $counter )
+      &gt;
+    #end
+  #end
+#end
+
+#macro ( displayTree $display $item )
+  #if ( $item && $item.items && $item.items.size() > 0 )
+    #foreach( $subitem in $item.items )
+      #set ( $subitemHref = $PathTool.calculateLink( $subitem.href, $relativePath ) )
+      #set ( $subitemHref = $subitemHref.replaceAll( "\\", "/" ) )
+      #if ( $alignedFileName == $subitemHref )
+        #set ( $display = true )
+      #end
+
+      #displayTree( $display $subitem )
+    #end
+  #end
+#end
+
+#macro ( menuItem $item )
+  #set ( $collapse = "none" )
+  #set ( $currentItemHref = $PathTool.calculateLink( $item.href, $relativePath ) )
+  #set ( $currentItemHref = $currentItemHref.replaceAll( "\\", "/" ) )
+
+  #if ( $item && $item.items && $item.items.size() > 0 )
+    #if ( $item.collapse == false )
+      #set ( $collapse = "expanded" )
+    #else
+      ## By default collapsed
+      #set ( $collapse = "collapsed" )
+    #end
+
+    #set ( $display = false )
+    #displayTree( $display $item )
+
+    #if ( $alignedFileName == $currentItemHref || $display )
+      #set ( $collapse = "expanded" )
+    #end
+  #end
+  <li class="$collapse">
+    #if ( $item.img )
+      #if ( ! ( $item.img.toLowerCase().startsWith("http") || $item.img.toLowerCase().startsWith("https") ) )
+        #set ( $src = $PathTool.calculateLink( $item.img, $relativePath ) )
+        #set ( $src = $src.replaceAll( "\\", "/" ) )
+        <img src="$src"/>
+      #else
+        <img src="$item.img" align="absbottom" style="border-width: 0"/>
+      #end
+    #end
+    #if ( $alignedFileName == $currentItemHref )
+      <strong>$item.name</strong>
+    #else
+      #link( $currentItemHref $item.name )
+    #end
+  #if ( $item && $item.items && $item.items.size() > 0 )
+    #if ( $collapse == "expanded" )
+      <ul>
+        #foreach( $subitem in $item.items )
+          #menuItem( $subitem )
+        #end
+      </ul>
+    #end
+  #end
+  </li>
+#end
+
+#macro ( mainMenu $menus )
+  #foreach( $menu in $menus )
+    #if ( $menu.name )
+    <h5>$menu.name</h5>
+    #end
+    #if ( $menu.items && $menu.items.size() > 0 )
+    <ul>
+      #foreach( $item in $menu.items )
+        #menuItem( $item )
+      #end
+    </ul>
+    #end
+  #end
+#end
+
+
+#macro ( publishDate $publishDate $version )
+
+	$dateFormat.applyPattern( $format )
+  	#set ( $dateToday = $dateFormat.format( $currentDate ) )
+	
+    <span id="publishDate">$dateToday</span>
+	&nbsp;| <span id="projectVersion">$version</span>
+	
+#end
+
+#macro (methodSummary $method)
+	#set ($partitions = $helper.getResidualPartitions($method))
+	<h4 name="$helper.getLinkId($method)">$helper.getName($method)</h4>
+	<span id="resumen_$helper.getLinkId($method)" style="display:block">
+		<table class="bodyTable">
+			<tr class="a"><th width="30%">Field</th><th>Value</th></tr>
+			<tr class="b">
+				<td>Formal Parameters</td>
+				<td>$helper.getFormalParameters($method)</td>
+			</tr>
+			<tr class="a">
+				<td>MemReq</td>
+				<td>$helper.getMemReq($method)</td>
+			</tr>
+			<tr class="b">
+				<td>Tmp</td>
+				<td>$helper.getTemporal($method)</td>
+			</tr>
+			<tr class="a">
+				<td>Rsd</td>
+				<td>$helper.getResidual($method)</td>
+			</tr>
+			#if (! $partitions.isEmpty())
+				<tr class="b">
+					<td colspan="2">Rsd sub-heaps</td>
+				</tr>
+				#foreach( $hp in  $partitions.keySet())
+				<tr class="a">
+					<td>$hp</td>
+					<td align="left">$partitions.get($hp)</td>
+				</tr>
+				#end
+			#end
+		</table>
+	</span>
+#end
+
+#macro (classSummary)
+	<table class="bodyTable">
+		<tr class="a"><th width="30%">Class</th><th>Methods</th></tr>
+		
+		#foreach( $clazz in $classIndex.keySet() )
+			#set ($methodList = $classIndex.get($clazz))
+			<tr class="b">
+				<td>$clazz.name</td>
+				<td>
+					<ul class="methodList">
+					#foreach($method in $methodList)
+						<li class="methodLink">#link( $helper.getLink($method) $helper.getName($method))</li> 	
+					#end
+					</ul>
+				</td>
+			</tr>
+		#end
+		
+	</table>
+#end
+
+#macro ( bodyContent )
+	<div class="section">
+		<h2>Class Index</h2>
+		#classSummary()
+	</div>
+	
+	
+	#foreach( $clazz in $classIndex.keySet() )
+		<div class="section">
+			<h3>$clazz.name</h3>
+		#set ($methodList = $classIndex.get($clazz))
+			#foreach($method in $methodList)
+				#methodSummary( $method )	
+			#end
+		</div>
+	#end
+	
+#end
+
+
+#macro ( menu  )
+    <h5>Consume Information</h5>
+    <ul>
+   		<li class="$collapse">Method Summary</li>
+    </ul>
+#end
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>$title</title>
+    <link rel="stylesheet" type="text/css" media="all" href="$relativePath/css/maven-base.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="$relativePath/css/maven-theme.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="$relativePath/css/site.css" />
+    <link rel="stylesheet" type="text/css" media="print" href="$relativePath/css/print.css" />
+    <script type="text/javascript" src="$relativePath/js/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="$relativePath/js/jquery.scrollTo-1.4.2-min.js"></script>
+    <script type="text/javascript">
+    	$(function() {
+    		$('.methodLink a').click(function (e) {
+    			e.preventDefault();
+    			var href = this.href;
+    			var methodId = href.substring(href.indexOf('#') + 1);
+    			$(window).scrollTo('h4[name=' + methodId + ']', 10, {axis: 'y'});
+    		});
+    	
+    		$('.lnkDetalle').toggle(
+    			function (e) {
+    				var trDetalle = document.getElementById('detalle_' + this.id);
+    				showDetail($(trDetalle));
+    				$(this).html('ocultar detalle').focus()
+	    		},
+	    		function (e) {
+	    			var trDetalle =  document.getElementById('detalle_' + this.id);
+	    			$(trDetalle).hide();
+    				$(this).html('mostrar detalle').focus();
+    				$(window).scrollTo($(this).closest('table'), 10, {axis: 'y'});
+	    		}
+    		);
+    		
+    		$('.lnkEscape').toggle(
+    			function (e) {
+    				var trDetalle = document.getElementById('escape_' + this.id);
+    				showDetail($(trDetalle));
+    				$(this).html('ocultar escape').focus();
+	    		},
+	    		function (e) {
+	    			var trDetalle = document.getElementById('escape_' + this.id);
+	    			$(trDetalle).hide();
+    				$(this).html('mostrar escape').focus();
+    				$(window).scrollTo($(this).closest('table'), 10, {axis: 'y'});
+	    		}
+    		);
+    		
+    		function showDetail($detalle) {
+    			var $imgSrc = $detalle.find('input[type=hidden]');
+    				
+				if ($imgSrc.size() > 0) {
+					var $img = $('<img/>').attr('src', $imgSrc.val()).attr('height', 300);
+					$imgSrc.parent().html($('<a/>').attr('href', $imgSrc.val()).attr('target', '_blank').append($img)); 
+				}
+
+				$detalle.show();
+    		}
+    	});
+    </script>
+</head>
+<body class="composite">
+	<div id="banner">
+    	#banner( $decoration.bannerLeft "bannerLeft" )
+    	#banner( $decoration.bannerRight "bannerRight" )
+		<span id="bannerLeft">Benchmark: $mainClass</span>
+		<div class="clear"></div>
+    </div>
+    <div id="breadcrumbs">
+    	<div class="xright">#publishDate( $date $version )</div>
+		<div class="clear"><hr/></div>
+    </div>
+	<!--div id="leftColumn">
+    	<div id="navcolumn">
+       		#menu()
+       		<br/>
+       		<br/>
+       		<br/>
+      	</div>
+	</div-->
+	<div >
+  		<div id="contentBox">#bodyContent()</div>
+	</div>
+	<div class="clear">
+  		<hr/>
+	</div>
+	<div id="footer">
+  		<div class="xright"></div>
+  		<div class="clear"><hr/></div>
+	</div>
+</body>
+</html>

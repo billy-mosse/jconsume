@@ -1,0 +1,296 @@
+<summary id="1" className="ar.uba.dc.tacas.Snippet01" methodSignature="ar.uba.dc.rinard.List duplicate(ar.uba.dc.rinard.List)">
+  <points-to-graph id="2">
+    <graph>
+      <nodes>
+        <param id="3" index="0"/>
+        <statement id="4" inside="false">
+          <statement-id id="5">
+            <method id="6">
+              <class>ar.uba.dc.rinard.ListItr</class>
+              <signature>java.lang.Object next()</signature>
+            </method>
+            <value>$r4 = $r4.&lt;ar.uba.dc.rinard.Cell: ar.uba.dc.rinard.Cell next&gt;</value>
+            <line-number>34</line-number>
+            <bytecode-offset>13</bytecode-offset>
+          </statement-id>
+          <context>
+            <call id="7">
+              <method id="8">
+                <class>ar.uba.dc.tacas.Snippet01</class>
+                <signature>ar.uba.dc.rinard.List duplicate(ar.uba.dc.rinard.List)</signature>
+              </method>
+              <value>$r4 = interfaceinvoke $r3.&lt;java.util.Iterator: java.lang.Object next()&gt;()</value>
+              <line-number>62</line-number>
+              <bytecode-offset>17</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <statement id="9" inside="false">
+          <statement-id id="10">
+            <method id="11">
+              <class>ar.uba.dc.rinard.List</class>
+              <signature>java.util.Iterator iterator()</signature>
+            </method>
+            <value>$r3 = $r2.&lt;ar.uba.dc.rinard.List: ar.uba.dc.rinard.Cell head&gt;</value>
+            <line-number>25</line-number>
+            <bytecode-offset>5</bytecode-offset>
+          </statement-id>
+          <context>
+            <call id="12">
+              <method reference="8"/>
+              <value>$r3 = virtualinvoke $r0.&lt;ar.uba.dc.rinard.List: java.util.Iterator iterator()&gt;()</value>
+              <line-number>61</line-number>
+              <bytecode-offset>9</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <statement id="13" inside="true">
+          <statement-id id="14">
+            <method reference="8"/>
+            <value>$r6 = new java.lang.Integer</value>
+            <line-number>63</line-number>
+            <bytecode-offset>30</bytecode-offset>
+          </statement-id>
+          <context/>
+        </statement>
+        <statement id="15" inside="false">
+          <statement-id id="16">
+            <method reference="6"/>
+            <value>$r3 = $r2.&lt;ar.uba.dc.rinard.Cell: java.lang.Object data&gt;</value>
+            <line-number>33</line-number>
+            <bytecode-offset>4</bytecode-offset>
+          </statement-id>
+          <context>
+            <call reference="7"/>
+          </context>
+        </statement>
+        <statement id="17" inside="true">
+          <statement-id id="18">
+            <method reference="8"/>
+            <value>$r0 = new ar.uba.dc.rinard.List</value>
+            <line-number>60</line-number>
+            <bytecode-offset>0</bytecode-offset>
+          </statement-id>
+          <context/>
+        </statement>
+        <statement id="19" inside="true">
+          <statement-id id="20">
+            <method reference="11"/>
+            <value>$r0 = new ar.uba.dc.rinard.ListItr</value>
+            <line-number>25</line-number>
+            <bytecode-offset>0</bytecode-offset>
+          </statement-id>
+          <context>
+            <call reference="12"/>
+          </context>
+        </statement>
+        <statement id="21" inside="true">
+          <statement-id id="22">
+            <method id="23">
+              <class>ar.uba.dc.rinard.List</class>
+              <signature>void add(java.lang.Object)</signature>
+            </method>
+            <value>$r1 = new ar.uba.dc.rinard.Cell</value>
+            <line-number>15</line-number>
+            <bytecode-offset>1</bytecode-offset>
+          </statement-id>
+          <context>
+            <call id="24">
+              <method reference="8"/>
+              <value>virtualinvoke $r0.&lt;ar.uba.dc.rinard.List: void add(java.lang.Object)&gt;($r6)</value>
+              <line-number>63</line-number>
+              <bytecode-offset>40</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+      </nodes>
+      <edges>
+        <edge id="25" field="head" inside="false">
+          <source>
+            <param reference="3"/>
+          </source>
+          <target>
+            <statement reference="9"/>
+          </target>
+        </edge>
+        <edge id="26" field="next" inside="false">
+          <source>
+            <statement reference="4"/>
+          </source>
+          <target>
+            <statement reference="4"/>
+          </target>
+        </edge>
+        <edge id="27" field="data" inside="false">
+          <source>
+            <statement reference="4"/>
+          </source>
+          <target>
+            <statement reference="15"/>
+          </target>
+        </edge>
+        <edge id="28" field="data" inside="false">
+          <source>
+            <statement reference="9"/>
+          </source>
+          <target>
+            <statement reference="15"/>
+          </target>
+        </edge>
+        <edge id="29" field="next" inside="false">
+          <source>
+            <statement reference="9"/>
+          </source>
+          <target>
+            <statement reference="4"/>
+          </target>
+        </edge>
+        <edge id="30" field="head" inside="true">
+          <source>
+            <statement reference="17"/>
+          </source>
+          <target>
+            <statement reference="21"/>
+          </target>
+        </edge>
+        <edge id="31" field="data" inside="true">
+          <source>
+            <statement reference="21"/>
+          </source>
+          <target>
+            <statement reference="13"/>
+          </target>
+        </edge>
+        <edge id="32" field="next" inside="true">
+          <source>
+            <statement id="33" inside="true">
+              <statement-id reference="22"/>
+              <context>
+                <call id="34">
+                  <method reference="8"/>
+                  <value>virtualinvoke $r0.&lt;ar.uba.dc.rinard.List: void add(java.lang.Object)&gt;($r6)</value>
+                  <line-number>63</line-number>
+                  <bytecode-offset>40</bytecode-offset>
+                </call>
+              </context>
+            </statement>
+          </source>
+          <target>
+            <statement reference="21"/>
+          </target>
+        </edge>
+        <edge id="35" field="cell" inside="true">
+          <source>
+            <statement reference="19"/>
+          </source>
+          <target>
+            <statement reference="9"/>
+          </target>
+        </edge>
+        <edge id="36" field="cell" inside="true">
+          <source>
+            <statement reference="19"/>
+          </source>
+          <target>
+            <statement reference="4"/>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <variables>
+      <variable>
+        <name>$r0</name>
+        <type id="37" name="ref" to="ar.uba.dc.rinard.List"/>
+        <points-to id="38">
+          <statement reference="17"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r1</name>
+        <type reference="37"/>
+        <points-to id="39">
+          <statement reference="17"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r2</name>
+        <type id="40" name="ref" to="java.lang.Integer"/>
+        <points-to id="41">
+          <statement id="42" inside="true">
+            <statement-id id="43">
+              <method reference="8"/>
+              <value>$r6 = new java.lang.Integer</value>
+              <line-number>63</line-number>
+              <bytecode-offset>30</bytecode-offset>
+            </statement-id>
+            <context/>
+          </statement>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r5</name>
+        <type reference="40"/>
+        <points-to id="44">
+          <statement id="45" inside="false">
+            <statement-id reference="16"/>
+            <context>
+              <call id="46">
+                <method reference="8"/>
+                <value>$r4 = interfaceinvoke $r3.&lt;java.util.Iterator: java.lang.Object next()&gt;()</value>
+                <line-number>62</line-number>
+                <bytecode-offset>17</bytecode-offset>
+              </call>
+            </context>
+          </statement>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r6</name>
+        <type reference="40"/>
+        <points-to id="47">
+          <statement reference="42"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>it</name>
+        <type id="48" name="ref" to="java.util.Iterator"/>
+        <points-to id="49">
+          <statement reference="19"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r3</name>
+        <type reference="48"/>
+        <points-to id="50">
+          <statement reference="19"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>list</name>
+        <type reference="37"/>
+        <points-to id="51">
+          <param reference="3"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>res</name>
+        <type reference="37"/>
+        <points-to id="52">
+          <statement reference="17"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r4</name>
+        <type id="53" name="ref" to="java.lang.Object"/>
+        <points-to id="54">
+          <statement reference="45"/>
+        </points-to>
+      </variable>
+    </variables>
+    <returned id="55">
+      <statement reference="17"/>
+    </returned>
+    <escape-globaly id="56"/>
+  </points-to-graph>
+  <mutated-fields/>
+</summary>

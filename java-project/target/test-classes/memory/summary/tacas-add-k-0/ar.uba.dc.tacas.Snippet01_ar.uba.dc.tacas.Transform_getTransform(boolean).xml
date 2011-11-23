@@ -1,0 +1,47 @@
+<summary id="1" className="ar.uba.dc.tacas.Snippet01" methodSignature="ar.uba.dc.tacas.Transform getTransform(boolean)">
+  <heap>
+    <graph>
+      <nodes>
+        <statement id="2" inside="true">
+          <statement-id id="3">
+            <method id="4">
+              <class>ar.uba.dc.tacas.Snippet01</class>
+              <signature>ar.uba.dc.tacas.Transform getTransform(boolean)</signature>
+            </method>
+            <value>tmp = new ar.uba.dc.tacas.Transform</value>
+            <line-number>36</line-number>
+            <bytecode-offset>4</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="5" inside="true">
+          <statement-id id="6">
+            <method reference="4"/>
+            <value>tmp = new ar.uba.dc.tacas.Transform2</value>
+            <line-number>36</line-number>
+            <bytecode-offset>14</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+      </nodes>
+      <edges/>
+    </graph>
+    <returned>
+      <statement reference="2"/>
+      <statement reference="5"/>
+    </returned>
+    <escape-globaly/>
+  </heap>
+  <parameters/>
+  <temporal>{ 0 }</temporal>
+  <residual>
+    <node>
+      <statement reference="2"/>
+      <value>{ 1 }</value>
+    </node>
+    <node>
+      <statement reference="5"/>
+      <value>{ 1 }</value>
+    </node>
+  </residual>
+</summary>

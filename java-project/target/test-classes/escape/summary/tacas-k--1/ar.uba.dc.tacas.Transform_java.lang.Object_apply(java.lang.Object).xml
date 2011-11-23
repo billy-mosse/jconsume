@@ -1,0 +1,132 @@
+<summary id="1" className="ar.uba.dc.tacas.Transform" methodSignature="java.lang.Object apply(java.lang.Object)">
+  <points-to-graph id="2">
+    <graph>
+      <nodes>
+        <param id="3" index="0"/>
+        <statement id="4" inside="true">
+          <statement-id id="5">
+            <method id="6">
+              <class>ar.uba.dc.tacas.Transform</class>
+              <signature>java.lang.Object apply(java.lang.Object)</signature>
+            </method>
+            <value>$r6 = new java.lang.Integer</value>
+            <line-number>25</line-number>
+            <bytecode-offset>29</bytecode-offset>
+          </statement-id>
+          <context/>
+        </statement>
+        <statement id="7" inside="true">
+          <statement-id id="8">
+            <method reference="6"/>
+            <value>$r3 = new java.util.Random</value>
+            <line-number>23</line-number>
+            <bytecode-offset>8</bytecode-offset>
+          </statement-id>
+          <context/>
+        </statement>
+        <statement id="9" inside="true">
+          <statement-id id="10">
+            <method reference="6"/>
+            <value>$r0 = new java.util.Date</value>
+            <line-number>22</line-number>
+            <bytecode-offset>0</bytecode-offset>
+          </statement-id>
+          <context/>
+        </statement>
+        <this id="11"/>
+      </nodes>
+      <edges/>
+    </graph>
+    <variables>
+      <variable>
+        <name>$r4</name>
+        <type id="12" name="ref" to="java.util.Random"/>
+        <points-to id="13">
+          <statement reference="7"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r3</name>
+        <type reference="12"/>
+        <points-to id="14">
+          <statement reference="7"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r2</name>
+        <type id="15" name="ref" to="java.util.Date"/>
+        <points-to id="16">
+          <statement reference="9"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>random</name>
+        <type reference="12"/>
+        <points-to id="17">
+          <statement reference="7"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r6</name>
+        <type id="18" name="ref" to="java.lang.Integer"/>
+        <points-to id="19">
+          <statement reference="4"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r7</name>
+        <type reference="18"/>
+        <points-to id="20">
+          <statement reference="4"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>object</name>
+        <type id="21" name="ref" to="java.lang.Object"/>
+        <points-to id="22">
+          <param reference="3"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r1</name>
+        <type reference="15"/>
+        <points-to id="23">
+          <statement reference="9"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r5</name>
+        <type reference="21"/>
+        <points-to id="24">
+          <param reference="3"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>date</name>
+        <type reference="15"/>
+        <points-to id="25">
+          <statement reference="9"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>this</name>
+        <type id="26" name="ref" to="ar.uba.dc.tacas.Transform"/>
+        <points-to id="27">
+          <this reference="11"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r0</name>
+        <type reference="15"/>
+        <points-to id="28">
+          <statement reference="9"/>
+        </points-to>
+      </variable>
+    </variables>
+    <returned id="29">
+      <statement reference="4"/>
+    </returned>
+    <escape-globaly id="30"/>
+  </points-to-graph>
+  <mutated-fields/>
+</summary>

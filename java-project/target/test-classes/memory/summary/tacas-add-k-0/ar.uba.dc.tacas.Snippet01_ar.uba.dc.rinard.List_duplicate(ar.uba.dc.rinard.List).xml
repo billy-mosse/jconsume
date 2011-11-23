@@ -1,0 +1,179 @@
+<summary id="1" className="ar.uba.dc.tacas.Snippet01" methodSignature="ar.uba.dc.rinard.List duplicate(ar.uba.dc.rinard.List)">
+  <heap>
+    <graph>
+      <nodes>
+        <statement id="2" inside="false">
+          <statement-id id="3">
+            <method id="4">
+              <class>ar.uba.dc.rinard.ListItr</class>
+              <signature>java.lang.Object next()</signature>
+            </method>
+            <value>$r3 = $r2.&lt;ar.uba.dc.rinard.Cell: java.lang.Object data&gt;</value>
+            <line-number>33</line-number>
+            <bytecode-offset>4</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <param id="5" index="0"/>
+        <statement id="6" inside="false">
+          <statement-id id="7">
+            <method id="8">
+              <class>ar.uba.dc.rinard.List</class>
+              <signature>java.util.Iterator iterator()</signature>
+            </method>
+            <value>$r3 = $r2.&lt;ar.uba.dc.rinard.List: ar.uba.dc.rinard.Cell head&gt;</value>
+            <line-number>25</line-number>
+            <bytecode-offset>5</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="9" inside="false">
+          <statement-id id="10">
+            <method reference="4"/>
+            <value>$r4 = $r4.&lt;ar.uba.dc.rinard.Cell: ar.uba.dc.rinard.Cell next&gt;</value>
+            <line-number>34</line-number>
+            <bytecode-offset>13</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="11" inside="true">
+          <statement-id id="12">
+            <method id="13">
+              <class>ar.uba.dc.rinard.List</class>
+              <signature>void add(java.lang.Object)</signature>
+            </method>
+            <value>$r1 = new ar.uba.dc.rinard.Cell</value>
+            <line-number>15</line-number>
+            <bytecode-offset>1</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="14" inside="true">
+          <statement-id id="15">
+            <method id="16">
+              <class>ar.uba.dc.tacas.Snippet01</class>
+              <signature>ar.uba.dc.rinard.List duplicate(ar.uba.dc.rinard.List)</signature>
+            </method>
+            <value>$r0 = new ar.uba.dc.rinard.List</value>
+            <line-number>60</line-number>
+            <bytecode-offset>0</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="17" inside="true">
+          <statement-id id="18">
+            <method reference="16"/>
+            <value>$r6 = new java.lang.Integer</value>
+            <line-number>63</line-number>
+            <bytecode-offset>30</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+      </nodes>
+      <edges>
+        <edge id="19" field="head" inside="false">
+          <source>
+            <param reference="5"/>
+          </source>
+          <target>
+            <statement reference="6"/>
+          </target>
+        </edge>
+        <edge id="20" field="next" inside="false">
+          <source>
+            <statement reference="6"/>
+          </source>
+          <target>
+            <statement reference="9"/>
+          </target>
+        </edge>
+        <edge id="21" field="data" inside="false">
+          <source>
+            <statement reference="6"/>
+          </source>
+          <target>
+            <statement reference="2"/>
+          </target>
+        </edge>
+        <edge id="22" field="head" inside="true">
+          <source>
+            <statement reference="14"/>
+          </source>
+          <target>
+            <statement reference="11"/>
+          </target>
+        </edge>
+        <edge id="23" field="data" inside="false">
+          <source>
+            <statement reference="9"/>
+          </source>
+          <target>
+            <statement reference="2"/>
+          </target>
+        </edge>
+        <edge id="24" field="next" inside="false">
+          <source>
+            <statement reference="9"/>
+          </source>
+          <target>
+            <statement reference="9"/>
+          </target>
+        </edge>
+        <edge id="25" field="next" inside="true">
+          <source>
+            <statement reference="11"/>
+          </source>
+          <target>
+            <statement reference="11"/>
+          </target>
+        </edge>
+        <edge id="26" field="data" inside="true">
+          <source>
+            <statement reference="11"/>
+          </source>
+          <target>
+            <statement reference="17"/>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <returned>
+      <statement reference="14"/>
+    </returned>
+    <escape-globaly/>
+  </heap>
+  <parameters>
+    <parameter>list.size</parameter>
+  </parameters>
+  <temporal>{ [[list.size] -&gt; []] -&gt; 1 : list.size &gt;= 1 }</temporal>
+  <residual>
+    <node>
+      <statement reference="2"/>
+      <value>{ [[list.size] -&gt; []] -&gt; 0 : list.size &gt; 0 }</value>
+    </node>
+    <node>
+      <param reference="5"/>
+      <value>{ [[list.size] -&gt; []] -&gt; 0 : list.size &gt; 0 }</value>
+    </node>
+    <node>
+      <statement reference="6"/>
+      <value>{ [[list.size] -&gt; []] -&gt; 0 : list.size &gt; 0 }</value>
+    </node>
+    <node>
+      <statement reference="9"/>
+      <value>{ [[list.size] -&gt; []] -&gt; 0 : list.size &gt; 0 }</value>
+    </node>
+    <node>
+      <statement reference="11"/>
+      <value>{ [[list.size] -&gt; []] -&gt; list.size : list.size &gt;= 1 }</value>
+    </node>
+    <node>
+      <statement reference="14"/>
+      <value>{ [[list.size] -&gt; []] -&gt; 1 : list.size &gt;= 1 }</value>
+    </node>
+    <node>
+      <statement reference="17"/>
+      <value>{ [[list.size] -&gt; []] -&gt; list.size : list.size &gt;= 1 }</value>
+    </node>
+  </residual>
+</summary>

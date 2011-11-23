@@ -1,0 +1,75 @@
+<summary id="1" className="ar.uba.dc.rinard.BasicTest" methodSignature="java.lang.Integer sumOperator(java.lang.Integer)">
+  <points-to-graph id="2">
+    <graph>
+      <nodes>
+        <param id="3" index="0"/>
+        <method id="4">
+          <method-id id="5">
+            <class>java.lang.Integer</class>
+            <signature>java.lang.Integer valueOf(int)</signature>
+          </method-id>
+          <context sensitivity="0"/>
+        </method>
+      </nodes>
+      <edges/>
+    </graph>
+    <variables>
+      <variable>
+        <name>$r1</name>
+        <type id="6" name="ref" to="java.lang.Integer"/>
+        <points-to id="7">
+          <method id="8">
+            <method-id reference="5"/>
+            <context sensitivity="0"/>
+          </method>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r0</name>
+        <type reference="6"/>
+        <points-to id="9">
+          <method id="10">
+            <method-id reference="5"/>
+            <context sensitivity="0"/>
+          </method>
+        </points-to>
+      </variable>
+      <variable>
+        <name>n</name>
+        <type reference="6"/>
+        <points-to id="11">
+          <param reference="3"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>i</name>
+        <type reference="6"/>
+        <points-to id="12">
+          <method id="13">
+            <method-id reference="5"/>
+            <context sensitivity="0"/>
+          </method>
+        </points-to>
+      </variable>
+      <variable>
+        <name>result1</name>
+        <type reference="6"/>
+        <points-to id="14">
+          <method reference="4"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>result2</name>
+        <type reference="6"/>
+        <points-to id="15">
+          <method reference="10"/>
+        </points-to>
+      </variable>
+    </variables>
+    <returned id="16">
+      <method reference="8"/>
+    </returned>
+    <escape-globaly id="17"/>
+  </points-to-graph>
+  <mutated-fields/>
+</summary>

@@ -1,0 +1,331 @@
+<summary id="1" className="ar.uba.dc.simple.EjemploSimple01" methodSignature="void main(java.lang.String[])">
+  <points-to-graph id="2">
+    <graph>
+      <nodes>
+        <param id="3" index="0"/>
+        <statement id="4" inside="true">
+          <statement-id id="5">
+            <method id="6">
+              <class>ar.uba.dc.simple.EjemploSimple01</class>
+              <signature>java.lang.Integer newInteger()</signature>
+            </method>
+            <value>$r0 = new java.lang.Integer</value>
+            <line-number>71</line-number>
+            <bytecode-offset>0</bytecode-offset>
+          </statement-id>
+          <context>
+            <call id="7">
+              <method id="8">
+                <class>ar.uba.dc.simple.EjemploSimple01</class>
+                <signature>void main(java.lang.String[])</signature>
+              </method>
+              <value>$r0 = staticinvoke &lt;ar.uba.dc.simple.EjemploSimple01: ar.uba.dc.simple.Tupla test()&gt;()</value>
+              <line-number>25</line-number>
+              <bytecode-offset>8</bytecode-offset>
+            </call>
+            <call id="9">
+              <method id="10">
+                <class>ar.uba.dc.simple.EjemploSimple01</class>
+                <signature>ar.uba.dc.simple.Tupla test()</signature>
+              </method>
+              <value>$r0 = staticinvoke &lt;ar.uba.dc.simple.EjemploSimple01: ar.uba.dc.simple.Tupla nuevaTupla()&gt;()</value>
+              <line-number>42</line-number>
+              <bytecode-offset>0</bytecode-offset>
+            </call>
+            <call id="11">
+              <method id="12">
+                <class>ar.uba.dc.simple.EjemploSimple01</class>
+                <signature>ar.uba.dc.simple.Tupla nuevaTupla()</signature>
+              </method>
+              <value>$r2 = staticinvoke &lt;ar.uba.dc.simple.EjemploSimple01: java.lang.Integer newInteger()&gt;()</value>
+              <line-number>59</line-number>
+              <bytecode-offset>9</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <statement id="13" inside="true">
+          <statement-id id="14">
+            <method id="15">
+              <class>ar.uba.dc.simple.EjemploSimple01</class>
+              <signature>ar.uba.dc.simple.Tupla dameTupla()</signature>
+            </method>
+            <value>$r3 = new java.lang.Integer</value>
+            <line-number>94</line-number>
+            <bytecode-offset>21</bytecode-offset>
+          </statement-id>
+          <context>
+            <call reference="7"/>
+            <call id="16">
+              <method reference="10"/>
+              <value>$r0 = staticinvoke &lt;ar.uba.dc.simple.EjemploSimple01: ar.uba.dc.simple.Tupla dameTupla()&gt;()</value>
+              <line-number>46</line-number>
+              <bytecode-offset>16</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <statement id="17" inside="true">
+          <statement-id id="18">
+            <method reference="15"/>
+            <value>$r3 = new java.lang.Integer</value>
+            <line-number>93</line-number>
+            <bytecode-offset>9</bytecode-offset>
+          </statement-id>
+          <context>
+            <call id="19">
+              <method reference="8"/>
+              <value>$r0 = staticinvoke &lt;ar.uba.dc.simple.EjemploSimple01: ar.uba.dc.simple.Tupla dameTupla()&gt;()</value>
+              <line-number>23</line-number>
+              <bytecode-offset>0</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <statement id="20" inside="true">
+          <statement-id reference="18"/>
+          <context>
+            <call reference="7"/>
+            <call reference="16"/>
+          </context>
+        </statement>
+        <statement id="21" inside="true">
+          <statement-id reference="5"/>
+          <context>
+            <call reference="7"/>
+            <call reference="9"/>
+            <call id="22">
+              <method reference="12"/>
+              <value>$r2 = staticinvoke &lt;ar.uba.dc.simple.EjemploSimple01: java.lang.Integer newInteger()&gt;()</value>
+              <line-number>60</line-number>
+              <bytecode-offset>16</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <statement id="23" inside="true">
+          <statement-id reference="5"/>
+          <context>
+            <call reference="7"/>
+            <call id="24">
+              <method reference="10"/>
+              <value>$r2 = staticinvoke &lt;ar.uba.dc.simple.EjemploSimple01: java.lang.Integer newInteger()&gt;()</value>
+              <line-number>47</line-number>
+              <bytecode-offset>21</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <statement id="25" inside="true">
+          <statement-id reference="14"/>
+          <context>
+            <call reference="19"/>
+          </context>
+        </statement>
+        <statement id="26" inside="true">
+          <statement-id id="27">
+            <method id="28">
+              <class>ar.uba.dc.simple.EjemploSimple01</class>
+              <signature>void cargarTupla(ar.uba.dc.simple.Tupla)</signature>
+            </method>
+            <value>$r1 = new java.lang.Integer</value>
+            <line-number>81</line-number>
+            <bytecode-offset>1</bytecode-offset>
+          </statement-id>
+          <context>
+            <call id="29">
+              <method reference="8"/>
+              <value>staticinvoke &lt;ar.uba.dc.simple.EjemploSimple01: void cargarTupla(ar.uba.dc.simple.Tupla)&gt;($r0)</value>
+              <line-number>24</line-number>
+              <bytecode-offset>5</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <statement id="30" inside="true">
+          <statement-id id="31">
+            <method reference="12"/>
+            <value>$r0 = new ar.uba.dc.simple.Tupla</value>
+            <line-number>58</line-number>
+            <bytecode-offset>0</bytecode-offset>
+          </statement-id>
+          <context>
+            <call reference="7"/>
+            <call reference="9"/>
+          </context>
+        </statement>
+        <statement id="32" inside="true">
+          <statement-id id="33">
+            <method reference="10"/>
+            <value>$r0 = new ar.uba.dc.simple.Tupla</value>
+            <line-number>45</line-number>
+            <bytecode-offset>8</bytecode-offset>
+          </statement-id>
+          <context>
+            <call reference="7"/>
+          </context>
+        </statement>
+        <statement id="34" inside="true">
+          <statement-id reference="27"/>
+          <context>
+            <call reference="7"/>
+            <call id="35">
+              <method reference="10"/>
+              <value>staticinvoke &lt;ar.uba.dc.simple.EjemploSimple01: void cargarTupla(ar.uba.dc.simple.Tupla)&gt;($r0)</value>
+              <line-number>43</line-number>
+              <bytecode-offset>5</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <statement id="36" inside="true">
+          <statement-id id="37">
+            <method reference="28"/>
+            <value>$r1 = new java.lang.Integer</value>
+            <line-number>82</line-number>
+            <bytecode-offset>13</bytecode-offset>
+          </statement-id>
+          <context>
+            <call reference="7"/>
+            <call reference="35"/>
+          </context>
+        </statement>
+        <statement id="38" inside="true">
+          <statement-id id="39">
+            <method reference="15"/>
+            <value>$r0 = new ar.uba.dc.simple.Tupla</value>
+            <line-number>92</line-number>
+            <bytecode-offset>0</bytecode-offset>
+          </statement-id>
+          <context>
+            <call reference="7"/>
+            <call reference="16"/>
+          </context>
+        </statement>
+        <statement id="40" inside="true">
+          <statement-id reference="37"/>
+          <context>
+            <call reference="29"/>
+          </context>
+        </statement>
+        <statement id="41" inside="true">
+          <statement-id reference="39"/>
+          <context>
+            <call reference="19"/>
+          </context>
+        </statement>
+      </nodes>
+      <edges>
+        <edge id="42" field="a" inside="true">
+          <source>
+            <statement reference="30"/>
+          </source>
+          <target>
+            <statement reference="4"/>
+          </target>
+        </edge>
+        <edge id="43" field="a" inside="true">
+          <source>
+            <statement reference="30"/>
+          </source>
+          <target>
+            <statement reference="34"/>
+          </target>
+        </edge>
+        <edge id="44" field="b" inside="true">
+          <source>
+            <statement reference="30"/>
+          </source>
+          <target>
+            <statement reference="36"/>
+          </target>
+        </edge>
+        <edge id="45" field="b" inside="true">
+          <source>
+            <statement reference="30"/>
+          </source>
+          <target>
+            <statement reference="21"/>
+          </target>
+        </edge>
+        <edge id="46" field="a" inside="true">
+          <source>
+            <statement reference="38"/>
+          </source>
+          <target>
+            <statement reference="20"/>
+          </target>
+        </edge>
+        <edge id="47" field="b" inside="true">
+          <source>
+            <statement reference="38"/>
+          </source>
+          <target>
+            <statement reference="13"/>
+          </target>
+        </edge>
+        <edge id="48" field="a" inside="true">
+          <source>
+            <statement reference="38"/>
+          </source>
+          <target>
+            <statement reference="23"/>
+          </target>
+        </edge>
+        <edge id="49" field="b" inside="true">
+          <source>
+            <statement reference="41"/>
+          </source>
+          <target>
+            <statement reference="25"/>
+          </target>
+        </edge>
+        <edge id="50" field="a" inside="true">
+          <source>
+            <statement reference="41"/>
+          </source>
+          <target>
+            <statement reference="17"/>
+          </target>
+        </edge>
+        <edge id="51" field="a" inside="true">
+          <source>
+            <statement reference="41"/>
+          </source>
+          <target>
+            <statement reference="26"/>
+          </target>
+        </edge>
+        <edge id="52" field="b" inside="true">
+          <source>
+            <statement reference="41"/>
+          </source>
+          <target>
+            <statement reference="40"/>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <variables>
+      <variable>
+        <name>$r0</name>
+        <type id="53" name="ref" to="ar.uba.dc.simple.Tupla"/>
+        <points-to id="54">
+          <statement reference="38"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>tupla</name>
+        <type reference="53"/>
+        <points-to id="55">
+          <statement reference="41"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>args</name>
+        <type id="56" name="array" numDimensions="1">
+          <base id="57" name="ref" to="java.lang.String"/>
+        </type>
+        <points-to id="58">
+          <param reference="3"/>
+        </points-to>
+      </variable>
+    </variables>
+    <returned id="59"/>
+    <escape-globaly id="60"/>
+  </points-to-graph>
+  <mutated-fields/>
+</summary>

@@ -1,0 +1,38 @@
+<summary id="1" className="ar.uba.dc.basic.polymorphism.expectation.BasicTest" methodSignature="java.lang.Integer newInteger()">
+  <heap>
+    <graph>
+      <nodes>
+        <statement id="2" inside="true">
+          <statement-id id="3">
+            <method id="4">
+              <class>ar.uba.dc.basic.polymorphism.expectation.BasicTest</class>
+              <signature>java.lang.Integer newInteger()</signature>
+            </method>
+            <value>$r0 = new java.lang.Integer</value>
+            <line-number>57</line-number>
+            <bytecode-offset>0</bytecode-offset>
+          </statement-id>
+          <context sensitivity="1"/>
+        </statement>
+        <this id="5"/>
+      </nodes>
+      <edges/>
+    </graph>
+    <returned>
+      <statement reference="2"/>
+    </returned>
+    <escape-globaly/>
+  </heap>
+  <parameters/>
+  <temporal>{ 0 }</temporal>
+  <residual>
+    <node>
+      <statement reference="2"/>
+      <value>{ 1 }</value>
+    </node>
+    <node>
+      <this reference="5"/>
+      <value>{ 0 }</value>
+    </node>
+  </residual>
+</summary>

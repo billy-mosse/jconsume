@@ -1,0 +1,82 @@
+<summary id="1" className="ar.uba.dc.rinard.Point" methodSignature="void flip()">
+  <heap>
+    <graph>
+      <nodes>
+        <statement id="2" inside="false">
+          <statement-id id="3">
+            <method id="4">
+              <class>ar.uba.dc.rinard.Point</class>
+              <signature>void flip()</signature>
+            </method>
+            <value>$r3 = $r1.&lt;ar.uba.dc.rinard.Point: java.lang.Float y&gt;</value>
+            <line-number>39</line-number>
+            <bytecode-offset>7</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="5" inside="false">
+          <statement-id id="6">
+            <method reference="4"/>
+            <value>$r2 = $r0.&lt;ar.uba.dc.rinard.Point: java.lang.Float x&gt;</value>
+            <line-number>38</line-number>
+            <bytecode-offset>1</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <this id="7"/>
+      </nodes>
+      <edges>
+        <edge id="8" field="y" inside="false">
+          <source>
+            <this reference="7"/>
+          </source>
+          <target>
+            <statement reference="2"/>
+          </target>
+        </edge>
+        <edge id="9" field="y" inside="true">
+          <source>
+            <this reference="7"/>
+          </source>
+          <target>
+            <statement reference="5"/>
+          </target>
+        </edge>
+        <edge id="10" field="x" inside="true">
+          <source>
+            <this reference="7"/>
+          </source>
+          <target>
+            <statement reference="2"/>
+          </target>
+        </edge>
+        <edge id="11" field="x" inside="false">
+          <source>
+            <this reference="7"/>
+          </source>
+          <target>
+            <statement reference="5"/>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <returned/>
+    <escape-globaly/>
+  </heap>
+  <parameters/>
+  <temporal>{ 0 }</temporal>
+  <residual>
+    <node>
+      <statement reference="2"/>
+      <value>{ 0 }</value>
+    </node>
+    <node>
+      <statement reference="5"/>
+      <value>{ 0 }</value>
+    </node>
+    <node>
+      <this reference="7"/>
+      <value>{ 0 }</value>
+    </node>
+  </residual>
+</summary>

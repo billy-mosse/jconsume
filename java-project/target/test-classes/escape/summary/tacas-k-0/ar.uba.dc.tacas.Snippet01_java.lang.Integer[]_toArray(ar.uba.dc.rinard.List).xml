@@ -1,0 +1,232 @@
+<summary id="1" className="ar.uba.dc.tacas.Snippet01" methodSignature="java.lang.Integer[] toArray(ar.uba.dc.rinard.List)">
+  <points-to-graph id="2">
+    <graph>
+      <nodes>
+        <param id="3" index="0"/>
+        <statement id="4" inside="false">
+          <statement-id id="5">
+            <method id="6">
+              <class>ar.uba.dc.rinard.ListItr</class>
+              <signature>java.lang.Object next()</signature>
+            </method>
+            <value>$r3 = $r2.&lt;ar.uba.dc.rinard.Cell: java.lang.Object data&gt;</value>
+            <line-number>33</line-number>
+            <bytecode-offset>4</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="7" inside="true">
+          <statement-id id="8">
+            <method id="9">
+              <class>ar.uba.dc.tacas.Snippet01</class>
+              <signature>java.lang.Integer[] toArray(ar.uba.dc.rinard.List)</signature>
+            </method>
+            <value>$r1 = new java.lang.Integer</value>
+            <line-number>48</line-number>
+            <bytecode-offset>20</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="10" inside="false">
+          <statement-id id="11">
+            <method reference="6"/>
+            <value>$r4 = $r4.&lt;ar.uba.dc.rinard.Cell: ar.uba.dc.rinard.Cell next&gt;</value>
+            <line-number>34</line-number>
+            <bytecode-offset>13</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="12" inside="false">
+          <statement-id id="13">
+            <method id="14">
+              <class>ar.uba.dc.rinard.List</class>
+              <signature>java.util.Iterator iterator()</signature>
+            </method>
+            <value>$r3 = $r2.&lt;ar.uba.dc.rinard.List: ar.uba.dc.rinard.Cell head&gt;</value>
+            <line-number>25</line-number>
+            <bytecode-offset>5</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="15" inside="true">
+          <statement-id id="16">
+            <method reference="14"/>
+            <value>$r0 = new ar.uba.dc.rinard.ListItr</value>
+            <line-number>25</line-number>
+            <bytecode-offset>0</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="17" inside="true">
+          <statement-id id="18">
+            <method reference="9"/>
+            <value>$r4 = newarray (java.lang.Integer)[$i1]</value>
+            <line-number>45</line-number>
+            <bytecode-offset>4</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+      </nodes>
+      <edges>
+        <edge id="19" field="head" inside="false">
+          <source>
+            <param reference="3"/>
+          </source>
+          <target>
+            <statement reference="12"/>
+          </target>
+        </edge>
+        <edge id="20" field="next" inside="false">
+          <source>
+            <statement reference="10"/>
+          </source>
+          <target>
+            <statement reference="10"/>
+          </target>
+        </edge>
+        <edge id="21" field="data" inside="false">
+          <source>
+            <statement reference="10"/>
+          </source>
+          <target>
+            <statement reference="4"/>
+          </target>
+        </edge>
+        <edge id="22" field="data" inside="false">
+          <source>
+            <statement reference="12"/>
+          </source>
+          <target>
+            <statement reference="4"/>
+          </target>
+        </edge>
+        <edge id="23" field="next" inside="false">
+          <source>
+            <statement reference="12"/>
+          </source>
+          <target>
+            <statement reference="10"/>
+          </target>
+        </edge>
+        <edge id="24" field="[]" inside="true">
+          <source>
+            <statement reference="17"/>
+          </source>
+          <target>
+            <statement reference="7"/>
+          </target>
+        </edge>
+        <edge id="25" field="cell" inside="true">
+          <source>
+            <statement reference="15"/>
+          </source>
+          <target>
+            <statement reference="12"/>
+          </target>
+        </edge>
+        <edge id="26" field="cell" inside="true">
+          <source>
+            <statement reference="15"/>
+          </source>
+          <target>
+            <statement reference="10"/>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <variables>
+      <variable>
+        <name>$r6</name>
+        <type id="27" name="ref" to="java.lang.Object"/>
+        <points-to id="28">
+          <statement reference="4"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>res</name>
+        <type id="29" name="array" numDimensions="1">
+          <base id="30" name="ref" to="java.lang.Integer"/>
+        </type>
+        <points-to id="31">
+          <statement reference="17"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r0</name>
+        <type id="32" name="ref" to="ar.uba.dc.rinard.List"/>
+        <points-to id="33">
+          <param reference="3"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r7</name>
+        <type reference="30"/>
+        <points-to id="34">
+          <statement reference="4"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r1</name>
+        <type reference="30"/>
+        <points-to id="35">
+          <statement id="36" inside="true">
+            <statement-id id="37">
+              <method reference="9"/>
+              <value>$r1 = new java.lang.Integer</value>
+              <line-number>48</line-number>
+              <bytecode-offset>20</bytecode-offset>
+            </statement-id>
+            <context sensitivity="0"/>
+          </statement>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r4</name>
+        <type reference="29"/>
+        <points-to id="38">
+          <statement reference="17"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r2</name>
+        <type reference="30"/>
+        <points-to id="39">
+          <statement reference="36"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r3</name>
+        <type id="40" name="ref" to="java.util.Iterator"/>
+        <points-to id="41">
+          <statement reference="15"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>it</name>
+        <type reference="40"/>
+        <points-to id="42">
+          <statement reference="15"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r5</name>
+        <type reference="40"/>
+        <points-to id="43">
+          <statement reference="15"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>ls</name>
+        <type reference="32"/>
+        <points-to id="44">
+          <param reference="3"/>
+        </points-to>
+      </variable>
+    </variables>
+    <returned id="45">
+      <statement reference="17"/>
+    </returned>
+    <escape-globaly id="46"/>
+  </points-to-graph>
+  <mutated-fields/>
+</summary>

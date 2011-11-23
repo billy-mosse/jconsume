@@ -1,0 +1,85 @@
+<summary id="1" className="ar.uba.dc.simple.EjemploSimple01" methodSignature="ar.uba.dc.simple.Tupla nuevaTupla()">
+  <points-to-graph id="2">
+    <graph>
+      <nodes>
+        <statement id="3" inside="true">
+          <statement-id id="4">
+            <method id="5">
+              <class>ar.uba.dc.simple.EjemploSimple01</class>
+              <signature>java.lang.Integer newInteger()</signature>
+            </method>
+            <value>$r0 = new java.lang.Integer</value>
+            <line-number>71</line-number>
+            <bytecode-offset>0</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="6" inside="true">
+          <statement-id id="7">
+            <method id="8">
+              <class>ar.uba.dc.simple.EjemploSimple01</class>
+              <signature>ar.uba.dc.simple.Tupla nuevaTupla()</signature>
+            </method>
+            <value>$r0 = new ar.uba.dc.simple.Tupla</value>
+            <line-number>58</line-number>
+            <bytecode-offset>0</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+      </nodes>
+      <edges>
+        <edge id="9" field="b" inside="true">
+          <source>
+            <statement reference="6"/>
+          </source>
+          <target>
+            <statement reference="3"/>
+          </target>
+        </edge>
+        <edge id="10" field="a" inside="true">
+          <source>
+            <statement reference="6"/>
+          </source>
+          <target>
+            <statement reference="3"/>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <variables>
+      <variable>
+        <name>tupla</name>
+        <type id="11" name="ref" to="ar.uba.dc.simple.Tupla"/>
+        <points-to id="12">
+          <statement reference="6"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r0</name>
+        <type reference="11"/>
+        <points-to id="13">
+          <statement reference="6"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r2</name>
+        <type id="14" name="ref" to="java.lang.Integer"/>
+        <points-to id="15">
+          <statement reference="3"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r1</name>
+        <type reference="11"/>
+        <points-to id="16">
+          <statement reference="6"/>
+        </points-to>
+      </variable>
+    </variables>
+    <returned id="17">
+      <statement reference="6"/>
+    </returned>
+    <escape-globaly id="18"/>
+  </points-to-graph>
+  <mutated-fields/>
+</summary>

@@ -1,0 +1,202 @@
+<summary id="1" className="ar.uba.dc.simple.EjemploSimple01" methodSignature="ar.uba.dc.simple.Tupla test()">
+  <points-to-graph id="2">
+    <graph>
+      <nodes>
+        <statement id="3" inside="true">
+          <statement-id id="4">
+            <method id="5">
+              <class>ar.uba.dc.simple.EjemploSimple01</class>
+              <signature>void cargarTupla(ar.uba.dc.simple.Tupla)</signature>
+            </method>
+            <value>$r1 = new java.lang.Integer</value>
+            <line-number>81</line-number>
+            <bytecode-offset>1</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="6" inside="true">
+          <statement-id id="7">
+            <method reference="5"/>
+            <value>$r1 = new java.lang.Integer</value>
+            <line-number>82</line-number>
+            <bytecode-offset>13</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="8" inside="true">
+          <statement-id id="9">
+            <method id="10">
+              <class>ar.uba.dc.simple.EjemploSimple01</class>
+              <signature>ar.uba.dc.simple.Tupla dameTupla()</signature>
+            </method>
+            <value>$r3 = new java.lang.Integer</value>
+            <line-number>93</line-number>
+            <bytecode-offset>9</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="11" inside="true">
+          <statement-id id="12">
+            <method reference="10"/>
+            <value>$r0 = new ar.uba.dc.simple.Tupla</value>
+            <line-number>92</line-number>
+            <bytecode-offset>0</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="13" inside="true">
+          <statement-id id="14">
+            <method id="15">
+              <class>ar.uba.dc.simple.EjemploSimple01</class>
+              <signature>ar.uba.dc.simple.Tupla test()</signature>
+            </method>
+            <value>$r0 = new ar.uba.dc.simple.Tupla</value>
+            <line-number>45</line-number>
+            <bytecode-offset>8</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="16" inside="true">
+          <statement-id id="17">
+            <method id="18">
+              <class>ar.uba.dc.simple.EjemploSimple01</class>
+              <signature>java.lang.Integer newInteger()</signature>
+            </method>
+            <value>$r0 = new java.lang.Integer</value>
+            <line-number>71</line-number>
+            <bytecode-offset>0</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="19" inside="true">
+          <statement-id id="20">
+            <method reference="10"/>
+            <value>$r3 = new java.lang.Integer</value>
+            <line-number>94</line-number>
+            <bytecode-offset>21</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="21" inside="true">
+          <statement-id id="22">
+            <method id="23">
+              <class>ar.uba.dc.simple.EjemploSimple01</class>
+              <signature>ar.uba.dc.simple.Tupla nuevaTupla()</signature>
+            </method>
+            <value>$r0 = new ar.uba.dc.simple.Tupla</value>
+            <line-number>58</line-number>
+            <bytecode-offset>0</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+      </nodes>
+      <edges>
+        <edge id="24" field="b" inside="true">
+          <source>
+            <statement reference="11"/>
+          </source>
+          <target>
+            <statement reference="19"/>
+          </target>
+        </edge>
+        <edge id="25" field="a" inside="true">
+          <source>
+            <statement reference="11"/>
+          </source>
+          <target>
+            <statement reference="8"/>
+          </target>
+        </edge>
+        <edge id="26" field="a" inside="true">
+          <source>
+            <statement reference="11"/>
+          </source>
+          <target>
+            <statement reference="16"/>
+          </target>
+        </edge>
+        <edge id="27" field="b" inside="true">
+          <source>
+            <statement reference="21"/>
+          </source>
+          <target>
+            <statement reference="6"/>
+          </target>
+        </edge>
+        <edge id="28" field="a" inside="true">
+          <source>
+            <statement reference="21"/>
+          </source>
+          <target>
+            <statement reference="3"/>
+          </target>
+        </edge>
+        <edge id="29" field="b" inside="true">
+          <source>
+            <statement reference="21"/>
+          </source>
+          <target>
+            <statement reference="16"/>
+          </target>
+        </edge>
+        <edge id="30" field="a" inside="true">
+          <source>
+            <statement reference="21"/>
+          </source>
+          <target>
+            <statement reference="16"/>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <variables>
+      <variable>
+        <name>returnedTupla</name>
+        <type id="31" name="ref" to="ar.uba.dc.simple.Tupla"/>
+        <points-to id="32">
+          <statement reference="11"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>tupla</name>
+        <type reference="31"/>
+        <points-to id="33">
+          <statement reference="21"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>otraTupla</name>
+        <type reference="31"/>
+        <points-to id="34">
+          <statement reference="13"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r0</name>
+        <type reference="31"/>
+        <points-to id="35">
+          <statement reference="11"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r2</name>
+        <type id="36" name="ref" to="java.lang.Integer"/>
+        <points-to id="37">
+          <statement reference="16"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r1</name>
+        <type reference="31"/>
+        <points-to id="38">
+          <statement reference="13"/>
+        </points-to>
+      </variable>
+    </variables>
+    <returned id="39">
+      <statement reference="11"/>
+    </returned>
+    <escape-globaly id="40"/>
+  </points-to-graph>
+  <mutated-fields/>
+</summary>

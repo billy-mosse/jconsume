@@ -1,0 +1,20 @@
+<summary id="1" className="ar.uba.dc.basic.polymorphism.expectation.BasicTest" methodSignature="void main(java.lang.String[])">
+  <heap>
+    <graph>
+      <nodes>
+        <param id="2" index="0"/>
+      </nodes>
+      <edges/>
+    </graph>
+    <returned/>
+    <escape-globaly/>
+  </heap>
+  <parameters/>
+  <temporal>{ 7 }</temporal>
+  <residual>
+    <node>
+      <param reference="2"/>
+      <value>{ 0 }</value>
+    </node>
+  </residual>
+</summary>
