@@ -4,6 +4,10 @@ import org.apache.commons.lang.StringUtils;
 
 public class CreationSiteSpecification implements SiteSpecification {
 
+	public CreationSiteSpecification() {
+		super();
+	}
+
 	private String id;
 	private String offset;
 	private String constraints;

@@ -4,6 +4,10 @@ import org.apache.commons.lang.StringUtils;
 
 public class CallSiteSpecification implements SiteSpecification {
 
+	public CallSiteSpecification() {
+		super();
+	}
+
 	private String id;
 	private String offset;
 	private String constraints;

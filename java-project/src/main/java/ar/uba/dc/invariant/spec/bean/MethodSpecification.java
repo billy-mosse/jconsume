@@ -26,6 +26,9 @@ public class MethodSpecification {
 	public MethodSpecification(String signature) {
 		this.signature = signature;
 	}
+
+	public MethodSpecification() {
+	}
 	
 	/**
 	 * BugFix porque no se invoca al constructor por defecto con XStream

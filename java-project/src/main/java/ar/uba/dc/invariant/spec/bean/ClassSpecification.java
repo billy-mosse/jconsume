@@ -15,6 +15,10 @@ public class ClassSpecification {
 	
 	private List<InvariantSpecification> classInvariants = new ArrayList<InvariantSpecification>();
 	
+	public ClassSpecification() {
+		super();
+	}
+
 	public ClassSpecification(String className) {
 		super();
 		this.className = className;
