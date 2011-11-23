@@ -1,0 +1,189 @@
+<summary id="1" className="ar.uba.dc.tacas.Snippet01" methodSignature="ar.uba.dc.rinard.List copyList(ar.uba.dc.rinard.List)">
+  <heap>
+    <graph>
+      <nodes>
+        <param id="2" index="0"/>
+        <statement id="3" inside="false">
+          <statement-id id="4">
+            <method id="5">
+              <class>ar.uba.dc.rinard.ListItr</class>
+              <signature>java.lang.Object next()</signature>
+            </method>
+            <value>$r3 = $r2.&lt;ar.uba.dc.rinard.Cell: java.lang.Object data&gt;</value>
+            <line-number>33</line-number>
+            <bytecode-offset>4</bytecode-offset>
+          </statement-id>
+          <context>
+            <call id="6">
+              <method id="7">
+                <class>ar.uba.dc.tacas.Snippet01</class>
+                <signature>ar.uba.dc.rinard.List copyList(ar.uba.dc.rinard.List)</signature>
+              </method>
+              <value>$r4 = interfaceinvoke $r3.&lt;java.util.Iterator: java.lang.Object next()&gt;()</value>
+              <line-number>125</line-number>
+              <bytecode-offset>18</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <statement id="8" inside="false">
+          <statement-id id="9">
+            <method id="10">
+              <class>ar.uba.dc.rinard.List</class>
+              <signature>java.util.Iterator iterator()</signature>
+            </method>
+            <value>$r3 = $r2.&lt;ar.uba.dc.rinard.List: ar.uba.dc.rinard.Cell head&gt;</value>
+            <line-number>25</line-number>
+            <bytecode-offset>5</bytecode-offset>
+          </statement-id>
+          <context>
+            <call id="11">
+              <method reference="7"/>
+              <value>$r2 = virtualinvoke $r0.&lt;ar.uba.dc.rinard.List: java.util.Iterator iterator()&gt;()</value>
+              <line-number>124</line-number>
+              <bytecode-offset>9</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <statement id="12" inside="true">
+          <statement-id id="13">
+            <method id="14">
+              <class>ar.uba.dc.rinard.List</class>
+              <signature>void add(java.lang.Object)</signature>
+            </method>
+            <value>$r1 = new ar.uba.dc.rinard.Cell</value>
+            <line-number>15</line-number>
+            <bytecode-offset>1</bytecode-offset>
+          </statement-id>
+          <context>
+            <call id="15">
+              <method reference="7"/>
+              <value>virtualinvoke $r0.&lt;ar.uba.dc.rinard.List: void add(java.lang.Object)&gt;($r4)</value>
+              <line-number>125</line-number>
+              <bytecode-offset>23</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <statement id="16" inside="true">
+          <statement-id id="17">
+            <method reference="7"/>
+            <value>$r0 = new ar.uba.dc.rinard.List</value>
+            <line-number>123</line-number>
+            <bytecode-offset>0</bytecode-offset>
+          </statement-id>
+          <context/>
+        </statement>
+        <statement id="18" inside="false">
+          <statement-id id="19">
+            <method reference="5"/>
+            <value>$r4 = $r4.&lt;ar.uba.dc.rinard.Cell: ar.uba.dc.rinard.Cell next&gt;</value>
+            <line-number>34</line-number>
+            <bytecode-offset>13</bytecode-offset>
+          </statement-id>
+          <context>
+            <call reference="6"/>
+          </context>
+        </statement>
+      </nodes>
+      <edges>
+        <edge id="20" field="head" inside="false">
+          <source>
+            <param reference="2"/>
+          </source>
+          <target>
+            <statement reference="8"/>
+          </target>
+        </edge>
+        <edge id="21" field="next" inside="false">
+          <source>
+            <statement reference="18"/>
+          </source>
+          <target>
+            <statement reference="18"/>
+          </target>
+        </edge>
+        <edge id="22" field="data" inside="false">
+          <source>
+            <statement reference="18"/>
+          </source>
+          <target>
+            <statement reference="3"/>
+          </target>
+        </edge>
+        <edge id="23" field="data" inside="false">
+          <source>
+            <statement reference="8"/>
+          </source>
+          <target>
+            <statement reference="3"/>
+          </target>
+        </edge>
+        <edge id="24" field="next" inside="false">
+          <source>
+            <statement reference="8"/>
+          </source>
+          <target>
+            <statement reference="18"/>
+          </target>
+        </edge>
+        <edge id="25" field="next" inside="true">
+          <source>
+            <statement reference="12"/>
+          </source>
+          <target>
+            <statement reference="12"/>
+          </target>
+        </edge>
+        <edge id="26" field="data" inside="true">
+          <source>
+            <statement reference="12"/>
+          </source>
+          <target>
+            <statement reference="3"/>
+          </target>
+        </edge>
+        <edge id="27" field="head" inside="true">
+          <source>
+            <statement reference="16"/>
+          </source>
+          <target>
+            <statement reference="12"/>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <returned>
+      <statement reference="16"/>
+    </returned>
+    <escape-globaly/>
+  </heap>
+  <parameters>
+    <parameter>list.size</parameter>
+  </parameters>
+  <temporal>{ [[list.size] -&gt; []] -&gt; 1 : list.size &gt;= 1 }</temporal>
+  <residual>
+    <node>
+      <param reference="2"/>
+      <value>{ [[list.size] -&gt; []] -&gt; 0 : list.size &gt; 0 }</value>
+    </node>
+    <node>
+      <statement reference="3"/>
+      <value>{ [[list.size] -&gt; []] -&gt; 0 : list.size &gt; 0 }</value>
+    </node>
+    <node>
+      <statement reference="8"/>
+      <value>{ [[list.size] -&gt; []] -&gt; 0 : list.size &gt; 0 }</value>
+    </node>
+    <node>
+      <statement reference="12"/>
+      <value>{ [[list.size] -&gt; []] -&gt; list.size : list.size &gt;= 1 }</value>
+    </node>
+    <node>
+      <statement reference="16"/>
+      <value>{ [[list.size] -&gt; []] -&gt; 1 : list.size &gt;= 1 }</value>
+    </node>
+    <node>
+      <statement reference="18"/>
+      <value>{ [[list.size] -&gt; []] -&gt; 0 : list.size &gt; 0 }</value>
+    </node>
+  </residual>
+</summary>

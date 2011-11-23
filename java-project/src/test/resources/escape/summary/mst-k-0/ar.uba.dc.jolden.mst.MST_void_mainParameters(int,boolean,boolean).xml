@@ -1,0 +1,626 @@
+<summary id="1" className="ar.uba.dc.jolden.mst.MST" methodSignature="void mainParameters(int,boolean,boolean)">
+  <points-to-graph id="2">
+    <graph>
+      <nodes>
+        <ar.uba.dc.analysis.escape.graph.node.GlobalNode id="3"/>
+        <statement id="4" inside="false">
+          <statement-id id="5">
+            <method id="6">
+              <class>ar.uba.dc.jolden.mst.HashEntry</class>
+              <signature>java.lang.Object entry()</signature>
+            </method>
+            <value>$r1 = $r0.&lt;ar.uba.dc.jolden.mst.HashEntry: java.lang.Object entry&gt;</value>
+            <line-number>114</line-number>
+            <bytecode-offset>1</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <method id="7">
+          <method-id id="8">
+            <class>java.lang.StringBuilder</class>
+            <signature>java.lang.StringBuilder append(int)</signature>
+          </method-id>
+          <context sensitivity="0"/>
+        </method>
+        <method id="9">
+          <method-id id="10">
+            <class>java.lang.StringBuilder</class>
+            <signature>java.lang.StringBuilder append(double)</signature>
+          </method-id>
+          <context sensitivity="0"/>
+        </method>
+        <statement id="11" inside="true">
+          <statement-id id="12">
+            <method id="13">
+              <class>ar.uba.dc.jolden.mst.MST</class>
+              <signature>void mainParameters(int,boolean,boolean)</signature>
+            </method>
+            <value>$r5 = new ar.uba.dc.jolden.mst.Graph</value>
+            <line-number>69</line-number>
+            <bytecode-offset>30</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="14" inside="false">
+          <statement-id id="15">
+            <method id="16">
+              <class>ar.uba.dc.jolden.mst.Hashtable</class>
+              <signature>java.lang.Object get(java.lang.Object)</signature>
+            </method>
+            <value>$r2 = $r0.&lt;ar.uba.dc.jolden.mst.Hashtable: ar.uba.dc.jolden.mst.HashEntry[] array&gt;</value>
+            <line-number>45</line-number>
+            <bytecode-offset>9</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="17" inside="true">
+          <statement-id id="18">
+            <method id="19">
+              <class>ar.uba.dc.jolden.mst.Vertex</class>
+              <signature>void &lt;init&gt;(ar.uba.dc.jolden.mst.Vertex,int)</signature>
+            </method>
+            <value>$r3 = new ar.uba.dc.jolden.mst.Hashtable</value>
+            <line-number>38</line-number>
+            <bytecode-offset>16</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <method id="20">
+          <method-id id="21">
+            <class>java.lang.StringBuilder</class>
+            <signature>java.lang.String toString()</signature>
+          </method-id>
+          <context sensitivity="0"/>
+        </method>
+        <statement id="22" inside="true">
+          <statement-id id="23">
+            <method id="24">
+              <class>ar.uba.dc.jolden.mst.Hashtable</class>
+              <signature>void &lt;init&gt;(int)</signature>
+            </method>
+            <value>$r2 = newarray (ar.uba.dc.jolden.mst.HashEntry)[$i0]</value>
+            <line-number>21</line-number>
+            <bytecode-offset>14</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="25" inside="true">
+          <statement-id id="26">
+            <method id="27">
+              <class>ar.uba.dc.jolden.mst.Graph</class>
+              <signature>void &lt;init&gt;(int)</signature>
+            </method>
+            <value>$r4 = newarray (ar.uba.dc.jolden.mst.Vertex)[$i0]</value>
+            <line-number>32</line-number>
+            <bytecode-offset>6</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="28" inside="true">
+          <statement-id id="29">
+            <method reference="13"/>
+            <value>$r0 = new java.lang.StringBuilder</value>
+            <line-number>82</line-number>
+            <bytecode-offset>115</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="30" inside="true">
+          <statement-id id="31">
+            <method reference="13"/>
+            <value>$r0 = new java.lang.StringBuilder</value>
+            <line-number>66</line-number>
+            <bytecode-offset>7</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="32" inside="true">
+          <statement-id id="33">
+            <method reference="27"/>
+            <value>$r1 = new ar.uba.dc.jolden.mst.Vertex</value>
+            <line-number>36</line-number>
+            <bytecode-offset>26</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="34" inside="true">
+          <statement-id id="35">
+            <method reference="13"/>
+            <value>$r0 = new java.lang.StringBuilder</value>
+            <line-number>79</line-number>
+            <bytecode-offset>88</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="36" inside="false">
+          <statement-id id="37">
+            <method id="38">
+              <class>ar.uba.dc.jolden.mst.HashEntry</class>
+              <signature>java.lang.Object key()</signature>
+            </method>
+            <value>$r1 = $r0.&lt;ar.uba.dc.jolden.mst.HashEntry: java.lang.Object key&gt;</value>
+            <line-number>105</line-number>
+            <bytecode-offset>1</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="39" inside="true">
+          <statement-id id="40">
+            <method id="41">
+              <class>ar.uba.dc.jolden.mst.Graph</class>
+              <signature>void addEdges(int)</signature>
+            </method>
+            <value>$r7 = new java.lang.Integer</value>
+            <line-number>97</line-number>
+            <bytecode-offset>49</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="42" inside="true">
+          <statement-id id="43">
+            <method reference="13"/>
+            <value>$r0 = new java.lang.StringBuilder</value>
+            <line-number>83</line-number>
+            <bytecode-offset>145</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="44" inside="false">
+          <statement-id id="45">
+            <method reference="16"/>
+            <value>$r3 = $r2[$i1]</value>
+            <line-number>45</line-number>
+            <bytecode-offset>13</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="46" inside="false">
+          <statement-id id="47">
+            <method id="48">
+              <class>ar.uba.dc.jolden.mst.HashEntry</class>
+              <signature>ar.uba.dc.jolden.mst.HashEntry next()</signature>
+            </method>
+            <value>$r0 = $r0.&lt;ar.uba.dc.jolden.mst.HashEntry: ar.uba.dc.jolden.mst.HashEntry next&gt;</value>
+            <line-number>123</line-number>
+            <bytecode-offset>1</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="49" inside="false">
+          <statement-id id="50">
+            <method id="51">
+              <class>ar.uba.dc.jolden.mst.Vertex</class>
+              <signature>ar.uba.dc.jolden.mst.Hashtable neighbors()</signature>
+            </method>
+            <value>$r1 = $r0.&lt;ar.uba.dc.jolden.mst.Vertex: ar.uba.dc.jolden.mst.Hashtable neighbors&gt;</value>
+            <line-number>83</line-number>
+            <bytecode-offset>1</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="52" inside="false">
+          <statement-id id="53">
+            <method id="54">
+              <class>ar.uba.dc.jolden.mst.Vertex</class>
+              <signature>ar.uba.dc.jolden.mst.Vertex next()</signature>
+            </method>
+            <value>$r0 = $r0.&lt;ar.uba.dc.jolden.mst.Vertex: ar.uba.dc.jolden.mst.Vertex next&gt;</value>
+            <line-number>65</line-number>
+            <bytecode-offset>1</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="55" inside="true">
+          <statement-id id="56">
+            <method id="57">
+              <class>ar.uba.dc.jolden.mst.Hashtable</class>
+              <signature>void put(java.lang.Object,java.lang.Object)</signature>
+            </method>
+            <value>$r5 = new ar.uba.dc.jolden.mst.HashEntry</value>
+            <line-number>58</line-number>
+            <bytecode-offset>6</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="58" inside="true">
+          <statement-id id="59">
+            <method id="60">
+              <class>ar.uba.dc.jolden.mst.MST</class>
+              <signature>ar.uba.dc.jolden.mst.BlueReturn BlueRule(ar.uba.dc.jolden.mst.Vertex,ar.uba.dc.jolden.mst.Vertex)</signature>
+            </method>
+            <value>$r0 = new ar.uba.dc.jolden.mst.BlueReturn</value>
+            <line-number>128</line-number>
+            <bytecode-offset>0</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="61" inside="true">
+          <statement-id id="62">
+            <method reference="13"/>
+            <value>$r0 = new java.lang.StringBuilder</value>
+            <line-number>84</line-number>
+            <bytecode-offset>176</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+      </nodes>
+      <edges>
+        <edge id="63" field="neighbors" inside="true">
+          <source>
+            <statement reference="32"/>
+          </source>
+          <target>
+            <statement reference="17"/>
+          </target>
+        </edge>
+        <edge id="64" field="next" inside="false">
+          <source>
+            <statement reference="32"/>
+          </source>
+          <target>
+            <statement reference="52"/>
+          </target>
+        </edge>
+        <edge id="65" field="next" inside="true">
+          <source>
+            <statement reference="32"/>
+          </source>
+          <target>
+            <statement reference="52"/>
+          </target>
+        </edge>
+        <edge id="66" field="next" inside="true">
+          <source>
+            <statement id="67" inside="true">
+              <statement-id id="68">
+                <method reference="27"/>
+                <value>$r1 = new ar.uba.dc.jolden.mst.Vertex</value>
+                <line-number>36</line-number>
+                <bytecode-offset>26</bytecode-offset>
+              </statement-id>
+              <context sensitivity="0"/>
+            </statement>
+          </source>
+          <target>
+            <statement reference="32"/>
+          </target>
+        </edge>
+        <edge id="69" field="neighbors" inside="false">
+          <source>
+            <statement reference="32"/>
+          </source>
+          <target>
+            <statement reference="49"/>
+          </target>
+        </edge>
+        <edge id="70" field="next" inside="true">
+          <source>
+            <ar.uba.dc.analysis.escape.graph.node.GlobalNode reference="3"/>
+          </source>
+          <target>
+            <statement reference="52"/>
+          </target>
+        </edge>
+        <edge id="71" field="neighbors" inside="false">
+          <source>
+            <ar.uba.dc.analysis.escape.graph.node.GlobalNode reference="3"/>
+          </source>
+          <target>
+            <statement reference="49"/>
+          </target>
+        </edge>
+        <edge id="72" field="next" inside="true">
+          <source>
+            <ar.uba.dc.analysis.escape.graph.node.GlobalNode reference="3"/>
+          </source>
+          <target>
+            <statement reference="32"/>
+          </target>
+        </edge>
+        <edge id="73" field="next" inside="false">
+          <source>
+            <ar.uba.dc.analysis.escape.graph.node.GlobalNode reference="3"/>
+          </source>
+          <target>
+            <statement reference="52"/>
+          </target>
+        </edge>
+        <edge id="74" field="nodes" inside="true">
+          <source>
+            <statement reference="11"/>
+          </source>
+          <target>
+            <statement reference="25"/>
+          </target>
+        </edge>
+        <edge id="75" field="next" inside="false">
+          <source>
+            <statement reference="46"/>
+          </source>
+          <target>
+            <statement reference="46"/>
+          </target>
+        </edge>
+        <edge id="76" field="key" inside="false">
+          <source>
+            <statement reference="46"/>
+          </source>
+          <target>
+            <statement reference="36"/>
+          </target>
+        </edge>
+        <edge id="77" field="entry" inside="false">
+          <source>
+            <statement reference="46"/>
+          </source>
+          <target>
+            <statement reference="4"/>
+          </target>
+        </edge>
+        <edge id="78" field="key" inside="false">
+          <source>
+            <statement reference="44"/>
+          </source>
+          <target>
+            <statement reference="36"/>
+          </target>
+        </edge>
+        <edge id="79" field="entry" inside="false">
+          <source>
+            <statement reference="44"/>
+          </source>
+          <target>
+            <statement reference="4"/>
+          </target>
+        </edge>
+        <edge id="80" field="next" inside="false">
+          <source>
+            <statement reference="44"/>
+          </source>
+          <target>
+            <statement reference="46"/>
+          </target>
+        </edge>
+        <edge id="81" field="[]" inside="false">
+          <source>
+            <statement reference="14"/>
+          </source>
+          <target>
+            <statement reference="44"/>
+          </target>
+        </edge>
+        <edge id="82" field="array" inside="false">
+          <source>
+            <statement reference="49"/>
+          </source>
+          <target>
+            <statement reference="14"/>
+          </target>
+        </edge>
+        <edge id="83" field="array" inside="true">
+          <source>
+            <statement reference="17"/>
+          </source>
+          <target>
+            <statement reference="22"/>
+          </target>
+        </edge>
+        <edge id="84" field="array" inside="false">
+          <source>
+            <statement reference="17"/>
+          </source>
+          <target>
+            <statement reference="14"/>
+          </target>
+        </edge>
+        <edge id="85" field="next" inside="true">
+          <source>
+            <statement reference="52"/>
+          </source>
+          <target>
+            <statement reference="52"/>
+          </target>
+        </edge>
+        <edge id="86" field="neighbors" inside="false">
+          <source>
+            <statement reference="52"/>
+          </source>
+          <target>
+            <statement reference="49"/>
+          </target>
+        </edge>
+        <edge id="87" field="next" inside="true">
+          <source>
+            <statement reference="52"/>
+          </source>
+          <target>
+            <statement reference="32"/>
+          </target>
+        </edge>
+        <edge id="88" field="next" inside="false">
+          <source>
+            <statement reference="52"/>
+          </source>
+          <target>
+            <statement reference="52"/>
+          </target>
+        </edge>
+        <edge id="89" field="next" inside="false">
+          <source>
+            <statement reference="55"/>
+          </source>
+          <target>
+            <statement reference="46"/>
+          </target>
+        </edge>
+        <edge id="90" field="entry" inside="false">
+          <source>
+            <statement reference="55"/>
+          </source>
+          <target>
+            <statement reference="4"/>
+          </target>
+        </edge>
+        <edge id="91" field="key" inside="false">
+          <source>
+            <statement reference="55"/>
+          </source>
+          <target>
+            <statement reference="36"/>
+          </target>
+        </edge>
+        <edge id="92" field="next" inside="true">
+          <source>
+            <statement reference="55"/>
+          </source>
+          <target>
+            <statement reference="55"/>
+          </target>
+        </edge>
+        <edge id="93" field="key" inside="true">
+          <source>
+            <statement reference="55"/>
+          </source>
+          <target>
+            <statement reference="32"/>
+          </target>
+        </edge>
+        <edge id="94" field="entry" inside="true">
+          <source>
+            <statement reference="55"/>
+          </source>
+          <target>
+            <statement reference="39"/>
+          </target>
+        </edge>
+        <edge id="95" field="vert" inside="true">
+          <source>
+            <statement reference="58"/>
+          </source>
+          <target>
+            <ar.uba.dc.analysis.escape.graph.node.GlobalNode reference="3"/>
+          </target>
+        </edge>
+        <edge id="96" field="vert" inside="true">
+          <source>
+            <statement reference="58"/>
+          </source>
+          <target>
+            <statement reference="32"/>
+          </target>
+        </edge>
+        <edge id="97" field="vert" inside="true">
+          <source>
+            <statement reference="58"/>
+          </source>
+          <target>
+            <statement reference="52"/>
+          </target>
+        </edge>
+        <edge id="98" field="[]" inside="false">
+          <source>
+            <statement reference="22"/>
+          </source>
+          <target>
+            <statement reference="44"/>
+          </target>
+        </edge>
+        <edge id="99" field="[]" inside="true">
+          <source>
+            <statement reference="22"/>
+          </source>
+          <target>
+            <statement reference="55"/>
+          </target>
+        </edge>
+        <edge id="100" field="[]" inside="true">
+          <source>
+            <statement reference="25"/>
+          </source>
+          <target>
+            <statement reference="32"/>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <variables>
+      <variable>
+        <name>$r0</name>
+        <type id="101" name="ref" to="java.lang.StringBuilder"/>
+        <points-to id="102">
+          <method reference="7"/>
+          <method id="103">
+            <method-id reference="10"/>
+            <context sensitivity="0"/>
+          </method>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r5</name>
+        <type id="104" name="ref" to="ar.uba.dc.jolden.mst.Graph"/>
+        <points-to id="105">
+          <statement reference="11"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r4</name>
+        <type id="106" name="ref" to="java.lang.String"/>
+        <points-to id="107">
+          <method reference="20"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r6</name>
+        <type reference="104"/>
+        <points-to id="108">
+          <statement reference="11"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r1</name>
+        <type reference="101"/>
+        <points-to id="109">
+          <statement reference="34"/>
+          <statement reference="61"/>
+          <statement reference="30"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r3</name>
+        <type id="110" name="ref" to="java.io.PrintStream"/>
+        <points-to id="111">
+          <ar.uba.dc.analysis.escape.graph.node.GlobalNode reference="3"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>graph</name>
+        <type reference="104"/>
+        <points-to id="112">
+          <statement reference="11"/>
+        </points-to>
+      </variable>
+    </variables>
+    <returned id="113"/>
+    <escape-globaly id="114">
+      <statement reference="32"/>
+      <statement reference="52"/>
+    </escape-globaly>
+  </points-to-graph>
+  <mutated-fields>
+    <node>
+      <ar.uba.dc.analysis.escape.graph.node.GlobalNode reference="3"/>
+      <fields>
+        <field>mindist</field>
+        <field>MyVertexList</field>
+        <field>next</field>
+      </fields>
+    </node>
+    <node>
+      <statement reference="52"/>
+      <fields>
+        <field>mindist</field>
+        <field>next</field>
+      </fields>
+    </node>
+  </mutated-fields>
+</summary>

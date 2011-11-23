@@ -1,0 +1,509 @@
+<summary id="1" className="ar.uba.dc.rinard.BasicTest" methodSignature="void main(java.lang.String[])">
+  <heap>
+    <graph>
+      <nodes>
+        <param id="2" index="0"/>
+        <statement id="3" inside="true">
+          <statement-id id="4">
+            <method id="5">
+              <class>ar.uba.dc.rinard.BasicTest</class>
+              <signature>void sumNumbersUpToParameter(java.lang.Integer)</signature>
+            </method>
+            <value>$r5 = new ar.uba.dc.rinard.Point</value>
+            <line-number>128</line-number>
+            <bytecode-offset>17</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <ar.uba.dc.analysis.escape.graph.node.GlobalNode id="6"/>
+        <statement id="7" inside="true">
+          <statement-id id="8">
+            <method id="9">
+              <class>ar.uba.dc.rinard.BasicTest</class>
+              <signature>void sumAndFlipFixedPoints(java.lang.String[])</signature>
+            </method>
+            <value>$r3 = new ar.uba.dc.rinard.Point</value>
+            <line-number>111</line-number>
+            <bytecode-offset>48</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="10" inside="true">
+          <statement-id id="11">
+            <method id="12">
+              <class>ar.uba.dc.rinard.BasicTest</class>
+              <signature>void sumNumbersUpToParameterUsingStaticList(java.lang.Integer)</signature>
+            </method>
+            <value>$r5 = new ar.uba.dc.rinard.Point</value>
+            <line-number>151</line-number>
+            <bytecode-offset>21</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="13" inside="false">
+          <statement-id id="14">
+            <method id="15">
+              <class>ar.uba.dc.rinard.BasicTest</class>
+              <signature>void main(java.lang.String[])</signature>
+            </method>
+            <value>$r1 = $r0[$b0]</value>
+            <line-number>93</line-number>
+            <bytecode-offset>2</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="16" inside="false">
+          <statement-id id="17">
+            <method id="18">
+              <class>ar.uba.dc.rinard.BasicTest</class>
+              <signature>float sumX(ar.uba.dc.rinard.List)</signature>
+            </method>
+            <value>$r5 = $r0.&lt;ar.uba.dc.rinard.Point: java.lang.Float x&gt;</value>
+            <line-number>56</line-number>
+            <bytecode-offset>22</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="19" inside="false">
+          <statement-id id="20">
+            <method id="21">
+              <class>ar.uba.dc.rinard.ListItr</class>
+              <signature>java.lang.Object next()</signature>
+            </method>
+            <value>$r4 = $r4.&lt;ar.uba.dc.rinard.Cell: ar.uba.dc.rinard.Cell next&gt;</value>
+            <line-number>34</line-number>
+            <bytecode-offset>13</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="22" inside="false">
+          <statement-id id="23">
+            <method reference="21"/>
+            <value>$r3 = $r2.&lt;ar.uba.dc.rinard.Cell: java.lang.Object data&gt;</value>
+            <line-number>33</line-number>
+            <bytecode-offset>4</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="24" inside="false">
+          <statement-id id="25">
+            <method id="26">
+              <class>ar.uba.dc.rinard.List</class>
+              <signature>java.util.Iterator iterator()</signature>
+            </method>
+            <value>$r3 = $r2.&lt;ar.uba.dc.rinard.List: ar.uba.dc.rinard.Cell head&gt;</value>
+            <line-number>25</line-number>
+            <bytecode-offset>5</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="27" inside="true">
+          <statement-id id="28">
+            <method id="29">
+              <class>ar.uba.dc.rinard.List</class>
+              <signature>void add(java.lang.Object)</signature>
+            </method>
+            <value>$r1 = new ar.uba.dc.rinard.Cell</value>
+            <line-number>15</line-number>
+            <bytecode-offset>1</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="30" inside="false">
+          <statement-id id="31">
+            <method reference="29"/>
+            <value>$r5 = $r4.&lt;ar.uba.dc.rinard.List: ar.uba.dc.rinard.Cell head&gt;</value>
+            <line-number>15</line-number>
+            <bytecode-offset>7</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="32" inside="true">
+          <statement-id id="33">
+            <method reference="9"/>
+            <value>$r3 = new ar.uba.dc.rinard.Point</value>
+            <line-number>110</line-number>
+            <bytecode-offset>28</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <method id="34">
+          <method-id id="35">
+            <class>java.lang.Float</class>
+            <signature>java.lang.Float valueOf(float)</signature>
+          </method-id>
+          <context sensitivity="0"/>
+        </method>
+        <statement id="36" inside="true">
+          <statement-id id="37">
+            <method reference="9"/>
+            <value>$r3 = new ar.uba.dc.rinard.Point</value>
+            <line-number>109</line-number>
+            <bytecode-offset>9</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="38" inside="true">
+          <statement-id id="39">
+            <method reference="12"/>
+            <value>$r0 = new ar.uba.dc.rinard.List</value>
+            <line-number>149</line-number>
+            <bytecode-offset>0</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+      </nodes>
+      <edges>
+        <edge id="40" field="[]" inside="false">
+          <source>
+            <param reference="2"/>
+          </source>
+          <target>
+            <statement reference="13"/>
+          </target>
+        </edge>
+        <edge id="41" field="next" inside="true">
+          <source>
+            <statement reference="27"/>
+          </source>
+          <target>
+            <statement reference="27"/>
+          </target>
+        </edge>
+        <edge id="42" field="data" inside="true">
+          <source>
+            <statement reference="27"/>
+          </source>
+          <target>
+            <statement reference="3"/>
+          </target>
+        </edge>
+        <edge id="43" field="data" inside="true">
+          <source>
+            <statement reference="27"/>
+          </source>
+          <target>
+            <statement reference="36"/>
+          </target>
+        </edge>
+        <edge id="44" field="next" inside="false">
+          <source>
+            <statement reference="27"/>
+          </source>
+          <target>
+            <statement reference="19"/>
+          </target>
+        </edge>
+        <edge id="45" field="data" inside="true">
+          <source>
+            <statement reference="27"/>
+          </source>
+          <target>
+            <statement reference="32"/>
+          </target>
+        </edge>
+        <edge id="46" field="data" inside="false">
+          <source>
+            <statement reference="27"/>
+          </source>
+          <target>
+            <statement reference="22"/>
+          </target>
+        </edge>
+        <edge id="47" field="data" inside="true">
+          <source>
+            <statement reference="27"/>
+          </source>
+          <target>
+            <statement reference="7"/>
+          </target>
+        </edge>
+        <edge id="48" field="next" inside="true">
+          <source>
+            <statement reference="27"/>
+          </source>
+          <target>
+            <statement reference="30"/>
+          </target>
+        </edge>
+        <edge id="49" field="data" inside="true">
+          <source>
+            <statement reference="27"/>
+          </source>
+          <target>
+            <statement reference="10"/>
+          </target>
+        </edge>
+        <edge id="50" field="x" inside="true">
+          <source>
+            <statement reference="3"/>
+          </source>
+          <target>
+            <method reference="34"/>
+          </target>
+        </edge>
+        <edge id="51" field="y" inside="true">
+          <source>
+            <statement reference="3"/>
+          </source>
+          <target>
+            <method id="52">
+              <method-id reference="35"/>
+              <context sensitivity="0"/>
+            </method>
+          </target>
+        </edge>
+        <edge id="53" field="head" inside="true">
+          <source>
+            <ar.uba.dc.analysis.escape.graph.node.GlobalNode reference="6"/>
+          </source>
+          <target>
+            <statement reference="27"/>
+          </target>
+        </edge>
+        <edge id="54" field="head" inside="false">
+          <source>
+            <ar.uba.dc.analysis.escape.graph.node.GlobalNode reference="6"/>
+          </source>
+          <target>
+            <statement reference="24"/>
+          </target>
+        </edge>
+        <edge id="55" field="head" inside="false">
+          <source>
+            <ar.uba.dc.analysis.escape.graph.node.GlobalNode reference="6"/>
+          </source>
+          <target>
+            <statement reference="30"/>
+          </target>
+        </edge>
+        <edge id="56" field="data" inside="false">
+          <source>
+            <statement reference="30"/>
+          </source>
+          <target>
+            <statement reference="22"/>
+          </target>
+        </edge>
+        <edge id="57" field="next" inside="false">
+          <source>
+            <statement reference="30"/>
+          </source>
+          <target>
+            <statement reference="19"/>
+          </target>
+        </edge>
+        <edge id="58" field="y" inside="true">
+          <source>
+            <statement reference="32"/>
+          </source>
+          <target>
+            <method id="59">
+              <method-id reference="35"/>
+              <context sensitivity="0"/>
+            </method>
+          </target>
+        </edge>
+        <edge id="60" field="x" inside="true">
+          <source>
+            <statement reference="32"/>
+          </source>
+          <target>
+            <method id="61">
+              <method-id reference="35"/>
+              <context sensitivity="0"/>
+            </method>
+          </target>
+        </edge>
+        <edge id="62" field="x" inside="true">
+          <source>
+            <statement reference="36"/>
+          </source>
+          <target>
+            <method id="63">
+              <method-id reference="35"/>
+              <context sensitivity="0"/>
+            </method>
+          </target>
+        </edge>
+        <edge id="64" field="y" inside="true">
+          <source>
+            <statement reference="36"/>
+          </source>
+          <target>
+            <method id="65">
+              <method-id reference="35"/>
+              <context sensitivity="0"/>
+            </method>
+          </target>
+        </edge>
+        <edge id="66" field="y" inside="true">
+          <source>
+            <statement reference="7"/>
+          </source>
+          <target>
+            <method id="67">
+              <method-id reference="35"/>
+              <context sensitivity="0"/>
+            </method>
+          </target>
+        </edge>
+        <edge id="68" field="x" inside="true">
+          <source>
+            <statement reference="7"/>
+          </source>
+          <target>
+            <method id="69">
+              <method-id reference="35"/>
+              <context sensitivity="0"/>
+            </method>
+          </target>
+        </edge>
+        <edge id="70" field="y" inside="true">
+          <source>
+            <statement reference="10"/>
+          </source>
+          <target>
+            <method id="71">
+              <method-id reference="35"/>
+              <context sensitivity="0"/>
+            </method>
+          </target>
+        </edge>
+        <edge id="72" field="x" inside="true">
+          <source>
+            <statement reference="10"/>
+          </source>
+          <target>
+            <method id="73">
+              <method-id reference="35"/>
+              <context sensitivity="0"/>
+            </method>
+          </target>
+        </edge>
+        <edge id="74" field="x" inside="false">
+          <source>
+            <statement reference="10"/>
+          </source>
+          <target>
+            <statement reference="16"/>
+          </target>
+        </edge>
+        <edge id="75" field="next" inside="false">
+          <source>
+            <statement reference="19"/>
+          </source>
+          <target>
+            <statement reference="19"/>
+          </target>
+        </edge>
+        <edge id="76" field="data" inside="false">
+          <source>
+            <statement reference="19"/>
+          </source>
+          <target>
+            <statement reference="22"/>
+          </target>
+        </edge>
+        <edge id="77" field="x" inside="false">
+          <source>
+            <statement reference="22"/>
+          </source>
+          <target>
+            <statement reference="16"/>
+          </target>
+        </edge>
+        <edge id="78" field="data" inside="false">
+          <source>
+            <statement reference="24"/>
+          </source>
+          <target>
+            <statement reference="22"/>
+          </target>
+        </edge>
+        <edge id="79" field="next" inside="false">
+          <source>
+            <statement reference="24"/>
+          </source>
+          <target>
+            <statement reference="19"/>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <returned/>
+    <escape-globaly>
+      <statement reference="38"/>
+    </escape-globaly>
+  </heap>
+  <parameters>
+    <parameter>n</parameter>
+  </parameters>
+  <temporal>{ [[n] -&gt; []] -&gt; max(7 + 8*n, 50 + 4*n) : n &gt;= 2; [[n] -&gt; []] -&gt; max(11 + 4*n, 54) : n == 1; [[n] -&gt; []] -&gt; 52 : n &lt;= 0 }</temporal>
+  <residual>
+    <node>
+      <param reference="2"/>
+      <value>{ 0 }</value>
+    </node>
+    <node>
+      <statement reference="3"/>
+      <value>{ 0 }</value>
+    </node>
+    <node>
+      <ar.uba.dc.analysis.escape.graph.node.GlobalNode reference="6"/>
+      <value>{ 0 }</value>
+    </node>
+    <node>
+      <statement reference="7"/>
+      <value>{ 0 }</value>
+    </node>
+    <node>
+      <statement reference="10"/>
+      <value>{ [[n] -&gt; []] -&gt; n : n &gt;= 1 }</value>
+    </node>
+    <node>
+      <statement reference="13"/>
+      <value>{ 0 }</value>
+    </node>
+    <node>
+      <statement reference="16"/>
+      <value>{ 0 }</value>
+    </node>
+    <node>
+      <statement reference="19"/>
+      <value>{ 0 }</value>
+    </node>
+    <node>
+      <statement reference="22"/>
+      <value>{ 0 }</value>
+    </node>
+    <node>
+      <statement reference="24"/>
+      <value>{ 0 }</value>
+    </node>
+    <node>
+      <statement reference="27"/>
+      <value>{ [[n] -&gt; []] -&gt; n : n &gt;= 1 }</value>
+    </node>
+    <node>
+      <statement reference="30"/>
+      <value>{ 0 }</value>
+    </node>
+    <node>
+      <statement reference="32"/>
+      <value>{ 0 }</value>
+    </node>
+    <node>
+      <method reference="34"/>
+      <value>{ [[n] -&gt; []] -&gt; 1 + 2*n : n &gt;= 1; [[n] -&gt; []] -&gt; 1 : n &lt;= 0 }</value>
+    </node>
+    <node>
+      <statement reference="36"/>
+      <value>{ 0 }</value>
+    </node>
+    <node>
+      <statement reference="38"/>
+      <value>{ [[n] -&gt; []] -&gt; 1 }</value>
+    </node>
+  </residual>
+</summary>

@@ -1,0 +1,126 @@
+<summary id="1" className="ar.uba.dc.rinard.ListItr" methodSignature="java.lang.Object next()">
+  <heap>
+    <graph>
+      <nodes>
+        <statement id="2" inside="false">
+          <statement-id id="3">
+            <method id="4">
+              <class>ar.uba.dc.rinard.ListItr</class>
+              <signature>java.lang.Object next()</signature>
+            </method>
+            <value>$r3 = $r2.&lt;ar.uba.dc.rinard.Cell: java.lang.Object data&gt;</value>
+            <line-number>33</line-number>
+            <bytecode-offset>4</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="5" inside="false">
+          <statement-id id="6">
+            <method reference="4"/>
+            <value>$r4 = $r1.&lt;ar.uba.dc.rinard.ListItr: ar.uba.dc.rinard.Cell cell&gt;</value>
+            <line-number>34</line-number>
+            <bytecode-offset>10</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="7" inside="false">
+          <statement-id id="8">
+            <method reference="4"/>
+            <value>$r2 = $r0.&lt;ar.uba.dc.rinard.ListItr: ar.uba.dc.rinard.Cell cell&gt;</value>
+            <line-number>33</line-number>
+            <bytecode-offset>1</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="9" inside="false">
+          <statement-id id="10">
+            <method reference="4"/>
+            <value>$r4 = $r4.&lt;ar.uba.dc.rinard.Cell: ar.uba.dc.rinard.Cell next&gt;</value>
+            <line-number>34</line-number>
+            <bytecode-offset>13</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <this id="11"/>
+      </nodes>
+      <edges>
+        <edge id="12" field="next" inside="false">
+          <source>
+            <statement reference="5"/>
+          </source>
+          <target>
+            <statement reference="9"/>
+          </target>
+        </edge>
+        <edge id="13" field="data" inside="false">
+          <source>
+            <statement reference="7"/>
+          </source>
+          <target>
+            <statement id="14" inside="false">
+              <statement-id id="15">
+                <method reference="4"/>
+                <value>$r3 = $r2.&lt;ar.uba.dc.rinard.Cell: java.lang.Object data&gt;</value>
+                <line-number>33</line-number>
+                <bytecode-offset>4</bytecode-offset>
+              </statement-id>
+              <context sensitivity="0"/>
+            </statement>
+          </target>
+        </edge>
+        <edge id="16" field="cell" inside="false">
+          <source>
+            <this reference="11"/>
+          </source>
+          <target>
+            <statement reference="5"/>
+          </target>
+        </edge>
+        <edge id="17" field="cell" inside="true">
+          <source>
+            <this reference="11"/>
+          </source>
+          <target>
+            <statement reference="9"/>
+          </target>
+        </edge>
+        <edge id="18" field="cell" inside="false">
+          <source>
+            <this reference="11"/>
+          </source>
+          <target>
+            <statement reference="7"/>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <returned>
+      <statement reference="2"/>
+    </returned>
+    <escape-globaly/>
+  </heap>
+  <parameters/>
+  <temporal>{ 0 }</temporal>
+  <residual>
+    <node>
+      <statement reference="2"/>
+      <value>{ 0 }</value>
+    </node>
+    <node>
+      <statement reference="5"/>
+      <value>{ 0 }</value>
+    </node>
+    <node>
+      <statement reference="7"/>
+      <value>{ 0 }</value>
+    </node>
+    <node>
+      <statement reference="9"/>
+      <value>{ 0 }</value>
+    </node>
+    <node>
+      <this reference="11"/>
+      <value>{ 0 }</value>
+    </node>
+  </residual>
+</summary>

@@ -1,0 +1,126 @@
+<summary id="1" className="ar.uba.dc.simple.EjemploSimple01" methodSignature="ar.uba.dc.simple.Tupla test()">
+  <heap>
+    <graph>
+      <nodes>
+        <statement id="2" inside="true">
+          <statement-id id="3">
+            <method id="4">
+              <class>ar.uba.dc.simple.EjemploSimple01</class>
+              <signature>ar.uba.dc.simple.Tupla dameTupla()</signature>
+            </method>
+            <value>$r3 = new java.lang.Integer</value>
+            <line-number>93</line-number>
+            <bytecode-offset>9</bytecode-offset>
+          </statement-id>
+          <context>
+            <call id="5">
+              <method id="6">
+                <class>ar.uba.dc.simple.EjemploSimple01</class>
+                <signature>ar.uba.dc.simple.Tupla test()</signature>
+              </method>
+              <value>$r0 = staticinvoke &lt;ar.uba.dc.simple.EjemploSimple01: ar.uba.dc.simple.Tupla dameTupla()&gt;()</value>
+              <line-number>46</line-number>
+              <bytecode-offset>16</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <statement id="7" inside="true">
+          <statement-id id="8">
+            <method reference="4"/>
+            <value>$r0 = new ar.uba.dc.simple.Tupla</value>
+            <line-number>92</line-number>
+            <bytecode-offset>0</bytecode-offset>
+          </statement-id>
+          <context>
+            <call id="9">
+              <method reference="6"/>
+              <value>$r0 = staticinvoke &lt;ar.uba.dc.simple.EjemploSimple01: ar.uba.dc.simple.Tupla dameTupla()&gt;()</value>
+              <line-number>46</line-number>
+              <bytecode-offset>16</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <statement id="10" inside="true">
+          <statement-id id="11">
+            <method reference="4"/>
+            <value>$r3 = new java.lang.Integer</value>
+            <line-number>94</line-number>
+            <bytecode-offset>21</bytecode-offset>
+          </statement-id>
+          <context>
+            <call reference="5"/>
+          </context>
+        </statement>
+        <statement id="12" inside="true">
+          <statement-id id="13">
+            <method id="14">
+              <class>ar.uba.dc.simple.EjemploSimple01</class>
+              <signature>java.lang.Integer newInteger()</signature>
+            </method>
+            <value>$r0 = new java.lang.Integer</value>
+            <line-number>71</line-number>
+            <bytecode-offset>0</bytecode-offset>
+          </statement-id>
+          <context>
+            <call id="15">
+              <method reference="6"/>
+              <value>$r2 = staticinvoke &lt;ar.uba.dc.simple.EjemploSimple01: java.lang.Integer newInteger()&gt;()</value>
+              <line-number>47</line-number>
+              <bytecode-offset>21</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+      </nodes>
+      <edges>
+        <edge id="16" field="a" inside="true">
+          <source>
+            <statement reference="7"/>
+          </source>
+          <target>
+            <statement reference="2"/>
+          </target>
+        </edge>
+        <edge id="17" field="a" inside="true">
+          <source>
+            <statement reference="7"/>
+          </source>
+          <target>
+            <statement reference="12"/>
+          </target>
+        </edge>
+        <edge id="18" field="b" inside="true">
+          <source>
+            <statement reference="7"/>
+          </source>
+          <target>
+            <statement reference="10"/>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <returned>
+      <statement reference="7"/>
+    </returned>
+    <escape-globaly/>
+  </heap>
+  <parameters/>
+  <temporal>{ 6 }</temporal>
+  <residual>
+    <node>
+      <statement reference="2"/>
+      <value>{ 1 }</value>
+    </node>
+    <node>
+      <statement reference="7"/>
+      <value>{ 1 }</value>
+    </node>
+    <node>
+      <statement reference="10"/>
+      <value>{ 1 }</value>
+    </node>
+    <node>
+      <statement reference="12"/>
+      <value>{ 1 }</value>
+    </node>
+  </residual>
+</summary>

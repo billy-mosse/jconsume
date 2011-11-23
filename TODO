@@ -1,0 +1,17 @@
+Para revisar con Gaston y Matias
+
+
+1. Cuando haces el mvn compile no compila las clases que estan en examples.
+2. Idem con el mvn eclipse:eclipse, no pone como src a los examples.
+3. Hay que poder correr ejemplos con otro soot-classpath, no deberia asumir que los ejemplos son parte del proyecto.
+4. Faltaria describir la entrada y salida de los comandos. Por ejemplo, no se donde se escribe el resultado de methodDump
+    Sale por System.out, le agregamos un file como parametro?
+
+5. Idem para purity.sh, describir la salida.
+
+6. metrics.sh nuevamente describir la salida. Esto me parecio piola, pero que calcular? Cantidad total de metodos, o los que se van a analizar?
+
+7. Para instrumentar, si corres el escape primero, despues no hace falta poner el parametro de run escape en true? Eso no funciono.
+Pero, al correrlo con true corrio todo el proceso de instrumentacion.
+
+

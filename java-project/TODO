@@ -1,0 +1,274 @@
+REFERENCIAS:
+============
+
+- = Item a hacer obligatoriamente
++ = Item a hacer opcional
+* = Item hecho
+
+20-07-2010
+==========
+
+* Convertir la ejecución principal en un test. Evaluar si esto es necesario o conviene dejarlo dentro de un main....
+
+
+28-07-2010
+==========
+
+* Levantar de una configuracion "preacaria" para poder correr los ejemplos
+	* Cambiar las clases que ya estan para que se haga inyeccion de dependencias (asi todo queda mas prolijo)
+	* Definir el main actual en una clase fuera de los test y terminar de armar la configuracion
+* Soportar renombre de parametros. Poder describirle a diego como lo hariamos al margen de que no este implementado
+
+
+13-08-2010
+==========
+
+- Input
+	* Bug en el formato simple
+	* Soportar formato spec como lo pensamos
+		* soportar el formato que tenia martin de input
+		* Soportar el formato simple-references
+			* Crear los spec que ya teniamos en fast para simple
+		* Soportar el formato full-references
+			* Crear los spec que ya teniamos en fast para full
+	- Agregar test para los invariantes q ya tenemos y probar que los 4 formatos dan lo mismo (a nivel linea a linea)
+- Invariantes
+	- Ejemplos con polimorfismo
+	- Ejemplos MST, snippets, rinard
+	- Ejemplos con variables estaticas y que dependan de this.campo
+	- Ejemplos que sean "chotos" por el escape (Armar ejemplos donde Falle el escape y que eso haga que de mal el consumo (ifs, polimorfismo (list)): documentar las limitaciones del analisis.)
+	- Soportar el tag requires como Madeja
+	+ Variables inductivas
+		- Al menos hacer un chequeo de el invariante hable sobre todas las variables inductivas
+		- En el peor caso, agregar las importantes al invariante para que de infinito e ir corrigiendo a partir de ahi
+- Algoritmo
+	* Evaluar si el EjemploSimple04 despues de todos los cambios esta dando bien el resultado
+		* Ver porque no me esta tomando el () la calculadora 
+		* Unir los invariantes como corresponde (distribuyendo los ORs)
+			* Cuando agregamos invariantes (a priori la calculadora lo hace para hacer sum y ub), tenemos que tener en cuenta que para barvinok los una expresion es (a and b) or (c and d)
+	* Ver el caso de EjemploSimple01 que nos da distinto que a martin. Habria que pedirle que corra eso
+	- Bug de ser context-free a nivel escape y a nivel memoria para los calls
+		- Dejar todo armado como para poder usar dos implementaciones: con y sin bug (esto para medir performance)
+	* Soportar el caso donde el invariante de infinito
+		* Ver si la calculadora soporta operar con infinitos
+	* Soportar varias implementaciones del maximo
+		* Instalar la ultima version de la calculadora
+			- Nos paramos donde queremos que quede la copia local
+				- Ejecutamos
+					- git clone git://repo.or.cz/barvinok.git
+				- Nos paramos en ./barvinok y ejecutamos
+					- git submodule init
+					- git submodule update
+					- sh autogen.sh
+					- ./configure
+					- make
+					- make check
+					- make install (seguramente con sudo)
+		* Probar operadores nuevos a ver si nos sirve para estrategia lazy
+		* Implementar estrategia lazy
+		* Documentar casos donde no ande la calculadora
+	+ Al guardar la memoria temporal y residual final, simplificar la expresion usando la calculadora.
+		+ El EjemploSimple04 para m3 da como resultado "1 + k si k == 1", esto es equivalente a "2 si k == 1"
+	* Soportar varias implementaciones de la calculadora
+		* que siempre devuelva 1 (que no use barvinok). Esto sirve para contar news + calls y ver cuanto tiempo agregamos usando calculadora
+	- hacer mas performante el analisis en la parte de la calculadora evitando hacer las operaciones con la calculadora y haciendolas manual cuando se puede (p + q = q si p es 0, etc)
+		- que optimice cuentas con infinito y/o ctes y no se la pase a barvinok		
+	- Mejorar la forma de especificar metodos no analizables
+		- Tener una lista para los metodos puros
+		- Tener una lista para los metodos impuros. Si hay summary para esos usamos el summary, sino dan infinito
+		- El resto de los metodos son analizables
+	- Ver el caso donde tengo una interfaz sin implementaciones. Ahora esta dando un resumen de 0 porque hace la union de todas las implementaciones. En este caso deberia dar infinito y/o una constante
+	- Limitar CallGraph de soot a los metodos analizables (meterse en soot a ver como podemos hacer eso)
+		- La clase Scene de soot tiene un metodo getReachableMethods
+		- Esta clase tiene una propiedad EdgeFilter
+		- Ese filtro permite decir cuando no avanzar en el callgraph
+		- Tenemos que implementar nuestro filtro y agregarlo ahi
+	* Paras las opciones para el armado del callgraph al application.properties
+	+ Terminar el refactor de codigo que habiamos arrancado en su momento
+		- Emprolijar lo del method Under analisis. Conviene que el grafo lo tenga y no se lo paso al visitor....
+		- Sacar la calculadora de las expresiones
+		- Refactor de packages. Algunas cosas dependen de otras y no estan bien... (algunos packages estan dependiendo de otros que no deberian...)
+		- Refactor de la estructura actual para usar un solo grafo. Poner mas "datos" en el summary. Las expresiones asociarlas al nodo en el summary y no en el grafo. Eso va a hacer que haya menos clases repetidas
+	- Terminar el tema de los test para el escape
+		- Armar test para c/componente
+		- Revizar aplicacion de reglas a mano
+		- Revizar grafo a mano
+		- Revizar que los visitor esten bien hechos
+		* Modificar los dos test que nos llevamos del proyecto pasado para que encajen con lo que hay ahora
+	+ Usar log4j y lograr que ande bien
+		- Sacar todo por consola y en un archivo
+		- Pasar por todas las clases y ver que usen log4j
+		- Agregar logs donde haga falta
+	- Armar test de regresion para los casos que ya sabemos cuanto dan o cuanto deberian dar
+	- Soportar contar 1 o size en memoria para los arrays (configurable)
+	* Mejorar el binding de parametros (parametro "binding.type")
+		* Poder configurar que queremos hacer cuando falto un binding:
+			* Lanzar un error
+				* Mejorar el mensaje de error para q diga q falta el binding y q parametro falta
+			* Permitir que el analisis siga
+				* Devolviendo infinito si corresponde (pesimista)
+					* Agregar los parametros q faltan en las variables
+				* Eliminando las variables (optimista)
+					* Eliminamos los parametros del polinomio
+- Output
+	- Tener el output de martin (Armar resumenes HTML del analisis)
+	- Grafos mas legibles
+		- Cambiar el texto del nodo para que haga referencia al metodo donde se creo
+		- Agregar una tabla de referencias para poder entender de donde sale c/nodo y que los nodos no sean gigantes (que el nodo diga "1" y despues decimos "1 = clase.metodo")
+		- Mostrar la sumarizacion con enters (por si hay varias condiciones)
+	- Evaluar si los grafos conviene tirarlos por package (es probable que para ejemplos "grandes" convenga)
+		- Hacer esto configurable para poder tirar todo en un unico directorio como ahora
+	+ Xml masl legible de los summaries
+		+ No poner el line number exacto sino que poner el numero de linea relativo al metodo
+		+ Armar un tool para verificar que el summary este vigente (que no se hayan corrido los numeros de linea y/o las instrucciones)
+		+ Sacar el keep_line_number porque ya no lo necesitariamos mas
+- Tools
+	* Mejoras sobre invariant tagger
+		* Poder especificar si es necesario o no imprimir el numero de linea. Asi solo imprime los invariantes y se lee mas rapido
+	* Permitir ver el callgraph con el que se va a trabajar (esto permitiria ver si no faltan poner menos metodos no analizables
+	+ Conversor de XML a Dot para poder ver el grafo
+	- Template para cargar invariantes en formato spec 
+	- Convertir entre distintos formatos
+		* FullReferencesSpec -> FastReferencesSpec
+		* SimpleReferencesSpec -> FastReferencesSpec
+		- FastReferencesSpec -> Simple
+	* Leer invariantes con la herramienta de diego (preguntarle a martin como lo hace)
+	+ Leer invariantes de JML
+	+ Leer invariantes usando Dikon
+- General
+	* Mover los scripts "personales" que tenia para hacer pruebas afuera
+	* Mover los ejemplos a nuestro repositorio
+	- Buscar algunos casos de estudio interesantes
+	- Conseguir la tesis de martin y ver el caso de estudio. Correrlo contra lo nuestro a ver si mejoramos en presicion y ver cuanto de tiempo empeoramos
+	- Unir las dos implementaciones (martin y nuestra)
+
+
+11-09-2010 (redefinimos en base a una minuta. Limpio lo anterior y pongo nuevos objetivos)
+==========
+
+- Invariantes
+	* Ejemplos con polimorfismo
+	* Ejemplos MST, snippets, rinard
+	- Ejemplos con variables estaticas y que dependan de this.campo
+	- Ejemplos que sean "chotos" por el escape (Armar ejemplos donde Falle el escape y que eso haga que de mal el consumo (ifs, polimorfismo (list)): documentar las limitaciones del analisis.)
+	- Unificar invariantes: que en todos los formatos tengamos los mismos invariantes
+	+ Variables inductivas
+		+ Al menos hacer un chequeo de el invariante hable sobre todas las variables inductivas
+		+ En el peor caso, agregar las importantes al invariante para que de infinito e ir corrigiendo a partir de ahi
+	* Soportar el tag requires
+- Escape Analisis
+	* Manejar los casos de asignacion de null
+		* a = null
+			* Limpiar el mapping de a / tener un nodo que represente null.
+		* a.f = null
+			* No tiene efecto -> porque es un weak update
+	* Refactor del escape actual
+		* Poder correr el escape de forma independiente al analisis de memoria
+		* Permitir no eliminar las variables locales en el summary. (configuracion)
+		* Mover la configuracion especifica del escape a un archivo de configuracion aparte
+		* Terminar el refactor de codigo que habiamos arrancado en su momento
+			* Emprolijar lo del method Under analisis. Conviene que el grafo lo tenga y no se lo paso al visitor....
+			* Refactor de packages. Algunas cosas dependen de otras y no estan bien... (algunos packages estan dependiendo de otros que no deberian...)
+			* Refactor de la estructura actual para usar un solo grafo. Poner mas "datos" en el summary. Las expresiones asociarlas al nodo en el summary y no en el grafo. Eso va a hacer que haya menos clases repetidas
+	* Terminar el tema de los test para el escape
+		* Armar test para c/componente
+		* Revizar aplicacion de reglas a mano
+		* Revizar grafo a mano
+		* Revizar que los visitor esten bien hechos
+		* Armar test de regresion para los casos que ya sabemos cuanto dan o cuanto deberian dar
+	* Armar summaries que puedan ser reutilizados (en particular para el analisis de consumo)
+		* Ver en los grafos que no se repitan nodos. Todo deberia ser referencia y etc
+	* Solucionar el problema actual de ser context-free
+		* Agregar al algoritmo la capacidad de ser K-sensitivo, con posibilidad de que K sea infinito
+		* Evaluar usar un cicularFifoBuffer o una implementacion a mano (probablemente quede mas comodo la implementacion a mano
+			* Ver fusion de grafos con polimorfismo. Antes dos nodos "iguales" iban a parar a lo mismo, ahora no. Eso es mejor?
+		* Tener cuidado, cuando hacemos la union hay que sumar contexto (pensar en este caso)
+		* Evaluar la estructura del nodo actual. Deberia tener (y ser inmutable. Por eso los puedo cachear):
+			* Label/Id: Como identifico el nodo?
+				* Origin
+					* Metodo (metodo al que pertenece el stmt... esto es para poder levantarlo)
+					* Stmt
+				* ComeFrom
+			* Label: Debe depender de origin.id y es para poder mostrarlo. Asi asociamos los nodos q salieron de un mismo lugar.
+	- Mejorar la forma de especificar metodos no analizables
+		+ Permitir decidir si un metodo es no analizable en base a memoria o al escape
+		* Tener reglas que sean cargadas de forma flexible asi las podemos reutilizar para el analisis de consumo
+			* Las reglas me tiene que definir dos tipos: Puros (no escapa globalmente) e impuros (escapa globalmente)
+			* Si no hay summary para alguien de la lista, inventamos 1 (como ahora)
+	* Limitar CallGraph de soot a los metodos analizables (meterse en soot a ver como podemos hacer eso)
+		* Crear la clase ReachableMethods
+		* Setear de forma configurable el filtro a usar
+			* Primero filtrar por si existe el summary
+			* Luego filtrar por reglas
+			* Tener una regla que matchee todo si o si
+			* Agregar reglas de exclude que se ejecuten primero y lo que hacen es directamente correr como si el metodo que matchee no existiera (soot tiene un exclude para eso. Es el equivalente)
+	* Permitir excluir con reglas metodos que no queremos (nativos de java). Generan muchas llamadas polimorficas que no aportan (les pusimos consumo 0)
+	- Output
+		* Evaluar si los grafos conviene tirarlos por package (es probable que para ejemplos "grandes" convenga)
+			* Hacer esto configurable para poder tirar todo en un unico directorio como ahora
+		+ Xml masl legible de los summaries
+			+ Armar un tool para verificar que el summary este vigente (que no se hayan corrido los numeros de linea y/o las instrucciones)
+- Analisis de Consumo
+	* Adaptar el algoritmos actual al paper
+		* Tener la opcion de decidir si correr o no el escape (si no hace falta, no correrlo)
+		* Hacer que el analisis de memoria use los summaries que hay ya calculados en disco.
+	* Tener el output de Madeja (Armar resumenes HTML del analisis)
+	- Optimizar el algoritmo bajo invarianza de polimorfismo (Intentar detectar los casos de loop donde un virtual call no cambia para hacer hacer el sum(max) como max(sum))
+		* Modificar los invariantes para cargar la informacion de loop invariant (code motion)
+		* Usar la informacion de loop invariant (code motion) para operar antes de sacar el supremo.
+		- Pensar un ejemplo donde haga la diferencia usar invarianza o no 
+	* Soportar contar 1 o size en memoria para los arrays (configurable)
+	+ Grafos mas legibles
+		+ Cambiar el texto del nodo para que haga referencia al metodo donde se creo
+		+ Agregar una tabla de referencias para poder entender de donde sale c/nodo y que los nodos no sean gigantes (que el nodo diga "1" y despues decimos "1 = clase.metodo")
+		+ Mostrar la sumarizacion con enters (por si hay varias condiciones)
+	+ Al guardar la memoria temporal y residual final, simplificar la expresion usando la calculadora.
+		+ El EjemploSimple04 para m3 da como resultado "1 + k si k == 1", esto es equivalente a "2 si k == 1"
+	+ Dar los summaries en forma de regexp que describan los parametros afectados por el metodo y el consumo
+- Barvinok
+		* Resolver las operaciones que faltan con maximo (hacerlas cerradas al maximo) para tener opreciones cerradas sobre expresiones parametricas
+		* Unificar la interfaz con el paper que nos mando martin
+			* Separar el factory de la calculadora porque sino no sirve.
+		* Limpiar la implementacion
+			* Mucho codigo repetido entre operaciones
+			* Mantener las estrategias pero solo son para comparar, el resto deberia andar asi como esta
+		* hacer mas performante el analisis en la parte de la calculadora evitando hacer las operaciones con la calculadora y haciendolas manual cuando se puede (p + q = q si p es 0, etc). 
+			* Que optimice cuentas con infinito y/o ctes y no se la pase a barvinok
+		- Soportar sintaxis exists como input y output de la calculadora (de invariantes)
+			* Soportar la sintaxis como resultado de la calculadora
+				* Cuando uno dominios, si tengo un exists, tengo q meter todo adentro del exists
+				* Poder parsear cosas con []
+					* Dentro de los [] no resolver presedencia. Esto viene de la calculadora, no puedo sacarle () a lo pavote
+				* Tener cuidado de que no se solapen las variables a la hora de simplificar con la parte del exists 
+			- Soportar la sintaxis como input para los inviarnates
+				- Tener en cuenta que cuando uno dominios puedo llegar a tener exists unido con exists
+				- Poder escribir cosas con [] como input
+				- Tocar el parser para q no tome como variables la parte q tiene el exists
+- Tools
+	* mejorar migrator. Madeja no soporta "a < b < c" sino que hay que ponerlo como "a < b and b < c"
+	* Conversor de XML a Dot para poder ver el grafo
+	+ Template para cargar invariantes en formato spec 
+	+ Convertir entre distintos formatos
+		+ FastReferencesSpec -> Simple
+	+ Leer invariantes de JML
+	+ Leer invariantes usando Dikon
+- General
+	- Unir las dos implementaciones (martin y nuestra)
+	* Buscar algunos casos de estudio interesantes
+	* Conseguir la tesis de martin y ver el caso de estudio. 
+		* Conseguir el codigo fuente
+		* Armar un ambiente con barvinok 0.28
+		* Correr los ejemplos que tenemos contra madeja
+		* Medir tiempos del analisis de martin vs el nuestro
+	* Usar log4j y lograr que ande bien
+		* Pasar por todas las clases y ver que usen log4j
+		* Agregar logs donde haga falta
+	* Usar la informacion que tiene el points-to de escape para intentar mejorar el analisis del callgraph para los virtual calls.
+		* Si la variable sobre la que se hace el call (Ej: x.m() la variable es x) apunta a un unico nodo y ese nodo es inside node
+		  se puede tomar de ahi el tipo y analizar solo esa implementacion. Sin importar lo que diga el call graph.
+	* Poder especificar summaries para una interfaz
+	- Correr la herramienta en windows
+		- Configurar los script sh para bat
+		- Hacer algunas corridas y ver que todo salga bien
+		- Adaptar la parte de linea de comandos para que la soporte windows?
+			- Podemos usar el tool de apache para consola (Commons exec http://commons.apache.org/exec/tutorial.html)

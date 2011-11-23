@@ -1,0 +1,193 @@
+
+A continuacion damos una breve reseña de las herramientas auxiliares desarrolladas y como se las ejecuta
+
+specMigrator.sh
+===============
+
+Convierte todos los invariantes del repositorio del formato full-reference al formato aceptado por la herramienta de Martin Rouaux. 
+Es posible pasarle dos parametros:
+	- "Subcarpeta a partir de la cual convertir" (solo convierte lo que este en dicha subcarpeta y sus subdirectorios) y
+	- Un flag indicando si se deben migrar aquellos metodos que no posean informacion (esten definidos los metodos pero no los invariantes). 
+	  Con false se indica que no se migren esos metodos. Si una clase no tiene metodos (no se pudo migrar ninguno porque no tiene invariantes) tampoco se incluye la clase. 
+	  Esto genera un resultado mas compacto. El default es true
+	  
+Los invariantes a procesar son aquellos que se encuentren dentro del directorio especificado por la propiedad ${invariants.repository}.
+Como resultado se obtiene en el directorio ${output.folder} un archivo "all.spec" que contiene todos los invariantes migrados. Ademas en esa
+directorio un archivo <package>.<className>.spec con los invariantes procesados para la clase <className>. 
+
+Ejemplo: 
+	./migrator.sh config.properties ar/uba/dc/tacas
+	./migrator.sh config.properties javazoom false
+
+methodDump.sh
+=============
+
+Hace un dump del metodo en formato jimple numerando las instrucciones de call y new de forma relativa. 
+Esto sirve para ver el jimple de un metodo y poder calcular los offsets. Esto sirve para especificar invariantes 
+
+Ejemplo:
+	./methodDump.sh ar.uba.dc.tacas.Snippet01 "void main(java.lang.String[])" config.properties
+
+purity.sh
+=========
+
+Dado una clase y un archivo de configuracion ejecuta el analisis PurityAnalysis definido en Soot.
+Este analisis fue la base para el analisis de escape implementado. Los resultados del purity analisis quedan en el directorio
+${output.folder} en formato grafico (una imagen gif con el grafo de escape). 
+
+Ejemplo:
+	./purity.sh ar.uba.dc.tacas.Snippet01 config.properties
+
+invariantTagger.sh
+==================
+
+Este script genera un archivo jimple para la clase dada como parametro. En ese archivo se imprimen los invariantes que haya para la misma
+en el repositorio (${invariant.repository}). Se pasa como parametro opcionalmente un archivo de configuracion para poder saber donde esta el repositorio.
+El resultado queda en el directorio ${output.folder}.
+
+Ejemplo:
+	./invariantTagger.sh ar.uba.dc.tacas.Snippet01 config.properties
+
+callgraph.sh
+============
+
+Genera el callgraph asociado a la ejecucion del programa buscando el main en la clase pasada como parametro.
+El mismo es impreso en forma de grafo en el directorio ${output.folder}.  
+
+Ejemplo:
+	./callgraph.sh ar.uba.dc.tacas.Snippet01 config.properties
+
+metrics.sh
+==========
+
+Calcula las metricas del analisis de escape para una clase y las imprime por consola.
+El analisis puede no haber sido realizado. El tool recorre el callgraph para el programa calculando las metricas. 
+Las metricas son: 
+	- cantidad de clases
+	- cantidad de lineas java 
+	- cantidad de metodos
+	- cantidad de lineas bytecode
+
+Ejemplo:
+	./metrics.sh ar.uba.dc.tacas.Snippet01 config.properties
+
+repositorySizeRanking.sh
+========================
+
+Rankea los summaries de una carpeta retornando los metodo por tamaño del Points-To graph. Esto sirve para evaluar sin un criterio
+de compresion comprime mas que otro.
+
+El directorio de donde tomar los resumenes se resuelve de la siguiente manera:
+- Se asume que es el 1er parametro
+- Si existe un 4to parametro se lo utiliza como un property, se resuelve la misma (${args[3]}) y el resultado se usa como directorio.
+
+El tipo de summary a procesar se determina por la 2da propiedad que puede tomar dos valores: "escape" o "memory".
+
+El resultado es un ranking el cual es impreso por consola
+
+Ejemplo:
+	./repositorySizeRanking.sh "" "escape" config.properties "escape.summary.output.dir" true
+
+xmlToDot.sh
+===========
+
+Convierte los summaries de una carpeta de XML a Grafos. El primer parametro representa la carpeta a procesar (se procesa la misma y sus subdirectorios).
+Por cada resumen encontrado se lo procesa y dejando en la misma carpeta que el resumen su version en modo grafico (imagen gif con el grafo que lo representa).
+El 2do parametro indica si lo que estamos procesando es un resumen de escape (pasando como parametro "escape") o de memoria (pasando como parametro "memory")
+
+Ejemplo:
+	./xmlToDot.sh "summaries/escape" "escape" config.properties
+
+memoryReport.sh
+===============
+
+A partir de los summaries de memoria de una clase genera el reporte. Esto sirve si no se ha generado el reporte HTML como 
+parte del analisis de memoria.
+
+Los summaries de escape y de memoria utilizados para generar el reporte son obtenidos de los directorios ${escape.summary.output.dir} y ${memory.summary.output.dir}
+respectivamente. El resultado se almacena en ${memory.report.output.dir}. El mismo es una pagina HTML con un indice por clase donde para c/clase
+figuran los metodos. Estos tienen el temporal y residual. Si los directorios donde estan los summaries poseen imagenes (grafos que respresenten el resumen)
+entonces los mismos son incluidos en el reporte.
+
+Ejemplo:
+	./memoryReport.sh ar.uba.dc.tacas.Snippet01 config.properties
+
+checkRepository.sh
+==================
+
+Verifica si los resumenes de escape presentes en el repositorio de una clase han cambiado desde que fueron generados.
+Para la verificacion, primero se arma el callgraph para un programa. Luego, para c/metodo del callgraph se verifica si el summary
+para el metodo ha cambiado. El summary intenta ser recuperado primero del directorio ${escape.summary.output.dir}. Si no existe, se procede a obtener de ${escape.summary.repository.dir}.
+El primer parametro del tool es la clase que contiene el metodo main del programa.
+El tool imprime por consola el resultado de c/metodo procesado. En caso de encontrar errores en un metodo dice cual fue el problema y hace un dump del metodo
+en formato jimple del mismo y continua con el siguiente metodo. 
+
+Ejemplo:
+	./checkRepository.sh ar.uba.dc.tacas.Snippet01 config.properties
+
+repositoryCorrector.sh
+======================
+
+Corrige los problemas q tiene jlayer para ser instrumentado. Corrige los escape para que se puedan instrumentar.
+El tool necesita un archivo config.properties para poder configurar el repositorio de invariantes a utilizar.
+El tool queda deprecado pues se encontro un hack para analizar jlayer
+ 
+Ver sub-seccion "jlayer" de la seccion "Ejecucion".
+
+Ejemplo:
+	./repositoryCorrector.sh config.properties
+
+escape.sh
+=========
+
+Ejecuta el analisis de escape para un programa. Se recibe como parametro el nombre de la clase en donde buscar el main del programa.
+Existen varios parametros que definen el comportamiento del analisis de escape. Los mismos se encuentran distribuidos en los archivos
+config-soot.properties, config-escape.properties y application.properties.
+
+Entre las propiedades interesantes encontramos:
+	- ${escape.summary.printer}: formatos en los cuales presentar los resultados
+	- ${escape.summary.output.dir}: donde escribir los resultados
+	- ${escape.summary.output.layout}: forma de agrupar los resultados (por clase, por package, todos en una misma carpeta)
+	- ${callgraph.algorithm}: callgraph a utilizar para el analisis (cha o spark)
+
+Por defecto, el resultado queda en el directorio ${escape.summary.output.dir} y consta de los resumenes en formato XML y grafico.
+
+Ejemplo:
+	./escape.sh ar.uba.dc.tacas.Snippet01 config.properties
+
+memory.sh
+=========
+
+Ejecuta el analisis de memoria para un programa. Se recibe como parametro el nombre de la clase en donde buscar el main del programa.
+Existen varios parametros que definen el comportamiento del analisis de memoria. Los mismos se encuentran distribuidos en los archivos
+config-soot.properties, config-memory.properties y application.properties.
+
+Entre las propiedades interesantes encontramos:
+	- ${memory.summary.printer}: formatos en los cuales presentar los resultados
+	- ${memory.summary.output.dir}: donde escribir los resultados
+	- ${memory.summary.output.layout}: forma de agrupar los resultados (por clase, por package, todos en una misma carpeta)
+	- ${callgraph.algorithm}: callgraph a utilizar para el analisis (cha o spark)
+	- ${barvinok.calculator.compare-strategy}: estrategia para obtener el supremo de expresiones (add o lazy)
+	- ${memory.run.escape.before}: Flag para indicar si se debe ejecutar el analisis de escape antes del de memoria
+	- ${memory.print.report}: Flag para indicar si generar o no el reporte HTML
+	- ${memory.interprocedural.loop.invariant}: Estrategia de trabajo para loop invariant (asumir que siempre ocurre, asumir que no ocurre, inferirlo)
+
+Ejemplo:
+	./memory.sh ar.uba.dc.tacas.Snippet01 config.properties
+
+Por defecto, el resultado queda en el directorio ${memory.summary.output.dir} y consta de los resumenes en formato XML, grafico y un reporte
+HTML el cual resume los resultados y queda en el directorio ${memory.report.output.dir}.
+
+instrumentation.sh
+==================
+
+Instrumenta un programa buscando el main en la clase dada como paramtro. El 3er parametro es opcional e indica si primero se debe correr
+un analisis de escape previo a la instrumetacion. La misma requiere que se haya ejecutado el mismo. Este flag por default toma valor false, 
+permitiendo que se utilize el resultado del script "escape.sh".
+
+El resultado de la instrumentacion queda en el directorio ${instrumented.code.output.dir} y varia dependiendo del valor de la propiedad 
+${instrumented.code.output.format} pudiendo ser los archivos .class o los archivo .jimple de las clases que componenen el programa.
+
+Ejemplo:
+	./instrumentation.sh ar.uba.dc.jolden.mst.MST config.properties
+	./instrumentation.sh ar.uba.dc.jolden.mst.MST config.properties true

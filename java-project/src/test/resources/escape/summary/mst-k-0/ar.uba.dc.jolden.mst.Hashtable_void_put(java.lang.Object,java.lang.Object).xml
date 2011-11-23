@@ -1,0 +1,227 @@
+<summary id="1" className="ar.uba.dc.jolden.mst.Hashtable" methodSignature="void put(java.lang.Object,java.lang.Object)">
+  <points-to-graph id="2">
+    <graph>
+      <nodes>
+        <param id="3" index="0"/>
+        <param id="4" index="1"/>
+        <statement id="5" inside="true">
+          <statement-id id="6">
+            <method id="7">
+              <class>ar.uba.dc.jolden.mst.Hashtable</class>
+              <signature>void put(java.lang.Object,java.lang.Object)</signature>
+            </method>
+            <value>$r5 = new ar.uba.dc.jolden.mst.HashEntry</value>
+            <line-number>58</line-number>
+            <bytecode-offset>6</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="8" inside="false">
+          <statement-id id="9">
+            <method reference="7"/>
+            <value>$r9 = $r0.&lt;ar.uba.dc.jolden.mst.Hashtable: ar.uba.dc.jolden.mst.HashEntry[] array&gt;</value>
+            <line-number>59</line-number>
+            <bytecode-offset>24</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="10" inside="false">
+          <statement-id id="11">
+            <method reference="7"/>
+            <value>$r7 = $r4.&lt;ar.uba.dc.jolden.mst.Hashtable: ar.uba.dc.jolden.mst.HashEntry[] array&gt;</value>
+            <line-number>58</line-number>
+            <bytecode-offset>13</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <this id="12"/>
+        <statement id="13" inside="false">
+          <statement-id id="14">
+            <method reference="7"/>
+            <value>$r8 = $r7[$i0]</value>
+            <line-number>58</line-number>
+            <bytecode-offset>17</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+      </nodes>
+      <edges>
+        <edge id="15" field="[]" inside="true">
+          <source>
+            <statement reference="8"/>
+          </source>
+          <target>
+            <statement reference="5"/>
+          </target>
+        </edge>
+        <edge id="16" field="[]" inside="false">
+          <source>
+            <statement reference="10"/>
+          </source>
+          <target>
+            <statement reference="13"/>
+          </target>
+        </edge>
+        <edge id="17" field="key" inside="true">
+          <source>
+            <statement reference="5"/>
+          </source>
+          <target>
+            <param reference="3"/>
+          </target>
+        </edge>
+        <edge id="18" field="entry" inside="true">
+          <source>
+            <statement reference="5"/>
+          </source>
+          <target>
+            <param reference="4"/>
+          </target>
+        </edge>
+        <edge id="19" field="next" inside="true">
+          <source>
+            <statement reference="5"/>
+          </source>
+          <target>
+            <statement reference="13"/>
+          </target>
+        </edge>
+        <edge id="20" field="array" inside="false">
+          <source>
+            <this reference="12"/>
+          </source>
+          <target>
+            <statement reference="8"/>
+          </target>
+        </edge>
+        <edge id="21" field="array" inside="false">
+          <source>
+            <this reference="12"/>
+          </source>
+          <target>
+            <statement reference="10"/>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <variables>
+      <variable>
+        <name>$r3</name>
+        <type id="22" name="ref" to="java.lang.Object"/>
+        <points-to id="23">
+          <param reference="4"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>this</name>
+        <type id="24" name="ref" to="ar.uba.dc.jolden.mst.Hashtable"/>
+        <points-to id="25">
+          <this reference="12"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r0</name>
+        <type reference="24"/>
+        <points-to id="26">
+          <this reference="12"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>value</name>
+        <type reference="22"/>
+        <points-to id="27">
+          <param reference="4"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r2</name>
+        <type reference="22"/>
+        <points-to id="28">
+          <param reference="3"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r1</name>
+        <type reference="22"/>
+        <points-to id="29">
+          <param reference="3"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r4</name>
+        <type reference="24"/>
+        <points-to id="30">
+          <this reference="12"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r8</name>
+        <type id="31" name="ref" to="ar.uba.dc.jolden.mst.HashEntry"/>
+        <points-to id="32">
+          <statement reference="13"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r9</name>
+        <type id="33" name="array" numDimensions="1">
+          <base reference="31"/>
+        </type>
+        <points-to id="34">
+          <statement reference="8"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r5</name>
+        <type reference="31"/>
+        <points-to id="35">
+          <statement reference="5"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r7</name>
+        <type reference="33"/>
+        <points-to id="36">
+          <statement reference="10"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r6</name>
+        <type reference="31"/>
+        <points-to id="37">
+          <statement reference="5"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>key</name>
+        <type reference="22"/>
+        <points-to id="38">
+          <param reference="3"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r10</name>
+        <type reference="31"/>
+        <points-to id="39">
+          <statement reference="5"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>ent</name>
+        <type reference="31"/>
+        <points-to id="40">
+          <statement reference="5"/>
+        </points-to>
+      </variable>
+    </variables>
+    <returned id="41"/>
+    <escape-globaly id="42"/>
+  </points-to-graph>
+  <mutated-fields>
+    <node>
+      <statement reference="8"/>
+      <fields>
+        <field>[]</field>
+      </fields>
+    </node>
+  </mutated-fields>
+</summary>

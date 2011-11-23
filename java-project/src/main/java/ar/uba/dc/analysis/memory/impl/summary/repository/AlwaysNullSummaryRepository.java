@@ -1,0 +1,21 @@
+package ar.uba.dc.analysis.memory.impl.summary.repository;
+
+import soot.SootMethod;
+import ar.uba.dc.analysis.common.SummaryRepository;
+import ar.uba.dc.analysis.memory.summary.MemorySummary;
+
+/**
+ * Esta implementacion devuelve siempre null. Es util para hacer tests
+ * 
+ * @author testis
+ */
+public class AlwaysNullSummaryRepository implements SummaryRepository<MemorySummary> {
+
+	public MemorySummary get(SootMethod method) {
+		return null;
+	}
+
+	public boolean contains(SootMethod m) {
+		return false;
+	}
+}

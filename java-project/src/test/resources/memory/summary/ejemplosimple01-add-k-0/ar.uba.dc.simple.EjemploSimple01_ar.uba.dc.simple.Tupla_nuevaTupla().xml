@@ -1,0 +1,66 @@
+<summary id="1" className="ar.uba.dc.simple.EjemploSimple01" methodSignature="ar.uba.dc.simple.Tupla nuevaTupla()">
+  <heap>
+    <graph>
+      <nodes>
+        <statement id="2" inside="true">
+          <statement-id id="3">
+            <method id="4">
+              <class>ar.uba.dc.simple.EjemploSimple01</class>
+              <signature>ar.uba.dc.simple.Tupla nuevaTupla()</signature>
+            </method>
+            <value>$r0 = new ar.uba.dc.simple.Tupla</value>
+            <line-number>58</line-number>
+            <bytecode-offset>0</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="5" inside="true">
+          <statement-id id="6">
+            <method id="7">
+              <class>ar.uba.dc.simple.EjemploSimple01</class>
+              <signature>java.lang.Integer newInteger()</signature>
+            </method>
+            <value>$r0 = new java.lang.Integer</value>
+            <line-number>71</line-number>
+            <bytecode-offset>0</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+      </nodes>
+      <edges>
+        <edge id="8" field="b" inside="true">
+          <source>
+            <statement reference="2"/>
+          </source>
+          <target>
+            <statement reference="5"/>
+          </target>
+        </edge>
+        <edge id="9" field="a" inside="true">
+          <source>
+            <statement reference="2"/>
+          </source>
+          <target>
+            <statement reference="5"/>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <returned>
+      <statement reference="2"/>
+    </returned>
+    <escape-globaly/>
+  </heap>
+  <parameters/>
+  <temporal>{ 0 }</temporal>
+  <residual>
+    <node>
+      <statement reference="2"/>
+      <value>{ 1 }</value>
+    </node>
+    <node>
+      <statement reference="5"/>
+      <value>{ 2 }</value>
+    </node>
+  </residual>
+</summary>

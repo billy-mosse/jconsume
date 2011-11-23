@@ -1,0 +1,12 @@
+<summary id="1" className="ar.uba.dc.jolden.mst.Graph" methodSignature="int mult(int,int)">
+  <points-to-graph id="2">
+    <graph>
+      <nodes/>
+      <edges/>
+    </graph>
+    <variables/>
+    <returned id="3"/>
+    <escape-globaly id="4"/>
+  </points-to-graph>
+  <mutated-fields/>
+</summary>

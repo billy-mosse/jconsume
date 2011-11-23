@@ -1,0 +1,122 @@
+<summary id="1" className="ar.uba.dc.basic.polymorphism.expectation.BasicTest" methodSignature="java.lang.Integer[] test()">
+  <heap>
+    <graph>
+      <nodes>
+        <statement id="2" inside="true">
+          <statement-id id="3">
+            <method id="4">
+              <class>ar.uba.dc.basic.polymorphism.expectation.BasicExtension</class>
+              <signature>java.lang.Integer[] buildArray()</signature>
+            </method>
+            <value>$r2 = newarray (java.lang.Integer)[$b0]</value>
+            <line-number>69</line-number>
+            <bytecode-offset>1</bytecode-offset>
+          </statement-id>
+          <context sensitivity="1">
+            <call id="5">
+              <method id="6">
+                <class>ar.uba.dc.basic.polymorphism.expectation.BasicTest</class>
+                <signature>java.lang.Integer[] test()</signature>
+              </method>
+              <value>$r1 = virtualinvoke $r0.&lt;ar.uba.dc.basic.polymorphism.expectation.BasicTest: java.lang.Integer[] buildArray()&gt;()</value>
+              <line-number>41</line-number>
+              <bytecode-offset>1</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <statement id="7" inside="true">
+          <statement-id id="8">
+            <method id="9">
+              <class>ar.uba.dc.basic.polymorphism.expectation.BasicTest</class>
+              <signature>java.lang.Integer[] buildArray()</signature>
+            </method>
+            <value>$r2 = newarray (java.lang.Integer)[$b0]</value>
+            <line-number>49</line-number>
+            <bytecode-offset>1</bytecode-offset>
+          </statement-id>
+          <context sensitivity="1">
+            <call id="10">
+              <method reference="6"/>
+              <value>$r1 = virtualinvoke $r0.&lt;ar.uba.dc.basic.polymorphism.expectation.BasicTest: java.lang.Integer[] buildArray()&gt;()</value>
+              <line-number>41</line-number>
+              <bytecode-offset>1</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <statement id="11" inside="true">
+          <statement-id id="12">
+            <method id="13">
+              <class>ar.uba.dc.basic.polymorphism.expectation.BasicTest</class>
+              <signature>java.lang.Integer newInteger()</signature>
+            </method>
+            <value>$r0 = new java.lang.Integer</value>
+            <line-number>57</line-number>
+            <bytecode-offset>0</bytecode-offset>
+          </statement-id>
+          <context sensitivity="1">
+            <call id="14">
+              <method reference="6"/>
+              <value>$r1 = virtualinvoke $r0.&lt;ar.uba.dc.basic.polymorphism.expectation.BasicTest: java.lang.Integer[] buildArray()&gt;()</value>
+              <line-number>41</line-number>
+              <bytecode-offset>1</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <this id="15"/>
+      </nodes>
+      <edges>
+        <edge id="16" field="[]" inside="true">
+          <source>
+            <statement reference="2"/>
+          </source>
+          <target>
+            <statement reference="11"/>
+          </target>
+        </edge>
+        <edge id="17" field="[]" inside="true">
+          <source>
+            <statement reference="7"/>
+          </source>
+          <target>
+            <statement id="18" inside="true">
+              <statement-id reference="12"/>
+              <context sensitivity="1">
+                <call id="19">
+                  <method reference="6"/>
+                  <value>$r1 = virtualinvoke $r0.&lt;ar.uba.dc.basic.polymorphism.expectation.BasicTest: java.lang.Integer[] buildArray()&gt;()</value>
+                  <line-number>41</line-number>
+                  <bytecode-offset>1</bytecode-offset>
+                </call>
+              </context>
+            </statement>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <returned>
+      <statement reference="2"/>
+      <statement reference="7"/>
+    </returned>
+    <escape-globaly/>
+  </heap>
+  <parameters/>
+  <temporal>{ 0 }</temporal>
+  <residual>
+    <node>
+      <statement reference="2"/>
+      <value>{ 1 }</value>
+    </node>
+    <node>
+      <statement reference="7"/>
+      <value>{ 1 }</value>
+    </node>
+    <node>
+      <statement reference="11"/>
+      <value>{ 3 }</value>
+    </node>
+    <node>
+      <this reference="15"/>
+      <value>{ 0 }</value>
+    </node>
+  </residual>
+</summary>

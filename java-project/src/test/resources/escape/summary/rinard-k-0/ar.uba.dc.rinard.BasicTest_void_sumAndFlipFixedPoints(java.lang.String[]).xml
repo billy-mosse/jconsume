@@ -1,0 +1,255 @@
+<summary id="1" className="ar.uba.dc.rinard.BasicTest" methodSignature="void sumAndFlipFixedPoints(java.lang.String[])">
+  <points-to-graph id="2">
+    <graph>
+      <nodes>
+        <param id="3" index="0"/>
+        <statement id="4" inside="true">
+          <statement-id id="5">
+            <method id="6">
+              <class>ar.uba.dc.rinard.List</class>
+              <signature>void add(java.lang.Object)</signature>
+            </method>
+            <value>$r1 = new ar.uba.dc.rinard.Cell</value>
+            <line-number>15</line-number>
+            <bytecode-offset>1</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="7" inside="true">
+          <statement-id id="8">
+            <method id="9">
+              <class>ar.uba.dc.rinard.List</class>
+              <signature>java.util.Iterator iterator()</signature>
+            </method>
+            <value>$r0 = new ar.uba.dc.rinard.ListItr</value>
+            <line-number>25</line-number>
+            <bytecode-offset>0</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="10" inside="true">
+          <statement-id id="11">
+            <method id="12">
+              <class>ar.uba.dc.rinard.BasicTest</class>
+              <signature>void sumAndFlipFixedPoints(java.lang.String[])</signature>
+            </method>
+            <value>$r3 = new ar.uba.dc.rinard.Point</value>
+            <line-number>110</line-number>
+            <bytecode-offset>28</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="13" inside="true">
+          <statement-id id="14">
+            <method reference="12"/>
+            <value>$r3 = new ar.uba.dc.rinard.Point</value>
+            <line-number>109</line-number>
+            <bytecode-offset>9</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <method id="15">
+          <method-id id="16">
+            <class>java.lang.Float</class>
+            <signature>java.lang.Float valueOf(float)</signature>
+          </method-id>
+          <context sensitivity="0"/>
+        </method>
+        <statement id="17" inside="true">
+          <statement-id id="18">
+            <method reference="12"/>
+            <value>$r0 = new ar.uba.dc.rinard.List</value>
+            <line-number>108</line-number>
+            <bytecode-offset>0</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="19" inside="true">
+          <statement-id id="20">
+            <method reference="12"/>
+            <value>$r3 = new ar.uba.dc.rinard.Point</value>
+            <line-number>111</line-number>
+            <bytecode-offset>48</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+      </nodes>
+      <edges>
+        <edge id="21" field="y" inside="true">
+          <source>
+            <statement reference="19"/>
+          </source>
+          <target>
+            <method id="22">
+              <method-id reference="16"/>
+              <context sensitivity="0"/>
+            </method>
+          </target>
+        </edge>
+        <edge id="23" field="x" inside="true">
+          <source>
+            <statement reference="19"/>
+          </source>
+          <target>
+            <method id="24">
+              <method-id reference="16"/>
+              <context sensitivity="0"/>
+            </method>
+          </target>
+        </edge>
+        <edge id="25" field="next" inside="true">
+          <source>
+            <statement reference="4"/>
+          </source>
+          <target>
+            <statement reference="4"/>
+          </target>
+        </edge>
+        <edge id="26" field="data" inside="true">
+          <source>
+            <statement reference="4"/>
+          </source>
+          <target>
+            <statement reference="13"/>
+          </target>
+        </edge>
+        <edge id="27" field="data" inside="true">
+          <source>
+            <statement reference="4"/>
+          </source>
+          <target>
+            <statement reference="10"/>
+          </target>
+        </edge>
+        <edge id="28" field="data" inside="true">
+          <source>
+            <statement reference="4"/>
+          </source>
+          <target>
+            <statement reference="19"/>
+          </target>
+        </edge>
+        <edge id="29" field="cell" inside="true">
+          <source>
+            <statement reference="7"/>
+          </source>
+          <target>
+            <statement reference="4"/>
+          </target>
+        </edge>
+        <edge id="30" field="y" inside="true">
+          <source>
+            <statement reference="10"/>
+          </source>
+          <target>
+            <method id="31">
+              <method-id reference="16"/>
+              <context sensitivity="0"/>
+            </method>
+          </target>
+        </edge>
+        <edge id="32" field="x" inside="true">
+          <source>
+            <statement reference="10"/>
+          </source>
+          <target>
+            <method id="33">
+              <method-id reference="16"/>
+              <context sensitivity="0"/>
+            </method>
+          </target>
+        </edge>
+        <edge id="34" field="x" inside="true">
+          <source>
+            <statement reference="13"/>
+          </source>
+          <target>
+            <method reference="15"/>
+          </target>
+        </edge>
+        <edge id="35" field="y" inside="true">
+          <source>
+            <statement reference="13"/>
+          </source>
+          <target>
+            <method id="36">
+              <method-id reference="16"/>
+              <context sensitivity="0"/>
+            </method>
+          </target>
+        </edge>
+        <edge id="37" field="head" inside="true">
+          <source>
+            <statement reference="17"/>
+          </source>
+          <target>
+            <statement reference="4"/>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <variables>
+      <variable>
+        <name>$r0</name>
+        <type id="38" name="ref" to="ar.uba.dc.rinard.List"/>
+        <points-to id="39">
+          <statement reference="17"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>args</name>
+        <type id="40" name="array" numDimensions="1">
+          <base id="41" name="ref" to="java.lang.String"/>
+        </type>
+        <points-to id="42">
+          <param reference="3"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r1</name>
+        <type reference="38"/>
+        <points-to id="43">
+          <statement reference="17"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r2</name>
+        <type id="44" name="ref" to="ar.uba.dc.rinard.Point"/>
+        <points-to id="45">
+          <statement reference="19"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r5</name>
+        <type id="46" name="ref" to="java.lang.Float"/>
+        <points-to id="47">
+          <method reference="22"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>list</name>
+        <type reference="38"/>
+        <points-to id="48">
+          <statement reference="17"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r4</name>
+        <type reference="46"/>
+        <points-to id="49">
+          <method reference="24"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r3</name>
+        <type reference="44"/>
+        <points-to id="50">
+          <statement reference="19"/>
+        </points-to>
+      </variable>
+    </variables>
+    <returned id="51"/>
+    <escape-globaly id="52"/>
+  </points-to-graph>
+  <mutated-fields/>
+</summary>

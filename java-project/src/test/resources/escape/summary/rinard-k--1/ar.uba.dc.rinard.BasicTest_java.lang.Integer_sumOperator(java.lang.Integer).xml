@@ -1,0 +1,168 @@
+<summary id="1" className="ar.uba.dc.rinard.BasicTest" methodSignature="java.lang.Integer sumOperator(java.lang.Integer)">
+  <points-to-graph id="2">
+    <graph>
+      <nodes>
+        <param id="3" index="0"/>
+        <method id="4">
+          <method-id id="5">
+            <class>java.lang.Integer</class>
+            <signature>java.lang.Integer valueOf(int)</signature>
+          </method-id>
+          <context>
+            <call id="6">
+              <method id="7">
+                <class>ar.uba.dc.rinard.BasicTest</class>
+                <signature>java.lang.Integer sumOperator(java.lang.Integer)</signature>
+              </method>
+              <value>$r1 = staticinvoke &lt;java.lang.Integer: java.lang.Integer valueOf(int)&gt;($b0)</value>
+              <line-number>173</line-number>
+              <bytecode-offset>6</bytecode-offset>
+            </call>
+          </context>
+        </method>
+        <method id="8">
+          <method-id reference="5"/>
+          <context>
+            <call id="9">
+              <method reference="7"/>
+              <value>$r1 = staticinvoke &lt;java.lang.Integer: java.lang.Integer valueOf(int)&gt;($b0)</value>
+              <line-number>175</line-number>
+              <bytecode-offset>11</bytecode-offset>
+            </call>
+          </context>
+        </method>
+        <method id="10">
+          <method-id reference="5"/>
+          <context>
+            <call id="11">
+              <method reference="7"/>
+              <value>$r1 = staticinvoke &lt;java.lang.Integer: java.lang.Integer valueOf(int)&gt;($i1)</value>
+              <line-number>183</line-number>
+              <bytecode-offset>103</bytecode-offset>
+            </call>
+          </context>
+        </method>
+        <method id="12">
+          <method-id reference="5"/>
+          <context>
+            <call id="13">
+              <method reference="7"/>
+              <value>$r1 = staticinvoke &lt;java.lang.Integer: java.lang.Integer valueOf(int)&gt;($i1)</value>
+              <line-number>180</line-number>
+              <bytecode-offset>69</bytecode-offset>
+            </call>
+          </context>
+        </method>
+        <method id="14">
+          <method-id reference="5"/>
+          <context>
+            <call id="15">
+              <method reference="7"/>
+              <value>$r1 = staticinvoke &lt;java.lang.Integer: java.lang.Integer valueOf(int)&gt;($i1)</value>
+              <line-number>176</line-number>
+              <bytecode-offset>27</bytecode-offset>
+            </call>
+          </context>
+        </method>
+        <method id="16">
+          <method-id reference="5"/>
+          <context>
+            <call id="17">
+              <method reference="7"/>
+              <value>$r1 = staticinvoke &lt;java.lang.Integer: java.lang.Integer valueOf(int)&gt;($i1)</value>
+              <line-number>179</line-number>
+              <bytecode-offset>79</bytecode-offset>
+            </call>
+          </context>
+        </method>
+        <method id="18">
+          <method-id reference="5"/>
+          <context>
+            <call id="19">
+              <method reference="7"/>
+              <value>$r1 = staticinvoke &lt;java.lang.Integer: java.lang.Integer valueOf(int)&gt;($b0)</value>
+              <line-number>179</line-number>
+              <bytecode-offset>53</bytecode-offset>
+            </call>
+          </context>
+        </method>
+        <method id="20">
+          <method-id reference="5"/>
+          <context>
+            <call id="21">
+              <method reference="7"/>
+              <value>$r1 = staticinvoke &lt;java.lang.Integer: java.lang.Integer valueOf(int)&gt;($i1)</value>
+              <line-number>175</line-number>
+              <bytecode-offset>37</bytecode-offset>
+            </call>
+          </context>
+        </method>
+        <method id="22">
+          <method-id reference="5"/>
+          <context>
+            <call id="23">
+              <method reference="7"/>
+              <value>$r1 = staticinvoke &lt;java.lang.Integer: java.lang.Integer valueOf(int)&gt;($b0)</value>
+              <line-number>172</line-number>
+              <bytecode-offset>1</bytecode-offset>
+            </call>
+          </context>
+        </method>
+      </nodes>
+      <edges/>
+    </graph>
+    <variables>
+      <variable>
+        <name>$r1</name>
+        <type id="24" name="ref" to="java.lang.Integer"/>
+        <points-to id="25">
+          <method reference="10"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r0</name>
+        <type reference="24"/>
+        <points-to id="26">
+          <method reference="4"/>
+          <method reference="12"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>n</name>
+        <type reference="24"/>
+        <points-to id="27">
+          <param reference="3"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>i</name>
+        <type reference="24"/>
+        <points-to id="28">
+          <method reference="16"/>
+          <method reference="18"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>result1</name>
+        <type reference="24"/>
+        <points-to id="29">
+          <method reference="14"/>
+          <method reference="22"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>result2</name>
+        <type reference="24"/>
+        <points-to id="30">
+          <method reference="4"/>
+          <method reference="12"/>
+        </points-to>
+      </variable>
+    </variables>
+    <returned id="31">
+      <method reference="10"/>
+    </returned>
+    <escape-globaly id="32"/>
+  </points-to-graph>
+  <mutated-fields/>
+</summary>

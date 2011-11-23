@@ -1,0 +1,60 @@
+<summary id="1" className="ar.uba.dc.rinard.ListItr" methodSignature="void &lt;init&gt;(ar.uba.dc.rinard.Cell)">
+  <points-to-graph id="2">
+    <graph>
+      <nodes>
+        <param id="3" index="0"/>
+        <this id="4"/>
+      </nodes>
+      <edges>
+        <edge id="5" field="cell" inside="true">
+          <source>
+            <this reference="4"/>
+          </source>
+          <target>
+            <param reference="3"/>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <variables>
+      <variable>
+        <name>this</name>
+        <type id="6" name="ref" to="ar.uba.dc.rinard.ListItr"/>
+        <points-to id="7">
+          <this reference="4"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r1</name>
+        <type id="8" name="ref" to="ar.uba.dc.rinard.Cell"/>
+        <points-to id="9">
+          <param reference="3"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>head</name>
+        <type reference="8"/>
+        <points-to id="10">
+          <param reference="3"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r0</name>
+        <type reference="6"/>
+        <points-to id="11">
+          <this reference="4"/>
+        </points-to>
+      </variable>
+    </variables>
+    <returned id="12"/>
+    <escape-globaly id="13"/>
+  </points-to-graph>
+  <mutated-fields>
+    <node>
+      <this reference="4"/>
+      <fields>
+        <field>cell</field>
+      </fields>
+    </node>
+  </mutated-fields>
+</summary>

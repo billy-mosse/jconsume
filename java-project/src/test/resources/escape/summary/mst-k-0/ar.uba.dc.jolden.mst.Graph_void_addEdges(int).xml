@@ -1,0 +1,342 @@
+<summary id="1" className="ar.uba.dc.jolden.mst.Graph" methodSignature="void addEdges(int)">
+  <points-to-graph id="2">
+    <graph>
+      <nodes>
+        <statement id="3" inside="false">
+          <statement-id id="4">
+            <method id="5">
+              <class>ar.uba.dc.jolden.mst.Graph</class>
+              <signature>void addEdges(int)</signature>
+            </method>
+            <value>$r6 = $r5[$i2]</value>
+            <line-number>97</line-number>
+            <bytecode-offset>48</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="6" inside="false">
+          <statement-id id="7">
+            <method id="8">
+              <class>ar.uba.dc.jolden.mst.Hashtable</class>
+              <signature>void put(java.lang.Object,java.lang.Object)</signature>
+            </method>
+            <value>$r9 = $r0.&lt;ar.uba.dc.jolden.mst.Hashtable: ar.uba.dc.jolden.mst.HashEntry[] array&gt;</value>
+            <line-number>59</line-number>
+            <bytecode-offset>24</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="9" inside="true">
+          <statement-id id="10">
+            <method reference="5"/>
+            <value>$r7 = new java.lang.Integer</value>
+            <line-number>97</line-number>
+            <bytecode-offset>49</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="11" inside="false">
+          <statement-id id="12">
+            <method reference="8"/>
+            <value>$r7 = $r4.&lt;ar.uba.dc.jolden.mst.Hashtable: ar.uba.dc.jolden.mst.HashEntry[] array&gt;</value>
+            <line-number>58</line-number>
+            <bytecode-offset>13</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="13" inside="false">
+          <statement-id id="14">
+            <method reference="5"/>
+            <value>$r1 = $r0.&lt;ar.uba.dc.jolden.mst.Graph: ar.uba.dc.jolden.mst.Vertex[] nodes&gt;</value>
+            <line-number>92</line-number>
+            <bytecode-offset>3</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="15" inside="false">
+          <statement-id id="16">
+            <method id="17">
+              <class>ar.uba.dc.jolden.mst.Vertex</class>
+              <signature>ar.uba.dc.jolden.mst.Hashtable neighbors()</signature>
+            </method>
+            <value>$r1 = $r0.&lt;ar.uba.dc.jolden.mst.Vertex: ar.uba.dc.jolden.mst.Hashtable neighbors&gt;</value>
+            <line-number>83</line-number>
+            <bytecode-offset>1</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="18" inside="false">
+          <statement-id id="19">
+            <method id="20">
+              <class>ar.uba.dc.jolden.mst.Vertex</class>
+              <signature>ar.uba.dc.jolden.mst.Vertex next()</signature>
+            </method>
+            <value>$r0 = $r0.&lt;ar.uba.dc.jolden.mst.Vertex: ar.uba.dc.jolden.mst.Vertex next&gt;</value>
+            <line-number>65</line-number>
+            <bytecode-offset>1</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="21" inside="true">
+          <statement-id id="22">
+            <method reference="8"/>
+            <value>$r5 = new ar.uba.dc.jolden.mst.HashEntry</value>
+            <line-number>58</line-number>
+            <bytecode-offset>6</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="23" inside="false">
+          <statement-id id="24">
+            <method reference="5"/>
+            <value>$r5 = $r4.&lt;ar.uba.dc.jolden.mst.Graph: ar.uba.dc.jolden.mst.Vertex[] nodes&gt;</value>
+            <line-number>97</line-number>
+            <bytecode-offset>43</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="25" inside="false">
+          <statement-id id="26">
+            <method reference="5"/>
+            <value>$r2 = $r1[$b1]</value>
+            <line-number>92</line-number>
+            <bytecode-offset>7</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="27" inside="false">
+          <statement-id id="28">
+            <method reference="8"/>
+            <value>$r8 = $r7[$i0]</value>
+            <line-number>58</line-number>
+            <bytecode-offset>17</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <this id="29"/>
+      </nodes>
+      <edges>
+        <edge id="30" field="neighbors" inside="false">
+          <source>
+            <statement reference="18"/>
+          </source>
+          <target>
+            <statement reference="15"/>
+          </target>
+        </edge>
+        <edge id="31" field="next" inside="false">
+          <source>
+            <statement reference="18"/>
+          </source>
+          <target>
+            <statement reference="18"/>
+          </target>
+        </edge>
+        <edge id="32" field="entry" inside="true">
+          <source>
+            <statement reference="21"/>
+          </source>
+          <target>
+            <statement reference="9"/>
+          </target>
+        </edge>
+        <edge id="33" field="key" inside="true">
+          <source>
+            <statement reference="21"/>
+          </source>
+          <target>
+            <statement reference="3"/>
+          </target>
+        </edge>
+        <edge id="34" field="next" inside="true">
+          <source>
+            <statement reference="21"/>
+          </source>
+          <target>
+            <statement reference="27"/>
+          </target>
+        </edge>
+        <edge id="35" field="[]" inside="false">
+          <source>
+            <statement reference="23"/>
+          </source>
+          <target>
+            <statement reference="3"/>
+          </target>
+        </edge>
+        <edge id="36" field="[]" inside="true">
+          <source>
+            <statement reference="6"/>
+          </source>
+          <target>
+            <statement reference="21"/>
+          </target>
+        </edge>
+        <edge id="37" field="neighbors" inside="false">
+          <source>
+            <statement reference="25"/>
+          </source>
+          <target>
+            <statement reference="15"/>
+          </target>
+        </edge>
+        <edge id="38" field="next" inside="false">
+          <source>
+            <statement reference="25"/>
+          </source>
+          <target>
+            <statement reference="18"/>
+          </target>
+        </edge>
+        <edge id="39" field="[]" inside="false">
+          <source>
+            <statement reference="11"/>
+          </source>
+          <target>
+            <statement reference="27"/>
+          </target>
+        </edge>
+        <edge id="40" field="[]" inside="false">
+          <source>
+            <statement reference="13"/>
+          </source>
+          <target>
+            <statement reference="25"/>
+          </target>
+        </edge>
+        <edge id="41" field="array" inside="false">
+          <source>
+            <statement reference="15"/>
+          </source>
+          <target>
+            <statement reference="11"/>
+          </target>
+        </edge>
+        <edge id="42" field="array" inside="false">
+          <source>
+            <statement reference="15"/>
+          </source>
+          <target>
+            <statement reference="6"/>
+          </target>
+        </edge>
+        <edge id="43" field="nodes" inside="false">
+          <source>
+            <this reference="29"/>
+          </source>
+          <target>
+            <statement reference="13"/>
+          </target>
+        </edge>
+        <edge id="44" field="nodes" inside="false">
+          <source>
+            <this reference="29"/>
+          </source>
+          <target>
+            <statement reference="23"/>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <variables>
+      <variable>
+        <name>$r2</name>
+        <type id="45" name="ref" to="ar.uba.dc.jolden.mst.Vertex"/>
+        <points-to id="46">
+          <statement reference="18"/>
+          <statement reference="25"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>tmp</name>
+        <type reference="45"/>
+        <points-to id="47">
+          <statement reference="18"/>
+          <statement reference="25"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r6</name>
+        <type reference="45"/>
+        <points-to id="48">
+          <statement reference="3"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r7</name>
+        <type id="49" name="ref" to="java.lang.Integer"/>
+        <points-to id="50">
+          <statement reference="9"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r8</name>
+        <type reference="49"/>
+        <points-to id="51">
+          <statement reference="9"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r5</name>
+        <type id="52" name="array" numDimensions="1">
+          <base reference="45"/>
+        </type>
+        <points-to id="53">
+          <statement reference="23"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>hash</name>
+        <type id="54" name="ref" to="ar.uba.dc.jolden.mst.Hashtable"/>
+        <points-to id="55">
+          <statement reference="15"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r1</name>
+        <type reference="52"/>
+        <points-to id="56">
+          <statement reference="13"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r0</name>
+        <type id="57" name="ref" to="ar.uba.dc.jolden.mst.Graph"/>
+        <points-to id="58">
+          <this reference="29"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r4</name>
+        <type reference="57"/>
+        <points-to id="59">
+          <this reference="29"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>this</name>
+        <type reference="57"/>
+        <points-to id="60">
+          <this reference="29"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r3</name>
+        <type reference="54"/>
+        <points-to id="61">
+          <statement reference="15"/>
+        </points-to>
+      </variable>
+    </variables>
+    <returned id="62"/>
+    <escape-globaly id="63"/>
+  </points-to-graph>
+  <mutated-fields>
+    <node>
+      <statement reference="6"/>
+      <fields>
+        <field>[]</field>
+      </fields>
+    </node>
+  </mutated-fields>
+</summary>

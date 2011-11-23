@@ -1,0 +1,17 @@
+package ar.uba.dc.barvinok;
+
+import ar.uba.dc.barvinok.expression.DomainSet;
+import ar.uba.dc.barvinok.expression.PiecewiseQuasipolynomial;
+
+public interface BarvinokCalculator {
+
+	PiecewiseQuasipolynomial max(PiecewiseQuasipolynomial expr1, PiecewiseQuasipolynomial expr2);
+
+	PiecewiseQuasipolynomial add(PiecewiseQuasipolynomial... expressions);
+		
+	PiecewiseQuasipolynomial countExecutions(DomainSet invariant);
+
+	PiecewiseQuasipolynomial sumConsumtion(PiecewiseQuasipolynomial expr, DomainSet invariant);
+	
+	PiecewiseQuasipolynomial upperBound(PiecewiseQuasipolynomial value, DomainSet invariant);
+}

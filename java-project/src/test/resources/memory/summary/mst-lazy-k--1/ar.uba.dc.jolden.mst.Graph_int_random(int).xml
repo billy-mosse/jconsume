@@ -1,0 +1,15 @@
+<summary id="1" className="ar.uba.dc.jolden.mst.Graph" methodSignature="int random(int)">
+  <heap>
+    <graph>
+      <nodes/>
+      <edges/>
+    </graph>
+    <returned/>
+    <escape-globaly/>
+  </heap>
+  <parameters>
+    <parameter>seed</parameter>
+  </parameters>
+  <temporal>{ 0 }</temporal>
+  <residual/>
+</summary>

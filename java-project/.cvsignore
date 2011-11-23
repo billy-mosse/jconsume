@@ -1,0 +1,7 @@
+target
+*.classpath
+*.project
+.settings
+results
+ea.runtime
+cmd_tmp

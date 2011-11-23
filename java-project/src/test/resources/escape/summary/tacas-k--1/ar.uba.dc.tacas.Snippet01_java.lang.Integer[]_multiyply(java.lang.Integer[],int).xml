@@ -1,0 +1,145 @@
+<summary id="1" className="ar.uba.dc.tacas.Snippet01" methodSignature="java.lang.Integer[] multiyply(java.lang.Integer[],int)">
+  <points-to-graph id="2">
+    <graph>
+      <nodes>
+        <statement id="3" inside="true">
+          <statement-id id="4">
+            <method id="5">
+              <class>ar.uba.dc.tacas.Snippet01</class>
+              <signature>java.lang.Integer[] multiyply(java.lang.Integer[],int)</signature>
+            </method>
+            <value>$r3 = new java.lang.Integer</value>
+            <line-number>77</line-number>
+            <bytecode-offset>19</bytecode-offset>
+          </statement-id>
+          <context/>
+        </statement>
+        <param id="6" index="0"/>
+        <statement id="7" inside="true">
+          <statement-id id="8">
+            <method reference="5"/>
+            <value>$r5 = new java.lang.Integer</value>
+            <line-number>78</line-number>
+            <bytecode-offset>31</bytecode-offset>
+          </statement-id>
+          <context/>
+        </statement>
+        <statement id="9" inside="false">
+          <statement-id id="10">
+            <method reference="5"/>
+            <value>$r3 = $r0[$i0]</value>
+            <line-number>76</line-number>
+            <bytecode-offset>13</bytecode-offset>
+          </statement-id>
+          <context/>
+        </statement>
+        <statement id="11" inside="true">
+          <statement-id id="12">
+            <method reference="5"/>
+            <value>$r0 = newarray (java.lang.Integer)[$i3]</value>
+            <line-number>74</line-number>
+            <bytecode-offset>2</bytecode-offset>
+          </statement-id>
+          <context/>
+        </statement>
+      </nodes>
+      <edges>
+        <edge id="13" field="[]" inside="false">
+          <source>
+            <param reference="6"/>
+          </source>
+          <target>
+            <statement reference="9"/>
+          </target>
+        </edge>
+        <edge id="14" field="[]" inside="true">
+          <source>
+            <statement reference="11"/>
+          </source>
+          <target>
+            <statement reference="7"/>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <variables>
+      <variable>
+        <name>$r6</name>
+        <type id="15" name="array" numDimensions="1">
+          <base id="16" name="ref" to="java.lang.Integer"/>
+        </type>
+        <points-to id="17">
+          <param reference="6"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>factor</name>
+        <type reference="16"/>
+        <points-to id="18">
+          <statement reference="3"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>res</name>
+        <type reference="15"/>
+        <points-to id="19">
+          <statement reference="11"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r2</name>
+        <type reference="16"/>
+        <points-to id="20">
+          <statement reference="3"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r5</name>
+        <type reference="16"/>
+        <points-to id="21">
+          <statement reference="7"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r0</name>
+        <type reference="15"/>
+        <points-to id="22">
+          <statement reference="11"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r1</name>
+        <type reference="16"/>
+        <points-to id="23">
+          <statement reference="7"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r3</name>
+        <type reference="16"/>
+        <points-to id="24">
+          <statement reference="3"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r4</name>
+        <type reference="16"/>
+        <points-to id="25">
+          <statement reference="3"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>v</name>
+        <type reference="15"/>
+        <points-to id="26">
+          <param reference="6"/>
+        </points-to>
+      </variable>
+    </variables>
+    <returned id="27">
+      <statement reference="11"/>
+    </returned>
+    <escape-globaly id="28"/>
+  </points-to-graph>
+  <mutated-fields/>
+</summary>

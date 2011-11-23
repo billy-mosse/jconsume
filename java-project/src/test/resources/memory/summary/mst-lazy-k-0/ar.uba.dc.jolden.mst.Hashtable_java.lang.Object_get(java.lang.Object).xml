@@ -1,0 +1,179 @@
+<summary id="1" className="ar.uba.dc.jolden.mst.Hashtable" methodSignature="java.lang.Object get(java.lang.Object)">
+  <heap>
+    <graph>
+      <nodes>
+        <param id="2" index="0"/>
+        <statement id="3" inside="false">
+          <statement-id id="4">
+            <method id="5">
+              <class>ar.uba.dc.jolden.mst.HashEntry</class>
+              <signature>java.lang.Object key()</signature>
+            </method>
+            <value>$r1 = $r0.&lt;ar.uba.dc.jolden.mst.HashEntry: java.lang.Object key&gt;</value>
+            <line-number>105</line-number>
+            <bytecode-offset>1</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="6" inside="false">
+          <statement-id id="7">
+            <method id="8">
+              <class>ar.uba.dc.jolden.mst.HashEntry</class>
+              <signature>java.lang.Object entry()</signature>
+            </method>
+            <value>$r1 = $r0.&lt;ar.uba.dc.jolden.mst.HashEntry: java.lang.Object entry&gt;</value>
+            <line-number>114</line-number>
+            <bytecode-offset>1</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="9" inside="false">
+          <statement-id id="10">
+            <method id="11">
+              <class>ar.uba.dc.jolden.mst.HashEntry</class>
+              <signature>ar.uba.dc.jolden.mst.HashEntry next()</signature>
+            </method>
+            <value>$r0 = $r0.&lt;ar.uba.dc.jolden.mst.HashEntry: ar.uba.dc.jolden.mst.HashEntry next&gt;</value>
+            <line-number>123</line-number>
+            <bytecode-offset>1</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="12" inside="false">
+          <statement-id id="13">
+            <method id="14">
+              <class>ar.uba.dc.jolden.mst.Hashtable</class>
+              <signature>java.lang.Object get(java.lang.Object)</signature>
+            </method>
+            <value>$r3 = $r2[$i1]</value>
+            <line-number>45</line-number>
+            <bytecode-offset>13</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="15" inside="false">
+          <statement-id id="16">
+            <method reference="14"/>
+            <value>$r2 = $r0.&lt;ar.uba.dc.jolden.mst.Hashtable: ar.uba.dc.jolden.mst.HashEntry[] array&gt;</value>
+            <line-number>45</line-number>
+            <bytecode-offset>9</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <this id="17"/>
+      </nodes>
+      <edges>
+        <edge id="18" field="key" inside="false">
+          <source>
+            <statement reference="12"/>
+          </source>
+          <target>
+            <statement reference="3"/>
+          </target>
+        </edge>
+        <edge id="19" field="entry" inside="false">
+          <source>
+            <statement reference="12"/>
+          </source>
+          <target>
+            <statement id="20" inside="false">
+              <statement-id id="21">
+                <method reference="8"/>
+                <value>$r1 = $r0.&lt;ar.uba.dc.jolden.mst.HashEntry: java.lang.Object entry&gt;</value>
+                <line-number>114</line-number>
+                <bytecode-offset>1</bytecode-offset>
+              </statement-id>
+              <context sensitivity="0"/>
+            </statement>
+          </target>
+        </edge>
+        <edge id="22" field="next" inside="false">
+          <source>
+            <statement reference="12"/>
+          </source>
+          <target>
+            <statement reference="9"/>
+          </target>
+        </edge>
+        <edge id="23" field="next" inside="false">
+          <source>
+            <statement reference="9"/>
+          </source>
+          <target>
+            <statement reference="9"/>
+          </target>
+        </edge>
+        <edge id="24" field="key" inside="false">
+          <source>
+            <statement reference="9"/>
+          </source>
+          <target>
+            <statement reference="3"/>
+          </target>
+        </edge>
+        <edge id="25" field="entry" inside="false">
+          <source>
+            <statement reference="9"/>
+          </source>
+          <target>
+            <statement reference="20"/>
+          </target>
+        </edge>
+        <edge id="26" field="[]" inside="false">
+          <source>
+            <statement reference="15"/>
+          </source>
+          <target>
+            <statement reference="12"/>
+          </target>
+        </edge>
+        <edge id="27" field="array" inside="false">
+          <source>
+            <this reference="17"/>
+          </source>
+          <target>
+            <statement reference="15"/>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <returned>
+      <statement reference="6"/>
+    </returned>
+    <escape-globaly/>
+  </heap>
+  <parameters>
+    <parameter>this.array.elements.maxLength</parameter>
+  </parameters>
+  <temporal>{ 0 }</temporal>
+  <residual>
+    <node>
+      <param reference="2"/>
+      <value>{ [[this.array.elements.maxLength] -&gt; []] -&gt; 0 : this.array.elements.maxLength &gt; 0 }</value>
+    </node>
+    <node>
+      <statement reference="3"/>
+      <value>{ [[this.array.elements.maxLength] -&gt; []] -&gt; 0 : this.array.elements.maxLength &gt; 0 }</value>
+    </node>
+    <node>
+      <statement reference="6"/>
+      <value>{ [[this.array.elements.maxLength] -&gt; []] -&gt; 0 : this.array.elements.maxLength &gt; 0 }</value>
+    </node>
+    <node>
+      <statement reference="9"/>
+      <value>{ [[this.array.elements.maxLength] -&gt; []] -&gt; 0 : this.array.elements.maxLength &gt; 0 }</value>
+    </node>
+    <node>
+      <statement reference="12"/>
+      <value>{ [[this.array.elements.maxLength] -&gt; []] -&gt; 0 : this.array.elements.maxLength &gt; 0 }</value>
+    </node>
+    <node>
+      <statement reference="15"/>
+      <value>{ [[this.array.elements.maxLength] -&gt; []] -&gt; 0 : this.array.elements.maxLength &gt; 0 }</value>
+    </node>
+    <node>
+      <this reference="17"/>
+      <value>{ [[this.array.elements.maxLength] -&gt; []] -&gt; 0 : this.array.elements.maxLength &gt; 0 }</value>
+    </node>
+  </residual>
+</summary>

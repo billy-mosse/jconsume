@@ -1,0 +1,68 @@
+<summary id="1" className="ar.uba.dc.rinard.List" methodSignature="java.util.Iterator iterator()">
+  <heap>
+    <graph>
+      <nodes>
+        <statement id="2" inside="true">
+          <statement-id id="3">
+            <method id="4">
+              <class>ar.uba.dc.rinard.List</class>
+              <signature>java.util.Iterator iterator()</signature>
+            </method>
+            <value>$r0 = new ar.uba.dc.rinard.ListItr</value>
+            <line-number>25</line-number>
+            <bytecode-offset>0</bytecode-offset>
+          </statement-id>
+          <context/>
+        </statement>
+        <statement id="5" inside="false">
+          <statement-id id="6">
+            <method reference="4"/>
+            <value>$r3 = $r2.&lt;ar.uba.dc.rinard.List: ar.uba.dc.rinard.Cell head&gt;</value>
+            <line-number>25</line-number>
+            <bytecode-offset>5</bytecode-offset>
+          </statement-id>
+          <context/>
+        </statement>
+        <this id="7"/>
+      </nodes>
+      <edges>
+        <edge id="8" field="cell" inside="true">
+          <source>
+            <statement reference="2"/>
+          </source>
+          <target>
+            <statement reference="5"/>
+          </target>
+        </edge>
+        <edge id="9" field="head" inside="false">
+          <source>
+            <this reference="7"/>
+          </source>
+          <target>
+            <statement reference="5"/>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <returned>
+      <statement reference="2"/>
+    </returned>
+    <escape-globaly/>
+  </heap>
+  <parameters/>
+  <temporal>{ 0 }</temporal>
+  <residual>
+    <node>
+      <statement reference="2"/>
+      <value>{ 1 }</value>
+    </node>
+    <node>
+      <statement reference="5"/>
+      <value>{ 0 }</value>
+    </node>
+    <node>
+      <this reference="7"/>
+      <value>{ 0 }</value>
+    </node>
+  </residual>
+</summary>

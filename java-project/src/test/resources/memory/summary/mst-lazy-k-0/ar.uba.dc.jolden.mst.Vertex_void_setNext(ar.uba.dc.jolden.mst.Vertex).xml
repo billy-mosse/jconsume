@@ -1,0 +1,34 @@
+<summary id="1" className="ar.uba.dc.jolden.mst.Vertex" methodSignature="void setNext(ar.uba.dc.jolden.mst.Vertex)">
+  <heap>
+    <graph>
+      <nodes>
+        <param id="2" index="0"/>
+        <this id="3"/>
+      </nodes>
+      <edges>
+        <edge id="4" field="next" inside="true">
+          <source>
+            <this reference="3"/>
+          </source>
+          <target>
+            <param reference="2"/>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <returned/>
+    <escape-globaly/>
+  </heap>
+  <parameters/>
+  <temporal>{ 0 }</temporal>
+  <residual>
+    <node>
+      <param reference="2"/>
+      <value>{ 0 }</value>
+    </node>
+    <node>
+      <this reference="3"/>
+      <value>{ 0 }</value>
+    </node>
+  </residual>
+</summary>

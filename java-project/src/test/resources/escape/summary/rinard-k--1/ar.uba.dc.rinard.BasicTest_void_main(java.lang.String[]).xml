@@ -1,0 +1,1615 @@
+<summary id="1" className="ar.uba.dc.rinard.BasicTest" methodSignature="void main(java.lang.String[])">
+  <points-to-graph id="2">
+    <graph>
+      <nodes>
+        <param id="3" index="0"/>
+        <method id="4">
+          <method-id id="5">
+            <class>java.lang.Integer</class>
+            <signature>java.lang.Integer valueOf(int)</signature>
+          </method-id>
+          <context>
+            <call id="6">
+              <method id="7">
+                <class>ar.uba.dc.rinard.BasicTest</class>
+                <signature>void main(java.lang.String[])</signature>
+              </method>
+              <value>$r2 = staticinvoke &lt;ar.uba.dc.rinard.BasicTest: java.lang.Integer sumOperator(java.lang.Integer)&gt;($r2)</value>
+              <line-number>97</line-number>
+              <bytecode-offset>20</bytecode-offset>
+            </call>
+            <call id="8">
+              <method id="9">
+                <class>ar.uba.dc.rinard.BasicTest</class>
+                <signature>java.lang.Integer sumOperator(java.lang.Integer)</signature>
+              </method>
+              <value>$r1 = staticinvoke &lt;java.lang.Integer: java.lang.Integer valueOf(int)&gt;($b0)</value>
+              <line-number>179</line-number>
+              <bytecode-offset>53</bytecode-offset>
+            </call>
+          </context>
+        </method>
+        <method id="10">
+          <method-id reference="5"/>
+          <context>
+            <call reference="6"/>
+            <call id="11">
+              <method reference="9"/>
+              <value>$r1 = staticinvoke &lt;java.lang.Integer: java.lang.Integer valueOf(int)&gt;($b0)</value>
+              <line-number>173</line-number>
+              <bytecode-offset>6</bytecode-offset>
+            </call>
+          </context>
+        </method>
+        <method id="12">
+          <method-id id="13">
+            <class>java.lang.Float</class>
+            <signature>java.lang.Float valueOf(float)</signature>
+          </method-id>
+          <context>
+            <call id="14">
+              <method reference="7"/>
+              <value>staticinvoke &lt;ar.uba.dc.rinard.BasicTest: void sumNumbersUpToParameter(java.lang.Integer)&gt;($r2)</value>
+              <line-number>95</line-number>
+              <bytecode-offset>12</bytecode-offset>
+            </call>
+            <call id="15">
+              <method id="16">
+                <class>ar.uba.dc.rinard.BasicTest</class>
+                <signature>void sumNumbersUpToParameter(java.lang.Integer)</signature>
+              </method>
+              <value>$r4 = staticinvoke &lt;java.lang.Float: java.lang.Float valueOf(float)&gt;($f1)</value>
+              <line-number>127</line-number>
+              <bytecode-offset>9</bytecode-offset>
+            </call>
+          </context>
+        </method>
+        <method id="17">
+          <method-id reference="5"/>
+          <context>
+            <call reference="6"/>
+            <call id="18">
+              <method reference="9"/>
+              <value>$r1 = staticinvoke &lt;java.lang.Integer: java.lang.Integer valueOf(int)&gt;($b0)</value>
+              <line-number>172</line-number>
+              <bytecode-offset>1</bytecode-offset>
+            </call>
+          </context>
+        </method>
+        <statement id="19" inside="true">
+          <statement-id id="20">
+            <method id="21">
+              <class>ar.uba.dc.rinard.BasicTest</class>
+              <signature>void sumNumbersUpToParameterUsingStaticList(java.lang.Integer)</signature>
+            </method>
+            <value>$r0 = new ar.uba.dc.rinard.List</value>
+            <line-number>149</line-number>
+            <bytecode-offset>0</bytecode-offset>
+          </statement-id>
+          <context>
+            <call id="22">
+              <method reference="7"/>
+              <value>staticinvoke &lt;ar.uba.dc.rinard.BasicTest: void sumNumbersUpToParameterUsingStaticList(java.lang.Integer)&gt;($r2)</value>
+              <line-number>96</line-number>
+              <bytecode-offset>16</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <statement id="23" inside="true">
+          <statement-id id="24">
+            <method id="25">
+              <class>ar.uba.dc.rinard.BasicTest</class>
+              <signature>void sumAndFlipFixedPoints(java.lang.String[])</signature>
+            </method>
+            <value>$r3 = new ar.uba.dc.rinard.Point</value>
+            <line-number>111</line-number>
+            <bytecode-offset>48</bytecode-offset>
+          </statement-id>
+          <context>
+            <call id="26">
+              <method reference="7"/>
+              <value>staticinvoke &lt;ar.uba.dc.rinard.BasicTest: void sumAndFlipFixedPoints(java.lang.String[])&gt;($r0)</value>
+              <line-number>94</line-number>
+              <bytecode-offset>8</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <method id="27">
+          <method-id reference="5"/>
+          <context>
+            <call id="28">
+              <method reference="7"/>
+              <value>staticinvoke &lt;ar.uba.dc.rinard.BasicTest: void constantParameterCall()&gt;()</value>
+              <line-number>98</line-number>
+              <bytecode-offset>24</bytecode-offset>
+            </call>
+            <call id="29">
+              <method id="30">
+                <class>ar.uba.dc.rinard.BasicTest</class>
+                <signature>void constantParameterCall()</signature>
+              </method>
+              <value>$r0 = staticinvoke &lt;ar.uba.dc.rinard.BasicTest: java.lang.Integer sumOperator(java.lang.Integer)&gt;($r0)</value>
+              <line-number>201</line-number>
+              <bytecode-offset>21</bytecode-offset>
+            </call>
+            <call id="31">
+              <method reference="9"/>
+              <value>$r1 = staticinvoke &lt;java.lang.Integer: java.lang.Integer valueOf(int)&gt;($i1)</value>
+              <line-number>175</line-number>
+              <bytecode-offset>37</bytecode-offset>
+            </call>
+          </context>
+        </method>
+        <method id="32">
+          <method-id reference="13"/>
+          <context>
+            <call reference="26"/>
+            <call id="33">
+              <method reference="25"/>
+              <value>$r5 = staticinvoke &lt;java.lang.Float: java.lang.Float valueOf(float)&gt;($f1)</value>
+              <line-number>109</line-number>
+              <bytecode-offset>18</bytecode-offset>
+            </call>
+          </context>
+        </method>
+        <method id="34">
+          <method-id reference="5"/>
+          <context>
+            <call reference="28"/>
+            <call reference="29"/>
+            <call id="35">
+              <method reference="9"/>
+              <value>$r1 = staticinvoke &lt;java.lang.Integer: java.lang.Integer valueOf(int)&gt;($i1)</value>
+              <line-number>180</line-number>
+              <bytecode-offset>69</bytecode-offset>
+            </call>
+          </context>
+        </method>
+        <method id="36">
+          <method-id reference="13"/>
+          <context>
+            <call reference="22"/>
+            <call id="37">
+              <method reference="21"/>
+              <value>$r4 = staticinvoke &lt;java.lang.Float: java.lang.Float valueOf(float)&gt;($f1)</value>
+              <line-number>150</line-number>
+              <bytecode-offset>11</bytecode-offset>
+            </call>
+          </context>
+        </method>
+        <statement id="38" inside="true">
+          <statement-id id="39">
+            <method reference="16"/>
+            <value>$r5 = new ar.uba.dc.rinard.Point</value>
+            <line-number>128</line-number>
+            <bytecode-offset>17</bytecode-offset>
+          </statement-id>
+          <context>
+            <call reference="14"/>
+          </context>
+        </statement>
+        <method id="40">
+          <method-id reference="5"/>
+          <context>
+            <call reference="28"/>
+            <call id="41">
+              <method reference="30"/>
+              <value>$r0 = staticinvoke &lt;ar.uba.dc.rinard.BasicTest: java.lang.Integer sumOperator(java.lang.Integer)&gt;($r0)</value>
+              <line-number>199</line-number>
+              <bytecode-offset>4</bytecode-offset>
+            </call>
+            <call id="42">
+              <method reference="9"/>
+              <value>$r1 = staticinvoke &lt;java.lang.Integer: java.lang.Integer valueOf(int)&gt;($i1)</value>
+              <line-number>179</line-number>
+              <bytecode-offset>79</bytecode-offset>
+            </call>
+          </context>
+        </method>
+        <statement id="43" inside="false">
+          <statement-id id="44">
+            <method id="45">
+              <class>ar.uba.dc.rinard.BasicTest</class>
+              <signature>float sumX(ar.uba.dc.rinard.List)</signature>
+            </method>
+            <value>$r5 = $r0.&lt;ar.uba.dc.rinard.Point: java.lang.Float x&gt;</value>
+            <line-number>56</line-number>
+            <bytecode-offset>22</bytecode-offset>
+          </statement-id>
+          <context>
+            <call reference="22"/>
+            <call id="46">
+              <method reference="21"/>
+              <value>$f1 = staticinvoke &lt;ar.uba.dc.rinard.BasicTest: float sumX(ar.uba.dc.rinard.List)&gt;($r0)</value>
+              <line-number>154</line-number>
+              <bytecode-offset>62</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <method id="47">
+          <method-id reference="5"/>
+          <context>
+            <call reference="28"/>
+            <call reference="29"/>
+            <call id="48">
+              <method reference="9"/>
+              <value>$r1 = staticinvoke &lt;java.lang.Integer: java.lang.Integer valueOf(int)&gt;($i1)</value>
+              <line-number>183</line-number>
+              <bytecode-offset>103</bytecode-offset>
+            </call>
+          </context>
+        </method>
+        <method id="49">
+          <method-id reference="5"/>
+          <context>
+            <call reference="28"/>
+            <call id="50">
+              <method reference="30"/>
+              <value>$r0 = staticinvoke &lt;ar.uba.dc.rinard.BasicTest: java.lang.Integer sumOperator(java.lang.Integer)&gt;($r0)</value>
+              <line-number>200</line-number>
+              <bytecode-offset>12</bytecode-offset>
+            </call>
+            <call reference="42"/>
+          </context>
+        </method>
+        <statement id="51" inside="true">
+          <statement-id id="52">
+            <method reference="25"/>
+            <value>$r0 = new ar.uba.dc.rinard.List</value>
+            <line-number>108</line-number>
+            <bytecode-offset>0</bytecode-offset>
+          </statement-id>
+          <context>
+            <call reference="26"/>
+          </context>
+        </statement>
+        <method id="53">
+          <method-id reference="5"/>
+          <context>
+            <call reference="28"/>
+            <call id="54">
+              <method reference="30"/>
+              <value>$r0 = staticinvoke &lt;java.lang.Integer: java.lang.Integer valueOf(int)&gt;($b0)</value>
+              <line-number>199</line-number>
+              <bytecode-offset>1</bytecode-offset>
+            </call>
+          </context>
+        </method>
+        <statement id="55" inside="true">
+          <statement-id id="56">
+            <method reference="21"/>
+            <value>$r5 = new ar.uba.dc.rinard.Point</value>
+            <line-number>151</line-number>
+            <bytecode-offset>21</bytecode-offset>
+          </statement-id>
+          <context>
+            <call reference="22"/>
+          </context>
+        </statement>
+        <method id="57">
+          <method-id reference="5"/>
+          <context>
+            <call reference="28"/>
+            <call id="58">
+              <method reference="30"/>
+              <value>$r0 = staticinvoke &lt;java.lang.Integer: java.lang.Integer valueOf(int)&gt;($b0)</value>
+              <line-number>201</line-number>
+              <bytecode-offset>18</bytecode-offset>
+            </call>
+          </context>
+        </method>
+        <method id="59">
+          <method-id reference="5"/>
+          <context>
+            <call reference="28"/>
+            <call reference="29"/>
+            <call reference="42"/>
+          </context>
+        </method>
+        <statement id="60" inside="false">
+          <statement-id id="61">
+            <method id="62">
+              <class>ar.uba.dc.rinard.ListItr</class>
+              <signature>java.lang.Object next()</signature>
+            </method>
+            <value>$r4 = $r4.&lt;ar.uba.dc.rinard.Cell: ar.uba.dc.rinard.Cell next&gt;</value>
+            <line-number>34</line-number>
+            <bytecode-offset>13</bytecode-offset>
+          </statement-id>
+          <context>
+            <call reference="22"/>
+            <call reference="46"/>
+            <call id="63">
+              <method reference="45"/>
+              <value>$r3 = interfaceinvoke $r2.&lt;java.util.Iterator: java.lang.Object next()&gt;()</value>
+              <line-number>55</line-number>
+              <bytecode-offset>11</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <method id="64">
+          <method-id reference="5"/>
+          <context>
+            <call reference="6"/>
+            <call reference="48"/>
+          </context>
+        </method>
+        <method id="65">
+          <method-id reference="5"/>
+          <context>
+            <call reference="28"/>
+            <call reference="50"/>
+            <call reference="48"/>
+          </context>
+        </method>
+        <statement id="66" inside="true">
+          <statement-id id="67">
+            <method id="68">
+              <class>ar.uba.dc.rinard.List</class>
+              <signature>void add(java.lang.Object)</signature>
+            </method>
+            <value>$r1 = new ar.uba.dc.rinard.Cell</value>
+            <line-number>15</line-number>
+            <bytecode-offset>1</bytecode-offset>
+          </statement-id>
+          <context>
+            <call reference="26"/>
+            <call id="69">
+              <method reference="25"/>
+              <value>virtualinvoke $r0.&lt;ar.uba.dc.rinard.List: void add(java.lang.Object)&gt;($r3)</value>
+              <line-number>109</line-number>
+              <bytecode-offset>24</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <statement id="70" inside="true">
+          <statement-id reference="67"/>
+          <context>
+            <call reference="14"/>
+            <call id="71">
+              <method reference="16"/>
+              <value>virtualinvoke $r0.&lt;ar.uba.dc.rinard.List: void add(java.lang.Object)&gt;($r5)</value>
+              <line-number>128</line-number>
+              <bytecode-offset>29</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <method id="72">
+          <method-id reference="5"/>
+          <context>
+            <call reference="28"/>
+            <call reference="50"/>
+            <call reference="18"/>
+          </context>
+        </method>
+        <method id="73">
+          <method-id reference="5"/>
+          <context>
+            <call reference="28"/>
+            <call reference="50"/>
+            <call id="74">
+              <method reference="9"/>
+              <value>$r1 = staticinvoke &lt;java.lang.Integer: java.lang.Integer valueOf(int)&gt;($i1)</value>
+              <line-number>176</line-number>
+              <bytecode-offset>27</bytecode-offset>
+            </call>
+          </context>
+        </method>
+        <statement id="75" inside="false">
+          <statement-id id="76">
+            <method reference="62"/>
+            <value>$r3 = $r2.&lt;ar.uba.dc.rinard.Cell: java.lang.Object data&gt;</value>
+            <line-number>33</line-number>
+            <bytecode-offset>4</bytecode-offset>
+          </statement-id>
+          <context>
+            <call reference="22"/>
+            <call reference="46"/>
+            <call reference="63"/>
+          </context>
+        </statement>
+        <method id="77">
+          <method-id reference="5"/>
+          <context>
+            <call reference="6"/>
+            <call reference="74"/>
+          </context>
+        </method>
+        <method id="78">
+          <method-id reference="5"/>
+          <context>
+            <call reference="28"/>
+            <call reference="29"/>
+            <call reference="74"/>
+          </context>
+        </method>
+        <method id="79">
+          <method-id reference="5"/>
+          <context>
+            <call reference="28"/>
+            <call reference="41"/>
+            <call reference="35"/>
+          </context>
+        </method>
+        <method id="80">
+          <method-id reference="5"/>
+          <context>
+            <call reference="6"/>
+            <call reference="42"/>
+          </context>
+        </method>
+        <method id="81">
+          <method-id reference="5"/>
+          <context>
+            <call reference="28"/>
+            <call reference="41"/>
+            <call reference="31"/>
+          </context>
+        </method>
+        <method id="82">
+          <method-id reference="13"/>
+          <context>
+            <call reference="14"/>
+            <call id="83">
+              <method reference="16"/>
+              <value>$r6 = staticinvoke &lt;java.lang.Float: java.lang.Float valueOf(float)&gt;($f0)</value>
+              <line-number>128</line-number>
+              <bytecode-offset>23</bytecode-offset>
+            </call>
+          </context>
+        </method>
+        <statement id="84" inside="false">
+          <statement-id id="85">
+            <method reference="7"/>
+            <value>$r1 = $r0[$b0]</value>
+            <line-number>93</line-number>
+            <bytecode-offset>2</bytecode-offset>
+          </statement-id>
+          <context/>
+        </statement>
+        <statement id="86" inside="false">
+          <statement-id id="87">
+            <method reference="68"/>
+            <value>$r5 = $r4.&lt;ar.uba.dc.rinard.List: ar.uba.dc.rinard.Cell head&gt;</value>
+            <line-number>15</line-number>
+            <bytecode-offset>7</bytecode-offset>
+          </statement-id>
+          <context>
+            <call reference="22"/>
+            <call id="88">
+              <method reference="21"/>
+              <value>virtualinvoke $r0.&lt;ar.uba.dc.rinard.List: void add(java.lang.Object)&gt;($r5)</value>
+              <line-number>151</line-number>
+              <bytecode-offset>33</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <method id="89">
+          <method-id reference="5"/>
+          <context>
+            <call reference="28"/>
+            <call reference="50"/>
+            <call reference="31"/>
+          </context>
+        </method>
+        <ar.uba.dc.analysis.escape.graph.node.GlobalNode id="90"/>
+        <statement id="91" inside="true">
+          <statement-id id="92">
+            <method reference="25"/>
+            <value>$r3 = new ar.uba.dc.rinard.Point</value>
+            <line-number>110</line-number>
+            <bytecode-offset>28</bytecode-offset>
+          </statement-id>
+          <context>
+            <call reference="26"/>
+          </context>
+        </statement>
+        <method id="93">
+          <method-id reference="5"/>
+          <context>
+            <call reference="6"/>
+            <call id="94">
+              <method reference="9"/>
+              <value>$r1 = staticinvoke &lt;java.lang.Integer: java.lang.Integer valueOf(int)&gt;($b0)</value>
+              <line-number>175</line-number>
+              <bytecode-offset>11</bytecode-offset>
+            </call>
+          </context>
+        </method>
+        <method id="95">
+          <method-id reference="5"/>
+          <context>
+            <call reference="28"/>
+            <call reference="41"/>
+            <call reference="74"/>
+          </context>
+        </method>
+        <statement id="96" inside="true">
+          <statement-id id="97">
+            <method id="98">
+              <class>ar.uba.dc.rinard.List</class>
+              <signature>java.util.Iterator iterator()</signature>
+            </method>
+            <value>$r0 = new ar.uba.dc.rinard.ListItr</value>
+            <line-number>25</line-number>
+            <bytecode-offset>0</bytecode-offset>
+          </statement-id>
+          <context>
+            <call reference="14"/>
+            <call id="99">
+              <method reference="16"/>
+              <value>$f1 = staticinvoke &lt;ar.uba.dc.rinard.BasicTest: float sumX(ar.uba.dc.rinard.List)&gt;($r0)</value>
+              <line-number>130</line-number>
+              <bytecode-offset>56</bytecode-offset>
+            </call>
+            <call id="100">
+              <method reference="45"/>
+              <value>$r2 = virtualinvoke $r1.&lt;ar.uba.dc.rinard.List: java.util.Iterator iterator()&gt;()</value>
+              <line-number>53</line-number>
+              <bytecode-offset>3</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <method id="101">
+          <method-id reference="5"/>
+          <context>
+            <call reference="28"/>
+            <call reference="41"/>
+            <call reference="48"/>
+          </context>
+        </method>
+        <method id="102">
+          <method-id reference="5"/>
+          <context>
+            <call reference="6"/>
+            <call reference="35"/>
+          </context>
+        </method>
+        <method id="103">
+          <method-id reference="5"/>
+          <context>
+            <call reference="6"/>
+            <call reference="31"/>
+          </context>
+        </method>
+        <method id="104">
+          <method-id reference="5"/>
+          <context>
+            <call reference="28"/>
+            <call reference="41"/>
+            <call reference="8"/>
+          </context>
+        </method>
+        <statement id="105" inside="true">
+          <statement-id reference="97"/>
+          <context>
+            <call reference="26"/>
+            <call id="106">
+              <method reference="25"/>
+              <value>$f2 = staticinvoke &lt;ar.uba.dc.rinard.BasicTest: float sumX(ar.uba.dc.rinard.List)&gt;($r0)</value>
+              <line-number>112</line-number>
+              <bytecode-offset>69</bytecode-offset>
+            </call>
+            <call reference="100"/>
+          </context>
+        </statement>
+        <method id="107">
+          <method-id reference="13"/>
+          <context>
+            <call reference="26"/>
+            <call id="108">
+              <method reference="25"/>
+              <value>$r5 = staticinvoke &lt;java.lang.Float: java.lang.Float valueOf(float)&gt;($f1)</value>
+              <line-number>110</line-number>
+              <bytecode-offset>38</bytecode-offset>
+            </call>
+          </context>
+        </method>
+        <method id="109">
+          <method-id reference="13"/>
+          <context>
+            <call reference="26"/>
+            <call id="110">
+              <method reference="25"/>
+              <value>$r4 = staticinvoke &lt;java.lang.Float: java.lang.Float valueOf(float)&gt;($f0)</value>
+              <line-number>111</line-number>
+              <bytecode-offset>54</bytecode-offset>
+            </call>
+          </context>
+        </method>
+        <statement id="111" inside="true">
+          <statement-id reference="67"/>
+          <context>
+            <call reference="26"/>
+            <call id="112">
+              <method reference="25"/>
+              <value>virtualinvoke $r0.&lt;ar.uba.dc.rinard.List: void add(java.lang.Object)&gt;($r3)</value>
+              <line-number>111</line-number>
+              <bytecode-offset>65</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <statement id="113" inside="true">
+          <statement-id reference="97"/>
+          <context>
+            <call reference="22"/>
+            <call reference="46"/>
+            <call reference="100"/>
+          </context>
+        </statement>
+        <method id="114">
+          <method-id reference="5"/>
+          <context>
+            <call reference="28"/>
+            <call reference="41"/>
+            <call reference="18"/>
+          </context>
+        </method>
+        <method id="115">
+          <method-id reference="13"/>
+          <context>
+            <call reference="26"/>
+            <call id="116">
+              <method reference="25"/>
+              <value>$r5 = staticinvoke &lt;java.lang.Float: java.lang.Float valueOf(float)&gt;($f1)</value>
+              <line-number>111</line-number>
+              <bytecode-offset>59</bytecode-offset>
+            </call>
+          </context>
+        </method>
+        <statement id="117" inside="true">
+          <statement-id reference="97"/>
+          <context>
+            <call reference="26"/>
+            <call id="118">
+              <method reference="25"/>
+              <value>staticinvoke &lt;ar.uba.dc.rinard.BasicTest: void flipAll(ar.uba.dc.rinard.List)&gt;($r0)</value>
+              <line-number>113</line-number>
+              <bytecode-offset>74</bytecode-offset>
+            </call>
+            <call id="119">
+              <method id="120">
+                <class>ar.uba.dc.rinard.BasicTest</class>
+                <signature>void flipAll(ar.uba.dc.rinard.List)</signature>
+              </method>
+              <value>$r1 = virtualinvoke $r0.&lt;ar.uba.dc.rinard.List: java.util.Iterator iterator()&gt;()</value>
+              <line-number>66</line-number>
+              <bytecode-offset>1</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <statement id="121" inside="true">
+          <statement-id id="122">
+            <method reference="25"/>
+            <value>$r3 = new ar.uba.dc.rinard.Point</value>
+            <line-number>109</line-number>
+            <bytecode-offset>9</bytecode-offset>
+          </statement-id>
+          <context>
+            <call reference="26"/>
+          </context>
+        </statement>
+        <method id="123">
+          <method-id reference="5"/>
+          <context>
+            <call reference="28"/>
+            <call reference="41"/>
+            <call reference="11"/>
+          </context>
+        </method>
+        <method id="124">
+          <method-id id="125">
+            <class>java.lang.Integer</class>
+            <signature>java.lang.Integer valueOf(java.lang.String)</signature>
+          </method-id>
+          <context>
+            <call id="126">
+              <method reference="7"/>
+              <value>$r2 = staticinvoke &lt;java.lang.Integer: java.lang.Integer valueOf(java.lang.String)&gt;($r1)</value>
+              <line-number>93</line-number>
+              <bytecode-offset>3</bytecode-offset>
+            </call>
+          </context>
+        </method>
+        <method id="127">
+          <method-id reference="5"/>
+          <context>
+            <call reference="28"/>
+            <call reference="29"/>
+            <call reference="94"/>
+          </context>
+        </method>
+        <method id="128">
+          <method-id reference="5"/>
+          <context>
+            <call reference="28"/>
+            <call reference="29"/>
+            <call reference="18"/>
+          </context>
+        </method>
+        <method id="129">
+          <method-id reference="13"/>
+          <context>
+            <call reference="22"/>
+            <call id="130">
+              <method reference="21"/>
+              <value>$r4 = staticinvoke &lt;java.lang.Float: java.lang.Float valueOf(float)&gt;($f1)</value>
+              <line-number>150</line-number>
+              <bytecode-offset>42</bytecode-offset>
+            </call>
+          </context>
+        </method>
+        <statement id="131" inside="false">
+          <statement-id id="132">
+            <method reference="98"/>
+            <value>$r3 = $r2.&lt;ar.uba.dc.rinard.List: ar.uba.dc.rinard.Cell head&gt;</value>
+            <line-number>25</line-number>
+            <bytecode-offset>5</bytecode-offset>
+          </statement-id>
+          <context>
+            <call reference="22"/>
+            <call reference="46"/>
+            <call reference="100"/>
+          </context>
+        </statement>
+        <statement id="133" inside="true">
+          <statement-id id="134">
+            <method reference="16"/>
+            <value>$r0 = new ar.uba.dc.rinard.List</value>
+            <line-number>126</line-number>
+            <bytecode-offset>0</bytecode-offset>
+          </statement-id>
+          <context>
+            <call reference="14"/>
+          </context>
+        </statement>
+        <method id="135">
+          <method-id reference="13"/>
+          <context>
+            <call reference="22"/>
+            <call id="136">
+              <method reference="21"/>
+              <value>$r6 = staticinvoke &lt;java.lang.Float: java.lang.Float valueOf(float)&gt;($f0)</value>
+              <line-number>151</line-number>
+              <bytecode-offset>27</bytecode-offset>
+            </call>
+          </context>
+        </method>
+        <method id="137">
+          <method-id reference="13"/>
+          <context>
+            <call reference="14"/>
+            <call id="138">
+              <method reference="16"/>
+              <value>$r4 = staticinvoke &lt;java.lang.Float: java.lang.Float valueOf(float)&gt;($f1)</value>
+              <line-number>127</line-number>
+              <bytecode-offset>38</bytecode-offset>
+            </call>
+          </context>
+        </method>
+        <method id="139">
+          <method-id reference="5"/>
+          <context>
+            <call reference="28"/>
+            <call reference="29"/>
+            <call reference="8"/>
+          </context>
+        </method>
+        <method id="140">
+          <method-id reference="5"/>
+          <context>
+            <call reference="28"/>
+            <call id="141">
+              <method reference="30"/>
+              <value>$r0 = staticinvoke &lt;java.lang.Integer: java.lang.Integer valueOf(int)&gt;($b0)</value>
+              <line-number>200</line-number>
+              <bytecode-offset>9</bytecode-offset>
+            </call>
+          </context>
+        </method>
+        <method id="142">
+          <method-id reference="5"/>
+          <context>
+            <call reference="28"/>
+            <call reference="50"/>
+            <call reference="94"/>
+          </context>
+        </method>
+        <method id="143">
+          <method-id reference="5"/>
+          <context>
+            <call reference="28"/>
+            <call reference="50"/>
+            <call reference="8"/>
+          </context>
+        </method>
+        <statement id="144" inside="true">
+          <statement-id reference="67"/>
+          <context>
+            <call reference="22"/>
+            <call reference="88"/>
+          </context>
+        </statement>
+        <method id="145">
+          <method-id reference="13"/>
+          <context>
+            <call reference="26"/>
+            <call id="146">
+              <method reference="25"/>
+              <value>$r4 = staticinvoke &lt;java.lang.Float: java.lang.Float valueOf(float)&gt;($f0)</value>
+              <line-number>110</line-number>
+              <bytecode-offset>33</bytecode-offset>
+            </call>
+          </context>
+        </method>
+        <method id="147">
+          <method-id reference="5"/>
+          <context>
+            <call reference="28"/>
+            <call reference="29"/>
+            <call reference="11"/>
+          </context>
+        </method>
+        <method id="148">
+          <method-id reference="13"/>
+          <context>
+            <call reference="26"/>
+            <call id="149">
+              <method reference="25"/>
+              <value>$r4 = staticinvoke &lt;java.lang.Float: java.lang.Float valueOf(float)&gt;($f0)</value>
+              <line-number>109</line-number>
+              <bytecode-offset>14</bytecode-offset>
+            </call>
+          </context>
+        </method>
+        <method id="150">
+          <method-id reference="5"/>
+          <context>
+            <call reference="28"/>
+            <call reference="41"/>
+            <call reference="94"/>
+          </context>
+        </method>
+        <statement id="151" inside="true">
+          <statement-id reference="67"/>
+          <context>
+            <call reference="26"/>
+            <call id="152">
+              <method reference="25"/>
+              <value>virtualinvoke $r0.&lt;ar.uba.dc.rinard.List: void add(java.lang.Object)&gt;($r3)</value>
+              <line-number>110</line-number>
+              <bytecode-offset>44</bytecode-offset>
+            </call>
+          </context>
+        </statement>
+        <method id="153">
+          <method-id reference="5"/>
+          <context>
+            <call reference="28"/>
+            <call reference="50"/>
+            <call reference="35"/>
+          </context>
+        </method>
+        <method id="154">
+          <method-id reference="5"/>
+          <context>
+            <call reference="28"/>
+            <call reference="50"/>
+            <call reference="11"/>
+          </context>
+        </method>
+      </nodes>
+      <edges>
+        <edge id="155" field="cell" inside="true">
+          <source>
+            <statement reference="113"/>
+          </source>
+          <target>
+            <statement reference="131"/>
+          </target>
+        </edge>
+        <edge id="156" field="cell" inside="true">
+          <source>
+            <statement reference="113"/>
+          </source>
+          <target>
+            <statement reference="86"/>
+          </target>
+        </edge>
+        <edge id="157" field="cell" inside="true">
+          <source>
+            <statement reference="113"/>
+          </source>
+          <target>
+            <statement reference="144"/>
+          </target>
+        </edge>
+        <edge id="158" field="cell" inside="true">
+          <source>
+            <statement reference="113"/>
+          </source>
+          <target>
+            <statement reference="60"/>
+          </target>
+        </edge>
+        <edge id="159" field="[]" inside="false">
+          <source>
+            <param reference="3"/>
+          </source>
+          <target>
+            <statement reference="84"/>
+          </target>
+        </edge>
+        <edge id="160" field="y" inside="true">
+          <source>
+            <statement reference="91"/>
+          </source>
+          <target>
+            <method reference="107"/>
+          </target>
+        </edge>
+        <edge id="161" field="x" inside="true">
+          <source>
+            <statement reference="91"/>
+          </source>
+          <target>
+            <method reference="107"/>
+          </target>
+        </edge>
+        <edge id="162" field="y" inside="true">
+          <source>
+            <statement reference="91"/>
+          </source>
+          <target>
+            <method reference="109"/>
+          </target>
+        </edge>
+        <edge id="163" field="y" inside="true">
+          <source>
+            <statement reference="91"/>
+          </source>
+          <target>
+            <method reference="145"/>
+          </target>
+        </edge>
+        <edge id="164" field="x" inside="true">
+          <source>
+            <statement reference="91"/>
+          </source>
+          <target>
+            <method reference="145"/>
+          </target>
+        </edge>
+        <edge id="165" field="x" inside="true">
+          <source>
+            <statement reference="91"/>
+          </source>
+          <target>
+            <method reference="115"/>
+          </target>
+        </edge>
+        <edge id="166" field="x" inside="true">
+          <source>
+            <statement reference="91"/>
+          </source>
+          <target>
+            <method reference="109"/>
+          </target>
+        </edge>
+        <edge id="167" field="y" inside="true">
+          <source>
+            <statement reference="91"/>
+          </source>
+          <target>
+            <method reference="115"/>
+          </target>
+        </edge>
+        <edge id="168" field="x" inside="true">
+          <source>
+            <statement reference="91"/>
+          </source>
+          <target>
+            <method reference="32"/>
+          </target>
+        </edge>
+        <edge id="169" field="y" inside="true">
+          <source>
+            <statement reference="91"/>
+          </source>
+          <target>
+            <method reference="148"/>
+          </target>
+        </edge>
+        <edge id="170" field="y" inside="true">
+          <source>
+            <statement reference="91"/>
+          </source>
+          <target>
+            <method reference="32"/>
+          </target>
+        </edge>
+        <edge id="171" field="x" inside="true">
+          <source>
+            <statement reference="91"/>
+          </source>
+          <target>
+            <method reference="148"/>
+          </target>
+        </edge>
+        <edge id="172" field="head" inside="false">
+          <source>
+            <ar.uba.dc.analysis.escape.graph.node.GlobalNode reference="90"/>
+          </source>
+          <target>
+            <statement reference="86"/>
+          </target>
+        </edge>
+        <edge id="173" field="head" inside="false">
+          <source>
+            <ar.uba.dc.analysis.escape.graph.node.GlobalNode reference="90"/>
+          </source>
+          <target>
+            <statement reference="131"/>
+          </target>
+        </edge>
+        <edge id="174" field="head" inside="true">
+          <source>
+            <ar.uba.dc.analysis.escape.graph.node.GlobalNode reference="90"/>
+          </source>
+          <target>
+            <statement reference="144"/>
+          </target>
+        </edge>
+        <edge id="175" field="y" inside="true">
+          <source>
+            <statement reference="121"/>
+          </source>
+          <target>
+            <method reference="107"/>
+          </target>
+        </edge>
+        <edge id="176" field="x" inside="true">
+          <source>
+            <statement reference="121"/>
+          </source>
+          <target>
+            <method reference="107"/>
+          </target>
+        </edge>
+        <edge id="177" field="y" inside="true">
+          <source>
+            <statement reference="121"/>
+          </source>
+          <target>
+            <method reference="145"/>
+          </target>
+        </edge>
+        <edge id="178" field="x" inside="true">
+          <source>
+            <statement reference="121"/>
+          </source>
+          <target>
+            <method reference="145"/>
+          </target>
+        </edge>
+        <edge id="179" field="x" inside="true">
+          <source>
+            <statement reference="121"/>
+          </source>
+          <target>
+            <method reference="109"/>
+          </target>
+        </edge>
+        <edge id="180" field="x" inside="true">
+          <source>
+            <statement reference="121"/>
+          </source>
+          <target>
+            <method reference="148"/>
+          </target>
+        </edge>
+        <edge id="181" field="y" inside="true">
+          <source>
+            <statement reference="121"/>
+          </source>
+          <target>
+            <method reference="148"/>
+          </target>
+        </edge>
+        <edge id="182" field="y" inside="true">
+          <source>
+            <statement reference="121"/>
+          </source>
+          <target>
+            <method reference="109"/>
+          </target>
+        </edge>
+        <edge id="183" field="x" inside="true">
+          <source>
+            <statement reference="121"/>
+          </source>
+          <target>
+            <method reference="115"/>
+          </target>
+        </edge>
+        <edge id="184" field="y" inside="true">
+          <source>
+            <statement reference="121"/>
+          </source>
+          <target>
+            <method reference="115"/>
+          </target>
+        </edge>
+        <edge id="185" field="y" inside="true">
+          <source>
+            <statement reference="121"/>
+          </source>
+          <target>
+            <method reference="32"/>
+          </target>
+        </edge>
+        <edge id="186" field="x" inside="true">
+          <source>
+            <statement reference="121"/>
+          </source>
+          <target>
+            <method reference="32"/>
+          </target>
+        </edge>
+        <edge id="187" field="cell" inside="true">
+          <source>
+            <statement reference="117"/>
+          </source>
+          <target>
+            <statement reference="66"/>
+          </target>
+        </edge>
+        <edge id="188" field="cell" inside="true">
+          <source>
+            <statement reference="117"/>
+          </source>
+          <target>
+            <statement reference="111"/>
+          </target>
+        </edge>
+        <edge id="189" field="cell" inside="true">
+          <source>
+            <statement reference="117"/>
+          </source>
+          <target>
+            <statement reference="151"/>
+          </target>
+        </edge>
+        <edge id="190" field="x" inside="true">
+          <source>
+            <statement reference="55"/>
+          </source>
+          <target>
+            <method reference="129"/>
+          </target>
+        </edge>
+        <edge id="191" field="y" inside="true">
+          <source>
+            <statement reference="55"/>
+          </source>
+          <target>
+            <method reference="135"/>
+          </target>
+        </edge>
+        <edge id="192" field="x" inside="false">
+          <source>
+            <statement reference="55"/>
+          </source>
+          <target>
+            <statement reference="43"/>
+          </target>
+        </edge>
+        <edge id="193" field="x" inside="true">
+          <source>
+            <statement reference="55"/>
+          </source>
+          <target>
+            <method reference="36"/>
+          </target>
+        </edge>
+        <edge id="194" field="cell" inside="true">
+          <source>
+            <statement reference="96"/>
+          </source>
+          <target>
+            <statement reference="70"/>
+          </target>
+        </edge>
+        <edge id="195" field="data" inside="false">
+          <source>
+            <statement reference="60"/>
+          </source>
+          <target>
+            <statement reference="75"/>
+          </target>
+        </edge>
+        <edge id="196" field="next" inside="false">
+          <source>
+            <statement reference="60"/>
+          </source>
+          <target>
+            <statement reference="60"/>
+          </target>
+        </edge>
+        <edge id="197" field="data" inside="false">
+          <source>
+            <statement reference="131"/>
+          </source>
+          <target>
+            <statement reference="75"/>
+          </target>
+        </edge>
+        <edge id="198" field="next" inside="false">
+          <source>
+            <statement reference="131"/>
+          </source>
+          <target>
+            <statement reference="60"/>
+          </target>
+        </edge>
+        <edge id="199" field="x" inside="true">
+          <source>
+            <statement reference="23"/>
+          </source>
+          <target>
+            <method reference="32"/>
+          </target>
+        </edge>
+        <edge id="200" field="y" inside="true">
+          <source>
+            <statement reference="23"/>
+          </source>
+          <target>
+            <method reference="32"/>
+          </target>
+        </edge>
+        <edge id="201" field="x" inside="true">
+          <source>
+            <statement reference="23"/>
+          </source>
+          <target>
+            <method reference="107"/>
+          </target>
+        </edge>
+        <edge id="202" field="y" inside="true">
+          <source>
+            <statement reference="23"/>
+          </source>
+          <target>
+            <method reference="107"/>
+          </target>
+        </edge>
+        <edge id="203" field="y" inside="true">
+          <source>
+            <statement reference="23"/>
+          </source>
+          <target>
+            <method reference="115"/>
+          </target>
+        </edge>
+        <edge id="204" field="y" inside="true">
+          <source>
+            <statement reference="23"/>
+          </source>
+          <target>
+            <method reference="109"/>
+          </target>
+        </edge>
+        <edge id="205" field="y" inside="true">
+          <source>
+            <statement reference="23"/>
+          </source>
+          <target>
+            <method reference="145"/>
+          </target>
+        </edge>
+        <edge id="206" field="x" inside="true">
+          <source>
+            <statement reference="23"/>
+          </source>
+          <target>
+            <method reference="109"/>
+          </target>
+        </edge>
+        <edge id="207" field="x" inside="true">
+          <source>
+            <statement reference="23"/>
+          </source>
+          <target>
+            <method reference="145"/>
+          </target>
+        </edge>
+        <edge id="208" field="x" inside="true">
+          <source>
+            <statement reference="23"/>
+          </source>
+          <target>
+            <method reference="115"/>
+          </target>
+        </edge>
+        <edge id="209" field="y" inside="true">
+          <source>
+            <statement reference="23"/>
+          </source>
+          <target>
+            <method reference="148"/>
+          </target>
+        </edge>
+        <edge id="210" field="x" inside="true">
+          <source>
+            <statement reference="23"/>
+          </source>
+          <target>
+            <method reference="148"/>
+          </target>
+        </edge>
+        <edge id="211" field="data" inside="true">
+          <source>
+            <statement reference="66"/>
+          </source>
+          <target>
+            <statement reference="121"/>
+          </target>
+        </edge>
+        <edge id="212" field="next" inside="true">
+          <source>
+            <statement reference="70"/>
+          </source>
+          <target>
+            <statement reference="70"/>
+          </target>
+        </edge>
+        <edge id="213" field="data" inside="true">
+          <source>
+            <statement reference="70"/>
+          </source>
+          <target>
+            <statement reference="38"/>
+          </target>
+        </edge>
+        <edge id="214" field="head" inside="true">
+          <source>
+            <statement reference="133"/>
+          </source>
+          <target>
+            <statement reference="70"/>
+          </target>
+        </edge>
+        <edge id="215" field="x" inside="false">
+          <source>
+            <statement reference="75"/>
+          </source>
+          <target>
+            <statement reference="43"/>
+          </target>
+        </edge>
+        <edge id="216" field="x" inside="true">
+          <source>
+            <statement reference="38"/>
+          </source>
+          <target>
+            <method reference="12"/>
+          </target>
+        </edge>
+        <edge id="217" field="y" inside="true">
+          <source>
+            <statement reference="38"/>
+          </source>
+          <target>
+            <method reference="82"/>
+          </target>
+        </edge>
+        <edge id="218" field="x" inside="true">
+          <source>
+            <statement reference="38"/>
+          </source>
+          <target>
+            <method reference="137"/>
+          </target>
+        </edge>
+        <edge id="219" field="cell" inside="true">
+          <source>
+            <statement reference="105"/>
+          </source>
+          <target>
+            <statement reference="66"/>
+          </target>
+        </edge>
+        <edge id="220" field="cell" inside="true">
+          <source>
+            <statement reference="105"/>
+          </source>
+          <target>
+            <statement reference="111"/>
+          </target>
+        </edge>
+        <edge id="221" field="cell" inside="true">
+          <source>
+            <statement reference="105"/>
+          </source>
+          <target>
+            <statement reference="151"/>
+          </target>
+        </edge>
+        <edge id="222" field="next" inside="false">
+          <source>
+            <statement reference="144"/>
+          </source>
+          <target>
+            <statement reference="60"/>
+          </target>
+        </edge>
+        <edge id="223" field="data" inside="false">
+          <source>
+            <statement reference="144"/>
+          </source>
+          <target>
+            <statement reference="75"/>
+          </target>
+        </edge>
+        <edge id="224" field="next" inside="true">
+          <source>
+            <statement reference="144"/>
+          </source>
+          <target>
+            <statement reference="86"/>
+          </target>
+        </edge>
+        <edge id="225" field="data" inside="true">
+          <source>
+            <statement reference="144"/>
+          </source>
+          <target>
+            <statement reference="55"/>
+          </target>
+        </edge>
+        <edge id="226" field="next" inside="true">
+          <source>
+            <statement reference="144"/>
+          </source>
+          <target>
+            <statement reference="144"/>
+          </target>
+        </edge>
+        <edge id="227" field="head" inside="true">
+          <source>
+            <statement reference="51"/>
+          </source>
+          <target>
+            <statement reference="111"/>
+          </target>
+        </edge>
+        <edge id="228" field="head" inside="true">
+          <source>
+            <statement reference="51"/>
+          </source>
+          <target>
+            <statement reference="151"/>
+          </target>
+        </edge>
+        <edge id="229" field="head" inside="true">
+          <source>
+            <statement reference="51"/>
+          </source>
+          <target>
+            <statement reference="66"/>
+          </target>
+        </edge>
+        <edge id="230" field="next" inside="true">
+          <source>
+            <statement reference="111"/>
+          </source>
+          <target>
+            <statement reference="151"/>
+          </target>
+        </edge>
+        <edge id="231" field="next" inside="true">
+          <source>
+            <statement reference="111"/>
+          </source>
+          <target>
+            <statement reference="66"/>
+          </target>
+        </edge>
+        <edge id="232" field="data" inside="true">
+          <source>
+            <statement reference="111"/>
+          </source>
+          <target>
+            <statement reference="23"/>
+          </target>
+        </edge>
+        <edge id="233" field="data" inside="true">
+          <source>
+            <statement reference="151"/>
+          </source>
+          <target>
+            <statement reference="91"/>
+          </target>
+        </edge>
+        <edge id="234" field="next" inside="true">
+          <source>
+            <statement reference="151"/>
+          </source>
+          <target>
+            <statement reference="66"/>
+          </target>
+        </edge>
+        <edge id="235" field="data" inside="false">
+          <source>
+            <statement reference="86"/>
+          </source>
+          <target>
+            <statement reference="75"/>
+          </target>
+        </edge>
+        <edge id="236" field="next" inside="false">
+          <source>
+            <statement reference="86"/>
+          </source>
+          <target>
+            <statement reference="60"/>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <variables>
+      <variable>
+        <name>$r0</name>
+        <type id="237" name="array" numDimensions="1">
+          <base id="238" name="ref" to="java.lang.String"/>
+        </type>
+        <points-to id="239">
+          <param reference="3"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>args</name>
+        <type reference="237"/>
+        <points-to id="240">
+          <param reference="3"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r1</name>
+        <type reference="238"/>
+        <points-to id="241">
+          <statement reference="84"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r2</name>
+        <type id="242" name="ref" to="java.lang.Integer"/>
+        <points-to id="243">
+          <method reference="64"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>n</name>
+        <type reference="242"/>
+        <points-to id="244">
+          <method reference="124"/>
+        </points-to>
+      </variable>
+    </variables>
+    <returned id="245"/>
+    <escape-globaly id="246">
+      <statement reference="19"/>
+    </escape-globaly>
+  </points-to-graph>
+  <mutated-fields>
+    <node>
+      <ar.uba.dc.analysis.escape.graph.node.GlobalNode reference="90"/>
+      <fields>
+        <field>head</field>
+        <field>lista</field>
+        <field>size</field>
+      </fields>
+    </node>
+  </mutated-fields>
+</summary>

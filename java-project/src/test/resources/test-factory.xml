@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<config>
+	<invariants>
+		<provider>
+			<spec>
+				<fast config-class="ar.uba.dc.invariant.spec.SpecInvariantProvider">
+					<reader config-class="ar.uba.dc.invariant.spec.reader.XStreamSpecReader" />
+					<compiler config-class="ar.uba.dc.invariant.spec.compiler.FastSpecCompiler">
+						<parser config-class="ar.uba.dc.invariant.spec.compiler.constraints.parser.RegexpConstraintsParser">
+							<resolver config-class="ar.uba.dc.invariant.spec.compiler.constraints.resolver.RegexpReferenceResolver" />
+						</parser>
+					</compiler>
+					<locationStrategy config-class="ar.uba.dc.util.location.FullPackageLocationStrategy" 
+									  basePath="${invariants.repository}" extension=".spec">
+					</locationStrategy>
+				</fast>
+				<simple-references config-class="ar.uba.dc.invariant.spec.SpecInvariantProvider">
+					<reader config-class="ar.uba.dc.invariant.spec.reader.XStreamSpecReader" />
+					<compiler config-class="ar.uba.dc.invariant.spec.compiler.SimpleReferencesSpecCompiler">
+						<parser config-class="ar.uba.dc.invariant.spec.compiler.constraints.parser.RegexpConstraintsParser">
+							<resolver config-class="ar.uba.dc.invariant.spec.compiler.constraints.resolver.RegexpReferenceResolver" />
+						</parser>
+						<resolver config-class="ar.uba.dc.invariant.spec.compiler.constraints.resolver.RegexpReferenceResolver" />
+					</compiler>
+					<locationStrategy config-class="ar.uba.dc.util.location.FullPackageLocationStrategy" 
+									  basePath="${invariants.repository}" extension=".spec">
+					</locationStrategy>
+				</simple-references>
+				<full-references config-class="ar.uba.dc.invariant.spec.SpecInvariantProvider">
+					<reader config-class="ar.uba.dc.invariant.spec.reader.XStreamSpecReader" />
+					<compiler config-class="ar.uba.dc.invariant.spec.compiler.FullReferencesSpecCompiler">
+						<parser config-class="ar.uba.dc.invariant.spec.compiler.constraints.parser.RegexpConstraintsParser">
+							<resolver config-class="ar.uba.dc.invariant.spec.compiler.constraints.resolver.RegexpReferenceResolver" />
+						</parser>
+						<resolver config-class="ar.uba.dc.invariant.spec.compiler.constraints.resolver.RegexpReferenceResolver" />
+					</compiler>
+					<locationStrategy config-class="ar.uba.dc.util.location.FullPackageLocationStrategy" 
+									  basePath="${invariants.repository}" extension=".spec">
+					</locationStrategy>
+				</full-references>
+			</spec>
+			<simple config-class="ar.uba.dc.invariant.simple.SimpleInvariantProvider">
+				<locationStrategy config-class="ar.uba.dc.util.location.FileLocationStrategy" repositoryFile="${invariants.repository}" />
+				<reader config-class="ar.uba.dc.invariant.simple.reader.XStreamSimpleReader" />
+			</simple>
+		</provider>
+	</invariants>
+	<location>
+		<type>
+			<xml config-class="ar.uba.dc.util.location.FileLocationStrategy" repositoryFile="/xml" config-factory="custom" config-scope="singleton" />
+			<dot config-class="ar.uba.dc.util.location.FileLocationStrategy" repositoryFile="/dot" config-factory="custom" />
+			<null config-class="ar.uba.dc.util.location.FileLocationStrategy" repositoryFile="/null" />
+		</type>
+	</location>
+	
+	<memory>
+		<writer>
+			<xml config-class="ar.uba.dc.analysis.memory.impl.summary.io.writer.XMLWriter" />
+			<dot config-class="ar.uba.dc.analysis.memory.impl.summary.io.writer.GraphvizWriter" />
+			<null config-class="ar.uba.dc.analysis.memory.impl.summary.io.writer.NullWriter" />
+		</writer>
+	</memory>
+	
+	<test>
+		<singleton config-class="ar.uba.dc.barvinok.calculators.ConstantCalculator" config-factory="custom" config-scope="singleton" />
+		<copy config-class="ar.uba.dc.barvinok.calculators.ConstantCalculator" config-factory="custom" />
+		<ref-singleton config-class="ar.uba.dc.util.location.FileLocationStrategy" config-factory="custom" config-ref-to="location.type.xml" />
+		<ref-copy config-class="ar.uba.dc.util.location.FileLocationStrategy" config-factory="custom" config-ref-to="location.type.dot" />
+		
+		<ref-with-ref config-class="ar.uba.dc.util.location.FileLocationStrategy" config-factory="custom" config-ref-to="location.type.${ref.type}" />
+		
+		<chain-default config-class="ar.uba.dc.analysis.memory.impl.summary.io.writer.ChainWriter" config-factory="container" config-source="memory.writer" config-select="" config-default="null" />
+		<chain-null config-class="ar.uba.dc.analysis.memory.impl.summary.io.writer.ChainWriter" config-factory="container" config-source="memory.writer" config-select="" config-default="" />
+		<chain-oneElement config-class="ar.uba.dc.analysis.memory.impl.summary.io.writer.ChainWriter" config-factory="container" config-source="memory.writer" config-select="xml" config-default="" />
+		<chain-multipleElements config-class="ar.uba.dc.analysis.memory.impl.summary.io.writer.ChainWriter" config-factory="container" config-source="memory.writer" config-select="dot, xml, null" config-default="" />
+		<chain-multipleElementsKey config-class="ar.uba.dc.analysis.memory.impl.summary.io.writer.ChainWriter" config-factory="container" config-source="memory.writer" config-select-key="test.printers.key" config-default="" />
+	</test>
+</config>

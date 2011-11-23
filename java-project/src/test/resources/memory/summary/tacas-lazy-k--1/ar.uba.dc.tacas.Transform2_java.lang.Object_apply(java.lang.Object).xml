@@ -1,0 +1,86 @@
+<summary id="1" className="ar.uba.dc.tacas.Transform2" methodSignature="java.lang.Object apply(java.lang.Object)">
+  <heap>
+    <graph>
+      <nodes>
+        <param id="2" index="0"/>
+        <statement id="3" inside="true">
+          <statement-id id="4">
+            <method id="5">
+              <class>ar.uba.dc.tacas.Transform2</class>
+              <signature>java.lang.Object apply(java.lang.Object)</signature>
+            </method>
+            <value>$r10 = newarray (java.lang.Integer)[$b3]</value>
+            <line-number>16</line-number>
+            <bytecode-offset>30</bytecode-offset>
+          </statement-id>
+          <context/>
+        </statement>
+        <statement id="6" inside="true">
+          <statement-id id="7">
+            <method reference="5"/>
+            <value>$r3 = new java.lang.Integer</value>
+            <line-number>17</line-number>
+            <bytecode-offset>35</bytecode-offset>
+          </statement-id>
+          <context/>
+        </statement>
+        <statement id="8" inside="true">
+          <statement-id id="9">
+            <method reference="5"/>
+            <value>$r3 = new java.lang.Integer</value>
+            <line-number>18</line-number>
+            <bytecode-offset>47</bytecode-offset>
+          </statement-id>
+          <context/>
+        </statement>
+        <this id="10"/>
+      </nodes>
+      <edges>
+        <edge id="11" field="[]" inside="true">
+          <source>
+            <statement reference="3"/>
+          </source>
+          <target>
+            <statement reference="8"/>
+          </target>
+        </edge>
+        <edge id="12" field="[]" inside="true">
+          <source>
+            <statement reference="3"/>
+          </source>
+          <target>
+            <statement reference="6"/>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <returned>
+      <statement reference="3"/>
+    </returned>
+    <escape-globaly/>
+  </heap>
+  <parameters/>
+  <temporal>{ 2 }</temporal>
+  <residual>
+    <node>
+      <param reference="2"/>
+      <value>{ 0 }</value>
+    </node>
+    <node>
+      <statement reference="3"/>
+      <value>{ 2 }</value>
+    </node>
+    <node>
+      <statement reference="6"/>
+      <value>{ 1 }</value>
+    </node>
+    <node>
+      <statement reference="8"/>
+      <value>{ 1 }</value>
+    </node>
+    <node>
+      <this reference="10"/>
+      <value>{ 0 }</value>
+    </node>
+  </residual>
+</summary>

@@ -1,0 +1,293 @@
+<summary id="1" className="ar.uba.dc.jolden.mst.MST" methodSignature="ar.uba.dc.jolden.mst.BlueReturn doAllBlueRule(ar.uba.dc.jolden.mst.Vertex)">
+  <heap>
+    <graph>
+      <nodes>
+        <param id="2" index="0"/>
+        <ar.uba.dc.analysis.escape.graph.node.GlobalNode id="3"/>
+        <statement id="4" inside="false">
+          <statement-id id="5">
+            <method id="6">
+              <class>ar.uba.dc.jolden.mst.HashEntry</class>
+              <signature>java.lang.Object key()</signature>
+            </method>
+            <value>$r1 = $r0.&lt;ar.uba.dc.jolden.mst.HashEntry: java.lang.Object key&gt;</value>
+            <line-number>105</line-number>
+            <bytecode-offset>1</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="7" inside="false">
+          <statement-id id="8">
+            <method id="9">
+              <class>ar.uba.dc.jolden.mst.HashEntry</class>
+              <signature>java.lang.Object entry()</signature>
+            </method>
+            <value>$r1 = $r0.&lt;ar.uba.dc.jolden.mst.HashEntry: java.lang.Object entry&gt;</value>
+            <line-number>114</line-number>
+            <bytecode-offset>1</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="10" inside="false">
+          <statement-id id="11">
+            <method id="12">
+              <class>ar.uba.dc.jolden.mst.Vertex</class>
+              <signature>ar.uba.dc.jolden.mst.Vertex next()</signature>
+            </method>
+            <value>$r0 = $r0.&lt;ar.uba.dc.jolden.mst.Vertex: ar.uba.dc.jolden.mst.Vertex next&gt;</value>
+            <line-number>65</line-number>
+            <bytecode-offset>1</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="13" inside="false">
+          <statement-id id="14">
+            <method id="15">
+              <class>ar.uba.dc.jolden.mst.Hashtable</class>
+              <signature>java.lang.Object get(java.lang.Object)</signature>
+            </method>
+            <value>$r3 = $r2[$i1]</value>
+            <line-number>45</line-number>
+            <bytecode-offset>13</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="16" inside="false">
+          <statement-id id="17">
+            <method reference="15"/>
+            <value>$r2 = $r0.&lt;ar.uba.dc.jolden.mst.Hashtable: ar.uba.dc.jolden.mst.HashEntry[] array&gt;</value>
+            <line-number>45</line-number>
+            <bytecode-offset>9</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="18" inside="false">
+          <statement-id id="19">
+            <method id="20">
+              <class>ar.uba.dc.jolden.mst.Vertex</class>
+              <signature>ar.uba.dc.jolden.mst.Hashtable neighbors()</signature>
+            </method>
+            <value>$r1 = $r0.&lt;ar.uba.dc.jolden.mst.Vertex: ar.uba.dc.jolden.mst.Hashtable neighbors&gt;</value>
+            <line-number>83</line-number>
+            <bytecode-offset>1</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="21" inside="true">
+          <statement-id id="22">
+            <method id="23">
+              <class>ar.uba.dc.jolden.mst.MST</class>
+              <signature>ar.uba.dc.jolden.mst.BlueReturn BlueRule(ar.uba.dc.jolden.mst.Vertex,ar.uba.dc.jolden.mst.Vertex)</signature>
+            </method>
+            <value>$r0 = new ar.uba.dc.jolden.mst.BlueReturn</value>
+            <line-number>128</line-number>
+            <bytecode-offset>0</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="24" inside="false">
+          <statement-id id="25">
+            <method id="26">
+              <class>ar.uba.dc.jolden.mst.HashEntry</class>
+              <signature>ar.uba.dc.jolden.mst.HashEntry next()</signature>
+            </method>
+            <value>$r0 = $r0.&lt;ar.uba.dc.jolden.mst.HashEntry: ar.uba.dc.jolden.mst.HashEntry next&gt;</value>
+            <line-number>123</line-number>
+            <bytecode-offset>1</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+      </nodes>
+      <edges>
+        <edge id="27" field="neighbors" inside="false">
+          <source>
+            <ar.uba.dc.analysis.escape.graph.node.GlobalNode reference="3"/>
+          </source>
+          <target>
+            <statement reference="18"/>
+          </target>
+        </edge>
+        <edge id="28" field="next" inside="false">
+          <source>
+            <ar.uba.dc.analysis.escape.graph.node.GlobalNode reference="3"/>
+          </source>
+          <target>
+            <statement reference="10"/>
+          </target>
+        </edge>
+        <edge id="29" field="next" inside="true">
+          <source>
+            <ar.uba.dc.analysis.escape.graph.node.GlobalNode reference="3"/>
+          </source>
+          <target>
+            <statement reference="10"/>
+          </target>
+        </edge>
+        <edge id="30" field="next" inside="false">
+          <source>
+            <statement reference="10"/>
+          </source>
+          <target>
+            <statement reference="10"/>
+          </target>
+        </edge>
+        <edge id="31" field="neighbors" inside="false">
+          <source>
+            <statement reference="10"/>
+          </source>
+          <target>
+            <statement reference="18"/>
+          </target>
+        </edge>
+        <edge id="32" field="next" inside="true">
+          <source>
+            <statement reference="10"/>
+          </source>
+          <target>
+            <statement reference="10"/>
+          </target>
+        </edge>
+        <edge id="33" field="next" inside="false">
+          <source>
+            <statement reference="13"/>
+          </source>
+          <target>
+            <statement reference="24"/>
+          </target>
+        </edge>
+        <edge id="34" field="key" inside="false">
+          <source>
+            <statement reference="13"/>
+          </source>
+          <target>
+            <statement reference="4"/>
+          </target>
+        </edge>
+        <edge id="35" field="entry" inside="false">
+          <source>
+            <statement reference="13"/>
+          </source>
+          <target>
+            <statement reference="7"/>
+          </target>
+        </edge>
+        <edge id="36" field="[]" inside="false">
+          <source>
+            <statement reference="16"/>
+          </source>
+          <target>
+            <statement reference="13"/>
+          </target>
+        </edge>
+        <edge id="37" field="array" inside="false">
+          <source>
+            <statement reference="18"/>
+          </source>
+          <target>
+            <statement reference="16"/>
+          </target>
+        </edge>
+        <edge id="38" field="vert" inside="true">
+          <source>
+            <statement reference="21"/>
+          </source>
+          <target>
+            <statement reference="10"/>
+          </target>
+        </edge>
+        <edge id="39" field="vert" inside="true">
+          <source>
+            <statement reference="21"/>
+          </source>
+          <target>
+            <ar.uba.dc.analysis.escape.graph.node.GlobalNode reference="3"/>
+          </target>
+        </edge>
+        <edge id="40" field="entry" inside="false">
+          <source>
+            <statement reference="24"/>
+          </source>
+          <target>
+            <statement reference="7"/>
+          </target>
+        </edge>
+        <edge id="41" field="next" inside="false">
+          <source>
+            <statement reference="24"/>
+          </source>
+          <target>
+            <statement reference="24"/>
+          </target>
+        </edge>
+        <edge id="42" field="key" inside="false">
+          <source>
+            <statement reference="24"/>
+          </source>
+          <target>
+            <statement reference="4"/>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <returned>
+      <statement reference="21"/>
+    </returned>
+    <escape-globaly>
+      <statement id="43" inside="false">
+        <statement-id id="44">
+          <method reference="12"/>
+          <value>$r0 = $r0.&lt;ar.uba.dc.jolden.mst.Vertex: ar.uba.dc.jolden.mst.Vertex next&gt;</value>
+          <line-number>65</line-number>
+          <bytecode-offset>1</bytecode-offset>
+        </statement-id>
+        <context sensitivity="0"/>
+      </statement>
+    </escape-globaly>
+  </heap>
+  <parameters>
+    <parameter>numvert</parameter>
+  </parameters>
+  <temporal>{ 0 }</temporal>
+  <residual>
+    <node>
+      <param reference="2"/>
+      <value>{ [[numvert] -&gt; []] -&gt; 0 : numvert &gt; 0 }</value>
+    </node>
+    <node>
+      <ar.uba.dc.analysis.escape.graph.node.GlobalNode reference="3"/>
+      <value>{ [[numvert] -&gt; []] -&gt; 0 : numvert &gt; 0 }</value>
+    </node>
+    <node>
+      <statement reference="4"/>
+      <value>{ [[numvert] -&gt; []] -&gt; 0 : numvert &gt; 0 }</value>
+    </node>
+    <node>
+      <statement reference="7"/>
+      <value>{ [[numvert] -&gt; []] -&gt; 0 : numvert &gt; 0 }</value>
+    </node>
+    <node>
+      <statement reference="10"/>
+      <value>{ [[numvert] -&gt; []] -&gt; 0 : numvert &gt; 0 }</value>
+    </node>
+    <node>
+      <statement reference="13"/>
+      <value>{ [[numvert] -&gt; []] -&gt; 0 : numvert &gt; 0 }</value>
+    </node>
+    <node>
+      <statement reference="16"/>
+      <value>{ [[numvert] -&gt; []] -&gt; 0 : numvert &gt; 0 }</value>
+    </node>
+    <node>
+      <statement reference="18"/>
+      <value>{ [[numvert] -&gt; []] -&gt; 0 : numvert &gt; 0 }</value>
+    </node>
+    <node>
+      <statement reference="21"/>
+      <value>{ [[numvert] -&gt; []] -&gt; 1 : numvert &gt;= 1 }</value>
+    </node>
+    <node>
+      <statement reference="24"/>
+      <value>{ [[numvert] -&gt; []] -&gt; 0 : numvert &gt; 0 }</value>
+    </node>
+  </residual>
+</summary>

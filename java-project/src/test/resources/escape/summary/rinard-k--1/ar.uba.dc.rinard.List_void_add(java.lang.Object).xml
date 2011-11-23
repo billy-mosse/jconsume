@@ -1,0 +1,141 @@
+<summary id="1" className="ar.uba.dc.rinard.List" methodSignature="void add(java.lang.Object)">
+  <points-to-graph id="2">
+    <graph>
+      <nodes>
+        <param id="3" index="0"/>
+        <statement id="4" inside="true">
+          <statement-id id="5">
+            <method id="6">
+              <class>ar.uba.dc.rinard.List</class>
+              <signature>void add(java.lang.Object)</signature>
+            </method>
+            <value>$r1 = new ar.uba.dc.rinard.Cell</value>
+            <line-number>15</line-number>
+            <bytecode-offset>1</bytecode-offset>
+          </statement-id>
+          <context/>
+        </statement>
+        <statement id="7" inside="false">
+          <statement-id id="8">
+            <method reference="6"/>
+            <value>$r5 = $r4.&lt;ar.uba.dc.rinard.List: ar.uba.dc.rinard.Cell head&gt;</value>
+            <line-number>15</line-number>
+            <bytecode-offset>7</bytecode-offset>
+          </statement-id>
+          <context/>
+        </statement>
+        <this id="9"/>
+      </nodes>
+      <edges>
+        <edge id="10" field="next" inside="true">
+          <source>
+            <statement reference="4"/>
+          </source>
+          <target>
+            <statement reference="7"/>
+          </target>
+        </edge>
+        <edge id="11" field="data" inside="true">
+          <source>
+            <statement reference="4"/>
+          </source>
+          <target>
+            <param reference="3"/>
+          </target>
+        </edge>
+        <edge id="12" field="head" inside="true">
+          <source>
+            <this reference="9"/>
+          </source>
+          <target>
+            <statement reference="4"/>
+          </target>
+        </edge>
+        <edge id="13" field="head" inside="false">
+          <source>
+            <this reference="9"/>
+          </source>
+          <target>
+            <statement reference="7"/>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <variables>
+      <variable>
+        <name>$r0</name>
+        <type id="14" name="ref" to="ar.uba.dc.rinard.List"/>
+        <points-to id="15">
+          <this reference="9"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r3</name>
+        <type id="16" name="ref" to="java.lang.Object"/>
+        <points-to id="17">
+          <param reference="3"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r6</name>
+        <type reference="14"/>
+        <points-to id="18">
+          <this reference="9"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>e</name>
+        <type reference="16"/>
+        <points-to id="19">
+          <param reference="3"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>this</name>
+        <type reference="14"/>
+        <points-to id="20">
+          <this reference="9"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r2</name>
+        <type id="21" name="ref" to="ar.uba.dc.rinard.Cell"/>
+        <points-to id="22">
+          <statement reference="4"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r1</name>
+        <type reference="21"/>
+        <points-to id="23">
+          <statement reference="4"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r4</name>
+        <type reference="14"/>
+        <points-to id="24">
+          <this reference="9"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r5</name>
+        <type reference="21"/>
+        <points-to id="25">
+          <statement reference="7"/>
+        </points-to>
+      </variable>
+    </variables>
+    <returned id="26"/>
+    <escape-globaly id="27"/>
+  </points-to-graph>
+  <mutated-fields>
+    <node>
+      <this reference="9"/>
+      <fields>
+        <field>head</field>
+        <field>size</field>
+      </fields>
+    </node>
+  </mutated-fields>
+</summary>

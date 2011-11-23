@@ -1,0 +1,55 @@
+<summary id="1" className="ar.uba.dc.jolden.mst.HashEntry" methodSignature="ar.uba.dc.jolden.mst.HashEntry next()">
+  <heap>
+    <graph>
+      <nodes>
+        <statement id="2" inside="false">
+          <statement-id id="3">
+            <method id="4">
+              <class>ar.uba.dc.jolden.mst.HashEntry</class>
+              <signature>ar.uba.dc.jolden.mst.HashEntry next()</signature>
+            </method>
+            <value>$r0 = $r0.&lt;ar.uba.dc.jolden.mst.HashEntry: ar.uba.dc.jolden.mst.HashEntry next&gt;</value>
+            <line-number>123</line-number>
+            <bytecode-offset>1</bytecode-offset>
+          </statement-id>
+          <context/>
+        </statement>
+        <this id="5"/>
+      </nodes>
+      <edges>
+        <edge id="6" field="next" inside="false">
+          <source>
+            <this reference="5"/>
+          </source>
+          <target>
+            <statement id="7" inside="false">
+              <statement-id id="8">
+                <method reference="4"/>
+                <value>$r0 = $r0.&lt;ar.uba.dc.jolden.mst.HashEntry: ar.uba.dc.jolden.mst.HashEntry next&gt;</value>
+                <line-number>123</line-number>
+                <bytecode-offset>1</bytecode-offset>
+              </statement-id>
+              <context/>
+            </statement>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <returned>
+      <statement reference="2"/>
+    </returned>
+    <escape-globaly/>
+  </heap>
+  <parameters/>
+  <temporal>{ 0 }</temporal>
+  <residual>
+    <node>
+      <statement reference="2"/>
+      <value>{ 0 }</value>
+    </node>
+    <node>
+      <this reference="5"/>
+      <value>{ 0 }</value>
+    </node>
+  </residual>
+</summary>

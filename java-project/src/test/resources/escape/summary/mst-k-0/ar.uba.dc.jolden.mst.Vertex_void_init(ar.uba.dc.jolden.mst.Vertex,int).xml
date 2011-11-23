@@ -1,0 +1,116 @@
+<summary id="1" className="ar.uba.dc.jolden.mst.Vertex" methodSignature="void &lt;init&gt;(ar.uba.dc.jolden.mst.Vertex,int)">
+  <points-to-graph id="2">
+    <graph>
+      <nodes>
+        <param id="3" index="0"/>
+        <statement id="4" inside="true">
+          <statement-id id="5">
+            <method id="6">
+              <class>ar.uba.dc.jolden.mst.Vertex</class>
+              <signature>void &lt;init&gt;(ar.uba.dc.jolden.mst.Vertex,int)</signature>
+            </method>
+            <value>$r3 = new ar.uba.dc.jolden.mst.Hashtable</value>
+            <line-number>38</line-number>
+            <bytecode-offset>16</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="7" inside="true">
+          <statement-id id="8">
+            <method id="9">
+              <class>ar.uba.dc.jolden.mst.Hashtable</class>
+              <signature>void &lt;init&gt;(int)</signature>
+            </method>
+            <value>$r2 = newarray (ar.uba.dc.jolden.mst.HashEntry)[$i0]</value>
+            <line-number>21</line-number>
+            <bytecode-offset>14</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <this id="10"/>
+      </nodes>
+      <edges>
+        <edge id="11" field="array" inside="true">
+          <source>
+            <statement reference="4"/>
+          </source>
+          <target>
+            <statement reference="7"/>
+          </target>
+        </edge>
+        <edge id="12" field="neighbors" inside="true">
+          <source>
+            <this reference="10"/>
+          </source>
+          <target>
+            <statement reference="4"/>
+          </target>
+        </edge>
+        <edge id="13" field="next" inside="true">
+          <source>
+            <this reference="10"/>
+          </source>
+          <target>
+            <param reference="3"/>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <variables>
+      <variable>
+        <name>$r0</name>
+        <type id="14" name="ref" to="ar.uba.dc.jolden.mst.Vertex"/>
+        <points-to id="15">
+          <this reference="10"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>n</name>
+        <type reference="14"/>
+        <points-to id="16">
+          <param reference="3"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r2</name>
+        <type reference="14"/>
+        <points-to id="17">
+          <param reference="3"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r3</name>
+        <type id="18" name="ref" to="ar.uba.dc.jolden.mst.Hashtable"/>
+        <points-to id="19">
+          <statement reference="4"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>this</name>
+        <type reference="14"/>
+        <points-to id="20">
+          <this reference="10"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r1</name>
+        <type reference="18"/>
+        <points-to id="21">
+          <statement reference="4"/>
+        </points-to>
+      </variable>
+    </variables>
+    <returned id="22"/>
+    <escape-globaly id="23"/>
+  </points-to-graph>
+  <mutated-fields>
+    <node>
+      <this reference="10"/>
+      <fields>
+        <field>mindist</field>
+        <field>neighbors</field>
+        <field>next</field>
+      </fields>
+    </node>
+  </mutated-fields>
+</summary>

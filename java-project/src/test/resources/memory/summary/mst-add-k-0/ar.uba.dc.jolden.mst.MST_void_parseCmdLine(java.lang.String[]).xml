@@ -1,0 +1,107 @@
+<summary id="1" className="ar.uba.dc.jolden.mst.MST" methodSignature="void parseCmdLine(java.lang.String[])">
+  <heap>
+    <graph>
+      <nodes>
+        <param id="2" index="0"/>
+        <statement id="3" inside="false">
+          <statement-id id="4">
+            <method id="5">
+              <class>ar.uba.dc.jolden.mst.MST</class>
+              <signature>void parseCmdLine(java.lang.String[])</signature>
+            </method>
+            <value>$r2 = $r1[$i1]</value>
+            <line-number>205</line-number>
+            <bytecode-offset>10</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <ar.uba.dc.analysis.escape.graph.node.GlobalNode id="6"/>
+        <statement id="7" inside="false">
+          <statement-id id="8">
+            <method reference="5"/>
+            <value>$r7 = $r0[$i2]</value>
+            <line-number>209</line-number>
+            <bytecode-offset>36</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="9" inside="true">
+          <statement-id id="10">
+            <method reference="5"/>
+            <value>$r8 = new java.lang.RuntimeException</value>
+            <line-number>210</line-number>
+            <bytecode-offset>49</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="11" inside="false">
+          <statement-id id="12">
+            <method reference="5"/>
+            <value>$r2 = $r1[$i1]</value>
+            <line-number>204</line-number>
+            <bytecode-offset>111</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+      </nodes>
+      <edges>
+        <edge id="13" field="[]" inside="false">
+          <source>
+            <param reference="2"/>
+          </source>
+          <target>
+            <statement reference="11"/>
+          </target>
+        </edge>
+        <edge id="14" field="[]" inside="false">
+          <source>
+            <param reference="2"/>
+          </source>
+          <target>
+            <statement reference="7"/>
+          </target>
+        </edge>
+        <edge id="15" field="[]" inside="false">
+          <source>
+            <param reference="2"/>
+          </source>
+          <target>
+            <statement reference="3"/>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <returned/>
+    <escape-globaly>
+      <statement reference="9"/>
+    </escape-globaly>
+  </heap>
+  <parameters/>
+  <temporal>{ 1 }</temporal>
+  <residual>
+    <node>
+      <param reference="2"/>
+      <value>{ 0 }</value>
+    </node>
+    <node>
+      <statement reference="3"/>
+      <value>{ 0 }</value>
+    </node>
+    <node>
+      <ar.uba.dc.analysis.escape.graph.node.GlobalNode reference="6"/>
+      <value>{ 0 }</value>
+    </node>
+    <node>
+      <statement reference="7"/>
+      <value>{ 0 }</value>
+    </node>
+    <node>
+      <statement reference="9"/>
+      <value>{ 1 }</value>
+    </node>
+    <node>
+      <statement reference="11"/>
+      <value>{ 0 }</value>
+    </node>
+  </residual>
+</summary>

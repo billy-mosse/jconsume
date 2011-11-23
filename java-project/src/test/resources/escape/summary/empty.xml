@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<summary className="java.lang.Integer" methodSignature="void &lt;init&gt;(int)">
+	<points-to-graph>
+		<graph>
+			<nodes/>
+			<edges/>
+		</graph>
+		<variables />
+		<returned />
+		<escape-globaly />
+	</points-to-graph>
+	<mutated-fields />
+</summary>

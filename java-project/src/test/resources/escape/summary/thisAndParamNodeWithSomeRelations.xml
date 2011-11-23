@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<summary className="ar.uba.dc.simple.Tupla" methodSignature="void &lt;init&gt;()">
+	<points-to-graph>
+		<graph>
+			<nodes>
+				<this id="1"/>
+				<param index="0" id="2" />
+				<param index="1" id="3" />
+				<global />
+			</nodes>
+			<edges>
+				<edge inside="true" field="array">
+					<source>
+						<this reference="1"/>
+					</source>
+					<target>
+						<param reference="2" />
+					</target>
+				</edge>
+				<edge inside="false" field="z">
+					<source>
+						<param reference="2" />
+					</source>
+					<target>	
+						<this reference="1"/>
+					</target>
+				</edge>
+				<edge inside="false" field="next">
+					<source>
+						<this reference="1"/>
+					</source>
+					<target>
+						<this reference="1"/>
+					</target>
+				</edge>
+			</edges>
+		</graph>
+		<variables>
+			<variable>
+				<name>$r0</name>
+				<type name="ref" to="ar.uba.dc.simple.Tupla" />
+				<points-to>
+					<this reference="1"/>
+				</points-to>
+			</variable>
+			<variable>
+				<name>this</name>
+				<type name="ref" to="ar.uba.dc.simple.Tupla" />
+				<points-to>
+					<this reference="1" />
+				</points-to>
+			</variable>
+		</variables>
+		<returned>
+			<param reference="2" />
+		</returned>
+		<escape-globaly>
+			<this reference="1" />
+		</escape-globaly>
+	</points-to-graph>
+	<mutated-fields>
+		<node>
+			<param reference="2" />
+			<fields>
+				<field>arrays</field>
+				<field>size</field>
+				<field>something</field>
+			</fields>
+		</node>
+		<node>
+			<param reference="3" />
+			<fields>
+				<field>other</field>
+				<field>size</field>
+			</fields>
+		</node>
+	</mutated-fields>
+</summary>

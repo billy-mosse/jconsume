@@ -1,0 +1,205 @@
+<summary id="1" className="ar.uba.dc.rinard.BasicTest" methodSignature="float sumX(ar.uba.dc.rinard.List)">
+  <points-to-graph id="2">
+    <graph>
+      <nodes>
+        <param id="3" index="0"/>
+        <statement id="4" inside="true">
+          <statement-id id="5">
+            <method id="6">
+              <class>ar.uba.dc.rinard.List</class>
+              <signature>java.util.Iterator iterator()</signature>
+            </method>
+            <value>$r0 = new ar.uba.dc.rinard.ListItr</value>
+            <line-number>25</line-number>
+            <bytecode-offset>0</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="7" inside="false">
+          <statement-id id="8">
+            <method id="9">
+              <class>ar.uba.dc.rinard.BasicTest</class>
+              <signature>float sumX(ar.uba.dc.rinard.List)</signature>
+            </method>
+            <value>$r5 = $r0.&lt;ar.uba.dc.rinard.Point: java.lang.Float x&gt;</value>
+            <line-number>56</line-number>
+            <bytecode-offset>22</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="10" inside="false">
+          <statement-id id="11">
+            <method id="12">
+              <class>ar.uba.dc.rinard.ListItr</class>
+              <signature>java.lang.Object next()</signature>
+            </method>
+            <value>$r4 = $r4.&lt;ar.uba.dc.rinard.Cell: ar.uba.dc.rinard.Cell next&gt;</value>
+            <line-number>34</line-number>
+            <bytecode-offset>13</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="13" inside="false">
+          <statement-id id="14">
+            <method reference="6"/>
+            <value>$r3 = $r2.&lt;ar.uba.dc.rinard.List: ar.uba.dc.rinard.Cell head&gt;</value>
+            <line-number>25</line-number>
+            <bytecode-offset>5</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+        <statement id="15" inside="false">
+          <statement-id id="16">
+            <method reference="12"/>
+            <value>$r3 = $r2.&lt;ar.uba.dc.rinard.Cell: java.lang.Object data&gt;</value>
+            <line-number>33</line-number>
+            <bytecode-offset>4</bytecode-offset>
+          </statement-id>
+          <context sensitivity="0"/>
+        </statement>
+      </nodes>
+      <edges>
+        <edge id="17" field="head" inside="false">
+          <source>
+            <param reference="3"/>
+          </source>
+          <target>
+            <statement reference="13"/>
+          </target>
+        </edge>
+        <edge id="18" field="cell" inside="true">
+          <source>
+            <statement reference="4"/>
+          </source>
+          <target>
+            <statement reference="13"/>
+          </target>
+        </edge>
+        <edge id="19" field="cell" inside="true">
+          <source>
+            <statement reference="4"/>
+          </source>
+          <target>
+            <statement reference="10"/>
+          </target>
+        </edge>
+        <edge id="20" field="next" inside="false">
+          <source>
+            <statement reference="10"/>
+          </source>
+          <target>
+            <statement reference="10"/>
+          </target>
+        </edge>
+        <edge id="21" field="data" inside="false">
+          <source>
+            <statement reference="10"/>
+          </source>
+          <target>
+            <statement reference="15"/>
+          </target>
+        </edge>
+        <edge id="22" field="data" inside="false">
+          <source>
+            <statement reference="13"/>
+          </source>
+          <target>
+            <statement reference="15"/>
+          </target>
+        </edge>
+        <edge id="23" field="next" inside="false">
+          <source>
+            <statement reference="13"/>
+          </source>
+          <target>
+            <statement reference="10"/>
+          </target>
+        </edge>
+        <edge id="24" field="x" inside="false">
+          <source>
+            <statement reference="15"/>
+          </source>
+          <target>
+            <statement reference="7"/>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <variables>
+      <variable>
+        <name>$r1</name>
+        <type id="25" name="ref" to="ar.uba.dc.rinard.List"/>
+        <points-to id="26">
+          <param reference="3"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>it</name>
+        <type id="27" name="ref" to="java.util.Iterator"/>
+        <points-to id="28">
+          <statement reference="4"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r2</name>
+        <type reference="27"/>
+        <points-to id="29">
+          <statement reference="4"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>list</name>
+        <type reference="25"/>
+        <points-to id="30">
+          <param reference="3"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r5</name>
+        <type id="31" name="ref" to="java.lang.Float"/>
+        <points-to id="32">
+          <statement id="33" inside="false">
+            <statement-id id="34">
+              <method reference="9"/>
+              <value>$r5 = $r0.&lt;ar.uba.dc.rinard.Point: java.lang.Float x&gt;</value>
+              <line-number>56</line-number>
+              <bytecode-offset>22</bytecode-offset>
+            </statement-id>
+            <context sensitivity="0"/>
+          </statement>
+        </points-to>
+      </variable>
+      <variable>
+        <name>p</name>
+        <type id="35" name="ref" to="ar.uba.dc.rinard.Point"/>
+        <points-to id="36">
+          <statement reference="15"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r3</name>
+        <type id="37" name="ref" to="java.lang.Object"/>
+        <points-to id="38">
+          <statement reference="15"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r4</name>
+        <type reference="35"/>
+        <points-to id="39">
+          <statement reference="15"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r0</name>
+        <type reference="35"/>
+        <points-to id="40">
+          <statement reference="15"/>
+        </points-to>
+      </variable>
+    </variables>
+    <returned id="41"/>
+    <escape-globaly id="42"/>
+  </points-to-graph>
+  <mutated-fields/>
+</summary>

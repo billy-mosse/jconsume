@@ -1,0 +1,60 @@
+<summary id="1" className="ar.uba.dc.jolden.mst.BlueReturn" methodSignature="void setVert(ar.uba.dc.jolden.mst.Vertex)">
+  <points-to-graph id="2">
+    <graph>
+      <nodes>
+        <param id="3" index="0"/>
+        <this id="4"/>
+      </nodes>
+      <edges>
+        <edge id="5" field="vert" inside="true">
+          <source>
+            <this reference="4"/>
+          </source>
+          <target>
+            <param reference="3"/>
+          </target>
+        </edge>
+      </edges>
+    </graph>
+    <variables>
+      <variable>
+        <name>v</name>
+        <type id="6" name="ref" to="ar.uba.dc.jolden.mst.Vertex"/>
+        <points-to id="7">
+          <param reference="3"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r0</name>
+        <type id="8" name="ref" to="ar.uba.dc.jolden.mst.BlueReturn"/>
+        <points-to id="9">
+          <this reference="4"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>$r1</name>
+        <type reference="6"/>
+        <points-to id="10">
+          <param reference="3"/>
+        </points-to>
+      </variable>
+      <variable>
+        <name>this</name>
+        <type reference="8"/>
+        <points-to id="11">
+          <this reference="4"/>
+        </points-to>
+      </variable>
+    </variables>
+    <returned id="12"/>
+    <escape-globaly id="13"/>
+  </points-to-graph>
+  <mutated-fields>
+    <node>
+      <this reference="4"/>
+      <fields>
+        <field>vert</field>
+      </fields>
+    </node>
+  </mutated-fields>
+</summary>

@@ -1,0 +1,23 @@
+<summary id="1" className="ar.uba.dc.tacas.Snippet01" methodSignature="void main(java.lang.String[])">
+  <heap>
+    <graph>
+      <nodes>
+        <param id="2" index="0"/>
+      </nodes>
+      <edges/>
+    </graph>
+    <returned/>
+    <escape-globaly/>
+  </heap>
+  <parameters>
+    <parameter>maxElementSize</parameter>
+    <parameter>size</parameter>
+  </parameters>
+  <temporal>{ [[maxElementSize,size] -&gt; []] -&gt; 25 + (21 + 7*maxElementSize)*size : maxElementSize &gt;= 1 &amp;&amp; size &gt;= 1 }</temporal>
+  <residual>
+    <node>
+      <param reference="2"/>
+      <value>{ [[maxElementSize,size] -&gt; []] -&gt; 0 : size &gt; 0 and maxElementSize &gt; 0 }</value>
+    </node>
+  </residual>
+</summary>
