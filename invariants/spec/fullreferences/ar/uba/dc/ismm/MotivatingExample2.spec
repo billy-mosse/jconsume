@@ -108,11 +108,11 @@
 			<requires><![CDATA[list.size > 0]]></requires>
 			<requires><![CDATA[list.elements.maxSize > 0]]></requires>
 			
-    		<call-site offset="3">
+    		<call-site offset="4">
       			<constraints><![CDATA[1 <= k <= list.size and $t.list.size == list.elements.maxSize]]></constraints>
     		</call-site>
     		
-    		<call-site offset="2,4,5">
+    		<call-site offset="2,3,5">
       			<constraints><![CDATA[1 <= k <= list.size]]></constraints>
     		</call-site>
 		</method>
