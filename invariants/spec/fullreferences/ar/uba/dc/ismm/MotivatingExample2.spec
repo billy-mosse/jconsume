@@ -85,7 +85,7 @@
     		</call-site>
 		</method>
 		
-		<method decl="ar.uba.dc.util.List copyList(ar.uba.dc.util.List)">
+		<method decl="ar.uba.dc.util.List copy(ar.uba.dc.util.List)">
 			<relevant-parameters>list.size</relevant-parameters>
 			<requires><![CDATA[list.size > 0]]></requires>
 			
