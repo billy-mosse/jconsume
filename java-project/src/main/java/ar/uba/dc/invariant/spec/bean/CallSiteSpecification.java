@@ -11,6 +11,7 @@ public class CallSiteSpecification implements SiteSpecification {
 	private String id;
 	private String offset;
 	private String constraints;
+	private String variables;
 	private Boolean loopInvariant;
 	private Boolean captureAllPartitions;
 	private String implementation;

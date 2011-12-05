@@ -82,6 +82,7 @@ public class XStreamSpecWriter implements SpecWriter {
 		xstream.alias("call-site", CallSiteSpecification.class);
 		xstream.useAttributeFor(CallSiteSpecification.class, "id");
 		xstream.useAttributeFor(CallSiteSpecification.class, "offset");
+		xstream.useAttributeFor(CallSiteSpecification.class, "variables");
 		xstream.useAttributeFor(CallSiteSpecification.class, "loopInvariant");
 		xstream.aliasAttribute(CallSiteSpecification.class, "loopInvariant", "loop-invariant");
 		xstream.aliasAttribute(CallSiteSpecification.class, "captureAllPartitions", "capture");
@@ -92,6 +93,7 @@ public class XStreamSpecWriter implements SpecWriter {
 		xstream.alias("creation-site", CreationSiteSpecification.class);
 		xstream.useAttributeFor(CreationSiteSpecification.class, "id");
 		xstream.useAttributeFor(CreationSiteSpecification.class, "offset");
+		xstream.useAttributeFor(CallSiteSpecification.class, "variables");
 		xstream.useAttributeFor(CreationSiteSpecification.class, "loopInvariant");
 		xstream.aliasAttribute(CreationSiteSpecification.class, "loopInvariant", "loop-invariant");
 		xstream.aliasAttribute(CreationSiteSpecification.class, "captureAllPartitions", "capture");
