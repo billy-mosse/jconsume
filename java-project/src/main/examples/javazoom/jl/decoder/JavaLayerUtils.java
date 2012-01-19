@@ -209,7 +209,12 @@ public class JavaLayerUtils
 		}
 		else
 		{
-			Class cls = JavaLayerUtils.class;
+			//Class cls = JavaLayerUtils.class;
+			Class cls = Manager.class;
+//			System.out.println(cls.toString()+":");
+//			System.out.println(name);
+			String executionPath = System.getProperty("user.dir");
+		    System.out.println("Executing at =>"+executionPath.replace("\\", "/"));
 			is = cls.getResourceAsStream(name);
 		}
 		

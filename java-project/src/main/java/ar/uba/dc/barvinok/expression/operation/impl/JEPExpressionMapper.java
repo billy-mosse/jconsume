@@ -215,7 +215,8 @@ public class JEPExpressionMapper implements ExpressionMapper {
 		String expr = target;
 		expr = expr.replaceAll("(?i) and ", " && ");
 		expr = expr.replaceAll("(?i) or ", " || ");
-		expr = expr.replaceAll("(\\d+)([a-zA-Z_]\\w*)", "$1*$2"); // Cambiamos la multiplicacion implicita por explicita. Asumimos que solo se da el caso numero*variable.
+		// Diego: La caso por ahora 
+		// expr = expr.replaceAll("(\\d+)([a-zA-Z_]\\w*)", "$1*$2"); // Cambiamos la multiplicacion implicita por explicita. Asumimos que solo se da el caso numero*variable.
 		String constraintsForResult = StringUtils.EMPTY;
 		if (StringUtils.isNotBlank(expr)) {
 			Node parsedConstratins = parser.parse(expr);

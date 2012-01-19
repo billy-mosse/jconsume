@@ -13,7 +13,9 @@ public class DomainSet {
 	private Set<String> parameters = new TreeSet<String>(); // AKA, free variables
 	
 	@XStreamImplicit(itemFieldName="variable")
-	private Set<String> variables = new TreeSet<String>(); // AKA, inductive variables
+	// (NO! aqui estan poniendo las que aparecen en el invariante)
+	private Set<String> variables = new TreeSet<String>(); // AKA, inductive variables 	
+	private Set<String> inductives = new TreeSet<String>(); 
 	
 	private String constraints;
 
@@ -42,6 +44,16 @@ public class DomainSet {
 	
 	public DomainSet(String constraints) {
 		this.constraints = constraints;
+	}
+	public DomainSet(String constraints, Set<String> inductives) {
+		this.constraints = constraints;
+		this.inductives = inductives;
+	}
+	
+	public DomainSet(String constraints, Set<String> inductives, Set<String> vars) {
+		this.constraints = constraints;
+		this.inductives = inductives;
+		this.variables = vars;
 	}
 	
 	public String toString() {
@@ -121,4 +133,10 @@ public class DomainSet {
 	public void addAllVariables(Set<String> vars) {
 		this.variables.addAll(vars);
 	}
+	
+	public void addAllInductives(Set<String> vars) {
+		this.inductives.addAll(vars);
+	}
+	
+	
 }

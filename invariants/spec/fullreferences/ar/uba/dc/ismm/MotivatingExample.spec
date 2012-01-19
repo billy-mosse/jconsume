@@ -113,7 +113,7 @@
     		</call-site>
     		
     		<call-site offset="2,3,5">
-      			<constraints><![CDATA[1 <= k <= list.size]]></constraints>
+      			<constraints><![CDATA[1 <= k <= list.size and $t.list.size == list.elements.maxSize]]></constraints>
     		</call-site>
 		</method>
 	</class>

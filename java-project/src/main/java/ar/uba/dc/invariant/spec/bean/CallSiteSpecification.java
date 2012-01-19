@@ -12,6 +12,8 @@ public class CallSiteSpecification implements SiteSpecification {
 	private String offset;
 	private String constraints;
 	private String variables;
+	private String inductives;
+	private String callee;
 	private Boolean loopInvariant;
 	private Boolean captureAllPartitions;
 	private String implementation;
@@ -84,6 +86,12 @@ public class CallSiteSpecification implements SiteSpecification {
 
 	public void setOperator(String operator) {
 		this.operator = operator;
+	}
+
+	@Override
+	public String getInductives() {
+		// TODO Auto-generated method stub
+		return inductives;
 	}
 	
 }

@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.StringTokenizer;
+import java.util.TreeSet;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -85,7 +87,8 @@ public abstract class AbstractSpecCompiler implements SpecCompiler {
 			if (StringUtils.isBlank(site.getOffset())) {
 				throw new SiteWithoutOffsetException("Site at index " + sitesInfo.size() + " of method " + methodSpec.getSignature() +  " at class " + classSpec.getClassName() + " has no offset specified");
 			}
-			ConstraintsInfo info = processConstraints(site.getConstraints(), methodSpec.getParameters());
+			// ConstraintsInfo info = processConstraints(site.getConstraints(), methodSpec.getParameters());
+			ConstraintsInfo info = processConstraints(site, methodSpec.getParameters());
 			sitesInfo.put(site, info);
 		}
 		
@@ -104,6 +107,8 @@ public abstract class AbstractSpecCompiler implements SpecCompiler {
 				ConstraintsInfo info = sitesInfo.get(site);
 				invariant.addAllParameters(params);
 				invariant.addAllVariables(info.getVariables());
+				// Podria usar el constructor...
+				invariant.addAllInductives(info.getinductives());
 				
 				// Obtenemos un identificador para el invariante que estamos procesando
 				InvariantId invariantId = site.apply(new SiteSpecificationVisitor<InvariantId>() {
@@ -161,6 +166,25 @@ public abstract class AbstractSpecCompiler implements SpecCompiler {
 		
 		return info;
 	}
+	
+	protected ConstraintsInfo processConstraints(SiteSpecification site, Set<String> parameters) {
+		String constraints = site.getConstraints();
+		
+		ConstraintsInfo info = new ConstraintsInfo();
+		
+		if (StringUtils.isNotBlank(site.getConstraints())) {
+			info = parser.parse(constraints);
+			info.getVariables().removeAll(parameters);
+		}
+		StringTokenizer stn = new StringTokenizer(site.getInductives(), ",");
+		while (stn.hasMoreTokens()) {
+	        info.addInductive(stn.nextToken());
+	     }
+		// Ojo!! Habria que borrarlas, ver lo de $t
+		// info.getinductives().removeAll(parameters);
+		return info;
+	}
+
 	
 	protected Set<Long> expandOffset(String offset) {
 		Set<Long> offsets = new HashSet<Long>();

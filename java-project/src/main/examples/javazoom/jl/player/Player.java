@@ -22,6 +22,8 @@ package javazoom.jl.player;
 
 import java.io.InputStream;
 
+import monitor.BooleanTracker;
+
 import javazoom.jl.decoder.Bitstream;
 import javazoom.jl.decoder.BitstreamException;
 import javazoom.jl.decoder.Decoder;
@@ -121,9 +123,15 @@ public class Player {
 	 */
 	public boolean play(int frames) throws JavaLayerException {
 		boolean ret = true;
+		int counter = 0;
 		//System.out.println("frames start at " + frames);
-		while (frames-- > 0 && ret)
+		while (frames-- > 0 && ret && counter<BooleanTracker.iterations)
+		{
+			counter++;
+			System.out.println("Frame #:"+counter+" Frames Rem:"+frames);
+			
 			ret = decodeFrame();			
+		}
 		
 		if (!ret) {
 			// last frame, ensure all data flushed to the audio device. 

@@ -12,6 +12,7 @@ public class CreationSiteSpecification implements SiteSpecification {
 	private String offset;
 	private String constraints;
 	private String variables;
+	private String inductives;
 	private Boolean loopInvariant;
 	private Boolean captureAllPartitions;
 	private String implementation;
@@ -84,5 +85,10 @@ public class CreationSiteSpecification implements SiteSpecification {
 
 	public void setOperator(String operator) {
 		this.operator = operator;
+	}
+
+	@Override
+	public String getInductives() {
+		return inductives;
 	}
 }

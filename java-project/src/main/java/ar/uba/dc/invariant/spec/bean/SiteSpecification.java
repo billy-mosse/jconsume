@@ -9,6 +9,8 @@ public interface SiteSpecification {
 	
 	public String getConstraints();
 	
+	public String getInductives();
+	
 	public <T> T apply(SiteSpecificationVisitor<T> visitor);
 
 	public void setConstraints(String constraints);

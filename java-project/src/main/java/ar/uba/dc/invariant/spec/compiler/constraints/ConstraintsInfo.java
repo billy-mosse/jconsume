@@ -6,6 +6,7 @@ import java.util.TreeSet;
 public class ConstraintsInfo {
 
 	private Set<String> variables = new TreeSet<String>();
+	private Set<String> inductives = new TreeSet<String>();
 	
 	/**
 	 * Nombres de los invariantes a los que hace referencia
@@ -20,8 +21,19 @@ public class ConstraintsInfo {
 		variables.addAll(vars);
 	}
 	
+	public void addInductive(String var) {
+		inductives.add(var);
+	}
+	
+	public void addAllInductives(Set<String> vars) {
+		inductives.addAll(vars);
+	}
+	
 	public Set<String> getVariables() {
 		return variables;
+	}
+	public Set<String> getinductives() {
+		return inductives;
 	}
 	
 	public void addReference(String invariantId) {

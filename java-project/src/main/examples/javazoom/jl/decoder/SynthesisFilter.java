@@ -1382,6 +1382,7 @@ final class SynthesisFilter {
 		}
 		catch (IOException ex)
 		{
+			System.out.println("Causa:"+ex);
 			throw new ExceptionInInitializerError(ex);
 		}		
 	}

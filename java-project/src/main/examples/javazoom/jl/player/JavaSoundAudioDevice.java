@@ -28,8 +28,13 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.Line;
+import javax.sound.sampled.Line.Info;
 import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.Mixer;
 import javax.sound.sampled.SourceDataLine;
+
+import com.sun.media.sound.MixerSourceLine;
+import com.sun.org.apache.xerces.internal.impl.dtd.models.MixedContentModel;
 
 import javazoom.jl.decoder.Decoder;
 import javazoom.jl.decoder.JavaLayerException;
@@ -104,6 +109,13 @@ public class JavaSoundAudioDevice extends AudioDeviceBase
 	 * @see javazoom.jl.player.AudioDeviceBase#openImpl()
 	 */
 	protected void openImpl() throws JavaLayerException { }
+	Line getLine(Info sli) throws LineUnavailableException
+	{
+//		HeadspaceMixerProvider mp = new HeadspaceMixerProvider();
+//		Mixer m = mp.getMixer(mp.getMixerInfo()[0]);
+//		return m.getLine(sli);
+		return new FakeSourceLine();
+	}
 
 
 	// createSource fix.
@@ -112,7 +124,8 @@ public class JavaSoundAudioDevice extends AudioDeviceBase
         Throwable t = null;
         try
         {
-			Line line = AudioSystem.getLine(getSourceLineInfo());
+        	Line line = getLine(getSourceLineInfo());
+			//Line line = AudioSystem.getLine(getSourceLineInfo());
             if (line instanceof SourceDataLine)
             {
          		source = (SourceDataLine)line;
