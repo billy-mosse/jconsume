@@ -152,13 +152,22 @@ public class IsccSyntax extends AbstractBarvinokSyntax {
 	}
 
 	public String toString(DomainSet value) {
+		Set<String> varsToElim = value.variablesToExclude();
+		Set<String> varsToInclude = value.getVariables();
+		varsToInclude.removeAll(varsToElim);
 		String params = StringUtils.join(value.getParameters(), ',');
-		String vars = StringUtils.join(value.getVariables(), ',');
+		String vars = StringUtils.join(varsToInclude, ',');
 		
 		String ret = "{ ";
 		
 		if (StringUtils.isNotEmpty(params) || StringUtils.isNotEmpty(vars)) {
 			ret += "[" + params + "] -> [" + vars + "]";
+		}
+		
+		
+		if(!varsToElim.isEmpty())  {
+			String stringElim = StringUtils.join(varsToElim, ',');
+			ret += ": exists "+stringElim+" ";
 		}
 		
 		if (StringUtils.isNotEmpty(value.getConstraints())) {
@@ -196,7 +205,11 @@ public class IsccSyntax extends AbstractBarvinokSyntax {
 	}
 
 	protected String toString(QuasiPolynomial value, String params, boolean includeVariables) {
-		String vars = StringUtils.join(value.getVariables(), ',');
+		Set<String> varsToElim = value.variablesToExclude();
+		Set<String> varsToInclude = value.getVariables();
+		varsToInclude.removeAll(varsToElim);
+		String vars = StringUtils.join(varsToInclude, ',');
+		
 		String ret = StringUtils.EMPTY;
 		
 		if (StringUtils.isNotBlank(params) || StringUtils.isNotBlank(vars)) {
@@ -208,6 +221,11 @@ public class IsccSyntax extends AbstractBarvinokSyntax {
 		}
 		
 		ret += value.getPolynomial();
+		
+		if(!varsToElim.isEmpty())  {
+			String stringElim = StringUtils.join(varsToElim, ',');
+			ret += ": exists "+stringElim+" ";
+		}
 		
 		if (StringUtils.isNotBlank(value.getConstraints())) {
 			ret += " : " + value.getConstraints();

@@ -8,6 +8,8 @@ import org.apache.commons.lang.StringUtils;
 public class QuasiPolynomial {
 
 	private Set<String> variables;
+	private Set<String> inductives;
+
 	
 	private String constraints;
 	
@@ -37,12 +39,17 @@ public class QuasiPolynomial {
 	}
 	
 	public QuasiPolynomial(String polynomial, String constraints, Set<String> variables) {
+		this(polynomial,constraints, variables, new TreeSet<String>(variables));
+	
+	}
+	public QuasiPolynomial(String polynomial, String constraints, Set<String> variables, Set<String> inductives) {
 		super();
 		this.variables = variables;
 		this.polynomial = polynomial;
 		this.constraints = constraints;
+		this.inductives = inductives;
 	}
-	
+
 	public String asString() {
 		String ret = polynomial;
 		
@@ -61,6 +68,11 @@ public class QuasiPolynomial {
 		if (!StringUtils.isEmpty(constraints)) {
 			ret += ": " + constraints;
 		}
+
+		
+		if (!StringUtils.isEmpty(constraints)) {
+			ret += ": " + constraints;
+		}
 		
 		return ret;
 	}
@@ -74,11 +86,32 @@ public class QuasiPolynomial {
 	}
 	
 	public Set<String> getVariables() {
-		return variables;
+		//return variables;
+		return new TreeSet<String>(variables);
 	}
+	
+	public Set<String> getInductives() {
+		//return inductives;
+		return new TreeSet<String>(inductives);
+	}
+
 	
 	public String getConstraints() {
 		return constraints;
+	}
+	
+	public Set<String> variablesToExclude()
+	{
+		Set<String> res = new TreeSet<String>(variables);
+		res.removeAll(inductives);
+		
+		// No sirve porque ya estan cambiando los nombres
+//		Set<String> res = new TreeSet<String>();
+//		for (String v : variables) {
+//			if(!inductives.contains(v) || v.startsWith("$t.") )
+//				res.add(v);
+//		}
+		return res;
 	}
 
 	public void setPolynomial(String polynomial) {

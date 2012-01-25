@@ -53,6 +53,7 @@
 		<package name="java.lang." type="startsWith">
 			<method name="valueOf" type="equals" />
 			<method name="parseInt" type="equals" />
+			<method name="clone" type="equals" />
 		</package>
 		
 		<package name="java." type="startsWith">

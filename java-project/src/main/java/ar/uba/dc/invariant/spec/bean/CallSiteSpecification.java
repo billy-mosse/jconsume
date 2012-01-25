@@ -30,6 +30,13 @@ public class CallSiteSpecification implements SiteSpecification {
 		if (constraints == null) {
 			constraints = StringUtils.EMPTY;
 		}
+		if (inductives == null) {
+			inductives = StringUtils.EMPTY;
+		}
+		if (variables == null) {
+			variables = StringUtils.EMPTY;
+		}
+
 	    return this;
 	}
 	

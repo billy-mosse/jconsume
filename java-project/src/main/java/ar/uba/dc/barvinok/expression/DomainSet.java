@@ -15,6 +15,7 @@ public class DomainSet {
 	@XStreamImplicit(itemFieldName="variable")
 	// (NO! aqui estan poniendo las que aparecen en el invariante)
 	private Set<String> variables = new TreeSet<String>(); // AKA, inductive variables 	
+	@XStreamImplicit(itemFieldName="inductive")
 	private Set<String> inductives = new TreeSet<String>(); 
 	
 	private String constraints;
@@ -33,6 +34,10 @@ public class DomainSet {
 		
 		if (variables == null) {
 			variables = new TreeSet<String>();
+		}
+		
+		if (inductives == null) {
+			inductives = new TreeSet<String>();
 		}
 		
 		if (constraints == null) {
@@ -77,20 +82,30 @@ public class DomainSet {
 	}
 	
 	public void addVariable(String var) {
-		this.variables.add(var);
+		this.variables.add(var.trim());
 	}
 	
 	public void removeVariable(String var) {
-		this.variables.remove(var);
+		this.variables.remove(var.trim());
 	}
 	
 	public void addParameter(String param) {
-		this.parameters.add(param);
+		this.parameters.add(param.trim());
 	}
 	
 	public void removeParameter(String param) {
-		this.parameters.remove(param);
+		this.parameters.remove(param.trim());
 	}
+	
+	
+	public void addInductive(String var) {
+		this.inductives.add(var.trim());
+	}
+	
+	public void removeInductive(String var) {
+		this.inductives.remove(var.trim());
+	}
+
 	
 	public String getConstraints() {
 		return constraints;
@@ -99,6 +114,11 @@ public class DomainSet {
 	public Set<String> getVariables() {
 		return new TreeSet<String>(variables);
 	}
+	
+	public Set<String> getInductives() {
+		return new TreeSet<String>(inductives);
+	}
+
 
 	public Set<String> getParameters() {
 		return new TreeSet<String>(parameters);
@@ -136,6 +156,12 @@ public class DomainSet {
 	
 	public void addAllInductives(Set<String> vars) {
 		this.inductives.addAll(vars);
+	}
+	public Set<String> variablesToExclude()
+	{
+		Set<String> res = new TreeSet<String>(variables);
+		res.removeAll(inductives);
+		return res;
 	}
 	
 	

@@ -41,5 +41,16 @@ public class ChainSummaryRepository<T> implements SummaryRepository<T>, Containe
 	public void unregister(SummaryRepository<T> repository) {
 		repositories.remove(repository);
 	}
+	public String toString() {
+		String res = "";
+		Iterator<SummaryRepository<T>> itRepositories = repositories.iterator();
+		
+		while (itRepositories.hasNext() ) {
+			SummaryRepository<T> sr =  itRepositories.next();
+			res+=sr.toString()+" ";
+		}
+		return res;
+	}
+
 	
 }

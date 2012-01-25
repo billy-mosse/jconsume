@@ -56,7 +56,7 @@ public class InstrumentationJPFTool {
 		}
 		
 		String[] opts = { 
-	//		"-w",
+			//"-w",
 			"-app",
 			"-soot-classpath", context.getString(Context.APPLICATION_CLASSPATH),
 			"-f", context.getString(Context.INSTRUMENTATION_OUTPUT_FORMAT),
@@ -109,6 +109,8 @@ public class InstrumentationJPFTool {
 		//SootUtils.insertTransformer("wjtp", "wjtp.la", transformer);	
 		
 		Scene.v().addBasicClass(InstrumenterForJPF.LISTENER_CLASS, SootClass.SIGNATURES);
+		Scene.v().loadClass(InstrumenterForJPF.LISTENER_CLASS, SootClass.SIGNATURES);
+		
 		SootUtils.insertTransformer("jtp", "jtp.instrumentation", new InstrumenterForJPF(args[0], repository));	
 		
 		

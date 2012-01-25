@@ -3,6 +3,7 @@ package ar.uba.dc.analysis.common.method.information.rules;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import org.apache.commons.logging.Log;
@@ -17,8 +18,9 @@ public class XMLRuleSetRepository implements RuleSetRepository {
 	
 	public RuleSet get() {
 		try {
-			
-			return reader.read(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream(rulesFile)));
+			InputStream is = this.getClass().getClassLoader().getResourceAsStream(rulesFile);
+			InputStreamReader isr= new InputStreamReader(is);
+			return reader.read(isr);
 			//return reader.read(new FileReader(new File(rulesFile)));
 		} catch (Exception e) {
 			log.error("No fue posible cargar el archivo de reglas para metodos no analizables [" + rulesFile + "]: " + e.getMessage(), e);

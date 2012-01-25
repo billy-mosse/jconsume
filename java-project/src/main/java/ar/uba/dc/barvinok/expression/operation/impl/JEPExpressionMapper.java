@@ -74,6 +74,17 @@ public class JEPExpressionMapper implements ExpressionMapper {
 				variables.add(inverseMapping.get(target));
 			}
 		}
+		Set<String> inductives = new TreeSet<String>();
+		for (String target : invariant.getInductives()) {
+			if (!inverseMapping.containsKey(target)) {
+				actualKey = keyGenerator.getNextKey(actualKey);
+				inductives.add(actualKey);
+				mapping.put(actualKey, target);
+				inverseMapping.put(target, actualKey);
+			} else {
+				inductives.add(inverseMapping.get(target));
+			}
+		}
 		
 		try {
 			String constraintsForResult = parseExpression(invariant.getConstraints(), inverseMapping); 
@@ -81,6 +92,7 @@ public class JEPExpressionMapper implements ExpressionMapper {
 			result = new DomainSet(constraintsForResult);
 			result.addAllParameters(params);
 			result.addAllVariables(variables);
+			result.addAllInductives(inductives);
 			
 			return result;
 		} catch (ParseException e) {

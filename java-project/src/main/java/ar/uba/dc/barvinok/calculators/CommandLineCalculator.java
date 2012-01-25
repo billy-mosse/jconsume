@@ -548,7 +548,7 @@ public class CommandLineCalculator implements BarvinokCalculator {
 		// Constraints y armado de los polinomios
 		for (QuasiPolynomial polynomial : p.getPieces()) {
 			String constraints = domainUnifier.unify(polynomial.getConstraints(), invariant.getConstraints());
-			pqp.add(new QuasiPolynomial(polynomial.getPolynomial(), constraints, variables));
+			pqp.add(new QuasiPolynomial(polynomial.getPolynomial(), constraints, variables, invariant.getInductives()));
 		}
 		
 		// Ejecutamos el comando
