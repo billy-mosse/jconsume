@@ -1,5 +1,5 @@
 #!/bin/bash
-ROOT=~/Facu/Investigacion/Memoria
+ROOT=$HOME/Facu/Investigacion/Memoria
 
 PROJECT_PATH=$(dirname $0)/..
 CLASS_PATH=$PROJECT_PATH/target/classes
