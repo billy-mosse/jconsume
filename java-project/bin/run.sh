@@ -1,9 +1,11 @@
 #!/bin/bash
+ROOT=~/Facu/Investigacion/Memoria
 
 PROJECT_PATH=$(dirname $0)/..
 CLASS_PATH=$PROJECT_PATH/target/classes
 CLASS_PATH=$CLASS_PATH:$PROJECT_PATH/../jpfHelper/bin
-CLASS_PATH=$CLASS_PATH:/Users/diegog/Facu/Investigacion/Memoria/pruebas/jolden
+CLASS_PATH=$CLASS_PATH:$ROOT/pruebas/:$ROOT/pruebas/flanagan.jar
+CLASS_PATH=$CLASS_PATH:$ROOT/pruebas/jolden
 CLASS_PATH=$CLASS_PATH:$M2_REPOSITORY_PATH/ca/mcgill/sable/jasmin/2.4.0/jasmin-2.4.0.jar
 CLASS_PATH=$CLASS_PATH:$M2_REPOSITORY_PATH/ca/mcgill/sable/polyglot/1.3.5/polyglot-1.3.5.jar
 CLASS_PATH=$CLASS_PATH:$M2_REPOSITORY_PATH/ca/mcgill/sable/soot/2.4.0/soot-2.4.0.jar
