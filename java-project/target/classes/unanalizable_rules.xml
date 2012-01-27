@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
-<rules cache-size="26">
+<rules cache-size="25">
 	<rule name="pure methods which consume 0 residual and 0 temporal resources" type="pure">
 		<resources syntax="iscc">
 			<temporal>{ 0 }</temporal>
@@ -39,7 +39,6 @@
 			<method name="valueOf" type="equals" />
 			<method name="parseInt" type="equals" />
 			<method name="clone" type="equals" />
-
 		</package>
 		
 		<package name="java." type="startsWith">
