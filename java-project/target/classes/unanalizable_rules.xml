@@ -1,14 +1,33 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <rules cache-size="25">
+	<rule name="methods that should be exlcuded from the analysis" type="exclude">
+		<package name="java." type="startsWith">
+			<method name="hasMoreElements" type="equals" />
+			<method name="nextElement" type="equals" />
+			<method name="hasNext" type="equals" />
+			<method name="next" type="equals" />
+		</package>
+		
+		<package name="sun." type="startsWith">
+			<method name="hasMoreElements" type="equals" />
+			<method name="nextElement" type="equals" />
+			<method name="hasNext" type="equals" />
+			<method name="next" type="equals" />
+		</package>
+		
+		<package name="javax." type="startsWith">
+			<method name="hasMoreElements" type="equals" />
+			<method name="nextElement" type="equals" />
+			<method name="hasNext" type="equals" />
+			<method name="next" type="equals" />
+		</package>
+	</rule>
+
 	<rule name="pure methods which consume 0 residual and 0 temporal resources" type="pure">
 		<resources syntax="iscc">
 			<temporal>{ 0 }</temporal>
 			<residual>{ 0 }</residual>
 		</resources>
-		
-		<package name="javazoom.jl.decoder.JavaLayerException" type="equals">
-			<method name="printStackTrace" type="equals" />
-		</package>
 		
 		<package name="java.lang.StringBuilder" type="startsWith">
 			<method name="append" type="equals" />
@@ -18,10 +37,6 @@
 		<package name="java.util.Date" type="equals">
 			<method name="&lt;init&gt;" type="equals" />
 			<method name="getTime" type="equals" />
-		</package>
-		
-		<package name="java." type="startsWith">
-			<method name="&lt;init&gt;" type="equals" />
 		</package>
 	</rule>
 
@@ -38,7 +53,6 @@
 		<package name="java.lang." type="startsWith">
 			<method name="valueOf" type="equals" />
 			<method name="parseInt" type="equals" />
-			<method name="clone" type="equals" />
 		</package>
 		
 		<package name="java." type="startsWith">
@@ -236,43 +250,5 @@
 		<package name="java.lang.Runtime" type="startsWith">
 			<method name="exit" type="equals" />
 		</package> 
-	</rule>
-	
-	<!-- Exlcuyo todo java nativo -->
-	<rule name="methods that should be exlcuded from the analysis" type="exclude">
-		
-		<package name="java." type="startsWith">
-			<method name="" type="startsWith" />
-		</package>
-		
-		<package name="sun." type="startsWith">
-			<method name="" type="startsWith" />
-		</package>
-		
-		<package name="javax." type="startsWith">
-			<method name="" type="startsWith" />
-		</package>
-	
-		<package name="java." type="startsWith">
-			<method name="hasMoreElements" type="equals" />
-			<method name="nextElement" type="equals" />
-			<method name="hasNext" type="equals" />
-			<method name="next" type="equals" />
-			<method name="initializeSystemClass" type="equals" />
-		</package>
-		
-		<package name="sun." type="startsWith">
-			<method name="hasMoreElements" type="equals" />
-			<method name="nextElement" type="equals" />
-			<method name="hasNext" type="equals" />
-			<method name="next" type="equals" />
-		</package>
-		
-		<package name="javax." type="startsWith">
-			<method name="hasMoreElements" type="equals" />
-			<method name="nextElement" type="equals" />
-			<method name="hasNext" type="equals" />
-			<method name="next" type="equals" />
-		</package>
 	</rule>
 </rules>

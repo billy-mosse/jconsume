@@ -24,8 +24,8 @@ public class MotivatingExample {
 	 */
 
 	public static void main(String[] args) {
-		List list = generateList(args[0]);
-		boolean firstTransformer = Boolean.parseBoolean(args[1]);
+		List list = generateList(args[0].replaceAll("\"", ""));
+		boolean firstTransformer = Boolean.parseBoolean(args[1].trim());
 		Transform transform = getTransform(firstTransformer);
 		test(list,transform);
 	}
@@ -33,7 +33,7 @@ public class MotivatingExample {
 	
 	private static List generateList(String integerList) {
 		List list = new List();
-		String[] sizes = integerList.split(",");
+		String[] sizes = integerList.split(" ");
 		for (String stringSize : sizes) {
 			int size = Integer.parseInt(stringSize);
 			List newList = new List();

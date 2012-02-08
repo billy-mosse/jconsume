@@ -176,10 +176,12 @@ public abstract class AbstractSpecCompiler implements SpecCompiler {
 			info = parser.parse(constraints);
 			info.getVariables().removeAll(parameters);
 		}
-		StringTokenizer stn = new StringTokenizer(site.getInductives(), ",");
-		while (stn.hasMoreTokens()) {
-	        info.addInductive(stn.nextToken().trim());
-	     }
+		if(site.getInductives()!=null) {
+			StringTokenizer stn = new StringTokenizer(site.getInductives(), ",");
+			while (stn.hasMoreTokens()) {
+		        info.addInductive(stn.nextToken().trim());
+		     }
+		}
 		// Ojo!! Habria que borrarlas, ver lo de $t
 		// info.getinductives().removeAll(parameters);
 		return info;

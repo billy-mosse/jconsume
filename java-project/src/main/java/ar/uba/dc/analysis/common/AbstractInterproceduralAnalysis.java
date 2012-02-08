@@ -56,7 +56,10 @@ public abstract class AbstractInterproceduralAnalysis {
 		public int compare(SootMethod o1, SootMethod o2) {
 			Integer v1 = order.get(o1);
 			Integer v2 = order.get(o2);
-			return v1.intValue() - v2.intValue();
+			if(v1!=null && v2!=null)	return v1.intValue() - v2.intValue();
+			else if(v1==null && v2!=null) return -v2.intValue();
+			else if(v1!=null) return v1.intValue();
+			else return 0;
 		}
 	};
 	

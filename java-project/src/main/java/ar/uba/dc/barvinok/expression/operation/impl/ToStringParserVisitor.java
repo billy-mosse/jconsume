@@ -96,7 +96,6 @@ public class ToStringParserVisitor implements ParserVisitor {
 		if (function.getPFMC() instanceof MaxMathCommand) {
 			return visitSpecialFunction(function, arg1, function.getName() + "(", ")");
 		}
-		
 		if (function.jjtGetNumChildren() == 1) {
 			String funcName = getFunctionName(function);
 			
@@ -130,6 +129,13 @@ public class ToStringParserVisitor implements ParserVisitor {
 		izq.addAll(der);
 		
 		izq.setLastFunctionApplied(function.getName());
+
+		if(function.getName().equals(DIV_FUNCITON))
+		{
+			izq.addFirst("[");
+			izq.addLast("]");
+
+		}
 		return izq;
 	}
 	
@@ -163,6 +169,7 @@ public class ToStringParserVisitor implements ParserVisitor {
 		if (StringUtils.isBlank(funcName)) {
 			funcName = defaultName;
 		}
+		
 		
 		if (!unaryFunction && !functionWithoutSpaces.contains(funcName)) {
 			funcName = SPACE + funcName + SPACE;

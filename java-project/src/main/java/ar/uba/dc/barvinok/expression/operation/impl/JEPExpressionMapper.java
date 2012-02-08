@@ -177,7 +177,9 @@ public class JEPExpressionMapper implements ExpressionMapper {
 	}
 	
 	protected String parsePolynomial(final String polynomial, final Map<String, String> mapping) throws ParseException {
-		return parseExpression(polynomial, mapping);
+		String pol = parseExpression(polynomial, mapping);
+		// OJO!!! FIXME: Le saco los chorchetes al pol
+		return pol.replaceAll("\\[([.[^\\[]]+)/([.[^\\[]]+)\\]", "($1/$2)");
 	}
 	
 	/**
@@ -227,14 +229,17 @@ public class JEPExpressionMapper implements ExpressionMapper {
 		String expr = target;
 		expr = expr.replaceAll("(?i) and ", " && ");
 		expr = expr.replaceAll("(?i) or ", " || ");
-		// Diego: La caso por ahora 
+		// Diego: La saco por ahora 
 		// expr = expr.replaceAll("(\\d+)([a-zA-Z_]\\w*)", "$1*$2"); // Cambiamos la multiplicacion implicita por explicita. Asumimos que solo se da el caso numero*variable.
-		String constraintsForResult = StringUtils.EMPTY;
+		// expr = expr.replaceAll("(\\d+)([a-zA-Z_]\\w*)", "[$1/$2]"); // Convertimos la division en div entera 
+			String constraintsForResult = StringUtils.EMPTY;
 		if (StringUtils.isNotBlank(expr)) {
 			Node parsedConstratins = parser.parse(expr);
 			ExpressionParsingResult parsingResult = (ExpressionParsingResult) parsedConstratins.jjtAccept(toStringVisitor, mapping);
 			constraintsForResult = parsingResult.getString();
 		}
+		if(expr.indexOf("/")!=-1)
+			System.out.print("");
 		return constraintsForResult;
 	}
 

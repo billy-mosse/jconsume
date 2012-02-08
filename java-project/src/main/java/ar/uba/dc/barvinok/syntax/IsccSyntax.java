@@ -117,7 +117,8 @@ public class IsccSyntax extends AbstractBarvinokSyntax {
 				polynomial = BarvinokSyntax.INFINITE;
 			}
 			
-			polynomial = polynomial.replaceAll("\\[(.+)/(.+)\\]", "(1/$2)*$1");
+			// Convertimos [a/b] en (1/b*a)
+			polynomial = polynomial.replaceAll("\\[([.[^\\[]]+)/([.[^\\[]]+)\\]", "((1/$2)*$1)"); //polynomial.replaceAll("\\[([a-zA-Z_0-9]+)/([a-zA-Z_0-9]+)\\]", "((1/$2)*$1");
 			
 			p.add(new QuasiPolynomial(polynomial, constraints, variables));
 		}

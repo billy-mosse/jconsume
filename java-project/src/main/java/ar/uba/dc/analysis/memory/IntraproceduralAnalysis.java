@@ -3,7 +3,11 @@ package ar.uba.dc.analysis.memory;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import soot.Scene;
+import soot.SootClass;
+import soot.SootField;
 import soot.SootMethod;
+import soot.jimple.AssignStmt;
 import ar.uba.dc.analysis.memory.code.CallStatement;
 import ar.uba.dc.analysis.memory.code.MethodBody;
 import ar.uba.dc.analysis.memory.code.MethodDecorator;
@@ -62,7 +66,64 @@ public class IntraproceduralAnalysis {
 	}
 
 
+	private int computeSize(NewStatement newStmt)
+	{
+		int res = 1;
+		AssignStmt as = (AssignStmt) newStmt.getStatement();
+		soot.Type t = as.getRightOp().getType();
+		res = computeSize(t);
+		return res;
+	}
 
+
+
+	private int computeSize(soot.Type t) {
+		int res = 1;
+		if(isTypeObject(t)) {
+			SootClass sc = Scene.v().loadClass(t.toString(), SootClass.DANGLING);
+			if(sc!=null)
+			{
+				res = 0;
+				if(sc.getFieldCount()>0) {
+					for (SootField f : sc.getFields()) {
+						if(isTypeObject(f.getType())) res += 4;
+						else res += computeSize(f.getType());
+					}
+				}
+				else res = 4;
+			}
+		}
+		else
+		{
+			String st = t.toString();
+			if(st.equals("int")) res = 4;
+			else if(st.equals("long")) res = 4;
+			else if(st.equals("float")) res = 4;
+			else if(st.equals("double")) res = 8;
+			else if(st.equals("char")) res = 2;
+			else if(st.equals("byte")) res = 1;
+			else if(st.endsWith("[]")) res = 4;
+			else res = 1;
+		}
+		return res;
+	}
+
+
+
+	private boolean isTypeObject(soot.Type t) {
+		boolean ok = false;
+		try {
+			Class c = Class.forName(t.toString());
+			if (Object.class.isAssignableFrom(c)) {
+				ok = true;
+			}
+		} catch (ClassNotFoundException e) {
+			ok=false;
+		}
+		return ok;
+	}
+		
+	
 	public MemorySummary run(SootMethod method) {
 		log.debug(" |- Intraprocedural Analysis for: " + method.toString());
 		MemorySummary summary = summaryFactory.initialSummary(method);
@@ -100,7 +161,14 @@ public class IntraproceduralAnalysis {
 				log.debug(" | |- Processing statement " + newStmt.toString());
 			}
 				
+			
 			ParametricExpression bound = ct.count(newStmt);
+			
+//			ParametricExpression sizeType = expressionFactory.constant((long) computeSize(newStmt));
+//			ParametricExpression bound = sa.summate(sizeType, newStmt);
+			
+			
+			
 			if (log.isDebugEnabled()) {
 				log.debug(" | | |- New is executed [" +  bound + "] times");
 			}

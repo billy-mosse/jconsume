@@ -125,7 +125,10 @@ public class CommandLineCalculator implements BarvinokCalculator {
 		Map<String, String> mapping = new HashMap<String, String>();
 		
 		PiecewiseQuasipolynomial result = null;
-		
+		if(invariant.getConstraints().indexOf("/")!=-1)
+		{
+			System.out.print("");
+		}
 		if (BarvinokUtils.hasFoldPiece(expr)) {
 			//result = sumConsumtionWithFold(SUM_OPERATION, invariant, expr, mapping);
 			expr = sumCandidatesOnFoldPieces(expr);
@@ -548,7 +551,15 @@ public class CommandLineCalculator implements BarvinokCalculator {
 		// Constraints y armado de los polinomios
 		for (QuasiPolynomial polynomial : p.getPieces()) {
 			String constraints = domainUnifier.unify(polynomial.getConstraints(), invariant.getConstraints());
-			pqp.add(new QuasiPolynomial(polynomial.getPolynomial(), constraints, variables, invariant.getInductives()));
+			if(invariant.hasInductives())
+				pqp.add(new QuasiPolynomial(polynomial.getPolynomial(), constraints, variables, invariant.getInductives()));
+			else
+			{
+				TreeSet<String> inductives = new TreeSet<String>();
+				inductives.addAll(variables);
+				inductives.addAll(p.getParameters());
+				pqp.add(new QuasiPolynomial(polynomial.getPolynomial(), constraints, variables, inductives));
+			}
 		}
 		
 		// Ejecutamos el comando

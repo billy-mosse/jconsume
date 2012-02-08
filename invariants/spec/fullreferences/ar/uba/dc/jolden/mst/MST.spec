@@ -35,8 +35,9 @@
 		<method decl="void mainParameters(int,boolean,boolean)">
 			<relevant-parameters>numvert</relevant-parameters>
 			<requires><![CDATA[numvert > 0]]></requires>
-			<call-site offset="6,10" >
-      			<constraints><![CDATA[$t.numvert == numvert]]></constraints>
+			<!-- call-site offset="6,10"-->
+      			 <call-site offset="5,9" >
+			<constraints><![CDATA[$t.numvert == numvert]]></constraints>
     		</call-site>
 		</method>
 		

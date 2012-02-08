@@ -56,7 +56,7 @@ public class InstrumentationJPFTool {
 		}
 		
 		String[] opts = { 
-			//"-w",
+			// "-w",
 			"-app",
 			"-soot-classpath", context.getString(Context.APPLICATION_CLASSPATH),
 			"-f", context.getString(Context.INSTRUMENTATION_OUTPUT_FORMAT),

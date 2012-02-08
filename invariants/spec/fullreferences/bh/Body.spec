@@ -23,7 +23,8 @@
 				<inductives>d_f___r5_rsize, __i0, l_init, $t.d_f_tree_init_rsize, $t.l_init</inductives>
 				<callee>bh.Body: int subindex(bh.Tree,int)</callee>
 				<constraints>
-					<![CDATA[__i0 == l_init &&  d_f___r5_rsize == 4 &&  d_f___r5_rsize < __i0 &&  $t.d_f_tree_init_rsize == d_f___r5_rsize &&  $t.l_init == __i0]]>
+					<![CDATA[__i0 == l_init &&  d_f___r5_rsize == 4 &&  d_f___r5_rsize < __i0 &&  $t.d_f_tree_init_rsize == d_f___r5_rsize &&  $t.l_init == __i0
+					&& l_init == 10]]>
 				</constraints>
 			 </call-site>
 			 <call-site offset="2" srccode-offset="150">
@@ -31,7 +32,8 @@
 				<inductives>size_f___r8_data, __i4, l_init, $t.size_f_ic_init_data, $t.l_init</inductives>
 				<callee>bh.Node: int oldSubindex(bh.MathVector,int)</callee>
 				<constraints>
-					<![CDATA[__i4 == l_init &&  size_f___r8_data == 3 &&  size_f___r8_data < __i4 &&  $t.size_f_ic_init_data == size_f___r8_data &&  $t.l_init == __i4]]>
+					<![CDATA[__i4 == l_init &&  size_f___r8_data == 3 &&  size_f___r8_data < __i4 &&  $t.size_f_ic_init_data == size_f___r8_data &&  $t.l_init == __i4
+					&& l_init == 10]]>
 				</constraints>
 			 </call-site>
 			 <call-site offset="3" srccode-offset="153">

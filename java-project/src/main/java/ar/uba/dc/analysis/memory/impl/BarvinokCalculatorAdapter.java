@@ -5,8 +5,12 @@ import java.util.Arrays;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import soot.jimple.AnyNewExpr;
+import soot.jimple.AssignStmt;
+
 import ar.uba.dc.analysis.memory.CountingTheory;
 import ar.uba.dc.analysis.memory.SymbolicCalculator;
+import ar.uba.dc.analysis.memory.code.NewStatement;
 import ar.uba.dc.analysis.memory.code.Statement;
 import ar.uba.dc.analysis.memory.expression.ParametricExpression;
 import ar.uba.dc.barvinok.BarvinokCalculator;

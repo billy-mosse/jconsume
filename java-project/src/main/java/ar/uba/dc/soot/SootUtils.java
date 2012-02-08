@@ -266,6 +266,8 @@ public class SootUtils {
 		
 		options.add("-w");
 		
+		options.add("-allow-phantom-refs");
+		
 		options.add("-soot-classpath");
 		options.add(ctx.getString(Context.APPLICATION_CLASSPATH));
 		

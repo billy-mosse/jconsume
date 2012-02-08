@@ -19,6 +19,8 @@ public class DomainSet {
 	private Set<String> inductives = new TreeSet<String>(); 
 	
 	private String constraints;
+	
+	private boolean hasInductives = false;
 
 	/**
 	 * BugFix porque no se invoca al constructor por defecto con XStream
@@ -53,12 +55,14 @@ public class DomainSet {
 	public DomainSet(String constraints, Set<String> inductives) {
 		this.constraints = constraints;
 		this.inductives = inductives;
+		hasInductives = !inductives.isEmpty();
 	}
 	
 	public DomainSet(String constraints, Set<String> inductives, Set<String> vars) {
 		this.constraints = constraints;
 		this.inductives = inductives;
 		this.variables = vars;
+		hasInductives = !inductives.isEmpty();
 	}
 	
 	public String toString() {
@@ -100,15 +104,17 @@ public class DomainSet {
 	
 	public void addInductive(String var) {
 		this.inductives.add(var.trim());
+		hasInductives = !inductives.isEmpty();
 	}
 	
 	public void removeInductive(String var) {
 		this.inductives.remove(var.trim());
+		hasInductives = !inductives.isEmpty();
 	}
 
 	
 	public String getConstraints() {
-		return constraints;
+		return constraints.trim();
 	}
 	
 	public Set<String> getVariables() {
@@ -128,7 +134,8 @@ public class DomainSet {
 		DomainSet d = new DomainSet(new String(constraints));
 		d.parameters = new TreeSet<String>(parameters);
 		d.variables = new TreeSet<String>(variables);
-		
+		d.inductives = new TreeSet<String>(inductives);
+		d.hasInductives = !inductives.isEmpty();
 		return d;
 	}
 
@@ -156,6 +163,7 @@ public class DomainSet {
 	
 	public void addAllInductives(Set<String> vars) {
 		this.inductives.addAll(vars);
+		hasInductives = !inductives.isEmpty();
 	}
 	public Set<String> variablesToExclude()
 	{
@@ -163,6 +171,10 @@ public class DomainSet {
 		res.removeAll(inductives);
 		return res;
 	}
-	
+
+	public boolean hasInductives()
+	{
+		return hasInductives;
+	}
 	
 }

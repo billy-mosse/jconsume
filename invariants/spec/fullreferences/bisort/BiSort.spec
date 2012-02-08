@@ -13,32 +13,32 @@
 			 </call-site>
 		</method>
 		 <method decl="void main(java.lang.String[])">
-			<relevant-parameters></relevant-parameters>
+			<relevant-parameters>size_init</relevant-parameters>
 			 <call-site offset="0" srccode-offset="38">
 				<variables>size___r0, size_args_init</variables>
-				<inductives>size___r0, size_args_init, $t.size_args_init</inductives>
+				<inductives>size_init, $t.size_init</inductives>
 				<callee>bisort.BiSort: void mainOrig(java.lang.String[])</callee>
 				<constraints>
-					<![CDATA[$t.size_args_init == size___r0]]>
+					<![CDATA[$t.size_init == size_init]]>
 				</constraints>
 			 </call-site>
 		</method>
 		 <method decl="void mainOrig(java.lang.String[])">
-			<relevant-parameters>size_args_init</relevant-parameters>
+			<relevant-parameters>size_init</relevant-parameters>
 			 <call-site offset="0" srccode-offset="42">
-				<variables>size___r0, size_args_init</variables>
-				<inductives>size___r0, size_args_init, $t.size_args_init</inductives>
+				<variables>size_init</variables>
+				<inductives>size_init, $t.size_args_init</inductives>
 				<callee>bisort.BiSort: void parseCmdLine(java.lang.String[])</callee>
 				<constraints>
-					<![CDATA[size___r0 == size_args_init &&  size___r0 == 2 &&  $t.size_args_init == size___r0]]>
+					<![CDATA[$t.size_args_init == size_init]]>
 				</constraints>
 			 </call-site>
 			 <call-site offset="1" srccode-offset="43">
-				<variables>__i0, size_args_init</variables>
-				<inductives>__i0, size_args_init, $t.size_init</inductives>
+				<variables>size_init</variables>
+				<inductives>size_init, $t.size_init</inductives>
 				<callee>bisort.BiSort: void mainParameters(int,boolean,boolean)</callee>
 				<constraints>
-					<![CDATA[size_args_init == 2 &&  __i0 > size_args_init &&  $t.size_init == __i0]]>
+					<![CDATA[ $t.size_init == size_init]]>
 				</constraints>
 			 </call-site>
 		</method>

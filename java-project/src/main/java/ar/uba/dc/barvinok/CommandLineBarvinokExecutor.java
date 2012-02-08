@@ -33,7 +33,13 @@ public class CommandLineBarvinokExecutor implements BarvinokExecutor {
 				
 			}*/
 			FileWriter fw = new FileWriter("cmd_tmp", false);
+			// OJO! Mega hack para arreglar el manejo de la division que esta enparchadisimo
+			command = command.replaceAll("\\[\\[([.[^\\[]]+)/([.[^\\[]]+)\\]\\]", "[$1/$2]");
+			command = command.replaceAll("\\[\\[([.[^\\[]]+)/([.[^\\[]]+)\\]\\]", "[$1/$2]");
+			command = command.replaceAll("\\[\\[([.[^\\[]]+)/([.[^\\[]]+)\\]\\]", "[$1/$2]");
+			
 			fw.write(command.replaceAll("==", "="));
+			
 			fw.close();
 			return ConsoleUtils.execCommand(barvinokCmdPath + " cmd_tmp", false);
 		} catch (IOException e) {
