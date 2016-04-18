@@ -1,0 +1,58 @@
+a project.classes.classpath no le está dando pelota! devuelve NULL. La ruta de barvinok.sh la dejé absoluta (y no debería)
+
+
+---
+
+10-3-2016:
+
+A Rinard sí le importa el orden de las instrucciones; crea un nodo en base a la línea de código (o era madeja?)
+
+Weak update: ir sobreaproximando a dónde apunta caada variable
+
+Soot te arma el callsgraph usando el points-to, pero no lo estamos aprovechando para nuestro points-to.
+
+Eventualmente va a haber que cambiar la cuenta de Escp y MaxLive para que quede como en el paper en vez de una suma, porque la suma no es una entidad que tenga sentido.
+
+También va a querer que agregue algún análisis, que permita dejar anotaciones simples en métodos no analizables para generar el grafo automáticamente (creo que cada método tiene  en realidad un grafo, y se van haciendo cuentas locas con los grafos)
+
+
+--
+
+
+public PiecewiseQuasipolynomial compare nos estamos quedando con e2 "casi siempre"
+
+
+----
+
+
+El EjemploSimple04 tiene un bug...debería dar 2n m0.
+
+--
+
+Por ahora estamos calculando MAXLIVE=MEM_REQ como TMP+RSD, donde RSD = ESCAPE, cuando TMP no significa nada (ademas tomamos el maximo de los que no escapan. Y los que escapan los calculamos sobreaproximando, asi que el maximo de los que no escapan = tot - escapan es una subaproximacion (ya que viene de una sobreaproximacion y se da vuelta al hacer tot - la sobre).
+
+Lo que hay que hacer es calcular MAXLIVE=MEM_REQ de una, es decir, cada vez que llega info nueva, se la pasamos a MAXLIVE, y si es de RSD, a RSD. TMP lo volamos. Y en todo caso, si hay que calcular TMP, lo calculamos como el MAX(TOT-ESC), pero sin darle un nombre. (o
+
+
+La cuenta da bien igual (es sound), porque aunque los temp son, como minimo, TOT-ESC, si hubiera mas temp se compensaria con que habria menos ESC.
+
+Hay que cambiar el LoopInvariantDefaultCallAnalizer. Idea: primero agregar MaxLive, y despues sacar tmp.
+
+
+----
+
+Las particiones del heap son las distintas formas de devolver objetos. Esta en el paper.
+
+Dos, por ejemplo, puedens er parametros & return.
+
+Rinard NO usa esos. (Madeja sí?)
+
+
+---
+
+sebastian lamelas/namelas tesis de licenciatura DC fors.
+
+
+-----
+
+El factory-config.xml de target classes es el que hay que cambiar. No ahy que recompilar para aplicar el cambio. 
