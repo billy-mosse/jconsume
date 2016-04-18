@@ -15,6 +15,8 @@ import org.apache.commons.lang.StringUtils;
 import ar.uba.dc.analysis.escape.runner.RunCommand;
 import ar.uba.dc.util.ConsoleUtils;
 
+import org.junit.Assert;
+
 /**
  * @author martin
  *
@@ -29,6 +31,7 @@ public class Main {
 	 
 		// create the parser
 	    CommandLineParser parser = new GnuParser();
+	    
 	
 	    	// create Options object
 	    	Options options = new Options();
@@ -53,14 +56,19 @@ public class Main {
 	    	OptionBuilder.withDescription("the jar containing the required spec.");
 	    	Option specJar = OptionBuilder.create("specJar");
 	    	options.addOption(specJar);
+	    	
 	    
 	    try {
 	    	
-	    	
+
 	    	
 	        // parse the command line arguments
 	        CommandLine line = parser.parse( options, args );
 	        String properties = line.hasOption("madeja") ? "config.madeja.properties" : "config.properties";
+	        
+
+	        
+	        
 	        String className = line.getOptionValue("mainClass");
 	        String spec = line.getOptionValue("specJar");
 	        

@@ -146,4 +146,9 @@ public class EscapeBasedMemorySummaryInterpreter implements MemorySummaryInterpr
 	public String getMemReq(MemorySummary summary) {
 		return this.expressionToString(this.memReqSummarizer.getMemReq(summary));
 	}
+	
+	@Override
+	public String getMemReq2(MemorySummary summary) {
+		return this.expressionToString(this.memReqSummarizer.getMemReq2(summary));
+	}
 }

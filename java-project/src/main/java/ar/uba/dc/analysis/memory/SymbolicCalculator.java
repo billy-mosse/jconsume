@@ -7,8 +7,10 @@ import ar.uba.dc.analysis.memory.expression.ParametricExpression;
 public interface SymbolicCalculator {
 
 	public ParametricExpression maximize(ParametricExpression target, Statement stmt);
-	
+
 	public ParametricExpression add(ParametricExpression... expressions);
+	
+	public ParametricExpression substract(ParametricExpression expression1, ParametricExpression expression2);
 	
 	public ParametricExpression supreme(ParametricExpression e1, ParametricExpression e2);
 

@@ -38,9 +38,13 @@ public class HtmlReportHelper {
 	public String getResidual(MemorySummary summary) {
 		return interpreter.getResidual(summary);
 	}
-	
+
 	public String getMemReq(MemorySummary summary) {
 		return interpreter.getMemReq(summary);
+	}
+
+	public String getMemReq2(MemorySummary summary) {
+		return interpreter.getMemReq2(summary);
 	}
 	
 	public boolean hasEscapeDetail(MemorySummary summary) {

@@ -23,7 +23,7 @@ public interface MemorySummary {
 	/**
 	 * Parametros relevantes para el analisis de consumo del metodo en cuestion.
 	 * No hace falta que sean exactamente los mismos parametros del metodo para el cual construimos el summary.
-	 * De hecho, pueden ser derivados de los mismos o construidos artificialmente para poder predicars sobre el consumo
+	 * De hecho, pueden ser derivados de los mismos o construidos artificialmente para poder predicar sobre el consumo
 	 */
 	public Set<String> getParameters();
 	
@@ -43,4 +43,12 @@ public interface MemorySummary {
 	public void setTemporal(ParametricExpression newValue);
 
 	public Set<HeapPartition> getResidualPartitions();
+
+	public void setMemoryRequirement(ParametricExpression newValue);
+
+	public ParametricExpression getMemoryRequirement();
+
+
+
+
 }

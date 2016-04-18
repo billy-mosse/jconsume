@@ -167,9 +167,13 @@
 				<td>Formal Parameters</td>
 				<td>$helper.getFormalParameters($method)</td>
 			</tr>
+      <tr class="a">
+        <td>MemReq</td>
+        <td>$helper.getMemReq($method)</td>
+      </tr>
 			<tr class="a">
-				<td>MemReq</td>
-				<td>$helper.getMemReq($method)</td>
+				<td>MemReq2</td>
+				<td>$helper.getMemReq2($method)</td>
 			</tr>
 			<tr class="b">
 				<td>Tmp</td>

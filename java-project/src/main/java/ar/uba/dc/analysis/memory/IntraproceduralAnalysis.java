@@ -133,7 +133,7 @@ public class IntraproceduralAnalysis {
 		 * es el metodo bajo analisis. Es otras palabras, acumula el consumo de objetos creados que no escapan al 
 		 * metodo. 
 		 */
-		ParametricExpression tempLocal = expressionFactory.constant(0L);
+		//ParametricExpression tempLocal = expressionFactory.constant(0L);
 		
 		/*
 		 * Acumula la memoria temporal necesaria para realizar los calls ejecutados por el metodo bajo analisis. 
@@ -145,7 +145,28 @@ public class IntraproceduralAnalysis {
 		 * generado a partir de los objetos generados por los metodos invocados que son capturados por el metodo bajo 
 		 * analisis (su tiempo de vida finaliza con el metodo bajo analisis).
 		 */
-		ParametricExpression resCaptured = expressionFactory.constant(0L);
+		//ParametricExpression resCaptured = expressionFactory.constant(0L);
+		
+		
+		/*
+		 * Acumula la memoria que escapa de los metodos invocados, para sumarselos al final a MemReq
+		 * 
+		 * 
+		 * 
+		 * */
+		ParametricExpression residualForMemReq = expressionFactory.constant(0L);
+		
+		ParametricExpression memReqFromCallees = expressionFactory.constant(0L);
+
+		
+		/* Acumula (sobreaproximando) el consumo total del metodo, 
+		 * incluyendo  tanto a los objetos creados cuyo tiempo de vida es el metodo bajo analisis,
+		 * como a la maxima cantidad de objetos creados por un metodo invocado que NO escapan
+		 *  y son capturados por el metodo original.
+		 *  En otras palabras, MemReq (=MaxLive) = tempLocal + tempCalls + resCaptured. 
+		 *  
+		 */		
+		ParametricExpression memReq = expressionFactory.constant(0L);
 		
 		log.debug(" |- Building Method abstraction");
 		// Generamos una abstraccion del body de un metodo util para poder procesar el analisis.
@@ -161,6 +182,10 @@ public class IntraproceduralAnalysis {
 				log.debug(" | |- Processing statement " + newStmt.toString());
 			}
 				
+			//BILLY: aca llama a barvinok para armar el invariante del statement? O algo parecido
+			//en los new esta dando 1.
+			//en los new de array esta dando n
+			
 			
 			ParametricExpression bound = ct.count(newStmt);
 			
@@ -175,17 +200,30 @@ public class IntraproceduralAnalysis {
 			
 			HeapPartition partition = ea.getPartition(newStmt);
 			
+			
+			memReq = sa.add(memReq, bound);
+			
+			
+			
+			
 			if (!partition.isTemporal()) {
 				log.debug(" | | |- Partition escapes");
+				
 				ParametricExpression oldValue = summary.getResidual(partition);
+				
+				//Bound es el invariante del new statement
 				ParametricExpression newValue = bound;
+				
+				//Y voy acumulando los bounds
 				if (oldValue != null) {
 					newValue = sa.add(bound, oldValue);
 				}
+				
+				log.debug(" | | |- Setting residual...");
 				summary.setResidual(partition, newValue);
 			} else {
 				log.debug(" | | |- Partition is temporal");
-				tempLocal = sa.add(tempLocal, bound);
+				//tempLocal = sa.add(tempLocal, bound);
 			}
 		}
 		
@@ -197,21 +235,54 @@ public class IntraproceduralAnalysis {
 			
 			CallSummary callSummary = interprocedural.analyseCall(callStmt);
 			
-			ParametricExpression newTempCalls = sa.supreme(tempCalls, callSummary.getTemporalCall());
-			ParametricExpression newResCaptured = sa.add(resCaptured, callSummary.getResidualCaptured());
 			
-			if (log.isDebugEnabled()) {
-				log.debug("Update tempCalls from [" + tempCalls + "] to [" + newTempCalls + "]");
-				log.debug("Update tempCalls from [" + resCaptured + "] to [" + newResCaptured + "]");
-				
-			}
+			//BILLY: Actualiza tempCalls y resCaptured a partir de los del callee
 			
-			tempCalls = newTempCalls;
-			resCaptured = newResCaptured;
+			//Esto lo dejo asi para debuguear y ver que tienen adentro
+			//ParametricExpression tempCallsForUpdate = callSummary.getTemporalCall();
+			ParametricExpression resCapturedForUpdate = callSummary.getResidualCaptured();
+			ParametricExpression memReqForUpdate = callSummary.getMemoryRequirement();
+			ParametricExpression totalResiduals = callSummary.getTotalResidualsIfCallee();
+					
+			//BILLY Trata de tomar el supremo
+			//Porque para contar el maxlive hay que contar la maxima cantidad de variables temporales vivas tambien!
+			//ParametricExpression newTempCalls = sa.supreme(tempCalls, tempCallsForUpdate);
+			
+			
+			//Trata de sumar las expresiones
+			//Porque los objetos que escapan y son capturados por la funcion que llama tienen que ser contados para el maxlive!
+			//ParametricExpression newResCaptured = sa.add(resCaptured, resCapturedForUpdate);
+			
+			
+			
+			
+			
+			
+			
+			//BILLY: es esto lo que tengo que cambiar?
+			//Mirar arriba tempLocal, tempCalls, resCaptured
+			
+			//tempCalls = newTempCalls;
+			//resCaptured = newResCaptured;
+			
+			
+			
+			//BILLY: temporal es los objetos que no escapan
+			//Residual es los que escapan
+			
+			
+			//ParametricExpression callSummaryRes = expressionFactory.constant(0L);
+			
+
+			//log.debug("Update tempCalls from [" + tempCalls + "] to [" + newTempCalls + "]");
+			//log.debug("Update resCaptured from [" + resCaptured + "] to [" + newResCaptured + "]");		
+
+			
 			
 			for (HeapPartition partition : callSummary.getResidualPartitions()) {
 				ParametricExpression oldValue = summary.getResidual(partition);
 				ParametricExpression newValue = callSummary.getResidual(partition);
+				//callSummaryRes = sa.add(callSummaryRes, newValue );
 				if (oldValue != null) {
 					newValue = sa.add(oldValue, newValue);
 					if (log.isDebugEnabled()) {
@@ -220,9 +291,29 @@ public class IntraproceduralAnalysis {
 				}
 				summary.setResidual(partition, newValue);
 			}
+			
+
+			// memReq = MAX (Maxlive_callee - Esc_callee) + SUM(ESC_callee)
+			
+			
+
+			//Hay que cambiar el diseño, porque callSummaryRes ya lo estoy calculando en LoopInvariantDefault
+			//residualForMemReq = sa.add(residualForMemReq, totalResiduals);
+			
+			log.debug("Adding " + totalResiduals + " and " + memReqForUpdate + " to " + memReq);			
+			
+			//memReqFromCallees = sa.supreme(memReqFromCallees, memReqForUpdate);
+			
+			memReq = sa.add(memReq, memReqForUpdate, totalResiduals);
+
+
+			
 		}
 		
-		summary.setTemporal(sa.add(tempLocal, tempCalls, resCaptured));
+		
+		//summary.setTemporal(sa.add(tempLocal, tempCalls, resCaptured));
+		
+		summary.setMemoryRequirement(memReq);
 	
 		return summary;
 	}

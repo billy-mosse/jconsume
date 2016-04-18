@@ -1,0 +1,1134 @@
+2016-04-15 11:32:47,108 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2016-04-15 11:32:47,108 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2016-04-15 11:32:47,110 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2016-04-15 11:32:47,112 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2016-04-15 11:32:47,114 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2016-04-15 11:32:47,115 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2016-04-15 11:32:47,117 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2016-04-15 11:32:47,118 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2016-04-15 11:32:47,120 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2016-04-15 11:32:47,121 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2016-04-15 11:32:47,140 - Created '20' parsers.
+2016-04-15 11:32:47,146 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2016-04-15 11:32:47,146 - Velocimacro : Default library not found.
+2016-04-15 11:32:47,146 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2016-04-15 11:32:47,146 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2016-04-15 11:32:47,146 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2016-04-15 11:32:47,146 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2016-04-15 11:32:47,195 - Velocimacro : added #link(  href name ) : source = site/peak.vm
+2016-04-15 11:32:47,200 - Velocimacro : added #banner(  banner id ) : source = site/peak.vm
+2016-04-15 11:32:47,204 - Velocimacro : added #links(  links ) : source = site/peak.vm
+2016-04-15 11:32:47,207 - Velocimacro : added #breadcrumbs(  breadcrumbs ) : source = site/peak.vm
+2016-04-15 11:32:47,209 - Velocimacro : added #displayTree(  display item ) : source = site/peak.vm
+2016-04-15 11:32:47,217 - Velocimacro : added #menuItem(  item ) : source = site/peak.vm
+2016-04-15 11:32:47,219 - Velocimacro : added #mainMenu(  menus ) : source = site/peak.vm
+2016-04-15 11:32:47,220 - Velocimacro : added #publishDate(  publishDate version ) : source = site/peak.vm
+2016-04-15 11:32:47,226 - Velocimacro : added #methodSummary(  method ) : source = site/peak.vm
+2016-04-15 11:32:47,228 - Velocimacro : added #classSummary(  ) : source = site/peak.vm
+2016-04-15 11:32:47,229 - Velocimacro : added #bodyContent(  ) : source = site/peak.vm
+2016-04-15 11:32:47,229 - Velocimacro : added #menu(  ) : source = site/peak.vm
+2016-04-15 11:32:47,266 - ResourceManager : found site/peak.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2016-04-15 11:32:47,269 - Null reference [template 'site/peak.vm', line 311, column 37] : $detalle cannot be resolved.
+2016-04-15 11:32:47,269 - Null reference [template 'site/peak.vm', line 312, column 29] : $imgSrc cannot be resolved.
+2016-04-15 11:32:47,269 - Null reference [template 'site/peak.vm', line 312, column 39] : $detalle.find('input[type=hidden]') cannot be resolved.
+2016-04-15 11:32:47,269 - Null reference [template 'site/peak.vm', line 314, column 37] : $imgSrc.size() cannot be resolved.
+2016-04-15 11:32:47,269 - Null reference [template 'site/peak.vm', line 315, column 45] : $img cannot be resolved.
+2016-04-15 11:32:47,269 - Null reference [template 'site/peak.vm', line 315, column 76] : $imgSrc.val() cannot be resolved.
+2016-04-15 11:32:47,269 - Null reference [template 'site/peak.vm', line 316, column 41] : $imgSrc.parent().html cannot be resolved.
+2016-04-15 11:32:47,269 - Null reference [template 'site/peak.vm', line 316, column 86] : $imgSrc.val() cannot be resolved.
+2016-04-15 11:32:47,269 - Null reference [template 'site/peak.vm', line 316, column 133] : $img cannot be resolved.
+2016-04-15 11:32:47,269 - Null reference [template 'site/peak.vm', line 319, column 33] : $detalle.show() cannot be resolved.
+2016-04-15 11:32:47,278 - Null reference [template 'site/peak.vm', line 3, column 28] : $collapse cannot be resolved.
+2016-04-15 11:36:56,225 - Log4JLogChute initialized using file 'velocity.log'
+2016-04-15 11:36:56,226 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2016-04-15 11:36:56,226 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2016-04-15 11:36:56,226 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2016-04-15 11:36:56,226 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:278)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:63)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:534)
+	at org.apache.velocity.runtime.RuntimeSingleton.init(RuntimeSingleton.java:227)
+	at org.apache.velocity.app.Velocity.init(Velocity.java:111)
+	at ar.uba.dc.analysis.memory.impl.report.html.HtmlReportWriter.init(HtmlReportWriter.java:79)
+	at ar.uba.dc.analysis.memory.impl.report.html.HtmlReportWriter.write(HtmlReportWriter.java:37)
+	at ar.uba.dc.analysis.memory.impl.MemoryInterproceduralAnalysis.doAnalysis(MemoryInterproceduralAnalysis.java:85)
+	at ar.uba.dc.analysis.common.AbstractInterproceduralAnalysis.run(AbstractInterproceduralAnalysis.java:37)
+	at ar.uba.dc.analysis.memory.impl.runner.MemorySceneTransformer.internalTransform(MemorySceneTransformer.java:56)
+	at soot.SceneTransformer.transform(SceneTransformer.java:39)
+	at soot.Transform.apply(Transform.java:89)
+	at soot.ScenePack.internalApply(ScenePack.java:43)
+	at soot.Pack.apply(Pack.java:114)
+	at soot.PackManager.runWholeProgramPacks(PackManager.java:407)
+	at soot.PackManager.runPacks(PackManager.java:327)
+	at soot.Main.run(Main.java:202)
+	at soot.Main.main(Main.java:145)
+	at ar.uba.dc.analysis.memory.impl.runner.MainSootRunner.main(MainSootRunner.java:61)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:366)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:355)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:354)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:425)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:308)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:358)
+	... 25 more
+2016-04-15 11:36:56,228 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2016-04-15 11:36:56,228 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2016-04-15 11:36:56,229 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2016-04-15 11:36:56,231 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2016-04-15 11:36:56,232 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2016-04-15 11:36:56,233 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2016-04-15 11:36:56,234 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2016-04-15 11:36:56,235 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2016-04-15 11:36:56,236 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2016-04-15 11:36:56,236 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2016-04-15 11:36:56,254 - Created '20' parsers.
+2016-04-15 11:36:56,259 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2016-04-15 11:36:56,260 - Velocimacro : Default library not found.
+2016-04-15 11:36:56,260 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2016-04-15 11:36:56,260 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2016-04-15 11:36:56,260 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2016-04-15 11:36:56,260 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2016-04-15 11:36:56,305 - Velocimacro : added #link(  href name ) : source = site/peak.vm
+2016-04-15 11:36:56,309 - Velocimacro : added #banner(  banner id ) : source = site/peak.vm
+2016-04-15 11:36:56,313 - Velocimacro : added #links(  links ) : source = site/peak.vm
+2016-04-15 11:36:56,315 - Velocimacro : added #breadcrumbs(  breadcrumbs ) : source = site/peak.vm
+2016-04-15 11:36:56,318 - Velocimacro : added #displayTree(  display item ) : source = site/peak.vm
+2016-04-15 11:36:56,324 - Velocimacro : added #menuItem(  item ) : source = site/peak.vm
+2016-04-15 11:36:56,326 - Velocimacro : added #mainMenu(  menus ) : source = site/peak.vm
+2016-04-15 11:36:56,327 - Velocimacro : added #publishDate(  publishDate version ) : source = site/peak.vm
+2016-04-15 11:36:56,331 - Velocimacro : added #methodSummary(  method ) : source = site/peak.vm
+2016-04-15 11:36:56,332 - Velocimacro : added #classSummary(  ) : source = site/peak.vm
+2016-04-15 11:36:56,333 - Velocimacro : added #bodyContent(  ) : source = site/peak.vm
+2016-04-15 11:36:56,333 - Velocimacro : added #menu(  ) : source = site/peak.vm
+2016-04-15 11:36:56,367 - ResourceManager : found site/peak.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2016-04-15 11:36:56,370 - Null reference [template 'site/peak.vm', line 311, column 37] : $detalle cannot be resolved.
+2016-04-15 11:36:56,371 - Null reference [template 'site/peak.vm', line 312, column 29] : $imgSrc cannot be resolved.
+2016-04-15 11:36:56,371 - Null reference [template 'site/peak.vm', line 312, column 39] : $detalle.find('input[type=hidden]') cannot be resolved.
+2016-04-15 11:36:56,371 - Null reference [template 'site/peak.vm', line 314, column 37] : $imgSrc.size() cannot be resolved.
+2016-04-15 11:36:56,371 - Null reference [template 'site/peak.vm', line 315, column 45] : $img cannot be resolved.
+2016-04-15 11:36:56,371 - Null reference [template 'site/peak.vm', line 315, column 76] : $imgSrc.val() cannot be resolved.
+2016-04-15 11:36:56,371 - Null reference [template 'site/peak.vm', line 316, column 41] : $imgSrc.parent().html cannot be resolved.
+2016-04-15 11:36:56,371 - Null reference [template 'site/peak.vm', line 316, column 86] : $imgSrc.val() cannot be resolved.
+2016-04-15 11:36:56,371 - Null reference [template 'site/peak.vm', line 316, column 133] : $img cannot be resolved.
+2016-04-15 11:36:56,371 - Null reference [template 'site/peak.vm', line 319, column 33] : $detalle.show() cannot be resolved.
+2016-04-15 11:36:56,380 - Null reference [template 'site/peak.vm', line 3, column 28] : $collapse cannot be resolved.
+2016-04-15 11:39:01,734 - Log4JLogChute initialized using file 'velocity.log'
+2016-04-15 11:39:01,735 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2016-04-15 11:39:01,735 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2016-04-15 11:39:01,735 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2016-04-15 11:39:01,736 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:278)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:63)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:534)
+	at org.apache.velocity.runtime.RuntimeSingleton.init(RuntimeSingleton.java:227)
+	at org.apache.velocity.app.Velocity.init(Velocity.java:111)
+	at ar.uba.dc.analysis.memory.impl.report.html.HtmlReportWriter.init(HtmlReportWriter.java:79)
+	at ar.uba.dc.analysis.memory.impl.report.html.HtmlReportWriter.write(HtmlReportWriter.java:37)
+	at ar.uba.dc.analysis.memory.impl.MemoryInterproceduralAnalysis.doAnalysis(MemoryInterproceduralAnalysis.java:85)
+	at ar.uba.dc.analysis.common.AbstractInterproceduralAnalysis.run(AbstractInterproceduralAnalysis.java:37)
+	at ar.uba.dc.analysis.memory.impl.runner.MemorySceneTransformer.internalTransform(MemorySceneTransformer.java:56)
+	at soot.SceneTransformer.transform(SceneTransformer.java:39)
+	at soot.Transform.apply(Transform.java:89)
+	at soot.ScenePack.internalApply(ScenePack.java:43)
+	at soot.Pack.apply(Pack.java:114)
+	at soot.PackManager.runWholeProgramPacks(PackManager.java:407)
+	at soot.PackManager.runPacks(PackManager.java:327)
+	at soot.Main.run(Main.java:202)
+	at soot.Main.main(Main.java:145)
+	at ar.uba.dc.analysis.memory.impl.runner.MainSootRunner.main(MainSootRunner.java:61)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:366)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:355)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:354)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:425)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:308)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:358)
+	... 25 more
+2016-04-15 11:39:01,738 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2016-04-15 11:39:01,739 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2016-04-15 11:39:01,741 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2016-04-15 11:39:01,744 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2016-04-15 11:39:01,746 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2016-04-15 11:39:01,747 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2016-04-15 11:39:01,749 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2016-04-15 11:39:01,750 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2016-04-15 11:39:01,752 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2016-04-15 11:39:01,753 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2016-04-15 11:39:01,785 - Created '20' parsers.
+2016-04-15 11:39:01,794 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2016-04-15 11:39:01,795 - Velocimacro : Default library not found.
+2016-04-15 11:39:01,795 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2016-04-15 11:39:01,795 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2016-04-15 11:39:01,795 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2016-04-15 11:39:01,795 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2016-04-15 11:39:01,874 - Velocimacro : added #link(  href name ) : source = site/peak.vm
+2016-04-15 11:39:01,881 - Velocimacro : added #banner(  banner id ) : source = site/peak.vm
+2016-04-15 11:39:01,887 - Velocimacro : added #links(  links ) : source = site/peak.vm
+2016-04-15 11:39:01,891 - Velocimacro : added #breadcrumbs(  breadcrumbs ) : source = site/peak.vm
+2016-04-15 11:39:01,895 - Velocimacro : added #displayTree(  display item ) : source = site/peak.vm
+2016-04-15 11:39:01,905 - Velocimacro : added #menuItem(  item ) : source = site/peak.vm
+2016-04-15 11:39:01,908 - Velocimacro : added #mainMenu(  menus ) : source = site/peak.vm
+2016-04-15 11:39:01,909 - Velocimacro : added #publishDate(  publishDate version ) : source = site/peak.vm
+2016-04-15 11:39:01,915 - Velocimacro : added #methodSummary(  method ) : source = site/peak.vm
+2016-04-15 11:39:01,917 - Velocimacro : added #classSummary(  ) : source = site/peak.vm
+2016-04-15 11:39:01,919 - Velocimacro : added #bodyContent(  ) : source = site/peak.vm
+2016-04-15 11:39:01,919 - Velocimacro : added #menu(  ) : source = site/peak.vm
+2016-04-15 11:39:01,975 - ResourceManager : found site/peak.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2016-04-15 11:39:01,979 - Null reference [template 'site/peak.vm', line 311, column 37] : $detalle cannot be resolved.
+2016-04-15 11:39:01,979 - Null reference [template 'site/peak.vm', line 312, column 29] : $imgSrc cannot be resolved.
+2016-04-15 11:39:01,979 - Null reference [template 'site/peak.vm', line 312, column 39] : $detalle.find('input[type=hidden]') cannot be resolved.
+2016-04-15 11:39:01,979 - Null reference [template 'site/peak.vm', line 314, column 37] : $imgSrc.size() cannot be resolved.
+2016-04-15 11:39:01,979 - Null reference [template 'site/peak.vm', line 315, column 45] : $img cannot be resolved.
+2016-04-15 11:39:01,979 - Null reference [template 'site/peak.vm', line 315, column 76] : $imgSrc.val() cannot be resolved.
+2016-04-15 11:39:01,980 - Null reference [template 'site/peak.vm', line 316, column 41] : $imgSrc.parent().html cannot be resolved.
+2016-04-15 11:39:01,980 - Null reference [template 'site/peak.vm', line 316, column 86] : $imgSrc.val() cannot be resolved.
+2016-04-15 11:39:01,980 - Null reference [template 'site/peak.vm', line 316, column 133] : $img cannot be resolved.
+2016-04-15 11:39:01,980 - Null reference [template 'site/peak.vm', line 319, column 33] : $detalle.show() cannot be resolved.
+2016-04-15 11:39:01,989 - Null reference [template 'site/peak.vm', line 3, column 28] : $collapse cannot be resolved.
+2016-04-15 11:44:26,355 - Log4JLogChute initialized using file 'velocity.log'
+2016-04-15 11:44:26,355 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2016-04-15 11:44:26,356 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2016-04-15 11:44:26,356 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2016-04-15 11:44:26,357 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:278)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:63)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:534)
+	at org.apache.velocity.runtime.RuntimeSingleton.init(RuntimeSingleton.java:227)
+	at org.apache.velocity.app.Velocity.init(Velocity.java:111)
+	at ar.uba.dc.analysis.memory.impl.report.html.HtmlReportWriter.init(HtmlReportWriter.java:79)
+	at ar.uba.dc.analysis.memory.impl.report.html.HtmlReportWriter.write(HtmlReportWriter.java:37)
+	at ar.uba.dc.analysis.memory.impl.MemoryInterproceduralAnalysis.doAnalysis(MemoryInterproceduralAnalysis.java:85)
+	at ar.uba.dc.analysis.common.AbstractInterproceduralAnalysis.run(AbstractInterproceduralAnalysis.java:37)
+	at ar.uba.dc.analysis.memory.impl.runner.MemorySceneTransformer.internalTransform(MemorySceneTransformer.java:56)
+	at soot.SceneTransformer.transform(SceneTransformer.java:39)
+	at soot.Transform.apply(Transform.java:89)
+	at soot.ScenePack.internalApply(ScenePack.java:43)
+	at soot.Pack.apply(Pack.java:114)
+	at soot.PackManager.runWholeProgramPacks(PackManager.java:407)
+	at soot.PackManager.runPacks(PackManager.java:327)
+	at soot.Main.run(Main.java:202)
+	at soot.Main.main(Main.java:145)
+	at ar.uba.dc.analysis.memory.impl.runner.MainSootRunner.main(MainSootRunner.java:61)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:366)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:355)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:354)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:425)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:308)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:358)
+	... 25 more
+2016-04-15 11:44:26,359 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2016-04-15 11:44:26,359 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2016-04-15 11:44:26,361 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2016-04-15 11:44:26,363 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2016-04-15 11:44:26,365 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2016-04-15 11:44:26,366 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2016-04-15 11:44:26,368 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2016-04-15 11:44:26,369 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2016-04-15 11:44:26,371 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2016-04-15 11:44:26,371 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2016-04-15 11:44:26,404 - Created '20' parsers.
+2016-04-15 11:44:26,412 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2016-04-15 11:44:26,412 - Velocimacro : Default library not found.
+2016-04-15 11:44:26,413 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2016-04-15 11:44:26,413 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2016-04-15 11:44:26,413 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2016-04-15 11:44:26,413 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2016-04-15 11:44:26,491 - Velocimacro : added #link(  href name ) : source = site/peak.vm
+2016-04-15 11:44:26,498 - Velocimacro : added #banner(  banner id ) : source = site/peak.vm
+2016-04-15 11:44:26,503 - Velocimacro : added #links(  links ) : source = site/peak.vm
+2016-04-15 11:44:26,506 - Velocimacro : added #breadcrumbs(  breadcrumbs ) : source = site/peak.vm
+2016-04-15 11:44:26,509 - Velocimacro : added #displayTree(  display item ) : source = site/peak.vm
+2016-04-15 11:44:26,518 - Velocimacro : added #menuItem(  item ) : source = site/peak.vm
+2016-04-15 11:44:26,520 - Velocimacro : added #mainMenu(  menus ) : source = site/peak.vm
+2016-04-15 11:44:26,521 - Velocimacro : added #publishDate(  publishDate version ) : source = site/peak.vm
+2016-04-15 11:44:26,525 - Velocimacro : added #methodSummary(  method ) : source = site/peak.vm
+2016-04-15 11:44:26,526 - Velocimacro : added #classSummary(  ) : source = site/peak.vm
+2016-04-15 11:44:26,528 - Velocimacro : added #bodyContent(  ) : source = site/peak.vm
+2016-04-15 11:44:26,528 - Velocimacro : added #menu(  ) : source = site/peak.vm
+2016-04-15 11:44:26,561 - ResourceManager : found site/peak.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2016-04-15 11:44:26,563 - Null reference [template 'site/peak.vm', line 311, column 37] : $detalle cannot be resolved.
+2016-04-15 11:44:26,563 - Null reference [template 'site/peak.vm', line 312, column 29] : $imgSrc cannot be resolved.
+2016-04-15 11:44:26,563 - Null reference [template 'site/peak.vm', line 312, column 39] : $detalle.find('input[type=hidden]') cannot be resolved.
+2016-04-15 11:44:26,563 - Null reference [template 'site/peak.vm', line 314, column 37] : $imgSrc.size() cannot be resolved.
+2016-04-15 11:44:26,564 - Null reference [template 'site/peak.vm', line 315, column 45] : $img cannot be resolved.
+2016-04-15 11:44:26,564 - Null reference [template 'site/peak.vm', line 315, column 76] : $imgSrc.val() cannot be resolved.
+2016-04-15 11:44:26,564 - Null reference [template 'site/peak.vm', line 316, column 41] : $imgSrc.parent().html cannot be resolved.
+2016-04-15 11:44:26,564 - Null reference [template 'site/peak.vm', line 316, column 86] : $imgSrc.val() cannot be resolved.
+2016-04-15 11:44:26,564 - Null reference [template 'site/peak.vm', line 316, column 133] : $img cannot be resolved.
+2016-04-15 11:44:26,564 - Null reference [template 'site/peak.vm', line 319, column 33] : $detalle.show() cannot be resolved.
+2016-04-15 11:44:26,570 - Null reference [template 'site/peak.vm', line 3, column 28] : $collapse cannot be resolved.
+2016-04-15 11:51:54,061 - Log4JLogChute initialized using file 'velocity.log'
+2016-04-15 11:51:54,062 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2016-04-15 11:51:54,062 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2016-04-15 11:51:54,062 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2016-04-15 11:51:54,063 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:278)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:63)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:534)
+	at org.apache.velocity.runtime.RuntimeSingleton.init(RuntimeSingleton.java:227)
+	at org.apache.velocity.app.Velocity.init(Velocity.java:111)
+	at ar.uba.dc.analysis.memory.impl.report.html.HtmlReportWriter.init(HtmlReportWriter.java:79)
+	at ar.uba.dc.analysis.memory.impl.report.html.HtmlReportWriter.write(HtmlReportWriter.java:37)
+	at ar.uba.dc.analysis.memory.impl.MemoryInterproceduralAnalysis.doAnalysis(MemoryInterproceduralAnalysis.java:85)
+	at ar.uba.dc.analysis.common.AbstractInterproceduralAnalysis.run(AbstractInterproceduralAnalysis.java:37)
+	at ar.uba.dc.analysis.memory.impl.runner.MemorySceneTransformer.internalTransform(MemorySceneTransformer.java:56)
+	at soot.SceneTransformer.transform(SceneTransformer.java:39)
+	at soot.Transform.apply(Transform.java:89)
+	at soot.ScenePack.internalApply(ScenePack.java:43)
+	at soot.Pack.apply(Pack.java:114)
+	at soot.PackManager.runWholeProgramPacks(PackManager.java:407)
+	at soot.PackManager.runPacks(PackManager.java:327)
+	at soot.Main.run(Main.java:202)
+	at soot.Main.main(Main.java:145)
+	at ar.uba.dc.analysis.memory.impl.runner.MainSootRunner.main(MainSootRunner.java:61)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:366)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:355)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:354)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:425)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:308)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:358)
+	... 25 more
+2016-04-15 11:51:54,065 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2016-04-15 11:51:54,065 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2016-04-15 11:51:54,067 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2016-04-15 11:51:54,070 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2016-04-15 11:51:54,071 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2016-04-15 11:51:54,072 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2016-04-15 11:51:54,074 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2016-04-15 11:51:54,075 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2016-04-15 11:51:54,076 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2016-04-15 11:51:54,077 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2016-04-15 11:51:54,107 - Created '20' parsers.
+2016-04-15 11:51:54,115 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2016-04-15 11:51:54,116 - Velocimacro : Default library not found.
+2016-04-15 11:51:54,116 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2016-04-15 11:51:54,116 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2016-04-15 11:51:54,116 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2016-04-15 11:51:54,117 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2016-04-15 11:51:54,191 - Velocimacro : added #link(  href name ) : source = site/peak.vm
+2016-04-15 11:51:54,198 - Velocimacro : added #banner(  banner id ) : source = site/peak.vm
+2016-04-15 11:51:54,204 - Velocimacro : added #links(  links ) : source = site/peak.vm
+2016-04-15 11:51:54,208 - Velocimacro : added #breadcrumbs(  breadcrumbs ) : source = site/peak.vm
+2016-04-15 11:51:54,212 - Velocimacro : added #displayTree(  display item ) : source = site/peak.vm
+2016-04-15 11:51:54,221 - Velocimacro : added #menuItem(  item ) : source = site/peak.vm
+2016-04-15 11:51:54,223 - Velocimacro : added #mainMenu(  menus ) : source = site/peak.vm
+2016-04-15 11:51:54,224 - Velocimacro : added #publishDate(  publishDate version ) : source = site/peak.vm
+2016-04-15 11:51:54,230 - Velocimacro : added #methodSummary(  method ) : source = site/peak.vm
+2016-04-15 11:51:54,232 - Velocimacro : added #classSummary(  ) : source = site/peak.vm
+2016-04-15 11:51:54,234 - Velocimacro : added #bodyContent(  ) : source = site/peak.vm
+2016-04-15 11:51:54,234 - Velocimacro : added #menu(  ) : source = site/peak.vm
+2016-04-15 11:51:54,290 - ResourceManager : found site/peak.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2016-04-15 11:51:54,294 - Null reference [template 'site/peak.vm', line 311, column 37] : $detalle cannot be resolved.
+2016-04-15 11:51:54,294 - Null reference [template 'site/peak.vm', line 312, column 29] : $imgSrc cannot be resolved.
+2016-04-15 11:51:54,294 - Null reference [template 'site/peak.vm', line 312, column 39] : $detalle.find('input[type=hidden]') cannot be resolved.
+2016-04-15 11:51:54,294 - Null reference [template 'site/peak.vm', line 314, column 37] : $imgSrc.size() cannot be resolved.
+2016-04-15 11:51:54,294 - Null reference [template 'site/peak.vm', line 315, column 45] : $img cannot be resolved.
+2016-04-15 11:51:54,294 - Null reference [template 'site/peak.vm', line 315, column 76] : $imgSrc.val() cannot be resolved.
+2016-04-15 11:51:54,294 - Null reference [template 'site/peak.vm', line 316, column 41] : $imgSrc.parent().html cannot be resolved.
+2016-04-15 11:51:54,294 - Null reference [template 'site/peak.vm', line 316, column 86] : $imgSrc.val() cannot be resolved.
+2016-04-15 11:51:54,294 - Null reference [template 'site/peak.vm', line 316, column 133] : $img cannot be resolved.
+2016-04-15 11:51:54,295 - Null reference [template 'site/peak.vm', line 319, column 33] : $detalle.show() cannot be resolved.
+2016-04-15 11:51:54,304 - Null reference [template 'site/peak.vm', line 3, column 28] : $collapse cannot be resolved.
+2016-04-15 12:06:43,626 - Log4JLogChute initialized using file 'velocity.log'
+2016-04-15 12:06:43,626 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2016-04-15 12:06:43,626 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2016-04-15 12:06:43,627 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2016-04-15 12:06:43,628 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:278)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:63)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:534)
+	at org.apache.velocity.runtime.RuntimeSingleton.init(RuntimeSingleton.java:227)
+	at org.apache.velocity.app.Velocity.init(Velocity.java:111)
+	at ar.uba.dc.analysis.memory.impl.report.html.HtmlReportWriter.init(HtmlReportWriter.java:79)
+	at ar.uba.dc.analysis.memory.impl.report.html.HtmlReportWriter.write(HtmlReportWriter.java:37)
+	at ar.uba.dc.analysis.memory.impl.MemoryInterproceduralAnalysis.doAnalysis(MemoryInterproceduralAnalysis.java:85)
+	at ar.uba.dc.analysis.common.AbstractInterproceduralAnalysis.run(AbstractInterproceduralAnalysis.java:37)
+	at ar.uba.dc.analysis.memory.impl.runner.MemorySceneTransformer.internalTransform(MemorySceneTransformer.java:56)
+	at soot.SceneTransformer.transform(SceneTransformer.java:39)
+	at soot.Transform.apply(Transform.java:89)
+	at soot.ScenePack.internalApply(ScenePack.java:43)
+	at soot.Pack.apply(Pack.java:114)
+	at soot.PackManager.runWholeProgramPacks(PackManager.java:407)
+	at soot.PackManager.runPacks(PackManager.java:327)
+	at soot.Main.run(Main.java:202)
+	at soot.Main.main(Main.java:145)
+	at ar.uba.dc.analysis.memory.impl.runner.MainSootRunner.main(MainSootRunner.java:61)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:366)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:355)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:354)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:425)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:308)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:358)
+	... 25 more
+2016-04-15 12:06:43,630 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2016-04-15 12:06:43,630 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2016-04-15 12:06:43,632 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2016-04-15 12:06:43,634 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2016-04-15 12:06:43,636 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2016-04-15 12:06:43,637 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2016-04-15 12:06:43,639 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2016-04-15 12:06:43,640 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2016-04-15 12:06:43,641 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2016-04-15 12:06:43,642 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2016-04-15 12:06:43,673 - Created '20' parsers.
+2016-04-15 12:06:43,681 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2016-04-15 12:06:43,682 - Velocimacro : Default library not found.
+2016-04-15 12:06:43,682 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2016-04-15 12:06:43,682 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2016-04-15 12:06:43,682 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2016-04-15 12:06:43,682 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2016-04-15 12:06:43,739 - Velocimacro : added #link(  href name ) : source = site/peak.vm
+2016-04-15 12:06:43,744 - Velocimacro : added #banner(  banner id ) : source = site/peak.vm
+2016-04-15 12:06:43,748 - Velocimacro : added #links(  links ) : source = site/peak.vm
+2016-04-15 12:06:43,750 - Velocimacro : added #breadcrumbs(  breadcrumbs ) : source = site/peak.vm
+2016-04-15 12:06:43,753 - Velocimacro : added #displayTree(  display item ) : source = site/peak.vm
+2016-04-15 12:06:43,762 - Velocimacro : added #menuItem(  item ) : source = site/peak.vm
+2016-04-15 12:06:43,764 - Velocimacro : added #mainMenu(  menus ) : source = site/peak.vm
+2016-04-15 12:06:43,765 - Velocimacro : added #publishDate(  publishDate version ) : source = site/peak.vm
+2016-04-15 12:06:43,772 - Velocimacro : added #methodSummary(  method ) : source = site/peak.vm
+2016-04-15 12:06:43,774 - Velocimacro : added #classSummary(  ) : source = site/peak.vm
+2016-04-15 12:06:43,776 - Velocimacro : added #bodyContent(  ) : source = site/peak.vm
+2016-04-15 12:06:43,776 - Velocimacro : added #menu(  ) : source = site/peak.vm
+2016-04-15 12:06:43,833 - ResourceManager : found site/peak.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2016-04-15 12:06:43,836 - Null reference [template 'site/peak.vm', line 311, column 37] : $detalle cannot be resolved.
+2016-04-15 12:06:43,836 - Null reference [template 'site/peak.vm', line 312, column 29] : $imgSrc cannot be resolved.
+2016-04-15 12:06:43,836 - Null reference [template 'site/peak.vm', line 312, column 39] : $detalle.find('input[type=hidden]') cannot be resolved.
+2016-04-15 12:06:43,836 - Null reference [template 'site/peak.vm', line 314, column 37] : $imgSrc.size() cannot be resolved.
+2016-04-15 12:06:43,836 - Null reference [template 'site/peak.vm', line 315, column 45] : $img cannot be resolved.
+2016-04-15 12:06:43,836 - Null reference [template 'site/peak.vm', line 315, column 76] : $imgSrc.val() cannot be resolved.
+2016-04-15 12:06:43,836 - Null reference [template 'site/peak.vm', line 316, column 41] : $imgSrc.parent().html cannot be resolved.
+2016-04-15 12:06:43,836 - Null reference [template 'site/peak.vm', line 316, column 86] : $imgSrc.val() cannot be resolved.
+2016-04-15 12:06:43,836 - Null reference [template 'site/peak.vm', line 316, column 133] : $img cannot be resolved.
+2016-04-15 12:06:43,836 - Null reference [template 'site/peak.vm', line 319, column 33] : $detalle.show() cannot be resolved.
+2016-04-15 12:06:43,843 - Null reference [template 'site/peak.vm', line 3, column 28] : $collapse cannot be resolved.
+2016-04-15 12:12:01,367 - Log4JLogChute initialized using file 'velocity.log'
+2016-04-15 12:12:01,368 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2016-04-15 12:12:01,368 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2016-04-15 12:12:01,368 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2016-04-15 12:12:01,369 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:278)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:63)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:534)
+	at org.apache.velocity.runtime.RuntimeSingleton.init(RuntimeSingleton.java:227)
+	at org.apache.velocity.app.Velocity.init(Velocity.java:111)
+	at ar.uba.dc.analysis.memory.impl.report.html.HtmlReportWriter.init(HtmlReportWriter.java:79)
+	at ar.uba.dc.analysis.memory.impl.report.html.HtmlReportWriter.write(HtmlReportWriter.java:37)
+	at ar.uba.dc.analysis.memory.impl.MemoryInterproceduralAnalysis.doAnalysis(MemoryInterproceduralAnalysis.java:85)
+	at ar.uba.dc.analysis.common.AbstractInterproceduralAnalysis.run(AbstractInterproceduralAnalysis.java:37)
+	at ar.uba.dc.analysis.memory.impl.runner.MemorySceneTransformer.internalTransform(MemorySceneTransformer.java:56)
+	at soot.SceneTransformer.transform(SceneTransformer.java:39)
+	at soot.Transform.apply(Transform.java:89)
+	at soot.ScenePack.internalApply(ScenePack.java:43)
+	at soot.Pack.apply(Pack.java:114)
+	at soot.PackManager.runWholeProgramPacks(PackManager.java:407)
+	at soot.PackManager.runPacks(PackManager.java:327)
+	at soot.Main.run(Main.java:202)
+	at soot.Main.main(Main.java:145)
+	at ar.uba.dc.analysis.memory.impl.runner.MainSootRunner.main(MainSootRunner.java:61)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:366)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:355)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:354)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:425)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:308)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:358)
+	... 25 more
+2016-04-15 12:12:01,371 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2016-04-15 12:12:01,371 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2016-04-15 12:12:01,373 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2016-04-15 12:12:01,375 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2016-04-15 12:12:01,376 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2016-04-15 12:12:01,377 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2016-04-15 12:12:01,379 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2016-04-15 12:12:01,380 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2016-04-15 12:12:01,381 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2016-04-15 12:12:01,382 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2016-04-15 12:12:01,401 - Created '20' parsers.
+2016-04-15 12:12:01,406 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2016-04-15 12:12:01,406 - Velocimacro : Default library not found.
+2016-04-15 12:12:01,406 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2016-04-15 12:12:01,406 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2016-04-15 12:12:01,406 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2016-04-15 12:12:01,406 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2016-04-15 12:12:01,449 - Velocimacro : added #link(  href name ) : source = site/peak.vm
+2016-04-15 12:12:01,453 - Velocimacro : added #banner(  banner id ) : source = site/peak.vm
+2016-04-15 12:12:01,457 - Velocimacro : added #links(  links ) : source = site/peak.vm
+2016-04-15 12:12:01,459 - Velocimacro : added #breadcrumbs(  breadcrumbs ) : source = site/peak.vm
+2016-04-15 12:12:01,462 - Velocimacro : added #displayTree(  display item ) : source = site/peak.vm
+2016-04-15 12:12:01,468 - Velocimacro : added #menuItem(  item ) : source = site/peak.vm
+2016-04-15 12:12:01,469 - Velocimacro : added #mainMenu(  menus ) : source = site/peak.vm
+2016-04-15 12:12:01,470 - Velocimacro : added #publishDate(  publishDate version ) : source = site/peak.vm
+2016-04-15 12:12:01,474 - Velocimacro : added #methodSummary(  method ) : source = site/peak.vm
+2016-04-15 12:12:01,475 - Velocimacro : added #classSummary(  ) : source = site/peak.vm
+2016-04-15 12:12:01,477 - Velocimacro : added #bodyContent(  ) : source = site/peak.vm
+2016-04-15 12:12:01,477 - Velocimacro : added #menu(  ) : source = site/peak.vm
+2016-04-15 12:12:01,517 - ResourceManager : found site/peak.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2016-04-15 12:12:01,520 - Null reference [template 'site/peak.vm', line 311, column 37] : $detalle cannot be resolved.
+2016-04-15 12:12:01,520 - Null reference [template 'site/peak.vm', line 312, column 29] : $imgSrc cannot be resolved.
+2016-04-15 12:12:01,520 - Null reference [template 'site/peak.vm', line 312, column 39] : $detalle.find('input[type=hidden]') cannot be resolved.
+2016-04-15 12:12:01,520 - Null reference [template 'site/peak.vm', line 314, column 37] : $imgSrc.size() cannot be resolved.
+2016-04-15 12:12:01,520 - Null reference [template 'site/peak.vm', line 315, column 45] : $img cannot be resolved.
+2016-04-15 12:12:01,520 - Null reference [template 'site/peak.vm', line 315, column 76] : $imgSrc.val() cannot be resolved.
+2016-04-15 12:12:01,521 - Null reference [template 'site/peak.vm', line 316, column 41] : $imgSrc.parent().html cannot be resolved.
+2016-04-15 12:12:01,521 - Null reference [template 'site/peak.vm', line 316, column 86] : $imgSrc.val() cannot be resolved.
+2016-04-15 12:12:01,521 - Null reference [template 'site/peak.vm', line 316, column 133] : $img cannot be resolved.
+2016-04-15 12:12:01,521 - Null reference [template 'site/peak.vm', line 319, column 33] : $detalle.show() cannot be resolved.
+2016-04-15 12:12:01,529 - Null reference [template 'site/peak.vm', line 3, column 28] : $collapse cannot be resolved.
+2016-04-15 12:14:41,999 - Log4JLogChute initialized using file 'velocity.log'
+2016-04-15 12:14:41,999 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2016-04-15 12:14:42,000 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2016-04-15 12:14:42,000 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2016-04-15 12:14:42,000 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:278)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:63)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:534)
+	at org.apache.velocity.runtime.RuntimeSingleton.init(RuntimeSingleton.java:227)
+	at org.apache.velocity.app.Velocity.init(Velocity.java:111)
+	at ar.uba.dc.analysis.memory.impl.report.html.HtmlReportWriter.init(HtmlReportWriter.java:79)
+	at ar.uba.dc.analysis.memory.impl.report.html.HtmlReportWriter.write(HtmlReportWriter.java:37)
+	at ar.uba.dc.analysis.memory.impl.MemoryInterproceduralAnalysis.doAnalysis(MemoryInterproceduralAnalysis.java:85)
+	at ar.uba.dc.analysis.common.AbstractInterproceduralAnalysis.run(AbstractInterproceduralAnalysis.java:37)
+	at ar.uba.dc.analysis.memory.impl.runner.MemorySceneTransformer.internalTransform(MemorySceneTransformer.java:56)
+	at soot.SceneTransformer.transform(SceneTransformer.java:39)
+	at soot.Transform.apply(Transform.java:89)
+	at soot.ScenePack.internalApply(ScenePack.java:43)
+	at soot.Pack.apply(Pack.java:114)
+	at soot.PackManager.runWholeProgramPacks(PackManager.java:407)
+	at soot.PackManager.runPacks(PackManager.java:327)
+	at soot.Main.run(Main.java:202)
+	at soot.Main.main(Main.java:145)
+	at ar.uba.dc.analysis.memory.impl.runner.MainSootRunner.main(MainSootRunner.java:61)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:366)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:355)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:354)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:425)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:308)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:358)
+	... 25 more
+2016-04-15 12:14:42,002 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2016-04-15 12:14:42,002 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2016-04-15 12:14:42,003 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2016-04-15 12:14:42,005 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2016-04-15 12:14:42,006 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2016-04-15 12:14:42,007 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2016-04-15 12:14:42,008 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2016-04-15 12:14:42,009 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2016-04-15 12:14:42,010 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2016-04-15 12:14:42,010 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2016-04-15 12:14:42,036 - Created '20' parsers.
+2016-04-15 12:14:42,044 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2016-04-15 12:14:42,045 - Velocimacro : Default library not found.
+2016-04-15 12:14:42,045 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2016-04-15 12:14:42,045 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2016-04-15 12:14:42,045 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2016-04-15 12:14:42,045 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2016-04-15 12:14:42,112 - Velocimacro : added #link(  href name ) : source = site/peak.vm
+2016-04-15 12:14:42,116 - Velocimacro : added #banner(  banner id ) : source = site/peak.vm
+2016-04-15 12:14:42,121 - Velocimacro : added #links(  links ) : source = site/peak.vm
+2016-04-15 12:14:42,124 - Velocimacro : added #breadcrumbs(  breadcrumbs ) : source = site/peak.vm
+2016-04-15 12:14:42,127 - Velocimacro : added #displayTree(  display item ) : source = site/peak.vm
+2016-04-15 12:14:42,133 - Velocimacro : added #menuItem(  item ) : source = site/peak.vm
+2016-04-15 12:14:42,134 - Velocimacro : added #mainMenu(  menus ) : source = site/peak.vm
+2016-04-15 12:14:42,135 - Velocimacro : added #publishDate(  publishDate version ) : source = site/peak.vm
+2016-04-15 12:14:42,139 - Velocimacro : added #methodSummary(  method ) : source = site/peak.vm
+2016-04-15 12:14:42,141 - Velocimacro : added #classSummary(  ) : source = site/peak.vm
+2016-04-15 12:14:42,142 - Velocimacro : added #bodyContent(  ) : source = site/peak.vm
+2016-04-15 12:14:42,142 - Velocimacro : added #menu(  ) : source = site/peak.vm
+2016-04-15 12:14:42,177 - ResourceManager : found site/peak.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2016-04-15 12:14:42,179 - Null reference [template 'site/peak.vm', line 311, column 37] : $detalle cannot be resolved.
+2016-04-15 12:14:42,179 - Null reference [template 'site/peak.vm', line 312, column 29] : $imgSrc cannot be resolved.
+2016-04-15 12:14:42,179 - Null reference [template 'site/peak.vm', line 312, column 39] : $detalle.find('input[type=hidden]') cannot be resolved.
+2016-04-15 12:14:42,179 - Null reference [template 'site/peak.vm', line 314, column 37] : $imgSrc.size() cannot be resolved.
+2016-04-15 12:14:42,179 - Null reference [template 'site/peak.vm', line 315, column 45] : $img cannot be resolved.
+2016-04-15 12:14:42,179 - Null reference [template 'site/peak.vm', line 315, column 76] : $imgSrc.val() cannot be resolved.
+2016-04-15 12:14:42,180 - Null reference [template 'site/peak.vm', line 316, column 41] : $imgSrc.parent().html cannot be resolved.
+2016-04-15 12:14:42,180 - Null reference [template 'site/peak.vm', line 316, column 86] : $imgSrc.val() cannot be resolved.
+2016-04-15 12:14:42,180 - Null reference [template 'site/peak.vm', line 316, column 133] : $img cannot be resolved.
+2016-04-15 12:14:42,180 - Null reference [template 'site/peak.vm', line 319, column 33] : $detalle.show() cannot be resolved.
+2016-04-15 12:14:42,186 - Null reference [template 'site/peak.vm', line 3, column 28] : $collapse cannot be resolved.
+2016-04-15 12:45:24,036 - Log4JLogChute initialized using file 'velocity.log'
+2016-04-15 12:45:24,037 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2016-04-15 12:45:24,037 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2016-04-15 12:45:24,037 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2016-04-15 12:45:24,038 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:278)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:63)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:534)
+	at org.apache.velocity.runtime.RuntimeSingleton.init(RuntimeSingleton.java:227)
+	at org.apache.velocity.app.Velocity.init(Velocity.java:111)
+	at ar.uba.dc.analysis.memory.impl.report.html.HtmlReportWriter.init(HtmlReportWriter.java:79)
+	at ar.uba.dc.analysis.memory.impl.report.html.HtmlReportWriter.write(HtmlReportWriter.java:37)
+	at ar.uba.dc.analysis.memory.impl.MemoryInterproceduralAnalysis.doAnalysis(MemoryInterproceduralAnalysis.java:85)
+	at ar.uba.dc.analysis.common.AbstractInterproceduralAnalysis.run(AbstractInterproceduralAnalysis.java:37)
+	at ar.uba.dc.analysis.memory.impl.runner.MemorySceneTransformer.internalTransform(MemorySceneTransformer.java:56)
+	at soot.SceneTransformer.transform(SceneTransformer.java:39)
+	at soot.Transform.apply(Transform.java:89)
+	at soot.ScenePack.internalApply(ScenePack.java:43)
+	at soot.Pack.apply(Pack.java:114)
+	at soot.PackManager.runWholeProgramPacks(PackManager.java:407)
+	at soot.PackManager.runPacks(PackManager.java:327)
+	at soot.Main.run(Main.java:202)
+	at soot.Main.main(Main.java:145)
+	at ar.uba.dc.analysis.memory.impl.runner.MainSootRunner.main(MainSootRunner.java:61)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:366)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:355)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:354)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:425)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:308)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:358)
+	... 25 more
+2016-04-15 12:45:24,040 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2016-04-15 12:45:24,040 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2016-04-15 12:45:24,042 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2016-04-15 12:45:24,044 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2016-04-15 12:45:24,045 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2016-04-15 12:45:24,047 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2016-04-15 12:45:24,048 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2016-04-15 12:45:24,050 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2016-04-15 12:45:24,051 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2016-04-15 12:45:24,052 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2016-04-15 12:45:24,083 - Created '20' parsers.
+2016-04-15 12:45:24,090 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2016-04-15 12:45:24,091 - Velocimacro : Default library not found.
+2016-04-15 12:45:24,091 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2016-04-15 12:45:24,091 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2016-04-15 12:45:24,091 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2016-04-15 12:45:24,091 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2016-04-15 12:45:24,140 - Velocimacro : added #link(  href name ) : source = site/peak.vm
+2016-04-15 12:45:24,145 - Velocimacro : added #banner(  banner id ) : source = site/peak.vm
+2016-04-15 12:45:24,148 - Velocimacro : added #links(  links ) : source = site/peak.vm
+2016-04-15 12:45:24,151 - Velocimacro : added #breadcrumbs(  breadcrumbs ) : source = site/peak.vm
+2016-04-15 12:45:24,154 - Velocimacro : added #displayTree(  display item ) : source = site/peak.vm
+2016-04-15 12:45:24,162 - Velocimacro : added #menuItem(  item ) : source = site/peak.vm
+2016-04-15 12:45:24,163 - Velocimacro : added #mainMenu(  menus ) : source = site/peak.vm
+2016-04-15 12:45:24,164 - Velocimacro : added #publishDate(  publishDate version ) : source = site/peak.vm
+2016-04-15 12:45:24,168 - Velocimacro : added #methodSummary(  method ) : source = site/peak.vm
+2016-04-15 12:45:24,169 - Velocimacro : added #classSummary(  ) : source = site/peak.vm
+2016-04-15 12:45:24,171 - Velocimacro : added #bodyContent(  ) : source = site/peak.vm
+2016-04-15 12:45:24,171 - Velocimacro : added #menu(  ) : source = site/peak.vm
+2016-04-15 12:45:24,205 - ResourceManager : found site/peak.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2016-04-15 12:45:24,208 - Null reference [template 'site/peak.vm', line 311, column 37] : $detalle cannot be resolved.
+2016-04-15 12:45:24,208 - Null reference [template 'site/peak.vm', line 312, column 29] : $imgSrc cannot be resolved.
+2016-04-15 12:45:24,208 - Null reference [template 'site/peak.vm', line 312, column 39] : $detalle.find('input[type=hidden]') cannot be resolved.
+2016-04-15 12:45:24,208 - Null reference [template 'site/peak.vm', line 314, column 37] : $imgSrc.size() cannot be resolved.
+2016-04-15 12:45:24,208 - Null reference [template 'site/peak.vm', line 315, column 45] : $img cannot be resolved.
+2016-04-15 12:45:24,208 - Null reference [template 'site/peak.vm', line 315, column 76] : $imgSrc.val() cannot be resolved.
+2016-04-15 12:45:24,208 - Null reference [template 'site/peak.vm', line 316, column 41] : $imgSrc.parent().html cannot be resolved.
+2016-04-15 12:45:24,209 - Null reference [template 'site/peak.vm', line 316, column 86] : $imgSrc.val() cannot be resolved.
+2016-04-15 12:45:24,209 - Null reference [template 'site/peak.vm', line 316, column 133] : $img cannot be resolved.
+2016-04-15 12:45:24,209 - Null reference [template 'site/peak.vm', line 319, column 33] : $detalle.show() cannot be resolved.
+2016-04-15 12:45:24,217 - Null reference [template 'site/peak.vm', line 3, column 28] : $collapse cannot be resolved.
+2016-04-18 09:44:29,494 - Log4JLogChute initialized using file 'velocity.log'
+2016-04-18 09:44:29,505 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2016-04-18 09:44:29,506 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2016-04-18 09:44:29,506 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2016-04-18 09:44:29,507 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:278)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:63)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:534)
+	at org.apache.velocity.runtime.RuntimeSingleton.init(RuntimeSingleton.java:227)
+	at org.apache.velocity.app.Velocity.init(Velocity.java:111)
+	at ar.uba.dc.analysis.memory.impl.report.html.HtmlReportWriter.init(HtmlReportWriter.java:79)
+	at ar.uba.dc.analysis.memory.impl.report.html.HtmlReportWriter.write(HtmlReportWriter.java:37)
+	at ar.uba.dc.analysis.memory.impl.MemoryInterproceduralAnalysis.doAnalysis(MemoryInterproceduralAnalysis.java:85)
+	at ar.uba.dc.analysis.common.AbstractInterproceduralAnalysis.run(AbstractInterproceduralAnalysis.java:37)
+	at ar.uba.dc.analysis.memory.impl.runner.MemorySceneTransformer.internalTransform(MemorySceneTransformer.java:56)
+	at soot.SceneTransformer.transform(SceneTransformer.java:39)
+	at soot.Transform.apply(Transform.java:89)
+	at soot.ScenePack.internalApply(ScenePack.java:43)
+	at soot.Pack.apply(Pack.java:114)
+	at soot.PackManager.runWholeProgramPacks(PackManager.java:407)
+	at soot.PackManager.runPacks(PackManager.java:327)
+	at soot.Main.run(Main.java:202)
+	at soot.Main.main(Main.java:145)
+	at ar.uba.dc.analysis.memory.impl.runner.MainSootRunner.main(MainSootRunner.java:61)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:366)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:355)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:354)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:425)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:308)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:358)
+	... 25 more
+2016-04-18 09:44:29,509 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2016-04-18 09:44:29,509 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2016-04-18 09:44:29,512 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2016-04-18 09:44:29,514 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2016-04-18 09:44:29,517 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2016-04-18 09:44:29,519 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2016-04-18 09:44:29,521 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2016-04-18 09:44:29,522 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2016-04-18 09:44:29,525 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2016-04-18 09:44:29,526 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2016-04-18 09:44:29,558 - Created '20' parsers.
+2016-04-18 09:44:29,566 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2016-04-18 09:44:29,567 - Velocimacro : Default library not found.
+2016-04-18 09:44:29,567 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2016-04-18 09:44:29,567 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2016-04-18 09:44:29,568 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2016-04-18 09:44:29,568 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2016-04-18 09:44:29,687 - Velocimacro : added #link(  href name ) : source = site/peak.vm
+2016-04-18 09:44:29,694 - Velocimacro : added #banner(  banner id ) : source = site/peak.vm
+2016-04-18 09:44:29,700 - Velocimacro : added #links(  links ) : source = site/peak.vm
+2016-04-18 09:44:29,704 - Velocimacro : added #breadcrumbs(  breadcrumbs ) : source = site/peak.vm
+2016-04-18 09:44:29,708 - Velocimacro : added #displayTree(  display item ) : source = site/peak.vm
+2016-04-18 09:44:29,717 - Velocimacro : added #menuItem(  item ) : source = site/peak.vm
+2016-04-18 09:44:29,719 - Velocimacro : added #mainMenu(  menus ) : source = site/peak.vm
+2016-04-18 09:44:29,721 - Velocimacro : added #publishDate(  publishDate version ) : source = site/peak.vm
+2016-04-18 09:44:29,727 - Velocimacro : added #methodSummary(  method ) : source = site/peak.vm
+2016-04-18 09:44:29,729 - Velocimacro : added #classSummary(  ) : source = site/peak.vm
+2016-04-18 09:44:29,731 - Velocimacro : added #bodyContent(  ) : source = site/peak.vm
+2016-04-18 09:44:29,732 - Velocimacro : added #menu(  ) : source = site/peak.vm
+2016-04-18 09:44:29,789 - ResourceManager : found site/peak.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2016-04-18 09:44:29,792 - Null reference [template 'site/peak.vm', line 311, column 37] : $detalle cannot be resolved.
+2016-04-18 09:44:29,792 - Null reference [template 'site/peak.vm', line 312, column 29] : $imgSrc cannot be resolved.
+2016-04-18 09:44:29,792 - Null reference [template 'site/peak.vm', line 312, column 39] : $detalle.find('input[type=hidden]') cannot be resolved.
+2016-04-18 09:44:29,793 - Null reference [template 'site/peak.vm', line 314, column 37] : $imgSrc.size() cannot be resolved.
+2016-04-18 09:44:29,793 - Null reference [template 'site/peak.vm', line 315, column 45] : $img cannot be resolved.
+2016-04-18 09:44:29,793 - Null reference [template 'site/peak.vm', line 315, column 76] : $imgSrc.val() cannot be resolved.
+2016-04-18 09:44:29,793 - Null reference [template 'site/peak.vm', line 316, column 41] : $imgSrc.parent().html cannot be resolved.
+2016-04-18 09:44:29,793 - Null reference [template 'site/peak.vm', line 316, column 86] : $imgSrc.val() cannot be resolved.
+2016-04-18 09:44:29,793 - Null reference [template 'site/peak.vm', line 316, column 133] : $img cannot be resolved.
+2016-04-18 09:44:29,793 - Null reference [template 'site/peak.vm', line 319, column 33] : $detalle.show() cannot be resolved.
+2016-04-18 09:44:29,803 - Null reference [template 'site/peak.vm', line 3, column 28] : $collapse cannot be resolved.
+2016-04-18 09:47:29,103 - Log4JLogChute initialized using file 'velocity.log'
+2016-04-18 09:47:29,104 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2016-04-18 09:47:29,104 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2016-04-18 09:47:29,104 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2016-04-18 09:47:29,105 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:278)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:63)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:534)
+	at org.apache.velocity.runtime.RuntimeSingleton.init(RuntimeSingleton.java:227)
+	at org.apache.velocity.app.Velocity.init(Velocity.java:111)
+	at ar.uba.dc.analysis.memory.impl.report.html.HtmlReportWriter.init(HtmlReportWriter.java:79)
+	at ar.uba.dc.analysis.memory.impl.report.html.HtmlReportWriter.write(HtmlReportWriter.java:37)
+	at ar.uba.dc.analysis.memory.impl.MemoryInterproceduralAnalysis.doAnalysis(MemoryInterproceduralAnalysis.java:85)
+	at ar.uba.dc.analysis.common.AbstractInterproceduralAnalysis.run(AbstractInterproceduralAnalysis.java:37)
+	at ar.uba.dc.analysis.memory.impl.runner.MemorySceneTransformer.internalTransform(MemorySceneTransformer.java:56)
+	at soot.SceneTransformer.transform(SceneTransformer.java:39)
+	at soot.Transform.apply(Transform.java:89)
+	at soot.ScenePack.internalApply(ScenePack.java:43)
+	at soot.Pack.apply(Pack.java:114)
+	at soot.PackManager.runWholeProgramPacks(PackManager.java:407)
+	at soot.PackManager.runPacks(PackManager.java:327)
+	at soot.Main.run(Main.java:202)
+	at soot.Main.main(Main.java:145)
+	at ar.uba.dc.analysis.memory.impl.runner.MainSootRunner.main(MainSootRunner.java:61)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:366)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:355)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:354)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:425)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:308)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:358)
+	... 25 more
+2016-04-18 09:47:29,107 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2016-04-18 09:47:29,107 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2016-04-18 09:47:29,109 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2016-04-18 09:47:29,112 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2016-04-18 09:47:29,113 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2016-04-18 09:47:29,115 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2016-04-18 09:47:29,116 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2016-04-18 09:47:29,118 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2016-04-18 09:47:29,119 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2016-04-18 09:47:29,121 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2016-04-18 09:47:29,154 - Created '20' parsers.
+2016-04-18 09:47:29,163 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2016-04-18 09:47:29,164 - Velocimacro : Default library not found.
+2016-04-18 09:47:29,164 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2016-04-18 09:47:29,164 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2016-04-18 09:47:29,164 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2016-04-18 09:47:29,164 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2016-04-18 09:47:29,247 - Velocimacro : added #link(  href name ) : source = site/peak.vm
+2016-04-18 09:47:29,254 - Velocimacro : added #banner(  banner id ) : source = site/peak.vm
+2016-04-18 09:47:29,260 - Velocimacro : added #links(  links ) : source = site/peak.vm
+2016-04-18 09:47:29,265 - Velocimacro : added #breadcrumbs(  breadcrumbs ) : source = site/peak.vm
+2016-04-18 09:47:29,269 - Velocimacro : added #displayTree(  display item ) : source = site/peak.vm
+2016-04-18 09:47:29,278 - Velocimacro : added #menuItem(  item ) : source = site/peak.vm
+2016-04-18 09:47:29,280 - Velocimacro : added #mainMenu(  menus ) : source = site/peak.vm
+2016-04-18 09:47:29,282 - Velocimacro : added #publishDate(  publishDate version ) : source = site/peak.vm
+2016-04-18 09:47:29,288 - Velocimacro : added #methodSummary(  method ) : source = site/peak.vm
+2016-04-18 09:47:29,290 - Velocimacro : added #classSummary(  ) : source = site/peak.vm
+2016-04-18 09:47:29,292 - Velocimacro : added #bodyContent(  ) : source = site/peak.vm
+2016-04-18 09:47:29,292 - Velocimacro : added #menu(  ) : source = site/peak.vm
+2016-04-18 09:47:29,351 - ResourceManager : found site/peak.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2016-04-18 09:47:29,354 - Null reference [template 'site/peak.vm', line 311, column 37] : $detalle cannot be resolved.
+2016-04-18 09:47:29,354 - Null reference [template 'site/peak.vm', line 312, column 29] : $imgSrc cannot be resolved.
+2016-04-18 09:47:29,355 - Null reference [template 'site/peak.vm', line 312, column 39] : $detalle.find('input[type=hidden]') cannot be resolved.
+2016-04-18 09:47:29,355 - Null reference [template 'site/peak.vm', line 314, column 37] : $imgSrc.size() cannot be resolved.
+2016-04-18 09:47:29,355 - Null reference [template 'site/peak.vm', line 315, column 45] : $img cannot be resolved.
+2016-04-18 09:47:29,355 - Null reference [template 'site/peak.vm', line 315, column 76] : $imgSrc.val() cannot be resolved.
+2016-04-18 09:47:29,355 - Null reference [template 'site/peak.vm', line 316, column 41] : $imgSrc.parent().html cannot be resolved.
+2016-04-18 09:47:29,355 - Null reference [template 'site/peak.vm', line 316, column 86] : $imgSrc.val() cannot be resolved.
+2016-04-18 09:47:29,355 - Null reference [template 'site/peak.vm', line 316, column 133] : $img cannot be resolved.
+2016-04-18 09:47:29,355 - Null reference [template 'site/peak.vm', line 319, column 33] : $detalle.show() cannot be resolved.
+2016-04-18 09:47:29,365 - Null reference [template 'site/peak.vm', line 3, column 28] : $collapse cannot be resolved.
+2016-04-18 10:06:14,583 - Log4JLogChute initialized using file 'velocity.log'
+2016-04-18 10:06:14,583 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2016-04-18 10:06:14,583 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2016-04-18 10:06:14,584 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2016-04-18 10:06:14,584 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:278)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:63)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:534)
+	at org.apache.velocity.runtime.RuntimeSingleton.init(RuntimeSingleton.java:227)
+	at org.apache.velocity.app.Velocity.init(Velocity.java:111)
+	at ar.uba.dc.analysis.memory.impl.report.html.HtmlReportWriter.init(HtmlReportWriter.java:79)
+	at ar.uba.dc.analysis.memory.impl.report.html.HtmlReportWriter.write(HtmlReportWriter.java:37)
+	at ar.uba.dc.analysis.memory.impl.MemoryInterproceduralAnalysis.doAnalysis(MemoryInterproceduralAnalysis.java:85)
+	at ar.uba.dc.analysis.common.AbstractInterproceduralAnalysis.run(AbstractInterproceduralAnalysis.java:37)
+	at ar.uba.dc.analysis.memory.impl.runner.MemorySceneTransformer.internalTransform(MemorySceneTransformer.java:56)
+	at soot.SceneTransformer.transform(SceneTransformer.java:39)
+	at soot.Transform.apply(Transform.java:89)
+	at soot.ScenePack.internalApply(ScenePack.java:43)
+	at soot.Pack.apply(Pack.java:114)
+	at soot.PackManager.runWholeProgramPacks(PackManager.java:407)
+	at soot.PackManager.runPacks(PackManager.java:327)
+	at soot.Main.run(Main.java:202)
+	at soot.Main.main(Main.java:145)
+	at ar.uba.dc.analysis.memory.impl.runner.MainSootRunner.main(MainSootRunner.java:61)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:366)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:355)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:354)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:425)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:308)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:358)
+	... 25 more
+2016-04-18 10:06:14,586 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2016-04-18 10:06:14,586 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2016-04-18 10:06:14,587 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2016-04-18 10:06:14,589 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2016-04-18 10:06:14,590 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2016-04-18 10:06:14,605 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2016-04-18 10:06:14,606 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2016-04-18 10:06:14,608 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2016-04-18 10:06:14,610 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2016-04-18 10:06:14,611 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2016-04-18 10:06:14,641 - Created '20' parsers.
+2016-04-18 10:06:14,648 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2016-04-18 10:06:14,649 - Velocimacro : Default library not found.
+2016-04-18 10:06:14,649 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2016-04-18 10:06:14,649 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2016-04-18 10:06:14,649 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2016-04-18 10:06:14,649 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2016-04-18 10:06:14,716 - Velocimacro : added #link(  href name ) : source = site/peak.vm
+2016-04-18 10:06:14,722 - Velocimacro : added #banner(  banner id ) : source = site/peak.vm
+2016-04-18 10:06:14,727 - Velocimacro : added #links(  links ) : source = site/peak.vm
+2016-04-18 10:06:14,731 - Velocimacro : added #breadcrumbs(  breadcrumbs ) : source = site/peak.vm
+2016-04-18 10:06:14,734 - Velocimacro : added #displayTree(  display item ) : source = site/peak.vm
+2016-04-18 10:06:14,743 - Velocimacro : added #menuItem(  item ) : source = site/peak.vm
+2016-04-18 10:06:14,745 - Velocimacro : added #mainMenu(  menus ) : source = site/peak.vm
+2016-04-18 10:06:14,746 - Velocimacro : added #publishDate(  publishDate version ) : source = site/peak.vm
+2016-04-18 10:06:14,752 - Velocimacro : added #methodSummary(  method ) : source = site/peak.vm
+2016-04-18 10:06:14,753 - Velocimacro : added #classSummary(  ) : source = site/peak.vm
+2016-04-18 10:06:14,755 - Velocimacro : added #bodyContent(  ) : source = site/peak.vm
+2016-04-18 10:06:14,755 - Velocimacro : added #menu(  ) : source = site/peak.vm
+2016-04-18 10:06:14,803 - ResourceManager : found site/peak.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2016-04-18 10:06:14,806 - Null reference [template 'site/peak.vm', line 311, column 37] : $detalle cannot be resolved.
+2016-04-18 10:06:14,806 - Null reference [template 'site/peak.vm', line 312, column 29] : $imgSrc cannot be resolved.
+2016-04-18 10:06:14,806 - Null reference [template 'site/peak.vm', line 312, column 39] : $detalle.find('input[type=hidden]') cannot be resolved.
+2016-04-18 10:06:14,806 - Null reference [template 'site/peak.vm', line 314, column 37] : $imgSrc.size() cannot be resolved.
+2016-04-18 10:06:14,806 - Null reference [template 'site/peak.vm', line 315, column 45] : $img cannot be resolved.
+2016-04-18 10:06:14,806 - Null reference [template 'site/peak.vm', line 315, column 76] : $imgSrc.val() cannot be resolved.
+2016-04-18 10:06:14,806 - Null reference [template 'site/peak.vm', line 316, column 41] : $imgSrc.parent().html cannot be resolved.
+2016-04-18 10:06:14,806 - Null reference [template 'site/peak.vm', line 316, column 86] : $imgSrc.val() cannot be resolved.
+2016-04-18 10:06:14,806 - Null reference [template 'site/peak.vm', line 316, column 133] : $img cannot be resolved.
+2016-04-18 10:06:14,806 - Null reference [template 'site/peak.vm', line 319, column 33] : $detalle.show() cannot be resolved.
+2016-04-18 10:06:14,814 - Null reference [template 'site/peak.vm', line 3, column 28] : $collapse cannot be resolved.
+2016-04-18 10:08:35,945 - Log4JLogChute initialized using file 'velocity.log'
+2016-04-18 10:08:35,946 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2016-04-18 10:08:35,946 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2016-04-18 10:08:35,946 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2016-04-18 10:08:35,946 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:278)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:63)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:534)
+	at org.apache.velocity.runtime.RuntimeSingleton.init(RuntimeSingleton.java:227)
+	at org.apache.velocity.app.Velocity.init(Velocity.java:111)
+	at ar.uba.dc.analysis.memory.impl.report.html.HtmlReportWriter.init(HtmlReportWriter.java:79)
+	at ar.uba.dc.analysis.memory.impl.report.html.HtmlReportWriter.write(HtmlReportWriter.java:37)
+	at ar.uba.dc.analysis.memory.impl.MemoryInterproceduralAnalysis.doAnalysis(MemoryInterproceduralAnalysis.java:85)
+	at ar.uba.dc.analysis.common.AbstractInterproceduralAnalysis.run(AbstractInterproceduralAnalysis.java:37)
+	at ar.uba.dc.analysis.memory.impl.runner.MemorySceneTransformer.internalTransform(MemorySceneTransformer.java:56)
+	at soot.SceneTransformer.transform(SceneTransformer.java:39)
+	at soot.Transform.apply(Transform.java:89)
+	at soot.ScenePack.internalApply(ScenePack.java:43)
+	at soot.Pack.apply(Pack.java:114)
+	at soot.PackManager.runWholeProgramPacks(PackManager.java:407)
+	at soot.PackManager.runPacks(PackManager.java:327)
+	at soot.Main.run(Main.java:202)
+	at soot.Main.main(Main.java:145)
+	at ar.uba.dc.analysis.memory.impl.runner.MainSootRunner.main(MainSootRunner.java:61)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:366)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:355)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:354)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:425)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:308)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:358)
+	... 25 more
+2016-04-18 10:08:35,948 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2016-04-18 10:08:35,948 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2016-04-18 10:08:35,951 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2016-04-18 10:08:35,952 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2016-04-18 10:08:35,953 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2016-04-18 10:08:35,954 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2016-04-18 10:08:35,956 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2016-04-18 10:08:35,957 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2016-04-18 10:08:35,959 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2016-04-18 10:08:35,960 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2016-04-18 10:08:35,979 - Created '20' parsers.
+2016-04-18 10:08:35,985 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2016-04-18 10:08:35,985 - Velocimacro : Default library not found.
+2016-04-18 10:08:35,985 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2016-04-18 10:08:35,985 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2016-04-18 10:08:35,985 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2016-04-18 10:08:35,986 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2016-04-18 10:08:36,528 - Velocimacro : added #link(  href name ) : source = site/peak.vm
+2016-04-18 10:08:36,534 - Velocimacro : added #banner(  banner id ) : source = site/peak.vm
+2016-04-18 10:08:36,538 - Velocimacro : added #links(  links ) : source = site/peak.vm
+2016-04-18 10:08:36,541 - Velocimacro : added #breadcrumbs(  breadcrumbs ) : source = site/peak.vm
+2016-04-18 10:08:36,543 - Velocimacro : added #displayTree(  display item ) : source = site/peak.vm
+2016-04-18 10:08:36,549 - Velocimacro : added #menuItem(  item ) : source = site/peak.vm
+2016-04-18 10:08:36,551 - Velocimacro : added #mainMenu(  menus ) : source = site/peak.vm
+2016-04-18 10:08:36,551 - Velocimacro : added #publishDate(  publishDate version ) : source = site/peak.vm
+2016-04-18 10:08:36,555 - Velocimacro : added #methodSummary(  method ) : source = site/peak.vm
+2016-04-18 10:08:36,556 - Velocimacro : added #classSummary(  ) : source = site/peak.vm
+2016-04-18 10:08:36,558 - Velocimacro : added #bodyContent(  ) : source = site/peak.vm
+2016-04-18 10:08:36,558 - Velocimacro : added #menu(  ) : source = site/peak.vm
+2016-04-18 10:08:36,590 - ResourceManager : found site/peak.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2016-04-18 10:08:36,592 - Null reference [template 'site/peak.vm', line 311, column 37] : $detalle cannot be resolved.
+2016-04-18 10:08:36,592 - Null reference [template 'site/peak.vm', line 312, column 29] : $imgSrc cannot be resolved.
+2016-04-18 10:08:36,592 - Null reference [template 'site/peak.vm', line 312, column 39] : $detalle.find('input[type=hidden]') cannot be resolved.
+2016-04-18 10:08:36,592 - Null reference [template 'site/peak.vm', line 314, column 37] : $imgSrc.size() cannot be resolved.
+2016-04-18 10:08:36,592 - Null reference [template 'site/peak.vm', line 315, column 45] : $img cannot be resolved.
+2016-04-18 10:08:36,593 - Null reference [template 'site/peak.vm', line 315, column 76] : $imgSrc.val() cannot be resolved.
+2016-04-18 10:08:36,593 - Null reference [template 'site/peak.vm', line 316, column 41] : $imgSrc.parent().html cannot be resolved.
+2016-04-18 10:08:36,593 - Null reference [template 'site/peak.vm', line 316, column 86] : $imgSrc.val() cannot be resolved.
+2016-04-18 10:08:36,593 - Null reference [template 'site/peak.vm', line 316, column 133] : $img cannot be resolved.
+2016-04-18 10:08:36,593 - Null reference [template 'site/peak.vm', line 319, column 33] : $detalle.show() cannot be resolved.
+2016-04-18 10:08:36,598 - Null reference [template 'site/peak.vm', line 3, column 28] : $collapse cannot be resolved.
+2016-04-18 10:11:15,182 - Log4JLogChute initialized using file 'velocity.log'
+2016-04-18 10:11:15,183 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2016-04-18 10:11:15,183 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2016-04-18 10:11:15,183 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2016-04-18 10:11:15,185 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:278)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:63)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:534)
+	at org.apache.velocity.runtime.RuntimeSingleton.init(RuntimeSingleton.java:227)
+	at org.apache.velocity.app.Velocity.init(Velocity.java:111)
+	at ar.uba.dc.analysis.memory.impl.report.html.HtmlReportWriter.init(HtmlReportWriter.java:79)
+	at ar.uba.dc.analysis.memory.impl.report.html.HtmlReportWriter.write(HtmlReportWriter.java:37)
+	at ar.uba.dc.analysis.memory.impl.MemoryInterproceduralAnalysis.doAnalysis(MemoryInterproceduralAnalysis.java:85)
+	at ar.uba.dc.analysis.common.AbstractInterproceduralAnalysis.run(AbstractInterproceduralAnalysis.java:37)
+	at ar.uba.dc.analysis.memory.impl.runner.MemorySceneTransformer.internalTransform(MemorySceneTransformer.java:56)
+	at soot.SceneTransformer.transform(SceneTransformer.java:39)
+	at soot.Transform.apply(Transform.java:89)
+	at soot.ScenePack.internalApply(ScenePack.java:43)
+	at soot.Pack.apply(Pack.java:114)
+	at soot.PackManager.runWholeProgramPacks(PackManager.java:407)
+	at soot.PackManager.runPacks(PackManager.java:327)
+	at soot.Main.run(Main.java:202)
+	at soot.Main.main(Main.java:145)
+	at ar.uba.dc.analysis.memory.impl.runner.MainSootRunner.main(MainSootRunner.java:61)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:366)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:355)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:354)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:425)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:308)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:358)
+	... 25 more
+2016-04-18 10:11:15,187 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2016-04-18 10:11:15,187 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2016-04-18 10:11:15,188 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2016-04-18 10:11:15,191 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2016-04-18 10:11:15,192 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2016-04-18 10:11:15,194 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2016-04-18 10:11:15,195 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2016-04-18 10:11:15,196 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2016-04-18 10:11:15,198 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2016-04-18 10:11:15,199 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2016-04-18 10:11:15,225 - Created '20' parsers.
+2016-04-18 10:11:15,676 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2016-04-18 10:11:15,677 - Velocimacro : Default library not found.
+2016-04-18 10:11:15,677 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2016-04-18 10:11:15,677 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2016-04-18 10:11:15,677 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2016-04-18 10:11:15,677 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2016-04-18 10:11:15,735 - Velocimacro : added #link(  href name ) : source = site/peak.vm
+2016-04-18 10:11:15,739 - Velocimacro : added #banner(  banner id ) : source = site/peak.vm
+2016-04-18 10:11:15,743 - Velocimacro : added #links(  links ) : source = site/peak.vm
+2016-04-18 10:11:15,747 - Velocimacro : added #breadcrumbs(  breadcrumbs ) : source = site/peak.vm
+2016-04-18 10:11:15,750 - Velocimacro : added #displayTree(  display item ) : source = site/peak.vm
+2016-04-18 10:11:15,756 - Velocimacro : added #menuItem(  item ) : source = site/peak.vm
+2016-04-18 10:11:15,758 - Velocimacro : added #mainMenu(  menus ) : source = site/peak.vm
+2016-04-18 10:11:15,758 - Velocimacro : added #publishDate(  publishDate version ) : source = site/peak.vm
+2016-04-18 10:11:15,762 - Velocimacro : added #methodSummary(  method ) : source = site/peak.vm
+2016-04-18 10:11:15,764 - Velocimacro : added #classSummary(  ) : source = site/peak.vm
+2016-04-18 10:11:15,765 - Velocimacro : added #bodyContent(  ) : source = site/peak.vm
+2016-04-18 10:11:15,765 - Velocimacro : added #menu(  ) : source = site/peak.vm
+2016-04-18 10:11:15,803 - ResourceManager : found site/peak.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2016-04-18 10:11:15,806 - Null reference [template 'site/peak.vm', line 311, column 37] : $detalle cannot be resolved.
+2016-04-18 10:11:15,806 - Null reference [template 'site/peak.vm', line 312, column 29] : $imgSrc cannot be resolved.
+2016-04-18 10:11:15,806 - Null reference [template 'site/peak.vm', line 312, column 39] : $detalle.find('input[type=hidden]') cannot be resolved.
+2016-04-18 10:11:15,806 - Null reference [template 'site/peak.vm', line 314, column 37] : $imgSrc.size() cannot be resolved.
+2016-04-18 10:11:15,806 - Null reference [template 'site/peak.vm', line 315, column 45] : $img cannot be resolved.
+2016-04-18 10:11:15,807 - Null reference [template 'site/peak.vm', line 315, column 76] : $imgSrc.val() cannot be resolved.
+2016-04-18 10:11:15,807 - Null reference [template 'site/peak.vm', line 316, column 41] : $imgSrc.parent().html cannot be resolved.
+2016-04-18 10:11:15,807 - Null reference [template 'site/peak.vm', line 316, column 86] : $imgSrc.val() cannot be resolved.
+2016-04-18 10:11:15,807 - Null reference [template 'site/peak.vm', line 316, column 133] : $img cannot be resolved.
+2016-04-18 10:11:15,807 - Null reference [template 'site/peak.vm', line 319, column 33] : $detalle.show() cannot be resolved.
+2016-04-18 10:11:15,815 - Null reference [template 'site/peak.vm', line 3, column 28] : $collapse cannot be resolved.
+2016-04-18 10:29:38,816 - Log4JLogChute initialized using file 'velocity.log'
+2016-04-18 10:29:38,817 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2016-04-18 10:29:38,818 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2016-04-18 10:29:38,818 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2016-04-18 10:29:38,819 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:278)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:63)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:534)
+	at org.apache.velocity.runtime.RuntimeSingleton.init(RuntimeSingleton.java:227)
+	at org.apache.velocity.app.Velocity.init(Velocity.java:111)
+	at ar.uba.dc.analysis.memory.impl.report.html.HtmlReportWriter.init(HtmlReportWriter.java:79)
+	at ar.uba.dc.analysis.memory.impl.report.html.HtmlReportWriter.write(HtmlReportWriter.java:37)
+	at ar.uba.dc.analysis.memory.impl.MemoryInterproceduralAnalysis.doAnalysis(MemoryInterproceduralAnalysis.java:85)
+	at ar.uba.dc.analysis.common.AbstractInterproceduralAnalysis.run(AbstractInterproceduralAnalysis.java:37)
+	at ar.uba.dc.analysis.memory.impl.runner.MemorySceneTransformer.internalTransform(MemorySceneTransformer.java:56)
+	at soot.SceneTransformer.transform(SceneTransformer.java:39)
+	at soot.Transform.apply(Transform.java:89)
+	at soot.ScenePack.internalApply(ScenePack.java:43)
+	at soot.Pack.apply(Pack.java:114)
+	at soot.PackManager.runWholeProgramPacks(PackManager.java:407)
+	at soot.PackManager.runPacks(PackManager.java:327)
+	at soot.Main.run(Main.java:202)
+	at soot.Main.main(Main.java:145)
+	at ar.uba.dc.analysis.memory.impl.runner.MainSootRunner.main(MainSootRunner.java:61)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:366)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:355)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:354)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:425)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:308)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:358)
+	... 25 more

@@ -32,9 +32,16 @@ public class LoopInvariantDefaultCallAnalyzer implements CallAnalyzer {
 	
 	protected Map<HeapPartition, ParametricExpression> residuals;
 	// Tiene el maximo temporal necesario para ejecutar el call 
-	protected ParametricExpression tempCall;
+	//protected ParametricExpression tempCall;
 	// Tiene el temporal generado por capturar objetos del callee
 	protected ParametricExpression resCap;
+	
+
+	protected ParametricExpression memReq;
+	
+	protected ParametricExpression MAX_memReqMinusRsd;
+
+	protected ParametricExpression totalResiduals;
 
 	public void init(CallStatement callStmt, LifeTimeOracle lifeTimeOracle, SymbolicCalculator symbolicCalculator, ParametricExpressionFactory expressionFactory) {
 		log.debug("Analyse call with loop invariant");
@@ -43,8 +50,11 @@ public class LoopInvariantDefaultCallAnalyzer implements CallAnalyzer {
 		this.expressionFactory = expressionFactory;
 		
 		this.residuals = new HashMap<HeapPartition, ParametricExpression>();
-		this.tempCall = expressionFactory.constant(0L);
+		//this.tempCall = expressionFactory.constant(0L);
 		this.resCap = expressionFactory.constant(0L);
+		this.memReq = expressionFactory.constant(0L);
+		this.MAX_memReqMinusRsd = expressionFactory.constant(0L);
+		this.totalResiduals = expressionFactory.constant(0L);
 	}
 
 	@Override
@@ -53,8 +63,17 @@ public class LoopInvariantDefaultCallAnalyzer implements CallAnalyzer {
 		ParametricExpression acumCaptured = expressionFactory.constant(0L);
 			// Calculamos cuanto residual aporta el calle a las particiones de caller. Este map se encarga de eso
 		Map<HeapPartition, ParametricExpression> acumResiduals = new HashMap<HeapPartition, ParametricExpression>();
+		
 			// Actualizamos el maximo temporal necesario para ejecutar el call en base a lo que ya teniamos y el temporal del callee.
-		tempCall = symbolicCalculator.supreme(tempCall, symbolicCalculator.maximize(calleeSummary.getTemporal(), virtualInvoke));
+		//tempCall = symbolicCalculator.supreme(tempCall, symbolicCalculator.maximize(calleeSummary.getTemporal(), virtualInvoke));
+		
+		
+		
+		//memReq = symbolicCalculator.supreme(memReq,symbolicCalculator.maximize(calleeSummary.getMemoryRequirement(), virtualInvoke));
+		
+		
+		ParametricExpression acumTotalResiduals = expressionFactory.constant(0L);
+		
 		
 		for (HeapPartition calleePartition : calleeSummary.getResidualPartitions()) {
 				// Calculamos el vinculo entre caller y callee. 
@@ -63,18 +82,21 @@ public class LoopInvariantDefaultCallAnalyzer implements CallAnalyzer {
 				// depende del analisis de tiempo de vida auxiliar que utilizemos. Por ejemplo, para el escape, las particiones
 				// que representan parametros no se vinculan entre caller y callee.
 			if (callerPartition != null) {
-				ParametricExpression newValue = symbolicCalculator.summate(calleeSummary.getResidual(calleePartition), virtualInvoke);
+				ParametricExpression rsdFromPartition = calleeSummary.getResidual(calleePartition);
+				ParametricExpression newValue = symbolicCalculator.summate(rsdFromPartition, virtualInvoke);
+				
+				acumTotalResiduals = symbolicCalculator.add(acumTotalResiduals, rsdFromPartition);
+
 				
 				if (!callerPartition.isTemporal()) {
+					acumCaptured = symbolicCalculator.add(acumCaptured, rsdFromPartition);
+
 						// Actualizamos el aporte de esta implementacion al residual de la particion del caller
 					ParametricExpression oldValue = acumResiduals.get(callerPartition);
 					if (oldValue != null) {
 						newValue = symbolicCalculator.add(oldValue, newValue);
 					}
-					acumResiduals.put(callerPartition, newValue);
-				} else {
-						// Actualizamos el temporal capturado para esta implementacion
-					acumCaptured = symbolicCalculator.add(acumCaptured, newValue);
+					acumResiduals.put(callerPartition, newValue);					
 				}
 			}
 		}
@@ -90,21 +112,30 @@ public class LoopInvariantDefaultCallAnalyzer implements CallAnalyzer {
 			residuals.put(callerPartition, newValue);
 		}
 		
-			// Hacemos lo mismo con el residual capturado. Nos quedamos con el valor mas grande (el supremo) entre todas las
-			// implementaciones
-		resCap = symbolicCalculator.supreme(resCap, acumCaptured);
+		resCap = symbolicCalculator.add(resCap, acumCaptured);		
+		
+		ParametricExpression memReqMinusRsd = symbolicCalculator.substract(calleeSummary.getMemoryRequirement(), acumTotalResiduals);
+		
+		MAX_memReqMinusRsd = symbolicCalculator.supreme(MAX_memReqMinusRsd, symbolicCalculator.maximize(memReqMinusRsd, virtualInvoke));
+		
+		totalResiduals = symbolicCalculator.supreme(totalResiduals, symbolicCalculator.summate(acumTotalResiduals, virtualInvoke));
+
 	}
 	
 	public CallSummary buildSummary(CallStatement callStmt) {
 		CallSummary result = new CallSummary();
 		
-		result.setTemporalCall(tempCall);
+		//result.setTemporalCall(tempCall);
 
 		for (HeapPartition partition : residuals.keySet()) {
 			result.setResidual(partition, residuals.get(partition));
 		}
 		
 		result.setResidualCaptured(resCap);
+		
+		result.setMemoryRequirement(MAX_memReqMinusRsd);
+		
+		result.setTotalResidualsIfCallee(totalResiduals);
 		
 		return result;
 	}	

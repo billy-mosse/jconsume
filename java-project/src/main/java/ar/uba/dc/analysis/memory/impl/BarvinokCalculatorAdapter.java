@@ -42,6 +42,31 @@ public class BarvinokCalculatorAdapter implements CountingTheory, SymbolicCalcul
 		return expressionFactory.polynomial(result);
 	}
 
+	
+	//BILLY
+	//Todavia no lo implemento pero quiero debuguear	
+	//A diferencia de add, substract solo tiene sentido aplicarselo a dos epxresiones
+	//Hace falta pasar por el adapter? O esto solo se hace cuando no sabes cuantos son?
+	@Override
+	public ParametricExpression substract(ParametricExpression expression1, ParametricExpression expression2) {		
+		
+		PiecewiseQuasipolynomial pol1 = new PiecewiseQuasipolynomial();
+		PiecewiseQuasipolynomial pol2 = new PiecewiseQuasipolynomial();
+
+		pol1 = ((BarvinokParametricExpression)expression1).expr;
+		pol2 = ((BarvinokParametricExpression)expression2).expr;		
+		
+		PiecewiseQuasipolynomial result = calculator.substract(pol1, pol2);
+		
+		if (log.isDebugEnabled()) {
+			log.debug("substract(" + expression2.toString() + "from " + expression1.toString() + ") = " + result);
+		}
+		
+		return expressionFactory.polynomial(result);	
+		
+	}
+	
+	
 	@Override
 	public ParametricExpression add(ParametricExpression... expressions) {
 		PiecewiseQuasipolynomial[] pols = new PiecewiseQuasipolynomial[expressions.length];  

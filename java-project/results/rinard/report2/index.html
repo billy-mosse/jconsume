@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>ar.uba.dc.simple.EjemploSimple02</title>
+    <link rel="stylesheet" type="text/css" media="all" href="./css/maven-base.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="./css/maven-theme.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="./css/site.css" />
+    <link rel="stylesheet" type="text/css" media="print" href="./css/print.css" />
+    <script type="text/javascript" src="./js/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="./js/jquery.scrollTo-1.4.2-min.js"></script>
+    <script type="text/javascript">
+    	$(function() {
+    		$('.methodLink a').click(function (e) {
+    			e.preventDefault();
+    			var href = this.href;
+    			var methodId = href.substring(href.indexOf('#') + 1);
+    			$(window).scrollTo('h4[name=' + methodId + ']', 10, {axis: 'y'});
+    		});
+    	
+    		$('.lnkDetalle').toggle(
+    			function (e) {
+    				var trDetalle = document.getElementById('detalle_' + this.id);
+    				showDetail($(trDetalle));
+    				$(this).html('hide memory graph').focus()
+	    		},
+	    		function (e) {
+	    			var trDetalle =  document.getElementById('detalle_' + this.id);
+	    			$(trDetalle).hide();
+    				$(this).html('mostrar detalle').focus();
+    				$(window).scrollTo($(this).closest('table'), 10, {axis: 'y'});
+	    		}
+    		);
+    		
+    		$('.lnkEscape').toggle(
+    			function (e) {
+    				var trDetalle = document.getElementById('escape_' + this.id);
+    				showDetail($(trDetalle));
+    				$(this).html('hide escape graph').focus();
+	    		},
+	    		function (e) {
+	    			var trDetalle = document.getElementById('escape_' + this.id);
+	    			$(trDetalle).hide();
+    				$(this).html('show escape graph').focus();
+    				$(window).scrollTo($(this).closest('table'), 10, {axis: 'y'});
+	    		}
+    		);
+    		
+    		function showDetail($detalle) {
+    			var $imgSrc = $detalle.find('input[type=hidden]');
+    				
+				if ($imgSrc.size() > 0) {
+					var $img = $('<img/>').attr('src', $imgSrc.val()).attr('height', 300);
+					$imgSrc.parent().html($('<a/>').attr('href', $imgSrc.val()).attr('target', '_blank').append($img)); 
+				}
+
+				$detalle.show();
+    		}
+    	});
+    </script>
+</head>
+<body class="composite">
+	<div id="banner">
+    	      	  		<span id="bannerLeft">Benchmark: ar.uba.dc.simple.EjemploSimple02</span>
+		<div class="clear"></div>
+    </div>
+    <div id="breadcrumbs">
+    	<div class="xright">
+	
+  		
+    <span id="publishDate">09-03-2016</span>
+	&nbsp;| <span id="projectVersion">1.0</span>
+	
+</div>
+		<div class="clear"><hr/></div>
+    </div>
+	<!--div id="leftColumn">
+    	<div id="navcolumn">
+       		    <h5>Consume Information</h5>
+    <ul>
+   		<li class="$collapse">Method Summary</li>
+    </ul>
+       		<br/>
+       		<br/>
+       		<br/>
+      	</div>
+	</div-->
+	<!--div id="bodyColumn"-->
+	<div>
+  		<div id="contentBox">	<div class="section"><!--h2>Method Summary</h2-->
+	<div class="section">
+		<h2>Class Index</h2>
+			<table class="bodyTable">
+		<tr class="a"><th width="30%">Class</th><th>Methods</th></tr>
+		
+					<tr class="b">
+				<td>ar.uba.dc.simple.EjemploSimple02</td>
+				<td>
+					<ul class="methodList">
+											<li class="methodLink">      <a href="#ar.uba.dc.simple.EjemploSimple0225801">public static java.lang.String testJimpleSingleVariable()</a>
+  </li> 	
+											<li class="methodLink">      <a href="#ar.uba.dc.simple.EjemploSimple0225800">public static void main(java.lang.String[])</a>
+  </li> 	
+										</ul>
+				</td>
+			</tr>
+				
+	</table>
+	</div>
+	
+	
+			<div class="section">
+			<h3>ar.uba.dc.simple.EjemploSimple02</h3>
+										<h4 name="ar.uba.dc.simple.EjemploSimple0225801">public static java.lang.String testJimpleSingleVariable()</h4>
+	<span id="resumen_ar.uba.dc.simple.EjemploSimple0225801" style="display:block">
+		<table class="bodyTable">
+			<tr class="a"><th width="30%">Field</th><th>Value</th></tr>
+			<tr class="b">
+				<td>Formal Parameters</td>
+				<td></td>
+			</tr>
+			<tr class="a">
+				<td>MemReq</td>
+				<td>3</td>
+			</tr>
+			<tr class="b">
+				<td>Tmp</td>
+				<td>2</td>
+			</tr>
+			<tr class="a">
+				<td>Rsd</td>
+				<td>1</td>
+			</tr>
+									<tr class="a">
+				<td align="left">
+																	&nbsp;
+				</td>
+				<td>&nbsp;</td>
+			</tr>
+		</table>
+	</span>
+								<h4 name="ar.uba.dc.simple.EjemploSimple0225800">public static void main(java.lang.String[])</h4>
+	<span id="resumen_ar.uba.dc.simple.EjemploSimple0225800" style="display:block">
+		<table class="bodyTable">
+			<tr class="a"><th width="30%">Field</th><th>Value</th></tr>
+			<tr class="b">
+				<td>Formal Parameters</td>
+				<td></td>
+			</tr>
+			<tr class="a">
+				<td>MemReq</td>
+				<td>3</td>
+			</tr>
+			<tr class="b">
+				<td>Tmp</td>
+				<td>3</td>
+			</tr>
+			<tr class="a">
+				<td>Rsd</td>
+				<td>0</td>
+			</tr>
+									<tr class="a">
+				<td align="left">
+																	&nbsp;
+				</td>
+				<td>&nbsp;</td>
+			</tr>
+		</table>
+	</span>
+					</div>
+		
+</div>
+	</div>
+	<div class="clear">
+  		<hr/>
+	</div>
+	<div id="footer">
+  		<div class="xright"></div>
+  		<div class="clear"><hr/></div>
+	</div>
+</body>
+</html>

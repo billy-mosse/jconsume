@@ -38,6 +38,8 @@ public class HtmlReportWriter implements ReportWriter {
 
 		VelocityContext context = buildContext(ds);
 		
+		//El HtmlReportHelper se encarga de escribir
+		
 		//File templateFolder = new File(Thread.currentThread().getContextClassLoader().getResource(inputFolder).getFile());
 		
 		File templateFolder = new File(inputFolder);

@@ -21,14 +21,16 @@ public class EscapeBasedMemorySummary implements MemorySummary {
 	protected Set<PointsToHeapPartition> ret; 						// return -> partition
 	protected Set<PointsToHeapPartition> globEscape; 				// partition escaping globally
 	protected ParametricExpression temporal;						// temporal
+	protected ParametricExpression memoryRequirement;						// memoryRequirement (maxLive)
 	protected Map<HeapPartition, ParametricExpression> residuals; 	// heapPartition -> residual
 	
 	private boolean doCheck = true;
 	
-	public EscapeBasedMemorySummary(SootMethod target, Set<String> parameters, ParametricExpression initialTemporal) {
+	public EscapeBasedMemorySummary(SootMethod target, Set<String> parameters, ParametricExpression initialTemporal, ParametricExpression memoryRequirement) {
 		this.target = target;
 		this.parameters = parameters;
 		this.temporal = initialTemporal;
+		this.memoryRequirement = memoryRequirement;
 		this.graph = new DirectedGraph<PointsToHeapPartition, PointsToHeapPartitionEdge>();
 		this.ret = new HashSet<PointsToHeapPartition>();
 		this.globEscape = new HashSet<PointsToHeapPartition>();
@@ -92,12 +94,12 @@ public class EscapeBasedMemorySummary implements MemorySummary {
 	public ParametricExpression getResidual(HeapPartition aHeapPartition) {
 		return residuals.get(aHeapPartition);
 	}
-
+	
 	@Override
 	public Set<HeapPartition> getResidualPartitions() {
 		return new HashSet<HeapPartition>(residuals.keySet());
 	}
-
+	
 	@Override
 	public SootMethod getTarget() {
 		return target;
@@ -106,6 +108,11 @@ public class EscapeBasedMemorySummary implements MemorySummary {
 	@Override
 	public ParametricExpression getTemporal() {
 		return temporal;
+	}
+
+	@Override
+	public ParametricExpression getMemoryRequirement() {
+		return memoryRequirement;
 	}
 
 	@Override
@@ -120,6 +127,12 @@ public class EscapeBasedMemorySummary implements MemorySummary {
 	public void setTemporal(ParametricExpression newValue) {
 		this.temporal = newValue;
 	}
+	
+	@Override
+	public void setMemoryRequirement(ParametricExpression newValue) {
+		this.memoryRequirement = newValue;
+	}
+
 
 	public Set<PointsToHeapPartition> getAllPartitions() {
 		return graph.getNodes();

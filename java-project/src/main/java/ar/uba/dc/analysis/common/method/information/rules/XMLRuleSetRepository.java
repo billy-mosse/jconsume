@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import sun.jkernel.Bundle;
+/*import sun.jkernel.Bundle;*/
 
 public class XMLRuleSetRepository implements RuleSetRepository {
 

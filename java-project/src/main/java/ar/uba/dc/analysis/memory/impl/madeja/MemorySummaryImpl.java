@@ -18,13 +18,16 @@ public class MemorySummaryImpl implements MemorySummary {
 	
 	protected ParametricExpression temporal;
 	
+	protected ParametricExpression memoryRequirement;
+	
 	protected Map<HeapPartition, ParametricExpression> residuals;
 	
-	public MemorySummaryImpl(SootMethod method, Set<String> methodParameters, ParametricExpression initialTemporal) {
+	public MemorySummaryImpl(SootMethod method, Set<String> methodParameters, ParametricExpression initialTemporal, ParametricExpression initialMemoryRequirement) {
 		super();
 		this.target = method;
 		this.parameters = methodParameters;
 		this.temporal = initialTemporal;
+		this.memoryRequirement = initialMemoryRequirement;
 		this.residuals = new HashMap<HeapPartition, ParametricExpression>();
 	}
 	
@@ -55,6 +58,12 @@ public class MemorySummaryImpl implements MemorySummary {
 	}
 
 	@Override
+	public ParametricExpression getMemoryRequirement() {
+		return this.memoryRequirement;
+	}
+	
+	
+	@Override
 	public void setResidual(HeapPartition aHeapPartition, ParametricExpression newValue) {
 		residuals.put(aHeapPartition, newValue);	
 	}
@@ -62,6 +71,12 @@ public class MemorySummaryImpl implements MemorySummary {
 	@Override
 	public void setTemporal(ParametricExpression newValue) {
 		this.temporal = newValue;
+		
+	}
+	
+	@Override
+	public void setMemoryRequirement(ParametricExpression newValue) {
+		this.memoryRequirement = newValue;
 		
 	}
 	

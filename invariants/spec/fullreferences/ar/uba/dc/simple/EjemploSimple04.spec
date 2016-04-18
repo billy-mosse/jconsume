@@ -15,22 +15,22 @@
 		</method>
 		
 		<method decl="java.lang.Integer[] m0(int)">
-			<relevant-parameters>n</relevant-parameters>
-			
-			<invariant id="loop_invariant">
+			<relevant-parameters>n</relevant-parameters>			
+
+			<creation-site offset="1" srccode-offset="">						
+				<variables>j</variables>
+				<inductives>j</inductives>
+      			<constraints><![CDATA[1 <= j <= n]]></constraints>
+    		</creation-site>
+
+    		<invariant id="loop_invariant">
 				<constraints><![CDATA[0 <= i < n]]></constraints>
 			</invariant>
-			
-			<call-site offset="1" srccode-offset="">
-      			<constraints>@loop_invariant</constraints>
-    		</call-site>
     		
-    		<creation-site offset="1" srccode-offset="">
-      			<constraints><![CDATA[1 <= k <= n]]></constraints>
-    		</creation-site>
-    		
-    		<creation-site offset="2" srccode-offset="">
-      			<constraints>@loop_invariant</constraints>
+    		<creation-site offset="2" srccode-offset="">   
+      			<constraints>@loop_invariant</constraints>      			
+				<variables>i</variables>
+				<inductives>i</inductives>
     		</creation-site>
 		</method>
 		
@@ -41,17 +41,22 @@
 				<constraints><![CDATA[0 <= i < j]]></constraints>
 			</invariant>
 			
-			<creation-site offset="0" srccode-offset="">
+			<creation-site offset="0" srccode-offset="">						
+				<variables>k</variables>
+				<inductives>k</inductives>
       			<constraints><![CDATA[1 <= k <= j]]></constraints>
     		</creation-site>
 		
 			<creation-site offset="1" srccode-offset="">
+    		 	<variables>i</variables>
+				<inductives>i</inductives>
       			<constraints>@loop_invariant</constraints>
     		</creation-site>
 		
-			<call-site offset="0" srccode-offset="">
+			<!--<call-site offset="0" srccode-offset="">
       			<constraints>@loop_invariant</constraints>
-    		</call-site>
+    		</call-site>-->
+
 		
 			<call-site offset="1" srccode-offset="">
       			<constraints>$t.values.length == vector.length and vector.length == j</constraints>
@@ -60,30 +65,39 @@
 		
 		<method decl="java.lang.Integer m2(java.lang.Integer[])">
 			<relevant-parameters>values.length</relevant-parameters>
+
+			<invariant id="loop_invariant">
+				<constraints><![CDATA[0 <= i < values.length]]></constraints>
+			</invariant>			
 			
-			<call-site offset="0" srccode-offset="">
-      			<constraints><![CDATA[0 <= i < values.length]]></constraints>
+			<call-site offset="0" srccode-offset="">						
+      			<constraints>@loop_invariant</constraints>
+				<variables>i</variables>
+				<inductives>i</inductives>
     		</call-site>
+
 		</method>
 		
 		<method decl="java.lang.Integer[] m3(int)">
 			<relevant-parameters>k</relevant-parameters>
-			
-			<invariant id="loop_invariant">
-				<constraints><![CDATA[0 <= i < k]]></constraints>
-			</invariant>
-			
-			<creation-site offset="0" srccode-offset="">
+
+			<creation-site offset="0" srccode-offset="">						
+				<variables>j</variables>
+				<inductives>j</inductives>
       			<constraints><![CDATA[1 <= j <= k]]></constraints>
     		</creation-site>
 			
+			<invariant id="loop_invariant">			
+				<constraints><![CDATA[0 <= i < k]]></constraints>
+			</invariant>			
+
 			<call-site offset="0" srccode-offset="">
-      			<constraints>@loop_invariant and $t.n == i</constraints>
-    		</call-site>
-    		
-    		<call-site offset="1" srccode-offset="">
-      			<constraints>@loop_invariant and $t.values.length == i</constraints>
-    		</call-site>
+				<constraints>@loop_invariant and $t.n == i</constraints>
+			</call-site>
+
+			<call-site offset="1" srccode-offset="">
+				<constraints>@loop_invariant and $t.values.length == i</constraints>
+			</call-site>
 		</method>
 	</class>
 </spec>

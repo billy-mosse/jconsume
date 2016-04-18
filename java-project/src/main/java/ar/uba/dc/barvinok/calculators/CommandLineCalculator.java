@@ -42,6 +42,7 @@ public class CommandLineCalculator implements BarvinokCalculator {
 	public static final String UPPER_BOUND_OPERATION = "ub";
 	public static final String SUM_OPERATION = "sum";
 	public static final String ADD_OPERATOR = "+";
+	public static final String SUBSTRACT_OPERATOR = "-";
 	public static final String COMPARE_OPERATOR = ".";
 	
 	/**
@@ -92,7 +93,9 @@ public class CommandLineCalculator implements BarvinokCalculator {
 			log.debug("    Mapping: " + syntax.toString(invariant) + " to " + syntax.toString(inv));
 		}
 		
-		String ret = execCommand("card " + syntax.toString(inv) + ";");
+		//For debugging more easily
+		String command = "card " + syntax.toString(inv) + ";";
+		String ret = execCommand(command);
 		
 		PiecewiseQuasipolynomial pqs = syntax.parsePiecewiseQuasipolynomial(ret);
 		
@@ -294,6 +297,51 @@ public class CommandLineCalculator implements BarvinokCalculator {
 		return compareStrategy.compare(e1, e2, this);
 	}
 	
+	public PiecewiseQuasipolynomial substract(PiecewiseQuasipolynomial expression1, PiecewiseQuasipolynomial expression2)
+	{			
+		Map<String, String> mapping = new HashMap<String, String>();
+		PiecewiseQuasipolynomial[] polynomials = new PiecewiseQuasipolynomial[2];
+		
+		//BILLY. TODO: esto no es prolijo
+		polynomials[0] = expression1.clone();
+		polynomials[1] = expression2.clone();
+
+		
+		PiecewiseQuasipolynomial result = null;
+
+		//BILLY: Posible bug: tengo que clonar el pol para usar esta funcion?
+		if(BarvinokUtils.hasFoldPiece(expression1) && BarvinokUtils.hasFoldPiece(expression2))
+		{
+			// Operamos nosotros porque la calculadora no soporta hacer una resta donde hay mas de un polinomio con fold
+			result = substractPolynomialsWithMoreThanTwoFolds(expression1, expression2, mapping);
+
+		}
+		else
+		{
+			// La calculadora soporta restar (?) hasta 1 fold.
+			//BILLY: puede realmente restar?
+			result = execOperationOverExpressions(SUBSTRACT_OPERATOR, mapping, polynomials);
+		}
+
+		
+		result = expand(result, mapping);
+		
+		if (log.isDebugEnabled()) {
+			log.debug("    mapping: " + mapping);
+			log.debug("    expanded result: " + result);
+		}
+		
+		return result; 
+		
+	}
+	
+	
+	private PiecewiseQuasipolynomial substractPolynomialsWithMoreThanTwoFolds(PiecewiseQuasipolynomial expression1,
+			PiecewiseQuasipolynomial expression2, Map<String, String> mapping) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	public PiecewiseQuasipolynomial add(PiecewiseQuasipolynomial... exprs) {
 		Map<String, String> mapping = new HashMap<String, String>();
 		PiecewiseQuasipolynomial[] polynomials = new PiecewiseQuasipolynomial[exprs.length];
@@ -302,6 +350,7 @@ public class CommandLineCalculator implements BarvinokCalculator {
 		
 		for (Integer i = 0; i < exprs.length; i++) {
 			polynomials[i] = exprs[i].clone();
+			
 			if (BarvinokUtils.hasFoldPiece(polynomials[i])) {
 				polynomialsWithFoldPiece.add(polynomials[i]);
 			} else {
@@ -526,6 +575,11 @@ public class CommandLineCalculator implements BarvinokCalculator {
 			log.debug("    Invariant: " + syntax.toString(invariant));
 			log.debug("    Expr: " + syntax.toString(p));
 			log.debug("    mapping: " + mapping);
+		}
+		
+		if(operation == "ub")
+		{
+			log.debug("    For debugging: case UB");
 		}
 		
 		invariant = mapper.simplify(invariant, mapping);

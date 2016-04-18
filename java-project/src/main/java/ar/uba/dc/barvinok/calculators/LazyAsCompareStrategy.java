@@ -69,7 +69,7 @@ public class LazyAsCompareStrategy implements ComparePolynomialStrategy {
 	}
 		
 	public void prepareFor(String operator, PiecewiseQuasipolynomial[] polynomials) {
-		if (CommandLineCalculator.ADD_OPERATOR.equals(operator)) {
+		if (CommandLineCalculator.ADD_OPERATOR.equals(operator) || CommandLineCalculator.SUBSTRACT_OPERATOR.equals(operator)) {
 			for (PiecewiseQuasipolynomial p : polynomials) {
 				if (BarvinokUtils.hasFoldPiece(p)) {
 					BarvinokUtils.surroundWithMax(p);

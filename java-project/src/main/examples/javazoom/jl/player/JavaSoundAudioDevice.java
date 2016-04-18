@@ -33,8 +33,8 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.Mixer;
 import javax.sound.sampled.SourceDataLine;
 
-import com.sun.media.sound.MixerSourceLine;
-import com.sun.org.apache.xerces.internal.impl.dtd.models.MixedContentModel;
+/*import com.sun.media.sound.MixerSourceLine;
+import com.sun.org.apache.xerces.internal.impl.dtd.models.MixedContentModel;*/
 
 import javazoom.jl.decoder.Decoder;
 import javazoom.jl.decoder.JavaLayerException;

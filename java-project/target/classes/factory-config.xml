@@ -210,8 +210,9 @@
 					<summaryFactory config-class="ar.uba.dc.analysis.memory.impl.summary.RuleBasedMemorySummaryFactory" sensitivity="${escape.sensitivity}">
 						<expressionFactory config-class="ar.uba.dc.analysis.memory.impl.BarvinokParametricExpressionFactory" />
 						<informationProvider config-class="ar.uba.dc.analysis.common.method.information.RuleBasedMethodInformationProvider" config-factory="custom" config-ref-to="analysis.common.method-information-provider"/>
-						<omegaSyntax config-class="ar.uba.dc.barvinok.BarvinokSyntax" config-factory="custom" config-ref-to="barvinok.syntax.omega" />
 						<isccSyntax config-class="ar.uba.dc.barvinok.BarvinokSyntax" config-factory="custom" config-ref-to="barvinok.syntax.iscc" />
+						<omegaSyntax config-class="ar.uba.dc.barvinok.BarvinokSyntax" config-factory="custom" config-ref-to="barvinok.syntax.omega" />
+						<symbolicCalculator config-class="ar.uba.dc.analysis.memory.SymbolicCalculator" config-factory="custom" config-ref-to="analysis.memory.barvinok-calculator-adapter" />
 					</summaryFactory>
 				</hardcoded>
 			</repositories>

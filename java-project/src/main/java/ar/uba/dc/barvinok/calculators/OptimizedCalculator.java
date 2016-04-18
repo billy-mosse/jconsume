@@ -36,17 +36,63 @@ public class OptimizedCalculator implements BarvinokCalculator {
 		this.target = target;
 	}
 	
+	public PiecewiseQuasipolynomial substract(PiecewiseQuasipolynomial expression1, PiecewiseQuasipolynomial expression2)
+	{			
+		PiecewiseQuasipolynomial expr1 = (PiecewiseQuasipolynomial) expression1;
+		Long value1 = BarvinokUtils.toConstant(expr1); 
+		boolean esConstante1 = (value1 != null);
+		boolean esCero1 = (esConstante1 && value1.equals(0L));
+		boolean tieneConstraints1 = StringUtils.isNotBlank(expr1.getPieces().get(0).getConstraints());
+		
+		PiecewiseQuasipolynomial expr2 = (PiecewiseQuasipolynomial) expression2;
+		Long value2 = BarvinokUtils.toConstant(expr2); 
+		boolean esConstante2 = (value2 != null);
+		boolean esCero2 = (esConstante2 && value2.equals(0L));
+		boolean tieneConstraints2 = StringUtils.isNotBlank(expr2.getPieces().get(0).getConstraints());
+		
+		PiecewiseQuasipolynomial result = null;
+
+		if (esCero2) {
+			if(esCero1)
+			{
+				result = BarvinokFactory.constant(0L);
+			}
+			else
+			{
+				result = expression1.clone();
+			}
+		}
+		else
+		{
+			result = target.substract(expression1, expression2);
+		}
+		
+		
+		return result;	
+		
+	}
+	
 	public PiecewiseQuasipolynomial add(PiecewiseQuasipolynomial... expressions) {
 		List<PiecewiseQuasipolynomial> finalExpressions = new ArrayList<PiecewiseQuasipolynomial>(expressions.length);
+		
+		
 		
 		for (PiecewiseQuasipolynomial e : expressions) {
 			PiecewiseQuasipolynomial expr = (PiecewiseQuasipolynomial) e;
 			Long value = BarvinokUtils.toConstant(expr); 
+
 			boolean esConstante = (value != null);
 			boolean esCero = (esConstante && value.equals(0L));
 			boolean tieneConstraints = StringUtils.isNotBlank(expr.getPieces().get(0).getConstraints());
+			
+			//BILLY: esto es lo mismo que preguntar !esCero || tieneConstraints
+			//El !esConstante esta de mas, porque !esConstante implica !esCero.
 			if (!esConstante || !esCero || tieneConstraints) {
 				finalExpressions.add(e);
+			}
+			else
+			{
+				log.debug("No tiene constraints");
 			}
 		}
 		

@@ -11,6 +11,8 @@ import ar.uba.dc.config.ContextFactory;
 import ar.uba.dc.soot.SootUtils;
 import ar.uba.dc.util.Timer;
 
+import org.junit.Assert;
+
 /**
  * Clase que se encarga de correr el analisis de escape sobre una clase y un metodo.
  * No invoca al Main de soot sino que instrumenta invocaciones a las clases que hacen falta invocar.
@@ -19,6 +21,9 @@ import ar.uba.dc.util.Timer;
 public class StandAloneRunner {
 
 	private static Log log = LogFactory.getLog(StandAloneRunner.class);
+	
+	
+	
 	
 	public static void main(String[] args) {
 		String propertiesFile = null;
@@ -29,6 +34,12 @@ public class StandAloneRunner {
 			}
 		}
 		
+		
+		
+		log.info("Hola!!");
+		
+		log.debug("Hola, soy un mensaje de debug!!");
+
 		Context context = ContextFactory.getContext(propertiesFile);
 		
 		String className = args[0];

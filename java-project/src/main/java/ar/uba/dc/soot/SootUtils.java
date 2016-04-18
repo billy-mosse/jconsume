@@ -188,6 +188,7 @@ public class SootUtils {
 	
 	public static void setClasspath(Context context) {
 		String classpath = context.getString(Context.APPLICATION_CLASSPATH);
+
 		if (classpath != null) {
 			Scene.v().setSootClassPath(classpath);
 		}

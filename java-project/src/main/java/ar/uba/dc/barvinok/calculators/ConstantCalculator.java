@@ -1,5 +1,7 @@
 package ar.uba.dc.barvinok.calculators;
 
+import java.util.Arrays;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -26,6 +28,45 @@ import ar.uba.dc.barvinok.expression.PiecewiseQuasipolynomial;
 public class ConstantCalculator implements BarvinokCalculator {
 
 	private static Log log = LogFactory.getLog(ConstantCalculator.class);
+	
+	private void throwNotConstantExpression(PiecewiseQuasipolynomial expression)
+	{
+		throw new RuntimeException("Intentamos sumar una expresion [" + expression + "] que no es una constante");
+	}
+	
+	public PiecewiseQuasipolynomial substract(PiecewiseQuasipolynomial expression1, PiecewiseQuasipolynomial expression2) {
+		if (log.isDebugEnabled()) {
+			String operation = expression1 + " + " + expression2;
+				
+			if (StringUtils.isNotEmpty(operation)) {
+				operation = operation.substring(3);
+			}
+			log.debug(operation);
+		}
+
+		Long result = 0L; //BILLY: Tengo que inicializarlo?
+		
+		
+		if (BarvinokUtils.isConstant(expression1))
+		{
+			if (BarvinokUtils.isConstant(expression2))
+			{				
+				result = BarvinokUtils.toConstant(expression1) - BarvinokUtils.toConstant(expression2);
+			}
+			else
+			{
+				throwNotConstantExpression(expression2);
+			}
+		}		
+		else
+		{
+			throwNotConstantExpression(expression1);
+		}		
+		
+		return BarvinokFactory.constant(result);
+	}
+	
+	
 	
 	public PiecewiseQuasipolynomial add(PiecewiseQuasipolynomial... expressions) {
 		if (log.isDebugEnabled()) {

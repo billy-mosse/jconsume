@@ -9,7 +9,7 @@ public interface MemorySummaryInterpreter {
 	public String getTemporal(MemorySummary summary);
 
 	public String getResidual(MemorySummary summary);
-
+	
 	public boolean hasEscapeDetail(MemorySummary summary);
 
 	public String getEscapeDetail(MemorySummary summary);
@@ -21,5 +21,7 @@ public interface MemorySummaryInterpreter {
 	public Map<String, String> getResidualPartitions(MemorySummary summary);
 
 	public String getMemReq(MemorySummary summary);
+
+	public String getMemReq2(MemorySummary summary);
 
 }

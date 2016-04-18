@@ -35,6 +35,7 @@ import ar.uba.dc.invariant.spec.compiler.compilation.DefaultMethodInvariantProvi
 import ar.uba.dc.invariant.spec.compiler.compilation.InvariantId;
 import ar.uba.dc.util.location.FullPackageLocationStrategy;
 
+
 public class SpecToMadejaMigrator {
 
 	@SuppressWarnings("unchecked")

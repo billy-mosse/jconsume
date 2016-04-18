@@ -4,6 +4,7 @@
 		<resources syntax="iscc">
 			<temporal>{ 0 }</temporal>
 			<residual>{ 0 }</residual>
+			<memReq>{ 0 }</memReq>
 		</resources>
 		
 		<package name="javazoom.jl.decoder.JavaLayerException" type="equals">
@@ -29,6 +30,7 @@
 		<resources syntax="iscc">
 			<temporal>{ 0 }</temporal>
 			<residual>{ 1 }</residual>
+			<memReq>{ 1 }</memReq>
 		</resources>
 		
 		<package name="java.lang.String" type="startsWith">
@@ -183,6 +185,7 @@
 		<resources syntax="iscc">
 			<temporal>{ 0 }</temporal>
 			<residual>{ 0 }</residual>
+			<memReq>{ 0 }</memReq>
 		</resources>
 		
 		<package name="java.lang.System" type="startsWith">
@@ -222,6 +225,7 @@
 		<resources syntax="iscc">
 			<temporal>{ 0 }</temporal>
 			<residual>{ 0 }</residual>
+			<memReq>{ 0 }</memReq>
 		</resources>
 		
 		<package name="java.io." type="startsWith">

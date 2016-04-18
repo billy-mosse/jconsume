@@ -11,13 +11,19 @@ import ar.uba.dc.analysis.memory.expression.ParametricExpression;
 public class CallSummary {
 
 	private Map<HeapPartition, ParametricExpression> residuals = new HashMap<HeapPartition, ParametricExpression>();
-	private ParametricExpression temporalCall;
+	//private ParametricExpression temporalCall;
+	private ParametricExpression memoryRequirement;
 	private ParametricExpression residualCapured;
+	private ParametricExpression totalResidualsIfCallee;
 	
-	public ParametricExpression getTemporalCall() {
+	/*public ParametricExpression getTemporalCall() {
 		return temporalCall;
+	}*/
+	
+	public ParametricExpression getMemoryRequirement() {
+		return memoryRequirement;
 	}
-
+	
 	public ParametricExpression getResidualCaptured() {
 		return residualCapured;
 	}
@@ -30,8 +36,12 @@ public class CallSummary {
 		return residuals.get(partition);
 	}
 
-	public void setTemporalCall(ParametricExpression value) {
+	/*public void setTemporalCall(ParametricExpression value) {
 		this.temporalCall = value;
+	}*/
+	
+	public void setMemoryRequirement(ParametricExpression value) {
+		this.memoryRequirement = value;
 	}
 
 	public void setResidual(HeapPartition partition, ParametricExpression value) {
@@ -40,6 +50,16 @@ public class CallSummary {
 
 	public void setResidualCaptured(ParametricExpression value) {
 		this.residualCapured = value;
+	}
+
+	public void setTotalResidualsIfCallee(ParametricExpression value) {
+		this.totalResidualsIfCallee = value;
+		
+	}
+	
+	public ParametricExpression getTotalResidualsIfCallee()
+	{
+		return totalResidualsIfCallee;
 	}
 
 }

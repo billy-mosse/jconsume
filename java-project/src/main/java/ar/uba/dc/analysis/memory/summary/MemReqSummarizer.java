@@ -6,4 +6,6 @@ public interface MemReqSummarizer <M extends MemorySummary, P extends Parametric
 
 	public P getMemReq(M summary);
 	
+	public P getMemReq2(M summary);
+	
 }

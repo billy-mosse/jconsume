@@ -16,11 +16,14 @@ import ar.uba.dc.soot.SootUtils;
  * A diferencia del {@link StandAloneRunner} el analisis se realiza invocando al {@link Main} de soot.
  */
 public class MainSootRunner {
+	//El StandAloneRunner de memory llama genera, con soot, el callgraph. Este llama al main de soot y se cuelga en un momento (es mas facil)
+	//Ojo que hay que pisar el ReachableMethods.class. Esto se hace modificando el classpath para que tome target/classes.
+	//En eclipse, hay que agregarlo como user entries en run configurations (no basta con agregar el classpath como variable de entorno)
 	
 	private static Log log = LogFactory.getLog(MainSootRunner.class);
 	
 	public static void main(String[] args) {
-		String propertiesFile = null;
+ 		String propertiesFile = null;
 		
 		if (args.length >= 2) {
 			if (StringUtils.isNotBlank(args[1])) {
@@ -29,7 +32,7 @@ public class MainSootRunner {
 		}
 		
 		final Context context = ContextFactory.getContext(propertiesFile, false);
-		
+		 
 		String className = args[0];
 		String methodSignature = context.getString(Context.DEFAULT_MAIN_METHOD);
 		
@@ -49,10 +52,12 @@ public class MainSootRunner {
 			initializer.initialize(context, className);
 		}
 		
+		//BILLY jtp: interprocedural
+		//BILLY wjtp: callgraph
 		SootUtils.insertTransformer("wjtp", "wjtp.memory", MemorySceneTransformer.v(context, className));
 		
 		String[] opts = SootUtils.buildOptions(context, className, methodSignature).toArray(new String[] {});
 		
-		soot.Main.main(opts);
+		soot.Main.main(opts); 	
 	}
 }

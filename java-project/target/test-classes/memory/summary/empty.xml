@@ -10,5 +10,6 @@
 	</heap>
 	<parameters />
 	<temporal>{ 0 }</temporal>
+	<memReq>{ 0 }</memReq> <!--BILLY: esto lo agregue pero no se si esta bien -->
 	<residual />
 </summary>

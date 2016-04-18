@@ -206,6 +206,7 @@ public class IsccSyntax extends AbstractBarvinokSyntax {
 	}
 
 	protected String toString(QuasiPolynomial value, String params, boolean includeVariables) {
+		//BILLY DEBUG: estoy borrando b sin querer
 		Set<String> varsToElim = value.variablesToExclude();
 		Set<String> varsToInclude = value.getVariables();
 		varsToInclude.removeAll(varsToElim);

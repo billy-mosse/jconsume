@@ -28,6 +28,10 @@ public class AddAsCompareStrategy implements ComparePolynomialStrategy {
 
 	private static Log log = LogFactory.getLog(AddAsCompareStrategy.class);
 	
+
+
+
+	//BILLY Aca no estamos quedando con e2 si no podemos comparar ambos?
 	public PiecewiseQuasipolynomial compare(PiecewiseQuasipolynomial e1, PiecewiseQuasipolynomial e2, CommandLineCalculator calculator) {
 		if (BarvinokUtils.isConstant(e1) 
 				&& StringUtils.isEmpty(e1.getPieces().get(0).getConstraints()) 
@@ -51,6 +55,9 @@ public class AddAsCompareStrategy implements ComparePolynomialStrategy {
 		PiecewiseQuasipolynomial result = calculator.execOperationOverDomain(CommandLineCalculator.UPPER_BOUND_OPERATION, invariant, expr, mapping);
 		
 		// Procesamos el resultado por si algun polinomio retorna varios candidatos
+
+
+		//BILLY: aca nos estamos quedando con la suma de los candidatos?
 		for (Integer i = 0; i < result.getPieces().size(); i++) {
 			QuasiPolynomial pq = result.getPieces().get(i);
 			String max = pq.getPolynomial();
@@ -64,9 +71,9 @@ public class AddAsCompareStrategy implements ComparePolynomialStrategy {
 			
 			if (candidates.length > 1) {
 				if (log.isDebugEnabled()) {
-					log.debug("    To much candidates [" + max + "]. Start the selection strategy");
+					log.debug("    Too many candidates [" + max + "]. Start the selection strategy");
 				}
-				// Si hay varios candidatos, los sumamos para conseguir una cota para el verdader maximo
+				// Si hay varios candidatos, los sumamos para conseguir una cota para el verdadero maximo
 				List<String> pols = new ArrayList<String>();
 				for (String candidate : candidates) {
 					candidate = candidate.trim();

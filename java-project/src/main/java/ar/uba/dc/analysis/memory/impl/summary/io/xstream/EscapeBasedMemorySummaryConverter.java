@@ -80,7 +80,7 @@ public class EscapeBasedMemorySummaryConverter extends AbstractCollectionConvert
 		SootMethod method = SootUtils.getMethod(className, methodSignature);
 		
 		Set<String> params = new TreeSet<String>();
-		EscapeBasedMemorySummary summary = new EscapeBasedMemorySummary(method, params, null);
+		EscapeBasedMemorySummary summary = new EscapeBasedMemorySummary(method, params, null, null);
 		
 		Map<PointsToHeapPartition, PointsToHeapPartition> cachePartition = new HashMap<PointsToHeapPartition, PointsToHeapPartition>();
 		

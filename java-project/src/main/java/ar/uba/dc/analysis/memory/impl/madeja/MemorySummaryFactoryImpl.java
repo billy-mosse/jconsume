@@ -29,7 +29,8 @@ public class MemorySummaryFactoryImpl implements MemorySummaryFactory {
 		DomainSet methodRequirements = invariantProvider.getRequeriments(method);
 		Set<String> methodParameters = invariantProvider.getRelevantParameters(method);
 		ParametricExpression initialTemporal = expressionFactory.constant(0L, methodRequirements);
-		MemorySummaryImpl summary =  new MemorySummaryImpl(method, methodParameters, initialTemporal);
+		ParametricExpression initialMemoryRequirement = expressionFactory.constant(0L, methodRequirements);
+		MemorySummaryImpl summary =  new MemorySummaryImpl(method, methodParameters, initialTemporal, initialMemoryRequirement);
 		
 		log.debug(" |- Building process finished.");
 		return summary;

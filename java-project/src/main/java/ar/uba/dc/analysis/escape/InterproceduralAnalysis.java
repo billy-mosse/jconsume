@@ -86,6 +86,7 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 		log.info("Escape Analysis finished. Took " + t.getElapsedTime() + " (" + t.getElapsedSeconds() + " seconds)");
 		
 		if (writeResults) {
+			
 			log.info("Writing escape summaries");
 			t.start();
 			
@@ -242,22 +243,23 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 		return new EscapeSummary(forMethod);
 	}
 	
-	protected void internalWriteSummaries() {		
+	protected void internalWriteSummaries() {
+		
 		for (EscapeSummary summary : data.values()) {
-			log.debug(" |- Writing summary of analyzed method: " + summary.getTarget());
+			log.info(" |- Writing summary of analyzed method: " + summary.getTarget());
 			summaryWriter.write(summary);
 		}
 
 		if (writeUnanalysedSummaries) {
 			for (EscapeSummary summary : unanalysed.values()) {
-				log.debug(" |- Writing summary of unanalyzed method: " + summary.getTarget());
+				log.info(" |- Writing summary of unanalyzed method: " + summary.getTarget());
 				summaryWriter.write(summary);
 			}
 		}
 	}
 	
 	public void setSummaryWriter(SummaryWriter<EscapeSummary> writer) {
-		this.summaryWriter = writer;
+		this.summaryWriter = writer; 
 	}
 
 	public void setSummaryApplier(SummaryApplier summaryApplier) {

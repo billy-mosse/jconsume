@@ -120,7 +120,19 @@ public class SummaryInterpreter  implements MemorySummaryInterpreter {
 
 	@Override
 	public String getMemReq(MemorySummary summary) {
+		
 		ParametricExpression memReq = this.memReqSummarizer.getMemReq(summary);
 		return this.isccFormat ? memReq.toString() : expressionToString(memReq);
 	}
+	
+	
+	@Override
+	public String getMemReq2(MemorySummary summary) {
+		
+		//BILLY, cambiado
+		ParametricExpression memReq = this.memReqSummarizer.getMemReq2(summary);
+		return this.isccFormat ? memReq.toString() : expressionToString(memReq);
+	}
+	
+	
 }

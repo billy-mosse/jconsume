@@ -28,33 +28,39 @@
 		<method decl="void m1(int)">
 			<relevant-parameters>k</relevant-parameters>
 			
-			<creation-site id="loop" offset="0">
-      			<constraints><![CDATA[1 <= i <= k]]></constraints>
+			<invariant id="loop_invariant">
+				<constraints><![CDATA[1 <= i <= k]]></constraints>
+			</invariant>
+    		
+    		<creation-site offset="0" srccode-offset="">
+    			<variables>i</variables>
+    			<inductives>i</inductives>
+      			<constraints>@loop_invariant</constraints>
     		</creation-site>
     		
-    		<call-site offset="0" srccode-offset="">
-      			<constraints>@loop</constraints>
-    		</call-site>
-    		
     		<call-site offset="1" srccode-offset="">
-      			<constraints>@loop and $t.n == i</constraints>
+      			<constraints>@loop_invariant and $t.n == i</constraints>
     		</call-site>
 		</method>
 		
 		<method decl="ar.uba.dc.simple.B[] m2(int)">
 			<relevant-parameters>n</relevant-parameters>
 			
-			<creation-site offset="0">
+			<creation-site offset="0">					
+				<variables>k</variables>
+				<inductives>k</inductives>
       			<constraints><![CDATA[1 <= k <= n]]></constraints>
     		</creation-site>
 			
-			<creation-site id="loop" offset="1">
-      			<constraints><![CDATA[1 <= j <= n]]></constraints>
-    		</creation-site>
+			<invariant id="loop_invariant">
+				<constraints><![CDATA[0 <= i < n]]></constraints>
+			</invariant>
 			
-			<call-site offset="0" srccode-offset="">
-      			<constraints>@loop</constraints>
-    		</call-site>
+			<creation-site offset="1" srccode-offset="">
+    		 	<variables>i</variables>
+				<inductives>i</inductives>
+      			<constraints>@loop_invariant</constraints>
+    		</creation-site>
 		</method>
 	</class>
 </spec>

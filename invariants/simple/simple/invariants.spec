@@ -157,6 +157,7 @@
 		</invariant>
 	</entry>
 	<entry>
+	<entry>
 		<string>ar.uba.dc.simple.EjemploSimple04: java.lang.Integer[] m3(int)-call-0</string>
 		<invariant>
 			<parameter>k</parameter>

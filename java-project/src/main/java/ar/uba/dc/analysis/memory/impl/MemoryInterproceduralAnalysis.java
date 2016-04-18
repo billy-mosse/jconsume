@@ -82,7 +82,7 @@ public class MemoryInterproceduralAnalysis extends InterproceduralAnalysis {
 				summaries.putAll(unanalysed);
 			}
 			if(directedCallGraph.size()>0)
-				reportWriter.write(new AnalysisResultsReportDataSource(directedCallGraph.getHeads().iterator().next(), summaries));
+ 				reportWriter.write(new AnalysisResultsReportDataSource(directedCallGraph.getHeads().iterator().next(), summaries));
 	
 			t.stop();
 			log.info("Writing finished. Took " + t.getElapsedTime() + " (" + t.getElapsedSeconds() + " seconds)");

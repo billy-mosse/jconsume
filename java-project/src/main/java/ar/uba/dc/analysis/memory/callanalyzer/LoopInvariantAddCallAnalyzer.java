@@ -26,7 +26,7 @@ public class LoopInvariantAddCallAnalyzer implements CallAnalyzer {
 	
 	protected Map<HeapPartition, ParametricExpression> residuals;
 	// Tiene el maximo temporal necesario para ejecutar el call 
-	protected ParametricExpression tempCall;
+	//protected ParametricExpression tempCall;
 	// Tiene el temporal generado por capturar objetos del callee
 	protected ParametricExpression resCap;
 
@@ -37,7 +37,7 @@ public class LoopInvariantAddCallAnalyzer implements CallAnalyzer {
 		this.expressionFactory = expressionFactory;
 		
 		this.residuals = new HashMap<HeapPartition, ParametricExpression>();
-		this.tempCall = expressionFactory.constant(0L);
+		//this.tempCall = expressionFactory.constant(0L);
 		this.resCap = expressionFactory.constant(0L);
 	}
 
@@ -48,7 +48,7 @@ public class LoopInvariantAddCallAnalyzer implements CallAnalyzer {
 			// Calculamos cuanto residual aporta el calle a las particiones de caller. Este map se encarga de eso
 		Map<HeapPartition, ParametricExpression> acumResiduals = new HashMap<HeapPartition, ParametricExpression>();
 			// Actualizamos el maximo temporal necesario para ejecutar el call en base a lo que ya teniamos y el temporal del callee.
-		tempCall = symbolicCalculator.supreme(tempCall, symbolicCalculator.maximize(calleeSummary.getTemporal(), virtualInvoke));
+		//tempCall = symbolicCalculator.supreme(tempCall, symbolicCalculator.maximize(calleeSummary.getTemporal(), virtualInvoke));
 		
 		for (HeapPartition calleePartition : calleeSummary.getResidualPartitions()) {
 				// Calculamos el vinculo entre caller y callee. 
@@ -92,7 +92,7 @@ public class LoopInvariantAddCallAnalyzer implements CallAnalyzer {
 	public CallSummary buildSummary(CallStatement callStmt) {
 		CallSummary result = new CallSummary();
 		
-		result.setTemporalCall(tempCall);
+		//result.setTemporalCall(tempCall);
 
 		for (HeapPartition partition : residuals.keySet()) {
 			result.setResidual(partition, residuals.get(partition));

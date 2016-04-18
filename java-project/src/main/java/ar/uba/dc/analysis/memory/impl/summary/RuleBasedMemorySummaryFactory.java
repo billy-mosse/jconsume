@@ -17,6 +17,11 @@ import ar.uba.dc.analysis.memory.impl.BarvinokParametricExpressionFactory;
 import ar.uba.dc.analysis.memory.summary.MemorySummary;
 import ar.uba.dc.barvinok.BarvinokSyntax;
 
+
+
+import ar.uba.dc.analysis.memory.SymbolicCalculator;
+
+
 public class RuleBasedMemorySummaryFactory implements SummaryFactory<MemorySummary> {
 	
 	private RuleBasedMethodInformationProvider informationProvider;
@@ -24,6 +29,8 @@ public class RuleBasedMemorySummaryFactory implements SummaryFactory<MemorySumma
 	private BarvinokSyntax isccSyntax;
 	private BarvinokSyntax omegaSyntax;
 	private int sensitivity;
+	private SymbolicCalculator symbolicCalculator;
+
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -31,10 +38,11 @@ public class RuleBasedMemorySummaryFactory implements SummaryFactory<MemorySumma
 		Rule rule = informationProvider.findRule(method);
 		ParametricExpression tempMemory = buildExpression(rule.getResources().getTemporal(), rule.getResources().getSyntax());
 		ParametricExpression resMemory = buildExpression(rule.getResources().getResidual(), rule.getResources().getSyntax());
+		ParametricExpression memReq = buildExpression(rule.getResources().getMemoryRequirement(), rule.getResources().getSyntax());
 		
 		Set<String> parameters = new TreeSet<String>(tempMemory.getParameters());
 		parameters.addAll(resMemory.getParameters());
-		EscapeBasedMemorySummary summary = new EscapeBasedMemorySummary(method, parameters, tempMemory);
+		EscapeBasedMemorySummary summary = new EscapeBasedMemorySummary(method, parameters, tempMemory,memReq);
 		
 		PointsToHeapPartition globHp = new PointsToHeapPartition(GlobalNode.node, false);
 		summary.add(globHp, resMemory);
@@ -66,20 +74,27 @@ public class RuleBasedMemorySummaryFactory implements SummaryFactory<MemorySumma
 		return expressionFactory.polynomial(parser.parsePiecewiseQuasipolynomial(value));
 	}
 
+
 	@Override
 	public MemorySummary freshGraph(SootMethod method) {
 		Rule rule = informationProvider.findRule(method);
 		ParametricExpression tempMemory = buildExpression(rule.getResources().getTemporal(), rule.getResources().getSyntax());
 		ParametricExpression resMemory = buildExpression(rule.getResources().getResidual(), rule.getResources().getSyntax());
+		ParametricExpression memReq = buildExpression(rule.getResources().getMemoryRequirement(), rule.getResources().getSyntax());
 		
 		Set<String> parameters = new TreeSet<String>(tempMemory.getParameters());
 		parameters.addAll(resMemory.getParameters());
-		EscapeBasedMemorySummary summary = new EscapeBasedMemorySummary(method, parameters, tempMemory);
+		EscapeBasedMemorySummary summary = new EscapeBasedMemorySummary(method, parameters, tempMemory, memReq);
+		
 		
 		if (method.getReturnType() instanceof RefLikeType) {
 			PointsToHeapPartition methodHp = new PointsToHeapPartition(new MethodNode(method, sensitivity), false);
 			summary.returnPartition(methodHp);
 			summary.add(methodHp, resMemory);
+		}
+		else
+		{
+			summary.setMemoryRequirement(symbolicCalculator.substract(memReq, resMemory));
 		}
 		
 		return summary;
@@ -104,5 +119,10 @@ public class RuleBasedMemorySummaryFactory implements SummaryFactory<MemorySumma
 
 	public void setSensitivity(int sensitivity) {
 		this.sensitivity = sensitivity;
+	}
+	
+	public void setSymbolicCalculator(SymbolicCalculator symbolicCalculator)
+	{
+		this.symbolicCalculator = symbolicCalculator;
 	}
 }

@@ -34,6 +34,13 @@ protected ParametricExpressionFactory expressionFactory;
 		return this.symbolicCalculator.add(summary.getTemporal(), residual);
 	}
 	
+	//Billy agregado
+	//pero no cambia nada :(
+	public ParametricExpression getMemReq2(MemorySummary summary) {
+		return summary.getMemoryRequirement();
+		//return expressionFactory.constant(0L);
+	}
+	
 	public void setExpressionFactory(ParametricExpressionFactory expressionFactory) {
 		this.expressionFactory = expressionFactory;
 	}

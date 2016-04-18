@@ -38,7 +38,9 @@ public class EscapeBasedMemorySummaryFactory implements MemorySummaryFactory {
 		}
 		
 		DomainSet methodRequirements = invariantProvider.getRequeriments(method);
-		EscapeBasedMemorySummary summary = new EscapeBasedMemorySummary(method, invariantProvider.getRelevantParameters(method), expressionFactory.constant(0L, methodRequirements));
+		
+		//BILLY: agregue el ultimo parametro.
+		EscapeBasedMemorySummary summary = new EscapeBasedMemorySummary(method, invariantProvider.getRelevantParameters(method), expressionFactory.constant(0L, methodRequirements), expressionFactory.constant(0L, methodRequirements));
 		
 		Set<Node> escaping = escapeSummary.getEscaping();
 		

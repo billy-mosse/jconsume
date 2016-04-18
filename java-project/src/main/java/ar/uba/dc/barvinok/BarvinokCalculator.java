@@ -8,6 +8,8 @@ public interface BarvinokCalculator {
 	PiecewiseQuasipolynomial max(PiecewiseQuasipolynomial expr1, PiecewiseQuasipolynomial expr2);
 
 	PiecewiseQuasipolynomial add(PiecewiseQuasipolynomial... expressions);
+	
+	PiecewiseQuasipolynomial substract(PiecewiseQuasipolynomial expression1, PiecewiseQuasipolynomial expression2);
 		
 	PiecewiseQuasipolynomial countExecutions(DomainSet invariant);
 

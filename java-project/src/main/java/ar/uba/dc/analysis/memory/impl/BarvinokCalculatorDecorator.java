@@ -78,6 +78,12 @@ public class BarvinokCalculatorDecorator extends BarvinokCalculatorAdapter {
 			ParametricExpression e2) {
 		return calculatorAdapter.supreme(e1, e2);
 	}
+	
+	public ParametricExpression substract(ParametricExpression e1,
+			ParametricExpression e2) {
+		return calculatorAdapter.substract(e1, e2);
+	}
+
 
 	
 	

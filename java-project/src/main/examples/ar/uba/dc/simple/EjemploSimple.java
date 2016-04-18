@@ -58,7 +58,7 @@ public class EjemploSimple {
 	 */
 	void  m1(int k) {
 		for (int i = 1; i <= k; i++) {   
-			A a = new A(); 	//tempLocal = k si k >= 1 
+			A a = new A(); 	//tempLocal = k si k >= 1. Esto es safe, pero en realidad podria dar 1 tambien no?
 			a.a = 5;	
 			B[] dummyArr= m2(i); //maxCall = 0 , tempCall = 3/2 * k + 1/2 * k^2 si k >= 1 (k + k^2 : k >= 1  ArrayCountSize)
 			dummyArr[0].b = 10;

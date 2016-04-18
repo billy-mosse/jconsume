@@ -30,8 +30,12 @@ Una vez instalado maven, para facilitar el desarrollo dentro de eclipse, es nece
 Es importante instalar maven pues el mismo gestiona las dependencias del proyecto y los scripts generados dentro de la herramienta asumen 
 la existencia del repositorio local. 
 
-Por esta razon una vez instalada la aplicacion se recomienda ejecutar el comando "mvn compile" para compilar el proyecto y forzar a que todas las dependencias
+Por esta razon una vez instalada la aplicacion se recomienda:
+
+_ Ejecutar el comando "sh install.sh" en la carpeta del archivo para que maven instale las librerías de soot.
+_ Ejecutar el comando "mvn compile" para compilar el proyecto y forzar a que todas las dependencias
 sean bajadas al repositorio local de maven. El comando debe ejecutarse en el directorio root del proyecto (donde se encuentre el archivo pom.xml).  
+
 
 Barvinok
 --------
@@ -58,6 +62,15 @@ Graphviz
 
 Para generar los resumenes en forma de grafo la herramienta se basa en el comando dot incluido en graphviz. Por esta razon esta herramienta debe 
 estar instalada. Para mas informacion sobre la misma puede consultarse http://www.graphviz.org/
+
+
+
+Eclipse
+=======================
+Por ahora estamos pisando el file ReachableMethods de soot con uno nuestro, que se encuentra en target/classes/soot/jimple/toolkits/callgraph.
+
+Para que soot use nuestro archivo y no el suyo, hay que agregar target/classes al classpath. Esto ya está hecho en bin/run.sh, pero para que funcione en eclipse hay que agregar la carpeta, no en Environment como parte del classpath (como variable de entorno), sino en Classpath, como un User Entry.
+
 
 Estructura del proyecto
 =======================
@@ -242,12 +255,36 @@ Classpath
 
 Si no agregamos el ejemplo en la carpeta src/main/examples y compilamos desde eclipse, tendremos que cambiar la propiedad application.classpath
 
+Rinard se corre por defecto, salvo que esté configurado que se corra madeja.
+ 
+
+EjemploSimple02 (memoria)
+---
+
+javac -g EjemploSimple02.java (el 01 por ahora no compila). Esto se hace porque mvn compile por ahora no compila los archivos de ejemplo.
+
+./escape.sh ar.uba.dc.simple.EjemploSimple02 (OJO: no poner la extensión)
+
+Para analizar un binario, hay que agregar la carpeta donde se encuentra al soot-class-path. Para EjemploSimple02 no hace falta porque ya está agregada a .classpath (agregar rutas ahí si se quieren correr otros ejemplos)
+
+
+Para correrlo desde eclipse, se debe:
+En argumentos poner: ar.uba.dc.simple.EjemploSimple02 config.properties
+En Main.class, ar.uba.dc.analysis.memory.impl.runner.MainSootRunner
+En Environment, agregar la variable classpath, con el valor correspondiente (la mía es ./bin/../target/classes:./bin/../../jpfHelper/bin:/home/billy/Projects/git2/jconsume//pruebas/:/home/billy/Projects/git2/jconsume//pruebas/jolden:/home/billy/Projects/git2/jconsume//java_project/:/home/billy/.m2/repository/ca/mcgill/sable/jasmin/2.4.0/jasmin-2.4.0.jar:/home/billy/.m2/repository/ca/mcgill/sable/polyglot/1.3.5/polyglot-1.3.5.jar:/home/billy/.m2/repository/ca/mcgill/sable/soot/2.4.0/soot-2.4.0.jar:/home/billy/.m2/repository/jep/jep/2.4.1/jep-2.4.1.jar:/home/billy/.m2/repository/com/verimag/madeja/1.0/madeja-1.0.jar:/home/billy/.m2/repository/com/thoughtworks/xstream/xstream/1.3.1/xstream-1.3.1.jar:/home/billy/.m2/repository/xpp3/xpp3_min/1.1.4c/xpp3_min-1.1.4c.jar:/home/billy/.m2/repository/commons-collections/commons-collections/3.2.1/commons-collections-3.2.1.jar:/home/billy/.m2/repository/commons-lang/commons-lang/2.5/commons-lang-2.5.jar:/home/billy/.m2/repository/commons-configuration/commons-configuration/1.6/commons-configuration-1.6.jar:/home/billy/.m2/repository/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar:/home/billy/.m2/repository/commons-beanutils/commons-beanutils/1.8.0/commons-beanutils-1.8.0.jar:/home/billy/.m2/repository/commons-io/commons-io/1.4/commons-io-1.4.jar:/home/billy/.m2/repository/log4j/log4j/1.2.12/log4j-1.2.12.jar:/home/billy/.m2/repository/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar:/home/billy/.m2/repository/org/apache/velocity/velocity/1.5/velocity-1.5.jar
+
+)
+Agregar el bin de jpfHelper como library en el Java Build Path
+
+
 Em3d
 ----
 
 Para ejecutar el analisis de escape para el programa em3d alcanza con ejecutar
 
 ./escape.sh ar.uba.dc.jolden.em3d.Em3d
+
+Cuidado: al compilar el proyecto con maven, el archivo target/classes/config.properties suele ser borrado. Regenerarlo.
 
 El analisis deja en la carpeta ${escape.summary.output.dir} los summaries de escape en formato XML y la representacion grafica de los mismos.
 
@@ -295,7 +332,7 @@ Instrumentador
 --------------
 
 El instrumentador permite ejecutar un programa simulando que ejecuta bajo una administracion de memoria basada en scopes.
-Por defecto el instrumentador retrona el consumo del metodo main del programa pero puede ser adaptado para que de mas informacion.
+Por defecto el instrumentador retorna el consumo del metodo main del programa pero puede ser adaptado para que de mas informacion.
 Para esto se utiliza el archivo tracker.properties que debe se encuentra en la carpeta ar/uba/dc/tools/instrumentation/resource/tracker
 del directorio ${instrumented.code.output.dir}.
 

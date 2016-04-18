@@ -3,6 +3,7 @@ package ar.uba.dc.analysis.escape.summary.io.writer;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import ar.uba.dc.analysis.common.SummaryWriter;
 import ar.uba.dc.analysis.escape.EscapeSummary;
 import ar.uba.dc.config.Container;
@@ -15,6 +16,7 @@ public class ChainWriter implements SummaryWriter<EscapeSummary>, Container<Summ
 		super();
 	}
 	
+
 	public void write(EscapeSummary summary) {
 		for (SummaryWriter<EscapeSummary> writer : writers) {
 			writer.write(summary);

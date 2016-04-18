@@ -17,3 +17,8 @@ Pero, al correrlo con true corrio todo el proceso de instrumentacion.
 .
 
 
+PASAR EN LIMPIO:
+
+results/rinard/report
+
+aparentemente escape no escribe nada; memory llama a escape.

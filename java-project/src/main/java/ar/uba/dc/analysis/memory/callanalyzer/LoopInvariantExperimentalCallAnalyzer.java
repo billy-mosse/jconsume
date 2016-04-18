@@ -34,8 +34,11 @@ public class LoopInvariantExperimentalCallAnalyzer implements CallAnalyzer {
 
 	protected Map<HeapPartition, ParametricExpression> residuals;
 		// Tiene el maximo temporal necesario para ejecutar el call
-	protected ParametricExpression temps;
-		// Tiene el temporal generado por capturar objetos del callee
+	
+	
+	//protected ParametricExpression temps;
+	
+	// Tiene el temporal generado por capturar objetos del callee
 	protected ParametricExpression resCap;
 	
 		// El supremo de los residuales entre todas las implementaciones
@@ -51,7 +54,7 @@ public class LoopInvariantExperimentalCallAnalyzer implements CallAnalyzer {
 		this.expressionFactory = expressionFactory;		
 		
 		this.residuals = new HashMap<HeapPartition, ParametricExpression>();	 
-		this.temps = expressionFactory.constant(0L);
+		//this.temps = expressionFactory.constant(0L);
 		this.resCap = expressionFactory.constant(0L);
 		this.maxResidual = expressionFactory.constant(0L);
 		
@@ -67,7 +70,7 @@ public class LoopInvariantExperimentalCallAnalyzer implements CallAnalyzer {
 			// Residual aportado por esta implementacion al caller sin discriminar por particion
 		ParametricExpression sumResidual = expressionFactory.constant(0L);
 			// Actualizamos el maximo temporal necesario para ejecutar el call en base a lo que ya teniamos y el temporal del callee.
-		temps = symbolicCalculator.supreme(temps, symbolicCalculator.maximize(calleeSummary.getTemporal(), virtualInvoke));
+		//temps = symbolicCalculator.supreme(temps, symbolicCalculator.maximize(calleeSummary.getTemporal(), virtualInvoke));
 		
 		for (HeapPartition calleePartition : calleeSummary.getResidualPartitions()) {
 				// Calculamos el vinculo entre caller y callee. 
@@ -137,7 +140,7 @@ public class LoopInvariantExperimentalCallAnalyzer implements CallAnalyzer {
 			}
 		}
 		
-		result.setTemporalCall(temps);
+		//result.setTemporalCall(temps);
 
 		for (HeapPartition partition : residuals.keySet()) {
 			result.setResidual(partition, residuals.get(partition));

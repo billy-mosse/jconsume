@@ -30,6 +30,7 @@
             		<configuration>
               			<sources>
                 			<source>src/main/examples</source>
+					<source>src/jpfHelper/src</source>
 		              </sources>
         		    </configuration>
           		</execution>
