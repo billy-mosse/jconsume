@@ -4,8 +4,8 @@ import ar.uba.dc.analysis.memory.expression.ParametricExpression;
 
 public interface MemReqSummarizer <M extends MemorySummary, P extends ParametricExpression> {
 
-	public P getMemReq(M summary);
+	//public P getMemReq(M summary);
 	
-	public P getMemReq2(M summary);
+	public P getMemReq(M summary);
 	
 }

@@ -19,4 +19,6 @@ public interface CallAnalyzer {
 	public void process(CallStatement virtualInvoke, MemorySummary calleeSummary);
 
 	public CallSummary buildSummary(CallStatement callStmt);	
+	
+	public CallSummaryInContext buildSummary2(CallStatement callStmt);	
 }

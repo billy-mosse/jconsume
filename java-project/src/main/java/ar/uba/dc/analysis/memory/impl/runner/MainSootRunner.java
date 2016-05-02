@@ -23,7 +23,8 @@ public class MainSootRunner {
 	private static Log log = LogFactory.getLog(MainSootRunner.class);
 	
 	public static void main(String[] args) {
- 		String propertiesFile = null;
+
+		String propertiesFile = null;
 		
 		if (args.length >= 2) {
 			if (StringUtils.isNotBlank(args[1])) {
@@ -39,6 +40,7 @@ public class MainSootRunner {
 		if (args.length >= 3 && StringUtils.isNotBlank(args[2])) {
 			methodSignature = args[2];
 		}
+		
 		
 		EdgePredicate predicate = context.getFactory().getEdgePredicate();
 		if (predicate != null) {

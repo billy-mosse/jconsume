@@ -46,10 +46,10 @@ public class SummaryInterpreter  implements MemorySummaryInterpreter {
 		return expressionToString(residualSummarizer.getResidual(summary));
 	}
 
-	@Override
+	/*@Override
 	public String getTemporal(MemorySummary summary) {
 		return expressionToString(summary.getTemporal());
-	}
+	}*/
 	
 	protected String expressionToString2(ParametricExpression expr) {
 		return expr.toString();
@@ -118,19 +118,19 @@ public class SummaryInterpreter  implements MemorySummaryInterpreter {
 		return  residual;
 	}
 
-	@Override
+	/*@Override
 	public String getMemReq(MemorySummary summary) {
 		
 		ParametricExpression memReq = this.memReqSummarizer.getMemReq(summary);
 		return this.isccFormat ? memReq.toString() : expressionToString(memReq);
-	}
+	}*/
 	
 	
 	@Override
-	public String getMemReq2(MemorySummary summary) {
+	public String getMemReq(MemorySummary summary) {
 		
 		//BILLY, cambiado
-		ParametricExpression memReq = this.memReqSummarizer.getMemReq2(summary);
+		ParametricExpression memReq = this.memReqSummarizer.getMemReq(summary);
 		return this.isccFormat ? memReq.toString() : expressionToString(memReq);
 	}
 	

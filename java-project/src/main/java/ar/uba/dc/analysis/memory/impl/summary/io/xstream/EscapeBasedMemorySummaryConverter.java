@@ -56,9 +56,9 @@ public class EscapeBasedMemorySummaryConverter extends AbstractCollectionConvert
 			}
 		writer.endNode();
 		
-		writer.startNode("temporal");
-			writer.setValue(toString(summary.getTemporal()));
-		writer.endNode();
+		//writer.startNode("temporal");
+		//writer.setValue(toString(summary.getTemporal()));
+		//writer.endNode();
 		
 		writer.startNode("residual");
 			for (HeapPartition hp : summary.getResidualPartitions()) {
@@ -99,7 +99,7 @@ public class EscapeBasedMemorySummaryConverter extends AbstractCollectionConvert
 			unmarshalResidual(reader, context, summary, cachePartition);
 		reader.moveUp();
 		
-		summary.setTemporal(expressionFactory.polynomial(syntax.parsePiecewiseQuasipolynomial(temporal.replaceAll("==", "="))));
+		//summary.setTemporal(expressionFactory.polynomial(syntax.parsePiecewiseQuasipolynomial(temporal.replaceAll("==", "="))));
 		return summary;
 	}
 

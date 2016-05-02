@@ -37,10 +37,10 @@ public class EscapeBasedMemorySummaryInterpreter implements MemorySummaryInterpr
 		return expressionToString(residualSummarizer.getResidual(summary));
 	}
 
-	@Override
+	/*@Override
 	public String getTemporal(MemorySummary summary) {
 		return expressionToString(summary.getTemporal());
-	}
+	}*/
 	
 	protected String expressionToString(ParametricExpression expr) {
 		String result = null;
@@ -145,10 +145,5 @@ public class EscapeBasedMemorySummaryInterpreter implements MemorySummaryInterpr
 	@Override
 	public String getMemReq(MemorySummary summary) {
 		return this.expressionToString(this.memReqSummarizer.getMemReq(summary));
-	}
-	
-	@Override
-	public String getMemReq2(MemorySummary summary) {
-		return this.expressionToString(this.memReqSummarizer.getMemReq2(summary));
 	}
 }

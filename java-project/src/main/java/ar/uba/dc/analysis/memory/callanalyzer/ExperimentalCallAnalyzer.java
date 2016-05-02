@@ -12,6 +12,7 @@ import org.apache.commons.logging.LogFactory;
 
 import ar.uba.dc.analysis.memory.CallAnalyzer;
 import ar.uba.dc.analysis.memory.CallSummary;
+import ar.uba.dc.analysis.memory.CallSummaryInContext;
 import ar.uba.dc.analysis.memory.HeapPartition;
 import ar.uba.dc.analysis.memory.LifeTimeOracle;
 import ar.uba.dc.analysis.memory.SymbolicCalculator;
@@ -71,7 +72,7 @@ public class ExperimentalCallAnalyzer implements CallAnalyzer {
 			// Residual aportado por esta implementacion al caller sin discriminar por particion
 		ParametricExpression sumResidual = expressionFactory.constant(0L);
 			// Actualizamos el maximo temporal necesario para ejecutar el call en base a lo que ya teniamos y el temporal del callee.
-		temps = symbolicCalculator.supreme(temps, calleeSummary.getTemporal());
+		//temps = symbolicCalculator.supreme(temps, calleeSummary.getTemporal());
 		
 		for (HeapPartition calleePartition : calleeSummary.getResidualPartitions()) {
 				// Calculamos el vinculo entre caller y callee. 
@@ -156,6 +157,10 @@ public class ExperimentalCallAnalyzer implements CallAnalyzer {
 		result.setResidualCaptured(symbolicCalculator.summate(resCap, callStmt));
 		
 		return result;
+	}
+	
+	public CallSummaryInContext buildSummary2(CallStatement callStmt) {
+		throw new UnsupportedOperationException("Not implemented yet");
 	}
 	
 }

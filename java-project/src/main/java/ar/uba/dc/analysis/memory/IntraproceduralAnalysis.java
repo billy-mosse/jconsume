@@ -126,6 +126,11 @@ public class IntraproceduralAnalysis {
 	
 	public MemorySummary run(SootMethod method) {
 		log.debug(" |- Intraprocedural Analysis for: " + method.toString());
+		
+		if(method.toString() == "<ar.uba.dc.paper.Program4: ar.uba.dc.util.List test(ar.uba.dc.util.List,ar.uba.dc.paper.Op)>")
+		{
+			log.debug("Hola");
+		}
 		MemorySummary summary = summaryFactory.initialSummary(method);
 		
 		/*
@@ -156,7 +161,10 @@ public class IntraproceduralAnalysis {
 		 * */
 		ParametricExpression residualForMemReq = expressionFactory.constant(0L);
 		
-		ParametricExpression memReqFromCallees = expressionFactory.constant(0L);
+		ParametricExpression MAX_memReqFromCallees = expressionFactory.constant(0L);
+		
+		ParametricExpression acumResidualsFromCallees = expressionFactory.constant(0L);
+
 
 		
 		/* Acumula (sobreaproximando) el consumo total del metodo, 
@@ -233,17 +241,21 @@ public class IntraproceduralAnalysis {
 				log.debug(" | |- Processing statement " + callStmt.toString());
 			}
 			
-			CallSummary callSummary = interprocedural.analyseCall(callStmt);
+			CallSummaryInContext callSummary = interprocedural.analyseCall(callStmt);
 			
 			
 			//BILLY: Actualiza tempCalls y resCaptured a partir de los del callee
 			
 			//Esto lo dejo asi para debuguear y ver que tienen adentro
 			//ParametricExpression tempCallsForUpdate = callSummary.getTemporalCall();
-			ParametricExpression resCapturedForUpdate = callSummary.getResidualCaptured();
-			ParametricExpression memReqForUpdate = callSummary.getMemoryRequirement();
-			ParametricExpression totalResiduals = callSummary.getTotalResidualsIfCallee();
+			ParametricExpression memReqFromCallee = callSummary.getMAX_memoryRequirementMinusRsd();
+			ParametricExpression acumResidualsFromCallee = callSummary.getAcumResiduals();
 					
+			
+			MAX_memReqFromCallees = sa.supreme(MAX_memReqFromCallees, memReqFromCallee);
+			
+			
+			acumResidualsFromCallees = sa.add(acumResidualsFromCallees, acumResidualsFromCallee);
 			//BILLY Trata de tomar el supremo
 			//Porque para contar el maxlive hay que contar la maxima cantidad de variables temporales vivas tambien!
 			//ParametricExpression newTempCalls = sa.supreme(tempCalls, tempCallsForUpdate);
@@ -300,15 +312,18 @@ public class IntraproceduralAnalysis {
 			//Hay que cambiar el diseño, porque callSummaryRes ya lo estoy calculando en LoopInvariantDefault
 			//residualForMemReq = sa.add(residualForMemReq, totalResiduals);
 			
-			log.debug("Adding " + totalResiduals + " and " + memReqForUpdate + " to " + memReq);			
+//			log.debug("Adding " + acumResiduals + " and " + memReqForUpdate + " to " + memReq);			
 			
 			//memReqFromCallees = sa.supreme(memReqFromCallees, memReqForUpdate);
 			
-			memReq = sa.add(memReq, memReqForUpdate, totalResiduals);
+			
 
 
 			
 		}
+
+		memReq = sa.add(memReq, acumResidualsFromCallees);
+		memReq = sa.add(memReq, MAX_memReqFromCallees);
 		
 		
 		//summary.setTemporal(sa.add(tempLocal, tempCalls, resCaptured));

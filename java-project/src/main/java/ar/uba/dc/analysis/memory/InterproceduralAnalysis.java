@@ -121,7 +121,7 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis {
 		}
 	}
 	
-	public CallSummary analyseCall(CallStatement callStmt) {
+	public CallSummaryInContext analyseCall(CallStatement callStmt) {
 		log.debug(" | | |- Analyse call: " + callStmt);
 		
 		if (trustInterfaceSummaries && (callStmt.getStatement().getInvokeExpr() instanceof InterfaceInvokeExpr)) {
@@ -136,7 +136,7 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis {
 				// Dejamos que se inicialize el callAnalyzer. Debe setear todo el entorno para un nuevo analisis
 				callAnalyzer.init(callStmt, lifeTimeOracle, symbolicCalculator, expressionFactory);
 				callAnalyzer.process(callStmt, calleeSummary);
-				return callAnalyzer.buildSummary(callStmt);
+				return callAnalyzer.buildSummary2(callStmt);
 			} else {
 				log.debug(" | | | | |- Summary not found. Continue with call analysis");
 			}		
@@ -190,7 +190,7 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis {
 			}
 		}
 		
-		CallSummary result = callAnalyzer.buildSummary(callStmt);
+		CallSummaryInContext result = callAnalyzer.buildSummary2(callStmt);
 		
 	
 		log.debug("Call analysis finished");

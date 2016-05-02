@@ -126,7 +126,7 @@ public class GraphvizWriter implements SummaryWriter<EscapeBasedMemorySummary> {
 		
 		DotGraphNode node = out.drawNode("memoTemp");
 		node.setShape("plaintext");
-		node.setLabel("Tmp: " + toString(summary.getTemporal()));
+		//node.setLabel("Tmp: " + toString(summary.getTemporal()));
 		
 		if (showResidualMemorySummarized) {
 			log.debug("Build summary for residual memory of method [" + summary.getTarget() + "]");

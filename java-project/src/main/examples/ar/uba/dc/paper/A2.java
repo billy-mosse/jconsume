@@ -3,10 +3,10 @@ package ar.uba.dc.paper;
 /**
  * @author billy
  *
- * int container para Program1.
+ * B container para Program5.
  */
 
-public class A {
+public class A2 {
 
-	int a;
+	B f;
 }

@@ -30,7 +30,7 @@ public interface MemorySummary {
 	/**
 	 * 
 	 */
-	public ParametricExpression getTemporal();
+	//public ParametricExpression getTemporal();
 	
 	/**
 	 * Dado un HeapPartition se retorna una expresion que representa el consumo de los objetos incluidos
@@ -40,7 +40,7 @@ public interface MemorySummary {
 
 	public void setResidual(HeapPartition aHeapPartition, ParametricExpression newValue);
 
-	public void setTemporal(ParametricExpression newValue);
+	//public void setTemporal(ParametricExpression newValue);
 
 	public Set<HeapPartition> getResidualPartitions();
 

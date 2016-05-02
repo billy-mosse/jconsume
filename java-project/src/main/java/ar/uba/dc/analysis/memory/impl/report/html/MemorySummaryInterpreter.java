@@ -6,7 +6,7 @@ import ar.uba.dc.analysis.memory.summary.MemorySummary;
 
 public interface MemorySummaryInterpreter {
 
-	public String getTemporal(MemorySummary summary);
+	//public String getTemporal(MemorySummary summary);
 
 	public String getResidual(MemorySummary summary);
 	
@@ -22,6 +22,6 @@ public interface MemorySummaryInterpreter {
 
 	public String getMemReq(MemorySummary summary);
 
-	public String getMemReq2(MemorySummary summary);
+	//public String getMemReq2(MemorySummary summary);
 
 }

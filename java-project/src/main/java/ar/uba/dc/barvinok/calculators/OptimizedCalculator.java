@@ -132,7 +132,7 @@ public class OptimizedCalculator implements BarvinokCalculator {
 			
 			if (l1 > l2) {
 				return expr1;
-			}
+			}//else
 			
 			return expr2;
 		}

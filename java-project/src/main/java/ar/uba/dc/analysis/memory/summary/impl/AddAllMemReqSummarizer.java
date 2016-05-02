@@ -13,8 +13,9 @@ protected ParametricExpressionFactory expressionFactory;
 	
 	protected SymbolicCalculator symbolicCalculator;
 	
-	@Override
+	/*@Override
 	public ParametricExpression getMemReq(MemorySummary summary) {
+		
 		ParametricExpression[] residualExpressions = new ParametricExpression[summary.getResidualPartitions().size()];
 		
 		int idx = 0;
@@ -31,12 +32,14 @@ protected ParametricExpressionFactory expressionFactory;
 			residual = symbolicCalculator.add(residualExpressions);
 		}
 		
-		return this.symbolicCalculator.add(summary.getTemporal(), residual);
-	}
+		//return this.symbolicCalculator.add(summary.getTemporal(), residual);
+		
+		//throw new UnsupportedOperationException("This has been replaced by getMemReq2 and will be deleted shortly");
+	}*/
 	
 	//Billy agregado
 	//pero no cambia nada :(
-	public ParametricExpression getMemReq2(MemorySummary summary) {
+	public ParametricExpression getMemReq(MemorySummary summary) {
 		return summary.getMemoryRequirement();
 		//return expressionFactory.constant(0L);
 	}

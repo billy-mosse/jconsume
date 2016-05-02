@@ -292,6 +292,8 @@ public class CommandLineCalculator implements BarvinokCalculator {
 		
 		// verificamos que ambos polinomios tengan los mismos parametros. 
 		// Sino la comparacion no se puede hacer
+		
+		//BILLY: en realidad esta no parece una funcion de validacion sino de "correccion". Le agrega los parametros faltantes a cada polinomio
 		validate(e1, e2);
 		
 		return compareStrategy.compare(e1, e2, this);

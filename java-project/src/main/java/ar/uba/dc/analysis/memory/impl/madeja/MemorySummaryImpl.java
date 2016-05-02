@@ -52,10 +52,10 @@ public class MemorySummaryImpl implements MemorySummary {
 		return this.target;
 	}
 
-	@Override
+	/*@Override
 	public ParametricExpression getTemporal() {
 		return this.temporal;
-	}
+	}*/
 
 	@Override
 	public ParametricExpression getMemoryRequirement() {
@@ -68,11 +68,11 @@ public class MemorySummaryImpl implements MemorySummary {
 		residuals.put(aHeapPartition, newValue);	
 	}
 
-	@Override
+	/*@Override
 	public void setTemporal(ParametricExpression newValue) {
 		this.temporal = newValue;
 		
-	}
+	}*/
 	
 	@Override
 	public void setMemoryRequirement(ParametricExpression newValue) {

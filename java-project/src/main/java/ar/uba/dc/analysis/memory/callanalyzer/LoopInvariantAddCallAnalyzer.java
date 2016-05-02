@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory;
 
 import ar.uba.dc.analysis.memory.CallAnalyzer;
 import ar.uba.dc.analysis.memory.CallSummary;
+import ar.uba.dc.analysis.memory.CallSummaryInContext;
 import ar.uba.dc.analysis.memory.HeapPartition;
 import ar.uba.dc.analysis.memory.LifeTimeOracle;
 import ar.uba.dc.analysis.memory.SymbolicCalculator;
@@ -102,5 +103,8 @@ public class LoopInvariantAddCallAnalyzer implements CallAnalyzer {
 		
 		return result;
 	}	
+	public CallSummaryInContext buildSummary2(CallStatement callStmt) {
+		throw new UnsupportedOperationException("Not implemented yet");
+	}
 	
 }

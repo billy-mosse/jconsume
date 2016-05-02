@@ -31,9 +31,9 @@ public class HtmlReportHelper {
 		return StringUtils.join(summary.getParameters(), ", ");
 	}
 	
-	public String getTemporal(MemorySummary summary) {
+	/*public String getTemporal(MemorySummary summary) {
 		return interpreter.getTemporal(summary);
-	}
+	}*/
 	
 	public String getResidual(MemorySummary summary) {
 		return interpreter.getResidual(summary);
@@ -43,9 +43,6 @@ public class HtmlReportHelper {
 		return interpreter.getMemReq(summary);
 	}
 
-	public String getMemReq2(MemorySummary summary) {
-		return interpreter.getMemReq2(summary);
-	}
 	
 	public boolean hasEscapeDetail(MemorySummary summary) {
 		return interpreter.hasEscapeDetail(summary);

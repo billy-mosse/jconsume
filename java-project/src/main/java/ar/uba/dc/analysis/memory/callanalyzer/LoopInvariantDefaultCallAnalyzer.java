@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory;
 
 import ar.uba.dc.analysis.memory.CallAnalyzer;
 import ar.uba.dc.analysis.memory.CallSummary;
+import ar.uba.dc.analysis.memory.CallSummaryInContext;
 import ar.uba.dc.analysis.memory.HeapPartition;
 import ar.uba.dc.analysis.memory.LifeTimeOracle;
 import ar.uba.dc.analysis.memory.SymbolicCalculator;
@@ -122,7 +123,7 @@ public class LoopInvariantDefaultCallAnalyzer implements CallAnalyzer {
 
 	}
 	
-	public CallSummary buildSummary(CallStatement callStmt) {
+	/*public CallSummary buildSummary(CallStatement callStmt) {
 		CallSummary result = new CallSummary();
 		
 		//result.setTemporalCall(tempCall);
@@ -138,6 +139,25 @@ public class LoopInvariantDefaultCallAnalyzer implements CallAnalyzer {
 		result.setTotalResidualsIfCallee(totalResiduals);
 		
 		return result;
+	}*/	
+	
+	public CallSummaryInContext buildSummary2(CallStatement callStmt) {
+		CallSummaryInContext result = new CallSummaryInContext();
+		
+		//result.setTemporalCall(tempCall);
+
+		for (HeapPartition partition : residuals.keySet()) {
+			result.setResidual(partition, residuals.get(partition));
+		}
+		
+		result.setAcumResiduals(totalResiduals);
+		result.setMAX_memoryRequirementMinusRsd(MAX_memReqMinusRsd);
+		
+		return result;
+	}
+
+	public CallSummary buildSummary(CallStatement callStmt) {
+		throw new UnsupportedOperationException("Will not be implemented. Fix");
 	}	
 	
 }

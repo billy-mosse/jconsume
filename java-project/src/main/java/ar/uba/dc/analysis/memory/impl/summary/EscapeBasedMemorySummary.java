@@ -105,10 +105,10 @@ public class EscapeBasedMemorySummary implements MemorySummary {
 		return target;
 	}
 
-	@Override
+	/*@Override
 	public ParametricExpression getTemporal() {
 		return temporal;
-	}
+	}*/
 
 	@Override
 	public ParametricExpression getMemoryRequirement() {
@@ -123,10 +123,10 @@ public class EscapeBasedMemorySummary implements MemorySummary {
 		residuals.put(aHeapPartition, newValue);
 	}
 
-	@Override
+	/*@Override
 	public void setTemporal(ParametricExpression newValue) {
 		this.temporal = newValue;
-	}
+	}*/
 	
 	@Override
 	public void setMemoryRequirement(ParametricExpression newValue) {
