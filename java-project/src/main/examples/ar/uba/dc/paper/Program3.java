@@ -26,10 +26,6 @@ public class Program3
 	public static List map(List list, Op op) {
 		List res = new List();
 
-
-		
-
-
 		Iterator it = list.iterator();
 		// sum max (OP, OP2) , no lo sabe hacer y hace sum OP + OP2
 		// si te das cuenta que op no cambia podrias hacer max (sum OP, sum OP2) 

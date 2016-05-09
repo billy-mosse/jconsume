@@ -52,12 +52,7 @@
 				<inductives>i</inductives>
       			<constraints>@loop_invariant</constraints>
     		</creation-site>
-		
-			<!--<call-site offset="0" srccode-offset="">
-      			<constraints>@loop_invariant</constraints>
-    		</call-site>-->
-
-		
+				
 			<call-site offset="1" srccode-offset="">
       			<constraints>$t.values.length == vector.length and vector.length == j</constraints>
     		</call-site>

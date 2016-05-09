@@ -53,12 +53,12 @@
     		</creation-site>
 			
 			<invariant id="loop_invariant">
-				<constraints><![CDATA[0 <= i < n]]></constraints>
+				<constraints><![CDATA[0 <= j < n]]></constraints>
 			</invariant>
 			
 			<creation-site offset="1" srccode-offset="">
-    		 	<variables>i</variables>
-				<inductives>i</inductives>
+    		 	<variables>j</variables>
+				<inductives>j</inductives>
       			<constraints>@loop_invariant</constraints>
     		</creation-site>
 		</method>
