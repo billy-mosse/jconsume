@@ -31,10 +31,6 @@ public class HtmlReportHelper {
 		return StringUtils.join(summary.getParameters(), ", ");
 	}
 	
-	/*public String getTemporal(MemorySummary summary) {
-		return interpreter.getTemporal(summary);
-	}*/
-	
 	public String getResidual(MemorySummary summary) {
 		return interpreter.getResidual(summary);
 	}

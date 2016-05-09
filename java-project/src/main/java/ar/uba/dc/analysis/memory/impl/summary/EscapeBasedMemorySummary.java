@@ -123,11 +123,6 @@ public class EscapeBasedMemorySummary implements MemorySummary {
 		residuals.put(aHeapPartition, newValue);
 	}
 
-	/*@Override
-	public void setTemporal(ParametricExpression newValue) {
-		this.temporal = newValue;
-	}*/
-	
 	@Override
 	public void setMemoryRequirement(ParametricExpression newValue) {
 		this.memoryRequirement = newValue;

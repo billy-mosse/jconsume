@@ -41,7 +41,6 @@ protected ParametricExpressionFactory expressionFactory;
 	//pero no cambia nada :(
 	public ParametricExpression getMemReq(MemorySummary summary) {
 		return summary.getMemoryRequirement();
-		//return expressionFactory.constant(0L);
 	}
 	
 	public void setExpressionFactory(ParametricExpressionFactory expressionFactory) {

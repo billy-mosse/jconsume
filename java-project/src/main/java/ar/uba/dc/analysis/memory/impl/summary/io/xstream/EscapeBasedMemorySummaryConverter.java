@@ -99,7 +99,6 @@ public class EscapeBasedMemorySummaryConverter extends AbstractCollectionConvert
 			unmarshalResidual(reader, context, summary, cachePartition);
 		reader.moveUp();
 		
-		//summary.setTemporal(expressionFactory.polynomial(syntax.parsePiecewiseQuasipolynomial(temporal.replaceAll("==", "="))));
 		return summary;
 	}
 

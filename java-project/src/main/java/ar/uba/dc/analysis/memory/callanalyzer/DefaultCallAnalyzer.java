@@ -102,7 +102,6 @@ public class DefaultCallAnalyzer implements CallAnalyzer {
 		if (log.isDebugEnabled()) {
 			log.debug(" | | |- Temporal call is: " + tempCall);
 		}
-		//result.setTemporalCall(tempCall);
 
 		for (HeapPartition partition : residuals.keySet()) {
 			result.setResidual(partition, symbolicCalculator.summate(residuals.get(partition), callStmt));

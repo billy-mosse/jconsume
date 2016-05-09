@@ -40,8 +40,6 @@ public interface MemorySummary {
 
 	public void setResidual(HeapPartition aHeapPartition, ParametricExpression newValue);
 
-	//public void setTemporal(ParametricExpression newValue);
-
 	public Set<HeapPartition> getResidualPartitions();
 
 	public void setMemoryRequirement(ParametricExpression newValue);

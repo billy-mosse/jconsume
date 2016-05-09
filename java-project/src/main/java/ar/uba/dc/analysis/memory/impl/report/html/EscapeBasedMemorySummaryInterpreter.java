@@ -36,11 +36,6 @@ public class EscapeBasedMemorySummaryInterpreter implements MemorySummaryInterpr
 	public String getResidual(MemorySummary summary) {
 		return expressionToString(residualSummarizer.getResidual(summary));
 	}
-
-	/*@Override
-	public String getTemporal(MemorySummary summary) {
-		return expressionToString(summary.getTemporal());
-	}*/
 	
 	protected String expressionToString(ParametricExpression expr) {
 		String result = null;

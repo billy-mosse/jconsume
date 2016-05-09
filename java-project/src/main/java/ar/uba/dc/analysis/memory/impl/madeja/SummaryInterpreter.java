@@ -45,11 +45,6 @@ public class SummaryInterpreter  implements MemorySummaryInterpreter {
 	public String getResidual(MemorySummary summary) {
 		return expressionToString(residualSummarizer.getResidual(summary));
 	}
-
-	/*@Override
-	public String getTemporal(MemorySummary summary) {
-		return expressionToString(summary.getTemporal());
-	}*/
 	
 	protected String expressionToString2(ParametricExpression expr) {
 		return expr.toString();

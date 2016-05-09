@@ -22,6 +22,5 @@ public interface MemorySummaryInterpreter {
 
 	public String getMemReq(MemorySummary summary);
 
-	//public String getMemReq2(MemorySummary summary);
 
 }
