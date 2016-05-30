@@ -1,5 +1,6 @@
 package ar.uba.dc.basic;
 
+import ar.uba.dc.paper.*;
 
 /**
  * @author billy
@@ -9,7 +10,18 @@ package ar.uba.dc.basic;
 public class SubstractWithFolds {	
 	
 	public static Integer f(int n){
+		IntContainer op;
+		if(n==4)
+		{
+			op = new IntContainer();
+		}
+		else
+		{
+			op = new IntContainerSon();
+		}
+
 		Integer j = new Integer(4);
+		Object o2 = op.apply(n);
 		return j;
 	}
 

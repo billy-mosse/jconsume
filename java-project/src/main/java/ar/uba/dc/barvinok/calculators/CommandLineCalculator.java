@@ -312,16 +312,19 @@ public class CommandLineCalculator implements BarvinokCalculator {
 		PiecewiseQuasipolynomial result = null;
 
 		//BILLY: Posible bug: tengo que clonar el pol para usar esta funcion?
-		if(BarvinokUtils.hasFoldPiece(expression1) && BarvinokUtils.hasFoldPiece(expression2))
+
+		boolean e1HasFoldPiece = BarvinokUtils.hasFoldPiece(expression1);
+		boolean e2HasFoldPiece = BarvinokUtils.hasFoldPiece(expression2);
+		
+		//Las calculo antes porque igual las voy a usar
+		if(e1HasFoldPiece || e2HasFoldPiece)
 		{
 			// Operamos nosotros porque la calculadora no soporta hacer una resta donde hay mas de un polinomio con fold
-			result = substractPolynomialsWithMoreThanTwoFolds(expression1, expression2, mapping);
+			result = substractPolynomialsWithMoreThanOneFold(expression1, expression2, mapping, e1HasFoldPiece, e2HasFoldPiece);
 
 		}
 		else
 		{
-			// La calculadora soporta restar (?) hasta 1 fold.
-			//BILLY: puede realmente restar?
 			result = execOperationOverExpressions(SUBSTRACT_OPERATOR, mapping, polynomials);
 		}
 
@@ -338,10 +341,18 @@ public class CommandLineCalculator implements BarvinokCalculator {
 	}
 	
 	
-	private PiecewiseQuasipolynomial substractPolynomialsWithMoreThanTwoFolds(PiecewiseQuasipolynomial expression1,
-			PiecewiseQuasipolynomial expression2, Map<String, String> mapping) {
-		// TODO Auto-generated method stub
-		return null;
+	private PiecewiseQuasipolynomial substractPolynomialsWithMoreThanOneFold(PiecewiseQuasipolynomial expression1,
+			PiecewiseQuasipolynomial expression2, Map<String, String> mapping, boolean e1HasFoldPiece, boolean e2HasFoldPiece) {
+		
+		PiecewiseQuasipolynomial[] polynomials = new PiecewiseQuasipolynomial[2];
+
+		polynomials[0] = e1HasFoldPiece ? BarvinokUtils.upperBoundToRemoveFolds(expression1) : expression1;
+		polynomials[1] = e1HasFoldPiece ? BarvinokUtils.lowerBoundToRemoveFolds(expression1) : expression2;
+		
+		PiecewiseQuasipolynomial result = null;
+
+		result = execOperationOverExpressions(SUBSTRACT_OPERATOR, mapping, polynomials);
+		return result;
 	}
 
 	public PiecewiseQuasipolynomial add(PiecewiseQuasipolynomial... exprs) {

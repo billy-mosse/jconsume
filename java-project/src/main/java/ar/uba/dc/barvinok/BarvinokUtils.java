@@ -2,6 +2,7 @@ package ar.uba.dc.barvinok;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -84,6 +85,8 @@ public class BarvinokUtils {
 		}
 	}
 	
+	
+	
 	public static void cleanMaxIfPossible(PiecewiseQuasipolynomial polynomial) {
 		String candidatesPrefix = BarvinokSyntax.MAX_CANDIDATES + "(";
 		for (QuasiPolynomial quasipolynomial : polynomial.getPieces()) {
@@ -111,4 +114,76 @@ public class BarvinokUtils {
 			}
 		}
 	}
+	
+	
+	/**
+	 * Barvinok solo acepta un fold en sumas, y ninguno en restas
+	 * @return el polinomio acotando el maximo por la suma
+	 */
+	public static PiecewiseQuasipolynomial lowerBoundToRemoveFolds(PiecewiseQuasipolynomial polynomial_with_max)
+	{
+		PiecewiseQuasipolynomial polynomial = polynomial_with_max.clone();
+		cleanMaxIfPossible(polynomial);
+		String candidatesPrefix = BarvinokSyntax.MAX_CANDIDATES + "(";
+		
+		for (QuasiPolynomial quasipolynomial : polynomial.getPieces()) {
+
+			if (quasipolynomial.getPolynomial().startsWith(candidatesPrefix)) {
+				String candidates = quasipolynomial.getPolynomial().substring(candidatesPrefix.length(), quasipolynomial.getPolynomial().lastIndexOf(")"));
+				candidates = candidates.trim();				
+				
+				String lower_bound = candidates.split(",")[0];				
+				
+				quasipolynomial.setPolynomial(lower_bound);
+			}
+		}
+		
+		return polynomial;
+	}
+	
+	/**
+	 * Barvinok solo acepta un fold en sumas, y ninguno en restas
+	 * @return el polinomio acotando el maximo por la suma
+	 */
+	public static PiecewiseQuasipolynomial upperBoundToRemoveFolds(PiecewiseQuasipolynomial polynomial_with_max)
+	{
+		PiecewiseQuasipolynomial polynomial = polynomial_with_max.clone();
+		cleanMaxIfPossible(polynomial);
+		String candidatesPrefix = BarvinokSyntax.MAX_CANDIDATES + "(";
+		
+		for (QuasiPolynomial quasipolynomial : polynomial.getPieces()) {
+
+			if (quasipolynomial.getPolynomial().startsWith(candidatesPrefix)) {
+				String candidates = quasipolynomial.getPolynomial().substring(candidatesPrefix.length(), quasipolynomial.getPolynomial().lastIndexOf(")"));
+				candidates = candidates.trim();
+				
+				String upper_bound = "";
+				
+				boolean first = true;
+				for (String candidate : candidates.split(",")) {
+					candidate = candidate.trim();
+					
+					if (!first)
+						upper_bound += " + ";
+					else
+						first = false;
+					
+					upper_bound += candidate;
+				}
+				
+				quasipolynomial.setPolynomial(upper_bound);
+			}
+		}
+		
+		return polynomial;
+		//throw new UnsupportedOperationException();
+		//Set<String> params = this.getParameters();
+		
+		
+		//PiecewiseQuasipolynomial result = this.clone();
+		
+		//return result;
+		
+	}
+	
 }
