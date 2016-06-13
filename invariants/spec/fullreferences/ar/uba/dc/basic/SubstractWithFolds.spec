@@ -9,15 +9,15 @@
 		</method>
 
 		<method decl="java.lang.Integer f(int)">
-			<relevant-parameters>n</relevant-parameters>
-			<creation-site offset="0" srccode-offset="">
-				<variables>j</variables>
-				<inductives>j</inductives>
-      			<constraints><![CDATA[1 <= j <= n]]></constraints>
-    		</creation-site>
+			<relevant-parameters>n,j</relevant-parameters>
+			
+    		<invariant id="loop_invariant">
+				<constraints><![CDATA[0 <= i < n]]></constraints>
+			</invariant>
 
-			<call-site offset="4" srccode-offset="">
-      			<constraints>$t.n == n</constraints>
+			<call-site offset="3" srccode-offset="">			
+				<annotations>class_called_changed_during_loop</annotations>
+      			<constraints>@loop_invariant and $t.n == i</constraints>
     		</call-site>
 		</method>
 	</class>
