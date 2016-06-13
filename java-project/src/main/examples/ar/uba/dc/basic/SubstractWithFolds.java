@@ -1,6 +1,5 @@
 package ar.uba.dc.basic;
 
-import ar.uba.dc.paper.*;
 
 /**
  * @author billy
@@ -21,7 +20,10 @@ public class SubstractWithFolds {
 		}
 
 		Integer j = new Integer(4);
-		Object o2 = op.apply(n);
+		for(int i = 1; i < n; i++)
+		{
+			Object o2 = op.apply(i);
+		}		
 		return j;
 	}
 
