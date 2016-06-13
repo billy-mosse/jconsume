@@ -21,6 +21,8 @@ public class DomainSet {
 	private String constraints;
 	
 	private boolean hasInductives = false;
+	
+	private boolean class_called_changed_during_loop = false;
 
 	/**
 	 * BugFix porque no se invoca al constructor por defecto con XStream
@@ -128,6 +130,15 @@ public class DomainSet {
 
 	public Set<String> getParameters() {
 		return new TreeSet<String>(parameters);
+	}
+	
+	
+	public boolean checkIfClassCalledChangedDuringLoop() {
+		return class_called_changed_during_loop;
+	}
+
+	public void setClassCalledChangedDuringLoop(boolean classCalledChangedDuringLoop) {
+		this.class_called_changed_during_loop = classCalledChangedDuringLoop;
 	}
 	
 	public DomainSet clone() {

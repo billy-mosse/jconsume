@@ -25,7 +25,8 @@ public class LazyAsCompareStrategy implements ComparePolynomialStrategy {
 	private static final Log log = LogFactory.getLog(LazyAsCompareStrategy.class);
 	
 	public PiecewiseQuasipolynomial compare(PiecewiseQuasipolynomial e1, PiecewiseQuasipolynomial e2, CommandLineCalculator calculator) {
-		PiecewiseQuasipolynomial p = e1.clone();
+		PiecewiseQuasipolynomial p = e1.clone();		
+		
 		PiecewiseQuasipolynomial q = e2.clone();
 		
 		BarvinokUtils.surroundWithMax(p);

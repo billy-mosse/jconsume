@@ -11,6 +11,7 @@ public class CallSiteSpecification implements SiteSpecification {
 	private String id;
 	private String offset;
 	private String constraints;
+	private String annotations;
 	private String variables;
 	private String inductives;
 	private String callee;
@@ -29,6 +30,9 @@ public class CallSiteSpecification implements SiteSpecification {
 	private Object readResolve() {
 		if (constraints == null) {
 			constraints = StringUtils.EMPTY;
+		}
+		if (annotations == null) {
+			annotations = StringUtils.EMPTY;
 		}
 		if (inductives == null) {
 			inductives = StringUtils.EMPTY;
@@ -57,6 +61,14 @@ public class CallSiteSpecification implements SiteSpecification {
 
 	public String getConstraints() {
 		return constraints;
+	}
+	
+	public void setAnnotations(String annotations) {
+		this.annotations = annotations;
+	}
+
+	public String getAnnotations() {
+		return annotations;
 	}
 
 	public String getOffset() {

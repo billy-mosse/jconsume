@@ -163,4 +163,9 @@ public class ExperimentalCallAnalyzer implements CallAnalyzer {
 		throw new UnsupportedOperationException("Not implemented yet");
 	}
 	
+	public void calculateCorrectTotalResiduals(CallStatement virtualInvoke)
+	{
+		throw new UnsupportedOperationException("Not implemented yet");
+	}
+	
 }

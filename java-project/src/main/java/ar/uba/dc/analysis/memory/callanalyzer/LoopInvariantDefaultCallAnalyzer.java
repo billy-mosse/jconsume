@@ -1,6 +1,7 @@
 package ar.uba.dc.analysis.memory.callanalyzer;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -15,7 +16,25 @@ import ar.uba.dc.analysis.memory.SymbolicCalculator;
 import ar.uba.dc.analysis.memory.code.CallStatement;
 import ar.uba.dc.analysis.memory.expression.ParametricExpression;
 import ar.uba.dc.analysis.memory.expression.ParametricExpressionFactory;
+import ar.uba.dc.analysis.memory.impl.BarvinokParametricExpression;
 import ar.uba.dc.analysis.memory.summary.MemorySummary;
+
+import ar.uba.dc.barvinok.BarvinokUtils;
+
+
+
+
+
+
+
+import ar.uba.dc.analysis.memory.expression.ParametricExpression;
+import ar.uba.dc.barvinok.BarvinokCalculator;
+import ar.uba.dc.barvinok.expression.DomainSet;
+import ar.uba.dc.barvinok.expression.PiecewiseQuasipolynomial;
+import ar.uba.dc.barvinok.expression.QuasiPolynomial;
+import ar.uba.dc.invariant.InvariantProvider;
+
+
 
 /**
  * Estamos ante invarianza de polimorfismo. Este es el mejor caso para el algoritmo:
@@ -43,6 +62,10 @@ public class LoopInvariantDefaultCallAnalyzer implements CallAnalyzer {
 	protected ParametricExpression MAX_memReqMinusRsd;
 
 	protected ParametricExpression totalResiduals;
+	
+	protected ParametricExpression MAX_totalResidualsBeforeSummate;
+	
+	protected ParametricExpression summated_MAX_totalResiduals;
 
 	public void init(CallStatement callStmt, LifeTimeOracle lifeTimeOracle, SymbolicCalculator symbolicCalculator, ParametricExpressionFactory expressionFactory) {
 		log.debug("Analyse call with loop invariant");
@@ -56,6 +79,8 @@ public class LoopInvariantDefaultCallAnalyzer implements CallAnalyzer {
 		this.memReq = expressionFactory.constant(0L);
 		this.MAX_memReqMinusRsd = expressionFactory.constant(0L);
 		this.totalResiduals = expressionFactory.constant(0L);
+		this.MAX_totalResidualsBeforeSummate = expressionFactory.constant(0L);
+		this.summated_MAX_totalResiduals= expressionFactory.constant(0L);
 	}
 
 	@Override
@@ -73,7 +98,7 @@ public class LoopInvariantDefaultCallAnalyzer implements CallAnalyzer {
 		//memReq = symbolicCalculator.supreme(memReq,symbolicCalculator.maximize(calleeSummary.getMemoryRequirement(), virtualInvoke));
 		
 		
-		ParametricExpression acumTotalResiduals = expressionFactory.constant(0L);
+		ParametricExpression acumTotalResiduals = expressionFactory.constant(0L); //porque tengo que inicializarla para cada implementacion
 		
 		
 		for (HeapPartition calleePartition : calleeSummary.getResidualPartitions()) {
@@ -86,6 +111,7 @@ public class LoopInvariantDefaultCallAnalyzer implements CallAnalyzer {
 				ParametricExpression rsdFromPartition = calleeSummary.getResidual(calleePartition);
 				ParametricExpression newValue = symbolicCalculator.summate(rsdFromPartition, virtualInvoke);
 				
+				//no va a tener mas de un fold piece
 				acumTotalResiduals = symbolicCalculator.add(acumTotalResiduals, rsdFromPartition);
 
 				
@@ -113,13 +139,23 @@ public class LoopInvariantDefaultCallAnalyzer implements CallAnalyzer {
 			residuals.put(callerPartition, newValue);
 		}
 		
-		resCap = symbolicCalculator.add(resCap, acumCaptured);		
+		resCap = symbolicCalculator.add(resCap, acumCaptured);
 		
-		ParametricExpression memReqMinusRsd = symbolicCalculator.substract(calleeSummary.getMemoryRequirement(), acumTotalResiduals);
+		// Deberiamos maximizar antes de restar?		
+		//Eh no. 
+		
+		
+		//Esto tal vez sea correcto
+		acumTotalResiduals = symbolicCalculator.boundIfHasFold(acumTotalResiduals);
+				
+		//Tampoco ojo que el invariante de cada linea puede ser distinto
+		ParametricExpression memReqMinusRsd = symbolicCalculator.substract(symbolicCalculator.boundIfHasFold(calleeSummary.getMemoryRequirement()), acumTotalResiduals);
 		
 		MAX_memReqMinusRsd = symbolicCalculator.supreme(MAX_memReqMinusRsd, symbolicCalculator.maximize(memReqMinusRsd, virtualInvoke));
 		
 		totalResiduals = symbolicCalculator.supreme(totalResiduals, symbolicCalculator.summate(acumTotalResiduals, virtualInvoke));
+		
+		MAX_totalResidualsBeforeSummate = symbolicCalculator.supreme(MAX_totalResidualsBeforeSummate, acumTotalResiduals);
 
 	}
 	
@@ -140,6 +176,13 @@ public class LoopInvariantDefaultCallAnalyzer implements CallAnalyzer {
 		
 		return result;
 	}*/	
+	
+	
+	
+	public void calculateCorrectTotalResiduals(CallStatement virtualInvoke)
+	{
+		totalResiduals = symbolicCalculator.summateIfClassCalledChangedDuringLoop(MAX_totalResidualsBeforeSummate, totalResiduals, virtualInvoke);
+	}
 	
 	public CallSummaryInContext buildSummary2(CallStatement callStmt) {
 		CallSummaryInContext result = new CallSummaryInContext();

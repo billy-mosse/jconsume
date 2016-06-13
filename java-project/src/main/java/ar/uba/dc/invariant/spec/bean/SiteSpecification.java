@@ -11,9 +11,15 @@ public interface SiteSpecification {
 	
 	public String getInductives();
 	
+	//no debe tener estos metodos porque CreationSite no necesita annotations (por ahora)
+	//public String getAnnotations();
+	//public void setAnnotations(String annotations);
+
+	
 	public <T> T apply(SiteSpecificationVisitor<T> visitor);
 
 	public void setConstraints(String constraints);
+	
 	
 	public Boolean isLoopInvariant();
 	

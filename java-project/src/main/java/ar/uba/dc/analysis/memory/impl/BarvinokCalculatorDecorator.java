@@ -47,6 +47,16 @@ public class BarvinokCalculatorDecorator extends BarvinokCalculatorAdapter {
 		return calculatorAdapter.maximize(target, stmt);
 	}
 
+	
+	public ParametricExpression summateIfClassCalledChangedDuringLoop(ParametricExpression target, ParametricExpression totalResiduals, Statement stmt) {
+
+		String stamentId = stmt.apply(this.statementVisitor);
+		if(this.override(stamentId))
+			return this.summateOverride.get(stamentId);
+
+		return calculatorAdapter.summateIfClassCalledChangedDuringLoop(target, totalResiduals, stmt);
+	}
+
 	public ParametricExpression summate(ParametricExpression target, Statement stmt) {
 
 		String stamentId = stmt.apply(this.statementVisitor);
@@ -82,6 +92,12 @@ public class BarvinokCalculatorDecorator extends BarvinokCalculatorAdapter {
 	public ParametricExpression substract(ParametricExpression e1,
 			ParametricExpression e2) {
 		return calculatorAdapter.substract(e1, e2);
+	}
+	
+	
+	public ParametricExpression boundIfHasFold(ParametricExpression expression)
+	{
+		return calculatorAdapter.boundIfHasFold(expression);
 	}
 
 

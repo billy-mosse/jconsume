@@ -6,6 +6,8 @@ import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 
+import ar.uba.dc.analysis.memory.expression.ParametricExpression;
+import ar.uba.dc.analysis.memory.impl.BarvinokParametricExpression;
 import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.barvinok.expression.PiecewiseQuasipolynomial;
 import ar.uba.dc.barvinok.expression.QuasiPolynomial;
@@ -141,6 +143,14 @@ public class BarvinokUtils {
 		return polynomial;
 	}
 	
+	
+	public static PiecewiseQuasipolynomial boundIfHasFold(PiecewiseQuasipolynomial pol)
+	{		
+		if(!hasFoldPiece(pol))
+			return pol;
+		else
+			return upperBoundToRemoveFolds(pol);
+	}
 	/**
 	 * Barvinok solo acepta un fold en sumas, y ninguno en restas
 	 * @return el polinomio acotando el maximo por la suma

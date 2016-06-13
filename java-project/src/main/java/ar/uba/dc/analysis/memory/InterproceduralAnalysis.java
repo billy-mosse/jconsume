@@ -1,8 +1,10 @@
 package ar.uba.dc.analysis.memory;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
@@ -150,6 +152,10 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis {
 		
 		// Iteramos por c/implementacion posible (si no es un virtual call, habra un solo eje).
 		Iterator<Edge> it = callGraph.edgesOutOf(callStmt.getStatement());
+		
+		List<CallStatement> virtualInvokes = new ArrayList<CallStatement>();
+		
+		
 		while (it.hasNext()) {
 			Edge edge = it.next();
 			SootMethod callee = edge.tgt(); 
@@ -179,16 +185,21 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis {
 						} else {
 						
 							callAnalyzer.process(callStmt.virtualInvoke(callee), calleeSummary);
+							virtualInvokes.add(callStmt.virtualInvoke(callee));
 						}
 						log.debug(" | | | |- Merge finished");
 					} else {
 						log.debug(" | | | |- Method [" + callee + "] is excluded from the analysis. It won't be merged");
 					}
 				} else {
-					log.debug(" | | | |- Method [" + callee + "] is skipped from the analysis. It won't be merged because polymorphism resolver decide it's not the correct implementation of the polymorphic call");
+					log.debug(" | | | |- Method [" + callee + "] is skipped from the analysis. It won't be merged because polymorphism resolver decided it's not the correct implementation of the polymorphic call");
 				}
 			}
 		}
+				
+		callAnalyzer.calculateCorrectTotalResiduals(virtualInvokes.get(0));
+		
+		
 		
 		CallSummaryInContext result = callAnalyzer.buildSummary2(callStmt);
 		

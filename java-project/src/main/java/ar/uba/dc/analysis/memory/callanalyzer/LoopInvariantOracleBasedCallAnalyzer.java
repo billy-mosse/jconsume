@@ -38,8 +38,7 @@ public class LoopInvariantOracleBasedCallAnalyzer implements CallAnalyzer {
 
 	public CallSummaryInContext buildSummary2(CallStatement callStmt) {
 		throw new UnsupportedOperationException("Not implemented yet");
-	}
-	
+	}	
 	
 	public void setLoopInvariantOracle(LoopInvariantOracle loopInvariantOracle) {
 		this.loopInvariantOracle = loopInvariantOracle;
@@ -51,6 +50,11 @@ public class LoopInvariantOracleBasedCallAnalyzer implements CallAnalyzer {
 
 	public void setWithoutLoopInvariant(CallAnalyzer withoutLoopInvariant) {
 		this.withoutLoopInvariant = withoutLoopInvariant;
+	}
+	
+	public void calculateCorrectTotalResiduals(CallStatement virtualInvoke)
+	{
+		throw new UnsupportedOperationException("Not implemented yet");
 	}
 
 }

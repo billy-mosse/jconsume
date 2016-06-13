@@ -1,5 +1,6 @@
 package ar.uba.dc.barvinok;
 
+import ar.uba.dc.analysis.memory.expression.ParametricExpression;
 import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.barvinok.expression.PiecewiseQuasipolynomial;
 
@@ -16,4 +17,6 @@ public interface BarvinokCalculator {
 	PiecewiseQuasipolynomial sumConsumtion(PiecewiseQuasipolynomial expr, DomainSet invariant);
 	
 	PiecewiseQuasipolynomial upperBound(PiecewiseQuasipolynomial value, DomainSet invariant);
+
+	PiecewiseQuasipolynomial boundIfHasFold(PiecewiseQuasipolynomial expression);
 }

@@ -13,6 +13,8 @@ public class ConstraintsInfo {
 	 */
 	private Set<String> references = new TreeSet<String>();
 	
+	private boolean class_called_changed_during_loop;
+	
 	public void addVariable(String var) {
 		variables.add(var);
 	}
@@ -46,5 +48,13 @@ public class ConstraintsInfo {
 	
 	public Set<String> getReferences() {
 		return references;
+	}
+
+	public boolean checkIfClassCalledChangedDuringLoop() {
+		return class_called_changed_during_loop;
+	}
+
+	public void setClassCalledChangedDuringLoop(boolean classCalledChangedDuringLoop) {
+		this.class_called_changed_during_loop = classCalledChangedDuringLoop;
 	}
 }

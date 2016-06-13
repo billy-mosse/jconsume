@@ -57,6 +57,8 @@ public class EscapeBasedMemorySummaryFactory implements MemorySummaryFactory {
 
 		Set<Node> returned = new HashSet<Node>(escapeSummary.getReturnedNodes());
 		returned.retainAll(escaping);
+		
+		//Hay dos particiones para esc. Por el return value, y globally
 		for (Node n : returned) {
 			summary.returnPartition(new PointsToHeapPartition(n, false));
 		}

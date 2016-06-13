@@ -110,6 +110,8 @@ public abstract class AbstractSpecCompiler implements SpecCompiler {
 				// Podria usar el constructor...
 				invariant.addAllInductives(info.getinductives());
 				
+				invariant.setClassCalledChangedDuringLoop(info.checkIfClassCalledChangedDuringLoop());
+				
 				// Obtenemos un identificador para el invariante que estamos procesando
 				InvariantId invariantId = site.apply(new SiteSpecificationVisitor<InvariantId>() {
 
@@ -144,10 +146,15 @@ public abstract class AbstractSpecCompiler implements SpecCompiler {
 					actualInvariant.setConstraints(domainUnifier.unify(actualInvariant.getConstraints(), invariant.getConstraints()));
 					actualInvariant.addAllVariables(invariant.getVariables());
 					actualInvariant.addAllParameters(invariant.getParameters());
+					
+					actualInvariant.setClassCalledChangedDuringLoop(invariant.checkIfClassCalledChangedDuringLoop());
 				} else {
 						// Si no habia nada y tengo requires para el metodo, los agrego al invariante
 					if (requirementsInvariant != null && StringUtils.isNotBlank(requirementsInvariant.getConstraints())) {
 						invariant.setConstraints(domainUnifier.unify(requirementsInvariant.getConstraints(), invariant.getConstraints()));
+						
+						//no estoy seguro de si hace falta esto.
+						invariant.setClassCalledChangedDuringLoop(requirementsInvariant.checkIfClassCalledChangedDuringLoop());
 					}
 					provider.putInvariant(invariantId, invariant);
 				}
@@ -170,6 +177,17 @@ public abstract class AbstractSpecCompiler implements SpecCompiler {
 	protected ConstraintsInfo processConstraints(SiteSpecification site, Set<String> parameters) {
 		String constraints = site.getConstraints();
 		
+		
+		boolean class_called_changed_during_loop = false;
+		if(site instanceof CallSiteSpecification)
+		{
+			String annotations = ((CallSiteSpecification)site).getAnnotations();
+			if (annotations.equals("class_called_changed_during_loop"))
+			{
+				class_called_changed_during_loop = true;
+			}
+			
+		}
 		ConstraintsInfo info = new ConstraintsInfo();
 		
 		if (StringUtils.isNotBlank(site.getConstraints())) {
@@ -184,6 +202,8 @@ public abstract class AbstractSpecCompiler implements SpecCompiler {
 		}
 		// Ojo!! Habria que borrarlas, ver lo de $t
 		// info.getinductives().removeAll(parameters);
+		
+		info.setClassCalledChangedDuringLoop(class_called_changed_during_loop);
 		return info;
 	}
 
@@ -224,6 +244,7 @@ public abstract class AbstractSpecCompiler implements SpecCompiler {
 			requirementsInfo = processConstraints(requirements, methodSpec.getParameters());
 			requirementsInvariant = new DomainSet(requirements);
 			requirementsInvariant.addAllParameters(methodSpec.getParameters());
+			
 		}
 		
 		if (requirementsInfo != null && !requirementsInfo.getVariables().isEmpty()) {

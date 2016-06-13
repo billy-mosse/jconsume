@@ -44,6 +44,11 @@ public class OptimizedCalculator implements BarvinokCalculator {
 		boolean esCero1 = (esConstante1 && value1.equals(0L));
 		boolean tieneConstraints1 = StringUtils.isNotBlank(expr1.getPieces().get(0).getConstraints());
 		
+		if(tieneConstraints1)
+		{
+			log.debug("Tiene constraints");
+		}
+		
 		PiecewiseQuasipolynomial expr2 = (PiecewiseQuasipolynomial) expression2;
 		Long value2 = BarvinokUtils.toConstant(expr2); 
 		boolean esConstante2 = (value2 != null);
@@ -86,13 +91,18 @@ public class OptimizedCalculator implements BarvinokCalculator {
 			boolean tieneConstraints = StringUtils.isNotBlank(expr.getPieces().get(0).getConstraints());
 			
 			//BILLY: esto es lo mismo que preguntar !esCero || tieneConstraints
-			//El !esConstante esta de mas, porque !esConstante implica !esCero.
+			//El !esConstante esta de mas, porque !esConstante implica !esCero. (Por contrarreciproco)
 			if (!esConstante || !esCero || tieneConstraints) {
 				finalExpressions.add(e);
 			}
 			else
 			{
 				log.debug("No tiene constraints");
+			}
+			
+			if(!esConstante && !tieneConstraints)
+			{
+				log.debug("No entiendo como esto puege llegar a pasar");
 			}
 		}
 		
@@ -178,5 +188,10 @@ public class OptimizedCalculator implements BarvinokCalculator {
 
 	public BarvinokCalculator getTarget() {
 		return target;
+	}
+
+	@Override
+	public PiecewiseQuasipolynomial boundIfHasFold(PiecewiseQuasipolynomial pol) {
+		return BarvinokUtils.boundIfHasFold(pol);
 	}
 }

@@ -43,6 +43,17 @@ public class BarvinokCalculatorAdapter implements CountingTheory, SymbolicCalcul
 	}
 
 	
+	public ParametricExpression boundIfHasFold(ParametricExpression expression)
+	{
+		PiecewiseQuasipolynomial pol = new PiecewiseQuasipolynomial();
+		pol = ((BarvinokParametricExpression)expression).expr;
+		
+		PiecewiseQuasipolynomial result = calculator.boundIfHasFold(pol);
+
+		return expressionFactory.polynomial(result);
+	}
+	
+	
 	//BILLY
 	//Todavia no lo implemento pero quiero debuguear	
 	//A diferencia de add, substract solo tiene sentido aplicarselo a dos epxresiones
@@ -101,12 +112,32 @@ public class BarvinokCalculatorAdapter implements CountingTheory, SymbolicCalcul
 		return expressionFactory.polynomial(result);
 	}
 
+	
+	
+	
+	
 	@Override
-	public ParametricExpression summate(ParametricExpression target, Statement stmt) {
+	public ParametricExpression summateIfClassCalledChangedDuringLoop(ParametricExpression target, ParametricExpression totalResiduals, Statement stmt) {
 		PiecewiseQuasipolynomial polynomial = ((BarvinokParametricExpression) target).expr;
 		DomainSet inv = invariantProvider.getInvariant(stmt, InvariantProvider.Operation.SUMMATE);
-		PiecewiseQuasipolynomial result = null;
-		
+		if(inv.checkIfClassCalledChangedDuringLoop())
+			return summateWithInvariant(target, stmt, inv);
+		else
+			return totalResiduals;
+	}
+	
+	
+	
+	@Override
+	public ParametricExpression summate(ParametricExpression target, Statement stmt) {		
+		DomainSet inv = invariantProvider.getInvariant(stmt, InvariantProvider.Operation.SUMMATE);
+		return summateWithInvariant(target,stmt, inv);
+	}
+	
+	
+	public ParametricExpression summateWithInvariant(ParametricExpression target, Statement stmt, DomainSet inv) {
+		PiecewiseQuasipolynomial polynomial = ((BarvinokParametricExpression) target).expr;
+		PiecewiseQuasipolynomial result = null;		
 		//FIXME esto es un hack para un ejemplo. Hacer un adapter con un file de rules para sobreescribir expresiones
 		if(stmt.belongsTo().getDeclaringClass().getName().contains("ar.uba.dc.jolden.mst.Vertex") && stmt.belongsTo().getName().equals("<init>")) {
 			result = new PiecewiseQuasipolynomial();
@@ -126,6 +157,10 @@ public class BarvinokCalculatorAdapter implements CountingTheory, SymbolicCalcul
 		return expressionFactory.polynomial(result);
 	}
 
+	
+	
+	
+	
 	@Override
 	public ParametricExpression supreme(ParametricExpression e1, ParametricExpression e2) {
 		PiecewiseQuasipolynomial polynomial1 = ((BarvinokParametricExpression) e1).expr;

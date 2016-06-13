@@ -18,6 +18,8 @@ import ar.uba.dc.barvinok.expression.PiecewiseQuasipolynomial;
  * Para la opreacion {@link BarvinokCalculator#sumConsumtion(PiecewiseQuasipolynomial, DomainSet)} asi como la de {@link BarvinokCalculator#upperBound(PiecewiseQuasipolynomial, DomainSet)} 
  * devuelve la expresion recibida como parametro.
  * 
+ * Para la operacion {@link BarvinokCalculator#boundIfHasFold(PiecewiseQuasipolynomial)} devuelve la expresion recibida, si no tiene folds.
+ * 
  * Los operadores de suma y maximo operan normalmente.
  * 
  * Esta implementacion permite contar cuantos news existen en el codigo y ademas medir los tiempos que insume el uso de otras
@@ -65,6 +67,7 @@ public class ConstantCalculator implements BarvinokCalculator {
 		
 		return BarvinokFactory.constant(result);
 	}
+	
 	
 	
 	
@@ -130,5 +133,13 @@ public class ConstantCalculator implements BarvinokCalculator {
 	public PiecewiseQuasipolynomial upperBound(PiecewiseQuasipolynomial value, DomainSet invariant) {
 		log.debug("upperBound(" + value + ", " + invariant + ") = " + value);
 		return value.clone();
+	}
+
+	@Override
+	public PiecewiseQuasipolynomial boundIfHasFold(PiecewiseQuasipolynomial pol) {
+		if (BarvinokUtils.hasFoldPiece(pol))
+			throw new RuntimeException("Intentamos acotar una expresion [" + pol + "] con un maximo");
+		else
+			return pol;
 	}
 }

@@ -57,7 +57,8 @@ public class PiecewiseQuasipolynomial {
 		}
 
 		return clone;
-	}
+	}	
+	
 	
 	public void addParameter(String param) {
 		parameters.add(param);

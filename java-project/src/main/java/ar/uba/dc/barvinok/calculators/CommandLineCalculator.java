@@ -15,6 +15,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import ar.uba.dc.analysis.memory.expression.ParametricExpression;
 import ar.uba.dc.barvinok.BarvinokCalculator;
 import ar.uba.dc.barvinok.BarvinokException;
 import ar.uba.dc.barvinok.BarvinokExecutor;
@@ -346,7 +347,16 @@ public class CommandLineCalculator implements BarvinokCalculator {
 		
 		PiecewiseQuasipolynomial[] polynomials = new PiecewiseQuasipolynomial[2];
 
-		polynomials[0] = e1HasFoldPiece ? BarvinokUtils.upperBoundToRemoveFolds(expression1) : expression1;
+		
+		polynomials[0] = e1HasFoldPiece ? BarvinokUtils.lowerBoundToRemoveFolds(expression1) : expression1;
+		
+
+		// Aunque es el sustraendo, como la cuenta es max(M1-E1,...,Mn-En) + E1 + ... + En
+		//Si E1 tiene fold y lo acotamos por arriba por cota(E1), pueden pasar dos opciones:
+		//1) Que M1-E1 sea el maximo, con lo cual cota(E1) se cancela con la cota(E1) que sumamos
+		//2) Que no se realice, con lo cual estamos sumando cota(E1) >= E1
+		
+		//Lo que hay que hacer es que si estamos restando M1-E1, y acotamos E1, tenemos que acordarnos de acotarlo tambien en la suma
 		polynomials[1] = e1HasFoldPiece ? BarvinokUtils.lowerBoundToRemoveFolds(expression1) : expression2;
 		
 		PiecewiseQuasipolynomial result = null;
@@ -803,5 +813,10 @@ public class CommandLineCalculator implements BarvinokCalculator {
 
 	public void setBindingValidator(BindingValidator bindingValidator) {
 		this.bindingValidator = bindingValidator;
+	}
+
+	@Override
+	public PiecewiseQuasipolynomial boundIfHasFold(PiecewiseQuasipolynomial polynomial_with_max) {
+		return BarvinokUtils.boundIfHasFold(polynomial_with_max);
 	}
 }

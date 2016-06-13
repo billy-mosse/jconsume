@@ -127,10 +127,11 @@ public class IntraproceduralAnalysis {
 	public MemorySummary run(SootMethod method) {
 		log.debug(" |- Intraprocedural Analysis for: " + method.toString());
 		
-		if(method.toString() == "<ar.uba.dc.paper.Program4: ar.uba.dc.util.List test(ar.uba.dc.util.List,ar.uba.dc.paper.Op)>")
+		if(method.toString()== "<ar.uba.dc.jolden.em3d.Node: ar.uba.dc.jolden.em3d.Node[] fillTable(int,int)>")
 		{
-			log.debug("Hola");
+			log.debug("Hola! Soy el metodo de Em3d cuyo invariante esta mal");
 		}
+		
 		MemorySummary summary = summaryFactory.initialSummary(method);
 		
 		/*
@@ -179,6 +180,8 @@ public class IntraproceduralAnalysis {
 		log.debug(" |- Building Method abstraction");
 		// Generamos una abstraccion del body de un metodo util para poder procesar el analisis.
 		// De esta forma podemos decorar los statements con lo necesario para los analisis auxiliares
+		
+		//Creo que por cada new agrega una instruccion extra de "new" para el contador de objetos. Idem con las calls
 		MethodBody abstraction = methodDecorator.decorate(method);
 
 		log.debug(" |- Processing new statements");
@@ -240,6 +243,16 @@ public class IntraproceduralAnalysis {
 			if (log.isDebugEnabled()) {
 				log.debug(" | |- Processing statement " + callStmt.toString());
 			}
+
+			/*if(callStmt.toString()== "ar.uba.dc.paper.Program3 ar.uba.dc.util.List map(ar.uba.dc.util.List,ar.uba.dc.paper.Op): o = virtualinvoke op.<ar.uba.dc.paper.Op: java.lang.Object apply(java.lang.Object)>(li) (3)")
+			{
+				log.debug("Hola soy apply!");
+			}*/
+			
+			
+			String s = callStmt.toString();
+			Boolean frenar = (s.equals("ar.uba.dc.basic.SubstractWithFolds java.lang.Integer f(int): virtualinvoke op.<ar.uba.dc.basic.IntContainer: java.lang.Integer apply(int)>(n) (3)"));
+
 			
 			CallSummaryInContext callSummary = interprocedural.analyseCall(callStmt);
 			
