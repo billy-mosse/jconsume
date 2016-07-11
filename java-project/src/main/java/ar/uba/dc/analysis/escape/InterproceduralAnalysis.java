@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -22,9 +23,17 @@ import ar.uba.dc.analysis.common.AbstractInterproceduralAnalysis;
 import ar.uba.dc.analysis.common.MethodInformationProvider;
 import ar.uba.dc.analysis.common.SummaryRepository;
 import ar.uba.dc.analysis.common.SummaryWriter;
+import ar.uba.dc.analysis.common.code.MethodDecorator;
 import ar.uba.dc.analysis.escape.summary.repository.RAMSummaryRepository;
 import ar.uba.dc.soot.Box;
 import ar.uba.dc.util.Timer;
+
+import ar.uba.dc.invariant.InvariantProvider;
+
+import java.util.List;
+
+
+import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
 
 public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis implements CallAnalyzer {
 	
@@ -36,11 +45,17 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 	// de los metodos no analizables que se fueron utilizando.
 	protected RAMSummaryRepository data;					// SootMethod -> summary
 	
+	protected Set<IntermediateRepresentationMethod> ir_methods;
+	
 	// Tiene los summaries de aquellos metodos no analizados que se utilizaron durante
 	// el analisis
 	protected Map<SootMethod, EscapeSummary> unanalysed;	// SootMethod -> summary
 	
 	protected SummaryWriter<EscapeSummary> summaryWriter;
+	
+	protected SummaryWriter<IntermediateRepresentationMethod> irWriter;
+	
+	
 	
 	protected SummaryApplier summaryApplier;
 	
@@ -49,6 +64,10 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 	protected MethodInformationProvider methodInformationProvider;
 	
 	protected boolean writeResults;
+	
+	protected boolean writeIntermediateLanguageRepresentation;
+	
+	protected IntermediateLanguageRepresentationBuilder IRWriter;
 	
 	protected boolean writeUnanalysedSummaries;
 	
@@ -62,6 +81,9 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 	
 	protected String outputFolder;
 	
+	protected MethodDecorator methodDecorator;
+	
+
 	protected PolymorphismResolver polymorphismResolver;
 	
 	protected boolean trustInterfaceSummaries;
@@ -71,6 +93,9 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 	private boolean simplifySummary;
 	
 	private SummarySimplifier simplifier;
+	
+	
+	protected InvariantProvider invariantProvider;
 	
 	@Override
 	protected void doAnalysis() {
@@ -84,6 +109,15 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 		
 		t.stop();
 		log.info("Escape Analysis finished. Took " + t.getElapsedTime() + " (" + t.getElapsedSeconds() + " seconds)");
+		
+		if(writeIntermediateLanguageRepresentation)
+		{
+			log.info("Writing intermediate language representation");
+			IRWriter = new IntermediateLanguageRepresentationBuilder(data, order, repository, methodInformationProvider, methodDecorator, invariantProvider, outputFolder);
+			ir_methods = IRWriter.buildIntermediateLanguageRepresentation();
+			
+			internalWriteIntermediateRepresentation();
+		}		
 		
 		if (writeResults) {
 			
@@ -131,13 +165,13 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 		// fixpoint iterations
 		while (!queue.isEmpty()) {
 			SootMethod m = queue.first();
-			queue.remove(m);
+			queue.remove(m); 
 			if (analyseKnownMethods || !repository.contains(m)) {
 				EscapeSummary newSummary = newInitialSummary(m);
 				EscapeSummary oldSummary = data.get(m);
 	
 				if (nb.containsKey(m)) {
-					nb.put(m, new Integer(nb.get(m).intValue() + 1));
+					nb.put(m, new Integer(nb.get(m).intValue() + 1)); //Le suma 1.
 				} else {
 					nb.put(m, new Integer(1));
 				}
@@ -150,7 +184,8 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 					if (!oldSummary.equals(destBox.getValue())) {
 						// summary for m changed!
 						data.put(m, destBox.getValue());
-						queue.addAll(directedCallGraph.getPredsOf(m));
+						List<SootMethod> l = directedCallGraph.getPredsOf(m);
+						queue.addAll(l); //BILLY: por que los agrega si ya estan?
 					}
 				} else {
 					log.info(" |- Avoid processing " + m.toString() + ". Recursion Watchdog is set to [" + recursionWatchDog + "] and the method has been processed [" + (nb.get(m) - 1) + "] times");
@@ -258,10 +293,29 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 		}
 	}
 	
+	
+	protected void internalWriteIntermediateRepresentation() {
+		
+		for (IntermediateRepresentationMethod ir_method : ir_methods) {
+			irWriter.write(ir_method);
+		}
+
+		if (writeUnanalysedSummaries) {
+			for (EscapeSummary summary : unanalysed.values()) {
+				log.info(" |- Writing summary of unanalyzed method: " + summary.getTarget());
+				summaryWriter.write(summary);
+			}
+		}
+	}
+	
 	public void setSummaryWriter(SummaryWriter<EscapeSummary> writer) {
 		this.summaryWriter = writer; 
 	}
 
+	public void setIrWriter(SummaryWriter<IntermediateRepresentationMethod> ir_writer) {
+		this.irWriter = ir_writer; 
+	}
+	
 	public void setSummaryApplier(SummaryApplier summaryApplier) {
 		this.summaryApplier = summaryApplier;
 	}
@@ -272,7 +326,11 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 	
 	public void setWriteResults(boolean writeResults) {
 		this.writeResults = writeResults;
-	}
+	}	
+	
+	public void setWriteIntermediateLanguageRepresentation(boolean writeIntermediateLanguageRepresentation) {
+		this.writeIntermediateLanguageRepresentation = writeIntermediateLanguageRepresentation;
+	}	
 
 	public void setWriteUnanalysedSummaries(boolean writeUnanalysedSummaries) {
 		this.writeUnanalysedSummaries = writeUnanalysedSummaries;
@@ -324,5 +382,21 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 
 	public void setData(RAMSummaryRepository data) {
 		this.data = data;
+	}	
+
+	public MethodDecorator getMethodDecorator() {
+		return methodDecorator;
+	}
+
+	public void setMethodDecorator(MethodDecorator methodDecorator) {
+		this.methodDecorator = methodDecorator;
+	}
+
+	public InvariantProvider getInvariantProvider() {
+		return invariantProvider;
+	}
+
+	public void setInvariantProvider(InvariantProvider invariantProvider) {
+		this.invariantProvider = invariantProvider;
 	}
 }

@@ -1,9 +1,9 @@
-package ar.uba.dc.analysis.memory.code.impl;
+package ar.uba.dc.analysis.common.code.impl;
 
+import ar.uba.dc.analysis.common.code.NewStatement;
+import ar.uba.dc.analysis.common.code.StatementVisitor;
 import soot.SootMethod;
 import soot.jimple.Stmt;
-import ar.uba.dc.analysis.memory.code.NewStatement;
-import ar.uba.dc.analysis.memory.code.StatementVisitor;
 
 public class DefaultNewStatement extends AbstractStatement implements NewStatement {
 
@@ -14,5 +14,10 @@ public class DefaultNewStatement extends AbstractStatement implements NewStateme
 	@Override
 	public <T> T apply(StatementVisitor<T> visitor) {
 		return visitor.visit(this);
+	}
+
+	@Override
+	public String getIntermediateRepresentationName() {
+		return "new";
 	}
 }

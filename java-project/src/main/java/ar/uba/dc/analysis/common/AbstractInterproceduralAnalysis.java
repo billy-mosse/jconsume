@@ -40,7 +40,7 @@ public abstract class AbstractInterproceduralAnalysis {
 	protected void buildOrder() {
 		this.order = new HashMap<SootMethod, Integer>();
 		
-		//BILLY linear ordering of its vertices such that for every directed edge uv from vertex u to vertex v, u comes before v in the ordering
+		//BILLY linear ordering of its vertices such that for every directed edge uv from vertex u to vertex v, v comes before u in the ordering
 		Orderer<SootMethod> o = new PseudoTopologicalOrderer<SootMethod>();
 		Integer i = 0;
 		for (SootMethod m : o.newList(directedCallGraph, true)) {

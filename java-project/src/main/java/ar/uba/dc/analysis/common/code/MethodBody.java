@@ -1,4 +1,4 @@
-package ar.uba.dc.analysis.memory.code;
+package ar.uba.dc.analysis.common.code;
 
 import java.util.LinkedList;
 import java.util.List;

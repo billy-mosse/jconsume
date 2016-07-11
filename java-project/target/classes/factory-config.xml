@@ -86,6 +86,7 @@
 			
 			<interprocedural config-class="ar.uba.dc.analysis.escape.InterproceduralAnalysis"
 							 writeResults="${escape.summary.all.enabled}" writeUnanalysedSummaries="${escape.summary.unanalized.enabled}" 
+ 							 writeIntermediateLanguageRepresentation="${memory.summary.all.enabled}"
 							 removeLocals="${escape.summary.remove-variables}" 
 							 sensitivity="${escape.sensitivity}"
 							 analyseKnownMethods="${escape.analyse.known.methods}"
@@ -96,6 +97,13 @@
 							 simplifySummary="${escape.simplify.summary}">
 				<data config-class="ar.uba.dc.analysis.escape.summary.repository.RAMSummaryRepository" config-factory="custom" config-ref-to="analysis.escape.repositories.ram" />
 				<summaryWriter config-class="ar.uba.dc.analysis.escape.summary.io.writer.ChainWriter" config-factory="container" config-source="analysis.escape.writers" config-select-key="escape.summary.printer" config-default="null" config-scope="singleton" />
+
+
+				<irWriter config-class="ar.uba.dc.analysis.escape.summary.io.writer.ChainWriter" config-factory="container" config-source="analysis.escape.writers" config-select-key="escape.summary.printer" config-default="irxml" config-scope="singleton" />
+
+
+				<methodDecorator config-class="ar.uba.dc.analysis.common.code.impl.DefaultMethodDecorator" />
+				<invariantProvider config-class="ar.uba.dc.invariant.InvariantProvider" config-factory="custom" config-ref-to="invariants.provider.${invariants.provider}" />
 				<summaryApplier config-class="ar.uba.dc.analysis.escape.summary.DefaultSummaryApplier" sensitivity="${escape.sensitivity}" combineCapturedNodes="${escape.interprocedural.include.captured.nodes.from.callee.into.caller}">
 					<mapper config-class="ar.uba.dc.analysis.escape.summary.DefaultInterproceduralMapper" />
 					<combiner config-class="ar.uba.dc.analysis.escape.summary.DefaultSummaryCombiner" />
@@ -133,6 +141,11 @@
 				<xml config-class="ar.uba.dc.analysis.escape.summary.io.writer.XMLWriter">
 					<locationStrategy config-class="ar.uba.dc.util.location.method.${escape.summary.output.layout}LocationStrategy" extension=".xml" basePath="${escape.summary.output.dir}" />
 				</xml>
+
+				<irxml config-class="ar.uba.dc.analysis.common.intermediate_representation.io.writer.XMLWriter">
+					<locationStrategy config-class="ar.uba.dc.util.location.method.${escape.summary.output.layout}LocationStrategy" extension=".xml" basePath="${escape.summary.output.dir}" />
+				</irxml>
+
 				<dot config-class="ar.uba.dc.analysis.escape.summary.io.writer.GraphvizWriter" leaveSourceFile="${escape.summary.printer.dot.leave-source-file}" graphSizeLimit="${escape.summary.printer.dot.max-graph-size}">
 					<locationStrategy config-class="ar.uba.dc.util.location.method.${escape.summary.output.layout}LocationStrategy" extension=".dot" basePath="${escape.summary.output.dir}" />
 				</dot>
@@ -160,7 +173,7 @@
 					<expressionFactory config-class="ar.uba.dc.analysis.memory.impl.BarvinokParametricExpressionFactory" />
 					<invariantProvider config-class="ar.uba.dc.invariant.InvariantProvider" config-factory="custom" config-ref-to="invariants.provider.${invariants.provider}" />
 				</summaryFactory>
-				<methodDecorator config-class="ar.uba.dc.analysis.memory.code.impl.DefaultMethodDecorator" />
+				<methodDecorator config-class="ar.uba.dc.analysis.common.code.impl.DefaultMethodDecorator" />
 				<countingTheory config-class="ar.uba.dc.analysis.memory.CountingTheory" config-factory="custom" config-ref-to="analysis.memory.barvinok-calculator-adapter" />
 				<lifeTimeOracle config-class="ar.uba.dc.analysis.memory.impl.summary.EscapeBasedLifeTimeOracle" sensitivity="${escape.sensitivity}">
 					<invariantProvider config-class="ar.uba.dc.invariant.InvariantProvider" config-factory="custom" config-ref-to="invariants.provider.${invariants.provider}" />

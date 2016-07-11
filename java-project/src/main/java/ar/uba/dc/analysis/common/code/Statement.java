@@ -1,4 +1,4 @@
-package ar.uba.dc.analysis.memory.code;
+package ar.uba.dc.analysis.common.code;
 
 import soot.SootMethod;
 import soot.jimple.Stmt;
@@ -22,4 +22,6 @@ public interface Statement {
 	 * metodo debemos retornar un 2 (el contador es base 0).
 	 */
 	Long getCounter();
+
+	public String getIntermediateRepresentationName();
 }

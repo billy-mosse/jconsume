@@ -1,6 +1,6 @@
-package ar.uba.dc.analysis.memory.code.impl;
+package ar.uba.dc.analysis.common.code.impl;
 
-import ar.uba.dc.analysis.memory.code.Statement;
+import ar.uba.dc.analysis.common.code.Statement;
 import soot.SootMethod;
 import soot.jimple.Stmt;
 

@@ -1,7 +1,7 @@
-package ar.uba.dc.analysis.memory.code.impl;
+package ar.uba.dc.analysis.common.code.impl;
 
-import ar.uba.dc.analysis.memory.code.CallStatement;
-import ar.uba.dc.analysis.memory.code.StatementVisitor;
+import ar.uba.dc.analysis.common.code.CallStatement;
+import ar.uba.dc.analysis.common.code.StatementVisitor;
 import soot.SootMethod;
 import soot.jimple.Stmt;
 
@@ -37,5 +37,10 @@ public class DefaultCallStatement extends AbstractStatement implements CallState
 	@Override
 	public CallStatement virtualInvoke(SootMethod callee) {
 		return new DefaultCallStatement(belongsTo, statement, counter, calledMethod, callee);
+	}
+
+	@Override
+	public String getIntermediateRepresentationName() {
+		return this.toString();
 	}
 }
