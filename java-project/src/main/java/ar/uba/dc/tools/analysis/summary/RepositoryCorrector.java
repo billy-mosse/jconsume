@@ -19,6 +19,7 @@ import soot.jimple.toolkits.callgraph.EdgePredicate;
 import soot.jimple.toolkits.callgraph.ReachableMethods;
 import soot.tagkit.BytecodeOffsetTag;
 import soot.tagkit.LineNumberTag;
+import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
 import ar.uba.dc.analysis.escape.EscapeSummary;
 import ar.uba.dc.analysis.escape.summary.io.reader.XMLReader;
 import ar.uba.dc.analysis.escape.summary.io.writer.XMLWriter;
@@ -156,6 +157,22 @@ public class RepositoryCorrector extends BodyTransformer {
 					@Override
 					public String getLocation(SootMethod method) {
 						return destPath;
+					}
+					
+					@Override
+					public String getXMLLocation(IntermediateRepresentationMethod method) {
+						throw new java.lang.UnsupportedOperationException();
+
+					}
+
+					@Override
+					public String getBasePath() {
+						throw new java.lang.UnsupportedOperationException();
+					}
+
+					@Override
+					public String getHumanReadableLocation(IntermediateRepresentationMethod ir_method) {
+						throw new java.lang.UnsupportedOperationException();
 					}
 				};
 				writer.setLocationStrategy(strategy);

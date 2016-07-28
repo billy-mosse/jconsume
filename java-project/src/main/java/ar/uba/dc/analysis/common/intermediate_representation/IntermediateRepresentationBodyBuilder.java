@@ -32,7 +32,8 @@ public class IntermediateRepresentationBodyBuilder {
 		Line line = new Line(stmt);
 		DomainSet inv = invariantProvider.getInvariant(stmt);
 		log.debug("Line " + line.toString() + " has the following invariant: " + inv.toString());
-		line.setInvariant(inv);
+		line.setInvariant(inv);	
+		
 		return line;
 	}
 	//TODO: agregar al .spec lo que falta

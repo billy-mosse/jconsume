@@ -2,6 +2,9 @@ package ar.uba.dc.util.location;
 
 import soot.SootMethod;
 
+import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
+
+
 /**
  * Estrategia de busqueda de un archivo por metodo. 
  * 
@@ -28,4 +31,11 @@ public interface MethodLocationStrategy {
 	 * El contenido del archivo dependera de lo que se este buscando.
 	 */
 	public String getLocation(SootMethod method);
+
+	//public String getIRLocation(SootMethod method);
+	public String getXMLLocation(IntermediateRepresentationMethod method);
+	
+	public String getBasePath();
+
+	public String getHumanReadableLocation(IntermediateRepresentationMethod ir_method);
 }

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
@@ -21,10 +22,12 @@ import soot.jimple.Stmt;
 import soot.jimple.toolkits.callgraph.Edge;
 import ar.uba.dc.analysis.common.AbstractInterproceduralAnalysis;
 import ar.uba.dc.analysis.common.MethodInformationProvider;
+import ar.uba.dc.analysis.common.SummaryReader;
 import ar.uba.dc.analysis.common.SummaryRepository;
 import ar.uba.dc.analysis.common.SummaryWriter;
 import ar.uba.dc.analysis.common.code.MethodDecorator;
 import ar.uba.dc.analysis.escape.summary.repository.RAMSummaryRepository;
+import ar.uba.dc.analysis.memory.PaperInterproceduralAnalysis;
 import ar.uba.dc.soot.Box;
 import ar.uba.dc.util.Timer;
 
@@ -52,10 +55,12 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 	protected Map<SootMethod, EscapeSummary> unanalysed;	// SootMethod -> summary
 	
 	protected SummaryWriter<EscapeSummary> summaryWriter;
-	
+
 	protected SummaryWriter<IntermediateRepresentationMethod> irWriter;
 	
+	private SummaryWriter<IntermediateRepresentationMethod> ihrWriter;
 	
+	protected SummaryReader<IntermediateRepresentationMethod> irReader;	
 	
 	protected SummaryApplier summaryApplier;
 	
@@ -66,8 +71,6 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 	protected boolean writeResults;
 	
 	protected boolean writeIntermediateLanguageRepresentation;
-	
-	protected IntermediateLanguageRepresentationBuilder IRWriter;
 	
 	protected boolean writeUnanalysedSummaries;
 	
@@ -97,6 +100,8 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 	
 	protected InvariantProvider invariantProvider;
 	
+	protected PaperInterproceduralAnalysis paperInterproceduralAnalysis;
+	
 	@Override
 	protected void doAnalysis() {
 		init();
@@ -113,8 +118,10 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 		if(writeIntermediateLanguageRepresentation)
 		{
 			log.info("Writing intermediate language representation");
-			IRWriter = new IntermediateLanguageRepresentationBuilder(data, order, repository, methodInformationProvider, methodDecorator, invariantProvider, outputFolder);
-			ir_methods = IRWriter.buildIntermediateLanguageRepresentation();
+			
+			//TODO: esto se podria hacer con factory
+			IntermediateLanguageRepresentationBuilder irBuilder = new IntermediateLanguageRepresentationBuilder(data, order, repository, methodInformationProvider, methodDecorator, invariantProvider, outputFolder);
+			ir_methods = irBuilder.buildIntermediateLanguageRepresentation();
 			
 			internalWriteIntermediateRepresentation();
 		}		
@@ -129,6 +136,8 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 			t.stop();
 			log.info("Writing finished. Took " + t.getElapsedTime() + " (" + t.getElapsedSeconds() + " seconds)");
 		}
+		
+		//this.paperInterproceduralAnalysis.doAnalysis(mainClass);
 	}
 
 	protected void init() {
@@ -297,16 +306,26 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 	protected void internalWriteIntermediateRepresentation() {
 		
 		for (IntermediateRepresentationMethod ir_method : ir_methods) {
+			//TODO: agregar los parametros o un mejor nombre para debug
+			log.info(" |- Writing summary of analyzed method: " + ir_method.getName());
 			irWriter.write(ir_method);
 		}
-
-		if (writeUnanalysedSummaries) {
-			for (EscapeSummary summary : unanalysed.values()) {
-				log.info(" |- Writing summary of unanalyzed method: " + summary.getTarget());
-				summaryWriter.write(summary);
-			}
+		
+		
+		for (IntermediateRepresentationMethod ir_method : ir_methods) {
+			//TODO: agregar los parametros o un mejor nombre para debug
+			log.info(" |- Writing summary of analyzed method: " + ir_method.getName());
+			ihrWriter.write(ir_method);
 		}
 	}
+	
+/*protected Set<IntermediateRepresentationMethod> internalReadIntermediateRepresentation() {
+		Set<IntermediateRepresentationMethod> ir_methods = new LinkedHashSet<IntermediateRepresentationMethod>();
+		for (IntermediateRepresentationMethod ir_method : ir_methods) {
+			irReader.read(ir_method);
+		}
+		return ir_methods;
+	}*/
 	
 	public void setSummaryWriter(SummaryWriter<EscapeSummary> writer) {
 		this.summaryWriter = writer; 
@@ -398,5 +417,21 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 
 	public void setInvariantProvider(InvariantProvider invariantProvider) {
 		this.invariantProvider = invariantProvider;
+	}
+
+	public PaperInterproceduralAnalysis getPaperInterproceduralAnalysis() {
+		return paperInterproceduralAnalysis;
+	}
+
+	public void setPaperInterproceduralAnalysis(PaperInterproceduralAnalysis paperInterproceduralAnalysis) {
+		this.paperInterproceduralAnalysis = paperInterproceduralAnalysis;
+	}
+
+	public SummaryWriter<IntermediateRepresentationMethod> getIhrWriter() {
+		return ihrWriter;
+	}
+
+	public void setIhrWriter(SummaryWriter<IntermediateRepresentationMethod> ihrWriter) {
+		this.ihrWriter = ihrWriter;
 	}
 }

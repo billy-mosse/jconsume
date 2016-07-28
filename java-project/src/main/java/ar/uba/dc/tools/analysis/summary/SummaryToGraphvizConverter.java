@@ -12,6 +12,7 @@ import org.apache.commons.logging.LogFactory;
 
 import soot.SootMethod;
 import ar.uba.dc.analysis.common.SummaryReader;
+import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
 import ar.uba.dc.analysis.escape.EscapeSummary;
 import ar.uba.dc.analysis.memory.impl.summary.EscapeBasedMemorySummary;
 import ar.uba.dc.config.Context;
@@ -94,6 +95,24 @@ public class SummaryToGraphvizConverter {
 				public String getLocation(SootMethod method) {
 					return destPath;
 				}
+				
+				@Override
+				public String getXMLLocation(IntermediateRepresentationMethod method) {
+					throw new java.lang.UnsupportedOperationException();
+
+				}
+
+				@Override
+				public String getBasePath() {
+					throw new java.lang.UnsupportedOperationException();
+				}
+				
+				@Override
+				public String getHumanReadableLocation(IntermediateRepresentationMethod ir_method) {
+					throw new java.lang.UnsupportedOperationException();
+				}
+				
+				
 			};
 			writer.setLocationStrategy(strategy);
 			writer.write(reader.read(new FileReader(summaryFile)));
@@ -123,6 +142,24 @@ public class SummaryToGraphvizConverter {
 				public String getLocation(SootMethod method) {
 					return destPath;
 				}
+
+				@Override
+				public String getXMLLocation(IntermediateRepresentationMethod method) {
+					throw new java.lang.UnsupportedOperationException();
+
+				}
+
+				@Override
+				public String getBasePath() {
+					throw new java.lang.UnsupportedOperationException();
+				}
+				
+				@Override
+				public String getHumanReadableLocation(IntermediateRepresentationMethod ir_method) {
+					throw new java.lang.UnsupportedOperationException();
+				}
+				
+				
 			};
 			writer.setLocationStrategy(strategy);
 			writer.write(reader.read(new FileReader(summaryFile)));

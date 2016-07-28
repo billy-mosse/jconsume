@@ -23,9 +23,9 @@ public class IntermediateRepresentationMethodBuilder {
 		this.irmethod.body = irbody_builder.build_body(methodBody);
 	}	
 	
-	public IntermediateRepresentationMethod buildMethod(MethodBody methodBody)
+	public IntermediateRepresentationMethod buildMethod(MethodBody methodBody, long order)
 	{
-		this.irmethod = new IntermediateRepresentationMethod(methodBody);
+		this.irmethod = new IntermediateRepresentationMethod(methodBody, order);
 		
 		//TODO: NO HACE FALTA PARSEAR. EL SOOTMETHOD YA TIENE TODO!!
 		

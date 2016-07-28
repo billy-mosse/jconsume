@@ -2,62 +2,55 @@ package ar.uba.dc.analysis.common.intermediate_representation;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import ar.uba.dc.analysis.common.Line;
 import ar.uba.dc.analysis.common.code.MethodBody;
-import ar.uba.dc.analysis.escape.IntermediateLanguageRepresentationBuilder;
-import ar.uba.dc.invariant.InvariantProvider;
-import soot.IntType;
-import soot.Local;
+import ar.uba.dc.soot.SootUtils;
 import soot.SootMethod;
-import soot.util.Chain;
 
 public class IntermediateRepresentationMethod {
 	
+protected String name;
 	
+	protected String type;
+	
+	protected Set<IntermediateRepresentationParameterWithType> parameters;
+	
+	protected IntermediateRepresentationMethodBody body;
+	
+	protected String returnType;
+	
+	protected long order;
+	
+	
+	
+	public IntermediateRepresentationMethod()
+	{
+		
+	}
 	private static Log log = LogFactory.getLog(IntermediateRepresentationMethod.class);
 
 	protected SootMethod target;
 	
-
-	private void assertLength(String[] v, int length, String fullString)
-	{
-		if (v.length != length)
-		{
-			throw new RuntimeException("size of vector should be 3. Check " + fullString + "for any errors. Or is there a case not considered?"); 
-		}
-	}
+	
 	
 	private void setParameters()
-	{
-
-		this.parameters = new HashSet<IntermediateRepresentationParameterWithType>();
-		
-		
+	{	
 		//TODO: esto esta horrible
-		List parameterTypes = new ArrayList(target.getParameterTypes());	
-		
-		
-		String lines[] = target.getActiveBody().toString().split("\\r?\\n");
-		
-		for (String line: lines)
-		{
-			for(int i = 0; i < parameterTypes.size(); i++)
-			{
-				String numbered_parameter ="@parameter" + i;
-				if(line.contains(numbered_parameter))
-				{
-					String parameter = line.split(" := ")[0].trim();
-					String parameterType = parameterTypes.remove(i).toString();
-					
-					this.parameters.add(new IntermediateRepresentationParameterWithType(parameter, parameterType));
-				}
-			}
+		this.parameters = new LinkedHashSet<IntermediateRepresentationParameterWithType>();
+		Set<IntermediateRepresentationParameter> s = SootUtils.getParameters(this.target, IntermediateRepresentationParameterWithType.class);
+		for(IntermediateRepresentationParameter p : s)
+		{			
+			this.parameters.add((IntermediateRepresentationParameterWithType)p);
 		}
+		
+		
 	}
 	
 	
@@ -72,11 +65,12 @@ public class IntermediateRepresentationMethod {
 	}
 	
 	
-	public IntermediateRepresentationMethod(MethodBody methodBody)
+	public IntermediateRepresentationMethod(MethodBody methodBody, long order)
 	{
 		//TODO: NO HACE FALTA PARSEAR. EL SOOTMETHOD YA TIENE TODO!!
 		
 		this.target = methodBody.belongsTo();
+		this.order = order;
 		
 
 		log.debug("____Construyendo " + target.toString());
@@ -111,25 +105,19 @@ public class IntermediateRepresentationMethod {
 			IntermediateRepresentationArgumentWithType arg = new IntermediateRepresentationArgumentWithType (arguments[i]);
 		}*/
 		
-		
-		
-		
-		
 	}
 	
 	
-	
-	protected String name;
-	
-	protected String type;
-	
-	protected Set<IntermediateRepresentationParameterWithType> parameters;
-	
-	protected IntermediateRepresentationMethodBody body;
-	
-	protected String returnType;
-	
-	
+	public long getOrder() {
+		return order;
+	}
+
+
+	public void setOrder(long order) {
+		this.order = order;
+	}
+
+
 	//TODO: terminar
 	public String toFormattedString()
 	{
@@ -166,5 +154,27 @@ public class IntermediateRepresentationMethod {
 	public SootMethod getTarget() {
 		// TODO Auto-generated method stub
 		return this.target;
+	}
+
+
+	public String toHumanReadableString() {
+		StringBuffer sbf = new StringBuffer();
+        
+        //StringBuffer contents
+        sbf.append(this.name);
+        //new line
+        
+        Set<Line> lines = this.body.getLines(); 
+        for(Line line : lines)
+        {
+            sbf.append(System.getProperty("line.separator"));
+            //los NEW ya se duplicaron antes
+            //TODO: duplicar los new
+        	sbf.append(line.toHumanReadableString());
+        }
+        //second line
+        return sbf.toString();
+        
+        
 	}
 }

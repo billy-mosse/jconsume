@@ -22,6 +22,7 @@ public abstract class AbstractInterproceduralAnalysis {
 	protected CallGraph callGraph;
 	protected DirectedCallGraph directedCallGraph;
 	protected Map<SootMethod, Integer> order;
+	protected String mainClass; 
 	
 	public void run(CallGraph cg, SootMethodFilter filter, SootMethod head) {
 		Timer t = new Timer();
@@ -31,6 +32,7 @@ public abstract class AbstractInterproceduralAnalysis {
 		this.directedCallGraph = new DirectedCallGraph(cg, filter, head);
 		t.stop();
 		log.debug("Building directed callgraph took " + t.getElapsedTime() + " (" + t.getElapsedSeconds() + " seconds)");
+		this.mainClass = head.getDeclaringClass().toString();
 		
 		// construct reverse pseudo topological order on filtered methods
 		buildOrder();

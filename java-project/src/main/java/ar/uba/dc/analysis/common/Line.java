@@ -10,6 +10,11 @@ public class Line {
 	private DomainSet invariant;	
 	private Invocation invocation;	
 	
+	public Line()
+	{
+		
+	}
+	
 	public Line(Statement stmt) {
 		this.label = stmt.getCounter();
 		this.invocation = new Invocation(stmt);		
@@ -33,5 +38,10 @@ public class Line {
 	}
 	public void setInvocation(Invocation invocation) {
 		this.invocation = invocation;
+	}
+
+	public String toHumanReadableString() {
+		String s =  this.label + ", " + this.invocation.toHumanReadableString() + ", " + this.invariant.toHumanReadableString();
+		return String.format("<%s>", s);
 	}
 }

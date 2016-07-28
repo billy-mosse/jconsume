@@ -1,14 +1,8 @@
 package ar.uba.dc.analysis.common.intermediate_representation;
 
-public class IntermediateRepresentationParameter {
-	protected String name;
+public interface IntermediateRepresentationParameter {
 
-	public String getName() {
-		return name;
-	}
+	public String getName();
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
+	public void setName(String name);
 }

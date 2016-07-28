@@ -1,5 +1,6 @@
 package ar.uba.dc.util.location.method;
 
+import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
 import soot.SootMethod;
 
 /**
@@ -13,5 +14,16 @@ public class PackageLocationStrategy extends AbstractMethodLocationStrategy {
 
 	public String getLocation(SootMethod method) {
 		return processClass(method.getDeclaringClass()) + "/" + processMethodSignature(method.getSubSignature()) + getExtension();
+	}
+	
+	@Override
+	public String getXMLLocation(IntermediateRepresentationMethod method) {
+		throw new java.lang.UnsupportedOperationException();
+
+	}
+	
+	@Override
+	public String getHumanReadableLocation(IntermediateRepresentationMethod ir_method) {
+		throw new java.lang.UnsupportedOperationException();
 	}
 }
