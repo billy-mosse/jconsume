@@ -1,6 +1,7 @@
 package ar.uba.dc.analysis.common.intermediate_representation;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -16,21 +17,31 @@ import ar.uba.dc.analysis.memory.IntraproceduralAnalysis;
 import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.invariant.InvariantProvider;
 import ar.uba.dc.invariant.spec.SpecInvariantProvider;
+import soot.SootMethod;
+import soot.jimple.toolkits.callgraph.CallGraph;
+import soot.jimple.toolkits.callgraph.Edge;
 
 public class IntermediateRepresentationBodyBuilder {
 	private static Log log = LogFactory.getLog(IntraproceduralAnalysis.class);
 	
 	protected InvariantProvider invariantProvider;
-	public IntermediateRepresentationBodyBuilder(InvariantProvider invariantProvider)
+
+	private CallGraph callGraph;
+	public IntermediateRepresentationBodyBuilder(InvariantProvider invariantProvider, CallGraph callGraph)
 	{
 		this.invariantProvider = invariantProvider;
+		this.callGraph = callGraph;
 	}
 
 	
 	public Line buildLineFromStatement(Statement stmt)
 	{
-		Line line = new Line(stmt);
+		Line line = new Line(stmt, this.callGraph);
+		
+		
+		
 		DomainSet inv = invariantProvider.getInvariant(stmt);
+		
 		log.debug("Line " + line.toString() + " has the following invariant: " + inv.toString());
 		line.setInvariant(inv);	
 		
@@ -43,6 +54,8 @@ public class IntermediateRepresentationBodyBuilder {
 		Set<Line> lines = new LinkedHashSet<Line>();
 		for(Statement stmt : methodBody.getStatements())
 		{
+			log.debug("Processing statement: " + stmt.toString());
+			//ar.uba.dc.paper.Program3 ar.uba.dc.util.List map(ar.uba.dc.util.List,ar.uba.dc.paper.Op): li = interfaceinvoke it.<java.util.Iterator: java.lang.Object next()>() (2)
 			Line line = buildLineFromStatement(stmt);
 			lines.add(line);
 		}		

@@ -1,14 +1,20 @@
 package ar.uba.dc.soot;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import soot.Body;
 import soot.Local;
@@ -30,17 +36,28 @@ import soot.jimple.spark.SparkTransformer;
 import soot.jimple.toolkits.callgraph.CHATransformer;
 import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.jimple.toolkits.callgraph.ClinitElimTransformer;
+import soot.jimple.toolkits.callgraph.Edge;
 import soot.jimple.toolkits.callgraph.EdgePredicate;
 import soot.jimple.toolkits.callgraph.ReachableMethods;
 import soot.options.Options;
 import soot.tagkit.BytecodeOffsetTag;
 import soot.tagkit.LineNumberTag;
 import soot.util.Chain;
+import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
+import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationParameter;
+import ar.uba.dc.analysis.common.Invocation;
+import ar.uba.dc.analysis.common.code.CallStatement;
+import ar.uba.dc.analysis.common.code.Statement;
+import ar.uba.dc.analysis.common.intermediate_representation.DefaultIntermediateRepresentationParameter;
+import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationParameterWithType;
 import ar.uba.dc.config.Context;
 
 public class SootUtils {
 
-	private static final String SPARK_ALGORITHM = "spark";
+	private static final String SPARK_ALGORITHM = "spark";	
+	
+	private static Log log = LogFactory.getLog(SootUtils.class);
+
 	
 	/**
 	 * Retorna el callgraph de los metodos invocados por un metodo de una clase dado
@@ -213,6 +230,9 @@ public class SootUtils {
 		 PackManager.v().getPack(pack).add(new Transform(phaseName, transformer));
 	}
 	
+	
+	
+	
 	public static List<String> buildOptions(Context ctx, String mainClass, String mainMethod) {
 		List<String> options = new LinkedList<String>();
 		
@@ -282,4 +302,83 @@ public class SootUtils {
 	 static public void setPhaseOptions(String pack, String phaseName, String options) {
 		 soot.PackManager.v().getPack(pack).get(phaseName).setDefaultOptions("on "+options);
 	 }
+
+	 
+	 
+	 //Hacer una interfaz para irP, irPWithType
+	 //Mejor hacer una sola clase y fue.
+	@SuppressWarnings("unchecked")
+	public static Set<IntermediateRepresentationParameter> getParameters(SootMethod target, Class classname ) {
+
+		List parameterTypes = new ArrayList(target.getParameterTypes());	
+		
+		Set<IntermediateRepresentationParameter> parameters = new LinkedHashSet<IntermediateRepresentationParameter>();
+		
+		Body body;
+		
+		try
+		{
+			body = target.getActiveBody();
+		}
+		catch(RuntimeException ex)
+		{
+			log.debug("Body is null");
+			return parameters;
+		}		
+		
+		String lines[] = body.toString().split("\\r?\\n");
+		
+		for (String line: lines)
+		{
+			for(int i = 0; i < parameterTypes.size(); i++)
+			{
+				String numbered_parameter ="@parameter" + i;
+				if(line.contains(numbered_parameter))
+				{
+					String parameter = line.split(" := ")[0].trim();
+					//TODO: tal vez podria ir sacando los que ya proceso y usar un map parameterType -> numero
+					String parameterType = parameterTypes.get(i).toString();	
+					try
+					{
+						parameters.add((IntermediateRepresentationParameter)(classname.getDeclaredConstructor(String.class, String.class).newInstance(parameter, parameterType)));
+					}
+					catch(Exception e)
+					{
+						log.debug("La clase " + classname.getName() + " no fue encontrada");
+					}
+				}
+			}
+		}
+		
+		return parameters;
+	}
+
+	public static List<Invocation> getInvocations(Statement stmt, CallGraph callGraph) {
+		
+		List<Invocation> invocations = new LinkedList<Invocation>();
+		if(stmt instanceof CallStatement)
+		{
+			CallStatement callStmt = (CallStatement) stmt;
+			Iterator<Edge> it = callGraph.edgesOutOf(callStmt.getStatement());
+			
+			while (it.hasNext()) {
+				Edge edge = it.next();
+				SootMethod m = edge.tgt();
+				invocations.add(new Invocation(m));
+			}
+		}
+		else
+		{
+			invocations.add(new Invocation(stmt));
+		}
+		return invocations;		
+		
+	}
+	
+	
+	/*@SuppressWarnings("unchecked")
+	public Set<IntermediateRepresentationParameterWithType> getParametersWithType(SootMethod target, Class classname ) {
+
+		return this.getParameters(target, classname);
+	}*/
 }

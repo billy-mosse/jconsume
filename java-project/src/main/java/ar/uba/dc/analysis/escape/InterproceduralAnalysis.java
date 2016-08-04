@@ -120,7 +120,9 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 			log.info("Writing intermediate language representation");
 			
 			//TODO: esto se podria hacer con factory
-			IntermediateLanguageRepresentationBuilder irBuilder = new IntermediateLanguageRepresentationBuilder(data, order, repository, methodInformationProvider, methodDecorator, invariantProvider, outputFolder);
+			
+			//TODO importante: saltearse los metodos que no tienen active body. Ver como esta implementado en el analisis de memoria
+			IntermediateLanguageRepresentationBuilder irBuilder = new IntermediateLanguageRepresentationBuilder(data, order, repository, methodInformationProvider, methodDecorator, invariantProvider, outputFolder, callGraph);
 			ir_methods = irBuilder.buildIntermediateLanguageRepresentation();
 			
 			internalWriteIntermediateRepresentation();

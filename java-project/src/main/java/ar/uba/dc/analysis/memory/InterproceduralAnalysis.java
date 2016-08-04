@@ -20,8 +20,8 @@ import soot.jimple.toolkits.callgraph.Edge;
 import ar.uba.dc.analysis.common.AbstractInterproceduralAnalysis;
 import ar.uba.dc.analysis.common.MethodInformationProvider;
 import ar.uba.dc.analysis.common.SummaryRepository;
-import ar.uba.dc.analysis.memory.code.CallStatement;
-import ar.uba.dc.analysis.memory.code.MethodDecorator;
+import ar.uba.dc.analysis.common.code.CallStatement;
+import ar.uba.dc.analysis.common.code.MethodDecorator;
 import ar.uba.dc.analysis.memory.expression.ParametricExpressionFactory;
 import ar.uba.dc.analysis.memory.summary.MemorySummary;
 import ar.uba.dc.analysis.memory.summary.MemorySummaryFactory;
@@ -86,7 +86,7 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis {
 	}
 
 	protected void init() {
-		// Inicializamos los summaries q obtuvimos en esta corrida
+		// Inicializamos los summaries que  obtuvimos en esta corrida
 		this.data = new HashMap<SootMethod, MemorySummary>();
 		// Inicializamos los summaries de metodos no analizados que utilizamos en esta corrida
 		this.unanalysed = new HashMap<SootMethod, MemorySummary>();
@@ -95,7 +95,7 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis {
 		this.clinit = new HashSet<SootMethod>();
 	}
 	
-	protected void internalDoAnalysis() {
+	protected void internalDoAnalysis() {		
 		SortedSet<SootMethod> queue = new TreeSet<SootMethod>(getOrderComparator());
 		queue.addAll(order.keySet());
 		
@@ -136,7 +136,8 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis {
 				unanalysed.put(callStmt.getStatement().getInvokeExpr().getMethod(), calleeSummary);
 				
 				// Dejamos que se inicialize el callAnalyzer. Debe setear todo el entorno para un nuevo analisis
-				callAnalyzer.init(callStmt, lifeTimeOracle, symbolicCalculator, expressionFactory);
+				callAnalyzer.init(callStmt, lifeTimeOracle, symbolicCalculator, expressionFactory);				
+				
 				callAnalyzer.process(callStmt, calleeSummary);
 				return callAnalyzer.buildSummary2(callStmt);
 			} else {
@@ -197,8 +198,11 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis {
 			}
 		}
 				
-		callAnalyzer.calculateCorrectTotalResiduals(virtualInvokes.get(0));
-		
+		//TODO: que pasa cuando hay cero?
+		if(virtualInvokes.size() > 0)
+		{
+			callAnalyzer.calculateCorrectTotalResiduals(virtualInvokes.get(0));
+		}
 		
 		
 		CallSummaryInContext result = callAnalyzer.buildSummary2(callStmt);

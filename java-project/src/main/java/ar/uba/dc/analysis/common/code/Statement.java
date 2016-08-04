@@ -20,6 +20,7 @@ public interface Statement {
 	 */
 	public SootMethod belongsTo();
 	
+		
 	/**
 	 * Devuelve el valor para el contador relativo de statements representado. Por ejemplo, si el statement es el 3er new del 
 	 * metodo debemos retornar un 2 (el contador es base 0).

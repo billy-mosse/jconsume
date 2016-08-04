@@ -64,7 +64,7 @@ public class DefaultCallStatement extends AbstractStatement implements CallState
 	public Set<DefaultIntermediateRepresentationParameter> getIntermediateRepresentationParameters() {
 		SootMethod m = this.getCalledImplementation();
 		
-		log.debug(m.getActiveBody().toString());
+		//log.debug(m.getActiveBody().toString());
 		
 		Set<DefaultIntermediateRepresentationParameter> parameterList = new LinkedHashSet<DefaultIntermediateRepresentationParameter>();
 		Set<IntermediateRepresentationParameter> s = SootUtils.getParameters(m, DefaultIntermediateRepresentationParameter.class);

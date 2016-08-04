@@ -23,6 +23,7 @@ import ar.uba.dc.analysis.escape.summary.repository.RAMSummaryRepository;
 import ar.uba.dc.invariant.InvariantProvider;
 import ar.uba.dc.invariant.spec.SpecInvariantProvider;
 import soot.SootMethod;
+import soot.jimple.toolkits.callgraph.CallGraph;
 
 //import ar.uba.dc.analysis.common.MethodInformationProvider;
 
@@ -44,11 +45,13 @@ public class IntermediateLanguageRepresentationBuilder {
 	protected InvariantProvider invariantProvider;
 	private IntermediateRepresentationMethodBuilder irbuilder;
 	private IntermediateRepresentationBodyBuilder irbody_builder;
+
+	private CallGraph callGraph;
 	
 	
 	
 	
-	public IntermediateLanguageRepresentationBuilder(RAMSummaryRepository data, Map<SootMethod, Integer> order, SummaryRepository<EscapeSummary> repository, MethodInformationProvider methodInformationProvider, MethodDecorator methodDecorator, InvariantProvider invariantProvider, String outputFolder)
+	public IntermediateLanguageRepresentationBuilder(RAMSummaryRepository data, Map<SootMethod, Integer> order, SummaryRepository<EscapeSummary> repository, MethodInformationProvider methodInformationProvider, MethodDecorator methodDecorator, InvariantProvider invariantProvider, String outputFolder, CallGraph callGraph)
 	{
 		this.data=data;
 		this.order = order;
@@ -57,6 +60,7 @@ public class IntermediateLanguageRepresentationBuilder {
 		this.methodInformationProvider = methodInformationProvider;
 		this.methodDecorator = methodDecorator;
 		this.invariantProvider = invariantProvider;
+		this.callGraph = callGraph;
 	}
 	
 
@@ -67,14 +71,14 @@ public class IntermediateLanguageRepresentationBuilder {
 		queue.addAll(order.keySet());
 		
 		
-		irbody_builder = new IntermediateRepresentationBodyBuilder(invariantProvider);
 		//irbody_builder = new IntermediateRepresentationBodyBuilder(;
 		
-		irbuilder = new IntermediateRepresentationMethodBuilder(irbody_builder);
+		irbuilder = new IntermediateRepresentationMethodBuilder(invariantProvider, data, callGraph);
 		
 		long order = 0;
 		Set<IntermediateRepresentationMethod> ir_methods = new LinkedHashSet<IntermediateRepresentationMethod>();
 		for (SootMethod method : queue) {
+			log.debug("Generating IR of " + method.toString());
 			order++;
 			log.info(" |- processing " + method.toString());
 			MethodBody methodBody = methodDecorator.decorate(method);
