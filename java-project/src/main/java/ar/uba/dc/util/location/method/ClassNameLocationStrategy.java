@@ -18,15 +18,16 @@ public class ClassNameLocationStrategy extends AbstractMethodLocationStrategy {
 	
 	
 	
+	//TODO: sacar el processMethodSignature de las otras clases
 	public String getXMLLocation(IntermediateRepresentationMethod ir_method) {
-		return getBasePath() + "/xml/" + ir_method.getTarget().getDeclaringClass() + /* "/" + method.getOrder() + "_"  + */ "/" + processMethodSignature(ir_method) + getExtension();
+		
+		return getBasePath() + "/xml/" + ir_method.getName() + /* "/" + method.getOrder() + "_"  + */ "/" + ir_method.processMethodSignature() + getExtension();
 	}
 	
 	
 	@Override
 	public String getHumanReadableLocation(IntermediateRepresentationMethod ir_method) {
-		return getBasePath() + "/humanReadable/" + ir_method.getTarget().getDeclaringClass() + /* "/" + method.getOrder() + "_"  + */ "/" + processMethodSignature(ir_method) + getExtension();
+		return getBasePath() + "/humanReadable/" + ir_method.getName() + /* "/" + method.getOrder() + "_"  + */ "/" + ir_method.processMethodSignature() + getExtension();
 	}
-
 
 }

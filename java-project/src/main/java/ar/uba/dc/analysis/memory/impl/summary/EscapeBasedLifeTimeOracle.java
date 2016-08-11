@@ -1,13 +1,15 @@
 package ar.uba.dc.analysis.memory.impl.summary;
 
+import java.util.Set;
+
 import ar.uba.dc.analysis.common.SummaryRepository;
+import ar.uba.dc.analysis.common.code.CallStatement;
+import ar.uba.dc.analysis.common.code.NewStatement;
 import ar.uba.dc.analysis.escape.EscapeSummary;
 import ar.uba.dc.analysis.escape.graph.Node;
 import ar.uba.dc.analysis.escape.graph.node.StmtNode;
 import ar.uba.dc.analysis.memory.HeapPartition;
 import ar.uba.dc.analysis.memory.LifeTimeOracle;
-import ar.uba.dc.analysis.memory.code.CallStatement;
-import ar.uba.dc.analysis.memory.code.NewStatement;
 import ar.uba.dc.invariant.InvariantProvider;
 import ar.uba.dc.soot.StatementId;
 
@@ -18,6 +20,20 @@ public class EscapeBasedLifeTimeOracle implements LifeTimeOracle {
 	private InvariantProvider invariantProvider;
 	
 	private int sensitivity;
+	
+	/*public Set<HeapPartition> getSubHeapDescriptors(Set<HeapPartition> partitions, CallStatement caller, CallStatement callee)
+	{
+
+		Set<HeapPartition> result;
+		
+		
+		
+		//Assert partitions are from caller
+		// For each partition, get if exists the one from the callee that escapes 
+		return null;
+	}*/
+
+	
 	
 	@Override
 	public HeapPartition bind(HeapPartition calleePartition, CallStatement callStmt) {
