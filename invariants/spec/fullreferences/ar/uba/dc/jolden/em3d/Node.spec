@@ -9,6 +9,8 @@
 			<requires><![CDATA[degree > 0]]></requires>
 			
 			<creation-site offset="0" >
+				<variables>k</variables>
+				<inductives>k</inductives>
       			<constraints><![CDATA[1 <= k <= degree]]></constraints>
     		</creation-site>
     	</method>
@@ -19,6 +21,8 @@
 			<requires><![CDATA[size > 0]]></requires>
 			
 			<creation-site offset="0" >
+				<variables>k</variables>
+				<inductives>k</inductives>
       			<constraints><![CDATA[1 <= k <= size]]></constraints>
     		</creation-site>
 			
@@ -30,8 +34,18 @@
       			<constraints><![CDATA[$t.degree == degree]]></constraints>
     		</call-site>
     		
-    		<call-site offset="1" >
+    		<!--<call-site offset="1" >
+				<variables>i</variables>
+				<inductives>i</inductives>
       			<constraints><![CDATA[1 <= i < size and $t.degree == degree]]></constraints>
+    		</call-site>-->
+
+    		<invariant id="loop_invariant">			
+				<constraints><![CDATA[0 <= i < size]]></constraints>
+			</invariant>
+
+    		<call-site offset="1">
+				<constraints>@loop_invariant and $t.degree == degree</constraints>
     		</call-site>
 		</method>
 		
@@ -43,6 +57,8 @@
 			<requires><![CDATA[fromCount > 0]]></requires>
 			
 			<creation-site offset="0-1" >
+				<variables>k</variables>
+				<inductives>k</inductives>
       			<constraints><![CDATA[1 <= k <= fromCount]]></constraints>
     		</creation-site>
 		</method>

@@ -37,6 +37,8 @@
     		</call-site>
     		
     		<call-site offset="11" >
+				<variables>i</variables>
+				<inductives>i</inductives>
       			<constraints><![CDATA[0 <= i < numIter and $t.numNodes == numNodes]]></constraints>
     		</call-site>
 		</method>
