@@ -45,6 +45,7 @@
 				<resolver config-class="ar.uba.dc.invariant.spec.compiler.constraints.resolver.RegexpReferenceResolver" />
 			</parser>
 			<locationStrategy config-class="ar.uba.dc.util.location.FullPackageLocationStrategy" basePath="${invariants.repository}" extension=".spec" />
+			<!--locationStrategy config-class="ar.uba.dc.util.location.FullPackageJarLocationStrategy"  basePath="spec/invariants/" specJarPah="${spec.jar}" extension=".spec" /-->
 		</spec>
 	</invariants>
 	
@@ -60,25 +61,32 @@
 			</method-information-provider>
 		</common>
 
+
 		<lifetime>
 			<interprocedural config-class="ar.uba.dc.tools.instrumentation.resource.tracker.madeja.LifeTimeOracleAnalysis">
+				<heapPartitionVisitor config-class="ar.uba.dc.analysis.memory.impl.summary.IdHeapPartitionVisitor"/>
 				<statementVisitor config-class="ar.uba.dc.analysis.memory.code.impl.visitor.IdStatementVisitor"/>
-				<heapPartitionVisitor config-class="ar.uba.dc.analysis.memory.impl.madeja.KeyHeapPartitionVisitor"/>
-				<summaryFactory config-class="ar.uba.dc.analysis.memory.impl.madeja.MemorySummaryFactoryImpl">
+				
+				<summaryFactory config-class="ar.uba.dc.analysis.memory.impl.summary.EscapeBasedMemorySummaryFactory">
+					<escapeSummaryProvider config-class="ar.uba.dc.analysis.common.ChainSummaryRepository" config-factory="custom" config-ref-to="analysis.escape.repository" />
 					<expressionFactory config-class="ar.uba.dc.analysis.memory.impl.BarvinokParametricExpressionFactory" />
 					<invariantProvider config-class="ar.uba.dc.invariant.InvariantProvider" config-factory="custom" config-ref-to="invariants.provider.${invariants.provider}" />
 				</summaryFactory>
 				
-				<lifeTimeOracle config-class="ar.uba.dc.analysis.memory.impl.madeja.MadejaLifeTimeOracle">
+				<lifeTimeOracle config-class="ar.uba.dc.analysis.memory.impl.summary.EscapeBasedLifeTimeOracle" sensitivity="${escape.sensitivity}">
 					<invariantProvider config-class="ar.uba.dc.invariant.InvariantProvider" config-factory="custom" config-ref-to="invariants.provider.${invariants.provider}" />
+					<escapeSummaryProvider config-class="ar.uba.dc.analysis.common.SummaryRepository" config-factory="custom" config-ref-to="analysis.escape.repository" />
 				</lifeTimeOracle>
+				
 			</interprocedural>
 		</lifetime>
 
 		<escape>
-		 	<initializer config-class=" ar.uba.dc.analysis.memory.impl.madeja.MadejaEscapeTransformerInitializer"></initializer>
+			<initializer config-class="ar.uba.dc.analysis.memory.impl.runner.EscapeSceneTransformerInitializer"></initializer>
+			
 			<interprocedural config-class="ar.uba.dc.analysis.escape.InterproceduralAnalysis"
 							 writeResults="${escape.summary.all.enabled}" writeUnanalysedSummaries="${escape.summary.unanalized.enabled}" 
+ 							 writeIntermediateLanguageRepresentation="${memory.summary.all.enabled}"
 							 removeLocals="${escape.summary.remove-variables}" 
 							 sensitivity="${escape.sensitivity}"
 							 analyseKnownMethods="${escape.analyse.known.methods}"
@@ -89,13 +97,20 @@
 							 simplifySummary="${escape.simplify.summary}">
 				<data config-class="ar.uba.dc.analysis.escape.summary.repository.RAMSummaryRepository" config-factory="custom" config-ref-to="analysis.escape.repositories.ram" />
 				<summaryWriter config-class="ar.uba.dc.analysis.escape.summary.io.writer.ChainWriter" config-factory="container" config-source="analysis.escape.writers" config-select-key="escape.summary.printer" config-default="null" config-scope="singleton" />
+
+
+				<irWriter config-class="ar.uba.dc.analysis.escape.summary.io.writer.ChainWriter" config-factory="container" config-source="analysis.escape.writers" config-select-key="escape.summary.printer" config-default="irxml" config-scope="singleton" />
+
+
+				<methodDecorator config-class="ar.uba.dc.analysis.common.code.impl.DefaultMethodDecorator" />
+				<invariantProvider config-class="ar.uba.dc.invariant.InvariantProvider" config-factory="custom" config-ref-to="invariants.provider.${invariants.provider}" />
 				<summaryApplier config-class="ar.uba.dc.analysis.escape.summary.DefaultSummaryApplier" sensitivity="${escape.sensitivity}" combineCapturedNodes="${escape.interprocedural.include.captured.nodes.from.callee.into.caller}">
 					<mapper config-class="ar.uba.dc.analysis.escape.summary.DefaultInterproceduralMapper" />
 					<combiner config-class="ar.uba.dc.analysis.escape.summary.DefaultSummaryCombiner" />
 				</summaryApplier>
 				<repository config-class="ar.uba.dc.analysis.common.ChainSummaryRepository" config-factory="custom" config-ref-to="analysis.escape.internal-repository" />
 				<methodInformationProvider config-class="ar.uba.dc.analysis.common.MethodInformationProvider" config-factory="custom" config-ref-to="analysis.common.method-information-provider"/>
-				<polymorphismResolver config-class="ar.uba.dc.analysis.escape.PolymorphismResolver" config-factory="custom" config-ref-to="analysis.escape.polymorphism.callgraph-resolver"/>
+				<polymorphismResolver config-class="ar.uba.dc.analysis.escape.PolymorphismResolver" config-factory="custom" config-ref-to="analysis.escape.polymorphism.${polymorphism.resolver}-resolver"/>
 				<simplifier config-class="ar.uba.dc.analysis.escape.summary.simplification.EquivalentPathSummarySimplifier"
 							distinguishReturned="${escape.simplification.distinguish.returned}"
 							distinguishEscapeGlobaly="${escape.simplification.distinguish.escapeGlobaly}">
@@ -126,6 +141,11 @@
 				<xml config-class="ar.uba.dc.analysis.escape.summary.io.writer.XMLWriter">
 					<locationStrategy config-class="ar.uba.dc.util.location.method.${escape.summary.output.layout}LocationStrategy" extension=".xml" basePath="${escape.summary.output.dir}" />
 				</xml>
+
+				<irxml config-class="ar.uba.dc.analysis.common.intermediate_representation.io.writer.XMLWriter">
+					<locationStrategy config-class="ar.uba.dc.util.location.method.${escape.summary.output.layout}LocationStrategy" extension=".xml" basePath="${escape.summary.output.dir}" />
+				</irxml>
+
 				<dot config-class="ar.uba.dc.analysis.escape.summary.io.writer.GraphvizWriter" leaveSourceFile="${escape.summary.printer.dot.leave-source-file}" graphSizeLimit="${escape.summary.printer.dot.max-graph-size}">
 					<locationStrategy config-class="ar.uba.dc.util.location.method.${escape.summary.output.layout}LocationStrategy" extension=".dot" basePath="${escape.summary.output.dir}" />
 				</dot>
@@ -133,6 +153,7 @@
 			</writers>
 			
 			<polymorphism>
+				<escape-resolver config-class="ar.uba.dc.analysis.escape.polymorphism.EscapeBasedPolymorphismResolver" />
 				<callgraph-resolver config-class="ar.uba.dc.analysis.escape.polymorphism.AlwaysNullPolymorphismResolver"/>
 			</polymorphism>
 		</escape>
@@ -145,48 +166,41 @@
 							 writeReport="${memory.print.report}"
 							 writeUnanalyzedSummariesInReport="${memory.report.unanalized.enabled}"
 							 trustInterfaceSummaries="${trust.interface.summaries}">
-				<repository config-class="ar.uba.dc.analysis.memory.impl.summary.repository.AlwaysNullSummaryRepository"/>
-				
+				<repository config-class="ar.uba.dc.analysis.common.SummaryRepository" config-factory="custom" config-ref-to="analysis.memory.repository" />
 				<expressionFactory config-class="ar.uba.dc.analysis.memory.impl.BarvinokParametricExpressionFactory" />
-				
-				<summaryFactory config-class="ar.uba.dc.analysis.memory.impl.madeja.MemorySummaryFactoryImpl">
-					<!--escapeSummaryProvider config-class="ar.uba.dc.analysis.common.ChainSummaryRepository" config-factory="custom" config-ref-to="analysis.escape.repository"/-->
+				<summaryFactory config-class="ar.uba.dc.analysis.memory.impl.summary.EscapeBasedMemorySummaryFactory">
+					<escapeSummaryProvider config-class="ar.uba.dc.analysis.common.ChainSummaryRepository" config-factory="custom" config-ref-to="analysis.escape.repository" />
 					<expressionFactory config-class="ar.uba.dc.analysis.memory.impl.BarvinokParametricExpressionFactory" />
 					<invariantProvider config-class="ar.uba.dc.invariant.InvariantProvider" config-factory="custom" config-ref-to="invariants.provider.${invariants.provider}" />
 				</summaryFactory>
-				
-				<methodDecorator config-class="ar.uba.dc.analysis.memory.code.impl.DefaultMethodDecorator" />
-				
+				<methodDecorator config-class="ar.uba.dc.analysis.common.code.impl.DefaultMethodDecorator" />
 				<countingTheory config-class="ar.uba.dc.analysis.memory.CountingTheory" config-factory="custom" config-ref-to="analysis.memory.barvinok-calculator-adapter" />
-				
-				<lifeTimeOracle config-class="ar.uba.dc.analysis.memory.impl.madeja.MadejaLifeTimeOracle">
+				<lifeTimeOracle config-class="ar.uba.dc.analysis.memory.impl.summary.EscapeBasedLifeTimeOracle" sensitivity="${escape.sensitivity}">
 					<invariantProvider config-class="ar.uba.dc.invariant.InvariantProvider" config-factory="custom" config-ref-to="invariants.provider.${invariants.provider}" />
+					<escapeSummaryProvider config-class="ar.uba.dc.analysis.common.SummaryRepository" config-factory="custom" config-ref-to="analysis.escape.repository" />
 				</lifeTimeOracle>
-				
 				<symbolicCalculator  config-class="ar.uba.dc.analysis.memory.impl.BarvinokCalculatorDecorator">
 					<statementVisitor config-class="ar.uba.dc.analysis.memory.code.impl.visitor.IdStatementVisitor"/> 
 					<calculatorAdapter config-class="ar.uba.dc.analysis.memory.impl.BarvinokCalculatorAdapter" config-factory="custom" config-ref-to="analysis.memory.barvinok-calculator-adapter" />
 				</symbolicCalculator>
-				
 				<summaryWriter config-class="ar.uba.dc.analysis.memory.impl.summary.io.writer.ChainWriter" config-factory="container" config-source="analysis.memory.writers" config-select-key="memory.summary.printer" config-default="null" config-scope="singleton" />
-				
 				<reportWriter config-class="ar.uba.dc.analysis.memory.impl.report.html.HtmlReportWriter"
 							  propertiesFileName="velocity.properties" 
-							  template="site/peak.madeja.vm"
+							  template="site/peak.vm"
 							  inputFolder="site"
 							  outputFolder="${memory.report.output.dir}">
-					<interpreter config-class="ar.uba.dc.analysis.memory.impl.madeja.SummaryInterpreter">
+					<interpreter config-class="ar.uba.dc.analysis.memory.impl.report.html.EscapeBasedMemorySummaryInterpreter">
 						<residualSummarizer config-class="ar.uba.dc.analysis.memory.summary.ResidualSummarizer" config-factory="custom" config-ref-to="analysis.memory.residual-summarizer" />
 						<memReqSummarizer 	config-class="ar.uba.dc.analysis.memory.summary.MemReqSummarizer" config-factory="custom" config-ref-to="analysis.memory.memreq-summarizer" />
+						<escapeLocationStrategy config-class="ar.uba.dc.util.location.method.${escape.summary.output.layout}LocationStrategy" extension=".gif" basePath="${escape.summary.output.dir}" />
+						<memoryLocationStrategy config-class="ar.uba.dc.util.location.method.${memory.summary.output.layout}LocationStrategy" extension=".gif" basePath="${memory.summary.output.dir}" />
+						<reportEscapeLocationStrategy config-class="ar.uba.dc.util.location.method.FolderLocationStrategy" extension=".gif" basePath="${memory.report.output.dir}/images/escape" />
+						<reportMemoryLocationStrategy config-class="ar.uba.dc.util.location.method.FolderLocationStrategy" extension=".gif" basePath="${memory.report.output.dir}/images/memory" />
 					</interpreter>
 				</reportWriter>
-				
 				<methodInformationProvider config-class="ar.uba.dc.analysis.common.MethodInformationProvider" config-factory="custom" config-ref-to="analysis.common.method-information-provider"/>
-				
 				<callAnalyzer config-class="ar.uba.dc.analysis.memory.CallAnalyzer" config-factory="custom" config-ref-to="analysis.memory.call-analyzer.default.${memory.interprocedural.loop.invariant}" />
-				
-				<polymorphismResolver config-class="ar.uba.dc.analysis.memory.PolymorphismResolver" config-factory="custom" config-ref-to="analysis.memory.polymorphism.callgraph-resolver"/>
-		
+				<polymorphismResolver config-class="ar.uba.dc.analysis.memory.PolymorphismResolver" config-factory="custom" config-ref-to="analysis.memory.polymorphism.${polymorphism.resolver}-resolver"/>
 			</interprocedural>
 			
 			<barvinok-calculator-adapter config-class="ar.uba.dc.analysis.memory.impl.BarvinokCalculatorAdapter" config-factory="custom" config-scope="singleton">
@@ -209,8 +223,8 @@
 					<summaryFactory config-class="ar.uba.dc.analysis.memory.impl.summary.RuleBasedMemorySummaryFactory" sensitivity="${escape.sensitivity}">
 						<expressionFactory config-class="ar.uba.dc.analysis.memory.impl.BarvinokParametricExpressionFactory" />
 						<informationProvider config-class="ar.uba.dc.analysis.common.method.information.RuleBasedMethodInformationProvider" config-factory="custom" config-ref-to="analysis.common.method-information-provider"/>
-						<omegaSyntax config-class="ar.uba.dc.barvinok.BarvinokSyntax" config-factory="custom" config-ref-to="barvinok.syntax.omega" />
 						<isccSyntax config-class="ar.uba.dc.barvinok.BarvinokSyntax" config-factory="custom" config-ref-to="barvinok.syntax.iscc" />
+						<omegaSyntax config-class="ar.uba.dc.barvinok.BarvinokSyntax" config-factory="custom" config-ref-to="barvinok.syntax.omega" />
 						<symbolicCalculator config-class="ar.uba.dc.analysis.memory.SymbolicCalculator" config-factory="custom" config-ref-to="analysis.memory.barvinok-calculator-adapter" />
 					</summaryFactory>
 				</hardcoded>
@@ -251,13 +265,14 @@
 						<withLoopInvariant config-class="ar.uba.dc.analysis.memory.CallAnalyzer" config-factory="custom" config-ref-to="analysis.memory.call-analyzer.default.asume" />
 						<withoutLoopInvariant config-class="ar.uba.dc.analysis.memory.CallAnalyzer" config-factory="custom" config-ref-to="analysis.memory.call-analyzer.default.never" />
 					</infer>
+					<asume-add config-class="ar.uba.dc.analysis.memory.callanalyzer.LoopInvariantAddCallAnalyzer"/>					
 				</default>
 			</call-analyzer>
 			
 			<polymorphism>
 				<escape-resolver config-class="ar.uba.dc.analysis.memory.impl.EscapeBasedPolymorphismResolver">
 					<escapeSummaryProvider config-class="ar.uba.dc.analysis.common.SummaryRepository" config-factory="custom" config-ref-to="analysis.escape.repository" />
-					<escapeResolver config-class="ar.uba.dc.analysis.escape.PolymorphismResolver" config-factory="custom" config-ref-to="analysis.escape.polymorphism.escape-resolver"/>
+					<escapeResolver config-class="ar.uba.dc.analysis.escape.PolymorphismResolver" config-factory="custom" config-ref-to="analysis.escape.polymorphism.escape-resolver" />
 				</escape-resolver>
 				<callgraph-resolver config-class="ar.uba.dc.analysis.memory.polymorphism.AlwaysNullPolymorphismResolver"/>
 			</polymorphism>

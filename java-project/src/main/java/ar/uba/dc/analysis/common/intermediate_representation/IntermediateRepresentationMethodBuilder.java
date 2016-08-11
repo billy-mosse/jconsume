@@ -5,6 +5,7 @@ import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import ar.uba.dc.analysis.common.code.BasicMethodBody;
 import ar.uba.dc.analysis.common.code.MethodBody;
 import ar.uba.dc.analysis.escape.summary.repository.RAMSummaryRepository;
 import ar.uba.dc.barvinok.expression.DomainSet;
@@ -30,12 +31,12 @@ public class IntermediateRepresentationMethodBuilder {
 	}
 	
 	
-	private void setBody(MethodBody methodBody)
+	private void setBody(BasicMethodBody methodBody)
 	{
 		this.irmethod.body = irbody_builder.build_body(methodBody);
 	}	
 	
-	public IntermediateRepresentationMethod buildMethod(MethodBody methodBody, long order)
+	public IntermediateRepresentationMethod buildMethod(BasicMethodBody methodBody, long order)
 	{
 		this.irmethod = new IntermediateRepresentationMethod(methodBody, order);
 		
@@ -43,7 +44,7 @@ public class IntermediateRepresentationMethodBuilder {
 		
 		SootMethod m = methodBody.belongsTo();
 		this.irmethod.setMethodRequirements(invariantProvider.getRequeriments(m));
-		this.irmethod.setRelevant_parameters(invariantProvider.getRelevantParameters(m)); 
+		this.irmethod.setRelevant_parameters(invariantProvider.getRelevantParameters(m));
 		this.irmethod.setEscapeInfo(data.get(methodBody.belongsTo()));
 		
 

@@ -51,20 +51,6 @@ public abstract class AbstractMethodLocationStrategy implements MethodLocationSt
 	}
 	
 
-
-	protected String processMethodSignature(IntermediateRepresentationMethod ir_method) {		
-		String s = (ir_method.getParameters() != null ? Joiner.on(", ").skipNulls().join(Iterables.transform(ir_method.getParameters(), new Function<IntermediateRepresentationParameterWithType, String >()
-		{
-			public String apply(IntermediateRepresentationParameterWithType parameter) { return parameter.getType() + " " + parameter.getName(); }
-		}
-		
-		)) : "");
-
-		return ir_method.getName() + String.format("(%s)", s);
-	}
-	
-	
-
 	public void setExtension(String extension) {
 		this.extension = extension;
 		

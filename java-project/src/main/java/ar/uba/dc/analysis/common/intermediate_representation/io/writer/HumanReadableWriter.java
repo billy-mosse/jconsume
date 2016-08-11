@@ -53,7 +53,7 @@ public class HumanReadableWriter implements SummaryWriter<IntermediateRepresenta
             bwr.close();
 
 		} catch (IOException e) {
-			log.error("Error al imprimir el summary para el metodo [" + ir_method.getTarget().getSubSignature() + "] a xml: " + e.getMessage(), e);
+			log.error("Error al imprimir el summary para el metodo [" + ir_method.getName() + "] a xml: " + e.getMessage(), e);
 		}
 	}
 

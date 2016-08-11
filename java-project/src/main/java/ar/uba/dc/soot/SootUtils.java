@@ -241,7 +241,8 @@ public class SootUtils {
 		}
 		
 		if (ctx.getBoolean(Context.SOOT_OPTION_BYTECODE_OFFSET)) {
-			options.add("-keep-bytecode-offset");
+			options.add("-keep-offset");
+			//options.add("-keep-bytecode-offset");
 		}
 		
 		if (ctx.getBoolean(Context.SOOT_OPTION_APP)) {

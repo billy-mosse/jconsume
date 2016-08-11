@@ -101,6 +101,8 @@
 
 				<irWriter config-class="ar.uba.dc.analysis.escape.summary.io.writer.ChainWriter" config-factory="container" config-source="analysis.escape.writers" config-select-key="escape.summary.printer" config-default="irxml" config-scope="singleton" />
 
+				<ihrWriter config-class="ar.uba.dc.analysis.escape.summary.io.writer.ChainWriter" config-factory="container" config-source="analysis.escape.writers" config-select-key="escape.summary.printer" config-default="ihr" config-scope="singleton" />
+
 
 				<methodDecorator config-class="ar.uba.dc.analysis.common.code.impl.DefaultMethodDecorator" />
 				<invariantProvider config-class="ar.uba.dc.invariant.InvariantProvider" config-factory="custom" config-ref-to="invariants.provider.${invariants.provider}" />
@@ -145,6 +147,10 @@
 				<irxml config-class="ar.uba.dc.analysis.common.intermediate_representation.io.writer.XMLWriter">
 					<locationStrategy config-class="ar.uba.dc.util.location.method.${escape.summary.output.layout}LocationStrategy" extension=".xml" basePath="${escape.summary.output.dir}" />
 				</irxml>
+
+				<ihr config-class="ar.uba.dc.analysis.common.intermediate_representation.io.writer.HumanReadableWriter">
+					<locationStrategy config-class="ar.uba.dc.util.location.method.${escape.summary.output.layout}LocationStrategy" extension=".xml" basePath="${escape.summary.output.dir}" />
+				</ihr>
 
 				<dot config-class="ar.uba.dc.analysis.escape.summary.io.writer.GraphvizWriter" leaveSourceFile="${escape.summary.printer.dot.leave-source-file}" graphSizeLimit="${escape.summary.printer.dot.max-graph-size}">
 					<locationStrategy config-class="ar.uba.dc.util.location.method.${escape.summary.output.layout}LocationStrategy" extension=".dot" basePath="${escape.summary.output.dir}" />

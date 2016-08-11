@@ -51,6 +51,11 @@ public class DomainSet {
 	    return this;
 	}
 	
+	public DomainSet()
+	{
+		
+	}
+	
 	public DomainSet(String constraints) {
 		this.constraints = constraints;
 	}
@@ -186,6 +191,10 @@ public class DomainSet {
 	public boolean hasInductives()
 	{
 		return hasInductives;
+	}
+
+	public String toHumanReadableString() {
+		return this.toString();
 	}
 	
 }

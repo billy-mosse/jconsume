@@ -9,6 +9,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import ar.uba.dc.analysis.common.Line;
+import ar.uba.dc.analysis.common.code.BasicMethodBody;
 import ar.uba.dc.analysis.common.code.CallStatement;
 import ar.uba.dc.analysis.common.code.MethodBody;
 import ar.uba.dc.analysis.common.code.NewStatement;
@@ -34,10 +35,10 @@ public class IntermediateRepresentationBodyBuilder {
 	}
 
 	
-	public Line buildLineFromStatement(Statement stmt)
+	public Line buildLineFromStatement(Statement stmt, long counter)
 	{
 		Line line = new Line(stmt, this.callGraph);
-		
+		line.setLabel(counter);		
 		
 		
 		DomainSet inv = invariantProvider.getInvariant(stmt);
@@ -48,15 +49,17 @@ public class IntermediateRepresentationBodyBuilder {
 		return line;
 	}
 	//TODO: agregar al .spec lo que falta
-	public IntermediateRepresentationMethodBody build_body(MethodBody methodBody) {
+	public IntermediateRepresentationMethodBody build_body(BasicMethodBody methodBody) {
 		IntermediateRepresentationMethodBody ir_body = new IntermediateRepresentationMethodBody();
 		
 		Set<Line> lines = new LinkedHashSet<Line>();
+		long counter=0;
 		for(Statement stmt : methodBody.getStatements())
 		{
+			counter++;
 			log.debug("Processing statement: " + stmt.toString());
 			//ar.uba.dc.paper.Program3 ar.uba.dc.util.List map(ar.uba.dc.util.List,ar.uba.dc.paper.Op): li = interfaceinvoke it.<java.util.Iterator: java.lang.Object next()>() (2)
-			Line line = buildLineFromStatement(stmt);
+			Line line = buildLineFromStatement(stmt, counter);
 			lines.add(line);
 		}		
 		ir_body.setLines(lines);

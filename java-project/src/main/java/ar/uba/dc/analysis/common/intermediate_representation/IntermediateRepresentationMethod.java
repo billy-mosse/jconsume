@@ -14,6 +14,7 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.Iterables;
 
 import ar.uba.dc.analysis.common.Line;
+import ar.uba.dc.analysis.common.code.BasicMethodBody;
 import ar.uba.dc.analysis.common.code.MethodBody;
 import ar.uba.dc.analysis.escape.EscapeSummary;
 import ar.uba.dc.analysis.escape.graph.Node;
@@ -23,7 +24,9 @@ import soot.SootMethod;
 
 public class IntermediateRepresentationMethod {
 	
-protected String name;
+	protected String name;
+	
+	//protected String integer_name;
 	
 	protected Set<IntermediateRepresentationParameterWithType> parameters;
 	
@@ -33,11 +36,13 @@ protected String name;
 	
 	protected long order;
 	
-	private Set<String> relevant_parameters;
+	protected Set<String> relevant_parameters;
 
-	private DomainSet methodRequirements;
+	protected DomainSet methodRequirements;
 
-	private Set<Node> escapeNodes;
+	protected Set<Node> escapeNodes;
+	
+	
 	
 	
 	
@@ -47,15 +52,15 @@ protected String name;
 	}
 	private static Log log = LogFactory.getLog(IntermediateRepresentationMethod.class);
 
-	protected SootMethod target;
+	//protected SootMethod target;
 	
 	
 	
-	private void setParameters()
+	private void setParameters(SootMethod target)
 	{	
 		//TODO: esto esta horrible
 		this.parameters = new LinkedHashSet<IntermediateRepresentationParameterWithType>();
-		Set<IntermediateRepresentationParameter> s = SootUtils.getParameters(this.target, IntermediateRepresentationParameterWithType.class);
+		Set<IntermediateRepresentationParameter> s = SootUtils.getParameters(target, IntermediateRepresentationParameterWithType.class);
 		for(IntermediateRepresentationParameter p : s)
 		{			
 			this.parameters.add((IntermediateRepresentationParameterWithType)p);
@@ -65,7 +70,7 @@ protected String name;
 	}
 	
 	
-	private void setReturnType()
+	private void setReturnType(SootMethod target)
 	{
 		this.returnType = target.getReturnType().toString();
 	}
@@ -75,26 +80,26 @@ protected String name;
 		return this.returnType;
 	}
 	
-	private void setName()
+	private void setName(SootMethod target)
 	{
 		this.name = target.getName();
 	}
 	
 	
-	public IntermediateRepresentationMethod(MethodBody methodBody, long order)
+	public IntermediateRepresentationMethod(BasicMethodBody methodBody, long order)
 	{
 		//TODO: NO HACE FALTA PARSEAR. EL SOOTMETHOD YA TIENE TODO!!
 		
-		this.target = methodBody.belongsTo();
+		SootMethod target = methodBody.belongsTo();
 		this.order = order;
 		
 
 		log.debug("____Construyendo " + target.toString());
 		
 		
-		this.setName();
-		this.setParameters();
-		this.setReturnType();
+		this.setName(target);
+		this.setParameters(target);
+		this.setReturnType(target);
 		
 		
 		
@@ -155,10 +160,6 @@ protected String name;
 		this.parameters = arguments;
 	}
 
-	public SootMethod getTarget() {
-		// TODO Auto-generated method stub
-		return this.target;
-	}
 
 	public Set<String> getRelevant_parameters() {
 		return relevant_parameters;
@@ -183,7 +184,13 @@ protected String name;
 		StringBuffer sbf = new StringBuffer();
         
         //StringBuffer contents
-        sbf.append(this.processMethodSignature());
+		sbf.append(this.processMethodSignature());		
+
+    	sbf.append(System.getProperty("line.separator"));
+        
+		sbf.append("Integer signature: " + this.processMethodIntegerSignature());
+        
+        
         
         if(this.methodRequirements != null)
         {
@@ -191,7 +198,6 @@ protected String name;
             
             sbf.append("Method requirements: " + this.methodRequirements.toHumanReadableString());
         }
-        
 
     	sbf.append(System.getProperty("line.separator"));
     	
@@ -222,6 +228,13 @@ protected String name;
 	}
 	
 	
+	public String processMethodIntegerSignature() {
+		String s = (this.relevant_parameters != null ? Joiner.on(", ").skipNulls().join(this.relevant_parameters) : "");
+
+		return this.getReturnType() + " " + this.getName() + String.format("(%s)", s);
+	}
+
+
 	public String processMethodSignature() {		
 		String s = (this.getParameters() != null ? Joiner.on(", ").skipNulls().join(Iterables.transform(this.getParameters(), new Function<IntermediateRepresentationParameterWithType, String >()
 		{

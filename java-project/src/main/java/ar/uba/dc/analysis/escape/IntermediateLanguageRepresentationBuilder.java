@@ -13,6 +13,7 @@ import org.apache.commons.logging.LogFactory;
 
 import ar.uba.dc.analysis.common.MethodInformationProvider;
 import ar.uba.dc.analysis.common.SummaryRepository;
+import ar.uba.dc.analysis.common.code.BasicMethodBody;
 import ar.uba.dc.analysis.common.code.MethodBody;
 import ar.uba.dc.analysis.common.code.MethodDecorator;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationBodyBuilder;
@@ -81,7 +82,7 @@ public class IntermediateLanguageRepresentationBuilder {
 			log.debug("Generating IR of " + method.toString());
 			order++;
 			log.info(" |- processing " + method.toString());
-			MethodBody methodBody = methodDecorator.decorate(method);
+			BasicMethodBody methodBody = methodDecorator.decorate_for_IR(method);
 			IntermediateRepresentationMethod m = irbuilder.buildMethod(methodBody, order);
 			ir_methods.add(m);
 		}

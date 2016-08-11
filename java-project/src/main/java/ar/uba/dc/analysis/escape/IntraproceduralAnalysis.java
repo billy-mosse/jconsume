@@ -67,6 +67,7 @@ public class IntraproceduralAnalysis extends ForwardFlowAnalysis<Unit, Box<Escap
     	this.callAnalyzer = callAnalyzer;
     	this.sensitivity = sensitivity;
     	doAnalysis();
+    	
 	}
 
 	/**
@@ -78,6 +79,7 @@ public class IntraproceduralAnalysis extends ForwardFlowAnalysis<Unit, Box<Escap
     	for (Unit unit : graph.getTails()) {
     		Stmt stmt = (Stmt) unit;
     		Box<EscapeSummary> ref = (Box<EscapeSummary>) getFlowAfter(stmt);
+    		
     		r.union(ref.getValue());
     	}    	
     	dest.setValue(r);

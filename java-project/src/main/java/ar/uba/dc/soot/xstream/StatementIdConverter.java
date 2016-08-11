@@ -37,12 +37,14 @@ public class StatementIdConverter implements Converter {
 		BytecodeOffsetTag bytecodeOffsetTag = (BytecodeOffsetTag) stmt.getTag("BytecodeOffsetTag");
 		
 		if (lineNumberTag == null) {
-			throw new ConversionException("La opcion keep_line_number se encuentra deshabilitada. Para serializar summaries debe estar habilitada");
+			throw new ConversionException("La opcion keep-line-number se encuentra deshabilitada. Para serializar summaries debe estar habilitada");
 		}
 		
-		if (bytecodeOffsetTag == null) {
+		
+		//TODO: no estoy pudiendo conseguir el bytecode offset
+		/*if (bytecodeOffsetTag == null) {
 			throw new ConversionException("La opcion keep_offset se encuentra deshabilitada. Para serializar summaries debe estar habilitada");
-		}
+		}*/
 		
 		writer.startNode(methodNode);
 			context.convertAnother(node.getMethodOfId());
@@ -53,8 +55,14 @@ public class StatementIdConverter implements Converter {
         writer.startNode(lineNumberNode);
 	    	writer.setValue(Integer.toString(lineNumberTag.getLineNumber()));
 	    writer.endNode();
+	    
+	    
         writer.startNode(offsetNumberNode);
-        	writer.setValue(Integer.toString(bytecodeOffsetTag.getBytecodeOffset()));
+//    		writer.setValue(Integer.toString(bytecodeOffsetTag.getBytecodeOffset()));
+    		writer.setValue(Integer.toString(-1));
+        
+        	
+        
         writer.endNode();
 	}
 

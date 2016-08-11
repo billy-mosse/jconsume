@@ -40,7 +40,7 @@ public class XMLWriter implements SummaryWriter<IntermediateRepresentationMethod
 		try {
 			xstream.toXML(ir_method, new FileWriter(srcFile, false));
 		} catch (IOException e) {
-			log.error("Error al imprimir el summary para el metodo [" + ir_method.getTarget().getSubSignature() + "] a xml: " + e.getMessage(), e);
+			log.error("Error al imprimir el summary para el metodo [" + ir_method.getName() + "] a xml: " + e.getMessage(), e);
 		}
 	}
 
