@@ -10,9 +10,13 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Set;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import soot.SootClass;
 import soot.SootMethod;
-import ar.uba.dc.analysis.memory.code.Statement;
+import ar.uba.dc.analysis.common.code.Statement;
+import ar.uba.dc.analysis.escape.InterproceduralAnalysis;
 import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.invariant.InvariantProvider;
 import ar.uba.dc.invariant.spec.bean.ClassSpecification;
@@ -87,8 +91,13 @@ public class SpecInvariantProvider implements InvariantProvider {
 		return invariantProvider.captureAllPartitions(stmt);
 	}
 
+	private static Log log = LogFactory.getLog(SpecInvariantProvider.class);
+	
+
 	protected void loadProvider(SootClass sootClass) {
 		// El provider que tenemos es para la clase que necesitamos? Si no lo es, generamos uno nuevo
+
+		
 		if (invariantProvider == null || !invariantProvider.forClass(sootClass.getName())) {
 				// Obtenemos de donde sacar el archivo con la especificacion de invariantes para la clase que necesitamos
 			String specFile = locationStrategy.getLocation(sootClass);

@@ -6,12 +6,14 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import soot.SootMethod;
 
 import ar.uba.dc.invariant.InvariantProvider.Operation;
 import ar.uba.dc.invariant.spec.compiler.CompiledClassInvariantProvider;
-import ar.uba.dc.analysis.memory.code.Statement;
+import ar.uba.dc.analysis.common.code.Statement;
 import ar.uba.dc.barvinok.expression.DomainSet;
 
 public class DefaultClassInvariantProvider extends AbstractClassInvariantProvider implements CompiledClassInvariantProvider {
@@ -21,8 +23,11 @@ public class DefaultClassInvariantProvider extends AbstractClassInvariantProvide
 	public DefaultClassInvariantProvider(String forClass) {
 		super(forClass);
 	}
+	
+	private static Log log = LogFactory.getLog(DefaultClassInvariantProvider.class);
 
 	public DomainSet getInvariant(Statement stmt) {
+		log.debug(stmt.belongsTo().getSubSignature());
 		DefaultMethodInvariantProvider provider = providers.get(stmt.belongsTo().getSubSignature());
 		DomainSet d = new DomainSet(StringUtils.EMPTY);
 		
