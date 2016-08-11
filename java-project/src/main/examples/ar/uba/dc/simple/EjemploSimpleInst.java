@@ -1,6 +1,6 @@
 package ar.uba.dc.simple;
 
-import monitor.BooleanTracker;
+//import monitor.BooleanTracker;
 
 /**
  * @author martin
@@ -28,7 +28,7 @@ public class EjemploSimpleInst {
 	public static void main(String[] args) {
 		int arg0 = Integer.parseInt(args[0]); 
 		
-		BooleanTracker.track();
+		//BooleanTracker.track();
 		EjemploSimpleInst es = new EjemploSimpleInst(); //tempLocal = 1
 
 		/*
@@ -38,9 +38,9 @@ public class EjemploSimpleInst {
 			BooleanTracker.stop();
 		}
 		*/
-		BooleanTracker.start();
-		es.m2(arg0);
-		BooleanTracker.stop();
+		//BooleanTracker.start();
+		//es.m2(arg0);
+		//BooleanTracker.stop();
 
 	}
 
@@ -73,7 +73,7 @@ public class EjemploSimpleInst {
 	 */
 	void  m1(int k) {
 		for (int i = 1; i <= k; i++) {
-			BooleanTracker.track();
+			//BooleanTracker.track();
 			A a = new A(); 	//tempLocal = k si k >= 1 
 			a.a = 5;	
 			B[] dummyArr= m2(i); //maxCall = 0 , tempCall = 3/2 * k + 1/2 * k^2 si k >= 1 (k + k^2 : k >= 1  ArrayCountSize)
@@ -93,10 +93,10 @@ public class EjemploSimpleInst {
 	 * @temporal: 0
 	 */
 	B[] m2(int n) {
-		BooleanTracker.track();
+		//BooleanTracker.track();
 		B[] arrB = new B[n]; //residual = 1 (n ArrayCountSize)
 		for (int j = 0; j < n; j++) {
-			BooleanTracker.track();
+			//BooleanTracker.track();
 			B b = new B(); //residual = n si n >=1
 			b.b = j;
 			arrB[j] = b;

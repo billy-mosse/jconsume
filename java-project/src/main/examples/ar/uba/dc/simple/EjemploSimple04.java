@@ -1,4 +1,4 @@
-package ar.uba.dc.simple;
+ package ar.uba.dc.simple;
 
 public class EjemploSimple04 {
 

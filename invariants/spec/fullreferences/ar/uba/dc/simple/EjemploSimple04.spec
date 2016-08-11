@@ -82,16 +82,21 @@
       			<constraints><![CDATA[1 <= j <= k]]></constraints>
     		</creation-site>
 			
-			<invariant id="loop_invariant">			
+			<invariant id="loop_invariant_1">			
 				<constraints><![CDATA[0 <= i < k]]></constraints>
-			</invariant>			
+			</invariant>
+
+			<invariant id="loop_invariant_2">			
+				<constraints><![CDATA[0 <= i < k]]></constraints>
+			</invariant>
 
 			<call-site offset="0" srccode-offset="">
-				<constraints>@loop_invariant and $t.n == i</constraints>
+				<constraints>@loop_invariant_1 and $t.n == i</constraints>
 			</call-site>
 
 			<call-site offset="1" srccode-offset="">
-				<constraints>@loop_invariant and $t.values.length == i</constraints>
+				<annotations>class_called_changed_during_loop</annotations>
+				<constraints>@loop_invariant_1 and $t.values.length == i</constraints>
 			</call-site>
 		</method>
 	</class>

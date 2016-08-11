@@ -79,7 +79,7 @@ public class EjemploSimple {
 	B[] m2(int n) {
 		B[] arrB = new B[n]; //residual = 1 (n ArrayCountSize)
 		for (int j = 0; j < n; j++) {
-			B b = new B(); //residual = n si n >=1
+			B b = new B(4, 7); //residual = n si n >=1
 			b.b = j;
 			arrB[j] = b;
 		}

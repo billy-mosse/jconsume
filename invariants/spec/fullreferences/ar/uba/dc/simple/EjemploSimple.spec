@@ -11,6 +11,8 @@
 		
 		<method decl="void m0(int)">
 			<relevant-parameters>m</relevant-parameters>
+			<requires><![CDATA[m < 50]]></requires>
+			<requires><![CDATA[m > 2]]></requires>
 			
 			<invariant id="loop">
 				<constraints><![CDATA[1 <= c <= m]]></constraints>
