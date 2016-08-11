@@ -1,0 +1,12 @@
+31-5: la fórmula que Diego me decía de reaprovechar lo que sobre de un método para el siguiente tal vez no cierre bien. Ver caso n=2. Qué pasa si lo que sobre de un método es "demasiado"? Puede ser, igual, que al tomar el máximo sobre los posibles caminos, al estar restando de más, eso haga que otra permutación de más y por lo tanto el máximo no influya?
+
+7-6: la fórmula de diego ya me cierra porque estoy agrandando el ESC y a lo sumo va a dar maś grande si el cálculo es correcto. También lo probé para el caso n=2 y sin polimorfismo. Estoy armándome el resumen y ya debería empezar a ver cómo hacer tests en java.
+
+9-6: ahí hice que se pudiera usar SUM de MAX. Tengo que ver ahora como agregar en invariantes una anotacion para decir que la clase va cambiando. En caso positivo, se hace sum de max. Si no, se hace max de sum.
+
+En vez de una anotación, se lo agrego al invariante. Ver las clases DomainSet y AbstractSpecCompiler. La segunda es donde construyo el methodSpec donde tengo que cambiar cosas. Podría agregar un constraint en los archivos (que si no está, por default es FALSE) indicando si la clase llamada va cambiando en el loop, y que la clase DomainSet tenga un atributo más (un boolean, nomás). Eso no rompería casi nada, salvo que hay que leer el archivo de una manera distinta.
+
+
+
+Ahora estoy haciendo andar em3d...supuestamente tiene recursion y por eso explota? Hay que ver cómo dejar anotado algo. Creo que es que un metodo sea no analizable y dejar el summary.
+

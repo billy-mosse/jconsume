@@ -1,0 +1,52 @@
+1) ¿Cómo calculo el consumo para un método?
+	¿Cómo resuelvo allocs? (News)
+	¿Cómo resuelvo calls?
+
+Rta:
+Para los ALLOCS, hago un COUNT del invariante asociado, y si escapa, meto la info en el acumulador de los residuals del subheap correspondiente.
+
+Para los CALLS, proceso el callee:
+	por cada implementación voy tomando el máximo (MAXIMIZE) sobre los memReq-RSD, y acumulo (SUM) el RSD. (Si tienen fold acoto por arriba)
+
+
+
+	Si hay polim y la clase llamada va cambiando durante el loop, una anotación en el archivo de invariantes (HACK; esto va a cambiar por anotaciones en el código) se toma el máx de los RSD sobre las clases y eso es a lo que se le hace SUM
+
+
+2) ¿Cómo se vinculan Allocs y Calls con los invariantes?
+	COUNT vs SUM vs MAXIMIZE
+
+Rta: 
+El summate hace la suma de una expresión en base a un invariante. (Pensar en sumatoria bajo un índice)
+El count calcula el cardinal del invariante asociado
+El maximize calcula el máximo de una expresión en base a un invariante
+
+
+En full-references, por cada alloc/cada call, se puede hacer tanto referencia a otros invariantes como poner uno explícito.
+
+Los allocs y los calls están numerados (por separado), y por método.
+
+
+
+
+
+Por ahora, puedo asociar un CALL y un ALLOC  a un invariante explícito o a un loop invariant definido en otro lado.
+
+3) Cómo se invoca a ESC analysis?
+	Cómo lo llamo para ALLOCS y CALLS
+
+Rta: Lo uso como un oráculo para saber si la partición del caller asociada a la del callee escapa (CALLS)
+
+y cuando la partición del newStmt escapa (ALLOCS) 
+
+
+4) Cómo hago si quiero reemplazar:
+	ESC
+	COUNTING
+	INVS
+
+Intento de respuesta: ESC se podría calcular en paralelo?
+
+COUNTING: esto ya se podría hacer [dependency injection]. Agregando una clase que implemente distinto el calculator y cambiando el archivo de factory, creo que no habría problema.
+
+Invariantes: por ahora están en formato xml. Agregar/modificar/sacar un elemento no es difícil (ya lo hice). Tal vez para incorporar la herramienta de Diego el primer paso sería chequear/hacer que outputee los invariantes en el formato correcto antes de empezar el análisis. Un segundo paso sería que los cargue en memoria (podríamos reusar las funciones que cargan en memoria los xml actualmente)

@@ -1,0 +1,81 @@
+*EscapeSceneTransformer*
+[ANÁLISIS DE ESCAPE]: Arma el esc summary en base al points to?
+
+
+*MemorySceneTransformer*
+[ANÁLISIS DE MEM_REQ]:
+	Por cada método dell callgraph (ordenados [en *AbstractInterproceduralAnalysis*] de manera que si tengo u->v, entonces u viene antes que v):
+		initialSummary: obtengo el escape summary del método.
+						Creo un initialSummary [en *MemorySummayFactory*]; armo la heapPartition de RET, y la de GLOBAL, y las lleno con información del esc summary.
+ 		decorate [en *MethodDecorator*]: devuelve el body dividido en News y Calls.
+
+ 		Proceso los NEW:
+ 			hago el bound en base al invariante asociado a ese NEW (se busca en función del tipo, y la implementación (?)):
+ 				countExecutions: 
+ 					Trata de convertilo a constante. 
+
+ 					Si no puede, simplifica el invariante (renombrando las variables y quitando las innecesarias). Se guarda un mapping para después poder volver para atrás el renombrado.
+
+ 					Se escribe el invariante con el formato correcto para barvinok y se ejecuta
+
+ 					Se transforma el string obtenido a un PiecewiseQuasipolynomial y se expande el resultado en base al mapping guardado
+
+			Si el newStmt "escapa" (esto lo averiguo viendo el initialSummary), acumulo en el HeapPartition correspondiente la #objetos escapados.
+
+		Proceso los CALL:
+			si hay una variable de configuración "trustInterfaceSummaries" seteada, hace algo que no entiendo. Creo que es que si el InvokeExpr del stmt es el de una interfaz, se queda con el summary de una interfaz. [REVISAR]
+
+			//SootClass virtualInvokeImplementation = polymorphismResolver.getTarget(callStmt);
+			//Dice que tiene que ser NULL
+
+			Ahora, por cada implementación posible:
+				Se fija si ya tiene un summary del mismo.
+				Si no la tiene, se fija si existe un default summary. Si hay, lo usa y coloca al método en la lista de unanalized. (Lo cual es raro, porque no veo que use esa lista en ningún momento)
+				Si no hay default summary, agrega el método a la lista de excluded, y sigue. (Antes tiraba excepción pero ya no, lo cambiaron)
+
+				//Ver lo de virtualinvoke
+				Procesa el call summary (si existe):
+					Por cada heapPartition: //ver lo del .bind del lifeTimeOracle
+					//"Por ejemplo, para el escape, las particiones que representan parametros no se vinculan entre caller y callee." What?
+
+					Por cada partición *válida* (VER) acumula el residual en la partición para el nuevo summary (Como esto se hace para cada implementación posible, vamos a tener que cada heapPartition tiene el acumulado de los residuals. Además, va acumulando todos los residuals en una variable auxiliar.
+
+
+					Toma el máximo sobre MemReq - RSD en base al invariante, (*)
+					y hace el SUM del acumulado de los residuals en base al invariante. (**)
+
+					Pisa cada HeapPartition dell Caller con el supremo entre su residual y el del callee.
+
+					Nota: Para cada uno de estos cálculos, se queda con el máximo entre lo que obtuvo y lo que obtuvo en la implementación anterior.
+
+
+				Construye el summary con los datos obtenidos, y lo retorna.
+
+
+			Tomo el supremo entre MAX_memReqFromCallees y el memReq del callee que obtuve.
+
+			Acumulo los residuals en los heap partitions
+
+		Una vez procesó todos los NEW y todos los CALL, suma los memReq obtenidos, y el acumulado de los Residuals de los callees.
+
+	Escribo los resultados.
+
+
+
+
+
+
+
+(*) Hacer una resta de QuasyPolinomials:
+	Si ambos son cero devuelve cero.
+	Si el segundo es cero y el primero no, devuelve el primero clonado. (Podría en ambos casos devolver el primero clonado también, pero es menos costoso hacer lo que está ahora)
+
+	(Por qué un polinomio puede tener constraints sin ser constante?)
+
+
+	Si el segundo no es cero, se fija si ambos polinomios tienen paréntesis.
+		Si pasa, lo hacemos a mano porque barvinok no sabe resolverlo (nota: cambiar el nombre de la función, está mal). PARA LA RESTA ESTO NO ESTÁ IMPLEMENTADO. PARA LA SUMA SÍ.
+
+		Si no, usamos Barvinok.
+
+(**) Upper Bound

@@ -1,0 +1,49 @@
+[ANÁLISIS DE ESCAPE]:
+
+[ANÁLISIS DE MEM_REQ]:
+ InterproceduralAnalysis: Itero de las hojas para adentro (callgraph) (la queue está ordenada de modo que si tengo u->v, entonces u viene antes que v)
+ 	Interproceduralanalysis: por cada método:
+ 		initialSummary. Obtengo el escape summary del método. Armo la partición de RET, y GLOBAL, y meto ahí lo que corresponde
+ 		decorate: ya a partir de ahora iteramos "dentro del método", las líneas de jimple. Por cada new y por cada call decoramos al método, diviendo las líneas en News y Calls
+
+ 		Proceso los NEW:
+ 			hago el bound en base al invariante asociado a ese NEW (se busca en función del tipo, y la implementación (?)):
+ 				countExecutions: 
+ 					trata de convertilo a constante. 
+ 					Si no puede, simplifica el invariante (renombrando las variables y quitando las innecesarias). Se guarda un mapping para después poder volver para atrás el renombrado. Se lo
+ 					Se escribe el invariante con el formato correcto para barvinok y se ejecuta
+ 					Se transforma el string obtenido a un PiecewiseQuasipolynomial y se expande el resultado en base al mapping guardado
+
+			Si el newStmt "escapa" (*) (esto lo averiguo viendo el initialSummary), acumulo en el HeapPartition correspondiente la #objetos escapados.
+
+		Proceso los CALL:
+			si hay una variable de configuración "trustInterfaceSummaries" seteada, hace algo que no entiendo. Creo que es que si el InvokeExpr del stmt es el de una interfaz, se queda con el summary de una interfaz. [REVISAR]
+			Intenta resolver el polimorfismo
+			Ahora, por cada implementación posible:
+				Se fija si ya tiene un summary del mismo.
+				Si no la tiene, se fija si existe un default summary. Si hay, lo usa y coloca al método en la lista de unanalized. (Lo cual es raro, porque no veo que use esa lista en ningún momento)
+				Si no hay default summary, agrega el método a la lista de excluded, y sigue. (Antes tiraba excepción pero ya no)
+				//Ver lo de virtualinvoke
+				Procesa el call:
+					Por cada heapPartition: //ver lo del .bind del lifeTimeOracle
+					//"Por ejemplo, para el escape, las particiones que representan parametros no se vinculan entre caller y callee." What?
+
+					Por cada partición *válida* (VER) acumula el residual para el nuevo summary (Como esto se hace para cada implementación posible, vamos a tener que cada heapPartition tiene . Luego toma:
+					el máximo sobre MemReq - RSD en base al invariante,
+					y hace el SUM de los residals en base al invariante.
+
+					Y va pisando cada HeapPartition dell Caller con el supremo entre su residual y el del callee.
+
+					Para cada uno de estos cálculos, se queda con el máximo entre lo que obtuvo y lo que obtuvo en la implementación anterior.
+				Construye el summary con los datos obtenidos, y lo retorna.
+			MAX_memReqFromCallees = sa.supreme(MAX_memReqFromCallees, memReqFromCallee);
+			Acumulo los residuals en los heap partitions
+
+	Escribo los resultados.
+
+
+
+
+
+
+
