@@ -2,7 +2,7 @@
 <spec>
 	<class decl="ar.uba.dc.ismm.MotivatingExample">
 
-	      <method decl="void main(java.lang.String[])">
+        <method decl="void main(java.lang.String[])">
 		  <relevant-parameters>size, maxElementSize</relevant-parameters>
 		  <requires><![CDATA[size > 0]]></requires>
 		  <requires><![CDATA[maxElementSize > 0]]></requires>
