@@ -173,7 +173,7 @@
       </tr>-->
 			<tr class="a">
 				<td>MemReq</td>
-				<td>$helper.getMemReq2($method)</td>
+				<td>$helper.getMemReq($method)</td>
 			</tr>
 			<!--<tr class="b">
 				<td>Tmp</td>
