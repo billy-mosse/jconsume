@@ -22,7 +22,7 @@ package javazoom.jl.player;
 
 import java.io.InputStream;
 
-import monitor.BooleanTracker;
+//import monitor.BooleanTracker;
 
 import javazoom.jl.decoder.Bitstream;
 import javazoom.jl.decoder.BitstreamException;
@@ -122,7 +122,7 @@ public class Player {
 	 *			more frames. 
 	 */
 	public boolean play(int frames) throws JavaLayerException {
-		boolean ret = true;
+		boolean ret = true;/*
 		int counter = 0;
 		//System.out.println("frames start at " + frames);
 		while (frames-- > 0 && ret && counter<BooleanTracker.iterations)
@@ -144,7 +144,7 @@ public class Player {
 				}				
 			}
 		}
-		//System.out.println("frames end at " + frames);
+		//System.out.println("frames end at " + frames);*/
 		return ret;
 	}
 		
