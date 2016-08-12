@@ -10,8 +10,8 @@ import soot.jimple.AssignStmt;
 
 import ar.uba.dc.analysis.memory.CountingTheory;
 import ar.uba.dc.analysis.memory.SymbolicCalculator;
-import ar.uba.dc.analysis.memory.code.NewStatement;
-import ar.uba.dc.analysis.memory.code.Statement;
+import ar.uba.dc.analysis.common.code.NewStatement;
+import ar.uba.dc.analysis.common.code.Statement;
 import ar.uba.dc.analysis.memory.expression.ParametricExpression;
 import ar.uba.dc.barvinok.BarvinokCalculator;
 import ar.uba.dc.barvinok.expression.DomainSet;

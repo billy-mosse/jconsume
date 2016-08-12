@@ -1,7 +1,7 @@
 package ar.uba.dc.analysis.memory;
 
-import ar.uba.dc.analysis.memory.code.CallStatement;
-import ar.uba.dc.analysis.memory.code.Statement;
+import ar.uba.dc.analysis.common.code.CallStatement;
+import ar.uba.dc.analysis.common.code.Statement;
 import ar.uba.dc.analysis.memory.expression.ParametricExpression;
 
 

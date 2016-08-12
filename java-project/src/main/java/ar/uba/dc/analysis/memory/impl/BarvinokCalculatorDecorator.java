@@ -3,8 +3,8 @@ package ar.uba.dc.analysis.memory.impl;
 import java.util.HashMap;
 import java.util.Map;
 
-import ar.uba.dc.analysis.memory.code.Statement;
-import ar.uba.dc.analysis.memory.code.StatementVisitor;
+import ar.uba.dc.analysis.common.code.Statement;
+import ar.uba.dc.analysis.common.code.StatementVisitor;
 import ar.uba.dc.analysis.memory.expression.ParametricExpression;
 import ar.uba.dc.barvinok.expression.PiecewiseQuasipolynomial;
 import ar.uba.dc.barvinok.expression.QuasiPolynomial;

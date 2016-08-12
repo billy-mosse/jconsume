@@ -1,7 +1,7 @@
 package ar.uba.dc.analysis.memory;
 
 import soot.SootClass;
-import ar.uba.dc.analysis.memory.code.CallStatement;
+import ar.uba.dc.analysis.common.code.CallStatement;
 
 public interface PolymorphismResolver {
 

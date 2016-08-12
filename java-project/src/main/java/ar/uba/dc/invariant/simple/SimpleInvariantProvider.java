@@ -14,10 +14,10 @@ import org.apache.commons.logging.LogFactory;
 
 import soot.SootClass;
 import soot.SootMethod;
-import ar.uba.dc.analysis.memory.code.CallStatement;
-import ar.uba.dc.analysis.memory.code.NewStatement;
-import ar.uba.dc.analysis.memory.code.Statement;
-import ar.uba.dc.analysis.memory.code.StatementVisitor;
+import ar.uba.dc.analysis.common.code.CallStatement;
+import ar.uba.dc.analysis.common.code.NewStatement;
+import ar.uba.dc.analysis.common.code.Statement;
+import ar.uba.dc.analysis.common.code.StatementVisitor;
 import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.invariant.InvariantProvider;
 import ar.uba.dc.util.location.ClassLocationStrategy;

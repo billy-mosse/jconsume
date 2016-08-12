@@ -1,8 +1,8 @@
 package ar.uba.dc.analysis.memory.code.impl.visitor;
 
-import ar.uba.dc.analysis.memory.code.CallStatement;
-import ar.uba.dc.analysis.memory.code.NewStatement;
-import ar.uba.dc.analysis.memory.code.StatementVisitor;
+import ar.uba.dc.analysis.common.code.CallStatement;
+import ar.uba.dc.analysis.common.code.NewStatement;
+import ar.uba.dc.analysis.common.code.StatementVisitor;
 import ar.uba.dc.invariant.spec.compiler.compilation.InvariantId.Type;
 
 public class StatementTypeVisitor implements StatementVisitor<Type> {

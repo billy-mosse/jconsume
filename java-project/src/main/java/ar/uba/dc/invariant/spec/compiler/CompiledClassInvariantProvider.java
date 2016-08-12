@@ -3,7 +3,7 @@ package ar.uba.dc.invariant.spec.compiler;
 import java.util.Set;
 
 import soot.SootMethod;
-import ar.uba.dc.analysis.memory.code.Statement;
+import ar.uba.dc.analysis.common.code.Statement;
 import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.invariant.InvariantProvider.Operation;
 

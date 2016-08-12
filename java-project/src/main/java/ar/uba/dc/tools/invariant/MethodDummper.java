@@ -4,9 +4,9 @@ import java.io.PrintStream;
 
 import org.apache.commons.lang.StringUtils;
 
-import ar.uba.dc.analysis.memory.code.MethodBody;
-import ar.uba.dc.analysis.memory.code.Statement;
-import ar.uba.dc.analysis.memory.code.impl.DefaultMethodDecorator;
+import ar.uba.dc.analysis.common.code.MethodBody;
+import ar.uba.dc.analysis.common.code.Statement;
+import ar.uba.dc.analysis.common.code.impl.DefaultMethodDecorator;
 import ar.uba.dc.config.Context;
 import ar.uba.dc.config.ContextFactory;
 import ar.uba.dc.soot.SootUtils;

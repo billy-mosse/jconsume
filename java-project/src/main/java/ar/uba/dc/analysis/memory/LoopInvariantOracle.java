@@ -1,6 +1,6 @@
 package ar.uba.dc.analysis.memory;
 
-import ar.uba.dc.analysis.memory.code.CallStatement;
+import ar.uba.dc.analysis.common.code.CallStatement;
 
 /**
  * Aquel que implemente esta intefaz debe ser capaz de responder si ante un 

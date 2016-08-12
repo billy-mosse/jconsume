@@ -4,7 +4,7 @@ import java.util.Set;
 
 import soot.SootMethod;
 import ar.uba.dc.analysis.memory.LifeTimeOracle;
-import ar.uba.dc.analysis.memory.code.Statement;
+import ar.uba.dc.analysis.common.code.Statement;
 import ar.uba.dc.barvinok.expression.DomainSet;
 
 /**

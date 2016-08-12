@@ -22,8 +22,8 @@ import soot.jimple.Stmt;
 import ar.uba.dc.analysis.memory.HeapPartition;
 import ar.uba.dc.analysis.memory.HeapPartitionVisitor;
 import ar.uba.dc.analysis.memory.LifeTimeOracle;
-import ar.uba.dc.analysis.memory.code.CallStatement;
-import ar.uba.dc.analysis.memory.code.NewStatement;
+import ar.uba.dc.analysis.common.code.CallStatement;
+import ar.uba.dc.analysis.common.code.NewStatement;
 import ar.uba.dc.invariant.InvariantProvider;
 
 public class MadejaLifeTimeOracle implements LifeTimeOracle {

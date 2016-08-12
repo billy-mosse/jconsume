@@ -1,7 +1,7 @@
 package ar.uba.dc.analysis.memory.impl;
 
 import ar.uba.dc.analysis.memory.LoopInvariantOracle;
-import ar.uba.dc.analysis.memory.code.CallStatement;
+import ar.uba.dc.analysis.common.code.CallStatement;
 import ar.uba.dc.invariant.InvariantProvider;
 
 public class InvariantBasedLoopInvariantOracle implements LoopInvariantOracle {

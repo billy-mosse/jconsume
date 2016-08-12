@@ -6,7 +6,7 @@ import ar.uba.dc.analysis.memory.CallSummaryInContext;
 import ar.uba.dc.analysis.memory.LifeTimeOracle;
 import ar.uba.dc.analysis.memory.LoopInvariantOracle;
 import ar.uba.dc.analysis.memory.SymbolicCalculator;
-import ar.uba.dc.analysis.memory.code.CallStatement;
+import ar.uba.dc.analysis.common.code.CallStatement;
 import ar.uba.dc.analysis.memory.expression.ParametricExpressionFactory;
 import ar.uba.dc.analysis.memory.summary.MemorySummary;
 

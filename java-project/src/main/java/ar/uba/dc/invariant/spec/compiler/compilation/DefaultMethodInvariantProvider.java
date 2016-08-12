@@ -11,7 +11,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.ComparatorUtils;
 import org.apache.commons.lang.StringUtils;
 
-import ar.uba.dc.analysis.memory.code.Statement;
+import ar.uba.dc.analysis.common.code.Statement;
 import ar.uba.dc.analysis.memory.code.impl.visitor.CalledImplementationVisitor;
 import ar.uba.dc.analysis.memory.code.impl.visitor.StatementTypeVisitor;
 import ar.uba.dc.barvinok.expression.DomainSet;

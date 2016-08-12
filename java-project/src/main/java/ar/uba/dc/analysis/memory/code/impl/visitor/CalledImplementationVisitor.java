@@ -2,9 +2,9 @@ package ar.uba.dc.analysis.memory.code.impl.visitor;
 
 import org.apache.commons.lang.StringUtils;
 
-import ar.uba.dc.analysis.memory.code.CallStatement;
-import ar.uba.dc.analysis.memory.code.NewStatement;
-import ar.uba.dc.analysis.memory.code.StatementVisitor;
+import ar.uba.dc.analysis.common.code.CallStatement;
+import ar.uba.dc.analysis.common.code.NewStatement;
+import ar.uba.dc.analysis.common.code.StatementVisitor;
 
 public class CalledImplementationVisitor implements StatementVisitor<String> {
 
