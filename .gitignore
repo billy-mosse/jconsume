@@ -1,1 +1,7 @@
 /dependencies/
+*.class
+*.jar
+java-project/results/
+java-project/target/surefire-reports/
+*.log
+java-project/velocity.log.1
