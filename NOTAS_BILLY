@@ -56,3 +56,10 @@ sebastian lamelas/namelas tesis de licenciatura DC fors.
 -----
 
 El factory-config.xml de target classes es el que hay que cambiar. No ahy que recompilar para aplicar el cambio. 
+
+
+------
+
+
+
+CAMBIÉ LA VERSIÓN DE SOOT DE 2.4.0 A 2.5.0 EN POM.XML E INSTALL.SH PARA VER SI ASÍ OBTENGO EL LINE NUMBER Y EL BYTECODE OFFSET.

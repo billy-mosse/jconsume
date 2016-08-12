@@ -91,7 +91,7 @@ El proyecto toma como base la estructura sugerida por maven para el desarrollo. 
 			- simple: es un diccionario <statement, invariant>
 			- fast: permite definir un archivo .spec donde no se permiten referencias a otros invariantes
 			- simple-reference: permite definir un archivo .spec donde se permiten referencias pero no se resuelve la clausura transitiva de las mismas
-			- full-reference: permite definir un archivo .spec donde se resuelven las clusuaras transitivas
+			- full-reference: permite definir un archivo .spec donde se resuelven las clausuras transitivas
 		A diferencia del formato simple, para generar los invariantes de los otros tres formatos, se compila el archivo .spec de input. El formato del archivo es el mismo para los 3 tipos de invariantes compilables
 		Para mas informacion referirse al codigo fuente y propiedad "invariants.provider" del archivo application.properties. 
 	- ar.uba.dc.soot:
