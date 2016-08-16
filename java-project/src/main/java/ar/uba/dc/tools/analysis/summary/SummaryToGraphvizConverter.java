@@ -112,6 +112,11 @@ public class SummaryToGraphvizConverter {
 					throw new java.lang.UnsupportedOperationException();
 				}
 				
+				@Override
+				public String getJsonLocation(IntermediateRepresentationMethod ir_method) {
+					throw new java.lang.UnsupportedOperationException();
+				}
+				
 				
 			};
 			writer.setLocationStrategy(strategy);
@@ -159,6 +164,10 @@ public class SummaryToGraphvizConverter {
 					throw new java.lang.UnsupportedOperationException();
 				}
 				
+				@Override
+				public String getJsonLocation(IntermediateRepresentationMethod ir_method) {
+					throw new java.lang.UnsupportedOperationException();
+				}
 				
 			};
 			writer.setLocationStrategy(strategy);

@@ -25,4 +25,9 @@ public class FolderLocationStrategy extends AbstractMethodLocationStrategy {
 	public String getHumanReadableLocation(IntermediateRepresentationMethod ir_method) {
 		throw new java.lang.UnsupportedOperationException();
 	}
+	
+	@Override
+	public String getJsonLocation(IntermediateRepresentationMethod ir_method) {
+		throw new java.lang.UnsupportedOperationException();
+	}
 }

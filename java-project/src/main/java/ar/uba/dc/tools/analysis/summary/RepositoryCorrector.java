@@ -174,6 +174,11 @@ public class RepositoryCorrector extends BodyTransformer {
 					public String getHumanReadableLocation(IntermediateRepresentationMethod ir_method) {
 						throw new java.lang.UnsupportedOperationException();
 					}
+					
+					@Override
+					public String getJsonLocation(IntermediateRepresentationMethod ir_method) {
+						throw new java.lang.UnsupportedOperationException();
+					}
 				};
 				writer.setLocationStrategy(strategy);
 				writer.write(summary);

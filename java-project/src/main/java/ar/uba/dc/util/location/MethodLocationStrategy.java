@@ -38,4 +38,6 @@ public interface MethodLocationStrategy {
 	public String getBasePath();
 
 	public String getHumanReadableLocation(IntermediateRepresentationMethod ir_method);
+	
+	public String getJsonLocation(IntermediateRepresentationMethod ir_method);
 }

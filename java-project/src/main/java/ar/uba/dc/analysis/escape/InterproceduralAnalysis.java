@@ -57,8 +57,10 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 	protected SummaryWriter<EscapeSummary> summaryWriter;
 
 	protected SummaryWriter<IntermediateRepresentationMethod> irWriter;
-	
+
 	private SummaryWriter<IntermediateRepresentationMethod> ihrWriter;
+	
+	private SummaryWriter<IntermediateRepresentationMethod> jsonWriter;
 	
 	protected SummaryReader<IntermediateRepresentationMethod> irReader;	
 	
@@ -307,17 +309,25 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 	
 	protected void internalWriteIntermediateRepresentation() {
 		
+		
+		//Si, ya se, podria meter todo en un solo FOR
 		for (IntermediateRepresentationMethod ir_method : ir_methods) {
 			//TODO: agregar los parametros o un mejor nombre para debug
 			log.info(" |- Writing summary of analyzed method: " + ir_method.getName());
 			irWriter.write(ir_method);
 		}
 		
-		
+
 		for (IntermediateRepresentationMethod ir_method : ir_methods) {
 			//TODO: agregar los parametros o un mejor nombre para debug
 			log.info(" |- Writing summary of analyzed method: " + ir_method.getName());
 			ihrWriter.write(ir_method);
+		}
+		
+		for (IntermediateRepresentationMethod ir_method : ir_methods) {
+			//TODO: agregar los parametros o un mejor nombre para debug
+			log.info(" |- Writing summary of analyzed method: " + ir_method.getName());
+			jsonWriter.write(ir_method);
 		}
 	}
 	
@@ -435,5 +445,13 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 
 	public void setIhrWriter(SummaryWriter<IntermediateRepresentationMethod> ihrWriter) {
 		this.ihrWriter = ihrWriter;
+	}
+
+	public SummaryWriter<IntermediateRepresentationMethod> getJsonWriter() {
+		return jsonWriter;
+	}
+
+	public void setJsonWriter(SummaryWriter<IntermediateRepresentationMethod> jsonWriter) {
+		this.jsonWriter = jsonWriter;
 	}
 }
