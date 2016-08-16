@@ -16,10 +16,14 @@ import ar.uba.dc.analysis.escape.summary.io.xstream.XStreamFactory;
 import ar.uba.dc.util.location.MethodLocationStrategy;
 
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
+import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationParameter;
+import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationParameterWithType;
+
 import com.thoughtworks.xstream.XStream;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
@@ -37,7 +41,10 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 	protected MethodLocationStrategy locationStrategy;
 	
 	public JsonWriter() {
-		this.gson = new GsonBuilder().registerTypeAdapter(IntermediateRepresentationMethod.class, new IntermediateRepresentationMethodSerializer()).create();
+		GsonBuilder builder = new GsonBuilder();
+		builder.registerTypeAdapter(IntermediateRepresentationMethod.class, new IntermediateRepresentationMethodSerializer());
+		builder.registerTypeAdapter(IntermediateRepresentationParameterWithType.class, new IntermediateRepresentationParameterWithTypeSerializer());			
+		this.gson = builder.create();
 
 	}
 	
@@ -81,10 +88,34 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 	}
 	
 	
-	public static class IntermediateRepresentationMethodSerializer implements JsonSerializer<IntermediateRepresentationMethod> {
-	    public JsonElement serialize(final IntermediateRepresentationMethod ir_method, final Type type, final JsonSerializationContext context) {
+	public static class IntermediateRepresentationMethodSerializer implements JsonSerializer<IntermediateRepresentationMethod> 
+	{
+	    
+		public JsonElement serialize(final IntermediateRepresentationMethod ir_method, final Type type, final JsonSerializationContext context) {
 	        JsonObject result = new JsonObject();
 	        result.add("name", new JsonPrimitive (ir_method.getName()));
+	        
+	        JsonArray arr = new JsonArray();
+	        
+	        
+	        for(IntermediateRepresentationParameterWithType p : ir_method.getParameters())
+	        {	        
+	        	arr.add(context.serialize(p));
+	        }
+	        
+	        result.add("parameters", arr);
+	        
+	        return result;
+	    }
+	}
+	
+	
+	public static class IntermediateRepresentationParameterWithTypeSerializer implements JsonSerializer<IntermediateRepresentationParameterWithType> 
+	{
+	    
+		public JsonElement serialize(final IntermediateRepresentationParameterWithType ir_parameter, final Type type, final JsonSerializationContext context) {
+			JsonObject result = new JsonObject();
+	        result.add("parameter name", new JsonPrimitive (ir_parameter.getName()));
 	        return result;
 	    }
 	}
