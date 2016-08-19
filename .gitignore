@@ -1,6 +1,5 @@
 /dependencies/
 *.class
-*.jar
 java-project/results/
 java-project/target/surefire-reports/
 *.log
