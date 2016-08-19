@@ -3,3 +3,4 @@ java-project/results/
 java-project/target/surefire-reports/
 *.log
 java-project/velocity.log.1
+java-project/results/
