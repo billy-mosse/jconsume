@@ -1,4 +1,3 @@
-/dependencies/
 *.class
 java-project/results/
 java-project/target/surefire-reports/
