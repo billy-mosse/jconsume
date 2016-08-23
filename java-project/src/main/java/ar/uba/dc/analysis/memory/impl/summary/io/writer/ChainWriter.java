@@ -37,4 +37,10 @@ public class ChainWriter implements SummaryWriter<MemorySummary>, Container<Summ
 			writers.remove(lastIndexOfPrinter);
 		}
 	}
+
+	@Override
+	public void setMainClass(String mainClass) {
+		throw new java.lang.UnsupportedOperationException();
+		
+	}
 }

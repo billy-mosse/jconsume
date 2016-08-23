@@ -1,5 +1,6 @@
 package ar.uba.dc.analysis.common.code.impl;
 
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import ar.uba.dc.analysis.common.code.NewStatement;
@@ -26,6 +27,6 @@ public class DefaultNewStatement extends AbstractStatement implements NewStateme
 
 	@Override
 	public Set<DefaultIntermediateRepresentationParameter> getIntermediateRepresentationParameters() {
-		return null;
+		return new LinkedHashSet<DefaultIntermediateRepresentationParameter>();
 	}
 }

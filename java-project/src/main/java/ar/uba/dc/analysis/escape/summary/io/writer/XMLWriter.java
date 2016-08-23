@@ -50,4 +50,10 @@ public class XMLWriter implements SummaryWriter<EscapeSummary> {
 	public void setLocationStrategy(MethodLocationStrategy locationStrategy) {
 		this.locationStrategy = locationStrategy;
 	}
+
+	@Override
+	public void setMainClass(String mainClass) {
+		throw new java.lang.UnsupportedOperationException();
+		
+	}
 }

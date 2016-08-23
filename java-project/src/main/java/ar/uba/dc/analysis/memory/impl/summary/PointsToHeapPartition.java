@@ -51,4 +51,10 @@ public class PointsToHeapPartition implements HeapPartition {
 	public <T> T apply(HeapPartitionVisitor<T> visitor) {
 		return visitor.visit(this);
 	}
+	
+	@Override
+	public String toHumanReadableString()
+	{
+		return "";
+	}
 }

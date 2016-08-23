@@ -96,5 +96,10 @@ public class MadejaHeapPartition implements HeapPartition {
 		return visitor.visit(this);
 	}
 
+	@Override
+	public String toHumanReadableString()
+	{
+		return "soy un nodo";
+	}
 	
 }

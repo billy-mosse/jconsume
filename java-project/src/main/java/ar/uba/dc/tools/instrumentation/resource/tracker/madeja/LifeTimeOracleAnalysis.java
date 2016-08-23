@@ -244,6 +244,12 @@ public class LifeTimeOracleAnalysis extends AbstractInterproceduralAnalysis {
 		public TemporalPartition clone() {
 			return new TemporalPartition();
 		}
+		
+		@Override
+		public String toHumanReadableString()
+		{
+			return "soy un nodo";
+		}
 	}
 
 }

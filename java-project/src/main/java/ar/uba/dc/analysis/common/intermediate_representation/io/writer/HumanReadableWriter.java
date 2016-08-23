@@ -23,6 +23,8 @@ public class HumanReadableWriter implements SummaryWriter<IntermediateRepresenta
 	
 	protected MethodLocationStrategy locationStrategy;
 	
+	protected String mainClass;
+	
 	public HumanReadableWriter() {
 		this.xstream = XStreamFactory.getXStream();
 	}
@@ -31,7 +33,7 @@ public class HumanReadableWriter implements SummaryWriter<IntermediateRepresenta
 		
 		log.debug("estoy escribiendo el metodo " + ir_method.toString());
 		
-		String location = locationStrategy.getHumanReadableLocation(ir_method);
+		String location = locationStrategy.getHumanReadableLocation(ir_method, this.mainClass);
 		log.debug("Location for summary: [" + location + "]");
 		
 		File srcFile = new File(location);
@@ -62,5 +64,16 @@ public class HumanReadableWriter implements SummaryWriter<IntermediateRepresenta
 
 	public void setLocationStrategy(MethodLocationStrategy locationStrategy) {
 		this.locationStrategy = locationStrategy;
+	}
+	
+	@Override
+	public void setMainClass(String mainClass) {
+		this.mainClass = mainClass;
+		
+	}
+	
+	public String getMainClass()
+	{
+		return this.getMainClass();
 	}
 }

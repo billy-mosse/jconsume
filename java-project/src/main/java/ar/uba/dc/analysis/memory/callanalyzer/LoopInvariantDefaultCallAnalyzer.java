@@ -103,7 +103,7 @@ public class LoopInvariantDefaultCallAnalyzer implements CallAnalyzer {
 		
 		for (HeapPartition calleePartition : calleeSummary.getResidualPartitions()) {
 				// Calculamos el vinculo entre caller y callee. 
-			HeapPartition callerPartition = lifeTimeOracle.bind(calleePartition, virtualInvoke);
+			HeapPartition callerPartition = lifeTimeOracle.bind(calleePartition, virtualInvoke);			
 				// El oraculo puede decidir que una particion no se vincule entre caller y callee (se pierda). Esto 
 				// depende del analisis de tiempo de vida auxiliar que utilizemos. Por ejemplo, para el escape, las particiones
 				// que representan parametros no se vinculan entre caller y callee.

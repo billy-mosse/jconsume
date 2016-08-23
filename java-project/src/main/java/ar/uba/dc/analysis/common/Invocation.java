@@ -24,59 +24,58 @@ public class Invocation {
 	
 	public Invocation(SootMethod m)
 	{
-		this.name = m.getName();
+		this.setName(m.getName());
 		this.class_called = m.getDeclaringClass().toString();
 		
+		this.called_implementation_signature = m.getSignature();
+		
 
-		this.parameters = new LinkedHashSet<DefaultIntermediateRepresentationParameter>();
+		this.setParameters(new LinkedHashSet<DefaultIntermediateRepresentationParameter>());
 		Set<IntermediateRepresentationParameter> s = SootUtils.getParameters(m, DefaultIntermediateRepresentationParameter.class);
 		for(IntermediateRepresentationParameter p : s)
 		{
-			this.parameters.add((DefaultIntermediateRepresentationParameter)p);
+			this.getParameters().add((DefaultIntermediateRepresentationParameter)p);
 		}
 		
 		
 	}
 	
-	public Invocation(Statement stmt) {
-		this.name = stmt.getIntermediateRepresentationName();
-		
-		this.parameters = stmt.getIntermediateRepresentationParameters();
+	public Invocation(NewStatement newStmt) {
+		this.setName(newStmt.getIntermediateRepresentationName());		
+		this.setParameters(newStmt.getIntermediateRepresentationParameters());
+		this.setClass_called("");
+		this.called_implementation_signature = "";
 	}
 	
 	
-	private void setName(CallStatement callStmt)
+	public void setName(CallStatement callStmt)
 	{
 		this.name = callStmt.toString();
 	}
 	
-	private String getName() {
+	public String getName() {
 		return name;
 	}
-	private void setName(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 
 
-	private Set<DefaultIntermediateRepresentationParameter> getParameters() {
+	public Set<DefaultIntermediateRepresentationParameter> getParameters() {
 		return parameters;
 	}
-
-
-	private void setArguments(Set<DefaultIntermediateRepresentationParameter> parameters) {
-		this.parameters = parameters;
-	}
-
 
 	private String name;
 	private Set<DefaultIntermediateRepresentationParameter> parameters;
 	private String class_called;
 	
+	private String called_implementation_signature;
+	
 
 	
 	public String toHumanReadableString() {
 		
-		String s = (this.parameters != null ? Joiner.on(", ").skipNulls().join(Iterables.transform(this.parameters, new Function<DefaultIntermediateRepresentationParameter, String >()
+		String s = (this.getParameters() != null ? Joiner.on(", ").skipNulls().join(Iterables.transform(this.getParameters(), new Function<DefaultIntermediateRepresentationParameter, String >()
 				{
 					public String apply(DefaultIntermediateRepresentationParameter parameter) { return parameter.getName(); }
 				}
@@ -84,7 +83,7 @@ public class Invocation {
 				
 				)) : "");
 		
-		return (this.name!="new" ? this.class_called + "." : "") + this.name + String.format("(%s)", s);
+		return (this.getName()!="new" ? this.class_called + "." : "") + this.getName() + String.format("(%s)", s);
 		
 		
 		//return "<invoke " + this.name + "(" + arguments. + ")>;"; //Falta el invariante
@@ -98,6 +97,18 @@ public class Invocation {
 
 	public void setClass_called(String class_called) {
 		this.class_called = class_called;
+	}
+
+	public void setParameters(Set<DefaultIntermediateRepresentationParameter> parameters) {
+		this.parameters = parameters;
+	}
+
+	public String getCalled_implementation_signature() {
+		return called_implementation_signature;
+	}
+
+	public void setCalled_implementation_signature(String called_implementation_signature) {
+		this.called_implementation_signature = called_implementation_signature;
 	}
 
 }

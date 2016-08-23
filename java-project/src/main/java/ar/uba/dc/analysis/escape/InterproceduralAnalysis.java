@@ -124,7 +124,7 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 			//TODO: esto se podria hacer con factory
 			
 			//TODO importante: saltearse los metodos que no tienen active body. Ver como esta implementado en el analisis de memoria
-			IntermediateLanguageRepresentationBuilder irBuilder = new IntermediateLanguageRepresentationBuilder(data, order, repository, methodInformationProvider, methodDecorator, invariantProvider, outputFolder, callGraph);
+			IntermediateLanguageRepresentationBuilder irBuilder = new IntermediateLanguageRepresentationBuilder(data, order, repository, methodInformationProvider, methodDecorator, invariantProvider, outputFolder, callGraph, mainClass);
 			ir_methods = irBuilder.buildIntermediateLanguageRepresentation();
 			
 			internalWriteIntermediateRepresentation();
@@ -309,7 +309,7 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 	
 	protected void internalWriteIntermediateRepresentation() {
 		
-		
+		irWriter.setMainClass(this.mainClass);
 		//Si, ya se, podria meter todo en un solo FOR
 		for (IntermediateRepresentationMethod ir_method : ir_methods) {
 			//TODO: agregar los parametros o un mejor nombre para debug
@@ -317,17 +317,20 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 			irWriter.write(ir_method);
 		}
 		
-
+		ihrWriter.setMainClass(this.mainClass);
 		for (IntermediateRepresentationMethod ir_method : ir_methods) {
 			//TODO: agregar los parametros o un mejor nombre para debug
 			log.info(" |- Writing summary of analyzed method: " + ir_method.getName());
 			ihrWriter.write(ir_method);
 		}
 		
+		jsonWriter.setMainClass(this.mainClass);
 		for (IntermediateRepresentationMethod ir_method : ir_methods) {
 			//TODO: agregar los parametros o un mejor nombre para debug
 			log.info(" |- Writing summary of analyzed method: " + ir_method.getName());
 			jsonWriter.write(ir_method);
+			
+			
 		}
 	}
 	

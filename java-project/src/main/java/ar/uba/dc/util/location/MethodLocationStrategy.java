@@ -33,11 +33,11 @@ public interface MethodLocationStrategy {
 	public String getLocation(SootMethod method);
 
 	//public String getIRLocation(SootMethod method);
-	public String getXMLLocation(IntermediateRepresentationMethod method);
+	public String getXMLLocation(IntermediateRepresentationMethod method, String mainClass);
 	
 	public String getBasePath();
 
-	public String getHumanReadableLocation(IntermediateRepresentationMethod ir_method);
+	public String getHumanReadableLocation(IntermediateRepresentationMethod ir_method, String mainClass);
 	
-	public String getJsonLocation(IntermediateRepresentationMethod ir_method);
+	public String getJsonLocation(IntermediateRepresentationMethod ir_method, String mainClass);
 }

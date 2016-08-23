@@ -7,5 +7,7 @@ public interface HeapPartition {
 	HeapPartition clone();
 	
 	public <T> T apply(HeapPartitionVisitor<T> visitor);
+	
+	public String toHumanReadableString();
 
 }

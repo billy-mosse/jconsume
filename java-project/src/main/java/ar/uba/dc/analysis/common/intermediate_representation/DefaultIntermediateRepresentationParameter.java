@@ -6,6 +6,12 @@ public class DefaultIntermediateRepresentationParameter implements IntermediateR
 	{
 		this.name = name;
 	}
+	
+	public DefaultIntermediateRepresentationParameter()
+	{
+		
+	}
+	
 	protected String name;
 
 	public String getName() {

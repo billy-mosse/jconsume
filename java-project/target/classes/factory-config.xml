@@ -220,7 +220,7 @@
 							 cleanOutputFolder="${clear.memory.summary.output.dir}" outputFolder="${memory.summary.output.dir}"
 							 writeReport="${memory.print.report}"
 							 writeUnanalyzedSummariesInReport="${memory.report.unanalized.enabled}">
-							 <locationStrategy config-class="ar.uba.dc.util.location.method.${memory.summary.output.layout}LocationStrategy" extension=".xml" basePath="${memory.summary.output.dir}" />
+							 <locationStrategy config-class="ar.uba.dc.util.location.method.${escape.summary.output.layout}LocationStrategy" extension=".xml" basePath="${escape.summary.output.dir}" />
 			</paperInterprocedural>
 			
 			<barvinok-calculator-adapter config-class="ar.uba.dc.analysis.memory.impl.BarvinokCalculatorAdapter" config-factory="custom" config-scope="singleton">

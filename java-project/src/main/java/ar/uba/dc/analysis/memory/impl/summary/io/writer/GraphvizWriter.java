@@ -57,6 +57,13 @@ public class GraphvizWriter implements SummaryWriter<EscapeBasedMemorySummary> {
 		plot(dot, summary);
 	}
 	
+	@Override
+	public void setMainClass(String mainClass) {
+		throw new java.lang.UnsupportedOperationException();
+		
+	}
+
+	
 	private void fillDotGraph(EscapeBasedMemorySummary summary, DotGraph out) {
 		Map<PointsToHeapPartition, String> nodeId = new HashMap<PointsToHeapPartition, String>();
 		int id = 0;

@@ -13,28 +13,29 @@ import soot.SootMethod;
 public class ClassNameLocationStrategy extends AbstractMethodLocationStrategy {
 
 	public String getLocation(SootMethod method) {
+		
 		return getBasePath() + method.getDeclaringClass() + "/" + processMethodSignature(method.getSubSignature()) + getExtension();
 	}
 	
-	public String getLocation(String type, IntermediateRepresentationMethod ir_method)
+	public String getLocation(String type, IntermediateRepresentationMethod ir_method, String mainClass)
 	{		
-		return getBasePath() + "/" + type +  "/" + ir_method.getName() + /* "/" + method.getOrder() + "_"  + */ "/" + ir_method.processMethodSignature() + getExtension();
+		return getBasePath() + type + "/" + mainClass + "/" + ir_method.getName() + /* "/" + method.getOrder() + "_"  + */ "/" + ir_method.processMethodSignature() + getExtension();
 	}
 	
 	//TODO: sacar el processMethodSignature de las otras clases
-	public String getXMLLocation(IntermediateRepresentationMethod ir_method) {
-		return getLocation("xml", ir_method);
+	public String getXMLLocation(IntermediateRepresentationMethod ir_method, String mainClass) {
+		return getLocation("xml", ir_method, mainClass);
 	}
 	
 	
 	@Override
-	public String getHumanReadableLocation(IntermediateRepresentationMethod ir_method) {
-		return getLocation("humanReadabla", ir_method);
+	public String getHumanReadableLocation(IntermediateRepresentationMethod ir_method, String mainClass) {
+		return getLocation("humanReadable", ir_method, mainClass);
 	}
 	
 	@Override
-	public String getJsonLocation(IntermediateRepresentationMethod ir_method) {
-		return getLocation("json", ir_method);
+	public String getJsonLocation(IntermediateRepresentationMethod ir_method, String mainClass) {
+		return getLocation("json", ir_method, mainClass);
 	}
 
 }

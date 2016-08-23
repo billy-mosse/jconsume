@@ -42,6 +42,10 @@ public class IntermediateRepresentationMethod {
 
 	protected Set<Node> escapeNodes;
 	
+	private String declaringClass;
+	
+	
+	
 	
 	
 	
@@ -100,6 +104,10 @@ public class IntermediateRepresentationMethod {
 		this.setName(target);
 		this.setParameters(target);
 		this.setReturnType(target);
+		this.declaringClass = target.getDeclaringClass().toString();
+		
+		String s = target.getSignature();
+		s = s;
 		
 		
 		
@@ -254,5 +262,15 @@ public class IntermediateRepresentationMethod {
 			this.escapeNodes.add(n);
 		}
 		
+	}
+
+
+	public String getDeclaringClass() {
+		return declaringClass;
+	}
+
+
+	public void setDeclaringClass(String declaringClass) {
+		this.declaringClass = declaringClass;
 	}
 }

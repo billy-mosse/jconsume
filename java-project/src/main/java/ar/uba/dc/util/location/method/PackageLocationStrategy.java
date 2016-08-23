@@ -17,18 +17,18 @@ public class PackageLocationStrategy extends AbstractMethodLocationStrategy {
 	}
 	
 	@Override
-	public String getXMLLocation(IntermediateRepresentationMethod method) {
+	public String getXMLLocation(IntermediateRepresentationMethod method, String mainClass) {
 		throw new java.lang.UnsupportedOperationException();
 
 	}
 	
 	@Override
-	public String getHumanReadableLocation(IntermediateRepresentationMethod ir_method) {
+	public String getHumanReadableLocation(IntermediateRepresentationMethod ir_method, String mainClass) {
 		throw new java.lang.UnsupportedOperationException();
 	}
 	
 	@Override
-	public String getJsonLocation(IntermediateRepresentationMethod ir_method) {
+	public String getJsonLocation(IntermediateRepresentationMethod ir_method, String mainClass) {
 		throw new java.lang.UnsupportedOperationException();
 	}
 }

@@ -41,7 +41,7 @@
 	<classpathentry kind="var" path="M2_REPO/commons-cli/commons-cli/1.2/commons-cli-1.2.jar"/>
 	<classpathentry kind="lib" path="/home/billy/Projects/git2/jconsume/jpfHelper/bin"/>
 	<classpathentry kind="lib" path="/home/billy/Projects/git2/jconsume/jpfHelper/src/monitor"/>
-	<classpathentry kind="lib" path="/home/billy/Projects/git2/jconsume/java-project/guava-r07.jar"/>
-	<classpathentry kind="lib" path="/home/billy/Projects/git2/jconsume/java-project/gson-2.2.2.jar"/>
+	<classpathentry kind="lib" path="/home/billy/Projects/git2/jconsume/dependencies/guava-r07.jar"/>
+	<classpathentry kind="lib" path="/home/billy/Projects/git2/jconsume/dependencies/gson-2.2.2.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

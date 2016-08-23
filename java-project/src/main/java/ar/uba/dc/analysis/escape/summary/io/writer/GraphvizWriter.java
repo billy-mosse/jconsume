@@ -36,6 +36,12 @@ public class GraphvizWriter implements SummaryWriter<EscapeSummary> {
 		super();
 	}
 
+	@Override
+	public void setMainClass(String mainClass) {
+		throw new java.lang.UnsupportedOperationException();
+		
+	}
+
 	public void write(EscapeSummary summary) {
 		DotGraph dot = new DotGraph(summary.getTarget().toString());
 		dot.setGraphLabel(summary.getTarget().toString());

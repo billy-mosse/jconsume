@@ -21,14 +21,22 @@ public class XMLWriter implements SummaryWriter<IntermediateRepresentationMethod
 	protected XStream xstream;
 	
 	protected MethodLocationStrategy locationStrategy;
+	protected String mainClass;
 	
 	public XMLWriter() {
 		this.xstream = XStreamFactory.getXStream();
 	}
 	
+
+	@Override
+	public void setMainClass(String mainClass) {
+		this.mainClass = mainClass;
+	}
+
+	
 	public void write(IntermediateRepresentationMethod ir_method) {
 		
-		String location = locationStrategy.getXMLLocation(ir_method);
+		String location = locationStrategy.getXMLLocation(ir_method, this.mainClass);
 		log.debug("Location for summary: [" + location + "]");
 		
 		File srcFile = new File(location);

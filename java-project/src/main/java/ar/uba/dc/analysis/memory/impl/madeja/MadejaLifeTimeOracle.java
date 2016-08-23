@@ -163,5 +163,11 @@ public class MadejaLifeTimeOracle implements LifeTimeOracle {
 			return visitor.visit(this);
 		}
 		
+		@Override
+		public String toHumanReadableString()
+		{
+			return "soy un nodo";
+		}
+		
 	}
 }

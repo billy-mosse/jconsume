@@ -25,6 +25,12 @@ public class XMLWriter implements SummaryWriter<EscapeBasedMemorySummary> {
 	public XMLWriter() {
 		this.xstream = XStreamFactory.getXStream();
 	}
+
+	@Override
+	public void setMainClass(String mainClass) {
+		throw new java.lang.UnsupportedOperationException();
+		
+	}
 	
 	public void write(EscapeBasedMemorySummary summary) {
 		String location = locationStrategy.getLocation(summary.getTarget());
