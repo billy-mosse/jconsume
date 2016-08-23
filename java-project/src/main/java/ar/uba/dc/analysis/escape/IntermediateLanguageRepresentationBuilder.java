@@ -46,13 +46,16 @@ public class IntermediateLanguageRepresentationBuilder {
 	protected InvariantProvider invariantProvider;
 	private IntermediateRepresentationMethodBuilder irbuilder;
 	private IntermediateRepresentationBodyBuilder irbody_builder;
+	private String mainClass;
 
 	private CallGraph callGraph;
 	
 	
 	
 	
-	public IntermediateLanguageRepresentationBuilder(RAMSummaryRepository data, Map<SootMethod, Integer> order, SummaryRepository<EscapeSummary> repository, MethodInformationProvider methodInformationProvider, MethodDecorator methodDecorator, InvariantProvider invariantProvider, String outputFolder, CallGraph callGraph)
+	public IntermediateLanguageRepresentationBuilder(RAMSummaryRepository data, Map<SootMethod, Integer> order, SummaryRepository<EscapeSummary> repository, 
+			MethodInformationProvider methodInformationProvider, MethodDecorator methodDecorator, InvariantProvider invariantProvider, 
+			String outputFolder, CallGraph callGraph, String mainClass)
 	{
 		this.data=data;
 		this.order = order;
@@ -62,6 +65,7 @@ public class IntermediateLanguageRepresentationBuilder {
 		this.methodDecorator = methodDecorator;
 		this.invariantProvider = invariantProvider;
 		this.callGraph = callGraph;
+		this.mainClass = mainClass;
 	}
 	
 

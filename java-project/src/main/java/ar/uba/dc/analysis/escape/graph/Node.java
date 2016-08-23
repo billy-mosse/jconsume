@@ -33,7 +33,7 @@ public interface Node extends Cloneable {
 
 	/** 
 	 * Method in which node was created (only apply for inside nodes). 
-	 * If this information is not available, the methdo should return null  
+	 * If this information is not available, the method should return null  
 	 * */
 	public SootMethod belongsTo();
 

@@ -13,4 +13,10 @@ public class NullWriter implements SummaryWriter<EscapeSummary> {
 		// No hacemos nada
 	}
 
+	@Override
+	public void setMainClass(String mainClass) {
+		throw new java.lang.UnsupportedOperationException();
+		
+	}
+
 }

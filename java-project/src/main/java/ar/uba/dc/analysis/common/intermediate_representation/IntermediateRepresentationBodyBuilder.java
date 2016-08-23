@@ -58,6 +58,7 @@ public class IntermediateRepresentationBodyBuilder {
 		{
 			counter++;
 			log.debug("Processing statement: " + stmt.toString());
+			
 			//ar.uba.dc.paper.Program3 ar.uba.dc.util.List map(ar.uba.dc.util.List,ar.uba.dc.paper.Op): li = interfaceinvoke it.<java.util.Iterator: java.lang.Object next()>() (2)
 			Line line = buildLineFromStatement(stmt, counter);
 			lines.add(line);

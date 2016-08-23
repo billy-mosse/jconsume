@@ -6,11 +6,20 @@ import ar.uba.dc.analysis.common.intermediate_representation.IntermediateReprese
 public class IntermediateRepresentationWriter implements SummaryWriter<IntermediateRepresentationMethod> {
 
 
+	protected String mainClass;
+	
 	@Override
 	public void write(IntermediateRepresentationMethod summary) {
 		// TODO Auto-generated method stub
 		
 	}
+
+
+	@Override
+	public void setMainClass(String mainClass) {
+		this.mainClass = mainClass;
+	}
+
 	
 
 }

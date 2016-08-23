@@ -49,6 +49,7 @@ public class MainSootRunner {
 		
 		log.info("Memory analysis was requested for [" + className + "] and method [" + methodSignature + "]");
 		
+		//aca hace el insertTransformer
 		if (context.getBoolean(Context.RUN_ESCAPE_ANALYSIS)) {
 			PhaseInitializer initializer = context.getFactory().getEscapePhaseInitializer();
 			initializer.initialize(context, className);
@@ -56,7 +57,9 @@ public class MainSootRunner {
 		
 		//BILLY jtp: interprocedural
 		//BILLY wjtp: callgraph
-		SootUtils.insertTransformer("wjtp", "wjtp.memory", MemorySceneTransformer.v(context, className));
+		//SootUtils.insertTransformer("wjtp", "wjtp.memory", MemorySceneTransformer.v(context, className));
+		
+		SootUtils.insertTransformer("wjtp", "wjtp.paperMemory", PaperMemorySceneTransformer.v(context, className));
 		
 		String[] opts = SootUtils.buildOptions(context, className, methodSignature).toArray(new String[] {});
 		

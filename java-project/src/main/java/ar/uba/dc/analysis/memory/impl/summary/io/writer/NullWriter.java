@@ -21,4 +21,10 @@ public class NullWriter implements SummaryWriter<MemorySummary> {
 		// No hacemos nada
 	}
 
+	@Override
+	public void setMainClass(String mainClass) {
+		throw new java.lang.UnsupportedOperationException();
+		
+	}
+
 }

@@ -54,6 +54,12 @@ public class Factory {
 		return getObject("analysis.memory.interprocedural");
 	}
 	
+	/**
+	 * Retorna el analisis de paperMemoria
+	 */
+	public ar.uba.dc.analysis.memory.PaperInterproceduralAnalysis getPaperMemoryAnalysis() {
+		return getObject("analysis.memory.paperInterprocedural");
+	}
 	
 	/**
 	 * Retorna el analisis de lifeTime
