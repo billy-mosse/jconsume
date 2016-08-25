@@ -178,6 +178,7 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 		// fixpoint iterations
 		while (!queue.isEmpty()) {
 			SootMethod m = queue.first();
+			log.debug("Processing " + m.toString());
 			queue.remove(m); 
 			if (analyseKnownMethods || !repository.contains(m)) {
 				EscapeSummary newSummary = newInitialSummary(m);

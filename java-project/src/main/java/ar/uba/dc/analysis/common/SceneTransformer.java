@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory;
 
 import soot.Scene;
 import soot.SootMethod;
+import ar.uba.dc.analysis.common.code.HSootMethod;
 import ar.uba.dc.config.Context;
 import ar.uba.dc.soot.SootUtils;
 import ar.uba.dc.util.Timer;
@@ -43,7 +44,7 @@ public class SceneTransformer extends soot.SceneTransformer {
 	
 		String methodSignature = StringUtils.defaultString(mainMethod, context.getString(Context.DEFAULT_MAIN_METHOD)); 
 	
-		SootMethod main = SootUtils.getMethod(mainClass, methodSignature); 
+		HSootMethod main = (HSootMethod) SootUtils.getMethod(mainClass, methodSignature); 
 	
 		Timer analysisTimer = new Timer();
 		analysisTimer.start();

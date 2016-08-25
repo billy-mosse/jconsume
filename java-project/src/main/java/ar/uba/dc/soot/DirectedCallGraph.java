@@ -3,15 +3,21 @@ package ar.uba.dc.soot;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import ar.uba.dc.analysis.common.code.HSootMethod;
+import ar.uba.dc.analysis.common.code.SootMethodComparator;
 import soot.SootMethod;
+
+
 import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.jimple.toolkits.callgraph.Edge;
 import soot.toolkits.graph.DirectedGraph;
@@ -59,18 +65,25 @@ public class DirectedCallGraph implements DirectedGraph<SootMethod> {
 			filteredHeads.add(head);
 		}
 		
+		//Cambie HashSet por LinkedHashSet para ver si el orden cambia asi
 		
-		nodes = new HashSet<SootMethod>(filteredHeads);
+		nodes = new TreeSet<SootMethod>(new SootMethodComparator());
+		nodes.addAll(filteredHeads);
 		
 		MultiMap<SootMethod, SootMethod> s = new HashMultiMap<SootMethod, SootMethod>();
 		MultiMap<SootMethod, SootMethod> p = new HashMultiMap<SootMethod, SootMethod>();
 
 		// simple breadth-first visit
-		Set<SootMethod> remain = new HashSet<SootMethod>(filteredHeads);
+
+		Set<SootMethod> remain = new TreeSet<SootMethod>(new SootMethodComparator());
+		remain.addAll(filteredHeads);
+		
+		
 		int nb = 0;
 		log.debug("Dumping method dependencies");
 		while (!remain.isEmpty()) {
-			Set<SootMethod> newRemain = new HashSet<SootMethod>();
+			
+			Set<SootMethod> newRemain = new TreeSet<SootMethod>(new SootMethodComparator());
 			Iterator<SootMethod> it = remain.iterator();
 			while (it.hasNext()) {
 				SootMethod m = it.next();
@@ -78,7 +91,7 @@ public class DirectedCallGraph implements DirectedGraph<SootMethod> {
 				log.debug(" |- " + m.toString() + " calls");
 				while (itt.hasNext()) {
 					Edge edge = itt.next();
-					SootMethod mm = edge.tgt();
+					SootMethod mm = (SootMethod) edge.tgt();
 					boolean keep = mm.isConcrete() && filter.want(mm);
 					log.debug(" |  |- " + mm.toString() + (keep ? "" : " (filtered out)"));
 					if (keep) {
@@ -145,3 +158,4 @@ public class DirectedCallGraph implements DirectedGraph<SootMethod> {
 		return pred.get(s);
 	}
 }
+

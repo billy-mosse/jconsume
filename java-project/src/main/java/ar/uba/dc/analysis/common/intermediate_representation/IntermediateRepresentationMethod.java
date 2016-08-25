@@ -164,8 +164,10 @@ public class IntermediateRepresentationMethod {
 	public Set<IntermediateRepresentationParameterWithType> getParameters() {
 		return parameters;
 	}
-	public void setParameters(Set<IntermediateRepresentationParameterWithType> arguments) {
-		this.parameters = arguments;
+	
+	//TODO: creeria que esto esta mal porque mueren al final. Probemos.
+	public void setParameters(Set<IntermediateRepresentationParameterWithType> parameters) {
+		this.parameters = parameters;
 	}
 
 

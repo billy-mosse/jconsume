@@ -37,12 +37,6 @@ public class PaperInterproceduralAnalysis {
 	protected MethodLocationStrategy locationStrategy;
 
 	
-	
-	/*public PaperInterproceduralAnalysis(MethodLocationStrategy locationStrategy)
-	{
-		this.locationStrategy = locationStrategy;
-	}*/
-	
 	private static Log log = LogFactory.getLog(PaperInterproceduralAnalysis.class);
 
 	
@@ -50,6 +44,14 @@ public class PaperInterproceduralAnalysis {
 	protected SummaryReader<IntermediateRepresentationMethod> jsonReader;
 	protected String mainClass;
 	
+	public SummaryReader<IntermediateRepresentationMethod> getJsonReader() {
+		return jsonReader;
+	}
+
+	public void setJsonReader(SummaryReader<IntermediateRepresentationMethod> jsonReader) {
+		this.jsonReader = jsonReader;
+	}
+
 	public void doAnalysis(String mainClass)
 	{
 		this.mainClass = mainClass;

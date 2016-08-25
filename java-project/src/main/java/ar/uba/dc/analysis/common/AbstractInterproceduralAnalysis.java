@@ -45,7 +45,12 @@ public abstract class AbstractInterproceduralAnalysis {
 		//BILLY linear ordering of its vertices such that for every directed edge uv from vertex u to vertex v, v comes before u in the ordering
 		Orderer<SootMethod> o = new PseudoTopologicalOrderer<SootMethod>();
 		Integer i = 0;
+		
+		
+		
 		for (SootMethod m : o.newList(directedCallGraph, true)) {
+			log.debug(m.toString());
+
 			this.order.put(m, new Integer(i));
 			i++;
 		}
