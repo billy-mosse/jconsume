@@ -65,11 +65,11 @@ public class Invocation {
 		return parameters;
 	}
 
-	private String name;
-	private Set<DefaultIntermediateRepresentationParameter> parameters;
-	private String class_called;
+	protected String name;
+	protected Set<DefaultIntermediateRepresentationParameter> parameters;
+	protected String class_called;
 	
-	private String called_implementation_signature;
+	protected String called_implementation_signature;
 	
 
 	
