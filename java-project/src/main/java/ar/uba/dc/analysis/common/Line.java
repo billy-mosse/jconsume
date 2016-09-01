@@ -45,7 +45,7 @@ public class Line {
 	public List<Invocation> getInvocations() {
 		return invocations;
 	}
-	public void setInvocation(List<Invocation> invocations) {
+	public void setInvocations(List<Invocation> invocations) {
 		this.invocations = invocations;
 	}
 

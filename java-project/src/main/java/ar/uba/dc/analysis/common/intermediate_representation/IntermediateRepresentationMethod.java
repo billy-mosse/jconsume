@@ -44,6 +44,8 @@ public class IntermediateRepresentationMethod {
 	
 	private String declaringClass;
 	
+	protected String class_owner;
+	
 	
 	
 	
@@ -74,7 +76,7 @@ public class IntermediateRepresentationMethod {
 	}
 	
 	
-	private void setReturnType(SootMethod target)
+	public void setReturnTypeFromSootMethod(SootMethod target)
 	{
 		this.returnType = target.getReturnType().toString();
 	}
@@ -82,6 +84,11 @@ public class IntermediateRepresentationMethod {
 	public String getReturnType()
 	{
 		return this.returnType;
+	}
+	
+	public void setReturnType(String returnType)
+	{
+		this.returnType = returnType;
 	}
 	
 	private void setName(SootMethod target)
@@ -103,10 +110,12 @@ public class IntermediateRepresentationMethod {
 		
 		this.setName(target);
 		this.setParameters(target);
-		this.setReturnType(target);
+		this.setReturnTypeFromSootMethod(target);
 		this.declaringClass = target.getDeclaringClass().toString();
 		
 		String s = target.getSignature();
+		
+		
 		s = s;
 		
 		

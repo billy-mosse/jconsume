@@ -2,11 +2,15 @@ package ar.uba.dc.analysis.common.intermediate_representation.io.reader;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.logging.Log;
@@ -30,16 +34,18 @@ import ar.uba.dc.analysis.common.SummaryReader;
 import ar.uba.dc.analysis.common.intermediate_representation.DefaultIntermediateRepresentationParameter;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethodBody;
+import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationParameter;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationParameterWithType;
 import ar.uba.dc.analysis.common.intermediate_representation.io.writer.JsonWriter;
 import ar.uba.dc.analysis.common.intermediate_representation.io.writer.JsonWriter.DefaultIntermediateRepresentationParameterSerializer;
 import ar.uba.dc.analysis.common.intermediate_representation.io.writer.JsonWriter.IntermediateRepresentationMethodBodySerializer;
 import ar.uba.dc.analysis.common.intermediate_representation.io.writer.JsonWriter.IntermediateRepresentationMethodSerializer;
-import ar.uba.dc.analysis.common.intermediate_representation.io.writer.JsonWriter.IntermediateRepresentationParameterWithTypeSerializer;
+//import ar.uba.dc.analysis.common.intermediate_representation.io.writer.JsonWriter.IntermediateRepresentationParameterWithTypeSerializer;
 import ar.uba.dc.analysis.common.intermediate_representation.io.writer.JsonWriter.InvocationSerializer;
 import ar.uba.dc.analysis.common.intermediate_representation.io.writer.JsonWriter.LineSerializer;
 import ar.uba.dc.analysis.escape.EscapeSummary;
 import ar.uba.dc.analysis.escape.summary.io.xstream.XStreamFactory;
+import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.soot.xstream.StatementIdConverter;
 import ar.uba.dc.util.location.MethodLocationStrategy;
 
@@ -53,8 +59,11 @@ protected Gson gson;
 	
 	public JsonReader() {
 		GsonBuilder builder = new GsonBuilder().setPrettyPrinting();
-		
+
 		builder.registerTypeAdapter(IntermediateRepresentationMethod.class, new IntermediateRepresentationMethodDeserializer());
+		builder.registerTypeAdapter(Line.class, new LineDeserializer());
+		builder.registerTypeAdapter(Invocation.class, new InvocationDeserializer());
+		builder.registerTypeAdapter(IntermediateRepresentationMethodBody.class, new IntermediateRepresentationMethodBodyDeserializer());
 		//builder.registerTypeAdapter(IntermediateRepresentationParameterWithType.class, new IntermediateRepresentationParameterWithTypeSerializer());
 		//builder.registerTypeAdapter(IntermediateRepresentationMethodBody.class, new IntermediateRepresentationMethodBodySerializer());	
 		//builder.registerTypeAdapter(Line.class, new LineSerializer());
@@ -77,7 +86,15 @@ protected Gson gson;
 	@Override
 	public IntermediateRepresentationMethod read(Reader reader) {
 		
-		return this.gson.fromJson(reader, IntermediateRepresentationMethod.class);
+
+		try {
+			IntermediateRepresentationMethod m = this.gson.fromJson(reader, IntermediateRepresentationMethod.class); 
+			return m;
+		} catch (Exception e) {
+			log.error("Error. " + e.getMessage(), e);
+			return null;
+		}
+		
 	}
 	
 	
@@ -90,8 +107,11 @@ protected Gson gson;
 
 		    JsonObject jobject = (JsonObject) json;
 
+			log.debug("json: " + jobject.toString());
 		    IntermediateRepresentationMethod m = new IntermediateRepresentationMethod();
 		    m.setName(jobject.get("name").getAsString());
+		    
+		    m.setDeclaringClass(jobject.get("declaring_class").getAsString());
 		    
 		    Set<IntermediateRepresentationParameterWithType> parameters  = new LinkedHashSet<IntermediateRepresentationParameterWithType>();
 		    
@@ -106,6 +126,14 @@ protected Gson gson;
 		    
 		    m.setParameters(parameters);
 		    
+		    m.setReturnType(jobject.get("return_type").getAsString());
+		    
+		    
+		    IntermediateRepresentationMethodBody body = context.deserialize(jobject.get("body"), IntermediateRepresentationMethodBody.class);
+		    
+		    
+		    m.setBody(body);
+		    
 		    
 		   /* m.setBody(
 		    		(IntermediateRepresentationMethodBody) context.deserialize(jobject.get("body").getAsJsonObject(), 
@@ -113,9 +141,114 @@ protected Gson gson;
 	    
 	    
 		    return m;
-		}
-
+		}			
+			
 	}
+	
+	public static class IntermediateRepresentationMethodBodyDeserializer implements JsonDeserializer<IntermediateRepresentationMethodBody> 
+	{
+	    
+		@Override
+		public IntermediateRepresentationMethodBody deserialize(JsonElement json, Type type,
+		        JsonDeserializationContext context) throws JsonParseException {
+
+			IntermediateRepresentationMethodBody body = new IntermediateRepresentationMethodBody();
+			JsonObject jobject = (JsonObject) json;
+			JsonArray jlines = jobject.get("lines").getAsJsonArray();
+			
+			Set<Line> lines = new LinkedHashSet<Line>();
+			
+		    for(int i = 0; i < jlines.size(); i++)
+		    {
+		    	//No necesita un custom deserializer porque tiene tipos primitivos adentro
+		    	Line l = context.deserialize(jlines.get(i), Line.class);
+		    	lines.add(l);
+		    }
+		    
+		    body.setLines(lines);
+		    return body;
+		}
+	}
+	
+	
+	public static class LineDeserializer implements JsonDeserializer<Line> 
+	{
+	    
+		@Override
+		public Line deserialize(JsonElement json, Type type,
+		        JsonDeserializationContext context) throws JsonParseException {
+
+
+			Line line = new Line();
+			
+			
+			JsonObject jobject = (JsonObject) json;
+			
+			
+			//TODO: agregar inductives y toda la bola
+			line.setInvariant(new DomainSet(jobject.get("invariant").getAsString()));
+			
+			
+			
+			JsonArray jinvocations = jobject.get("invocations").getAsJsonArray();
+			
+			List<Invocation> invocations = new LinkedList<Invocation>();
+			
+		    for(int i = 0; i < jinvocations.size(); i++)
+		    {
+		    	//No necesita un custom deserializer porque tiene tipos primitivos adentro
+		    	Invocation invocation = context.deserialize(jinvocations.get(i), Invocation.class);
+		    	invocations.add(invocation);
+		    }
+		    
+		    line.setInvocations(invocations);
+		    return line;
+		}
+	}
+	
+	
+	public static class InvocationDeserializer implements JsonDeserializer<Invocation> 
+	{
+	    
+		@Override
+		public Invocation deserialize(JsonElement json, Type type,
+		        JsonDeserializationContext context) throws JsonParseException {
+
+
+			Invocation invocation = new Invocation();
+			
+			
+			JsonObject jobject = (JsonObject) json;
+
+			invocation.setClass_called(jobject.get("class_called").getAsString());			
+			
+			invocation.setName( jobject.get("name").getAsString());
+			
+			
+			invocation.setCalled_implementation_signature(jobject.get("called_implementation_signature").getAsString());
+			
+			
+						
+			JsonArray jparameters = jobject.get("parameters").getAsJsonArray();
+			
+			Set<DefaultIntermediateRepresentationParameter> parameters = new LinkedHashSet<DefaultIntermediateRepresentationParameter>();
+			
+			
+		    for(int i = 0; i < jparameters.size(); i++)
+		    {
+		    	//No necesita un custom deserializer porque tiene tipos primitivos adentro
+		    	DefaultIntermediateRepresentationParameter p = context.deserialize(jparameters.get(i), DefaultIntermediateRepresentationParameter.class);
+		    	parameters.add(p);
+		    }
+		    
+		    invocation.setParameters(parameters);
+		    
+		    return invocation;
+		    
+		}
+	}
+	
+	
 	
 	/*public static class IntermediateRepresentationParameterWithTypeDeserializer implements JsonDeserializer<IntermediateRepresentationParameterWithType> 
 	{

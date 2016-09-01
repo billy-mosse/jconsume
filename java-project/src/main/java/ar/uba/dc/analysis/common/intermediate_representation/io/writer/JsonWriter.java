@@ -49,7 +49,7 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 		GsonBuilder builder = new GsonBuilder().setPrettyPrinting();
 		
 		builder.registerTypeAdapter(IntermediateRepresentationMethod.class, new IntermediateRepresentationMethodSerializer());
-		builder.registerTypeAdapter(IntermediateRepresentationParameterWithType.class, new IntermediateRepresentationParameterWithTypeSerializer());
+		//builder.registerTypeAdapter(IntermediateRepresentationParameterWithType.class, new IntermediateRepresentationParameterWithTypeSerializer());
 		builder.registerTypeAdapter(IntermediateRepresentationMethodBody.class, new IntermediateRepresentationMethodBodySerializer());	
 		builder.registerTypeAdapter(Line.class, new LineSerializer());
 		
@@ -118,18 +118,40 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 	        JsonObject result = new JsonObject();
 	        result.add("name", new JsonPrimitive (ir_method.getName()));
 	        
-	        JsonArray arr = new JsonArray();
+	        JsonArray parameters = new JsonArray();
 	        
 	        
 	        for(IntermediateRepresentationParameterWithType p : ir_method.getParameters())
 	        {	        
-	        	arr.add(context.serialize(p));
+	        	parameters.add(context.serialize(p));
 	        }
 	        
-	        result.add("parameters", arr);
 	        
 	        
-	        result.add("return type", new JsonPrimitive(ir_method.getReturnType()));
+	        //TODO: la verdad no necesito los parametros. Me parece que voy a volar xml y humanReadable, y todo lo que no necesite, y dejar solo json
+	        result.add("parameters", parameters);
+	        JsonArray relevant_parameters = new JsonArray();
+	        
+	        
+	        for(String rp : ir_method.getRelevant_parameters())
+	        {	        
+	        	relevant_parameters.add(context.serialize(rp));
+	        }
+	        
+	        //TOOD: falta ver que pasa con method requirements
+	        
+	        //y el binding
+	        
+	        result.add("declaring_class", new JsonPrimitive(ir_method.getDeclaringClass()));
+	        
+	        
+	        
+	        result.add("relevant_parameters", relevant_parameters);
+	        
+	        
+	        
+	        
+	        result.add("return_type", new JsonPrimitive(ir_method.getReturnType()));
 	        result.add("body", context.serialize(ir_method.getBody()));
 	        
 	        
@@ -138,7 +160,7 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 	}
 	
 	
-	public static class IntermediateRepresentationParameterWithTypeSerializer implements JsonSerializer<IntermediateRepresentationParameterWithType> 
+	/*public static class IntermediateRepresentationParameterWithTypeSerializer implements JsonSerializer<IntermediateRepresentationParameterWithType> 
 	{
 	    
 		public JsonElement serialize(final IntermediateRepresentationParameterWithType ir_parameter, final Type type, final JsonSerializationContext context) {
@@ -147,7 +169,7 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 	        result.add("type", new JsonPrimitive (ir_parameter.getType()));
 	        return result;
 	    }
-	}
+	}*/
 	
 	public static class IntermediateRepresentationMethodBodySerializer implements JsonSerializer<IntermediateRepresentationMethodBody> 
 	{
@@ -197,7 +219,7 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 			JsonObject result = new JsonObject();
 			result.add("class_called", new JsonPrimitive(invocation.getClass_called()));
 
-			result.add("name", new JsonPrimitive( invocation.toHumanReadableString()));
+			result.add("name", new JsonPrimitive( invocation.getName()));
 			
 			JsonArray arr = new JsonArray();
 			
