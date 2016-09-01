@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory;
 
 import ar.uba.dc.analysis.memory.InterproceduralAnalysis;
 import ar.uba.dc.analysis.memory.PaperInterproceduralAnalysis;
+import ar.uba.dc.analysis.memory.PaperInterproceduralAnalysis.NotDAGException;
 import ar.uba.dc.config.Context;
 import ar.uba.dc.soot.SootUtils;
 import ar.uba.dc.util.Timer;
@@ -53,7 +54,9 @@ private static Log log = LogFactory.getLog(PaperMemorySceneTransformer.class);
 		
 		log.info("Running memory analysis for [" + mainClass + "] and method [" + methodSignature + "]");
 		
+		
 		aPaperMemoryAnalysis.run(Scene.v().getCallGraph(), context.getFactory().getDirectedGraphMethodFilter(), mainClass);
+		
 		
 		analysisTimer.stop();
 		

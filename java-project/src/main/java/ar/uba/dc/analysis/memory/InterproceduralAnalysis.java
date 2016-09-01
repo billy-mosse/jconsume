@@ -102,6 +102,8 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis {
 		for (SootMethod methodUnderAnalysis : queue) {
 			if (analyseKnownMethods || !repository.contains(methodUnderAnalysis)) {
 				log.info(" |- processing " + methodUnderAnalysis.toString());
+				
+				//Esto no podria estar afuera?
 				IntraproceduralAnalysis analysis = new IntraproceduralAnalysis(this, expressionFactory, summaryFactory, methodDecorator, countingTheory, lifeTimeOracle, symbolicCalculator);
 				MemorySummary summary = analysis.run(methodUnderAnalysis);
 				this.analyzedNewStaments += analysis.getAnalyzedNews();

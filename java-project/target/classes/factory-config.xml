@@ -155,7 +155,7 @@
 				</ihr>
 
 				<json config-class="ar.uba.dc.analysis.common.intermediate_representation.io.writer.JsonWriter">
-					<locationStrategy config-class="ar.uba.dc.util.location.method.${escape.summary.output.layout}LocationStrategy" extension=".xml" basePath="${escape.summary.output.dir}" />
+					<locationStrategy config-class="ar.uba.dc.util.location.method.${escape.summary.output.layout}LocationStrategy" extension=".json" basePath="${escape.summary.output.dir}" />
 				</json>
 
 				<dot config-class="ar.uba.dc.analysis.escape.summary.io.writer.GraphvizWriter" leaveSourceFile="${escape.summary.printer.dot.leave-source-file}" graphSizeLimit="${escape.summary.printer.dot.max-graph-size}">
@@ -220,9 +220,16 @@
 							 cleanOutputFolder="${clear.memory.summary.output.dir}" outputFolder="${memory.summary.output.dir}"
 							 writeReport="${memory.print.report}"
 							 writeUnanalyzedSummariesInReport="${memory.report.unanalized.enabled}">
-							 <locationStrategy config-class="ar.uba.dc.util.location.method.${escape.summary.output.layout}LocationStrategy" extension=".xml" basePath="${escape.summary.output.dir}" />
+							 <locationStrategy config-class="ar.uba.dc.util.location.method.${escape.summary.output.layout}LocationStrategy" extension=".json" basePath="${escape.summary.output.dir}" />
 							 <jsonReader config-class="ar.uba.dc.analysis.common.intermediate_representation.io.reader.JsonReader" />
+							 <analysis config-class="ar.uba.dc.analysis.memory.PaperIntraproceduralAnalysis" />
 			</paperInterprocedural>
+
+			<paperIntraprocedural config-class="ar.uba.dc.analysis.memory.impl.PaperMemoryIntraproceduralAnalysis">
+				<summaryFactory config-class="ar.uba.dc.analysis.memory.PaperMemorySummaryFactory" />
+			</paperIntraprocedural>
+
+
 			
 			<barvinok-calculator-adapter config-class="ar.uba.dc.analysis.memory.impl.BarvinokCalculatorAdapter" config-factory="custom" config-scope="singleton">
 				<invariantProvider config-class="ar.uba.dc.invariant.InvariantProvider" config-factory="custom" config-ref-to="invariants.provider.${invariants.provider}" />
