@@ -40,7 +40,9 @@ public class IntermediateRepresentationMethod {
 
 	protected DomainSet methodRequirements;
 
-	protected Set<Node> escapeNodes;
+	
+	//TODO: ESTO ESTA MAL, NO DEBERIA EXISTIR PORQUE CADA NEW YA TIENE ASOCIADO SU NODO.
+	protected Set<String> escapeNodes;
 	
 	private String declaringClass;
 	
@@ -62,7 +64,7 @@ public class IntermediateRepresentationMethod {
 	
 	
 	
-	private void setParameters(SootMethod target)
+	private void setParametersFromSootMethod(SootMethod target)
 	{	
 		//TODO: esto esta horrible
 		this.parameters = new LinkedHashSet<IntermediateRepresentationParameterWithType>();
@@ -73,14 +75,8 @@ public class IntermediateRepresentationMethod {
 		}
 		
 		
-	}
+	}	
 	
-	
-	public void setReturnTypeFromSootMethod(SootMethod target)
-	{
-		this.returnType = target.getReturnType().toString();
-	}
-
 	public String getReturnType()
 	{
 		return this.returnType;
@@ -91,57 +87,19 @@ public class IntermediateRepresentationMethod {
 		this.returnType = returnType;
 	}
 	
-	private void setName(SootMethod target)
-	{
-		this.name = target.getName();
-	}
-	
-	
-	public IntermediateRepresentationMethod(BasicMethodBody methodBody, long order)
+	public IntermediateRepresentationMethod(SootMethod m, long order)
 	{
 		//TODO: NO HACE FALTA PARSEAR. EL SOOTMETHOD YA TIENE TODO!!
 		
-		SootMethod target = methodBody.belongsTo();
-		this.order = order;
-		
+		this.order = order;		
 
-		log.debug("____Construyendo " + target.toString());
+		log.debug("____Construyendo " + m.toString());
 		
 		
-		this.setName(target);
-		this.setParameters(target);
-		this.setReturnTypeFromSootMethod(target);
-		this.declaringClass = target.getDeclaringClass().toString();
-		
-		String s = target.getSignature();
-		
-		
-		s = s;
-		
-		
-		
-		/*String completeName = m.toString();
-		String[] v = completeName.split(" |<|>");
-		
-		assertLength(v, 4, completeName);
-		
-		this.type = v[2];
-		
-		String name_with_arguments = v[3];
-		String[] v2 = name_with_arguments.split("\\(|\\)"); //creo que los parentesis se tienen que escapar. El | es un OR en regex
-		assertLength(v2, 2, completeName);
-		
-		this.name = v2[0];
-		
-		String arguments_string = v2[1];
-		
-		String[] arguments = arguments_string.split(",");
-		
-		
-		for(int i = 0; i < arguments.length;i++)
-		{
-			IntermediateRepresentationArgumentWithType arg = new IntermediateRepresentationArgumentWithType (arguments[i]);
-		}*/
+		this.name = m.getName();
+		this.setParametersFromSootMethod(m);
+		this.returnType = m.getReturnType().toString();
+		this.declaringClass = m.getDeclaringClass().toString();
 		
 	}
 	
@@ -222,12 +180,7 @@ public class IntermediateRepresentationMethod {
     	
     	sbf.append("Escape info: {");
     	
-    	String s = Joiner.on(", ").skipNulls().join(Iterables.transform(this.escapeNodes, new Function<Node, String >()
-		{
-			public String apply(Node n) { return n.toString(); }
-		}
-		
-		));
+    	String s = Joiner.on(", ").skipNulls().join(this.escapeNodes);
     	
     	sbf.append(s + "}");
         
@@ -268,11 +221,16 @@ public class IntermediateRepresentationMethod {
 
 	public void setEscapeInfo(EscapeSummary escapeSummary) {
 		Set<Node> escaping = escapeSummary.getEscaping();	
-		this.escapeNodes = new LinkedHashSet<Node>();
+		this.escapeNodes = new LinkedHashSet<String>();
 		for (Node n : escaping) {
-			this.escapeNodes.add(n);
+			this.escapeNodes.add(n.toString());
 		}
 		
+	}
+	
+	public Set<String> getEscapeNodes()
+	{
+		return this.escapeNodes;
 	}
 
 

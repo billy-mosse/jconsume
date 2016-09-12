@@ -15,6 +15,8 @@ import ar.uba.dc.analysis.common.code.MethodBody;
 import ar.uba.dc.analysis.common.code.NewStatement;
 import ar.uba.dc.analysis.common.code.Statement;
 import ar.uba.dc.analysis.memory.IntraproceduralAnalysis;
+import ar.uba.dc.analysis.memory.LifeTimeOracle;
+import ar.uba.dc.analysis.memory.impl.summary.EscapeBasedLifeTimeOracle;
 import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.invariant.InvariantProvider;
 import ar.uba.dc.invariant.spec.SpecInvariantProvider;
@@ -28,16 +30,31 @@ public class IntermediateRepresentationBodyBuilder {
 	protected InvariantProvider invariantProvider;
 
 	private CallGraph callGraph;
-	public IntermediateRepresentationBodyBuilder(InvariantProvider invariantProvider, CallGraph callGraph)
+
+	protected LifeTimeOracle lifetimeOracle;
+	public LifeTimeOracle getLifetimeOracle() {
+		return lifetimeOracle;
+	}
+
+
+	public void setLifetimeOracle(LifeTimeOracle lifetimeOracle) {
+		this.lifetimeOracle = lifetimeOracle;
+	}
+
+
+	public IntermediateRepresentationBodyBuilder(InvariantProvider invariantProvider, CallGraph callGraph, LifeTimeOracle lifetimeOracle)
 	{
 		this.invariantProvider = invariantProvider;
 		this.callGraph = callGraph;
+		this.lifetimeOracle = lifetimeOracle;
 	}
 
 	
 	public Line buildLineFromStatement(Statement stmt, long counter)
 	{
-		Line line = new Line(stmt, this.callGraph);
+		Line line = new Line(stmt, this.callGraph, this.lifetimeOracle);
+		
+		//Esto no lo estoy escribiendo en el IR por ahora
 		line.setLabel(counter);		
 		
 		

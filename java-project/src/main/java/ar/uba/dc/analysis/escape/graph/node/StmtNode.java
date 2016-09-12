@@ -68,7 +68,10 @@ public class StmtNode implements Node {
     public boolean equals(Object o) {
     	if (o instanceof StmtNode) {
     		StmtNode oo = (StmtNode)o;
-    		return id.equals(oo.id) && inside == oo.inside && context.equals(oo.context);
+    		boolean first = id.equals(oo.id);
+    		boolean second = inside == oo.inside ;
+    		boolean third = context.equals(oo.context);
+    		return first && second && third;
     	} else {
     		return false;
     	}

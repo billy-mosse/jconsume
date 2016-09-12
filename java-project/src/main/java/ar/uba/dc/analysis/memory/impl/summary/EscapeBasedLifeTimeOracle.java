@@ -105,7 +105,8 @@ public class EscapeBasedLifeTimeOracle implements LifeTimeOracle {
 		PointsToHeapPartition hp = new PointsToHeapPartition(finalNode, isTemporal);
 		
 		return hp;
-	}
+	}	
+	
 
 	public void setEscapeSummaryProvider(SummaryRepository<EscapeSummary> escapeSummaryProvider) {
 		this.escapeSummaryProvider = escapeSummaryProvider;

@@ -24,6 +24,8 @@ import soot.SootMethod;
 
 /**
  * Para ser llamada desde InterproceduralAnalysis
+ * 
+ * NOTA: Esta clase es fruta y la voy a borrar; no sirve para nada y jamas lo hara
  * @author billy
  *
  */

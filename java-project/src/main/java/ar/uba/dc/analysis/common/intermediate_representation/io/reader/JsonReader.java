@@ -45,6 +45,7 @@ import ar.uba.dc.analysis.common.intermediate_representation.io.writer.JsonWrite
 import ar.uba.dc.analysis.common.intermediate_representation.io.writer.JsonWriter.LineSerializer;
 import ar.uba.dc.analysis.escape.EscapeSummary;
 import ar.uba.dc.analysis.escape.summary.io.xstream.XStreamFactory;
+import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
 import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.soot.xstream.StatementIdConverter;
 import ar.uba.dc.util.location.MethodLocationStrategy;
@@ -135,6 +136,22 @@ protected Gson gson;
 		    m.setBody(body);
 		    
 		    
+		    JsonArray jEscapeNodes = jobject.get("escapeNodes").getAsJsonArray();
+			
+			Set<String> escapeNodes = new LinkedHashSet<String>();
+			
+			
+		    for(int i = 0; i < jEscapeNodes.size(); i++)
+		    {
+		    	String escapeNode = jEscapeNodes.get(i).getAsString();		    	
+		    	escapeNodes.add(escapeNode);
+		    }
+		    
+		    
+		    
+		    
+		    
+		    
 		   /* m.setBody(
 		    		(IntermediateRepresentationMethodBody) context.deserialize(jobject.get("body").getAsJsonObject(), 
 		    																	IntermediateRepresentationMethodBody.class));*/
@@ -187,7 +204,9 @@ protected Gson gson;
 			
 			//TODO: agregar inductives y toda la bola
 			line.setInvariant(new DomainSet(jobject.get("invariant").getAsString()));
+			line.setName(jobject.get("name").getAsString());
 			
+			line.setLineNumber(jobject.get("line_number").getAsInt());
 			
 			
 			JsonArray jinvocations = jobject.get("invocations").getAsJsonArray();
@@ -222,13 +241,16 @@ protected Gson gson;
 
 			invocation.setClass_called(jobject.get("class_called").getAsString());			
 			
-			invocation.setName( jobject.get("name").getAsString());
+			//invocation.setName( jobject.get("name").getAsString());
 			
 			
 			invocation.setCalled_implementation_signature(jobject.get("called_implementation_signature").getAsString());
 			
 			
-						
+			PaperPointsToHeapPartition hp = context.deserialize(jobject.get("hp"), PaperPointsToHeapPartition.class);
+			invocation.setHeapPartition(hp);
+			
+			
 			JsonArray jparameters = jobject.get("parameters").getAsJsonArray();
 			
 			Set<DefaultIntermediateRepresentationParameter> parameters = new LinkedHashSet<DefaultIntermediateRepresentationParameter>();
@@ -240,6 +262,8 @@ protected Gson gson;
 		    	DefaultIntermediateRepresentationParameter p = context.deserialize(jparameters.get(i), DefaultIntermediateRepresentationParameter.class);
 		    	parameters.add(p);
 		    }
+		    
+		    
 		    
 		    invocation.setParameters(parameters);
 		    

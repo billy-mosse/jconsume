@@ -101,10 +101,6 @@
 
 				<irWriter config-class="ar.uba.dc.analysis.escape.summary.io.writer.ChainWriter" config-factory="container" config-source="analysis.escape.writers" config-select-key="escape.summary.printer" config-default="irxml" config-scope="singleton" />
 
-				<ihrWriter config-class="ar.uba.dc.analysis.escape.summary.io.writer.ChainWriter" config-factory="container" config-source="analysis.escape.writers" config-select-key="escape.summary.printer" config-default="ihr" config-scope="singleton" />
-
-				<jsonWriter config-class="ar.uba.dc.analysis.escape.summary.io.writer.ChainWriter" config-factory="container" config-source="analysis.escape.writers" config-select-key="escape.summary.printer" config-default="json" config-scope="singleton" />
-
 
 				<methodDecorator config-class="ar.uba.dc.analysis.common.code.impl.DefaultMethodDecorator" />
 				<invariantProvider config-class="ar.uba.dc.invariant.InvariantProvider" config-factory="custom" config-ref-to="invariants.provider.${invariants.provider}" />
@@ -149,14 +145,6 @@
 				<irxml config-class="ar.uba.dc.analysis.common.intermediate_representation.io.writer.XMLWriter">
 					<locationStrategy config-class="ar.uba.dc.util.location.method.${escape.summary.output.layout}LocationStrategy" extension=".xml" basePath="${escape.summary.output.dir}" />
 				</irxml>
-
-				<ihr config-class="ar.uba.dc.analysis.common.intermediate_representation.io.writer.HumanReadableWriter">
-					<locationStrategy config-class="ar.uba.dc.util.location.method.${escape.summary.output.layout}LocationStrategy" extension=".xml" basePath="${escape.summary.output.dir}" />
-				</ihr>
-
-				<json config-class="ar.uba.dc.analysis.common.intermediate_representation.io.writer.JsonWriter">
-					<locationStrategy config-class="ar.uba.dc.util.location.method.${escape.summary.output.layout}LocationStrategy" extension=".xml" basePath="${escape.summary.output.dir}" />
-				</json>
 
 				<dot config-class="ar.uba.dc.analysis.escape.summary.io.writer.GraphvizWriter" leaveSourceFile="${escape.summary.printer.dot.leave-source-file}" graphSizeLimit="${escape.summary.printer.dot.max-graph-size}">
 					<locationStrategy config-class="ar.uba.dc.util.location.method.${escape.summary.output.layout}LocationStrategy" extension=".dot" basePath="${escape.summary.output.dir}" />
@@ -214,14 +202,6 @@
 				<callAnalyzer config-class="ar.uba.dc.analysis.memory.CallAnalyzer" config-factory="custom" config-ref-to="analysis.memory.call-analyzer.default.${memory.interprocedural.loop.invariant}" />
 				<polymorphismResolver config-class="ar.uba.dc.analysis.memory.PolymorphismResolver" config-factory="custom" config-ref-to="analysis.memory.polymorphism.${polymorphism.resolver}-resolver"/>
 			</interprocedural>
-
-			<paperInterprocedural config-class="ar.uba.dc.analysis.memory.impl.PaperMemoryInterproceduralAnalysis"
-							 writeResults="${memory.summary.all.enabled}" writeUnanalysedSummaries="${memory.summary.unanalized.enabled}"
-							 cleanOutputFolder="${clear.memory.summary.output.dir}" outputFolder="${memory.summary.output.dir}"
-							 writeReport="${memory.print.report}"
-							 writeUnanalyzedSummariesInReport="${memory.report.unanalized.enabled}">
-							 <locationStrategy config-class="ar.uba.dc.util.location.method.${escape.summary.output.layout}LocationStrategy" extension=".xml" basePath="${escape.summary.output.dir}" />
-			</paperInterprocedural>
 			
 			<barvinok-calculator-adapter config-class="ar.uba.dc.analysis.memory.impl.BarvinokCalculatorAdapter" config-factory="custom" config-scope="singleton">
 				<invariantProvider config-class="ar.uba.dc.invariant.InvariantProvider" config-factory="custom" config-ref-to="invariants.provider.${invariants.provider}" />

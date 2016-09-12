@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory;
 import ar.uba.dc.analysis.common.code.BasicMethodBody;
 import ar.uba.dc.analysis.common.code.MethodBody;
 import ar.uba.dc.analysis.escape.summary.repository.RAMSummaryRepository;
+import ar.uba.dc.analysis.memory.LifeTimeOracle;
 import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.invariant.InvariantProvider;
 import soot.SootMethod;
@@ -24,32 +25,32 @@ public class IntermediateRepresentationMethodBuilder {
 
 	
 	
-	public IntermediateRepresentationMethodBuilder (InvariantProvider invariantProvider, RAMSummaryRepository data, CallGraph callGraph) {
+	public IntermediateRepresentationMethodBuilder (InvariantProvider invariantProvider, RAMSummaryRepository data, CallGraph callGraph, LifeTimeOracle lifetimeOracle) {
 		this.invariantProvider = invariantProvider;
-		this.irbody_builder = new IntermediateRepresentationBodyBuilder(invariantProvider, callGraph);
+		this.irbody_builder = new IntermediateRepresentationBodyBuilder(invariantProvider, callGraph, lifetimeOracle);
 		this.data = data;
 	}
 	
 	
 	private void setBody(BasicMethodBody methodBody)
-	{
+	{	
 		this.irmethod.body = irbody_builder.build_body(methodBody);
 	}	
 	
 	public IntermediateRepresentationMethod buildMethod(BasicMethodBody methodBody, long order)
 	{
-		this.irmethod = new IntermediateRepresentationMethod(methodBody, order);
-		
-		//TODO: NO HACE FALTA PARSEAR. EL SOOTMETHOD YA TIENE TODO!!
 		
 		SootMethod m = methodBody.belongsTo();
-		this.irmethod.setMethodRequirements(invariantProvider.getRequeriments(m));
-		this.irmethod.setRelevant_parameters(invariantProvider.getRelevantParameters(m));
-		this.irmethod.setEscapeInfo(data.get(methodBody.belongsTo()));
+		
+		log.debug("____Construyendo " + m.toString());
+
+		
+		this.irmethod = new IntermediateRepresentationMethod(m, order);
 		
 
-		log.debug("____Construyendo " + m.toString());
-		
+		this.irmethod.setMethodRequirements(invariantProvider.getRequeriments(m));
+		this.irmethod.setRelevant_parameters(invariantProvider.getRelevantParameters(m));
+		this.irmethod.setEscapeInfo(data.get(methodBody.belongsTo()));		
 		
 		this.setBody(methodBody);
 		

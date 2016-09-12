@@ -26,6 +26,8 @@ import ar.uba.dc.analysis.common.intermediate_representation.IntermediateReprese
 import ar.uba.dc.analysis.common.intermediate_representation.io.reader.JsonReader;
 import ar.uba.dc.analysis.common.intermediate_representation.io.reader.XMLReader;
 import ar.uba.dc.analysis.escape.InterproceduralAnalysis;
+import ar.uba.dc.analysis.memory.impl.BarvinokParametricExpressionFactory;
+import ar.uba.dc.analysis.memory.impl.madeja.PaperMemorySummary;
 import ar.uba.dc.analysis.memory.impl.summary.EscapeBasedMemorySummary;
 import ar.uba.dc.analysis.memory.summary.MemorySummary;
 import ar.uba.dc.soot.SootMethodFilter;
@@ -66,6 +68,8 @@ public class PaperInterproceduralAnalysis {
 	protected List<IntermediateRepresentationMethod> ordered_methods;
 	
 	protected PaperIntraproceduralAnalysis analysis;
+	
+	
 
 	//protected Map<IntermediateRepresentationMethod, List<IntermediateRepresentationMethod> > preds;
 	//protected Map<IntermediateRepresentationMethod, List<IntermediateRepresentationMethod> > succs;
@@ -78,16 +82,16 @@ public class PaperInterproceduralAnalysis {
 		{
 			for(Invocation inv : line.getInvocations())
 			{
-				succesors.add(key(inv));
+				succesors.add(key(inv, line.getName()));
 			}
 		}
 		
 		return succesors;
 	}
 	
-	public String key(Invocation invocation)
+	public String key(Invocation invocation, String name)
 	{
-		return invocation.getClass_called() + "." + invocation.getName(); 
+		return invocation.getClass_called() + "." + name; 
 	}
 	
 	
@@ -178,8 +182,7 @@ public class PaperInterproceduralAnalysis {
 		for(IntermediateRepresentationMethod ir_method : ordered_methods)
 		{
 			log.debug("Processing " + key(ir_method) + "...");
-			PaperMemorySummary summary = analysis.run(ir_method);
-			
+			PaperMemorySummary summary = analysis.run(ir_method);			
 		}
 		
 
@@ -297,6 +300,14 @@ public class PaperInterproceduralAnalysis {
 		return new IntComparator();
 	}
 	
+	public PaperIntraproceduralAnalysis getAnalysis() {
+		return analysis;
+	}
+
+	public void setAnalysis(PaperIntraproceduralAnalysis analysis) {
+		this.analysis = analysis;
+	}
+
 	// queue class
 	class IntComparator implements Comparator<SootMethod> {
 		public int compare(SootMethod o1, SootMethod o2) {

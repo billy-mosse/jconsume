@@ -51,6 +51,10 @@ import ar.uba.dc.analysis.common.code.NewStatement;
 import ar.uba.dc.analysis.common.code.Statement;
 import ar.uba.dc.analysis.common.intermediate_representation.DefaultIntermediateRepresentationParameter;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationParameterWithType;
+import ar.uba.dc.analysis.memory.HeapPartition;
+import ar.uba.dc.analysis.memory.LifeTimeOracle;
+import ar.uba.dc.analysis.memory.impl.summary.EscapeBasedLifeTimeOracle;
+import ar.uba.dc.analysis.memory.impl.summary.PointsToHeapPartition;
 import ar.uba.dc.config.Context;
 
 public class SootUtils {
@@ -355,10 +359,10 @@ public class SootUtils {
 		return parameters;
 	}
 
-	public static List<Invocation> getInvocations(Statement stmt, CallGraph callGraph) {
+	public static List<Invocation> getInvocations(Statement stmt, boolean isCallStatement, CallGraph callGraph, LifeTimeOracle lifetimeOracle) {
 		
 		List<Invocation> invocations = new LinkedList<Invocation>();
-		if(stmt instanceof CallStatement)
+		if(isCallStatement)
 		{
 			CallStatement callStmt = (CallStatement) stmt;
 			Iterator<Edge> it = callGraph.edgesOutOf(callStmt.getStatement());
@@ -372,7 +376,11 @@ public class SootUtils {
 		else
 		{
 			NewStatement newStmt = (NewStatement) stmt;
-			invocations.add(new Invocation(newStmt));
+			
+			HeapPartition hp = lifetimeOracle.getPartition(newStmt);
+			//PointsToHeapPartition hp = new PointsToHeapPartition();
+			
+			invocations.add(new Invocation(newStmt, hp));
 		}
 		return invocations;		
 		

@@ -11,6 +11,10 @@ public class PointsToHeapPartition implements HeapPartition {
 	private Node node;
 	private boolean temporal;
 	
+	
+	public PointsToHeapPartition()
+	{}
+	
 	public PointsToHeapPartition(Node node, boolean temporal) {
 		this.node = node;
 		this.temporal = temporal;

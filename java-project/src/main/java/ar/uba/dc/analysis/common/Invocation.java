@@ -8,6 +8,9 @@ import ar.uba.dc.analysis.common.code.NewStatement;
 import ar.uba.dc.analysis.common.code.Statement;
 import ar.uba.dc.analysis.common.intermediate_representation.DefaultIntermediateRepresentationParameter;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationParameter;
+import ar.uba.dc.analysis.memory.HeapPartition;
+import ar.uba.dc.analysis.memory.impl.summary.EscapeBasedLifeTimeOracle;
+import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
 import ar.uba.dc.soot.SootUtils;
 import soot.SootMethod;
 
@@ -17,6 +20,11 @@ import com.google.common.collect.Iterables;
 
 public class Invocation {
 	
+	private boolean isCallStatement;
+	private PaperPointsToHeapPartition heapPartition;
+
+
+
 	public Invocation()
 	{
 		
@@ -24,9 +32,8 @@ public class Invocation {
 	
 	public Invocation(SootMethod m)
 	{
-		this.setName(m.getName());
 		this.class_called = m.getDeclaringClass().toString();
-		
+		this.setCallStatement(true);
 		this.called_implementation_signature = m.getSignature();
 		
 
@@ -35,31 +42,26 @@ public class Invocation {
 		for(IntermediateRepresentationParameter p : s)
 		{
 			this.getParameters().add((DefaultIntermediateRepresentationParameter)p);
-		}
-		
+		}		
 		
 	}
 	
-	public Invocation(NewStatement newStmt) {
-		this.setName(newStmt.getIntermediateRepresentationName());		
+	public Invocation(NewStatement newStmt, HeapPartition heapPartition) {			
+		this.setCallStatement(false);
 		this.setParameters(newStmt.getIntermediateRepresentationParameters());
 		this.setClass_called("");
 		this.called_implementation_signature = "";
-	}
-	
-	
-	public void setName(CallStatement callStmt)
-	{
-		this.name = callStmt.toString();
-	}
-	
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
+		this.heapPartition =  new PaperPointsToHeapPartition(heapPartition);
+		
 	}
 
+	public PaperPointsToHeapPartition getHeapPartition() {
+		return heapPartition;
+	}	
+
+	public void setHeapPartition(PaperPointsToHeapPartition escapePartition) {
+		this.heapPartition = escapePartition;
+	}
 
 	public Set<DefaultIntermediateRepresentationParameter> getParameters() {
 		return parameters;
@@ -83,7 +85,7 @@ public class Invocation {
 				
 				)) : "");
 		
-		return (this.getName()!="new" ? this.class_called + "." : "") + this.getName() + String.format("(%s)", s);
+		return (this.isCallStatement ? this.class_called: "") + String.format("(%s)", s);
 		
 		
 		//return "<invoke " + this.name + "(" + arguments. + ")>;"; //Falta el invariante
@@ -109,6 +111,14 @@ public class Invocation {
 
 	public void setCalled_implementation_signature(String called_implementation_signature) {
 		this.called_implementation_signature = called_implementation_signature;
+	}
+
+	public boolean isCallStatement() {
+		return isCallStatement;
+	}
+
+	public void setCallStatement(boolean isCallStatement) {
+		this.isCallStatement = isCallStatement;
 	}
 
 }

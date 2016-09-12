@@ -144,7 +144,7 @@ public class IntraproceduralAnalysis {
 		/*
 		 * Acumula la memoria temporal necesaria para realizar los calls ejecutados por el metodo bajo analisis. 
 		 */
-		ParametricExpression tempCalls = expressionFactory.constant(0L);
+		//ParametricExpression tempCalls = expressionFactory.constant(0L);
 		
 		/*
 		 * Acumula la memoria generada por las llamadas a los metodos invocados. Esta variable acumula el consumo temporal
@@ -160,7 +160,7 @@ public class IntraproceduralAnalysis {
 		 * 
 		 * 
 		 * */
-		ParametricExpression residualForMemReq = expressionFactory.constant(0L);
+		//ParametricExpression residualForMemReq = expressionFactory.constant(0L);
 		
 		ParametricExpression MAX_memReqFromCallees = expressionFactory.constant(0L);
 		
@@ -251,7 +251,7 @@ public class IntraproceduralAnalysis {
 			
 			
 			String s = callStmt.toString();
-			Boolean frenar = (s.equals("ar.uba.dc.basic.SubstractWithFolds java.lang.Integer f(int): virtualinvoke op.<ar.uba.dc.basic.IntContainer: java.lang.Integer apply(int)>(n) (3)"));
+			//Boolean frenar = (s.equals("ar.uba.dc.basic.SubstractWithFolds java.lang.Integer f(int): virtualinvoke op.<ar.uba.dc.basic.IntContainer: java.lang.Integer apply(int)>(n) (3)"));
 
 			
 			CallSummaryInContext callSummary = interprocedural.analyseCall(callStmt);

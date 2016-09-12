@@ -10,6 +10,7 @@ import soot.jimple.AssignStmt;
 
 import ar.uba.dc.analysis.memory.CountingTheory;
 import ar.uba.dc.analysis.memory.SymbolicCalculator;
+import ar.uba.dc.analysis.common.Line;
 import ar.uba.dc.analysis.common.code.NewStatement;
 import ar.uba.dc.analysis.common.code.Statement;
 import ar.uba.dc.analysis.memory.expression.ParametricExpression;
@@ -37,6 +38,19 @@ public class BarvinokCalculatorAdapter implements CountingTheory, SymbolicCalcul
 		
 		if (log.isDebugEnabled()) {
 			log.debug("count(" + stmt + ", " + inv + ") = " + result);
+		}
+		
+		return expressionFactory.polynomial(result);
+	}
+	
+	@Override
+	public ParametricExpression count(Line newLine) {
+		DomainSet inv = newLine.getInvariant();
+		
+		PiecewiseQuasipolynomial result = calculator.countExecutions(inv);
+		
+		if (log.isDebugEnabled()) {
+			log.debug("count(" + newLine.toHumanReadableString() + ", " + inv + ") = " + result);
 		}
 		
 		return expressionFactory.polynomial(result);

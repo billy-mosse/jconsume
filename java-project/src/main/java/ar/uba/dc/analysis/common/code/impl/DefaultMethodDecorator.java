@@ -50,10 +50,6 @@ public class DefaultMethodDecorator implements MethodDecorator {
 			if (stmt instanceof AssignStmt) {
 				AssignStmt assign = (AssignStmt) stmt;
 				isNew = (assign.getRightOp() instanceof AnyNewExpr);
-				
-				
-				
-				
 			}			
 			
 			if (isCall) {
@@ -90,11 +86,8 @@ public class DefaultMethodDecorator implements MethodDecorator {
 			
 			
 
-			int s = stmt.getJavaSourceStartLineNumber();
-			List<Tag> tagList = stmt.getTags();
-			
-			s = s;
-			tagList = tagList;
+			//int s = stmt.getJavaSourceStartLineNumber();
+			//List<Tag> tagList = stmt.getTags();			
 			
 			if (stmt instanceof AssignStmt) {
 				AssignStmt assign = (AssignStmt) stmt;

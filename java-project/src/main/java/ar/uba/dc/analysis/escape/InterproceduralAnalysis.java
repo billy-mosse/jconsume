@@ -27,7 +27,9 @@ import ar.uba.dc.analysis.common.SummaryRepository;
 import ar.uba.dc.analysis.common.SummaryWriter;
 import ar.uba.dc.analysis.common.code.MethodDecorator;
 import ar.uba.dc.analysis.escape.summary.repository.RAMSummaryRepository;
+import ar.uba.dc.analysis.memory.LifeTimeOracle;
 import ar.uba.dc.analysis.memory.PaperInterproceduralAnalysis;
+import ar.uba.dc.analysis.memory.impl.summary.EscapeBasedLifeTimeOracle;
 import ar.uba.dc.soot.Box;
 import ar.uba.dc.util.Timer;
 
@@ -104,6 +106,18 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 	
 	protected PaperInterproceduralAnalysis paperInterproceduralAnalysis;
 	
+	
+	/*protected LifeTimeOracle lifeTimeOracle ;
+	
+	
+	public LifeTimeOracle getLifeTimeOracle() {
+		return lifeTimeOracle;
+	}
+
+	public void setLifeTimeOracle(LifeTimeOracle lifeTimeOracle) {
+		this.lifeTimeOracle = lifeTimeOracle;
+	}*/
+
 	@Override
 	protected void doAnalysis() {
 		init();
@@ -117,19 +131,6 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 		t.stop();
 		log.info("Escape Analysis finished. Took " + t.getElapsedTime() + " (" + t.getElapsedSeconds() + " seconds)");
 		
-		if(writeIntermediateLanguageRepresentation)
-		{
-			log.info("Writing intermediate language representation");
-			
-			//TODO: esto se podria hacer con factory
-			
-			//TODO importante: saltearse los metodos que no tienen active body. Ver como esta implementado en el analisis de memoria
-			IntermediateLanguageRepresentationBuilder irBuilder = new IntermediateLanguageRepresentationBuilder(data, order, repository, methodInformationProvider, methodDecorator, invariantProvider, outputFolder, callGraph, mainClass);
-			ir_methods = irBuilder.buildIntermediateLanguageRepresentation();
-			
-			internalWriteIntermediateRepresentation();
-		}		
-		
 		if (writeResults) {
 			
 			log.info("Writing escape summaries");
@@ -139,6 +140,34 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 	
 			t.stop();
 			log.info("Writing finished. Took " + t.getElapsedTime() + " (" + t.getElapsedSeconds() + " seconds)");
+		}
+		
+		if(writeIntermediateLanguageRepresentation)
+		{
+			log.info("Writing intermediate language representation");
+			
+			//TODO: esto se podria hacer con factory
+			
+			//TODO importante: saltearse los metodos que no tienen active body. Ver como esta implementado en el analisis de memoria
+			
+			
+			//TODO: no podria usar el factory para esto? Creo que no.
+			EscapeBasedLifeTimeOracle lifetimeOracle = new EscapeBasedLifeTimeOracle();
+			lifetimeOracle.setEscapeSummaryProvider(data);
+			lifetimeOracle.setInvariantProvider(invariantProvider);
+			
+			//La sensitivity es el maximo tamaño del stack {calls por donde fue pasando el nodo desde su creacion}
+			//Lo pongo en -1 porque en el analisis original tambien esta puesto en -1
+			//(Es decir, no estamos usando la informacion)
+			//Y si no pusiera -1, no andaria bien la parte de obtener la hp asociada a un nodo
+			//porque lo que hace es obtener toods los escaping nodes del metodo y los compara contra el nodo, comparando incluso ese stack
+			lifetimeOracle.setSensitivity(-1);
+			
+			IntermediateLanguageRepresentationBuilder irBuilder = new IntermediateLanguageRepresentationBuilder(data, order, repository, methodInformationProvider, methodDecorator,
+																												invariantProvider, outputFolder, callGraph, mainClass, lifetimeOracle);
+			ir_methods = irBuilder.buildIntermediateLanguageRepresentation();
+			
+			internalWriteIntermediateRepresentation();
 		}
 		
 		//this.paperInterproceduralAnalysis.doAnalysis(mainClass);

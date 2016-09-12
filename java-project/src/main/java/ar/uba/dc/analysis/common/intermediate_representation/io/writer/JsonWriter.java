@@ -127,6 +127,14 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 	        }
 	        
 	        
+	        JsonArray escapeNodes = new JsonArray();
+	        
+	        for(String escapeNode : ir_method.getEscapeNodes())
+	        {
+	        	escapeNodes.add(escapeNode);
+	        }
+	        
+	        result.add("escapeNodes", escapeNodes);
 	        
 	        //TODO: la verdad no necesito los parametros. Me parece que voy a volar xml y humanReadable, y todo lo que no necesite, y dejar solo json
 	        result.add("parameters", parameters);
@@ -199,6 +207,10 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 						
 			result.add("invariant", new JsonPrimitive(line.getInvariant().toHumanReadableString()));
 			
+			result.add("name", new JsonPrimitive( line.getName()));
+			
+			result.add("line_number", new JsonPrimitive( line.getLineNumber()));
+			
 			JsonArray arr = new JsonArray();
 			
 			for(Invocation i : line.getInvocations())
@@ -207,6 +219,7 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 			}
 			
 			result.add("invocations", arr);
+			
 			
 	        return result;
 	    }
@@ -219,7 +232,7 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 			JsonObject result = new JsonObject();
 			result.add("class_called", new JsonPrimitive(invocation.getClass_called()));
 
-			result.add("name", new JsonPrimitive( invocation.getName()));
+			//result.add("name", new JsonPrimitive( invocation.getName()));
 			
 			JsonArray arr = new JsonArray();
 			
@@ -229,6 +242,7 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 			}
 			result.add("parameters", arr);
 			result.add("called_implementation_signature", new JsonPrimitive (invocation.getCalled_implementation_signature()));
+			result.add("hp",  context.serialize(invocation.getHeapPartition()));
 			
 	        return result;
 	    }
