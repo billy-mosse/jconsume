@@ -67,7 +67,6 @@ public class Invocation {
 		return parameters;
 	}
 
-	protected String name;
 	protected Set<DefaultIntermediateRepresentationParameter> parameters;
 	protected String class_called;
 	

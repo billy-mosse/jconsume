@@ -47,6 +47,12 @@ public class MethodNode implements Node {
     public String toString() { 
     	return "M_" + nMap.get(id);
     }
+    
+    public String toJsonString() { 
+    	return this.toString();
+    }
+    
+    
 
     public int hashCode() { 
     	return id.hashCode() + context.hashCode(); 

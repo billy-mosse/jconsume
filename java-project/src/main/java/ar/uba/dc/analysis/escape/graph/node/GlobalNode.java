@@ -16,8 +16,12 @@ public class GlobalNode implements Node {
 	public String toString() { 
     	return "GBL"; 
     }
+	public String toJsonString() { 
+    	return this.toString(); 
+    }
 
     public int hashCode() { 
+    	//wut.
     	return 69; 
     }
     

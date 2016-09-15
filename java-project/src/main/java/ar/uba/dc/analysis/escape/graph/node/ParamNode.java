@@ -22,6 +22,11 @@ public class ParamNode implements Node {
     public String toString() { 
     	return "P_" + id; 
     }
+    
+    public String toJsonString()
+    {
+    	return this.toString();
+    }
 
     public int hashCode() { 
     	return id; 

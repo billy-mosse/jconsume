@@ -37,6 +37,10 @@ public class PointsToHeapPartition implements HeapPartition {
 	public String toString() {
 		return node.toString() + (temporal ? " (Temp)" : StringUtils.EMPTY);
 	}
+	
+	public String toJsonString() {
+		return node.toJsonString();
+	}
 
 	@Override
 	public boolean isTemporal() {

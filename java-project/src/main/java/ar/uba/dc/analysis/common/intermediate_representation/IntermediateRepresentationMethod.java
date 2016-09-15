@@ -223,7 +223,7 @@ public class IntermediateRepresentationMethod {
 		Set<Node> escaping = escapeSummary.getEscaping();	
 		this.escapeNodes = new LinkedHashSet<String>();
 		for (Node n : escaping) {
-			this.escapeNodes.add(n.toString());
+			this.escapeNodes.add(n.toJsonString());
 		}
 		
 	}

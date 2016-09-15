@@ -55,6 +55,11 @@ public class ContainerNode implements Node {
     	}*/
     }
     
+    public String toJsonString()
+    {
+    	return this.toString();
+    }
+    
     public int hashCode() { 
     	return id.hashCode() + context.hashCode(); 
     }

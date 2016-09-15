@@ -1,5 +1,7 @@
 package ar.uba.dc.analysis.memory.impl.summary;
 
+import org.apache.commons.lang.NotImplementedException;
+
 import ar.uba.dc.analysis.memory.HeapPartition;
 import ar.uba.dc.analysis.memory.HeapPartitionVisitor;
 
@@ -20,7 +22,15 @@ public class PaperPointsToHeapPartition implements HeapPartition {
 	public PaperPointsToHeapPartition(HeapPartition heapPartition)
 	{
 		this.temporal = heapPartition.isTemporal();
-		this.node = heapPartition.toString();
+		
+		if(heapPartition.getClass() == PointsToHeapPartition.class)
+		{
+			this.node = ((PointsToHeapPartition) heapPartition).toJsonString();
+		}
+		else
+		{
+			throw new NotImplementedException("Not implemented for another type of Heap Partition");
+		}		
 	}
 	
 	@Override

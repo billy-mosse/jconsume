@@ -1,7 +1,9 @@
 package ar.uba.dc.analysis.escape.graph.node;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import soot.SootClass;
 import soot.SootMethod;
@@ -29,7 +31,12 @@ public class StmtNode implements Node {
 	 */
     private static final Map<StatementId, Integer> nMap = new HashMap<StatementId, Integer>();
     private static int n = 0;
+
+    private static final Set<SootMethod> used = new HashSet<SootMethod>();
 	
+    private static final Map<StatementId, Integer> new_nMap = new HashMap<StatementId, Integer>();
+    private static int new_n = 0;
+    
 	/** Statement and method that created the node */
 	private StatementId id;
 	
@@ -47,6 +54,17 @@ public class StmtNode implements Node {
 			nMap.put(id, new Integer(n)); 
 			n++; 
 		}
+		
+		//Si estoy en un nuevo metodo reseteo el contador
+		if(used.add(id.getMethodOfId()))
+		{
+			new_n = 0;
+		}
+		
+		if (!new_nMap.containsKey(id)) { 
+			new_nMap.put(id, new Integer(new_n));
+			new_n++; 
+		}
     }
     
     public StmtNode(StatementId id, boolean inside, int sensitivity) {
@@ -59,6 +77,16 @@ public class StmtNode implements Node {
     	} else {
     		return "L_" + nMap.get(id);
     	}
+    }
+    
+    public String toJsonString()
+    {
+    	if (inside) {
+		return "I_" + new_nMap.get(id); 
+		} else {
+			return "L_" + new_nMap.get(id);
+		}
+    	
     }
     
     public int hashCode() { 

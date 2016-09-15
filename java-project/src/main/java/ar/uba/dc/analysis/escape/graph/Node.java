@@ -38,6 +38,8 @@ public interface Node extends Cloneable {
 	public SootMethod belongsTo();
 
 	public StatementId popContext();
+	
+	public String toJsonString();
 
 	public boolean accept(Node escapeNode);
 }

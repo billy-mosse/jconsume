@@ -228,7 +228,7 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 						// summary for m changed!
 						data.put(m, destBox.getValue());
 						List<SootMethod> l = directedCallGraph.getPredsOf(m);
-						queue.addAll(l); //BILLY: por que los agrega si ya estan?
+						queue.addAll(l);
 					}
 				} else {
 					log.info(" |- Avoid processing " + m.toString() + ". Recursion Watchdog is set to [" + recursionWatchDog + "] and the method has been processed [" + (nb.get(m) - 1) + "] times");
@@ -339,6 +339,8 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 	
 	protected void internalWriteIntermediateRepresentation() {
 		
+		
+		log.debug("Writing XML...");
 		irWriter.setMainClass(this.mainClass);
 		//Si, ya se, podria meter todo en un solo FOR
 		for (IntermediateRepresentationMethod ir_method : ir_methods) {
@@ -347,6 +349,9 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 			irWriter.write(ir_method);
 		}
 		
+		log.debug("Done");
+		log.debug("Writing Human Readable...");
+		
 		ihrWriter.setMainClass(this.mainClass);
 		for (IntermediateRepresentationMethod ir_method : ir_methods) {
 			//TODO: agregar los parametros o un mejor nombre para debug
@@ -354,6 +359,9 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 			ihrWriter.write(ir_method);
 		}
 		
+		log.debug("Done");
+		log.debug("Writing JSON...");
+
 		jsonWriter.setMainClass(this.mainClass);
 		for (IntermediateRepresentationMethod ir_method : ir_methods) {
 			//TODO: agregar los parametros o un mejor nombre para debug
@@ -362,6 +370,9 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 			
 			
 		}
+		
+		log.debug("Done");
+
 	}
 	
 /*protected Set<IntermediateRepresentationMethod> internalReadIntermediateRepresentation() {
