@@ -37,6 +37,9 @@ _ Ejecutar el comando "mvn compile" para compilar el proyecto y forzar a que tod
 sean bajadas al repositorio local de maven. El comando debe ejecutarse en el directorio root del proyecto (donde se encuentre el archivo pom.xml).  
 
 
+UPDATE: lo único realmente necesario es importar el proyecto desde eclipse como mvn proyect. Y tal vez agregar el classpath. Todo lo demás ya está hecho.
+
+
 Barvinok
 --------
 
