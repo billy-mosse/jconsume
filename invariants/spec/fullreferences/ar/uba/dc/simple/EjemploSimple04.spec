@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spec>
 	<class decl="ar.uba.dc.simple.EjemploSimple04">
+
 		<method decl="void main(java.lang.String[])">
 			<relevant-parameters>args.length</relevant-parameters>
 			<call-site offset="1,2" srccode-offset="">
-      			<constraints>$t.n == 10</constraints>
+      			<binding>$t.n == 10</binding>
     		</call-site>
     		<call-site offset="3" srccode-offset="">
-      			<constraints>$t.j == 10</constraints>
+      			<binding>$t.j == 10</binding>
     		</call-site>
     		<call-site offset="4" srccode-offset="">
-      			<constraints>$t.k == args.length</constraints>
+      			<binding>$t.k == args.length</binding>
     		</call-site>
 		</method>
 		
@@ -54,7 +55,8 @@
     		</creation-site>
 				
 			<call-site offset="1" srccode-offset="">
-      			<constraints>$t.values.length == vector.length and vector.length == j</constraints>
+      			<constraints>vector.length == j</constraints>
+      			<binding>$t.values.length == vector.length</binding>
     		</call-site>
 		</method>
 		
@@ -91,12 +93,14 @@
 			</invariant>
 
 			<call-site offset="0" srccode-offset="">
-				<constraints>@loop_invariant_1 and $t.n == i</constraints>
+				<constraints>@loop_invariant_1</constraints>
+				<binding>$t.n == i</binding>
 			</call-site>
 
 			<call-site offset="1" srccode-offset="">
 				<annotations>class_called_changed_during_loop</annotations>
-				<constraints>@loop_invariant_1 and $t.values.length == i</constraints>
+				<constraints>@loop_invariant_1</constraints>
+				<binding>$t.values.length == i</binding>
 			</call-site>
 		</method>
 	</class>

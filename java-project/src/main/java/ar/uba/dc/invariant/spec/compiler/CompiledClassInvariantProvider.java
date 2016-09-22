@@ -21,6 +21,6 @@ public interface CompiledClassInvariantProvider {
 
 	boolean captureAllPartitions(Statement stmt);
 
-	DomainSet getInvariant(Statement stmt, Operation operation);
+	DomainSet getInvariantWithBinding(Statement stmt, Operation operation);
 
 }

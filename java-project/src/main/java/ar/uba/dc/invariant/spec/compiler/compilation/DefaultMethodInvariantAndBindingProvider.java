@@ -10,13 +10,18 @@ import java.util.TreeSet;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.ComparatorUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import ar.uba.dc.analysis.common.code.Statement;
 import ar.uba.dc.analysis.memory.code.impl.visitor.CalledImplementationVisitor;
 import ar.uba.dc.analysis.memory.code.impl.visitor.StatementTypeVisitor;
 import ar.uba.dc.barvinok.expression.DomainSet;
+import ar.uba.dc.barvinok.expression.operation.DomainUnifier;
 import ar.uba.dc.invariant.InvariantProvider.Operation;
 import ar.uba.dc.invariant.spec.compiler.compilation.InvariantId.Type;
+import decorations.Binding;
+import decorations.CallDecoration;
 
 /**
  * Resultado de compilar una especificacion. Permite acceder facilmente a los
@@ -24,21 +29,25 @@ import ar.uba.dc.invariant.spec.compiler.compilation.InvariantId.Type;
  * 
  * @author testis
  */
-public class DefaultMethodInvariantProvider {
+public class DefaultMethodInvariantAndBindingProvider {
 
-	private Set<String> parameters = new TreeSet<String>();
-	private DomainSet requirements = null;
+	
+	private static Log log = LogFactory.getLog(DefaultMethodInvariantAndBindingProvider.class);
+	protected Set<String> parameters = new TreeSet<String>();
+	protected DomainSet requirements = null;
 	
 	
-	private Map<InvariantId, DomainSet> invariants = new HashMap<InvariantId, DomainSet>(); // offset -> invariant
-	private Set<InvariantId> loopInvariant = new HashSet<InvariantId>();
-	private Set<InvariantId> captureAllPartitions = new HashSet<InvariantId>();
+	private DomainUnifier domainUnifier;
+	
+	protected Map<InvariantId, CallDecoration> invariants = new HashMap<InvariantId, CallDecoration>(); // offset -> invariant
+	protected Set<InvariantId> loopInvariant = new HashSet<InvariantId>();
+	protected Set<InvariantId> captureAllPartitions = new HashSet<InvariantId>();
 		
 	public DomainSet getInvariant(Statement stmt) {
-		return getInvariant(stmt, null);
+		return getInvariantWithBinding(stmt, null);
 	}
 	
-	public DomainSet getInvariant(Statement stmt, Operation operation) {
+	public DomainSet getInvariantWithBinding(Statement stmt, Operation operation) {
 		String implementation = stmt.apply(CalledImplementationVisitor.INSTANCE);
 		Type type = stmt.apply(StatementTypeVisitor.INSTANCE);
 		
@@ -46,22 +55,22 @@ public class DefaultMethodInvariantProvider {
 
 		// Primero probamos recuperar con el operador + la implementacion
 		if (operation != null && StringUtils.isNotBlank(operation.getString())) {
-			invariant = invariants.get(new InvariantId(type, stmt.getCounter(), implementation, operation.getString()));
+			invariant = getInvariantAndBinding(new InvariantId(type, stmt.getCounter(), implementation, operation.getString()));
 			
 			// Si no encontramos buscamos operador sin implementacion
 			if (invariant == null) {
-				invariant = invariants.get(new InvariantId(type, stmt.getCounter(), StringUtils.EMPTY, operation.getString()));
+				invariant = getInvariantAndBinding(new InvariantId(type, stmt.getCounter(), StringUtils.EMPTY, operation.getString()));
 			}
 		}
 		
 		// Si no encontramos buscamos solo con implementacion
 		if (invariant == null) {
-			invariant = invariants.get(new InvariantId(type, stmt.getCounter(), implementation));
+			invariant = getInvariantAndBinding(new InvariantId(type, stmt.getCounter(), implementation));
 		}
 		
 		// Si no encontramos, buscamos sin implementacion (el default)
 		if (invariant == null) {
-			invariant = invariants.get(new InvariantId(type, stmt.getCounter()));
+			invariant = getInvariantAndBinding(new InvariantId(type, stmt.getCounter()));
 		}
 		
 		// Si no encontramos nada, devolvemos los requires del metodo
@@ -78,11 +87,43 @@ public class DefaultMethodInvariantProvider {
 	}
 	
 	public DomainSet getInvariant(InvariantId invariantId) {
-		return invariants.get(invariantId);
+		CallDecoration calldec = invariants.get(invariantId);
+		
+		if(calldec != null) 
+			return calldec.getInvariant();
+		else
+			return null;
+	}
+	
+	//funcion horrible. odio tener que chequear nulls
+	public DomainSet getInvariantAndBinding(InvariantId invariantId) {
+ 		CallDecoration calldec = invariants.get(invariantId);
+		
+		if(calldec != null) 
+		{
+			DomainSet inv = calldec.getInvariant().clone();			
+			Binding binding = calldec.getBinding();
+			
+			
+			if(binding != null)
+			{
+				
+				
+				log.debug(binding.toString());
+				inv.setConstraints(this.domainUnifier.unify(calldec.getBinding().toString(), inv.getConstraints()));
+				inv.addAllVariables(binding.getVariables());
+				return inv;
+			}
+			else
+			{
+				return inv;
+			}
+		}
+		return null;
 	}
 
-	public void putInvariant(InvariantId invariantId, DomainSet invariant) {
-		invariants.put(invariantId, invariant);		
+	public void putInvariant(InvariantId invariantId, CallDecoration callDecoration) {
+		invariants.put(invariantId, callDecoration);		
 	}
 	
 	public boolean isLoopInvariant(Statement stmt) {
@@ -128,11 +169,11 @@ public class DefaultMethodInvariantProvider {
 	}
 	
 	public DomainSet getCallInvariant(Long offset) {
-		return invariants.get(new InvariantId(Type.CALL, offset));
+		return getInvariant(new InvariantId(Type.CALL, offset));
 	}
 
 	public DomainSet getCreationInvariant(Long offset) {
-		return invariants.get(new InvariantId(Type.NEW, offset));
+		return getInvariant(new InvariantId(Type.NEW, offset));
 	}
 
 	public void setParameters(Set<String> params) {
@@ -164,5 +205,13 @@ public class DefaultMethodInvariantProvider {
 		ret.addAll(invariants.keySet());
 		
 		return ret;
+	}
+
+	public DomainUnifier getDomainUnifier() {
+		return domainUnifier;
+	}
+
+	public void setDomainUnifier(DomainUnifier domainUnifier) {
+		this.domainUnifier = domainUnifier;
 	}
 }

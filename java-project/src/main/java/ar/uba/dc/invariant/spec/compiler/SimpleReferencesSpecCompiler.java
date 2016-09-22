@@ -29,7 +29,7 @@ public class SimpleReferencesSpecCompiler extends AbstractReferencesSpecCompiler
 	protected void toCanonicalForm(MethodSpecification method) {
 		Integer index = 0;
 		for (SiteSpecification siteSpec : method.getSitesSpecification()) {
-			ConstraintsInfo info = sitesInfo.get(siteSpec);
+			ConstraintsInfo info = sitesConstraintsInfo.get(siteSpec);
 			
 			for (String ref : new TreeSet<String>(info.getReferences())) {
 				if (!classInvariants.containsKey(ref) && !methodInvariants.containsKey(ref)) {

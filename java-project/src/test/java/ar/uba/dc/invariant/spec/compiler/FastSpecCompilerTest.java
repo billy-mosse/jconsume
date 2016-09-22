@@ -1763,7 +1763,7 @@ public class FastSpecCompilerTest {
 		
 		for (Long i : new Long[] { 10L }) {
 			for (Statement s : new Statement[] { new DefaultCallStatement(sootMethod, stmt, i) }) {
-				DomainSet inv = classProvider.getInvariant(s, InvariantProvider.Operation.MAXIMIZE);
+				DomainSet inv = classProvider.getInvariantWithBinding(s, InvariantProvider.Operation.MAXIMIZE);
 				assertThat(inv.getParameters().size(), is(equalTo(2)));
 				assertThat(inv.getParameters(), hasItem("m"));
 				assertThat(inv.getParameters(), hasItem("args"));
@@ -1776,7 +1776,7 @@ public class FastSpecCompilerTest {
 		
 		for (Long i : new Long[] { 11L, 12L, 15L, 17L }) {
 			for (Statement s : new Statement[] { new DefaultCallStatement(sootMethod, stmt, i) }) {
-				DomainSet inv = classProvider.getInvariant(s, InvariantProvider.Operation.MAXIMIZE);
+				DomainSet inv = classProvider.getInvariantWithBinding(s, InvariantProvider.Operation.MAXIMIZE);
 				assertThat(inv.getParameters().size(), is(equalTo(2)));
 				assertThat(inv.getParameters(), hasItem("m"));
 				assertThat(inv.getParameters(), hasItem("args"));
@@ -1788,7 +1788,7 @@ public class FastSpecCompilerTest {
 		
 		for (Long i : new Long[] { 10L, 12L, 15L }) {
 			for (Statement s : new Statement[] { new DefaultCallStatement(sootMethod, stmt, i) }) {
-				DomainSet inv = classProvider.getInvariant(s, InvariantProvider.Operation.SUMMATE);
+				DomainSet inv = classProvider.getInvariantWithBinding(s, InvariantProvider.Operation.SUMMATE);
 				assertThat(inv.getParameters().size(), is(equalTo(2)));
 				assertThat(inv.getParameters(), hasItem("m"));
 				assertThat(inv.getParameters(), hasItem("args"));
@@ -1800,7 +1800,7 @@ public class FastSpecCompilerTest {
 		
 		for (Long i : new Long[] { 16L, 17L }) {
 			for (Statement s : new Statement[] { new DefaultCallStatement(sootMethod, stmt, i) }) {
-				DomainSet inv = classProvider.getInvariant(s, InvariantProvider.Operation.SUMMATE);
+				DomainSet inv = classProvider.getInvariantWithBinding(s, InvariantProvider.Operation.SUMMATE);
 				assertThat(inv.getParameters().size(), is(equalTo(2)));
 				assertThat(inv.getParameters(), hasItem("m"));
 				assertThat(inv.getParameters(), hasItem("args"));
@@ -1862,7 +1862,7 @@ public class FastSpecCompilerTest {
 		// Si no tengo operador + implementacion, busco solo por implementacion, si no encuentro por implementacion devuelvo regular
 		for (Long i : new Long[] { 10L }) {
 			for (Statement s : new Statement[] {new DefaultCallStatement(sootMethod, stmt, i) }) {
-				DomainSet inv = classProvider.getInvariant(s, InvariantProvider.Operation.MAXIMIZE);
+				DomainSet inv = classProvider.getInvariantWithBinding(s, InvariantProvider.Operation.MAXIMIZE);
 				assertThat(inv.getParameters().size(), is(equalTo(2)));
 				assertThat(inv.getParameters(), hasItem("m"));
 				assertThat(inv.getParameters(), hasItem("args"));
@@ -1873,7 +1873,7 @@ public class FastSpecCompilerTest {
 		
 		for (Long i : new Long[] { 11L, 15L, 17L }) {
 			for (Statement s : new Statement[] { new DefaultCallStatement(sootMethod, stmt, i) }) {
-				DomainSet inv = classProvider.getInvariant(s, InvariantProvider.Operation.MAXIMIZE);
+				DomainSet inv = classProvider.getInvariantWithBinding(s, InvariantProvider.Operation.MAXIMIZE);
 				assertThat(inv.getParameters().size(), is(equalTo(2)));
 				assertThat(inv.getParameters(), hasItem("m"));
 				assertThat(inv.getParameters(), hasItem("args"));
@@ -1885,7 +1885,7 @@ public class FastSpecCompilerTest {
 		
 		for (Long i : new Long[] { 10L, 12L, 15L }) {
 			for (Statement s : new Statement[] { new DefaultCallStatement(sootMethod, stmt, i) }) {
-				DomainSet inv = classProvider.getInvariant(s, InvariantProvider.Operation.SUMMATE);
+				DomainSet inv = classProvider.getInvariantWithBinding(s, InvariantProvider.Operation.SUMMATE);
 				assertThat(inv.getParameters().size(), is(equalTo(2)));
 				assertThat(inv.getParameters(), hasItem("m"));
 				assertThat(inv.getParameters(), hasItem("args"));
@@ -1897,7 +1897,7 @@ public class FastSpecCompilerTest {
 		
 		for (Long i : new Long[] { 16L, 17L }) {
 			for (Statement s : new Statement[] { new DefaultCallStatement(sootMethod, stmt, i) }) {
-				DomainSet inv = classProvider.getInvariant(s, InvariantProvider.Operation.SUMMATE);
+				DomainSet inv = classProvider.getInvariantWithBinding(s, InvariantProvider.Operation.SUMMATE);
 				assertThat(inv.getParameters().size(), is(equalTo(2)));
 				assertThat(inv.getParameters(), hasItem("m"));
 				assertThat(inv.getParameters(), hasItem("args"));

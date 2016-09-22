@@ -56,11 +56,11 @@ public class SpecInvariantProvider implements InvariantProvider {
 		return invariantProvider.getInvariant(stmt);
 	}
 	
-	public DomainSet getInvariant(Statement stmt, Operation operation) {
+	public DomainSet getInvariantWithBinding(Statement stmt, Operation operation) {
 		SootClass sootClass = stmt.belongsTo().getDeclaringClass();
 		loadProvider(sootClass);
 
-		return invariantProvider.getInvariant(stmt, operation);
+		return invariantProvider.getInvariantWithBinding(stmt, operation);
 	}
 
 	public Set<String> getRelevantParameters(SootMethod method) {
@@ -143,6 +143,7 @@ public class SpecInvariantProvider implements InvariantProvider {
 			
 			// Usamos un provider que siempre devuelve invariantes "nullos" o "vacios"
 			invariantProvider = new AllwaysEmptyInvariantProvider(sootClass.getName());
+			
 			if (currentSpec != null) {
 					// Buscamos la especificacion para la clase
 				ClassSpecification classSpec = currentSpec.get(sootClass.getName());

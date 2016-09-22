@@ -17,6 +17,8 @@ public class CreationSiteSpecification implements SiteSpecification {
 	private Boolean captureAllPartitions;
 	private String implementation;
 	private String operator;
+	
+	//Los Creation Sites no tienen binding claramente
 
 	/**
 	 * BugFix porque no se invoca al constructor por defecto con XStream

@@ -31,7 +31,7 @@ import ar.uba.dc.invariant.spec.bean.CreationSiteSpecification;
 import ar.uba.dc.invariant.spec.bean.MethodSpecification;
 import ar.uba.dc.invariant.spec.bean.Specification;
 import ar.uba.dc.invariant.spec.compiler.compilation.DefaultClassInvariantProvider;
-import ar.uba.dc.invariant.spec.compiler.compilation.DefaultMethodInvariantProvider;
+import ar.uba.dc.invariant.spec.compiler.compilation.DefaultMethodInvariantAndBindingProvider;
 import ar.uba.dc.invariant.spec.compiler.compilation.InvariantId;
 import ar.uba.dc.util.location.FullPackageLocationStrategy;
 
@@ -98,7 +98,7 @@ public class SpecToMadejaMigrator {
 					for (MethodSpecification methodSpec : classSpec.getMethods()) {
 						MethodSpecification destMethodSpec = new MethodSpecification(methodSpec.getSignature().replaceAll("<", StringUtils.EMPTY).replaceAll(">", StringUtils.EMPTY));
 						destMethodSpec.addAllParameters(methodSpec.getParameters());
-						DefaultMethodInvariantProvider methodProvider = compiled.get(methodSpec.getSignature());
+						DefaultMethodInvariantAndBindingProvider methodProvider = compiled.get(methodSpec.getSignature());
 						DomainSet requirements = methodProvider.getRequirements();
 						
 						if (requirements != null) {

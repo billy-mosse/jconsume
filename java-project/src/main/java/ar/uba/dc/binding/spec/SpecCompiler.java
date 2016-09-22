@@ -1,4 +1,4 @@
-package ar.uba.dc.invariant.spec;
+package ar.uba.dc.binding.spec;
 
 import ar.uba.dc.binding.spec.compiler.CompiledClassBindingProvider;
 import ar.uba.dc.invariant.spec.bean.ClassSpecification;
@@ -13,6 +13,6 @@ import ar.uba.dc.invariant.spec.compiler.exceptions.CompileException;
  */
 public interface SpecCompiler {
 
-	public CompiledClassInvariantProvider compile(ClassSpecification classSpec) throws CompileException;
+	public CompiledClassBindingProvider compile(ClassSpecification classSpec) throws CompileException;
 	
 }

@@ -20,6 +20,8 @@ public class DomainSet {
 	
 	private String constraints;
 	
+	//private String binding;
+	
 	private boolean hasInductives = false;
 	
 	private boolean class_called_changed_during_loop = false;
@@ -119,10 +121,14 @@ public class DomainSet {
 		hasInductives = !inductives.isEmpty();
 	}
 
-	
+
 	public String getConstraints() {
 		return constraints.trim();
 	}
+	
+	/*public String getBinding() {
+		return binding.trim();
+	}*/
 	
 	public Set<String> getVariables() {
 		return new TreeSet<String>(variables);
@@ -168,6 +174,10 @@ public class DomainSet {
 	public void setConstraints(String newValue) {
 		this.constraints = newValue;
 	}
+	
+	/*public void setBinding(String newValue) {
+		this.binding = newValue;
+	}*/
 
 	public void addAllParameters(Set<String> params) {
 		this.parameters.addAll(params);

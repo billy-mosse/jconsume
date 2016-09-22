@@ -59,7 +59,7 @@ public class SimpleInvariantProvider implements InvariantProvider, StatementVisi
 	
 	protected SimpleReader reader = null;
 		
-	public DomainSet getInvariant(Statement stmt, Operation operation) {
+	public DomainSet getInvariantWithBinding(Statement stmt, Operation operation) {
 		return getInvariant(stmt);
 	}
 

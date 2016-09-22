@@ -30,7 +30,7 @@ public interface InvariantProvider {
 		}
 	};
 	
-	DomainSet getInvariant(Statement stmt, Operation operation);
+	DomainSet getInvariantWithBinding(Statement stmt, Operation operation);
 	
 	DomainSet getInvariant(Statement stmt);
 

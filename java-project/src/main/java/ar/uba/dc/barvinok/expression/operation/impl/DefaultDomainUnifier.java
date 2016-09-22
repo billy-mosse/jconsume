@@ -47,8 +47,12 @@ public class DefaultDomainUnifier implements DomainUnifier {
 			return constraints + " and " + constraints2;
 		}
 		
-		String[] left = constraints.split("\\s?or\\s?");
-		String[] right = constraints2.split("\\s?or\\s?");
+
+		//constraints = "A or B";
+		//constraints2 = "1 or 2";
+		
+		String[] left = constraints.split("\\s? or \\s?");
+		String[] right = constraints2.split("\\s? or \\s?");
 		
 		StringBuilder sb = new StringBuilder();
 		

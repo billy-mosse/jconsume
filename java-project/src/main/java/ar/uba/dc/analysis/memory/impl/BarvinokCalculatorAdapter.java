@@ -115,7 +115,7 @@ public class BarvinokCalculatorAdapter implements CountingTheory, SymbolicCalcul
 	@Override
 	public ParametricExpression maximize(ParametricExpression target, Statement stmt) {
 		PiecewiseQuasipolynomial polynomial = ((BarvinokParametricExpression) target).expr;
-		DomainSet inv = invariantProvider.getInvariant(stmt, InvariantProvider.Operation.MAXIMIZE);
+		DomainSet inv = invariantProvider.getInvariantWithBinding(stmt, InvariantProvider.Operation.MAXIMIZE);
 		
 		PiecewiseQuasipolynomial result = calculator.upperBound(polynomial, inv);
 		
@@ -133,7 +133,7 @@ public class BarvinokCalculatorAdapter implements CountingTheory, SymbolicCalcul
 	@Override
 	public ParametricExpression summateIfClassCalledChangedDuringLoop(ParametricExpression target, ParametricExpression totalResiduals, Statement stmt) {
 		PiecewiseQuasipolynomial polynomial = ((BarvinokParametricExpression) target).expr;
-		DomainSet inv = invariantProvider.getInvariant(stmt, InvariantProvider.Operation.SUMMATE);
+		DomainSet inv = invariantProvider.getInvariantWithBinding(stmt, InvariantProvider.Operation.SUMMATE);
 		if(inv.checkIfClassCalledChangedDuringLoop())
 			return summateWithInvariant(target, stmt, inv);
 		else
@@ -144,7 +144,7 @@ public class BarvinokCalculatorAdapter implements CountingTheory, SymbolicCalcul
 	
 	@Override
 	public ParametricExpression summate(ParametricExpression target, Statement stmt) {		
-		DomainSet inv = invariantProvider.getInvariant(stmt, InvariantProvider.Operation.SUMMATE);
+		DomainSet inv = invariantProvider.getInvariantWithBinding(stmt, InvariantProvider.Operation.SUMMATE);
 		return summateWithInvariant(target,stmt, inv);
 	}
 	

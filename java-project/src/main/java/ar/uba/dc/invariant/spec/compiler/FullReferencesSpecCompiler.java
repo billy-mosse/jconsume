@@ -50,13 +50,13 @@ public class FullReferencesSpecCompiler extends AbstractReferencesSpecCompiler {
 
 		ClassInvariantScope classScope = new ClassInvariantScope(classInvariants, classInvariantInfo);
 		MethodInvariantScope methodScope = new MethodInvariantScope(methodInvariants, methodInvariantInfo, classScope);
-		SiteInvariantScope siteScope = new SiteInvariantScope(siteInvariants, sitesInfo, methodScope);
+		SiteInvariantScope siteScope = new SiteInvariantScope(siteInvariants, sitesConstraintsInfo, methodScope);
 		
 		for (SiteSpecification site : methodSpec.getSitesSpecification()) {
 				// Pila de invariantes que faltan procesar para terminar de llevar el site a forma canonica
 			Stack<InvariantAdapter> toProcess = new Stack<InvariantAdapter>();
 			
-			toProcess.push(InvariantAdapter.adapt(site, sitesInfo.get(site), siteScope));
+			toProcess.push(InvariantAdapter.adapt(site, sitesConstraintsInfo.get(site), siteScope));
 			
 			while (!toProcess.isEmpty()) {
 				InvariantAdapter inv = toProcess.pop();

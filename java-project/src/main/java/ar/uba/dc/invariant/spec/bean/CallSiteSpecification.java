@@ -20,6 +20,8 @@ public class CallSiteSpecification implements SiteSpecification {
 	private String implementation;
 	private String operator;
 	
+	private String binding;
+	
 	/**
 	 * BugFix porque no se invoca al constructor por defecto con XStream
 	 * 
@@ -41,6 +43,10 @@ public class CallSiteSpecification implements SiteSpecification {
 			variables = StringUtils.EMPTY;
 		}
 
+		if (binding == null) {
+			binding = StringUtils.EMPTY;
+		}
+		
 	    return this;
 	}
 	
@@ -61,6 +67,14 @@ public class CallSiteSpecification implements SiteSpecification {
 
 	public String getConstraints() {
 		return constraints;
+	}
+	
+	public void setBinding(String binding) {
+		this.binding = binding;
+	}
+
+	public String getBinding() {
+		return binding;
 	}
 	
 	public void setAnnotations(String annotations) {

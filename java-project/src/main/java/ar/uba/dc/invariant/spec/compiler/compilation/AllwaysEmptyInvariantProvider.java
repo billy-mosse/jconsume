@@ -40,7 +40,7 @@ public class AllwaysEmptyInvariantProvider extends AbstractClassInvariantProvide
 	}
 
 	@Override
-	public DomainSet getInvariant(Statement stmt, Operation operation) {
+	public DomainSet getInvariantWithBinding(Statement stmt, Operation operation) {
 		return getInvariant(stmt);
 	}
 }

@@ -18,7 +18,7 @@ import ar.uba.dc.barvinok.expression.DomainSet;
 
 public class DefaultClassInvariantProvider extends AbstractClassInvariantProvider implements CompiledClassInvariantProvider {
 
-	private Map<String, DefaultMethodInvariantProvider> providers = new HashMap<String, DefaultMethodInvariantProvider>(); // signature -> provider
+	private Map<String, DefaultMethodInvariantAndBindingProvider> providers = new HashMap<String, DefaultMethodInvariantAndBindingProvider>(); // signature -> provider
 	
 	public DefaultClassInvariantProvider(String forClass) {
 		super(forClass);
@@ -28,7 +28,7 @@ public class DefaultClassInvariantProvider extends AbstractClassInvariantProvide
 
 	public DomainSet getInvariant(Statement stmt) {
 		log.debug(stmt.belongsTo().getSubSignature());
-		DefaultMethodInvariantProvider provider = providers.get(stmt.belongsTo().getSubSignature());
+		DefaultMethodInvariantAndBindingProvider provider = providers.get(stmt.belongsTo().getSubSignature());
 		DomainSet d = new DomainSet(StringUtils.EMPTY);
 		
 		if (provider != null) {
@@ -38,19 +38,21 @@ public class DefaultClassInvariantProvider extends AbstractClassInvariantProvide
 		return d;
 	}
 	
-	public DomainSet getInvariant(Statement stmt, Operation operation) {
-		DefaultMethodInvariantProvider provider = providers.get(stmt.belongsTo().getSubSignature());
+	public DomainSet getInvariantWithBinding(Statement stmt, Operation operation) {
+		DefaultMethodInvariantAndBindingProvider provider = providers.get(stmt.belongsTo().getSubSignature());
 		DomainSet d = new DomainSet(StringUtils.EMPTY);
 		
 		if (provider != null) {
-			d = provider.getInvariant(stmt, operation);
+			d = provider.getInvariantWithBinding(stmt, operation);
 		}
+		
+		
 		
 		return d;
 	}
 
 	public Set<String> getRelevantParameters(SootMethod method) {
-		DefaultMethodInvariantProvider provider = providers.get(method.getSubSignature());
+		DefaultMethodInvariantAndBindingProvider provider = providers.get(method.getSubSignature());
 		Set<String> params = new TreeSet<String>();
 		
 		if (provider != null) {
@@ -61,7 +63,7 @@ public class DefaultClassInvariantProvider extends AbstractClassInvariantProvide
 	}
 
 	public DomainSet getRequirements(SootMethod method) {
-		DefaultMethodInvariantProvider provider = providers.get(method.getSubSignature());
+		DefaultMethodInvariantAndBindingProvider provider = providers.get(method.getSubSignature());
 		DomainSet requirements = null;
 		
 		if (provider != null) {
@@ -72,7 +74,7 @@ public class DefaultClassInvariantProvider extends AbstractClassInvariantProvide
 	}
 
 	public boolean isLoopInvariant(Statement stmt) {
-		DefaultMethodInvariantProvider provider = providers.get(stmt.belongsTo().getSubSignature());
+		DefaultMethodInvariantAndBindingProvider provider = providers.get(stmt.belongsTo().getSubSignature());
 		boolean ret = false;
 		
 		if (provider != null) {
@@ -83,7 +85,7 @@ public class DefaultClassInvariantProvider extends AbstractClassInvariantProvide
 	}
 
 	public boolean captureAllPartitions(Statement stmt) {
-		DefaultMethodInvariantProvider provider = providers.get(stmt.belongsTo().getSubSignature());
+		DefaultMethodInvariantAndBindingProvider provider = providers.get(stmt.belongsTo().getSubSignature());
 		boolean ret = false;
 		
 		if (provider != null) {
@@ -93,11 +95,11 @@ public class DefaultClassInvariantProvider extends AbstractClassInvariantProvide
 		return ret;
 	}
 
-	public DefaultMethodInvariantProvider get(String signature) {
+	public DefaultMethodInvariantAndBindingProvider get(String signature) {
 		return providers.get(signature);
 	}
 	
-	public void put(String signature, DefaultMethodInvariantProvider methodProvider) {
+	public void put(String signature, DefaultMethodInvariantAndBindingProvider methodProvider) {
 		providers.put(signature, methodProvider);
 	}
 }

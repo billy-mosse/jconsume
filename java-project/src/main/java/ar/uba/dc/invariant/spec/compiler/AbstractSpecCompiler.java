@@ -1,7 +1,9 @@
 package ar.uba.dc.invariant.spec.compiler;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
@@ -18,8 +20,9 @@ import ar.uba.dc.invariant.spec.bean.CreationSiteSpecification;
 import ar.uba.dc.invariant.spec.bean.MethodSpecification;
 import ar.uba.dc.invariant.spec.bean.SiteSpecification;
 import ar.uba.dc.invariant.spec.bean.SiteSpecificationVisitor;
+import ar.uba.dc.invariant.spec.compiler.binding.BindingInfo;
 import ar.uba.dc.invariant.spec.compiler.compilation.DefaultClassInvariantProvider;
-import ar.uba.dc.invariant.spec.compiler.compilation.DefaultMethodInvariantProvider;
+import ar.uba.dc.invariant.spec.compiler.compilation.DefaultMethodInvariantAndBindingProvider;
 import ar.uba.dc.invariant.spec.compiler.compilation.InvariantId;
 import ar.uba.dc.invariant.spec.compiler.compilation.InvariantId.Type;
 import ar.uba.dc.invariant.spec.compiler.constraints.ConstraintsInfo;
@@ -28,6 +31,13 @@ import ar.uba.dc.invariant.spec.compiler.exceptions.CompileException;
 import ar.uba.dc.invariant.spec.compiler.exceptions.DuplicateIdentifierException;
 import ar.uba.dc.invariant.spec.compiler.exceptions.SiteWithoutOffsetException;
 import ar.uba.dc.invariant.spec.compiler.exceptions.UnknownParameterException;
+import decorations.Binding;
+import decorations.CallDecoration;
+
+
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * Template para los compiladores
@@ -36,7 +46,14 @@ import ar.uba.dc.invariant.spec.compiler.exceptions.UnknownParameterException;
  */
 public abstract class AbstractSpecCompiler implements SpecCompiler {
 
-	protected Map<SiteSpecification, ConstraintsInfo> sitesInfo = new HashMap<SiteSpecification, ConstraintsInfo>(); // site -> info de variables y referencias
+	
+	
+	private static Log log = LogFactory.getLog(AbstractSpecCompiler.class);
+	protected Map<SiteSpecification, ConstraintsInfo> sitesConstraintsInfo = new HashMap<SiteSpecification, ConstraintsInfo>(); // site -> info de variables y referencias
+	
+	protected Map<SiteSpecification, BindingInfo> sitesBindingInfo = new HashMap<SiteSpecification, BindingInfo>(); // site -> info de variables y referencias
+	
+	
 	protected ConstraintsInfo requirementsInfo = null; // info de variables y referencias para los requerimientos
 	protected DomainSet requirementsInvariant = null;
 	
@@ -59,7 +76,11 @@ public abstract class AbstractSpecCompiler implements SpecCompiler {
 		
 		try {
 			for (MethodSpecification method : classSpec.getMethods()) {
-				DefaultMethodInvariantProvider methodProvider = compile(method, classSpec);
+				DefaultMethodInvariantAndBindingProvider methodProvider = compile(method, classSpec);
+				
+				methodProvider.setDomainUnifier(this.domainUnifier);
+				
+				
 				classProvider.put(method.getSignature(), methodProvider);
 			}
 		} catch (DuplicateIdentifierException e) {
@@ -68,9 +89,14 @@ public abstract class AbstractSpecCompiler implements SpecCompiler {
 		
 		return classProvider;
 	}
+	
+	
+	
+	
 
-	protected DefaultMethodInvariantProvider compile(MethodSpecification methodSpec, ClassSpecification classSpec) {
-		final DefaultMethodInvariantProvider provider = new DefaultMethodInvariantProvider();
+	protected DefaultMethodInvariantAndBindingProvider compile(MethodSpecification methodSpec, ClassSpecification classSpec) {
+		final DefaultMethodInvariantAndBindingProvider provider = new DefaultMethodInvariantAndBindingProvider();
+		log.debug("Generating provider for " + methodSpec.getSignature());
 
 		try {
 			processRequirements(methodSpec);
@@ -82,14 +108,21 @@ public abstract class AbstractSpecCompiler implements SpecCompiler {
 		
 			// Cargamos la informacion de las variables y referencias de los sites antes de 
 			// comenzar con el proceso. De paso vemos si hay sites que no tengan offset
-		sitesInfo.clear();
+		sitesConstraintsInfo.clear();
+		
+		sitesBindingInfo.clear();
+		
+		
 		for (SiteSpecification site : methodSpec.getSitesSpecification()) {
 			if (StringUtils.isBlank(site.getOffset())) {
-				throw new SiteWithoutOffsetException("Site at index " + sitesInfo.size() + " of method " + methodSpec.getSignature() +  " at class " + classSpec.getClassName() + " has no offset specified");
+				throw new SiteWithoutOffsetException("Site at index " + sitesConstraintsInfo.size() + " of method " + methodSpec.getSignature() +  " at class " + classSpec.getClassName() + " has no offset specified");
 			}
 			// ConstraintsInfo info = processConstraints(site.getConstraints(), methodSpec.getParameters());
-			ConstraintsInfo info = processConstraints(site, methodSpec.getParameters());
-			sitesInfo.put(site, info);
+			ConstraintsInfo cInfo = processConstraints(site, methodSpec.getParameters());
+			sitesConstraintsInfo.put(site, cInfo);
+			
+			BindingInfo bInfo = processBinding(site, methodSpec.getParameters());
+			sitesBindingInfo.put(site,  bInfo);
 		}
 		
 			// Este metodo puede cambiar la informacion de variables y referencias mientras lleva todo a forma canonica
@@ -103,14 +136,31 @@ public abstract class AbstractSpecCompiler implements SpecCompiler {
 			for (final Long offset : expandOffset(site.getOffset())) {
 					// Creamos el invariante
 				final DomainSet invariant = new DomainSet(site.getConstraints());
-					// Recuperamos la informacion (que pudo haber cambiado)
-				ConstraintsInfo info = sitesInfo.get(site);
-				invariant.addAllParameters(params);
-				invariant.addAllVariables(info.getVariables());
-				// Podria usar el constructor...
-				invariant.addAllInductives(info.getinductives());
 				
-				invariant.setClassCalledChangedDuringLoop(info.checkIfClassCalledChangedDuringLoop());
+				
+				// Recuperamos la informacion (que pudo haber cambiado)
+				ConstraintsInfo cInfo = sitesConstraintsInfo.get(site);
+				invariant.addAllParameters(params);
+				
+				Set<String> variables = cInfo.getVariables();
+				invariant.addAllVariables(variables);
+				// Podria usar el constructor...
+				invariant.addAllInductives(cInfo.getinductives());
+				
+				invariant.setClassCalledChangedDuringLoop(cInfo.checkIfClassCalledChangedDuringLoop());				
+				
+				
+				
+				BindingInfo bInfo = sitesBindingInfo.get(site);
+				
+				Binding binding = null;
+				
+				if(site.getClass() == CallSiteSpecification.class)
+				{
+					binding = new Binding(((CallSiteSpecification)site).getBinding(), bInfo.getVariables());
+				}
+				
+				
 				
 				// Obtenemos un identificador para el invariante que estamos procesando
 				InvariantId invariantId = site.apply(new SiteSpecificationVisitor<InvariantId>() {
@@ -144,6 +194,9 @@ public abstract class AbstractSpecCompiler implements SpecCompiler {
 				if (actualInvariant != null) {
 						// Si ya habia algo, devolvemos la union (el and) de las restricciones
 					actualInvariant.setConstraints(domainUnifier.unify(actualInvariant.getConstraints(), invariant.getConstraints()));
+					
+					//actualInvariant.setBinding(domainUnifier.unify(actualInvariant.getBinding(), invariant.getBinding()));
+					
 					actualInvariant.addAllVariables(invariant.getVariables());
 					actualInvariant.addAllParameters(invariant.getParameters());
 					
@@ -151,12 +204,14 @@ public abstract class AbstractSpecCompiler implements SpecCompiler {
 				} else {
 						// Si no habia nada y tengo requires para el metodo, los agrego al invariante
 					if (requirementsInvariant != null && StringUtils.isNotBlank(requirementsInvariant.getConstraints())) {
-						invariant.setConstraints(domainUnifier.unify(requirementsInvariant.getConstraints(), invariant.getConstraints()));
+						
+						invariant.setConstraints(domainUnifier.unify(requirementsInvariant.getConstraints(), invariant.getConstraints()));	
+						//El binding aca no hace falta agregarlo
 						
 						//no estoy seguro de si hace falta esto.
 						invariant.setClassCalledChangedDuringLoop(requirementsInvariant.checkIfClassCalledChangedDuringLoop());
 					}
-					provider.putInvariant(invariantId, invariant);
+					provider.putInvariant(invariantId, new CallDecoration(invariant, binding));
 				}
 			}
 		}	
@@ -174,11 +229,38 @@ public abstract class AbstractSpecCompiler implements SpecCompiler {
 		return info;
 	}
 	
+	protected BindingInfo processBinding(SiteSpecification site, Set<String> parameters)
+	{
+		BindingInfo bInfo = new BindingInfo();
+		if(site instanceof CallSiteSpecification)
+		{
+			String binding = ((CallSiteSpecification)site).getBinding();
+
+			if (StringUtils.isNotBlank(binding)) {
+				
+				Set<String> variables = parser.parse(binding).getVariables();
+				bInfo.addAllVariables(variables);
+				bInfo.getVariables().removeAll(parameters);
+			}			
+		}
+		
+		return bInfo;
+	}
+	
 	protected ConstraintsInfo processConstraints(SiteSpecification site, Set<String> parameters) {
 		String constraints = site.getConstraints();
 		
 		
 		boolean class_called_changed_during_loop = false;
+		
+		ConstraintsInfo info = new ConstraintsInfo();
+		
+		if (StringUtils.isNotBlank(site.getConstraints())) {
+			info = parser.parse(constraints);			
+			info.getVariables().removeAll(parameters);
+		}
+		
+		
 		if(site instanceof CallSiteSpecification)
 		{
 			String annotations = ((CallSiteSpecification)site).getAnnotations();
@@ -186,14 +268,8 @@ public abstract class AbstractSpecCompiler implements SpecCompiler {
 			{
 				class_called_changed_during_loop = true;
 			}
-			
 		}
-		ConstraintsInfo info = new ConstraintsInfo();
 		
-		if (StringUtils.isNotBlank(site.getConstraints())) {
-			info = parser.parse(constraints);
-			info.getVariables().removeAll(parameters);
-		}
 		if(site.getInductives()!=null) {
 			StringTokenizer stn = new StringTokenizer(site.getInductives(), ",");
 			while (stn.hasMoreTokens()) {
