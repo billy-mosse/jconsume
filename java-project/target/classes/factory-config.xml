@@ -226,6 +226,7 @@
 							 	<summaryFactory config-class="ar.uba.dc.analysis.memory.PaperMemorySummaryFactory">
 							 		<expressionFactory config-class="ar.uba.dc.analysis.memory.impl.BarvinokParametricExpressionFactory" />
 							 	</summaryFactory>
+							 	<countingTheory config-class="ar.uba.dc.analysis.memory.CountingTheory" config-factory="custom" config-ref-to="analysis.memory.barvinok-calculator-adapter" />
 							 </analysis>				 							 
 			</paperInterprocedural>
 			
