@@ -44,7 +44,11 @@ public class DefaultMethodInvariantAndBindingProvider {
 	protected Set<InvariantId> captureAllPartitions = new HashSet<InvariantId>();
 		
 	public DomainSet getInvariant(Statement stmt) {
-		return getInvariantWithBinding(stmt, null);
+		return getInvariant(stmt, null);
+	}
+	
+	public Binding getBinding(Statement stmt) {
+		return getBinding(stmt, null);
 	}
 	
 	public DomainSet getInvariantWithBinding(Statement stmt, Operation operation) {
@@ -86,6 +90,85 @@ public class DefaultMethodInvariantAndBindingProvider {
 		return invariant;
 	}
 	
+	
+	public DomainSet getInvariant(Statement stmt, Operation operation) {
+		String implementation = stmt.apply(CalledImplementationVisitor.INSTANCE);
+		Type type = stmt.apply(StatementTypeVisitor.INSTANCE);
+		
+		DomainSet invariant = null;
+
+		// Primero probamos recuperar con el operador + la implementacion
+		if (operation != null && StringUtils.isNotBlank(operation.getString())) {
+			invariant = getInvariant(new InvariantId(type, stmt.getCounter(), implementation, operation.getString()));
+			
+			// Si no encontramos buscamos operador sin implementacion
+			if (invariant == null) {
+				invariant = getInvariant(new InvariantId(type, stmt.getCounter(), StringUtils.EMPTY, operation.getString()));
+			}
+		}
+		
+		// Si no encontramos buscamos solo con implementacion
+		if (invariant == null) {
+			invariant = getInvariant(new InvariantId(type, stmt.getCounter(), implementation));
+		}
+		
+		// Si no encontramos, buscamos sin implementacion (el default)
+		if (invariant == null) {
+			invariant = getInvariant(new InvariantId(type, stmt.getCounter()));
+		}
+		
+		// Si no encontramos nada, devolvemos los requires del metodo
+		if (invariant == null) {
+			invariant = requirements;
+		}
+		
+		// Si asi y todo no encontramos nada, devolvemos un invariante vacio
+		if (invariant == null) {
+			invariant = new DomainSet(StringUtils.EMPTY);
+		}
+		
+		return invariant;
+	}
+	
+	
+	//probablemente esto este mal
+	public Binding getBinding(Statement stmt, Operation operation) {
+		String implementation = stmt.apply(CalledImplementationVisitor.INSTANCE);
+		Type type = stmt.apply(StatementTypeVisitor.INSTANCE);
+		
+		Binding binding = null;
+
+		// Primero probamos recuperar con el operador + la implementacion
+		if (operation != null && StringUtils.isNotBlank(operation.getString())) {
+			binding = getBinding(new InvariantId(type, stmt.getCounter(), implementation, operation.getString()));
+			
+			// Si no encontramos buscamos operador sin implementacion
+			if (binding == null) {
+				binding = getBinding(new InvariantId(type, stmt.getCounter(), StringUtils.EMPTY, operation.getString()));
+			}
+		}
+		
+		// Si no encontramos buscamos solo con implementacion
+		if (binding == null) {
+			binding = getBinding(new InvariantId(type, stmt.getCounter(), implementation));
+		}
+		
+		// Si no encontramos, buscamos sin implementacion (el default)
+		if (binding == null) {
+			binding = getBinding(new InvariantId(type, stmt.getCounter()));
+		}
+		
+		
+		// Si asi y todo no encontramos nada, devolvemos un invariante vacio
+		if (binding == null) {
+			binding = new Binding();
+		}
+		
+		return binding;
+	}
+	
+	
+	
 	public DomainSet getInvariant(InvariantId invariantId) {
 		CallDecoration calldec = invariants.get(invariantId);
 		
@@ -95,7 +178,20 @@ public class DefaultMethodInvariantAndBindingProvider {
 			return null;
 	}
 	
-	//funcion horrible. odio tener que chequear nulls
+	public Binding getBinding(InvariantId invariantId)
+	{
+		CallDecoration calldec = invariants.get(invariantId);
+		
+		if(calldec != null) 
+			return calldec.getBinding();
+		else
+			return null;
+	}
+	
+	
+	
+	
+	//funcion horrible. odio tener que chequear nulls	
 	public DomainSet getInvariantAndBinding(InvariantId invariantId) {
  		CallDecoration calldec = invariants.get(invariantId);
 		

@@ -9,6 +9,7 @@ import soot.SootMethod;
 
 import ar.uba.dc.invariant.InvariantProvider.Operation;
 import ar.uba.dc.invariant.spec.compiler.CompiledClassInvariantProvider;
+import decorations.Binding;
 import ar.uba.dc.analysis.common.code.Statement;
 import ar.uba.dc.barvinok.expression.DomainSet;
 
@@ -20,6 +21,10 @@ public class AllwaysEmptyInvariantProvider extends AbstractClassInvariantProvide
 
 	public DomainSet getInvariant(Statement stmt) {
 		return new DomainSet(StringUtils.EMPTY);
+	}
+	
+	public Binding getBinding(Statement stmt) {
+		return new Binding();
 	}
 
 	public Set<String> getRelevantParameters(SootMethod method) {
@@ -41,6 +46,11 @@ public class AllwaysEmptyInvariantProvider extends AbstractClassInvariantProvide
 
 	@Override
 	public DomainSet getInvariantWithBinding(Statement stmt, Operation operation) {
+		return getInvariant(stmt);
+	}
+	
+	@Override
+	public DomainSet getInvariant(Statement stmt, Operation operation) {
 		return getInvariant(stmt);
 	}
 }

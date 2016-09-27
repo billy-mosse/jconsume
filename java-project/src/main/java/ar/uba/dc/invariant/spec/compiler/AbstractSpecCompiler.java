@@ -51,7 +51,7 @@ public abstract class AbstractSpecCompiler implements SpecCompiler {
 	private static Log log = LogFactory.getLog(AbstractSpecCompiler.class);
 	protected Map<SiteSpecification, ConstraintsInfo> sitesConstraintsInfo = new HashMap<SiteSpecification, ConstraintsInfo>(); // site -> info de variables y referencias
 	
-	protected Map<SiteSpecification, BindingInfo> sitesBindingInfo = new HashMap<SiteSpecification, BindingInfo>(); // site -> info de variables y referencias
+	//protected Map<SiteSpecification, BindingInfo> sitesBindingInfo = new HashMap<SiteSpecification, BindingInfo>(); // site -> info de variables y referencias
 	
 	
 	protected ConstraintsInfo requirementsInfo = null; // info de variables y referencias para los requerimientos
@@ -110,8 +110,9 @@ public abstract class AbstractSpecCompiler implements SpecCompiler {
 			// comenzar con el proceso. De paso vemos si hay sites que no tengan offset
 		sitesConstraintsInfo.clear();
 		
-		sitesBindingInfo.clear();
+		//sitesBindingInfo.clear();
 		
+		//Set<String> empty_variables = new TreeSet<String>();
 		
 		for (SiteSpecification site : methodSpec.getSitesSpecification()) {
 			if (StringUtils.isBlank(site.getOffset())) {
@@ -122,7 +123,9 @@ public abstract class AbstractSpecCompiler implements SpecCompiler {
 			sitesConstraintsInfo.put(site, cInfo);
 			
 			BindingInfo bInfo = processBinding(site, methodSpec.getParameters());
-			sitesBindingInfo.put(site,  bInfo);
+			//bInfo.removeAllVariables();
+			
+			//sitesBindingInfo.put(site,  bInfo);
 		}
 		
 			// Este metodo puede cambiar la informacion de variables y referencias mientras lleva todo a forma canonica
@@ -151,13 +154,13 @@ public abstract class AbstractSpecCompiler implements SpecCompiler {
 				
 				
 				
-				BindingInfo bInfo = sitesBindingInfo.get(site);
+				//BindingInfo bInfo = sitesBindingInfo.get(site);
 				
 				Binding binding = null;
 				
 				if(site.getClass() == CallSiteSpecification.class)
 				{
-					binding = new Binding(((CallSiteSpecification)site).getBinding(), bInfo.getVariables());
+					binding = new Binding(((CallSiteSpecification)site).getBinding());
 				}
 				
 				

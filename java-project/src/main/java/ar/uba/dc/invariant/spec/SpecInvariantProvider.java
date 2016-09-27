@@ -24,6 +24,7 @@ import ar.uba.dc.invariant.spec.bean.Specification;
 import ar.uba.dc.invariant.spec.compiler.CompiledClassInvariantProvider;
 import ar.uba.dc.invariant.spec.compiler.compilation.AllwaysEmptyInvariantProvider;
 import ar.uba.dc.util.location.ClassLocationStrategy;
+import decorations.Binding;
 
 /**
  * Recuperamos los invariantes con el formato spec.
@@ -55,6 +56,15 @@ public class SpecInvariantProvider implements InvariantProvider {
 		
 		return invariantProvider.getInvariant(stmt);
 	}
+	
+	
+	public Binding getBinding(Statement stmt) {
+		// Obtenemos la clase para la cual hay que buscar el invariante
+	SootClass sootClass = stmt.belongsTo().getDeclaringClass();
+	loadProvider(sootClass);
+	
+	return invariantProvider.getBinding(stmt);
+}
 	
 	public DomainSet getInvariantWithBinding(Statement stmt, Operation operation) {
 		SootClass sootClass = stmt.belongsTo().getDeclaringClass();

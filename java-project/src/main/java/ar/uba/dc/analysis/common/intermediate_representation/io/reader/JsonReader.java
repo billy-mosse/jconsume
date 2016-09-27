@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.lang.reflect.Type;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -49,6 +50,8 @@ import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
 import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.soot.xstream.StatementIdConverter;
 import ar.uba.dc.util.location.MethodLocationStrategy;
+import decorations.Binding;
+import decorations.BindingPair;
 
 
 public class JsonReader implements SummaryReader<IntermediateRepresentationMethod> {
@@ -65,6 +68,10 @@ protected Gson gson;
 		builder.registerTypeAdapter(Line.class, new LineDeserializer());
 		builder.registerTypeAdapter(Invocation.class, new InvocationDeserializer());
 		builder.registerTypeAdapter(IntermediateRepresentationMethodBody.class, new IntermediateRepresentationMethodBodyDeserializer());
+		builder.registerTypeAdapter(Binding.class, new BindingDeserializer());
+		
+		
+		
 		//builder.registerTypeAdapter(IntermediateRepresentationParameterWithType.class, new IntermediateRepresentationParameterWithTypeSerializer());
 		//builder.registerTypeAdapter(IntermediateRepresentationMethodBody.class, new IntermediateRepresentationMethodBodySerializer());	
 		//builder.registerTypeAdapter(Line.class, new LineSerializer());
@@ -213,6 +220,7 @@ protected Gson gson;
 			
 			List<Invocation> invocations = new LinkedList<Invocation>();
 			
+			
 		    for(int i = 0; i < jinvocations.size(); i++)
 		    {
 		    	//No necesita un custom deserializer porque tiene tipos primitivos adentro
@@ -221,10 +229,39 @@ protected Gson gson;
 		    }
 		    
 		    line.setInvocations(invocations);
+		    
+		    
+		    line.setBinding((Binding)context.deserialize(jobject.get("binding"), Binding.class));
+		    
 		    return line;
 		}
 	}
 	
+	
+	
+	public static class BindingDeserializer implements JsonDeserializer<Binding> 
+	{
+	    
+		@Override
+		public Binding deserialize(JsonElement json, Type type,
+		        JsonDeserializationContext context) throws JsonParseException {
+			Binding binding = new Binding();
+			
+			JsonObject jobject = (JsonObject) json;
+			JsonArray jbindingPairs = jobject.get("bindingPairs").getAsJsonArray();
+			
+			Set<BindingPair> bindingPairs = new HashSet<BindingPair>();
+			for(int i = 0; i < jbindingPairs.size(); i++)
+			{
+				BindingPair bp = context.deserialize(jbindingPairs.get(i), BindingPair.class);
+				bindingPairs.add(bp);				
+			}
+			binding.setBindingPairs(bindingPairs);
+			
+			return binding;
+		}
+		
+	}
 	
 	public static class InvocationDeserializer implements JsonDeserializer<Invocation> 
 	{

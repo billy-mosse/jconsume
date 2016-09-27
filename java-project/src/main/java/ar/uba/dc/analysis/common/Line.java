@@ -15,11 +15,13 @@ import ar.uba.dc.analysis.memory.expression.ParametricExpression;
 import ar.uba.dc.analysis.memory.impl.summary.EscapeBasedLifeTimeOracle;
 import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.soot.SootUtils;
+import decorations.Binding;
 import soot.jimple.toolkits.callgraph.CallGraph;
 
 public class Line {
 	private long label;
 	private DomainSet invariant;	
+	private Binding binding;
 	private List<Invocation> invocations;	
 	private String name;
 	
@@ -111,5 +113,13 @@ public class Line {
 
 	public void setLineNumber(int lineNumber) {
 		this.lineNumber = lineNumber;
+	}
+
+	public Binding getBinding() {
+		return binding;
+	}
+
+	public void setBinding(Binding binding) {
+		this.binding = binding;
 	}
 }

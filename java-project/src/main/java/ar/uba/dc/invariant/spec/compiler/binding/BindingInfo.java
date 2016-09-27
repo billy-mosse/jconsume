@@ -23,5 +23,10 @@ private Set<String> variables = new TreeSet<String>();
 		return variables;
 	}
 	
+	public void removeAllVariables()
+	{
+		this.variables = new TreeSet<String>();
+	}
+	
 
 }

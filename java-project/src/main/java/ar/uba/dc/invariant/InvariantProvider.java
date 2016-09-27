@@ -6,6 +6,7 @@ import soot.SootMethod;
 import ar.uba.dc.analysis.memory.LifeTimeOracle;
 import ar.uba.dc.analysis.common.code.Statement;
 import ar.uba.dc.barvinok.expression.DomainSet;
+import decorations.Binding;
 
 /**
  * Interfaz que determina el contrato que cumple un proveedor de invariantes
@@ -31,8 +32,10 @@ public interface InvariantProvider {
 	};
 	
 	DomainSet getInvariantWithBinding(Statement stmt, Operation operation);
-	
+
 	DomainSet getInvariant(Statement stmt);
+	
+	Binding getBinding(Statement stmt);
 
 	/**
 	 * Retorna los parametros relevantes asociado a un metodo

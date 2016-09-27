@@ -17,6 +17,8 @@ import ar.uba.dc.analysis.common.Line;
 import ar.uba.dc.analysis.common.SummaryWriter;
 import ar.uba.dc.analysis.escape.summary.io.xstream.XStreamFactory;
 import ar.uba.dc.util.location.MethodLocationStrategy;
+import decorations.Binding;
+import decorations.BindingPair;
 import ar.uba.dc.analysis.common.intermediate_representation.DefaultIntermediateRepresentationParameter;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethodBody;
@@ -55,6 +57,7 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 		
 		builder.registerTypeAdapter(Invocation.class, new InvocationSerializer());
 		builder.registerTypeAdapter(DefaultIntermediateRepresentationParameter.class, new DefaultIntermediateRepresentationParameterSerializer());
+		builder.registerTypeAdapter(Binding.class, new BindingSerializer());
 		
 		this.gson = builder.create();
 	}
@@ -207,6 +210,10 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 						
 			result.add("invariant", new JsonPrimitive(line.getInvariant().toHumanReadableString()));
 			
+			
+			result.add("binding", context.serialize(line.getBinding()));			
+			
+			
 			result.add("name", new JsonPrimitive( line.getName()));
 			
 			result.add("line_number", new JsonPrimitive( line.getLineNumber()));
@@ -224,6 +231,41 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 	        return result;
 	    }
 	}
+	
+	
+	public static class BindingSerializer implements JsonSerializer<Binding> 
+	{
+	    
+		public JsonElement serialize(final Binding binding, final Type type, final JsonSerializationContext context) {
+			JsonObject result = new JsonObject();
+			
+			JsonArray arr = new JsonArray();
+			
+			for(BindingPair bp : binding.getBindingPairs())
+			{
+				arr.add(context.serialize(bp));
+			}
+			
+			result.add("bindingPairs", arr);
+			
+			return result;
+		}
+	}
+	
+	/*public static class BindingPairSerializer implements JsonSerializer<BindingPair> 
+	{
+	    
+		public JsonElement serialize(final BindingPair bindingPair, final Type type, final JsonSerializationContext context) {
+			JsonObject result = new JsonObject();
+			
+			result.add("caller", new JsonPrimitive(bindingPair.getCa));
+			
+			return result;
+		}
+	}*/
+		
+	
+	
 	
 	public static class InvocationSerializer implements JsonSerializer<Invocation> 
 	{

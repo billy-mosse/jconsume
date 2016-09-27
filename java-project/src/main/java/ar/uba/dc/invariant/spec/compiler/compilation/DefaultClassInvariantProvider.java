@@ -13,6 +13,7 @@ import soot.SootMethod;
 
 import ar.uba.dc.invariant.InvariantProvider.Operation;
 import ar.uba.dc.invariant.spec.compiler.CompiledClassInvariantProvider;
+import decorations.Binding;
 import ar.uba.dc.analysis.common.code.Statement;
 import ar.uba.dc.barvinok.expression.DomainSet;
 
@@ -38,12 +39,39 @@ public class DefaultClassInvariantProvider extends AbstractClassInvariantProvide
 		return d;
 	}
 	
+	
+	public Binding getBinding(Statement stmt) {
+		log.debug(stmt.belongsTo().getSubSignature());
+		DefaultMethodInvariantAndBindingProvider provider = providers.get(stmt.belongsTo().getSubSignature());
+		Binding b = new Binding();
+		
+		if (provider != null) {
+			b = provider.getBinding(stmt);
+		}
+		
+		return b;
+	}
+	
 	public DomainSet getInvariantWithBinding(Statement stmt, Operation operation) {
 		DefaultMethodInvariantAndBindingProvider provider = providers.get(stmt.belongsTo().getSubSignature());
 		DomainSet d = new DomainSet(StringUtils.EMPTY);
 		
 		if (provider != null) {
 			d = provider.getInvariantWithBinding(stmt, operation);
+		}
+		
+		
+		
+		return d;
+	}
+	
+	
+	public DomainSet getInvariant(Statement stmt, Operation operation) {
+		DefaultMethodInvariantAndBindingProvider provider = providers.get(stmt.belongsTo().getSubSignature());
+		DomainSet d = new DomainSet(StringUtils.EMPTY);
+		
+		if (provider != null) {
+			d = provider.getInvariant(stmt, operation);
 		}
 		
 		

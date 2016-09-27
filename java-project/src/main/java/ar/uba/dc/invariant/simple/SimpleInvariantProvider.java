@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.Map.Entry;
 
+import org.apache.commons.lang.NotImplementedException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -21,6 +22,7 @@ import ar.uba.dc.analysis.common.code.StatementVisitor;
 import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.invariant.InvariantProvider;
 import ar.uba.dc.util.location.ClassLocationStrategy;
+import decorations.Binding;
 
 /**
  * Levanta los invariantes de un unico archivo. El formato del archivo es el siguiente
@@ -61,6 +63,11 @@ public class SimpleInvariantProvider implements InvariantProvider, StatementVisi
 		
 	public DomainSet getInvariantWithBinding(Statement stmt, Operation operation) {
 		return getInvariant(stmt);
+	}
+	
+	public Binding getBinding(Statement stmt)
+	{
+		throw new NotImplementedException("not implemented yet. This provider still has invariants and bindings merged");
 	}
 
 	public DomainSet getInvariant(Statement stmt) {

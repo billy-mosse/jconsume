@@ -20,6 +20,7 @@ import ar.uba.dc.analysis.memory.impl.summary.EscapeBasedLifeTimeOracle;
 import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.invariant.InvariantProvider;
 import ar.uba.dc.invariant.spec.SpecInvariantProvider;
+import decorations.Binding;
 import soot.SootMethod;
 import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.jimple.toolkits.callgraph.Edge;
@@ -62,6 +63,13 @@ public class IntermediateRepresentationBodyBuilder {
 		
 		log.debug("Line " + line.toString() + " has the following invariant: " + inv.toString());
 		line.setInvariant(inv);	
+		
+		
+		Binding b = invariantProvider.getBinding(stmt);
+		
+		log.debug("Line " + line.toString() + " has the following invariant: " + inv.toString());
+		line.setBinding(b);	
+		
 		
 		return line;
 	}
