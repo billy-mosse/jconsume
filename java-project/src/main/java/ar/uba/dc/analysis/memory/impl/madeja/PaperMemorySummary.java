@@ -11,7 +11,7 @@ import ar.uba.dc.analysis.memory.expression.ParametricExpression;
 import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
 
 public class PaperMemorySummary {
-protected Set<String> parameters;
+	protected Set<String> parameters;
 	
 	protected ParametricExpression temporal;
 	

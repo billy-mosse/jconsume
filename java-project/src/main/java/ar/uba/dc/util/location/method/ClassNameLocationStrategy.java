@@ -19,7 +19,7 @@ public class ClassNameLocationStrategy extends AbstractMethodLocationStrategy {
 	
 	public String getLocation(String type, IntermediateRepresentationMethod ir_method, String mainClass)
 	{		
-		return getBasePath() + type + "/" + mainClass + /* "/" + method.getOrder() + "_"  + */ "/" + ir_method.processMethodSignature() + getExtension();
+		return getBasePath() + type + "/" + mainClass +  "/" + ir_method.getDeclaringClass() + "/" + ir_method.processMethodSignature() + getExtension();
 	}
 	
 	//TODO: sacar el processMethodSignature de las otras clases

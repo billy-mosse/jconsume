@@ -16,6 +16,7 @@ import ar.uba.dc.analysis.common.Invocation;
 import ar.uba.dc.analysis.common.Line;
 import ar.uba.dc.analysis.common.SummaryWriter;
 import ar.uba.dc.analysis.escape.summary.io.xstream.XStreamFactory;
+import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.util.location.MethodLocationStrategy;
 import decorations.Binding;
 import decorations.BindingPair;
@@ -58,6 +59,8 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 		builder.registerTypeAdapter(Invocation.class, new InvocationSerializer());
 		builder.registerTypeAdapter(DefaultIntermediateRepresentationParameter.class, new DefaultIntermediateRepresentationParameterSerializer());
 		builder.registerTypeAdapter(Binding.class, new BindingSerializer());
+		
+		builder.registerTypeAdapter(DomainSet.class, new DomainSetSerializer());
 		
 		this.gson = builder.create();
 	}
@@ -208,7 +211,8 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 		public JsonElement serialize(final Line line, final Type type, final JsonSerializationContext context) {
 			JsonObject result = new JsonObject();
 						
-			result.add("invariant", new JsonPrimitive(line.getInvariant().toHumanReadableString()));
+			//TODO: Hacer que las flechas se vean bien
+			result.add("invariant", context.serialize(line.getInvariant()));
 			
 			
 			result.add("binding", context.serialize(line.getBinding()));			
@@ -230,6 +234,28 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 			
 	        return result;
 	    }
+	}
+	
+	
+	public static class DomainSetSerializer implements JsonSerializer<DomainSet> 
+	{
+	    
+		public JsonElement serialize(final DomainSet invariant, final Type type, final JsonSerializationContext context) {
+			JsonObject result = new JsonObject();
+			result.add("expression", new JsonPrimitive(invariant.toHumanReadableString()));
+			
+			JsonArray arr = new JsonArray();			
+			for(String s : invariant.getVariables())
+			{
+				arr.add(new JsonPrimitive(s));
+			}
+			
+			result.add("variables", arr);
+			
+			
+			return result;
+		
+		}
 	}
 	
 	

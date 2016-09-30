@@ -13,6 +13,7 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -55,7 +56,7 @@ import decorations.BindingPair;
 
 
 public class JsonReader implements SummaryReader<IntermediateRepresentationMethod> {
-	private static Log log = LogFactory.getLog(JsonWriter.class);
+	private static Log log = LogFactory.getLog(JsonReader.class);
 
 protected Gson gson;
 	
@@ -69,6 +70,7 @@ protected Gson gson;
 		builder.registerTypeAdapter(Invocation.class, new InvocationDeserializer());
 		builder.registerTypeAdapter(IntermediateRepresentationMethodBody.class, new IntermediateRepresentationMethodBodyDeserializer());
 		builder.registerTypeAdapter(Binding.class, new BindingDeserializer());
+		builder.registerTypeAdapter(DomainSet.class, new DomainSetDeserializer());
 		
 		
 		
@@ -132,7 +134,22 @@ protected Gson gson;
 		    	parameters.add(p);
 		    }
 		    
+
 		    m.setParameters(parameters);
+		    
+		    
+		    Set<String> relevant_parameters = new TreeSet<String>();
+		    JsonArray jrelevant_parameters = jobject.get("relevant_parameters").getAsJsonArray();
+		    for(int i = 0; i < jrelevant_parameters.size(); i++)
+		    {
+		    	//No necesita un custom deserializer porque tiene tipos primitivos adentro
+		    	
+		    	relevant_parameters.add(jrelevant_parameters.get(i).getAsString());
+		    }
+		    m.setRelevant_parameters(relevant_parameters);
+		    
+		    
+		    
 		    
 		    m.setReturnType(jobject.get("return_type").getAsString());
 		    
@@ -183,7 +200,7 @@ protected Gson gson;
 			Set<Line> lines = new LinkedHashSet<Line>();
 			
 		    for(int i = 0; i < jlines.size(); i++)
-		    {
+		    {		    	
 		    	//No necesita un custom deserializer porque tiene tipos primitivos adentro
 		    	Line l = context.deserialize(jlines.get(i), Line.class);
 		    	lines.add(l);
@@ -210,8 +227,14 @@ protected Gson gson;
 			
 			
 			//TODO: agregar inductives y toda la bola
-			line.setInvariant(new DomainSet(jobject.get("invariant").getAsString()));
+			DomainSet invariant = context.deserialize(jobject.get("invariant"), DomainSet.class);
+			
+			line.setInvariant(invariant);
+			
 			line.setName(jobject.get("name").getAsString());
+			
+
+	    	log.debug("Deserializando " + line.getName());
 			
 			line.setLineNumber(jobject.get("line_number").getAsInt());
 			
@@ -236,7 +259,32 @@ protected Gson gson;
 		    return line;
 		}
 	}
-	
+	public static class DomainSetDeserializer implements JsonDeserializer<DomainSet> 
+	{
+	    
+		@Override
+		public DomainSet deserialize(JsonElement json, Type type,
+		        JsonDeserializationContext context) throws JsonParseException {
+			JsonObject jobject = (JsonObject) json;
+			DomainSet invariant = new DomainSet();
+			
+			Set<String> variables = new TreeSet<String>();
+			
+			JsonArray arr = jobject.get("variables").getAsJsonArray();
+			
+			for(int i = 0; i < arr.size(); i ++)
+			{
+				variables.add(arr.get(i).getAsString());
+			}
+			
+			
+			String barbinok_expression = jobject.get("expression").getAsString();
+			invariant = new DomainSet(barbinok_expression , variables, true);
+
+			return invariant;
+			
+		}
+	}
 	
 	
 	public static class BindingDeserializer implements JsonDeserializer<Binding> 

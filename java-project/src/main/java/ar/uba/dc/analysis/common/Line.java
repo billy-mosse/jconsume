@@ -82,9 +82,14 @@ public class Line {
 	
 	public boolean isNewStatement()
 	{
-		return this.name == "new";
+		return this.name.equals("new");
 	}
 
+	public String toString()
+	{
+		return this.name;
+	}
+	
 	private String getInvocationsToHumanReadableString() {
 
 		

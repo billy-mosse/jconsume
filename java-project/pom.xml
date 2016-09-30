@@ -36,6 +36,8 @@
           		</execution>
         	</executions>
       	</plugin>
+
+
       	
       	<plugin>
 	        <groupId>org.apache.maven.plugins</groupId>
@@ -239,7 +241,12 @@
       <version>19.0</version>
     </dependency>
 
-    
+    <dependency>
+      <groupId>org.antlr</groupId>
+      <artifactId>antlr4</artifactId>
+      <version>4.5.3</version>
+    </dependency>
+
   </dependencies>
 
   

@@ -127,11 +127,6 @@ public class IntraproceduralAnalysis {
 	public MemorySummary run(SootMethod method) {
 		log.debug(" |- Intraprocedural Analysis for: " + method.toString());
 		
-		if(method.toString()== "<ar.uba.dc.jolden.em3d.Node: ar.uba.dc.jolden.em3d.Node[] fillTable(int,int)>")
-		{
-			log.debug("Hola! Soy el metodo de Em3d cuyo invariante esta mal");
-		}
-		
 		MemorySummary summary = summaryFactory.initialSummary(method);
 		
 		/*

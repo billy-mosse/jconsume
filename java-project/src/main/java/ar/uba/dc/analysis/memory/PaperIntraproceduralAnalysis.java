@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.commons.lang.NotImplementedException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -11,7 +12,9 @@ import ar.uba.dc.analysis.common.Invocation;
 import ar.uba.dc.analysis.common.Line;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
 import ar.uba.dc.analysis.memory.expression.ParametricExpression;
+import ar.uba.dc.analysis.memory.expression.ParametricExpressionFactory;
 import ar.uba.dc.analysis.memory.impl.madeja.PaperMemorySummary;
+import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
 import ar.uba.dc.barvinok.expression.DomainSet;
 import heros.solver.Pair;
 
@@ -30,9 +33,36 @@ public class PaperIntraproceduralAnalysis {
 	private static Log log = LogFactory.getLog(PaperIntraproceduralAnalysis.class);
 
 	protected CountingTheory ct;
+	protected ParametricExpressionFactory expressionFactory;
 		
+	protected SymbolicCalculator sa;
+	
+	public SymbolicCalculator getSa() {
+		return sa;
+	}
+
+	public void setSa(SymbolicCalculator sa) {
+		this.sa = sa;
+	}
+
+	public ParametricExpressionFactory getExpressionFactory() {
+		return expressionFactory;
+	}
+
+	public void setExpressionFactory(ParametricExpressionFactory expressionFactory) {
+		this.expressionFactory = expressionFactory;
+	}
+
+	public CountingTheory getCt() {
+		return ct;
+	}
+
+	public void setCt(CountingTheory ct) {
+		this.ct = ct;
+	}
+
 	public PaperMemorySummary run(IntermediateRepresentationMethod ir_method) {
-		log.debug(" |- Intraprocedural Analysis for: " + ir_method.toString());
+		log.debug(" |- Intraprocedural Analysis for: " + ir_method.getName());
 		
 		PaperMemorySummary summary = summaryFactory.initialSummary(ir_method);
 		
@@ -40,7 +70,7 @@ public class PaperIntraproceduralAnalysis {
 		List<Line> news = new ArrayList<Line>();
 		List<Line> calls = new ArrayList<Line>();
 
-		
+		ParametricExpression memReq = expressionFactory.constant(0L);
 		
 		for(Line line: ir_method.getBody().getLines())
 		{
@@ -62,6 +92,44 @@ public class PaperIntraproceduralAnalysis {
 			/**
 			 * Hago el bound, pregunto si escapa, y si escapa voy acumulando
 			 */
+			
+			
+			
+			log.debug(" | |- Processing statement " + newLine.toHumanReadableString());
+			
+			ParametricExpression bound = ct.count(newLine);
+			
+			log.debug(bound.toString());
+			
+			//TODO: preocuparse por polimorfismo
+			
+			if(newLine.getInvocations().size() != 1) throw new NotImplementedException("Hola! Ver que pasa aca");
+			
+			Invocation inv = newLine.getInvocations().get(0);
+			PaperPointsToHeapPartition partition = inv.getHeapPartition();
+			
+			memReq = sa.add(memReq, bound);
+			
+			if (!partition.isTemporal()) {
+				log.debug(" | | |- Partition escapes");
+				
+				ParametricExpression oldValue = summary.getResidual(partition);
+				
+				//Bound es el invariante del new statement
+				ParametricExpression newValue = bound;
+				
+				//Y voy acumulando los bounds
+				if (oldValue != null) {
+					newValue = sa.add(bound, oldValue);
+				}
+				
+				log.debug(" | | |- Setting residual...");
+				summary.setResidual(partition, newValue);
+			} else {
+				log.debug(" | | |- Partition is temporal");
+				//tempLocal = sa.add(tempLocal, bound);
+			}
+			
 		}
 		
 		for(Line callInvocation : calls)
@@ -77,6 +145,7 @@ public class PaperIntraproceduralAnalysis {
 			 */
 		}
 		
+		log.info("Memory of " + ir_method.getName() + " is " + memReq.toString());
 		return summary;
 	}
 

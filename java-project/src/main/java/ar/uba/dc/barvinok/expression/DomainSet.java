@@ -4,6 +4,8 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
@@ -19,6 +21,8 @@ public class DomainSet {
 	private Set<String> inductives = new TreeSet<String>(); 
 	
 	private String constraints;
+	
+	
 	
 	//private String binding;
 	
@@ -57,10 +61,65 @@ public class DomainSet {
 	{
 		
 	}
-	
 	public DomainSet(String constraints) {
 		this.constraints = constraints;
 	}
+	
+	private static Log log = LogFactory.getLog(DomainSet.class);
+	
+	public DomainSet(String expr, Set<String> variables, boolean _)
+	{
+		this.variables = variables;
+		if(expr.equals("{}"))
+		{
+			this.constraints = "";
+			return;
+		}
+		
+		if(expr.length() < 2)
+		{
+			throw new Error("Expression should be between brackets. " + expr);
+		}
+		log.debug(expr);
+		String[] parts = expr.split("\\{|}");		
+		
+		if(parts[0].contains("->"))
+		{
+			String params = parts[0].substring(parts[0].indexOf("[") + 1, parts[0].indexOf("]"));
+		
+			String[] paramsArray = params.split(",");
+			for(String param : paramsArray)
+			{
+				this.parameters.add(param);
+				
+			}
+		}
+		
+		if(parts.length == 2)
+		{
+			this.constraints = parts[1].contains(":") ? parts[1].substring(parts[1].indexOf(":") + 1).trim() : "";
+			
+			String inductives = parts[1].substring(parts[1].indexOf("[") + 1, parts[1].indexOf("]"));
+			
+			String[] inductivesArray = inductives.split(",");
+			for(String inductive : inductivesArray)
+			{
+				this.inductives.add(inductive);
+				
+			}
+		}
+		else
+		{
+			this.constraints = "";
+		}
+		
+		//TODO: faltan las variables (ver si las necesito)
+
+		
+		
+	}
+	
+	
 	public DomainSet(String constraints, Set<String> inductives) {
 		this.constraints = constraints;
 		this.inductives = inductives;

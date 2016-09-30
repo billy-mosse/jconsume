@@ -15,6 +15,7 @@ import java.util.Set;
 import java.util.Stack;
 import java.util.concurrent.ThreadPoolExecutor.AbortPolicy;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -181,8 +182,14 @@ public class PaperInterproceduralAnalysis {
 		
 		for(IntermediateRepresentationMethod ir_method : ordered_methods)
 		{
+			try{
 			log.debug("Processing " + key(ir_method) + "...");
-			PaperMemorySummary summary = analysis.run(ir_method);			
+			PaperMemorySummary summary = analysis.run(ir_method);	
+			}
+			catch(Error error)
+			{
+				log.debug(ir_method.getName());
+			}
 		}
 		
 
@@ -208,8 +215,15 @@ public class PaperInterproceduralAnalysis {
 		
 		String loc = getLocationStrategy().getBasePath() + "json/" + mainClass + "/";
 		
-		File folder = new File(loc);
-		for (final File fileEntry : folder.listFiles()) {
+		
+		
+		
+		
+		List<File> files = new ArrayList<File>();
+		
+		listf(loc,files);
+		
+		for (final File fileEntry : files) {
 			log.debug("Retriving location for summary: [" + fileEntry.toString() + "]");			
 			
 			if (fileEntry.exists()) {
@@ -224,6 +238,21 @@ public class PaperInterproceduralAnalysis {
 			
 		}
 	}
+	
+	public void listf(String directoryPath, List<File> files) {
+
+		File directory = new File(directoryPath);
+	    // get all the files from a directory
+	    File[] fList = directory.listFiles();
+	    for (File file : fList) {
+	        if (file.isFile()) {
+	            files.add(file);
+	        } else if (file.isDirectory()) {
+	            listf(file.getAbsolutePath(), files);
+	        }
+	    }
+	}
+
 
 
 	public SummaryReader<IntermediateRepresentationMethod> getReader() {
