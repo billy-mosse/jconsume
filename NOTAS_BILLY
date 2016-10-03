@@ -65,3 +65,18 @@ El factory-config.xml de target classes es el que hay que cambiar. No ahy que re
 CAMBIÉ LA VERSIÓN DE SOOT DE 2.4.0 A 2.5.0 EN POM.XML E INSTALL.SH PARA VER SI ASÍ OBTENGO EL LINE NUMBER Y EL BYTECODE OFFSET.
 
 aa
+----------------
+
+
+
+
+
+backLocals del ptg tiene donde se guardan los nodos del calleee
+
+En m3 ejemploSimple04 [vector -> [I_3], sumArray -> [I_5]]
+
+
+
+
+
+

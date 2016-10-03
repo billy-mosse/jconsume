@@ -21,6 +21,18 @@ import heros.solver.Pair;
 public class PaperIntraproceduralAnalysis {
 
 	
+	public PaperIntraproceduralAnalysis(PaperInterproceduralAnalysis paperInterproceduralAnalysis,
+			PaperMemorySummaryFactory summaryFactory, CountingTheory ct,
+			ParametricExpressionFactory expressionFactory, SymbolicCalculator sa) {
+
+		this.interprocedural = paperInterproceduralAnalysis;
+		this.summaryFactory = summaryFactory;
+		this.ct = ct;
+		this.expressionFactory  = expressionFactory;
+		this.sa = sa;
+		
+	}
+
 	public PaperMemorySummaryFactory getSummaryFactory() {
 		return summaryFactory;
 	}
@@ -29,13 +41,17 @@ public class PaperIntraproceduralAnalysis {
 		this.summaryFactory = summaryFactory;
 	}
 
-	protected PaperMemorySummaryFactory summaryFactory;
+	
 	private static Log log = LogFactory.getLog(PaperIntraproceduralAnalysis.class);
-
+	
+	protected PaperMemorySummaryFactory summaryFactory;
 	protected CountingTheory ct;
-	protected ParametricExpressionFactory expressionFactory;
-		
+	protected ParametricExpressionFactory expressionFactory;		
 	protected SymbolicCalculator sa;
+	protected PaperInterproceduralAnalysis interprocedural;
+	
+	
+	
 	
 	public SymbolicCalculator getSa() {
 		return sa;
@@ -134,6 +150,18 @@ public class PaperIntraproceduralAnalysis {
 		
 		for(Line callInvocation : calls)
 		{
+			
+			ParametricExpression bound = ct.count(callInvocation);
+			//TODO: deberia haber una estructura que guarde los summaries para no procesar nada dos veces
+			
+			//TODO: si el summarie no existe o es un default, ver que hacer!!!
+			
+			PaperMemorySummary callSummary = interprocedural.analyseCall(callInvocation);
+			
+			
+			
+			
+			
 			/**
 			 * Tengo que procesar cada posible invocacion y tomar el max del ML y RSD, enchufarle la info de invariante e ir acumulando eso
 			 * 

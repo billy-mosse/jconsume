@@ -12,6 +12,16 @@ public class PaperPointsToHeapPartition implements HeapPartition {
 	protected String node;
 	
 	
+	public String getNode() {
+		return node;
+	}
+
+
+	public void setNode(String node) {
+		this.node = node;
+	}
+
+
 	public PaperPointsToHeapPartition(boolean temporal, String node)
 	{
 		this.temporal = temporal;

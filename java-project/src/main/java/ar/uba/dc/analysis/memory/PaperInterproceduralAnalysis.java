@@ -22,14 +22,18 @@ import org.apache.commons.logging.LogFactory;
 import ar.uba.dc.analysis.common.Invocation;
 import ar.uba.dc.analysis.common.Line;
 import ar.uba.dc.analysis.common.SummaryReader;
+import ar.uba.dc.analysis.common.code.CallStatement;
 //import ar.uba.dc.analysis.common.AbstractInterproceduralAnalysis.IntComparator;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
 import ar.uba.dc.analysis.common.intermediate_representation.io.reader.JsonReader;
 import ar.uba.dc.analysis.common.intermediate_representation.io.reader.XMLReader;
 import ar.uba.dc.analysis.escape.InterproceduralAnalysis;
+import ar.uba.dc.analysis.memory.expression.ParametricExpression;
+import ar.uba.dc.analysis.memory.expression.ParametricExpressionFactory;
 import ar.uba.dc.analysis.memory.impl.BarvinokParametricExpressionFactory;
 import ar.uba.dc.analysis.memory.impl.madeja.PaperMemorySummary;
 import ar.uba.dc.analysis.memory.impl.summary.EscapeBasedMemorySummary;
+import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
 import ar.uba.dc.analysis.memory.summary.MemorySummary;
 import ar.uba.dc.soot.SootMethodFilter;
 import ar.uba.dc.util.location.MethodLocationStrategy;
@@ -68,14 +72,54 @@ public class PaperInterproceduralAnalysis {
 	protected List<String> marked_permanently;
 	protected List<IntermediateRepresentationMethod> ordered_methods;
 	
-	protected PaperIntraproceduralAnalysis analysis;
+	//protected PaperIntraproceduralAnalysis analysis;
 	
+	
+	protected Map<String, PaperMemorySummary>  data;
+	
+	
+	protected PaperMemorySummaryFactory summaryFactory;
+	protected CountingTheory countingTheory;
+	protected ParametricExpressionFactory expressionFactory;
+	protected SymbolicCalculator symbolicCalculator;
 	
 
 	//protected Map<IntermediateRepresentationMethod, List<IntermediateRepresentationMethod> > preds;
 	//protected Map<IntermediateRepresentationMethod, List<IntermediateRepresentationMethod> > succs;
 	
 	
+	public PaperMemorySummaryFactory getSummaryFactory() {
+		return summaryFactory;
+	}
+
+	public void setSummaryFactory(PaperMemorySummaryFactory summaryFactory) {
+		this.summaryFactory = summaryFactory;
+	}
+
+	public CountingTheory getCountingTheory() {
+		return countingTheory;
+	}
+
+	public void setCountingTheory(CountingTheory countingTheory) {
+		this.countingTheory = countingTheory;
+	}
+
+	public ParametricExpressionFactory getExpressionFactory() {
+		return expressionFactory;
+	}
+
+	public void setExpressionFactory(ParametricExpressionFactory expressionFactory) {
+		this.expressionFactory = expressionFactory;
+	}
+
+	public SymbolicCalculator getSymbolicCalculator() {
+		return symbolicCalculator;
+	}
+
+	public void setSymbolicCalculator(SymbolicCalculator symbolicCalculator) {
+		this.symbolicCalculator = symbolicCalculator;
+	}
+
 	public Set<String> getSuccesors(IntermediateRepresentationMethod ir_method)
 	{
 		Set<String> succesors = new HashSet<String>();
@@ -180,11 +224,17 @@ public class PaperInterproceduralAnalysis {
 		getIrMethods();
 		orderIrMethods();
 		
+		this.data = new HashMap<String, PaperMemorySummary>();
+		
 		for(IntermediateRepresentationMethod ir_method : ordered_methods)
 		{
 			try{
-			log.debug("Processing " + key(ir_method) + "...");
-			PaperMemorySummary summary = analysis.run(ir_method);	
+				log.debug("Processing " + key(ir_method) + "...");				
+				
+				PaperIntraproceduralAnalysis analysis = new PaperIntraproceduralAnalysis(this, summaryFactory, countingTheory, expressionFactory, symbolicCalculator);
+				
+				PaperMemorySummary summary = analysis.run(ir_method);
+				data.put(key(ir_method), summary);				
 			}
 			catch(Error error)
 			{
@@ -198,6 +248,35 @@ public class PaperInterproceduralAnalysis {
 		
 		
 		//irMethods = irMethods;
+	}
+	
+	public PaperMemorySummary analyseCall(Line callInvocation)
+	{
+		
+		
+		ParametricExpression MAX_memreq = this.expressionFactory.constant(0L);
+		
+		for(Invocation invocation : callInvocation.getInvocations())
+		{
+			PaperMemorySummary invocationSummary = this.data.get(invocation.getCalled_implementation_signature()); //O algo asi
+			
+			MAX_memreq = symbolicCalculator.supreme(MAX_memreq, invocationSummary.getMemoryRequirement());
+			
+			
+			for(PaperPointsToHeapPartition hp: invocationSummary.getResidualPartitions())
+			{
+				
+			}
+			
+
+			
+			
+		}
+		
+		
+		
+		
+		return null;
 	}
 	
 	public void run(CallGraph cg, SootMethodFilter filter, String mainClass){
@@ -327,14 +406,6 @@ public class PaperInterproceduralAnalysis {
 	
 	protected Comparator<SootMethod> getOrderComparator() {
 		return new IntComparator();
-	}
-	
-	public PaperIntraproceduralAnalysis getAnalysis() {
-		return analysis;
-	}
-
-	public void setAnalysis(PaperIntraproceduralAnalysis analysis) {
-		this.analysis = analysis;
 	}
 
 	// queue class
