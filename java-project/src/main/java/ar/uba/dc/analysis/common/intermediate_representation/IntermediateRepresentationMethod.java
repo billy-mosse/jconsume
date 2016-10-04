@@ -8,6 +8,7 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hamcrest.core.IsInstanceOf;
 
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
@@ -18,6 +19,11 @@ import ar.uba.dc.analysis.common.code.BasicMethodBody;
 import ar.uba.dc.analysis.common.code.MethodBody;
 import ar.uba.dc.analysis.escape.EscapeSummary;
 import ar.uba.dc.analysis.escape.graph.Node;
+import ar.uba.dc.analysis.escape.graph.node.ContainerNode;
+import ar.uba.dc.analysis.escape.graph.node.GlobalNode;
+import ar.uba.dc.analysis.escape.graph.node.MethodNode;
+import ar.uba.dc.analysis.escape.graph.node.StmtNode;
+import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
 import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.soot.SootUtils;
 import soot.SootMethod;
@@ -42,7 +48,7 @@ public class IntermediateRepresentationMethod {
 
 	
 	//TODO: ESTO ESTA MAL, NO DEBERIA EXISTIR PORQUE CADA NEW YA TIENE ASOCIADO SU NODO.
-	protected Set<String> escapeNodes;
+	protected Set<PaperPointsToHeapPartition> escapeNodes;
 	
 	private String declaringClass;
 	
@@ -221,14 +227,38 @@ public class IntermediateRepresentationMethod {
 
 	public void setEscapeInfo(EscapeSummary escapeSummary) {
 		Set<Node> escaping = escapeSummary.getEscaping();	
-		this.escapeNodes = new LinkedHashSet<String>();
+		this.escapeNodes = new LinkedHashSet<PaperPointsToHeapPartition>();
 		for (Node n : escaping) {
-			this.escapeNodes.add(n.toJsonString());
+			
+			if(n.getClass() == StmtNode.class)
+			{
+				StmtNode stmtNode = (StmtNode) n;
+				this.escapeNodes.add(new PaperPointsToHeapPartition(false, n, stmtNode.belongsTo().getDeclaringClass() + "." + stmtNode.belongsTo().getName()));
+			} 
+			else if(n.getClass() == MethodNode.class) //Podria chequear si tienen el metodo belongsTo(), pero no tengo internet para fijarme como se hace
+			{
+				MethodNode stmtNode = (MethodNode) n;
+				this.escapeNodes.add(new PaperPointsToHeapPartition(false, n, stmtNode.belongsTo().getDeclaringClass() + "." + stmtNode.belongsTo().getName()));
+			} 
+			else if(n.getClass() == GlobalNode.class) //Podria chequear si tienen el metodo belongsTo(), pero no tengo internet para fijarme como se hace
+			{
+				GlobalNode stmtNode = (GlobalNode) n;
+				this.escapeNodes.add(new PaperPointsToHeapPartition(false, n, stmtNode.belongsTo().getDeclaringClass() + "." + stmtNode.belongsTo().getName()));
+			}
+			else if(n.getClass() == ContainerNode.class) //Podria chequear si tienen el metodo belongsTo(), pero no tengo internet para fijarme como se hace
+			{
+				ContainerNode stmtNode = (ContainerNode) n;
+				this.escapeNodes.add(new PaperPointsToHeapPartition(false, n, stmtNode.belongsTo().getDeclaringClass() + "." + stmtNode.belongsTo().getName()));
+			}
+			else
+			{
+				this.escapeNodes.add(new PaperPointsToHeapPartition(false, n, this.getDeclaringClass() + "." + this.getName()));
+			}
 		}
 		
 	}
 	
-	public Set<String> getEscapeNodes()
+	public Set<PaperPointsToHeapPartition> getEscapeNodes()
 	{
 		return this.escapeNodes;
 	}

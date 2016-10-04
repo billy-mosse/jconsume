@@ -162,12 +162,12 @@ protected Gson gson;
 		    
 		    JsonArray jEscapeNodes = jobject.get("escapeNodes").getAsJsonArray();
 			
-			Set<String> escapeNodes = new LinkedHashSet<String>();
+			Set<PaperPointsToHeapPartition> escapeNodes = new LinkedHashSet<PaperPointsToHeapPartition>();
 			
 			
 		    for(int i = 0; i < jEscapeNodes.size(); i++)
 		    {
-		    	String escapeNode = jEscapeNodes.get(i).getAsString();		    	
+		    	PaperPointsToHeapPartition escapeNode = context.deserialize(jEscapeNodes.get(i), PaperPointsToHeapPartition.class);		    	
 		    	escapeNodes.add(escapeNode);
 		    }
 		    

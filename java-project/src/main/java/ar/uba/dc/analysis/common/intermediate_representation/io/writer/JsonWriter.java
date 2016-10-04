@@ -16,6 +16,7 @@ import ar.uba.dc.analysis.common.Invocation;
 import ar.uba.dc.analysis.common.Line;
 import ar.uba.dc.analysis.common.SummaryWriter;
 import ar.uba.dc.analysis.escape.summary.io.xstream.XStreamFactory;
+import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
 import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.util.location.MethodLocationStrategy;
 import decorations.Binding;
@@ -135,9 +136,9 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 	        
 	        JsonArray escapeNodes = new JsonArray();
 	        
-	        for(String escapeNode : ir_method.getEscapeNodes())
+	        for(PaperPointsToHeapPartition escapeNode : ir_method.getEscapeNodes())
 	        {
-	        	escapeNodes.add(escapeNode);
+	        	escapeNodes.add(context.serialize(escapeNode));
 	        }
 	        
 	        result.add("escapeNodes", escapeNodes);

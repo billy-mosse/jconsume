@@ -2,14 +2,18 @@ package ar.uba.dc.analysis.memory.impl.summary;
 
 import org.apache.commons.lang.NotImplementedException;
 
+import ar.uba.dc.analysis.escape.graph.Node;
 import ar.uba.dc.analysis.memory.HeapPartition;
 import ar.uba.dc.analysis.memory.HeapPartitionVisitor;
+import soot.SootMethod;
 
 public class PaperPointsToHeapPartition implements HeapPartition {
 
 	
-	protected boolean temporal;
+	protected boolean temporal; //creo que lo voy a tirar
 	protected String node;
+	protected boolean isInside;
+	protected String belongsTo;
 	
 	
 	public String getNode() {
@@ -26,8 +30,16 @@ public class PaperPointsToHeapPartition implements HeapPartition {
 	{
 		this.temporal = temporal;
 		this.node = node;
-	}
+	}	
 	
+	
+	public PaperPointsToHeapPartition(boolean temporal, Node node, String belongsTo)
+	{
+		this.temporal = temporal;
+		this.node = node.toJsonString();
+		this.belongsTo = belongsTo;
+		this.isInside = node.isInside();
+	}	
 	
 	public PaperPointsToHeapPartition(HeapPartition heapPartition)
 	{
@@ -35,7 +47,13 @@ public class PaperPointsToHeapPartition implements HeapPartition {
 		
 		if(heapPartition.getClass() == PointsToHeapPartition.class)
 		{
-			this.node = ((PointsToHeapPartition) heapPartition).toJsonString();
+			PointsToHeapPartition hp = ((PointsToHeapPartition) heapPartition);
+			this.node = hp.toJsonString();
+			
+			SootMethod m = hp.getNode().belongsTo();
+			this.belongsTo = m.getDeclaringClass().toString() + "." +  m.getName();
+			this.isInside = hp.getNode().isInside();
+			
 		}
 		else
 		{
