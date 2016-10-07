@@ -1,4 +1,5 @@
 velocity.log
 results/
 cmd_tmp
-.settings
+.setting
+target/test-classes
