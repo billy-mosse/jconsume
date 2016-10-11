@@ -49,8 +49,7 @@ import ar.uba.dc.analysis.common.Invocation;
 import ar.uba.dc.analysis.common.code.CallStatement;
 import ar.uba.dc.analysis.common.code.NewStatement;
 import ar.uba.dc.analysis.common.code.Statement;
-import ar.uba.dc.analysis.common.intermediate_representation.DefaultIntermediateRepresentationParameter;
-import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationParameterWithType;
+import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationParameter;
 import ar.uba.dc.analysis.memory.HeapPartition;
 import ar.uba.dc.analysis.memory.LifeTimeOracle;
 import ar.uba.dc.analysis.memory.impl.summary.EscapeBasedLifeTimeOracle;
@@ -309,14 +308,11 @@ public class SootUtils {
 		 soot.PackManager.v().getPack(pack).get(phaseName).setDefaultOptions("on "+options);
 	 }
 
-	 
-	 
-	 //Hacer una interfaz para irP, irPWithType
-	 //Mejor hacer una sola clase y fue.
-	@SuppressWarnings("unchecked")
-	public static Set<IntermediateRepresentationParameter> getParameters(SootMethod target, Class classname ) {
 
-		List parameterTypes = new ArrayList(target.getParameterTypes());	
+	@SuppressWarnings("unchecked")
+	public static Set<IntermediateRepresentationParameter> getParameters(SootMethod target, boolean withType) {
+
+		List<Type> parameterTypes = new ArrayList(target.getParameterTypes());	
 		
 		Set<IntermediateRepresentationParameter> parameters = new LinkedHashSet<IntermediateRepresentationParameter>();
 		
@@ -344,14 +340,19 @@ public class SootUtils {
 					String parameter = line.split(" := ")[0].trim();
 					//TODO: tal vez podria ir sacando los que ya proceso y usar un map parameterType -> numero
 					String parameterType = parameterTypes.get(i).toString();	
-					try
+					boolean isRefLikeType = parameterTypes.get(i) instanceof RefLikeType ;					
+					
+					IntermediateRepresentationParameter p;
+					if(withType)
 					{
-						parameters.add((IntermediateRepresentationParameter)(classname.getDeclaredConstructor(String.class, String.class).newInstance(parameter, parameterType)));
+						p = new IntermediateRepresentationParameter(parameter, parameterType, isRefLikeType);
 					}
-					catch(Exception e)
+					else
 					{
-						log.debug("La clase " + classname.getName() + " no fue encontrada");
+						p = new IntermediateRepresentationParameter(parameter, isRefLikeType);
 					}
+					parameters.add(p);
+					
 				}
 			}
 		}

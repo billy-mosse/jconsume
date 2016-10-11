@@ -39,7 +39,7 @@ public class IntermediateLanguageRepresentationBuilder {
 	private static Log log = LogFactory.getLog(IntermediateLanguageRepresentationBuilder.class);
 
 	protected RAMSummaryRepository data;
-	protected SummaryRepository<EscapeSummary> repository;	
+	protected SummaryRepository<EscapeSummary, SootMethod> repository;	
 	protected String outputFolder;
 	protected MethodInformationProvider methodInformationProvider;
 	protected Map<SootMethod, Integer> order; 
@@ -56,7 +56,7 @@ public class IntermediateLanguageRepresentationBuilder {
 	
 	
 	
-	public IntermediateLanguageRepresentationBuilder(RAMSummaryRepository data, Map<SootMethod, Integer> order, SummaryRepository<EscapeSummary> repository, 
+	public IntermediateLanguageRepresentationBuilder(RAMSummaryRepository data, Map<SootMethod, Integer> order, SummaryRepository<EscapeSummary, SootMethod> repository, 
 			MethodInformationProvider methodInformationProvider, MethodDecorator methodDecorator, InvariantProvider invariantProvider, 
 			String outputFolder, CallGraph callGraph, String mainClass, LifeTimeOracle lifetimeOracle)
 	{

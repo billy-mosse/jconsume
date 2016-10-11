@@ -2,7 +2,7 @@ package ar.uba.dc.analysis.common.code;
 
 import java.util.Set;
 
-import ar.uba.dc.analysis.common.intermediate_representation.DefaultIntermediateRepresentationParameter;
+import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationParameter;
 import soot.SootMethod;
 import soot.jimple.Stmt;
 
@@ -29,5 +29,5 @@ public interface Statement {
 
 	public String getIntermediateRepresentationName();
 
-	public Set<DefaultIntermediateRepresentationParameter> getIntermediateRepresentationParameters();
+	public Set<IntermediateRepresentationParameter> getIntermediateRepresentationParameters();
 }

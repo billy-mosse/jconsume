@@ -21,11 +21,10 @@ import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.util.location.MethodLocationStrategy;
 import decorations.Binding;
 import decorations.BindingPair;
-import ar.uba.dc.analysis.common.intermediate_representation.DefaultIntermediateRepresentationParameter;
+import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationParameter;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethodBody;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationParameter;
-import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationParameterWithType;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -58,7 +57,7 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 		builder.registerTypeAdapter(Line.class, new LineSerializer());
 		
 		builder.registerTypeAdapter(Invocation.class, new InvocationSerializer());
-		builder.registerTypeAdapter(DefaultIntermediateRepresentationParameter.class, new DefaultIntermediateRepresentationParameterSerializer());
+		//builder.registerTypeAdapter(IntermediateRepresentationParameter.class, new DefaultIntermediateRepresentationParameterSerializer());
 		builder.registerTypeAdapter(Binding.class, new BindingSerializer());
 		
 		builder.registerTypeAdapter(DomainSet.class, new DomainSetSerializer());
@@ -128,7 +127,7 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 	        JsonArray parameters = new JsonArray();
 	        
 	        
-	        for(IntermediateRepresentationParameterWithType p : ir_method.getParameters())
+	        for(IntermediateRepresentationParameter p : ir_method.getParameters())
 	        {	        
 	        	parameters.add(context.serialize(p));
 	        }
@@ -162,6 +161,8 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 	        
 	        
 	        result.add("relevant_parameters", relevant_parameters);
+	        
+	        result.add("isReturnRefLikeType", new JsonPrimitive(ir_method.isReturnRefLikeType()));
 	        
 	        
 	        
@@ -305,7 +306,7 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 			
 			JsonArray arr = new JsonArray();
 			
-			for(DefaultIntermediateRepresentationParameter p : invocation.getParameters())
+			for(IntermediateRepresentationParameter p : invocation.getParameters())
 			{
 				arr.add(context.serialize(p));
 			}
@@ -318,15 +319,15 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 	}
 	
 	
-	public static class DefaultIntermediateRepresentationParameterSerializer implements JsonSerializer<DefaultIntermediateRepresentationParameter> 
+	/*public static class IntermediateRepresentationParameterSerializer implements JsonSerializer<IntermediateRepresentationParameter> 
 	{
 	    
-		public JsonElement serialize(final DefaultIntermediateRepresentationParameter parameter, final Type type, final JsonSerializationContext context) {
+		public JsonElement serialize(final IntermediateRepresentationParameter parameter, final Type type, final JsonSerializationContext context) {
 			JsonObject result = new JsonObject();
-			result.add("name", new JsonPrimitive(parameter.getName()));		
+			result.add("name", new JsonPrimitive(parameter.getName()));
 			
 	        return result;
 	    }
-	}
+	}*/
 	
 }

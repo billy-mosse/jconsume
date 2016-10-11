@@ -33,13 +33,12 @@ import com.google.gson.JsonSerializer;
 import ar.uba.dc.analysis.common.Invocation;
 import ar.uba.dc.analysis.common.Line;
 import ar.uba.dc.analysis.common.SummaryReader;
-import ar.uba.dc.analysis.common.intermediate_representation.DefaultIntermediateRepresentationParameter;
+import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationParameter;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethodBody;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationParameter;
-import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationParameterWithType;
 import ar.uba.dc.analysis.common.intermediate_representation.io.writer.JsonWriter;
-import ar.uba.dc.analysis.common.intermediate_representation.io.writer.JsonWriter.DefaultIntermediateRepresentationParameterSerializer;
+//import ar.uba.dc.analysis.common.intermediate_representation.io.writer.JsonWriter.DefaultIntermediateRepresentationParameterSerializer;
 import ar.uba.dc.analysis.common.intermediate_representation.io.writer.JsonWriter.IntermediateRepresentationMethodBodySerializer;
 import ar.uba.dc.analysis.common.intermediate_representation.io.writer.JsonWriter.IntermediateRepresentationMethodSerializer;
 //import ar.uba.dc.analysis.common.intermediate_representation.io.writer.JsonWriter.IntermediateRepresentationParameterWithTypeSerializer;
@@ -123,14 +122,14 @@ protected Gson gson;
 		    
 		    m.setDeclaringClass(jobject.get("declaring_class").getAsString());
 		    
-		    Set<IntermediateRepresentationParameterWithType> parameters  = new LinkedHashSet<IntermediateRepresentationParameterWithType>();
+		    Set<IntermediateRepresentationParameter> parameters  = new LinkedHashSet<IntermediateRepresentationParameter>();
 		    
 		    
 		    JsonArray jparameters = jobject.get("parameters").getAsJsonArray();
 		    for(int i = 0; i < jparameters.size(); i++)
 		    {
 		    	//No necesita un custom deserializer porque tiene tipos primitivos adentro
-		    	IntermediateRepresentationParameterWithType p = context.deserialize(jparameters.get(i), IntermediateRepresentationParameterWithType.class);
+		    	IntermediateRepresentationParameter p = context.deserialize(jparameters.get(i), IntermediateRepresentationParameter.class);
 		    	parameters.add(p);
 		    }
 		    
@@ -148,10 +147,9 @@ protected Gson gson;
 		    }
 		    m.setRelevant_parameters(relevant_parameters);
 		    
-		    
-		    
-		    
 		    m.setReturnType(jobject.get("return_type").getAsString());
+		    
+		    m.setIsReturnRefLikeType(jobject.get("isReturnRefLikeType").getAsBoolean());
 		    
 		    
 		    IntermediateRepresentationMethodBody body = context.deserialize(jobject.get("body"), IntermediateRepresentationMethodBody.class);
@@ -338,13 +336,13 @@ protected Gson gson;
 			
 			JsonArray jparameters = jobject.get("parameters").getAsJsonArray();
 			
-			Set<DefaultIntermediateRepresentationParameter> parameters = new LinkedHashSet<DefaultIntermediateRepresentationParameter>();
+			Set<IntermediateRepresentationParameter> parameters = new LinkedHashSet<IntermediateRepresentationParameter>();
 			
 			
 		    for(int i = 0; i < jparameters.size(); i++)
 		    {
 		    	//No necesita un custom deserializer porque tiene tipos primitivos adentro
-		    	DefaultIntermediateRepresentationParameter p = context.deserialize(jparameters.get(i), DefaultIntermediateRepresentationParameter.class);
+		    	IntermediateRepresentationParameter p = context.deserialize(jparameters.get(i), IntermediateRepresentationParameter.class);
 		    	parameters.add(p);
 		    }
 		    

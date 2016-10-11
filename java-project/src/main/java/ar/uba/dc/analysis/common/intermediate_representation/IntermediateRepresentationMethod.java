@@ -26,6 +26,7 @@ import ar.uba.dc.analysis.escape.graph.node.StmtNode;
 import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
 import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.soot.SootUtils;
+import soot.RefLikeType;
 import soot.SootMethod;
 
 public class IntermediateRepresentationMethod {
@@ -34,7 +35,7 @@ public class IntermediateRepresentationMethod {
 	
 	//protected String integer_name;
 	
-	protected Set<IntermediateRepresentationParameterWithType> parameters;
+	protected Set<IntermediateRepresentationParameter> parameters;
 	
 	protected IntermediateRepresentationMethodBody body;
 	
@@ -45,7 +46,20 @@ public class IntermediateRepresentationMethod {
 	protected Set<String> relevant_parameters;
 
 	protected DomainSet methodRequirements;
-
+	
+	protected boolean isReturnRefLikeType;
+	
+	public boolean isReturnRefLikeType()
+	{
+		return this.isReturnRefLikeType;
+	}
+	
+	
+	public void setIsReturnRefLikeType(boolean isReturnRefLikeType)
+	{
+		this.isReturnRefLikeType = isReturnRefLikeType;
+	}
+	
 	
 	//TODO: ESTO ESTA MAL, NO DEBERIA EXISTIR PORQUE CADA NEW YA TIENE ASOCIADO SU NODO.
 	protected Set<PaperPointsToHeapPartition> escapeNodes;
@@ -72,12 +86,11 @@ public class IntermediateRepresentationMethod {
 	
 	private void setParametersFromSootMethod(SootMethod target)
 	{	
-		//TODO: esto esta horrible
-		this.parameters = new LinkedHashSet<IntermediateRepresentationParameterWithType>();
-		Set<IntermediateRepresentationParameter> s = SootUtils.getParameters(target, IntermediateRepresentationParameterWithType.class);
+		this.parameters = new LinkedHashSet<IntermediateRepresentationParameter>();
+		Set<IntermediateRepresentationParameter> s = SootUtils.getParameters(target, true);
 		for(IntermediateRepresentationParameter p : s)
 		{			
-			this.parameters.add((IntermediateRepresentationParameterWithType)p);
+			this.parameters.add(p);
 		}
 		
 		
@@ -107,6 +120,9 @@ public class IntermediateRepresentationMethod {
 		this.returnType = m.getReturnType().toString();
 		this.declaringClass = m.getDeclaringClass().toString();
 		
+		this.isReturnRefLikeType = m.getReturnType() instanceof RefLikeType;
+		
+		
 	}
 	
 	
@@ -134,12 +150,12 @@ public class IntermediateRepresentationMethod {
 	public void setBody(IntermediateRepresentationMethodBody body) {
 		this.body = body;
 	}
-	public Set<IntermediateRepresentationParameterWithType> getParameters() {
+	public Set<IntermediateRepresentationParameter> getParameters() {
 		return parameters;
 	}
 	
 	//TODO: creeria que esto esta mal porque mueren al final. Probemos.
-	public void setParameters(Set<IntermediateRepresentationParameterWithType> parameters) {
+	public void setParameters(Set<IntermediateRepresentationParameter> parameters) {
 		this.parameters = parameters;
 	}
 
@@ -214,9 +230,9 @@ public class IntermediateRepresentationMethod {
 
 
 	public String processMethodSignature() {		
-		String s = (this.getParameters() != null ? Joiner.on(", ").skipNulls().join(Iterables.transform(this.getParameters(), new Function<IntermediateRepresentationParameterWithType, String >()
+		String s = (this.getParameters() != null ? Joiner.on(", ").skipNulls().join(Iterables.transform(this.getParameters(), new Function<IntermediateRepresentationParameter, String >()
 		{
-			public String apply(IntermediateRepresentationParameterWithType parameter) { return parameter.getType() + " " + parameter.getName(); }
+			public String apply(IntermediateRepresentationParameter parameter) { return parameter.getType() + " " + parameter.getName(); }
 		}
 		
 		)) : "");

@@ -8,9 +8,8 @@ import org.apache.commons.logging.LogFactory;
 
 import ar.uba.dc.analysis.common.code.CallStatement;
 import ar.uba.dc.analysis.common.code.StatementVisitor;
-import ar.uba.dc.analysis.common.intermediate_representation.DefaultIntermediateRepresentationParameter;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationParameter;
-import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationParameterWithType;
+import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationParameter;
 import ar.uba.dc.analysis.escape.IntermediateLanguageRepresentationBuilder;
 import ar.uba.dc.soot.SootUtils;
 import soot.Local;
@@ -61,16 +60,16 @@ public class DefaultCallStatement extends AbstractStatement implements CallState
 	}
 
 	@Override
-	public Set<DefaultIntermediateRepresentationParameter> getIntermediateRepresentationParameters() {
+	public Set<IntermediateRepresentationParameter> getIntermediateRepresentationParameters() {
 		SootMethod m = this.getCalledImplementation();
 		
 		//log.debug(m.getActiveBody().toString());
 		
-		Set<DefaultIntermediateRepresentationParameter> parameterList = new LinkedHashSet<DefaultIntermediateRepresentationParameter>();
-		Set<IntermediateRepresentationParameter> s = SootUtils.getParameters(m, DefaultIntermediateRepresentationParameter.class);
+		Set<IntermediateRepresentationParameter> parameterList = new LinkedHashSet<IntermediateRepresentationParameter>();
+		Set<IntermediateRepresentationParameter> s = SootUtils.getParameters(m, true);
 		for(IntermediateRepresentationParameter p : s)
 		{
-			parameterList.add((DefaultIntermediateRepresentationParameter)p);
+			parameterList.add((IntermediateRepresentationParameter)p);
 		}
 		
 		return parameterList;

@@ -6,7 +6,7 @@ import java.util.Set;
 import ar.uba.dc.analysis.common.code.CallStatement;
 import ar.uba.dc.analysis.common.code.NewStatement;
 import ar.uba.dc.analysis.common.code.Statement;
-import ar.uba.dc.analysis.common.intermediate_representation.DefaultIntermediateRepresentationParameter;
+import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationParameter;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationParameter;
 import ar.uba.dc.analysis.memory.HeapPartition;
 import ar.uba.dc.analysis.memory.impl.summary.EscapeBasedLifeTimeOracle;
@@ -37,11 +37,11 @@ public class Invocation {
 		this.called_implementation_signature = m.getSignature();
 		
 
-		this.setParameters(new LinkedHashSet<DefaultIntermediateRepresentationParameter>());
-		Set<IntermediateRepresentationParameter> s = SootUtils.getParameters(m, DefaultIntermediateRepresentationParameter.class);
+		this.setParameters(new LinkedHashSet<IntermediateRepresentationParameter>());
+		Set<IntermediateRepresentationParameter> s = SootUtils.getParameters(m, false);
 		for(IntermediateRepresentationParameter p : s)
 		{
-			this.getParameters().add((DefaultIntermediateRepresentationParameter)p);
+			this.parameters.add((IntermediateRepresentationParameter)p);
 		}		
 		
 	}
@@ -63,11 +63,11 @@ public class Invocation {
 		this.heapPartition = escapePartition;
 	}
 
-	public Set<DefaultIntermediateRepresentationParameter> getParameters() {
+	public Set<IntermediateRepresentationParameter> getParameters() {
 		return parameters;
 	}
 
-	protected Set<DefaultIntermediateRepresentationParameter> parameters;
+	protected Set<IntermediateRepresentationParameter> parameters;
 	protected String class_called;
 	
 	protected String called_implementation_signature;
@@ -76,9 +76,9 @@ public class Invocation {
 	
 	public String toHumanReadableString() {
 		
-		String s = (this.getParameters() != null ? Joiner.on(", ").skipNulls().join(Iterables.transform(this.getParameters(), new Function<DefaultIntermediateRepresentationParameter, String >()
+		String s = (this.getParameters() != null ? Joiner.on(", ").skipNulls().join(Iterables.transform(this.getParameters(), new Function<IntermediateRepresentationParameter, String >()
 				{
-					public String apply(DefaultIntermediateRepresentationParameter parameter) { return parameter.getName(); }
+					public String apply(IntermediateRepresentationParameter parameter) { return parameter.getName(); }
 				}
 				
 				
@@ -100,7 +100,7 @@ public class Invocation {
 		this.class_called = class_called;
 	}
 
-	public void setParameters(Set<DefaultIntermediateRepresentationParameter> parameters) {
+	public void setParameters(Set<IntermediateRepresentationParameter> parameters) {
 		this.parameters = parameters;
 	}
 
