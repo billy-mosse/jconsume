@@ -43,7 +43,7 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis {
 
 	protected Set<SootMethod> excludedMethods = new HashSet<SootMethod>();
 	
-	protected SummaryRepository<MemorySummary> repository;
+	protected SummaryRepository<MemorySummary, SootMethod>repository;
 	
 	protected ParametricExpressionFactory expressionFactory;
 	
@@ -224,7 +224,7 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis {
 		return summaries;
 	}
 
-	public void setRepository(SummaryRepository<MemorySummary> repository) {
+	public void setRepository(SummaryRepository<MemorySummary, SootMethod>repository) {
 		this.repository = repository;
 	}
 
@@ -256,7 +256,7 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis {
 		this.symbolicCalculator = symbolicCalculator;
 	}
 	
-	public SummaryRepository<MemorySummary> getRepository() {
+	public SummaryRepository<MemorySummary, SootMethod>getRepository() {
 		return repository;
 	}
 

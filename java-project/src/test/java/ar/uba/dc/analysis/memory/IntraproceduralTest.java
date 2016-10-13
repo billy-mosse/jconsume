@@ -117,7 +117,7 @@ public class IntraproceduralTest {
 					ctx = ContextFactory.getContext("test.properties");
 					CallGraph cg = SootUtils.getCallGraph(method.getDeclaringClass().getName(), method.getSubSignature(), ctx);
 					
-					SummaryRepository<MemorySummary> repository = ctx.getFactory().getMemoryRepository();
+					SummaryRepository<MemorySummary, SootMethod>repository = ctx.getFactory().getMemoryRepository();
 					InterproceduralAnalysis inter = ctx.getFactory().getMemoryAnalysis();
 					inter.setCallGraph(cg);
 					inter.init();

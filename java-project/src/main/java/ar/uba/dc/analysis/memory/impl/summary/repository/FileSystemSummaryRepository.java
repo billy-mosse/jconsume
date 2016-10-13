@@ -4,16 +4,18 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
+import org.apache.commons.lang.NotImplementedException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import soot.SootMethod;
 import ar.uba.dc.analysis.common.SummaryReader;
 import ar.uba.dc.analysis.common.SummaryRepository;
+import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
 import ar.uba.dc.analysis.memory.impl.summary.EscapeBasedMemorySummary;
 import ar.uba.dc.util.location.MethodLocationStrategy;
 
-public class FileSystemSummaryRepository implements SummaryRepository<EscapeBasedMemorySummary> {
+public class FileSystemSummaryRepository implements SummaryRepository<EscapeBasedMemorySummary, SootMethod> {
 
 	private static Log log = LogFactory.getLog(FileSystemSummaryRepository.class);
 	

@@ -1,5 +1,6 @@
 package ar.uba.dc.analysis.escape.summary.repository;
 
+import org.apache.commons.lang.NotImplementedException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -7,13 +8,14 @@ import soot.SootMethod;
 import ar.uba.dc.analysis.common.MethodInformationProvider;
 import ar.uba.dc.analysis.common.SummaryFactory;
 import ar.uba.dc.analysis.common.SummaryRepository;
+import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
 import ar.uba.dc.analysis.escape.EscapeSummary;
 
-public class DefaultSummaryRepository implements SummaryRepository<EscapeSummary> {
+public class DefaultSummaryRepository implements SummaryRepository<EscapeSummary, SootMethod> {
 
 	private static Log log = LogFactory.getLog(DefaultSummaryRepository.class);
 	
-	protected SummaryFactory<EscapeSummary> summaryFactory;
+	protected SummaryFactory<EscapeSummary, SootMethod> summaryFactory;
 	protected MethodInformationProvider methodInformationProvider;
 	
 	public EscapeSummary get(SootMethod method) {
@@ -44,7 +46,7 @@ public class DefaultSummaryRepository implements SummaryRepository<EscapeSummary
 		return !methodInformationProvider.isAnalyzable(m);
 	}
 
-	public void setSummaryFactory(SummaryFactory<EscapeSummary> summaryFactory) {
+	public void setSummaryFactory(SummaryFactory<EscapeSummary, SootMethod> summaryFactory) {
 		this.summaryFactory = summaryFactory;
 	}
 

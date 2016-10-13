@@ -88,7 +88,7 @@ public class IntraproceduralTest {
 				ctx = ContextFactory.getContext("test.properties");
 				CallGraph cg = SootUtils.getCallGraph(method.getDeclaringClass().getName(), method.getSubSignature(), ctx);
 				
-				SummaryRepository<EscapeSummary> repository = ctx.getFactory().getEscapeRepository();
+				SummaryRepository<EscapeSummary, SootMethod> repository = ctx.getFactory().getEscapeRepository();
 				InterproceduralAnalysis inter = ctx.getFactory().getEscapeAnalysis();
 				inter.setSensitivity(sensitivity);
 				inter.setRemoveLocals(false);

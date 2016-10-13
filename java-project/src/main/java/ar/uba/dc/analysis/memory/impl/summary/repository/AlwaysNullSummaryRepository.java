@@ -1,7 +1,11 @@
 package ar.uba.dc.analysis.memory.impl.summary.repository;
 
 import soot.SootMethod;
+
+import org.apache.commons.lang.NotImplementedException;
+
 import ar.uba.dc.analysis.common.SummaryRepository;
+import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
 import ar.uba.dc.analysis.memory.summary.MemorySummary;
 
 /**
@@ -9,7 +13,7 @@ import ar.uba.dc.analysis.memory.summary.MemorySummary;
  * 
  * @author testis
  */
-public class AlwaysNullSummaryRepository implements SummaryRepository<MemorySummary> {
+public class AlwaysNullSummaryRepository implements SummaryRepository<MemorySummary, SootMethod>{
 
 	public MemorySummary get(SootMethod method) {
 		return null;

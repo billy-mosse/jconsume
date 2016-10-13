@@ -14,6 +14,7 @@ public class AnalizableSrcEdgePredicate implements EdgePredicate {
 	protected MethodInformationProvider provider;
 	
 	public boolean want(Edge e) {
+		
 		boolean srcAnalyzable = provider.isAnalyzable(e.getSrc().method());
 		boolean tgtExcluded = provider.isExcluded(e.getTgt().method());
 		boolean srcExcluded = provider.isExcluded(e.getSrc().method());

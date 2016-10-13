@@ -74,7 +74,7 @@ public class Instrumenter  extends BodyTransformer {
 	public static final String LISTENER_CLASS = "ar.uba.dc.tools.instrumentation.resource.tracker.ResourceTrackerListener";
 	
 	private String mainClass;
-	private SummaryRepository<EscapeSummary> repository;
+	private SummaryRepository<EscapeSummary, SootMethod> repository;
 	private Integer escapeSensitivity;
 	private Map<Node, Integer> hpAlias = new HashMap<Node, Integer>();
 	private Integer hpCounter = 0;
@@ -87,7 +87,7 @@ public class Instrumenter  extends BodyTransformer {
 	//private static final String JLAYER_HUFFMANCODETAB_STATIC_CONSTRUCTOR = "<javazoom.jl.decoder.huffcodetab: void <clinit>()>";
 	//private Integer lastArrayFound = null;
 	
-	private Instrumenter(String mainClass, SummaryRepository<EscapeSummary> repository, Integer escapeSensitivity, RuleBasedMethodInformationProvider informationProvider, InvariantProvider invariantProvider) {
+	private Instrumenter(String mainClass, SummaryRepository<EscapeSummary, SootMethod> repository, Integer escapeSensitivity, RuleBasedMethodInformationProvider informationProvider, InvariantProvider invariantProvider) {
 		this.mainClass = mainClass;
 		this.repository = repository;
 		this.escapeSensitivity = escapeSensitivity;
@@ -95,7 +95,7 @@ public class Instrumenter  extends BodyTransformer {
 		this.invariantProvider = invariantProvider;
 	}
 	
-	public static Instrumenter v(String mainClass, SummaryRepository<EscapeSummary> repository, Integer escapeSensitivity, RuleBasedMethodInformationProvider informationProvider, InvariantProvider invariantProvider) {
+	public static Instrumenter v(String mainClass, SummaryRepository<EscapeSummary, SootMethod> repository, Integer escapeSensitivity, RuleBasedMethodInformationProvider informationProvider, InvariantProvider invariantProvider) {
 		return new Instrumenter(mainClass, repository, escapeSensitivity, informationProvider, invariantProvider);
 	}
 	

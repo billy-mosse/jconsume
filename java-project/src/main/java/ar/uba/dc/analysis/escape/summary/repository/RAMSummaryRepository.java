@@ -4,11 +4,14 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang.NotImplementedException;
+
 import soot.SootMethod;
 import ar.uba.dc.analysis.common.SummaryRepository;
+import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
 import ar.uba.dc.analysis.escape.EscapeSummary;
 
-public class RAMSummaryRepository implements SummaryRepository<EscapeSummary> {
+public class RAMSummaryRepository implements SummaryRepository<EscapeSummary, SootMethod> {
 
 	private Map<SootMethod, EscapeSummary> data;
 	

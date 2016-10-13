@@ -2,6 +2,7 @@ package ar.uba.dc.analysis.common.method.information;
 
 import soot.SootMethod;
 import ar.uba.dc.analysis.common.MethodInformationProvider;
+import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
 import ar.uba.dc.analysis.common.method.information.rules.Rule;
 import ar.uba.dc.analysis.common.method.information.rules.RuleSet;
 import ar.uba.dc.analysis.common.method.information.rules.RuleSetRepository;
@@ -48,6 +49,11 @@ public class RuleBasedMethodInformationProvider implements MethodInformationProv
 		return rules.find(method);
 	}
 	
+	public Rule findRule(IntermediateRepresentationMethod ir_method) {
+		SootMethod method = new SootMethod(ir_method.getName(), null, null);
+		return rules.find(method);
+	}
+	
 	public Boolean isExcluded(SootMethod method) {
 		if (rules == null) {
 			init();
@@ -74,5 +80,42 @@ public class RuleBasedMethodInformationProvider implements MethodInformationProv
 
 	public void setRepository(RuleSetRepository repository) {
 		this.repository = repository;
+	}
+
+	
+	//TODO: hacerlo bien
+	//en algun momento voy a volar lo que tenga que ver con SootMethods
+	//pero por ahora no quiero que las cosas se rompan
+	
+	
+	@Override
+	public Boolean isAnalyzable(IntermediateRepresentationMethod ir_method) {
+		SootMethod m = new SootMethod(ir_method.getName(), null, null);
+		
+		return isAnalyzable(m);
+	}
+
+	@Override
+	public Boolean hasFreshGraph(IntermediateRepresentationMethod ir_method) {
+		SootMethod m = new SootMethod(ir_method.getName(), null, null);
+		return hasFreshGraph(m);
+	}
+
+	@Override
+	public Boolean hasConservativaGraph(IntermediateRepresentationMethod ir_method) {
+		SootMethod m = new SootMethod(ir_method.getName(), null, null);
+		return hasConservativaGraph(m);
+	}
+
+	@Override
+	public Boolean hasNonConservativaGraph(IntermediateRepresentationMethod ir_method) {
+		SootMethod m = new SootMethod(ir_method.getName(), null, null);
+		return hasNonConservativaGraph(m);
+	}
+
+	@Override
+	public Boolean isExcluded(IntermediateRepresentationMethod ir_method) {
+		SootMethod m = new SootMethod(ir_method.getName(), null, null);
+		return isExcluded(m);
 	}
 }

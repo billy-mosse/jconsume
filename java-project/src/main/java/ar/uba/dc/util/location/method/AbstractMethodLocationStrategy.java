@@ -6,9 +6,8 @@ import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Iterables;
 
-import ar.uba.dc.analysis.common.intermediate_representation.DefaultIntermediateRepresentationParameter;
+import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationParameter;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
-import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationParameterWithType;
 import ar.uba.dc.util.location.MethodLocationStrategy;
 
 import soot.SootClass;

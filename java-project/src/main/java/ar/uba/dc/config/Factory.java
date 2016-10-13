@@ -7,6 +7,7 @@ import org.apache.commons.configuration.beanutils.BeanDeclaration;
 import org.apache.commons.configuration.beanutils.BeanHelper;
 import org.apache.commons.configuration.beanutils.XMLBeanDeclaration;
 
+import soot.SootMethod;
 import soot.jimple.toolkits.callgraph.EdgePredicate;
 import ar.uba.dc.analysis.common.AbstractInterproceduralAnalysis;
 import ar.uba.dc.analysis.common.SummaryRepository;
@@ -132,11 +133,11 @@ public class Factory {
 		return getObject("analysis.escape.interprocedural");
 	}
 
-	public SummaryRepository<EscapeSummary> getEscapeRepository() {
+	public SummaryRepository<EscapeSummary, SootMethod> getEscapeRepository() {
 		return getObject("analysis.escape.repository");
 	}
 	
-	public SummaryRepository<MemorySummary> getMemoryRepository() {
+	public SummaryRepository<MemorySummary, SootMethod>getMemoryRepository() {
 		return getObject("analysis.memory.interprocedural.repository");
 	}
 

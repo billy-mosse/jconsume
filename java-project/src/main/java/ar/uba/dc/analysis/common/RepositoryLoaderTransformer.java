@@ -15,14 +15,14 @@ import soot.Transformer;
 public class RepositoryLoaderTransformer extends SceneTransformer {
 	
 	private RAMSummaryRepository target;
-	private SummaryRepository<EscapeSummary> source;
+	private SummaryRepository<EscapeSummary, SootMethod> source;
 	
-	public RepositoryLoaderTransformer(SummaryRepository<EscapeSummary> source, RAMSummaryRepository target) {
+	public RepositoryLoaderTransformer(SummaryRepository<EscapeSummary, SootMethod> source, RAMSummaryRepository target) {
 		this.source = source;
 		this.target = target;
 	}
 
-	public static Transformer v(RAMSummaryRepository target, SummaryRepository<EscapeSummary> source) {
+	public static Transformer v(RAMSummaryRepository target, SummaryRepository<EscapeSummary, SootMethod> source) {
 		return new RepositoryLoaderTransformer(source, target);
 	}
 	

@@ -2,10 +2,10 @@ package ar.uba.dc.analysis.common;
 
 import soot.SootMethod;
 
-public interface SummaryFactory<T> {
+public interface SummaryFactory<T, S> {
 
-	T conservativeGraph(SootMethod method, boolean withEffect);
+	T conservativeGraph(S method, boolean withEffect);
 
-	T freshGraph(SootMethod method);
+	T freshGraph(S method);
 	
 }

@@ -92,10 +92,10 @@ public class RepositoryUpdateChecker extends BodyTransformer {
 		log.info("Finish. Took " + analysisTimer.getElapsedTime() + " (" + analysisTimer.getElapsedSeconds() + " seconds)");
 	}
 
-	private SummaryRepository<EscapeSummary> escapeRepository;
+	private SummaryRepository<EscapeSummary, SootMethod> escapeRepository;
 	private String methodFilter;
 	
-	public RepositoryUpdateChecker(SummaryRepository<EscapeSummary> escapeRepository, String methodFilter) {
+	public RepositoryUpdateChecker(SummaryRepository<EscapeSummary, SootMethod> escapeRepository, String methodFilter) {
 		this.escapeRepository = escapeRepository;
 		this.methodFilter = methodFilter;
 	}

@@ -12,7 +12,7 @@ import ar.uba.dc.analysis.escape.graph.node.GlobalNode;
 import ar.uba.dc.analysis.escape.graph.node.MethodNode;
 import ar.uba.dc.analysis.escape.graph.node.ParamNode;
 
-public class DefaultSummaryFactory implements SummaryFactory<EscapeSummary> {
+public class DefaultSummaryFactory implements SummaryFactory<EscapeSummary, SootMethod> {
 
 	protected int sensitivity;
 	

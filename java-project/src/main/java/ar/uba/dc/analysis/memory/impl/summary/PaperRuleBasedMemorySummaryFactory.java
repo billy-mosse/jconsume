@@ -7,13 +7,18 @@ import java.util.TreeSet;
 import soot.RefLikeType;
 import soot.SootMethod;
 import ar.uba.dc.analysis.common.SummaryFactory;
+import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
+import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationParameter;
 import ar.uba.dc.analysis.common.method.information.RuleBasedMethodInformationProvider;
 import ar.uba.dc.analysis.common.method.information.rules.Rule;
 import ar.uba.dc.analysis.escape.graph.node.GlobalNode;
 import ar.uba.dc.analysis.escape.graph.node.MethodNode;
+import ar.uba.dc.analysis.escape.graph.node.PaperMethodNode;
+import ar.uba.dc.analysis.escape.graph.node.PaperParamNode;
 import ar.uba.dc.analysis.escape.graph.node.ParamNode;
 import ar.uba.dc.analysis.memory.expression.ParametricExpression;
 import ar.uba.dc.analysis.memory.impl.BarvinokParametricExpressionFactory;
+import ar.uba.dc.analysis.memory.impl.madeja.PaperMemorySummary;
 import ar.uba.dc.analysis.memory.summary.MemorySummary;
 import ar.uba.dc.barvinok.BarvinokSyntax;
 
@@ -22,7 +27,7 @@ import ar.uba.dc.barvinok.BarvinokSyntax;
 import ar.uba.dc.analysis.memory.SymbolicCalculator;
 
 
-public class RuleBasedMemorySummaryFactory implements SummaryFactory<MemorySummary, SootMethod> {
+public class PaperRuleBasedMemorySummaryFactory implements SummaryFactory<PaperMemorySummary, IntermediateRepresentationMethod> {
 	
 	private RuleBasedMethodInformationProvider informationProvider;
 	private BarvinokParametricExpressionFactory expressionFactory;
@@ -34,7 +39,7 @@ public class RuleBasedMemorySummaryFactory implements SummaryFactory<MemorySumma
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public MemorySummary conservativeGraph(SootMethod method, boolean withEffect) {
+	public PaperMemorySummary conservativeGraph(IntermediateRepresentationMethod method, boolean withEffect) {
 		Rule rule = informationProvider.findRule(method);
 		ParametricExpression tempMemory = buildExpression(rule.getResources().getTemporal(), rule.getResources().getSyntax());
 		ParametricExpression resMemory = buildExpression(rule.getResources().getResidual(), rule.getResources().getSyntax());
@@ -42,26 +47,35 @@ public class RuleBasedMemorySummaryFactory implements SummaryFactory<MemorySumma
 		
 		Set<String> parameters = new TreeSet<String>(tempMemory.getParameters());
 		parameters.addAll(resMemory.getParameters());
-		EscapeBasedMemorySummary summary = new EscapeBasedMemorySummary(method, parameters, tempMemory,memReq);
+		
+		PaperMemorySummary summary = new PaperMemorySummary(method, parameters, tempMemory, memReq);
 		
 		PointsToHeapPartition globHp = new PointsToHeapPartition(GlobalNode.node, false);
-		summary.add(globHp, resMemory);
+		
+		PaperPointsToHeapPartition paperGlobHp = new PaperPointsToHeapPartition(globHp);
+		
+		summary.add(paperGlobHp, resMemory);
 
 		// parameters & this escape globally
-		Iterator it = method.getParameterTypes().iterator();
+		Iterator it = method.getParameters().iterator();
+		
 		int i = 0;
 		while (it.hasNext()) {
-			if (it.next() instanceof RefLikeType) {
-				PointsToHeapPartition paramHp = new PointsToHeapPartition(new ParamNode(i), false);
+			IntermediateRepresentationParameter p = (IntermediateRepresentationParameter) it.next();
+			
+			if(p.isRefLikeType())
+			{
+				PaperPointsToHeapPartition paramHp = new PaperPointsToHeapPartition(new PaperParamNode(i), false);
 				summary.add(paramHp, expressionFactory.constant(0L));
 				summary.partitionEscapeGlobaly(paramHp);
 			}
+			
 			i++;
 		}
 
 		// return value escapes globally
-		if (method.getReturnType() instanceof RefLikeType)
-			summary.returnPartition(globHp);
+		if (method.isReturnRefLikeType())
+			summary.returnPartition(paperGlobHp);
 		
 		return summary;
 	}
@@ -76,19 +90,22 @@ public class RuleBasedMemorySummaryFactory implements SummaryFactory<MemorySumma
 
 
 	@Override
-	public MemorySummary freshGraph(SootMethod method) {
-		Rule rule = informationProvider.findRule(method);
+	public PaperMemorySummary freshGraph(IntermediateRepresentationMethod ir_method) {
+		Rule rule = informationProvider.findRule(ir_method);
 		ParametricExpression tempMemory = buildExpression(rule.getResources().getTemporal(), rule.getResources().getSyntax());
 		ParametricExpression resMemory = buildExpression(rule.getResources().getResidual(), rule.getResources().getSyntax());
 		ParametricExpression memReq = buildExpression(rule.getResources().getMemoryRequirement(), rule.getResources().getSyntax());
 		
 		Set<String> parameters = new TreeSet<String>(tempMemory.getParameters());
 		parameters.addAll(resMemory.getParameters());
-		EscapeBasedMemorySummary summary = new EscapeBasedMemorySummary(method, parameters, tempMemory, memReq);
+		
+		PaperMemorySummary summary = new PaperMemorySummary(ir_method, parameters, tempMemory, memReq);
 		
 		
-		if (method.getReturnType() instanceof RefLikeType) {
-			PointsToHeapPartition methodHp = new PointsToHeapPartition(new MethodNode(method, sensitivity), false);
+		
+		if (ir_method.isReturnRefLikeType())
+		{
+			PaperPointsToHeapPartition methodHp = new PaperPointsToHeapPartition(new PaperMethodNode(ir_method, sensitivity), false);
 			summary.returnPartition(methodHp);
 			summary.add(methodHp, resMemory);
 		}
@@ -99,6 +116,7 @@ public class RuleBasedMemorySummaryFactory implements SummaryFactory<MemorySumma
 		
 		return summary;
 	}
+	
 
 	public void setInformationProvider(RuleBasedMethodInformationProvider informationProvider) {
 		this.informationProvider = informationProvider;
@@ -125,4 +143,5 @@ public class RuleBasedMemorySummaryFactory implements SummaryFactory<MemorySumma
 	{
 		this.symbolicCalculator = symbolicCalculator;
 	}
+	
 }

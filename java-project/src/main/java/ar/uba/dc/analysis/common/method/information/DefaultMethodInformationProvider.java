@@ -1,6 +1,7 @@
 package ar.uba.dc.analysis.common.method.information;
 
 import ar.uba.dc.analysis.common.MethodInformationProvider;
+import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
 import soot.SootMethod;
 
 public class DefaultMethodInformationProvider implements MethodInformationProvider {
@@ -106,7 +107,16 @@ public class DefaultMethodInformationProvider implements MethodInformationProvid
 	
 	public Boolean isAnalyzable(SootMethod method) {
 		// could be optimized with HashSet....
-		if (inArray(method, pureMethods) || inArray(method, impureMethods) || inArray(method, alterMethods)) {
+		if (inArray(method.getDeclaringClass().toString(), method.getName(), pureMethods) || inArray(method.getDeclaringClass().toString(), method.getName(), impureMethods) || inArray(method.getDeclaringClass().toString(), method.getName(), alterMethods)) {
+			return false;
+		}
+			    
+	    return true;
+	}
+	
+	public Boolean isAnalyzable(IntermediateRepresentationMethod ir_method) {
+		// could be optimized with HashSet....
+		if (inArray(ir_method.getDeclaringClass(), ir_method.getName(), pureMethods) || inArray(ir_method.getDeclaringClass(), ir_method.getName(), impureMethods) || inArray(ir_method.getDeclaringClass(), ir_method.getName(), alterMethods)) {
 			return false;
 		}
 			    
@@ -114,23 +124,35 @@ public class DefaultMethodInformationProvider implements MethodInformationProvid
 	}
 
 	public Boolean hasNonConservativaGraph(SootMethod method) {
-		return inArray(method, impureMethods);
+		return inArray(method.getDeclaringClass().toString(), method.getName(), impureMethods);
 	}
 	
 	public Boolean hasConservativaGraph(SootMethod method) {
-		return inArray(method, alterMethods);
+		return inArray(method.getDeclaringClass().toString(), method.getName(), alterMethods);
 	}
 
 	public Boolean hasFreshGraph(SootMethod method) {
-		return inArray(method, pureMethods);
+		return inArray(method.getDeclaringClass().toString(), method.getName(), pureMethods);
 	}
 	
-	private Boolean inArray(SootMethod method, String[][] array) {
-		String c = method.getDeclaringClass().toString();
-    	String m = method.getName();
+	public Boolean hasNonConservativaGraph(IntermediateRepresentationMethod ir_method) {
+		return inArray(ir_method.getDeclaringClass(), ir_method.getName(), impureMethods);
+	}
+	
+	public Boolean hasConservativaGraph(IntermediateRepresentationMethod ir_method) {
+		return inArray(ir_method.getDeclaringClass(), ir_method.getName(), alterMethods);
+	}
+
+	public Boolean hasFreshGraph(IntermediateRepresentationMethod ir_method) {
+		return inArray(ir_method.getDeclaringClass(), ir_method.getName(), pureMethods);
+	}
+	
+	private Boolean inArray(String declaringClass, String name, String[][] array) {
+		//String c = method.getDeclaringClass().toString();
+    	//String m = method.getName();
     	
 		for (String[] element : array) {
-			if (m.equals(element[1]) && c.startsWith(element[0])) {
+			if (name.equals(element[1]) && declaringClass.startsWith(element[0])) {
 				return true;
 			}
 	    }
@@ -142,6 +164,10 @@ public class DefaultMethodInformationProvider implements MethodInformationProvid
 	 * En esta implmenetacion no hay metodos que se exlcuyan
 	 */
 	public Boolean isExcluded(SootMethod method) {
+		return false;
+	}
+	
+	public Boolean isExcluded(IntermediateRepresentationMethod ir_method) {
 		return false;
 	}
 }

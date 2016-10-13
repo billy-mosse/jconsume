@@ -68,7 +68,7 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 	
 	protected SummaryApplier summaryApplier;
 	
-	protected SummaryRepository<EscapeSummary> repository;
+	protected SummaryRepository<EscapeSummary, SootMethod> repository;
 	
 	protected MethodInformationProvider methodInformationProvider;
 	
@@ -395,7 +395,7 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 		this.summaryApplier = summaryApplier;
 	}
 
-	public void setRepository(SummaryRepository<EscapeSummary> repository) {
+	public void setRepository(SummaryRepository<EscapeSummary, SootMethod> repository) {
 		this.repository = repository;
 	}
 	

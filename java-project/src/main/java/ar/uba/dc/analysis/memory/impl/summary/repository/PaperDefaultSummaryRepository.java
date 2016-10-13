@@ -9,17 +9,20 @@ import ar.uba.dc.analysis.common.MethodInformationProvider;
 import ar.uba.dc.analysis.common.SummaryFactory;
 import ar.uba.dc.analysis.common.SummaryRepository;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
+import ar.uba.dc.analysis.memory.impl.madeja.PaperMemorySummary;
 import ar.uba.dc.analysis.memory.summary.MemorySummary;
 
-public class DefaultSummaryRepository implements SummaryRepository<MemorySummary, SootMethod>{
+public class PaperDefaultSummaryRepository implements SummaryRepository<PaperMemorySummary, IntermediateRepresentationMethod>{
 
-	private static Log log = LogFactory.getLog(DefaultSummaryRepository.class);
+	private static Log log = LogFactory.getLog(PaperDefaultSummaryRepository.class);
 	
-	protected SummaryFactory<MemorySummary, SootMethod> summaryFactory;
-	protected MethodInformationProvider methodInformationProvider;
+	protected SummaryFactory<PaperMemorySummary, IntermediateRepresentationMethod> summaryFactory;
 	
-	public MemorySummary get(SootMethod method) {
-		MemorySummary elem = null;
+	
+	protected MethodInformationProvider methodInformationProvider; //este tiene para sootMethod y IR_method
+	
+	public PaperMemorySummary get(IntermediateRepresentationMethod method) {
+		PaperMemorySummary elem = null;
 		
 		log.debug("Search default summary for [" + method + "]");
 		
@@ -42,11 +45,11 @@ public class DefaultSummaryRepository implements SummaryRepository<MemorySummary
     	return elem;
 	}
 	
-	public boolean contains(SootMethod m) {
+	public boolean contains(IntermediateRepresentationMethod m) {
 		return !methodInformationProvider.isAnalyzable(m);
 	}
 
-	public void setSummaryFactory(SummaryFactory<MemorySummary, SootMethod> summaryFactory) {
+	public void setSummaryFactory(SummaryFactory<PaperMemorySummary, IntermediateRepresentationMethod> summaryFactory) {
 		this.summaryFactory = summaryFactory;
 	}
 

@@ -4,11 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import ar.uba.dc.analysis.common.SummaryRepository;
+import org.apache.commons.lang.NotImplementedException;
 
+import ar.uba.dc.analysis.common.SummaryRepository;
+import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
 import soot.SootMethod;
 
-public class LifeTimeSummaryRepository implements SummaryRepository<LifeTimeSummary> {
+public class LifeTimeSummaryRepository implements SummaryRepository<LifeTimeSummary, SootMethod> {
 
 	private Map<SootMethod, LifeTimeSummary> data = new HashMap<SootMethod, LifeTimeSummary>();
 
@@ -28,6 +30,5 @@ public class LifeTimeSummaryRepository implements SummaryRepository<LifeTimeSumm
 	
 	public Set<SootMethod> getMethods() {
 		return this.data.keySet();
-	}
-	
+	}	
 }

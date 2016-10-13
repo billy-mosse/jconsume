@@ -12,10 +12,11 @@ import ar.uba.dc.analysis.memory.HeapPartition;
 import ar.uba.dc.analysis.memory.LifeTimeOracle;
 import ar.uba.dc.invariant.InvariantProvider;
 import ar.uba.dc.soot.StatementId;
+import soot.SootMethod;
 
 public class EscapeBasedLifeTimeOracle implements LifeTimeOracle {
 
-	private SummaryRepository<EscapeSummary> escapeSummaryProvider;
+	private SummaryRepository<EscapeSummary, SootMethod> escapeSummaryProvider;
 	
 	private InvariantProvider invariantProvider;
 	
@@ -108,7 +109,7 @@ public class EscapeBasedLifeTimeOracle implements LifeTimeOracle {
 	}	
 	
 
-	public void setEscapeSummaryProvider(SummaryRepository<EscapeSummary> escapeSummaryProvider) {
+	public void setEscapeSummaryProvider(SummaryRepository<EscapeSummary, SootMethod> escapeSummaryProvider) {
 		this.escapeSummaryProvider = escapeSummaryProvider;
 	}
 

@@ -22,6 +22,7 @@ import org.apache.commons.logging.LogFactory;
 import ar.uba.dc.analysis.common.Invocation;
 import ar.uba.dc.analysis.common.Line;
 import ar.uba.dc.analysis.common.SummaryReader;
+import ar.uba.dc.analysis.common.SummaryRepository;
 import ar.uba.dc.analysis.common.code.CallStatement;
 //import ar.uba.dc.analysis.common.AbstractInterproceduralAnalysis.IntComparator;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
@@ -83,11 +84,22 @@ public class PaperInterproceduralAnalysis {
 	protected ParametricExpressionFactory expressionFactory;
 	protected SymbolicCalculator symbolicCalculator;
 	
+	protected SummaryRepository<PaperMemorySummary, IntermediateRepresentationMethod> repository;
+
+	
 
 	//protected Map<IntermediateRepresentationMethod, List<IntermediateRepresentationMethod> > preds;
 	//protected Map<IntermediateRepresentationMethod, List<IntermediateRepresentationMethod> > succs;
 	
 	
+	public SummaryRepository<PaperMemorySummary, IntermediateRepresentationMethod> getRepository() {
+		return repository;
+	}
+
+	public void setRepository(SummaryRepository<PaperMemorySummary, IntermediateRepresentationMethod> repository) {
+		this.repository = repository;
+	}
+
 	public PaperMemorySummaryFactory getSummaryFactory() {
 		return summaryFactory;
 	}

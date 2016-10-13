@@ -3,6 +3,11 @@ package ar.uba.dc.analysis.memory.impl.summary;
 import org.apache.commons.lang.NotImplementedException;
 
 import ar.uba.dc.analysis.escape.graph.Node;
+import ar.uba.dc.analysis.escape.graph.PaperNode;
+import ar.uba.dc.analysis.escape.graph.node.GlobalNode;
+import ar.uba.dc.analysis.escape.graph.node.PaperGlobalNode;
+import ar.uba.dc.analysis.escape.graph.node.PaperStmtNode;
+import ar.uba.dc.analysis.escape.graph.node.StmtNode;
 import ar.uba.dc.analysis.memory.HeapPartition;
 import ar.uba.dc.analysis.memory.HeapPartitionVisitor;
 import soot.SootMethod;
@@ -11,22 +16,23 @@ public class PaperPointsToHeapPartition implements HeapPartition {
 
 	
 	protected boolean temporal; //creo que lo voy a tirar
-	protected String node;
+	protected PaperNode node;
 	protected boolean isInside;
 	protected String belongsTo;
 	
 	
-	public String getNode() {
+	public PaperNode getNode() {
 		return node;
 	}
 
 
-	public void setNode(String node) {
+	public void setNode(PaperNode node) {
 		this.node = node;
 	}
 
+	
 
-	public PaperPointsToHeapPartition(boolean temporal, String node)
+	public PaperPointsToHeapPartition(PaperNode node, boolean temporal)
 	{
 		this.temporal = temporal;
 		this.node = node;
@@ -36,7 +42,11 @@ public class PaperPointsToHeapPartition implements HeapPartition {
 	public PaperPointsToHeapPartition(boolean temporal, Node node, String belongsTo)
 	{
 		this.temporal = temporal;
-		this.node = node.toJsonString();
+		
+		
+		//this.node = new PaperNode(node);
+		
+		
 		this.belongsTo = belongsTo;
 		this.isInside = node.isInside();
 	}	
@@ -48,7 +58,15 @@ public class PaperPointsToHeapPartition implements HeapPartition {
 		if(heapPartition.getClass() == PointsToHeapPartition.class)
 		{
 			PointsToHeapPartition hp = ((PointsToHeapPartition) heapPartition);
-			this.node = hp.toJsonString();
+			
+			Node origNode = hp.getNode();
+
+			
+			//TODO: hacer los otros.
+			if(origNode.getClass() == StmtNode.class)
+			{
+				this.node = new PaperStmtNode(origNode);
+			}
 			
 			SootMethod m = hp.getNode().belongsTo();
 			this.belongsTo = m.getDeclaringClass().toString() + "." +  m.getName();

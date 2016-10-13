@@ -15,9 +15,9 @@ public class AnalyzableMethodFilter implements SootMethodFilter {
 
 	private static Log log = LogFactory.getLog(AnalyzableMethodFilter.class);
 	
-	private SummaryRepository<EscapeSummary> escapeRepository;
+	private SummaryRepository<EscapeSummary, SootMethod> escapeRepository;
 	
-	private SummaryRepository<MemorySummary> memoryRepository;
+	private SummaryRepository<MemorySummary, SootMethod>memoryRepository;
 	
 	private MethodInformationProvider methodInformationProvider;
 	
@@ -57,11 +57,11 @@ public class AnalyzableMethodFilter implements SootMethodFilter {
 		this.methodInformationProvider = methodInformationProvider;
 	}
 
-	public void setEscapeRepository(SummaryRepository<EscapeSummary> escapeRepository) {
+	public void setEscapeRepository(SummaryRepository<EscapeSummary, SootMethod> escapeRepository) {
 		this.escapeRepository = escapeRepository;
 	}
 
-	public void setMemoryRepository(SummaryRepository<MemorySummary> memoryRepository) {
+	public void setMemoryRepository(SummaryRepository<MemorySummary, SootMethod>memoryRepository) {
 		this.memoryRepository = memoryRepository;
 	}
 

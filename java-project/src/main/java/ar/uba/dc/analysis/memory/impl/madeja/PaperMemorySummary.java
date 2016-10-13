@@ -9,6 +9,8 @@ import ar.uba.dc.analysis.common.intermediate_representation.IntermediateReprese
 import ar.uba.dc.analysis.memory.HeapPartition;
 import ar.uba.dc.analysis.memory.expression.ParametricExpression;
 import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
+import ar.uba.dc.analysis.memory.impl.summary.PointsToHeapPartition;
+import ar.uba.dc.analysis.memory.summary.MemorySummary;
 
 public class PaperMemorySummary {
 	protected Set<String> parameters;
@@ -21,6 +23,12 @@ public class PaperMemorySummary {
 	
 	protected IntermediateRepresentationMethod target;
 	
+	protected Set<PaperPointsToHeapPartition> globEscape; 				// partition escaping globally
+	
+	protected Set<PaperPointsToHeapPartition> ret; 						// return -> partition
+
+	
+	
 	public PaperMemorySummary(IntermediateRepresentationMethod target, Set<String> methodParameters, ParametricExpression initialTemporal, ParametricExpression initialMemoryRequirement) {
 		this.target = target;
 		this.parameters = methodParameters;
@@ -29,6 +37,9 @@ public class PaperMemorySummary {
 		this.residuals = new HashMap<PaperPointsToHeapPartition, ParametricExpression>();
 	}
 	
+	
+	
+
 
 	public IntermediateRepresentationMethod getTarget() {
 		return target;
@@ -64,4 +75,19 @@ public class PaperMemorySummary {
 		this.memoryRequirement = newValue;
 		
 	}
+
+	public void add(PaperPointsToHeapPartition paperGlobHp, ParametricExpression resMemory) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public void partitionEscapeGlobaly(PaperPointsToHeapPartition heapPartition) {
+		globEscape.add(heapPartition);		
+	}
+	
+
+	public void returnPartition(PaperPointsToHeapPartition heapPartition) {
+		ret.add(heapPartition);
+	}
+	
 }

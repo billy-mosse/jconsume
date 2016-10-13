@@ -21,7 +21,7 @@ public class EscapeBasedMemorySummaryFactory implements MemorySummaryFactory {
 
 	private static Log log = LogFactory.getLog(EscapeBasedMemorySummaryFactory.class);
 	
-	private SummaryRepository<EscapeSummary> escapeSummaryProvider;
+	private SummaryRepository<EscapeSummary, SootMethod> escapeSummaryProvider;
 	
 	private ParametricExpressionFactory expressionFactory;
 	
@@ -73,7 +73,7 @@ public class EscapeBasedMemorySummaryFactory implements MemorySummaryFactory {
 		return summary;
 	}
 
-	public void setEscapeSummaryProvider(SummaryRepository<EscapeSummary> escapeSummaryProvider) {
+	public void setEscapeSummaryProvider(SummaryRepository<EscapeSummary, SootMethod> escapeSummaryProvider) {
 		this.escapeSummaryProvider = escapeSummaryProvider;
 	}
 

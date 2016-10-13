@@ -1,7 +1,11 @@
 package ar.uba.dc.analysis.escape.summary.repository;
 
 import soot.SootMethod;
+
+import org.apache.commons.lang.NotImplementedException;
+
 import ar.uba.dc.analysis.common.SummaryRepository;
+import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
 import ar.uba.dc.analysis.escape.EscapeSummary;
 
 /**
@@ -9,7 +13,7 @@ import ar.uba.dc.analysis.escape.EscapeSummary;
  * 
  * @author testis
  */
-public class AlwaysEmptySummaryRepository implements SummaryRepository<EscapeSummary> {
+public class AlwaysEmptySummaryRepository implements SummaryRepository<EscapeSummary, SootMethod> {
 
 	public EscapeSummary get(SootMethod method) {
 		return new EscapeSummary(method);

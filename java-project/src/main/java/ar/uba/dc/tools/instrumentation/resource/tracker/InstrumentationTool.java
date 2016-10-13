@@ -11,6 +11,7 @@ import org.apache.commons.logging.LogFactory;
 
 import soot.Scene;
 import soot.SootClass;
+import soot.SootMethod;
 import soot.jimple.toolkits.callgraph.EdgePredicate;
 import soot.jimple.toolkits.callgraph.ReachableMethods;
 import ar.uba.dc.analysis.common.RepositoryLoaderTransformer;
@@ -79,8 +80,8 @@ public class InstrumentationTool {
 			args[0]
 		};
 		
-		SummaryRepository<EscapeSummary> escapeRepository = context.getFactory().getEscapeRepository();
-		SummaryRepository<EscapeSummary> repository = escapeRepository;
+		SummaryRepository<EscapeSummary, SootMethod> escapeRepository = context.getFactory().getEscapeRepository();
+		SummaryRepository<EscapeSummary, SootMethod> repository = escapeRepository;
 		if (runEscapeBefore) {
 			SootUtils.insertTransformer("wjtp", "wjtp.escape", EscapeSceneTransformer.v(context, args[0]));
 		} else {
