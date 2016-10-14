@@ -75,4 +75,10 @@ public class GlobalNode implements Node {
 		return false;
 	}
 	
+	
+	@Override
+	public int getNumber() {
+		throw new Error("Esto jamas deberia ser llamado");
+	}
+	
 }

@@ -103,6 +103,8 @@
 
 				<ihrWriter config-class="ar.uba.dc.analysis.escape.summary.io.writer.ChainWriter" config-factory="container" config-source="analysis.escape.writers" config-select-key="escape.summary.printer" config-default="ihr" config-scope="singleton" />
 
+				<jsonWriter config-class="ar.uba.dc.analysis.escape.summary.io.writer.ChainWriter" config-factory="container" config-source="analysis.escape.writers" config-select-key="escape.summary.printer" config-default="json" config-scope="singleton" />
+
 
 				<methodDecorator config-class="ar.uba.dc.analysis.common.code.impl.DefaultMethodDecorator" />
 				<invariantProvider config-class="ar.uba.dc.invariant.InvariantProvider" config-factory="custom" config-ref-to="invariants.provider.${invariants.provider}" />
@@ -151,6 +153,10 @@
 				<ihr config-class="ar.uba.dc.analysis.common.intermediate_representation.io.writer.HumanReadableWriter">
 					<locationStrategy config-class="ar.uba.dc.util.location.method.${escape.summary.output.layout}LocationStrategy" extension=".xml" basePath="${escape.summary.output.dir}" />
 				</ihr>
+
+				<json config-class="ar.uba.dc.analysis.common.intermediate_representation.io.writer.JsonWriter">
+					<locationStrategy config-class="ar.uba.dc.util.location.method.${escape.summary.output.layout}LocationStrategy" extension=".json" basePath="${escape.summary.output.dir}" />
+				</json>
 
 				<dot config-class="ar.uba.dc.analysis.escape.summary.io.writer.GraphvizWriter" leaveSourceFile="${escape.summary.printer.dot.leave-source-file}" graphSizeLimit="${escape.summary.printer.dot.max-graph-size}">
 					<locationStrategy config-class="ar.uba.dc.util.location.method.${escape.summary.output.layout}LocationStrategy" extension=".dot" basePath="${escape.summary.output.dir}" />
@@ -208,6 +214,27 @@
 				<callAnalyzer config-class="ar.uba.dc.analysis.memory.CallAnalyzer" config-factory="custom" config-ref-to="analysis.memory.call-analyzer.default.${memory.interprocedural.loop.invariant}" />
 				<polymorphismResolver config-class="ar.uba.dc.analysis.memory.PolymorphismResolver" config-factory="custom" config-ref-to="analysis.memory.polymorphism.${polymorphism.resolver}-resolver"/>
 			</interprocedural>
+
+			<paperInterprocedural config-class="ar.uba.dc.analysis.memory.impl.PaperMemoryInterproceduralAnalysis"
+							 writeResults="${memory.summary.all.enabled}" writeUnanalysedSummaries="${memory.summary.unanalized.enabled}"
+							 cleanOutputFolder="${clear.memory.summary.output.dir}" outputFolder="${memory.summary.output.dir}"
+							 writeReport="${memory.print.report}"
+							 writeUnanalyzedSummariesInReport="${memory.report.unanalized.enabled}">
+							 <locationStrategy config-class="ar.uba.dc.util.location.method.${escape.summary.output.layout}LocationStrategy" extension=".json" basePath="${escape.summary.output.dir}" />
+							 <jsonReader config-class="ar.uba.dc.analysis.common.intermediate_representation.io.reader.JsonReader" />
+
+
+							 <summaryFactory config-class="ar.uba.dc.analysis.memory.PaperMemorySummaryFactory">
+						 		<expressionFactory config-class="ar.uba.dc.analysis.memory.impl.BarvinokParametricExpressionFactory" />
+						 	</summaryFactory>
+						 	<expressionFactory config-class="ar.uba.dc.analysis.memory.impl.BarvinokParametricExpressionFactory" />
+						 	<countingTheory config-class="ar.uba.dc.analysis.memory.CountingTheory" config-factory="custom" config-ref-to="analysis.memory.barvinok-calculator-adapter" />
+						 	<symbolicCalculator  config-class="ar.uba.dc.analysis.memory.impl.BarvinokCalculatorDecorator">
+								<statementVisitor config-class="ar.uba.dc.analysis.memory.code.impl.visitor.IdStatementVisitor"/> 
+								<calculatorAdapter config-class="ar.uba.dc.analysis.memory.impl.BarvinokCalculatorAdapter" config-factory="custom" config-ref-to="analysis.memory.barvinok-calculator-adapter" />
+							</symbolicCalculator>
+							<repository config-class="ar.uba.dc.analysis.common.SummaryRepository" config-factory="custom" config-ref-to="analysis.memory.paperRepository" />
+			</paperInterprocedural>
 			
 			<barvinok-calculator-adapter config-class="ar.uba.dc.analysis.memory.impl.BarvinokCalculatorAdapter" config-factory="custom" config-scope="singleton">
 				<invariantProvider config-class="ar.uba.dc.invariant.InvariantProvider" config-factory="custom" config-ref-to="invariants.provider.${invariants.provider}" />
@@ -218,6 +245,8 @@
 			</barvinok-calculator-adapter>
 			
 			<repository config-class="ar.uba.dc.analysis.common.ChainSummaryRepository" config-factory="container" config-source="analysis.memory.repositories" config-select="repository, hardcoded" config-default="hardcoded" />
+
+			<paperRepository config-class="ar.uba.dc.analysis.common.ChainSummaryRepository" config-factory="container" config-source="analysis.memory.paperRepositories" config-select="repository, hardcoded" config-default="hardcoded" />
 			
 			<repositories>
 				<repository config-class="ar.uba.dc.analysis.memory.impl.summary.repository.FileSystemSummaryRepository">
@@ -235,6 +264,20 @@
 					</summaryFactory>
 				</hardcoded>
 			</repositories>
+
+
+			<paperRepositories>				
+				<hardcoded config-class="ar.uba.dc.analysis.memory.impl.summary.repository.PaperDefaultSummaryRepository" config-factory="custom">
+					<methodInformationProvider config-class="ar.uba.dc.analysis.common.MethodInformationProvider" config-factory="custom" config-ref-to="analysis.common.method-information-provider"/>
+					<summaryFactory config-class="ar.uba.dc.analysis.memory.impl.summary.RuleBasedMemorySummaryFactory" sensitivity="${escape.sensitivity}">
+						<expressionFactory config-class="ar.uba.dc.analysis.memory.impl.BarvinokParametricExpressionFactory" />
+						<informationProvider config-class="ar.uba.dc.analysis.common.method.information.RuleBasedMethodInformationProvider" config-factory="custom" config-ref-to="analysis.common.method-information-provider"/>
+						<isccSyntax config-class="ar.uba.dc.barvinok.BarvinokSyntax" config-factory="custom" config-ref-to="barvinok.syntax.iscc" />
+						<omegaSyntax config-class="ar.uba.dc.barvinok.BarvinokSyntax" config-factory="custom" config-ref-to="barvinok.syntax.omega" />
+						<symbolicCalculator config-class="ar.uba.dc.analysis.memory.SymbolicCalculator" config-factory="custom" config-ref-to="analysis.memory.barvinok-calculator-adapter" />
+					</summaryFactory>
+				</hardcoded>
+			</paperRepositories>
 			
 			<writers>
 				<xml config-class="ar.uba.dc.analysis.memory.impl.summary.io.writer.XMLWriter">
@@ -352,3 +395,4 @@
 		</callgraph>
 	</soot>
 </config>
+<!-- hola -->

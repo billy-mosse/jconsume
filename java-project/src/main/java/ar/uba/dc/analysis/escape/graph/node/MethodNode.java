@@ -116,4 +116,9 @@ public class MethodNode implements Node {
 		return this.equals(node);
 	}
 	
+	@Override
+	public int getNumber() {
+		return nMap.get(id);
+	}
+	
 }

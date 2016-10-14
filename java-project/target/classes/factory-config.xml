@@ -233,7 +233,8 @@
 								<statementVisitor config-class="ar.uba.dc.analysis.memory.code.impl.visitor.IdStatementVisitor"/> 
 								<calculatorAdapter config-class="ar.uba.dc.analysis.memory.impl.BarvinokCalculatorAdapter" config-factory="custom" config-ref-to="analysis.memory.barvinok-calculator-adapter" />
 							</symbolicCalculator>
-							<repository config-class="ar.uba.dc.analysis.common.SummaryRepository" config-factory="custom" config-ref-to="analysis.memory.paperRepository" />
+							<repository config-class="ar.uba.dc.analysis.common.ChainSummaryRepository" config-factory="container" config-source="analysis.memory.paperRepositories" config-select="hardcoded" config-default="hardcoded" />
+
 			</paperInterprocedural>
 			
 			<barvinok-calculator-adapter config-class="ar.uba.dc.analysis.memory.impl.BarvinokCalculatorAdapter" config-factory="custom" config-scope="singleton">
@@ -246,7 +247,7 @@
 			
 			<repository config-class="ar.uba.dc.analysis.common.ChainSummaryRepository" config-factory="container" config-source="analysis.memory.repositories" config-select="repository, hardcoded" config-default="hardcoded" />
 
-			<paperRepository config-class="ar.uba.dc.analysis.common.ChainSummaryRepository" config-factory="container" config-source="analysis.memory.paperRepositories" config-select="repository, hardcoded" config-default="hardcoded" />
+			<!--<paperRepository config-class="ar.uba.dc.analysis.common.PaperDefaultSummaryRepository" config-factory="container" config-source="analysis.memory.paperRepositories" config-select="repository, hardcoded" config-default="hardcoded" />-->
 			
 			<repositories>
 				<repository config-class="ar.uba.dc.analysis.memory.impl.summary.repository.FileSystemSummaryRepository">
@@ -395,3 +396,4 @@
 		</callgraph>
 	</soot>
 </config>
+<!-- hola -->

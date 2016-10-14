@@ -42,4 +42,6 @@ public interface Node extends Cloneable {
 	public String toJsonString();
 
 	public boolean accept(Node escapeNode);
+	
+	public int getNumber();
 }

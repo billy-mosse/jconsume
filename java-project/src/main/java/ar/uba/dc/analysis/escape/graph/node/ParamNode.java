@@ -89,4 +89,9 @@ public class ParamNode implements Node {
 		return false;
 	}
 	
+	@Override
+	public int getNumber() {
+		return this.id;
+	}
+	
 }

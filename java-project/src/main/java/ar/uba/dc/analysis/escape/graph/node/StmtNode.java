@@ -170,5 +170,10 @@ public class StmtNode implements Node {
 	public boolean accept(Node node) {
 		return equals(node);
 	}
+
+	@Override
+	public int getNumber() {
+		return new_nMap.get(id);
+	}
 	
 }

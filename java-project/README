@@ -181,6 +181,9 @@ Los atributos que define este factory son:
 	- config-default: Objeto a registrar por default si la propiedad no existe. Ejemplo: si toma valor "null", entonces se registra el objeto ${config-source}.null
 El codigo del factory se encuentra en la clase ar.uba.dc.config.factory.ContainerBeanFactory 
 
+
+Por alguna razón al abrir eclipse el factory de resources pisa al de target/classes.
+
 Metodos no analizables
 ----------------------
 

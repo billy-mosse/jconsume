@@ -187,6 +187,10 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 	    }
 	}*/
 	
+	
+	
+	
+	
 	public static class IntermediateRepresentationMethodBodySerializer implements JsonSerializer<IntermediateRepresentationMethodBody> 
 	{
 	    
@@ -237,7 +241,7 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 	        return result;
 	    }
 	}
-	
+
 	
 	public static class DomainSetSerializer implements JsonSerializer<DomainSet> 
 	{

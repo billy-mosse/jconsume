@@ -20,8 +20,11 @@ public interface PaperNode extends Cloneable {
 
     //O es line?
     public void changeContext(Invocation invocation);
-	
+    
 	public CircularStack<Invocation> getContext();
+
+	
+	//public CircularStack<Invocation> getContext();
 
 	public PaperNode clone();
 
@@ -33,6 +36,8 @@ public interface PaperNode extends Cloneable {
 	 * If this information is not available, the method should return null  
 	 * */
 	public IntermediateRepresentationMethod belongsTo();
+	
+	//public int getNumber();
 
 	//public StatementId popContext();
 	

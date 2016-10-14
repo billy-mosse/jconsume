@@ -29,6 +29,7 @@ import ar.uba.dc.analysis.common.intermediate_representation.IntermediateReprese
 import ar.uba.dc.analysis.common.intermediate_representation.io.reader.JsonReader;
 import ar.uba.dc.analysis.common.intermediate_representation.io.reader.XMLReader;
 import ar.uba.dc.analysis.escape.InterproceduralAnalysis;
+import ar.uba.dc.analysis.memory.callanalyzer.PaperCallAnalyzer;
 import ar.uba.dc.analysis.memory.expression.ParametricExpression;
 import ar.uba.dc.analysis.memory.expression.ParametricExpressionFactory;
 import ar.uba.dc.analysis.memory.impl.BarvinokParametricExpressionFactory;
@@ -52,7 +53,6 @@ import soot.toolkits.graph.PseudoTopologicalOrderer;
 public class PaperInterproceduralAnalysis {
 	
 	protected MethodLocationStrategy locationStrategy;
-
 	
 	private static Log log = LogFactory.getLog(PaperInterproceduralAnalysis.class);
 
@@ -86,6 +86,8 @@ public class PaperInterproceduralAnalysis {
 	
 	protected SummaryRepository<PaperMemorySummary, IntermediateRepresentationMethod> repository;
 
+	
+	protected PaperCallAnalyzer callAnalyzer;
 	
 
 	//protected Map<IntermediateRepresentationMethod, List<IntermediateRepresentationMethod> > preds;
@@ -271,6 +273,32 @@ public class PaperInterproceduralAnalysis {
 		for(Invocation invocation : callInvocation.getInvocations())
 		{
 			PaperMemorySummary invocationSummary = this.data.get(invocation.getCalled_implementation_signature()); //O algo asi
+			
+			if(invocationSummary == null)
+			{
+				
+				IntermediateRepresentationMethod ir_method = new IntermediateRepresentationMethod();
+				
+				//TODO: el name no es el signature, es otra cosa
+				ir_method.setName(invocation.getCalled_implementation_signature());		
+				
+				ir_method.setDeclaringClass(invocation.getClass_called());
+				
+				ir_method.setParameters(invocation.getParameters());
+				
+				invocationSummary = this.repository.get(ir_method);
+				
+				if (invocationSummary == null) {
+					// No hay se genero un summary en esta corrida ni existia en el repositorio. No podemos continuar. Informamos al usuario de esto 
+					throw new RuntimeException("Memory summary for method [" + ir_method.getName() + "] not found. Is this method unanalizable? Is it in a recursive call chain?");
+					
+				} else {
+				
+					callAnalyzer.process(invocation, invocationSummary);
+				}
+				
+			}
+			
 			
 			MAX_memreq = symbolicCalculator.supreme(MAX_memreq, invocationSummary.getMemoryRequirement());
 			

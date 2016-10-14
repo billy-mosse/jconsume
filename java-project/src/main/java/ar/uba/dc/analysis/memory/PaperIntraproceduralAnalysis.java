@@ -16,7 +16,7 @@ import ar.uba.dc.analysis.memory.expression.ParametricExpressionFactory;
 import ar.uba.dc.analysis.memory.impl.madeja.PaperMemorySummary;
 import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
 import ar.uba.dc.barvinok.expression.DomainSet;
-import heros.solver.Pair;
+//import heros.solver.Pair;
 
 public class PaperIntraproceduralAnalysis {
 

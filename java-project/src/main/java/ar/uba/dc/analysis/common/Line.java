@@ -34,7 +34,10 @@ public class Line {
 	
 	public Line(Statement stmt, CallGraph callGraph, LifeTimeOracle lifetimeOracle) {
 		
-		this.setLineNumber(stmt.getStatement().getJavaSourceStartLineNumber());
+		
+		//TODO: descomentar esta linea
+		//this.setLineNumber(stmt.getStatement().getJavaSourceStartLineNumber());
+		this.setLineNumber(0);
 		boolean isCallStatement = true;
 		if(stmt instanceof CallStatement)
 		{

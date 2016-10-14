@@ -137,5 +137,10 @@ public class ContainerNode implements Node {
 		
 		return ret;
 	}
+	
+	@Override
+	public int getNumber() {
+		throw new Error("Esto jamas deberia ser llamado");
+	}
 
 }

@@ -22,7 +22,11 @@ public class PaperParamNode implements PaperNode {
     	this.id = id; 
     }
 
-    public String toString() { 
+    public PaperParamNode(Node origNode) {
+		this.id = origNode.getNumber();
+	}
+
+	public String toString() { 
     	return "P_" + id; 
     }
     
@@ -97,17 +101,16 @@ public class PaperParamNode implements PaperNode {
 		// TODO Auto-generated method stub
 		
 	}
+	@Override
+	public boolean accept(PaperNode escapeNode) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 	@Override
 	public IntermediateRepresentationMethod belongsTo() {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public boolean accept(PaperNode escapeNode) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override

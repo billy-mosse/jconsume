@@ -6,7 +6,9 @@ import ar.uba.dc.analysis.escape.graph.Node;
 import ar.uba.dc.analysis.escape.graph.PaperNode;
 import ar.uba.dc.analysis.escape.graph.node.GlobalNode;
 import ar.uba.dc.analysis.escape.graph.node.PaperGlobalNode;
+import ar.uba.dc.analysis.escape.graph.node.PaperParamNode;
 import ar.uba.dc.analysis.escape.graph.node.PaperStmtNode;
+import ar.uba.dc.analysis.escape.graph.node.ParamNode;
 import ar.uba.dc.analysis.escape.graph.node.StmtNode;
 import ar.uba.dc.analysis.memory.HeapPartition;
 import ar.uba.dc.analysis.memory.HeapPartitionVisitor;
@@ -48,7 +50,16 @@ public class PaperPointsToHeapPartition implements HeapPartition {
 		
 		
 		this.belongsTo = belongsTo;
-		this.isInside = node.isInside();
+		
+		
+		if(node.getClass() == StmtNode.class)
+		{
+			this.node = new PaperStmtNode(node);
+		}
+		else if(node.getClass() == ParamNode.class)
+		{
+			this.node = new PaperParamNode(node);
+		}
 	}	
 	
 	public PaperPointsToHeapPartition(HeapPartition heapPartition)
@@ -66,6 +77,10 @@ public class PaperPointsToHeapPartition implements HeapPartition {
 			if(origNode.getClass() == StmtNode.class)
 			{
 				this.node = new PaperStmtNode(origNode);
+			}
+			else if(origNode.getClass() == ParamNode.class)
+			{
+				this.node = new PaperParamNode(origNode);
 			}
 			
 			SootMethod m = hp.getNode().belongsTo();
