@@ -294,6 +294,7 @@ public class PaperInterproceduralAnalysis {
 					
 				} else {
 				
+					callAnalyzer.init();
 					callAnalyzer.process(invocation, invocationSummary);
 				}
 				

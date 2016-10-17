@@ -15,6 +15,7 @@ import org.apache.commons.logging.LogFactory;
 import ar.uba.dc.analysis.common.Invocation;
 import ar.uba.dc.analysis.common.Line;
 import ar.uba.dc.analysis.common.SummaryWriter;
+import ar.uba.dc.analysis.escape.graph.PaperNode;
 import ar.uba.dc.analysis.escape.summary.io.xstream.XStreamFactory;
 import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
 import ar.uba.dc.barvinok.expression.DomainSet;
@@ -61,6 +62,7 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 		builder.registerTypeAdapter(Binding.class, new BindingSerializer());
 		
 		builder.registerTypeAdapter(DomainSet.class, new DomainSetSerializer());
+		builder.registerTypeAdapter(PaperNode.class, new PaperNodeSerializer());
 		
 		this.gson = builder.create();
 	}
@@ -321,6 +323,26 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 	        return result;
 	    }
 	}
+	
+	
+	public static class PaperNodeSerializer implements JsonSerializer<PaperNode> 
+	{
+	    
+		public JsonElement serialize(final PaperNode paperNode, final Type type, final JsonSerializationContext context) {
+			JsonObject result = new JsonObject();
+
+			String className = paperNode.getClass().getName();
+			result.addProperty("className", className);
+			
+			JsonElement elem = context.serialize(paperNode);
+			
+			result.add("instance", elem);
+			
+	        return result;
+	    }
+	}
+	
+	
 	
 	
 	/*public static class IntermediateRepresentationParameterSerializer implements JsonSerializer<IntermediateRepresentationParameter> 

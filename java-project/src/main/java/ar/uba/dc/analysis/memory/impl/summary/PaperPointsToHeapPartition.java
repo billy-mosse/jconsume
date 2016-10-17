@@ -18,10 +18,8 @@ public class PaperPointsToHeapPartition implements HeapPartition {
 
 	
 	protected boolean temporal; //creo que lo voy a tirar
-	protected PaperNode node;
-	protected boolean isInside;
-	protected String belongsTo;
-	
+	protected PaperNode node;	
+	public String belongsTo;
 	
 	public PaperNode getNode() {
 		return node;
@@ -85,7 +83,6 @@ public class PaperPointsToHeapPartition implements HeapPartition {
 			
 			SootMethod m = hp.getNode().belongsTo();
 			this.belongsTo = m.getDeclaringClass().toString() + "." +  m.getName();
-			this.isInside = hp.getNode().isInside();
 			
 		}
 		else
@@ -94,6 +91,13 @@ public class PaperPointsToHeapPartition implements HeapPartition {
 		}		
 	}
 	
+	public PaperPointsToHeapPartition(boolean temporal, String belongsTo, PaperNode node) {
+		this.temporal = temporal;
+		this.belongsTo = belongsTo;
+		this.node = node;
+	}
+
+
 	@Override
 	public boolean isTemporal() {
 		// TODO Auto-generated method stub

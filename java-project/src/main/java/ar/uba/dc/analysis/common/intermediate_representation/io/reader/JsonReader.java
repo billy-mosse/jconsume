@@ -45,6 +45,7 @@ import ar.uba.dc.analysis.common.intermediate_representation.io.writer.JsonWrite
 import ar.uba.dc.analysis.common.intermediate_representation.io.writer.JsonWriter.InvocationSerializer;
 import ar.uba.dc.analysis.common.intermediate_representation.io.writer.JsonWriter.LineSerializer;
 import ar.uba.dc.analysis.escape.EscapeSummary;
+import ar.uba.dc.analysis.escape.graph.PaperNode;
 import ar.uba.dc.analysis.escape.summary.io.xstream.XStreamFactory;
 import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
 import ar.uba.dc.barvinok.expression.DomainSet;
@@ -70,6 +71,8 @@ protected Gson gson;
 		builder.registerTypeAdapter(IntermediateRepresentationMethodBody.class, new IntermediateRepresentationMethodBodyDeserializer());
 		builder.registerTypeAdapter(Binding.class, new BindingDeserializer());
 		builder.registerTypeAdapter(DomainSet.class, new DomainSetDeserializer());
+		builder.registerTypeAdapter(PaperNode.class, new PaperNodeDeserializer());
+		builder.registerTypeAdapter(PaperPointsToHeapPartition.class, new PaperPointsToHeapPartitionDeserializer());
 		
 		
 		
@@ -331,6 +334,8 @@ protected Gson gson;
 			
 			
 			PaperPointsToHeapPartition hp = context.deserialize(jobject.get("hp"), PaperPointsToHeapPartition.class);
+			
+			
 			invocation.setHeapPartition(hp);
 			
 			
@@ -353,6 +358,54 @@ protected Gson gson;
 		    return invocation;
 		    
 		}
+	}
+
+		
+	
+	public static class PaperPointsToHeapPartitionDeserializer implements JsonDeserializer<PaperPointsToHeapPartition> 
+	{
+	    
+		@Override
+		public PaperPointsToHeapPartition deserialize(JsonElement json, Type type,
+		        JsonDeserializationContext context) throws JsonParseException {
+			JsonObject jobject = json.getAsJsonObject();
+			PaperPointsToHeapPartition hp;
+
+			String belongsTo = jobject.get("belongsTo").getAsString();
+			boolean temporal = jobject.get("temporal").getAsBoolean();
+			
+			PaperNode node = context.deserialize(jobject.get("node"), PaperNode.class);
+			
+			hp = new PaperPointsToHeapPartition(temporal, belongsTo, node);
+			
+			return hp;
+		
+		}
+	}
+	
+	
+	
+	public static class PaperNodeDeserializer implements JsonDeserializer<PaperNode> 
+	{
+	    
+		@Override
+		public PaperNode deserialize(JsonElement json, Type type,
+		        JsonDeserializationContext context) throws JsonParseException {
+			JsonObject jobject = json.getAsJsonObject();
+			JsonPrimitive prim = (JsonPrimitive) jobject.get("className");
+		    String className = prim.getAsString();
+		    Class<?> klass = null;
+		    try {
+		        klass = Class.forName(className);
+		    } catch (ClassNotFoundException e) {
+		        e.printStackTrace();
+		        throw new JsonParseException(e.getMessage());
+		    }
+		    return context.deserialize(jobject.get("instance"), klass);
+			
+			
+		}
+		
 	}
 	
 	
