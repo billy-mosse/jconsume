@@ -333,6 +333,7 @@ public class Instrumenter  extends BodyTransformer {
 		SootMethod method = expr.getMethod();
 		Integer captureAll = isCaptureAll(callStmt, callStatements);
 		
+
 		EscapeSummary calleeSummary = repository.get(method);
 		List<String> mapping = buildPartitionMapping(callerSummary, calleeSummary, callStmt);
 		

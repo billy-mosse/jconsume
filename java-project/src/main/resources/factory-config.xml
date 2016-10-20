@@ -233,7 +233,10 @@
 								<statementVisitor config-class="ar.uba.dc.analysis.memory.code.impl.visitor.IdStatementVisitor"/> 
 								<calculatorAdapter config-class="ar.uba.dc.analysis.memory.impl.BarvinokCalculatorAdapter" config-factory="custom" config-ref-to="analysis.memory.barvinok-calculator-adapter" />
 							</symbolicCalculator>
-							<repository config-class="ar.uba.dc.analysis.common.SummaryRepository" config-factory="custom" config-ref-to="analysis.memory.paperRepository" />
+							<repository config-class="ar.uba.dc.analysis.common.ChainSummaryRepository" config-factory="container" config-source="analysis.memory.paperRepositories" config-select="hardcoded" config-default="hardcoded" />
+							<callAnalyzer config-class="ar.uba.dc.analysis.memory.callanalyzer.PaperCallAnalyzer" config-factory="custom" />
+
+
 			</paperInterprocedural>
 			
 			<barvinok-calculator-adapter config-class="ar.uba.dc.analysis.memory.impl.BarvinokCalculatorAdapter" config-factory="custom" config-scope="singleton">
@@ -246,7 +249,7 @@
 			
 			<repository config-class="ar.uba.dc.analysis.common.ChainSummaryRepository" config-factory="container" config-source="analysis.memory.repositories" config-select="repository, hardcoded" config-default="hardcoded" />
 
-			<paperRepository config-class="ar.uba.dc.analysis.common.ChainSummaryRepository" config-factory="container" config-source="analysis.memory.paperRepositories" config-select="repository, hardcoded" config-default="hardcoded" />
+			<!--<paperRepository config-class="ar.uba.dc.analysis.common.PaperDefaultSummaryRepository" config-factory="container" config-source="analysis.memory.paperRepositories" config-select="repository, hardcoded" config-default="hardcoded" />-->
 			
 			<repositories>
 				<repository config-class="ar.uba.dc.analysis.memory.impl.summary.repository.FileSystemSummaryRepository">
@@ -269,7 +272,7 @@
 			<paperRepositories>				
 				<hardcoded config-class="ar.uba.dc.analysis.memory.impl.summary.repository.PaperDefaultSummaryRepository" config-factory="custom">
 					<methodInformationProvider config-class="ar.uba.dc.analysis.common.MethodInformationProvider" config-factory="custom" config-ref-to="analysis.common.method-information-provider"/>
-					<summaryFactory config-class="ar.uba.dc.analysis.memory.impl.summary.RuleBasedMemorySummaryFactory" sensitivity="${escape.sensitivity}">
+					<summaryFactory config-class="ar.uba.dc.analysis.memory.impl.summary.PaperRuleBasedMemorySummaryFactory" sensitivity="${escape.sensitivity}">
 						<expressionFactory config-class="ar.uba.dc.analysis.memory.impl.BarvinokParametricExpressionFactory" />
 						<informationProvider config-class="ar.uba.dc.analysis.common.method.information.RuleBasedMethodInformationProvider" config-factory="custom" config-ref-to="analysis.common.method-information-provider"/>
 						<isccSyntax config-class="ar.uba.dc.barvinok.BarvinokSyntax" config-factory="custom" config-ref-to="barvinok.syntax.iscc" />
@@ -395,4 +398,3 @@
 		</callgraph>
 	</soot>
 </config>
-<!-- hola -->

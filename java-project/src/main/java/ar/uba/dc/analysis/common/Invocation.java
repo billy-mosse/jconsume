@@ -30,6 +30,7 @@ public class Invocation {
 		
 	}
 	
+	
 	public Invocation(SootMethod m)
 	{
 		this.class_called = m.getDeclaringClass().toString();

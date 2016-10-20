@@ -33,6 +33,14 @@ public class PaperIntraproceduralAnalysis {
 		
 	}
 
+	/*public PaperIntraproceduralAnalysis() {
+		this.ct = null;
+	}*/
+
+	public PaperIntraproceduralAnalysis() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public PaperMemorySummaryFactory getSummaryFactory() {
 		return summaryFactory;
 	}
@@ -78,6 +86,10 @@ public class PaperIntraproceduralAnalysis {
 	}
 
 	public PaperMemorySummary run(IntermediateRepresentationMethod ir_method) {
+		
+		ParametricExpression MAX_memReqFromCallees = expressionFactory.constant(0L);		
+		ParametricExpression acumResidualsFromCallees = expressionFactory.constant(0L);
+		
 		log.debug(" |- Intraprocedural Analysis for: " + ir_method.getName());
 		
 		PaperMemorySummary summary = summaryFactory.initialSummary(ir_method);
@@ -156,11 +168,20 @@ public class PaperIntraproceduralAnalysis {
 			
 			//TODO: si el summarie no existe o es un default, ver que hacer!!!
 			
-			PaperMemorySummary callSummary = interprocedural.analyseCall(callInvocation);
+			CallSummaryInContext callSummary = interprocedural.analyseCall(callInvocation);
+			
+			ParametricExpression memReqFromCallee = callSummary.getMAX_memoryRequirementMinusRsd();
+			ParametricExpression acumResidualsFromCallee = callSummary.getAcumResiduals();
+					
 			
 			
+			//fruta para ver si anda
+			MAX_memReqFromCallees = sa.supreme(MAX_memReqFromCallees, memReqFromCallee);
 			
 			
+			acumResidualsFromCallees = sa.add(acumResidualsFromCallees, acumResidualsFromCallee);			
+			
+			memReq = MAX_memReqFromCallees;
 			
 			/**
 			 * Tengo que procesar cada posible invocacion y tomar el max del ML y RSD, enchufarle la info de invariante e ir acumulando eso
@@ -172,6 +193,9 @@ public class PaperIntraproceduralAnalysis {
 			 * y creo que puede pasar que el parametro de la invocacion vaya cambiando o algo asi
 			 */
 		}
+		summary.setMemoryRequirement(memReq);
+
+		
 		
 		log.info("Memory of " + ir_method.getName() + " is " + memReq.toString());
 		return summary;

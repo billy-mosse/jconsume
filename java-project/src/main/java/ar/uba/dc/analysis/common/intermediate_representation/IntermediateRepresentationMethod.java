@@ -179,6 +179,12 @@ public class IntermediateRepresentationMethod {
 		this.methodRequirements = methodRequirements;
 	}
 
+	@Override
+	public String toString()
+	{
+		return this.declaringClass  + "." + this.name;
+	}
+	
 	public String toHumanReadableString() {
 		StringBuffer sbf = new StringBuffer();
         

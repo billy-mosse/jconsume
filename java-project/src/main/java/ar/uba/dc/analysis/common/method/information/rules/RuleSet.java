@@ -40,11 +40,11 @@ public class RuleSet {
 	/**
 	 * Un poco mas rapido porque filtra por tipo, pero no usa cache
 	 */
-	public Rule findWithType(final SootMethod method, final String type) {
+	public Rule findWithType(final String methodClass, final String type) {
 		return (Rule) CollectionUtils.find(rules, new Predicate() {
 			public boolean evaluate(Object object) {
 				Rule rule = (Rule) object;
-				return (type == null || rule.getType().equals(type)) && rule.match(method);
+				return (type == null || rule.getType().equals(type)) && rule.match(methodClass);
 			}
 		});
 	}
@@ -52,28 +52,28 @@ public class RuleSet {
 	/**
 	 * Un poco mas rapido porque filtra por tipo, pero no usa cache
 	 */
-	public Rule findWithoutType(final SootMethod method, final String type) {
+	public Rule findWithoutType(final String methodClass, final String type) {
 		return (Rule) CollectionUtils.find(rules, new Predicate() {
 			public boolean evaluate(Object object) {
 				Rule rule = (Rule) object;
-				return (type == null || !rule.getType().equals(type)) && rule.match(method);
+				return (type == null || !rule.getType().equals(type)) && rule.match(methodClass);
 			}
 		});
 	}
 	
-	public Rule find(final SootMethod method) {
+	public Rule find(final String methodClass) {
 		if (cache == null) {
 			cache = new LRUMap(cacheSize);
 		}
 		
-		Rule rule = (Rule) cache.get(method);
+		Rule rule = (Rule) cache.get(methodClass);
 		
 		if (rule == null) {
-			rule = doFind(method);
+			rule = doFind(methodClass);
 			if (rule != null) {
-				cache.put(method, rule);
+				cache.put(methodClass, rule);
 			} else {
-				cache.put(method, Rule.NULL_CONST);
+				cache.put(methodClass, Rule.NULL_CONST);
 			}
 		}
 		
@@ -84,12 +84,12 @@ public class RuleSet {
 		return rule;
 	}	
 	
-	protected Rule doFind(final SootMethod method) {
+	protected Rule doFind(final String methodClass) {
 		return (Rule) CollectionUtils.find(rules, new Predicate() {
 			
 			public boolean evaluate(Object object) {
 				Rule rule = (Rule) object;
-				return rule.match(method);
+				return rule.match(methodClass);
 			}
 		});
 	}

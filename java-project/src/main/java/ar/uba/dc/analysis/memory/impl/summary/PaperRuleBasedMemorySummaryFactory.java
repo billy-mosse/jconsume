@@ -40,7 +40,7 @@ public class PaperRuleBasedMemorySummaryFactory implements SummaryFactory<PaperM
 	@SuppressWarnings("unchecked")
 	@Override
 	public PaperMemorySummary conservativeGraph(IntermediateRepresentationMethod method, boolean withEffect) {
-		Rule rule = informationProvider.findRule(method);
+		Rule rule = informationProvider.IR_findRule(method);
 		ParametricExpression tempMemory = buildExpression(rule.getResources().getTemporal(), rule.getResources().getSyntax());
 		ParametricExpression resMemory = buildExpression(rule.getResources().getResidual(), rule.getResources().getSyntax());
 		ParametricExpression memReq = buildExpression(rule.getResources().getMemoryRequirement(), rule.getResources().getSyntax());
@@ -91,7 +91,7 @@ public class PaperRuleBasedMemorySummaryFactory implements SummaryFactory<PaperM
 
 	@Override
 	public PaperMemorySummary freshGraph(IntermediateRepresentationMethod ir_method) {
-		Rule rule = informationProvider.findRule(ir_method);
+		Rule rule = informationProvider.IR_findRule(ir_method);
 		ParametricExpression tempMemory = buildExpression(rule.getResources().getTemporal(), rule.getResources().getSyntax());
 		ParametricExpression resMemory = buildExpression(rule.getResources().getResidual(), rule.getResources().getSyntax());
 		ParametricExpression memReq = buildExpression(rule.getResources().getMemoryRequirement(), rule.getResources().getSyntax());

@@ -231,8 +231,9 @@ protected Gson gson;
 			DomainSet invariant = context.deserialize(jobject.get("invariant"), DomainSet.class);
 			
 			line.setInvariant(invariant);
-			
+
 			line.setName(jobject.get("name").getAsString());
+			line.setIrName(jobject.get("ir_name").getAsString());
 			
 
 	    	log.debug("Deserializando " + line.getName());

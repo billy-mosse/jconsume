@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
@@ -94,6 +95,14 @@ public class PaperInterproceduralAnalysis {
 	//protected Map<IntermediateRepresentationMethod, List<IntermediateRepresentationMethod> > succs;
 	
 	
+	public PaperCallAnalyzer getCallAnalyzer() {
+		return callAnalyzer;
+	}
+
+	public void setCallAnalyzer(PaperCallAnalyzer callAnalyzer) {
+		this.callAnalyzer = callAnalyzer;
+	}
+
 	public SummaryRepository<PaperMemorySummary, IntermediateRepresentationMethod> getRepository() {
 		return repository;
 	}
@@ -141,7 +150,7 @@ public class PaperInterproceduralAnalysis {
 		{
 			for(Invocation inv : line.getInvocations())
 			{
-				succesors.add(key(inv, line.getName()));
+				succesors.add(key(inv, line.getIrName()));
 			}
 		}
 		
@@ -240,13 +249,17 @@ public class PaperInterproceduralAnalysis {
 		
 		this.data = new HashMap<String, PaperMemorySummary>();
 		
-		for(IntermediateRepresentationMethod ir_method : ordered_methods)
+		ListIterator li = ordered_methods.listIterator(ordered_methods.size());
+			
+		
+		while(li.hasNext())
 		{
+			IntermediateRepresentationMethod ir_method = (IntermediateRepresentationMethod) li.next();
 			try{
 				log.debug("Processing " + key(ir_method) + "...");				
 				
 				PaperIntraproceduralAnalysis analysis = new PaperIntraproceduralAnalysis(this, summaryFactory, countingTheory, expressionFactory, symbolicCalculator);
-				
+				//PaperIntraproceduralAnalysis analysis = new PaperIntraproceduralAnalysis();
 				PaperMemorySummary summary = analysis.run(ir_method);
 				data.put(key(ir_method), summary);				
 			}
@@ -256,15 +269,12 @@ public class PaperInterproceduralAnalysis {
 			}
 		}
 		
-
-		
-
-		
+		log.info("Paper Analisis terminado");
 		
 		//irMethods = irMethods;
 	}
 	
-	public PaperMemorySummary analyseCall(Line callInvocation)
+	public CallSummaryInContext analyseCall(Line callInvocation)
 	{
 		
 		
@@ -272,7 +282,9 @@ public class PaperInterproceduralAnalysis {
 		
 		for(Invocation invocation : callInvocation.getInvocations())
 		{
-			PaperMemorySummary invocationSummary = this.data.get(invocation.getCalled_implementation_signature()); //O algo asi
+			
+			//En realidad es sin los parametros, para que machee bien
+			PaperMemorySummary invocationSummary = this.data.get(key(invocation, callInvocation.getIrName()));
 			
 			if(invocationSummary == null)
 			{
@@ -280,7 +292,7 @@ public class PaperInterproceduralAnalysis {
 				IntermediateRepresentationMethod ir_method = new IntermediateRepresentationMethod();
 				
 				//TODO: el name no es el signature, es otra cosa
-				ir_method.setName(invocation.getCalled_implementation_signature());		
+				ir_method.setName(callInvocation.getIrName());		
 				
 				ir_method.setDeclaringClass(invocation.getClass_called());
 				
@@ -294,29 +306,34 @@ public class PaperInterproceduralAnalysis {
 					
 				} else {
 				
-					callAnalyzer.init();
+					callAnalyzer.init(symbolicCalculator, expressionFactory);
 					callAnalyzer.process(invocation, invocationSummary);
+					
+					CallSummaryInContext result = callAnalyzer.buildSummary(invocation);
+					return result;
+					
+					
 				}
 				
 			}
-			
-			
-			MAX_memreq = symbolicCalculator.supreme(MAX_memreq, invocationSummary.getMemoryRequirement());
-			
-			
-			for(PaperPointsToHeapPartition hp: invocationSummary.getResidualPartitions())
+			else
 			{
+				callAnalyzer.init(symbolicCalculator, expressionFactory);
+				callAnalyzer.process(invocation, invocationSummary);
 				
+				CallSummaryInContext result = callAnalyzer.buildSummary(invocation);
+				return result;
 			}
 			
-
+			
+			//MAX_memreq = symbolicCalculator.supreme(MAX_memreq, invocationSummary.getMemoryRequirement());
 			
 			
+			/*for(PaperPointsToHeapPartition hp: invocationSummary.getResidualPartitions())
+			{
+				
+			}*/
 		}
-		
-		
-		
-		
 		return null;
 	}
 	

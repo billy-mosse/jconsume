@@ -27,10 +27,42 @@ public class Line {
 	
 	private int lineNumber;
 	
+	private String irName;
+	
+	public String getIrName() {
+		return irName;
+	}
+
+	public void setIrName(String irName) {
+		this.irName = irName;
+	}
+
 	public Line()
 	{
 		
 	}
+	
+/*	public String getSimpleName()
+	{
+		
+		//TODO: hacerlo bien
+		
+		
+		//Esto esta muy mal. Guardar para las lines, el verdadero nombre. Seguro se puede conseguir porque 
+		//con el analisis de soot lo hacemos
+		int pos = this.name.lastIndexOf("(");
+		
+		if(pos == -1) return this.name;
+		
+		String simpleName = this.name.substring(0,  pos).trim();
+		
+		int pos2 = simpleName.lastIndexOf(" ");
+		
+		if(pos2==-1) return this.name;
+		
+		simpleName = simpleName.substring(pos2).trim();
+		return simpleName;
+	}*/
 	
 	public Line(Statement stmt, CallGraph callGraph, LifeTimeOracle lifetimeOracle) {
 		
@@ -41,12 +73,15 @@ public class Line {
 		boolean isCallStatement = true;
 		if(stmt instanceof CallStatement)
 		{
-			this.setName((CallStatement)stmt);
+			CallStatement callStmt = (CallStatement)stmt;
+			this.setName(callStmt);
+			this.setIrName(callStmt.getStatement().getInvokeExpr().getMethod().getName());
 		}
 		else
 		{
 			isCallStatement = false;
 			this.setName("new");
+			this.setIrName("new");
 		}
 		
 		
