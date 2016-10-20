@@ -7,10 +7,10 @@ import ar.uba.dc.analysis.memory.summary.MemorySummary;
 
 import soot.SootClass;
 
-public interface ReportDataSource {
+public interface ReportDataSource<S,T> {
 
 	String getMainClass();
 
-	Map<SootClass, SortedSet<MemorySummary>> getClassIndex();
+	Map<S, SortedSet<T>> getClassIndex();
 
 }

@@ -4,23 +4,23 @@ import java.util.Map;
 
 import ar.uba.dc.analysis.memory.summary.MemorySummary;
 
-public interface MemorySummaryInterpreter {
+public interface MemorySummaryInterpreter<T> {
 
 	//public String getTemporal(MemorySummary summary);
 
-	public String getResidual(MemorySummary summary);
+	public String getResidual(T summary);
 	
-	public boolean hasEscapeDetail(MemorySummary summary);
+	public boolean hasEscapeDetail(T summary);
 
-	public String getEscapeDetail(MemorySummary summary);
+	public String getEscapeDetail(T summary);
 	
-	public boolean hasMemoryDetail(MemorySummary summary);
+	public boolean hasMemoryDetail(T summary);
 
-	public String getMemoryDetail(MemorySummary summary);
+	public String getMemoryDetail(T summary);
 	
-	public Map<String, String> getResidualPartitions(MemorySummary summary);
+	public Map<String, String> getResidualPartitions(T summary);
 
-	public String getMemReq(MemorySummary summary);
+	public String getMemReq(T summary);
 
 
 }

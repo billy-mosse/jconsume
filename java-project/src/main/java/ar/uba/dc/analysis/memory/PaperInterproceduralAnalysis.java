@@ -25,6 +25,7 @@ import ar.uba.dc.analysis.common.Line;
 import ar.uba.dc.analysis.common.SummaryReader;
 import ar.uba.dc.analysis.common.SummaryRepository;
 import ar.uba.dc.analysis.common.code.CallStatement;
+import ar.uba.dc.analysis.common.intermediate_representation.IRUtils;
 //import ar.uba.dc.analysis.common.AbstractInterproceduralAnalysis.IntComparator;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
 import ar.uba.dc.analysis.common.intermediate_representation.io.reader.JsonReader;
@@ -150,23 +151,13 @@ public class PaperInterproceduralAnalysis {
 		{
 			for(Invocation inv : line.getInvocations())
 			{
-				succesors.add(key(inv, line.getIrName()));
+				succesors.add(IRUtils.key(inv, line.getIrName()));
 			}
 		}
 		
 		return succesors;
 	}
 	
-	public String key(Invocation invocation, String name)
-	{
-		return invocation.getClass_called() + "." + name; 
-	}
-	
-	
-	public String key(IntermediateRepresentationMethod ir_method)
-	{
-		return ir_method.getDeclaringClass() + "." + ir_method.getName(); 
-	}
 	
 	public class NotDAGException extends Exception {
 		public NotDAGException(String message)
@@ -177,17 +168,18 @@ public class PaperInterproceduralAnalysis {
 	}
 	
 	
+	
 	public void visit(IntermediateRepresentationMethod ir_method) throws NotDAGException
 	{
 		//log.debug("visiting " + key(ir_method) +  "...");
-		if(marked_temporarily.contains(key(ir_method)))
+		if(marked_temporarily.contains(IRUtils.key(ir_method)))
 		{
 			throw new NotDAGException("El grafo no es un DAG. Tiene ciclos");
 		}
 		
-		if(!marked_permanently.contains(key(ir_method)))
+		if(!marked_permanently.contains(IRUtils.key(ir_method)))
 		{
-			marked_temporarily.add(key(ir_method));
+			marked_temporarily.add(IRUtils.key(ir_method));
 			
 			
 			for(String s_name : getSuccesors(ir_method))
@@ -201,10 +193,10 @@ public class PaperInterproceduralAnalysis {
 			}
 			
 			ordered_methods.add(ir_method);
-			marked_temporarily.remove(key(ir_method));
+			marked_temporarily.remove(IRUtils.key(ir_method));
 			
 			//log.debug("+++Adding to set " + key(ir_method));
-			marked_permanently.add(key(ir_method));
+			marked_permanently.add(IRUtils.key(ir_method));
 		}
 	}
 	
@@ -237,7 +229,7 @@ public class PaperInterproceduralAnalysis {
 		log.debug("Listo! Metodos ordenados: ");
 		for(int i = 0; i < ordered_methods.size(); i++)
 		{
-			log.debug(key(ordered_methods.get(i)));
+			log.debug(IRUtils.key(ordered_methods.get(i)));
 		}
 	}
 
@@ -256,12 +248,12 @@ public class PaperInterproceduralAnalysis {
 		{
 			IntermediateRepresentationMethod ir_method = (IntermediateRepresentationMethod) li.next();
 			try{
-				log.debug("Processing " + key(ir_method) + "...");				
+				log.debug("Processing " + IRUtils.key(ir_method) + "...");				
 				
 				PaperIntraproceduralAnalysis analysis = new PaperIntraproceduralAnalysis(this, summaryFactory, countingTheory, expressionFactory, symbolicCalculator);
 				//PaperIntraproceduralAnalysis analysis = new PaperIntraproceduralAnalysis();
 				PaperMemorySummary summary = analysis.run(ir_method);
-				data.put(key(ir_method), summary);				
+				data.put(IRUtils.key(ir_method), summary);				
 			}
 			catch(Error error)
 			{
@@ -284,7 +276,7 @@ public class PaperInterproceduralAnalysis {
 		{
 			
 			//En realidad es sin los parametros, para que machee bien
-			PaperMemorySummary invocationSummary = this.data.get(key(invocation, callInvocation.getIrName()));
+			PaperMemorySummary invocationSummary = this.data.get(IRUtils.key(invocation, callInvocation.getIrName()));
 			
 			if(invocationSummary == null)
 			{
@@ -337,10 +329,8 @@ public class PaperInterproceduralAnalysis {
 		return null;
 	}
 	
-	public void run(CallGraph cg, SootMethodFilter filter, String mainClass){
-		
-		doAnalysis(mainClass);
-		
+	public void run(CallGraph cg, SootMethodFilter filter, String mainClass){		
+		doAnalysis(mainClass);		
 	}
 	
 	protected Map<String, IntermediateRepresentationMethod> methods;
@@ -366,7 +356,7 @@ public class PaperInterproceduralAnalysis {
 			if (fileEntry.exists()) {
 				try {
 					IntermediateRepresentationMethod method = jsonReader.read(new FileReader(fileEntry));
-					methods.put(key(method), method);
+					methods.put(IRUtils.key(method), method);
 					
 				} catch (FileNotFoundException e) {
 					log.error("Error al recuperar el summary de escape para el metodo [" + fileEntry.toString() + "] a xml: " + e.getMessage(), e);

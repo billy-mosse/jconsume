@@ -10,11 +10,16 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import soot.SootMethod;
+import soot.jimple.toolkits.callgraph.CallGraph;
 import ar.uba.dc.analysis.common.SummaryWriter;
+import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
 import ar.uba.dc.analysis.memory.InterproceduralAnalysis;
 import ar.uba.dc.analysis.memory.PaperInterproceduralAnalysis;
+import ar.uba.dc.analysis.memory.impl.madeja.PaperMemorySummary;
 import ar.uba.dc.analysis.memory.impl.report.datasource.AnalysisResultsReportDataSource;
+import ar.uba.dc.analysis.memory.impl.report.datasource.PaperAnalysisResultsReportDataSource;
 import ar.uba.dc.analysis.memory.summary.MemorySummary;
+import ar.uba.dc.soot.SootMethodFilter;
 import ar.uba.dc.util.Timer;
 import ar.uba.dc.util.location.MethodLocationStrategy;
 
@@ -44,7 +49,17 @@ public class PaperMemoryInterproceduralAnalysis extends PaperInterproceduralAnal
 	
 	protected ReportWriter reportWriter;
 	
-
+	//TODO los primeros dos parametros estan de mas :P
+	public void run(CallGraph cg, SootMethodFilter filter, String mainClass){		
+		super.doAnalysis(mainClass);		
+		
+		
+		//Esto probablemente no haga falta, y es costoso.....pero necesito el .getHeads()
+		Map<String, PaperMemorySummary> summaries = new HashMap<String, PaperMemorySummary>(data);
+		
+		reportWriter.write(new PaperAnalysisResultsReportDataSource(mainClass, summaries));
+	}
+	
 	
 	@Override
 	protected void init() {

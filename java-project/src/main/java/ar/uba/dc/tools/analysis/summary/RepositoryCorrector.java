@@ -155,6 +155,10 @@ public class RepositoryCorrector extends BodyTransformer {
 				MethodLocationStrategy strategy = new MethodLocationStrategy() {
 					
 					@Override
+					public String getLocation(IntermediateRepresentationMethod method) {
+						throw new java.lang.UnsupportedOperationException();
+					}
+					@Override
 					public String getLocation(SootMethod method) {
 						return destPath;
 					}

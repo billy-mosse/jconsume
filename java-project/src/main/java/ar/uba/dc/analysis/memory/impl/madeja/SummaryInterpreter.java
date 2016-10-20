@@ -15,7 +15,7 @@ import ar.uba.dc.analysis.memory.summary.MemorySummary;
 import ar.uba.dc.analysis.memory.summary.ResidualSummarizer;
 import ar.uba.dc.barvinok.expression.QuasiPolynomial;
 
-public class SummaryInterpreter  implements MemorySummaryInterpreter {
+public class SummaryInterpreter  implements MemorySummaryInterpreter<MemorySummary> {
 
 	protected ResidualSummarizer<MemorySummary, ParametricExpression> residualSummarizer;
 	

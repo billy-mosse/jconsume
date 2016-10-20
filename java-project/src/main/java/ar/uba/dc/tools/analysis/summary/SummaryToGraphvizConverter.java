@@ -97,6 +97,11 @@ public class SummaryToGraphvizConverter {
 				}
 				
 				@Override
+				public String getLocation(IntermediateRepresentationMethod method) {
+					throw new java.lang.UnsupportedOperationException();
+				}
+				
+				@Override
 				public String getXMLLocation(IntermediateRepresentationMethod method, String mainClass) {
 					throw new java.lang.UnsupportedOperationException();
 
@@ -142,6 +147,13 @@ public class SummaryToGraphvizConverter {
 		public void convert(File summaryFile) throws FileNotFoundException {
 			final String destPath = StringUtils.chomp(summaryFile.getAbsolutePath(), ".xml") + ".dot";  
 			MethodLocationStrategy strategy = new MethodLocationStrategy() {
+				
+				
+				@Override
+				public String getLocation(IntermediateRepresentationMethod method) {
+					throw new java.lang.UnsupportedOperationException();
+				}
+				
 				
 				@Override
 				public String getLocation(SootMethod method) {

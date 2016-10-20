@@ -17,6 +17,12 @@ public class PackageLocationStrategy extends AbstractMethodLocationStrategy {
 	}
 	
 	@Override
+	public String getLocation(IntermediateRepresentationMethod method) {
+		throw new java.lang.UnsupportedOperationException();
+	}
+	
+	
+	@Override
 	public String getXMLLocation(IntermediateRepresentationMethod method, String mainClass) {
 		throw new java.lang.UnsupportedOperationException();
 

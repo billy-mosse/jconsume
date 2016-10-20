@@ -31,6 +31,8 @@ public interface MethodLocationStrategy {
 	 * El contenido del archivo dependera de lo que se este buscando.
 	 */
 	public String getLocation(SootMethod method);
+	
+	public String getLocation(IntermediateRepresentationMethod method);
 
 	//public String getIRLocation(SootMethod method);
 	public String getXMLLocation(IntermediateRepresentationMethod method, String mainClass);

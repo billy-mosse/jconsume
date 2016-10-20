@@ -14,7 +14,7 @@ import soot.SootMethod;
 import ar.uba.dc.analysis.memory.impl.report.html.ReportDataSource;
 import ar.uba.dc.analysis.memory.summary.MemorySummary;
 
-public class AnalysisResultsReportDataSource implements ReportDataSource {
+public class AnalysisResultsReportDataSource implements ReportDataSource<SootClass, MemorySummary> {
 
 	private static Log log = LogFactory.getLog(AnalysisResultsReportDataSource.class);
 	
