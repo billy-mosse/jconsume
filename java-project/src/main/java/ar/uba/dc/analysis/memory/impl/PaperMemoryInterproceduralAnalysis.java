@@ -47,7 +47,7 @@ public class PaperMemoryInterproceduralAnalysis extends PaperInterproceduralAnal
 	
 	protected boolean writeUnanalyzedSummariesInReport;
 	
-	protected ReportWriter reportWriter;
+	protected ReportWriter<String, PaperMemorySummary> reportWriter;
 	
 	//TODO los primeros dos parametros estan de mas :P
 	public void run(CallGraph cg, SootMethodFilter filter, String mainClass){		

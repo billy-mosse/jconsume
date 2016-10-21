@@ -23,8 +23,7 @@ public class IntermediateRepresentationMethodBuilder {
 	private InvariantProvider invariantProvider;
 	protected RAMSummaryRepository data;
 
-	
-	
+
 	public IntermediateRepresentationMethodBuilder (InvariantProvider invariantProvider, RAMSummaryRepository data, CallGraph callGraph, LifeTimeOracle lifetimeOracle) {
 		this.invariantProvider = invariantProvider;
 		this.irbody_builder = new IntermediateRepresentationBodyBuilder(invariantProvider, callGraph, lifetimeOracle);
@@ -45,7 +44,16 @@ public class IntermediateRepresentationMethodBuilder {
 		log.debug("____Construyendo " + m.toString());
 
 		
+	
+		
+		
 		this.irmethod = new IntermediateRepresentationMethod(m, order);
+		
+		int n = m.getNumber();
+		
+		this.irmethod.setNumber(n);
+		this.irmethod.setDeclaration(m.getDeclaration());
+		this.irmethod.setSubSignature(m.getSubSignature());
 		
 
 		this.irmethod.setMethodRequirements(invariantProvider.getRequeriments(m));

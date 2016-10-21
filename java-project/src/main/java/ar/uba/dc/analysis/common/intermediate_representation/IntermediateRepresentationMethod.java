@@ -49,6 +49,43 @@ public class IntermediateRepresentationMethod {
 	
 	protected boolean isReturnRefLikeType;
 	
+	protected int number;
+	protected String declaration;
+	
+	protected String subSignature;
+
+	
+	
+	public String getSubSignature() {
+		return subSignature;
+	}
+
+
+	public void setSubSignature(String subSignature) {
+		this.subSignature = subSignature;
+	}
+
+
+	public int getNumber() {
+		return number;
+	}
+
+
+	public void setNumber(int number) {
+		this.number = number;
+	}
+
+
+	public String getDeclaration() {
+		return declaration;
+	}
+
+
+	public void setDeclaration(String declaration) {
+		this.declaration = declaration;
+	}
+	
+	
 	public boolean isReturnRefLikeType()
 	{
 		return this.isReturnRefLikeType;

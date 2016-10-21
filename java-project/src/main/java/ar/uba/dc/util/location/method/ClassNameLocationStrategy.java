@@ -18,8 +18,8 @@ public class ClassNameLocationStrategy extends AbstractMethodLocationStrategy {
 	}
 	
 	@Override
-	public String getLocation(IntermediateRepresentationMethod method) {
-		throw new java.lang.UnsupportedOperationException();
+	public String getLocation(IntermediateRepresentationMethod ir_method) {
+		return getBasePath() + ir_method.getDeclaringClass() + "/" + processMethodSignature(ir_method.getSubSignature()) + getExtension();
 	}
 	
 	public String getLocation(String type, IntermediateRepresentationMethod ir_method, String mainClass)

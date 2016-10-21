@@ -157,14 +157,18 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 	        //TOOD: falta ver que pasa con method requirements
 	        
 	        //y el binding
-	        
+
 	        result.add("declaring_class", new JsonPrimitive(ir_method.getDeclaringClass()));
+
+	        result.add("number", new JsonPrimitive(ir_method.getNumber()));
+	        result.add("declaration", new JsonPrimitive(ir_method.getDeclaration()));
+	        result.add("sub_signature", new JsonPrimitive(ir_method.getSubSignature()));
 	        
 	        
 	        
 	        result.add("relevant_parameters", relevant_parameters);
 	        
-	        result.add("isReturnRefLikeType", new JsonPrimitive(ir_method.isReturnRefLikeType()));
+	        result.add("is_return_ref_like_type", new JsonPrimitive(ir_method.isReturnRefLikeType()));
 	        
 	        
 	        

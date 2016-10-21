@@ -31,7 +31,7 @@ public class PaperAnalysisResultsReportDataSource implements ReportDataSource<St
 	@Override
 	@SuppressWarnings("unchecked")
 	public Map<String, SortedSet<PaperMemorySummary>> getClassIndex() {
-		Map<String, SortedSet<PaperMemorySummary>> summariesGroupedByClass = new TreeMap<String, SortedSet<PaperMemorySummary>>(new BeanComparator("name"));
+		Map<String, SortedSet<PaperMemorySummary>> summariesGroupedByClass = new TreeMap<String, SortedSet<PaperMemorySummary>>();
 		
 		for (PaperMemorySummary summary : results.values()) {
 			log.debug("Sorting summary for [" + summary.getTarget() + "]");

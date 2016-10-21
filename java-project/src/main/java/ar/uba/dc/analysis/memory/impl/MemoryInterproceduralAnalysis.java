@@ -9,6 +9,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import soot.SootClass;
 import soot.SootMethod;
 import ar.uba.dc.analysis.common.SummaryWriter;
 import ar.uba.dc.analysis.memory.InterproceduralAnalysis;
@@ -40,7 +41,7 @@ public class MemoryInterproceduralAnalysis extends InterproceduralAnalysis {
 	
 	protected boolean writeUnanalyzedSummariesInReport;
 	
-	protected ReportWriter reportWriter;
+	protected ReportWriter<SootClass, MemorySummary> reportWriter;
 	
 	@Override
 	protected void init() {

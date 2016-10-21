@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
+import org.apache.commons.lang.NotImplementedException;
 import org.apache.commons.lang.StringUtils;
 
 import ar.uba.dc.analysis.memory.HeapPartition;
@@ -108,12 +109,15 @@ public class PaperSummaryInterpreter  implements MemorySummaryInterpreter<PaperM
 	public Map<String, String> getResidualPartitions(PaperMemorySummary summary) {
 		
 		Map<String, String> residual = new LinkedHashMap<String, String>();
-		for (PaperPointsToHeapPartition part : summary.getResidualPartitions()) {
+		
+		//TODO como paso de hp a madejaHp?
+		throw new NotImplementedException();
+		/*for (PaperPointsToHeapPartition part : summary.getResidualPartitions()) {
 			MadejaHeapPartition hp = (MadejaHeapPartition) part;
 			residual.put(hp.key(), this.expressionToString(summary.getResidual(hp)));
-		}
+		}*/
 		
-		return  residual;
+		//return  residual;
 	}
 
 	/*@Override
@@ -125,7 +129,7 @@ public class PaperSummaryInterpreter  implements MemorySummaryInterpreter<PaperM
 	
 	
 	@Override
-	public String getMemReq(MemorySummary summary) {
+	public String getMemReq(PaperMemorySummary summary) {
 		
 		//BILLY, cambiado
 		ParametricExpression memReq = this.memReqSummarizer.getMemReq(summary);

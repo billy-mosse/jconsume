@@ -236,6 +236,21 @@
 							<repository config-class="ar.uba.dc.analysis.common.ChainSummaryRepository" config-factory="container" config-source="analysis.memory.paperRepositories" config-select="hardcoded" config-default="hardcoded" />
 							<callAnalyzer config-class="ar.uba.dc.analysis.memory.callanalyzer.PaperCallAnalyzer" config-factory="custom" />
 
+							<reportWriter config-class="ar.uba.dc.analysis.memory.impl.report.html.HtmlPaperReportWriter"
+							  propertiesFileName="velocity.properties" 
+							  template="site/peak.vm"
+							  inputFolder="site"
+							  outputFolder="${memory.report.output.dir}">
+								<interpreter config-class="ar.uba.dc.analysis.memory.impl.report.html.EscapeBasedPaperMemorySummaryInterpreter">
+									<residualSummarizer config-class="ar.uba.dc.analysis.memory.summary.PaperResidualSummarizer" config-factory="custom" config-ref-to="analysis.memory.paper-residual-summarizer" />
+									<memReqSummarizer config-class="ar.uba.dc.analysis.memory.summary.PaperMemReqSummarizer" config-factory="custom" config-ref-to="analysis.memory.paper-memreq-summarizer" />
+									<escapeLocationStrategy config-class="ar.uba.dc.util.location.method.${escape.summary.output.layout}LocationStrategy" extension=".gif" basePath="${escape.summary.output.dir}" />
+									<memoryLocationStrategy config-class="ar.uba.dc.util.location.method.${memory.summary.output.layout}LocationStrategy" extension=".gif" basePath="${memory.summary.output.dir}" />
+									<reportEscapeLocationStrategy config-class="ar.uba.dc.util.location.method.FolderLocationStrategy" extension=".gif" basePath="${memory.report.output.dir}/images/escape" />
+									<reportMemoryLocationStrategy config-class="ar.uba.dc.util.location.method.FolderLocationStrategy" extension=".gif" basePath="${memory.report.output.dir}/images/memory" />
+								</interpreter>
+							</reportWriter>
+
 
 			</paperInterprocedural>
 			
@@ -330,10 +345,19 @@
 			</polymorphism>
 			
 			<residual-summarizer config-class="ar.uba.dc.analysis.memory.summary.ResidualSummarizer" config-factory="custom" config-ref-to="analysis.memory.residual-summarizers.${memory.residual.summarizer}" />
+
+			<paper-residual-summarizer config-class="ar.uba.dc.analysis.memory.summary.PaperResidualSummarizer" config-factory="custom" config-ref-to="analysis.memory.paper-residual-summarizers.add-all" />
+
+
 			<memreq-summarizer config-class="ar.uba.dc.analysis.memory.summary.impl.AddAllMemReqSummarizer" config-factory="custom" config-scope="singleton">
 				<expressionFactory config-class="ar.uba.dc.analysis.memory.impl.BarvinokParametricExpressionFactory" />
 				<symbolicCalculator config-class="ar.uba.dc.analysis.memory.SymbolicCalculator" config-factory="custom" config-ref-to="analysis.memory.barvinok-calculator-adapter" />
 			</memreq-summarizer>
+
+			<paper-memreq-summarizer config-class="ar.uba.dc.analysis.memory.summary.impl.PaperAddAllMemReqSummarizer" config-factory="custom" config-scope="singleton">
+				<expressionFactory config-class="ar.uba.dc.analysis.memory.impl.BarvinokParametricExpressionFactory" />
+				<symbolicCalculator config-class="ar.uba.dc.analysis.memory.SymbolicCalculator" config-factory="custom" config-ref-to="analysis.memory.barvinok-calculator-adapter" />
+			</paper-memreq-summarizer>
 			
 			<residual-summarizers>
 				<add-all config-class="ar.uba.dc.analysis.memory.summary.impl.AddAllResidualSummarizer" config-factory="custom" config-scope="singleton">
@@ -345,6 +369,17 @@
 					<symbolicCalculator config-class="ar.uba.dc.analysis.memory.SymbolicCalculator" config-factory="custom" config-ref-to="analysis.memory.barvinok-calculator-adapter" />
 				</color>
 			</residual-summarizers>
+
+			<paper-residual-summarizers>
+				<add-all config-class="ar.uba.dc.analysis.memory.summary.impl.PaperAddAllResidualSummarizer" config-factory="custom" config-scope="singleton">
+					<expressionFactory config-class="ar.uba.dc.analysis.memory.impl.BarvinokParametricExpressionFactory" />
+					<symbolicCalculator config-class="ar.uba.dc.analysis.memory.SymbolicCalculator" config-factory="custom" config-ref-to="analysis.memory.barvinok-calculator-adapter" />
+				</add-all>
+				<color config-class="ar.uba.dc.analysis.memory.impl.summary.PaperEscapeBasedResidualSummarizer">
+					<expressionFactory config-class="ar.uba.dc.analysis.memory.impl.BarvinokParametricExpressionFactory" />
+					<symbolicCalculator config-class="ar.uba.dc.analysis.memory.SymbolicCalculator" config-factory="custom" config-ref-to="analysis.memory.barvinok-calculator-adapter" />
+				</color>
+			</paper-residual-summarizers>
 		</memory>
 	</analysis>
 

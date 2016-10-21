@@ -15,13 +15,14 @@ import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 
 import ar.uba.dc.analysis.memory.impl.ReportWriter;
+import ar.uba.dc.analysis.memory.impl.madeja.PaperMemorySummary;
 import ar.uba.dc.analysis.memory.summary.MemorySummary;
 import soot.SootClass;
 import soot.SootMethod;
 
-public class HtmlReportWriter implements ReportWriter<SootClass, MemorySummary> {
+public class HtmlPaperReportWriter implements ReportWriter<String, PaperMemorySummary> {
 
-	private static Log log = LogFactory.getLog(HtmlReportWriter.class);
+	private static Log log = LogFactory.getLog(HtmlPaperReportWriter.class);
 	
 	private String propertiesFileName;
 	
@@ -33,10 +34,10 @@ public class HtmlReportWriter implements ReportWriter<SootClass, MemorySummary> 
 	
 	private boolean initialized = false;
 	
-	private MemorySummaryInterpreter<MemorySummary> interpreter;
+	private MemorySummaryInterpreter<PaperMemorySummary> interpreter;
 	
 	@Override
-	public void write(ReportDataSource<SootClass, MemorySummary> ds) {
+	public void write(ReportDataSource<String, PaperMemorySummary> ds) {
 		init();	
 
 		VelocityContext context = buildContext(ds);
@@ -89,7 +90,7 @@ public class HtmlReportWriter implements ReportWriter<SootClass, MemorySummary> 
 		return true;
 	}
 	
-	protected VelocityContext buildContext(ReportDataSource<SootClass, MemorySummary> ds) {
+	protected VelocityContext buildContext(ReportDataSource<String, PaperMemorySummary> ds) {
 		VelocityContext context = new VelocityContext();
 		context.put("dateFormat", new SimpleDateFormat());
 		context.put("format","dd-MM-yyyy");
@@ -101,7 +102,7 @@ public class HtmlReportWriter implements ReportWriter<SootClass, MemorySummary> 
         context.put("mainClass", ds.getMainClass());
        	context.put("classIndex", ds.getClassIndex());
         
-       	context.put("helper", new HtmlReportHelper(interpreter));
+       	context.put("helper", new HtmlPaperReportHelper(interpreter));
 		
 		return context;
 	}
@@ -122,7 +123,7 @@ public class HtmlReportWriter implements ReportWriter<SootClass, MemorySummary> 
 		this.outputFolder = outputFolder;
 	}
 
-	public void setInterpreter(MemorySummaryInterpreter<MemorySummary> interpreter) {
+	public void setInterpreter(MemorySummaryInterpreter<PaperMemorySummary> interpreter) {
 		this.interpreter = interpreter;
 	}
 }

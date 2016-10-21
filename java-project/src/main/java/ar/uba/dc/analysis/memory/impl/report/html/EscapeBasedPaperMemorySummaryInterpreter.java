@@ -103,7 +103,7 @@ public class EscapeBasedPaperMemorySummaryInterpreter implements MemorySummaryIn
 		} catch (IOException e) {}
 	}
 	
-	public void setResidualSummarizer(ResidualSummarizer<PaperMemorySummary, ParametricExpression> residualSummarizer) {
+	public void setResidualSummarizer(PaperResidualSummarizer<PaperMemorySummary, ParametricExpression> residualSummarizer) {
 		this.residualSummarizer = residualSummarizer;
 	}
 
@@ -125,12 +125,12 @@ public class EscapeBasedPaperMemorySummaryInterpreter implements MemorySummaryIn
 	
 	
 
-	public MemReqSummarizer<PaperMemorySummary, ParametricExpression> getMemReqSummarizer() {
+	public PaperMemReqSummarizer<PaperMemorySummary, ParametricExpression> getMemReqSummarizer() {
 		return memReqSummarizer;
 	}
 
 	public void setMemReqSummarizer(
-			MemReqSummarizer<PaperMemorySummary, ParametricExpression> memReqSummarizer) {
+			PaperMemReqSummarizer<PaperMemorySummary, ParametricExpression> memReqSummarizer) {
 		this.memReqSummarizer = memReqSummarizer;
 	}
 

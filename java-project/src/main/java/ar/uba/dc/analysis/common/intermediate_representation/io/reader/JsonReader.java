@@ -152,7 +152,13 @@ protected Gson gson;
 		    
 		    m.setReturnType(jobject.get("return_type").getAsString());
 		    
-		    m.setIsReturnRefLikeType(jobject.get("isReturnRefLikeType").getAsBoolean());
+		    m.setIsReturnRefLikeType(jobject.get("is_return_ref_like_type").getAsBoolean());
+		    
+
+		    m.setSubSignature(jobject.get("sub_signature").getAsString());
+
+		    m.setNumber(jobject.get("number").getAsInt());
+		    m.setDeclaration(jobject.get("declaration").getAsString());
 		    
 		    
 		    IntermediateRepresentationMethodBody body = context.deserialize(jobject.get("body"), IntermediateRepresentationMethodBody.class);

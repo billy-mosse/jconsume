@@ -23,6 +23,8 @@ import ar.uba.dc.analysis.common.SummaryRepository;
 import ar.uba.dc.analysis.common.code.CallStatement;
 import ar.uba.dc.analysis.common.code.MethodDecorator;
 import ar.uba.dc.analysis.memory.expression.ParametricExpressionFactory;
+import ar.uba.dc.analysis.memory.impl.ReportWriter;
+import ar.uba.dc.analysis.memory.impl.madeja.PaperMemorySummary;
 import ar.uba.dc.analysis.memory.summary.MemorySummary;
 import ar.uba.dc.analysis.memory.summary.MemorySummaryFactory;
 import ar.uba.dc.util.Timer;
@@ -70,6 +72,8 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis {
 	private long analyzedNewStaments = 0;
 	
 	private long analyzedMethods = 0;
+	
+	protected ReportWriter<String, PaperMemorySummary> reportWriter;
 	
 	@Override
 	protected void doAnalysis() {

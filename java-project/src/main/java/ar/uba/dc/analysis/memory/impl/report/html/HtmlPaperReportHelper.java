@@ -5,58 +5,59 @@ import java.util.Map;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 
+import ar.uba.dc.analysis.memory.impl.madeja.PaperMemorySummary;
 import ar.uba.dc.analysis.memory.summary.MemorySummary;
 
 public class HtmlPaperReportHelper {
 
-	private MemorySummaryInterpreter interpreter;
+	private MemorySummaryInterpreter<PaperMemorySummary> interpreter;
 	
-	public HtmlPaperReportHelper(MemorySummaryInterpreter interpreter) {
+	public HtmlPaperReportHelper(MemorySummaryInterpreter<PaperMemorySummary> interpreter) {
 		this.interpreter = interpreter;
 	}
 	
-	public String getName(MemorySummary summary) {
+	public String getName(PaperMemorySummary summary) {
 		return StringEscapeUtils.escapeHtml(summary.getTarget().getDeclaration());
 	}
 	
-	public String getLinkId(MemorySummary summary) {
-		return summary.getTarget().getDeclaringClass().getName() + summary.getTarget().getNumber();
+	public String getLinkId(PaperMemorySummary summary) {
+		return summary.getTarget().getDeclaringClass() + summary.getTarget().getNumber();
 	}
 	
-	public String getLink(MemorySummary summary) {
-		return "#" + summary.getTarget().getDeclaringClass().getName() + summary.getTarget().getNumber();
+	public String getLink(PaperMemorySummary summary) {
+		return "#" + summary.getTarget().getDeclaringClass() + summary.getTarget().getNumber();
 	}
 	
-	public String getFormalParameters(MemorySummary summary) {
+	public String getFormalParameters(PaperMemorySummary summary) {
 		return StringUtils.join(summary.getParameters(), ", ");
 	}
 	
-	public String getResidual(MemorySummary summary) {
+	public String getResidual(PaperMemorySummary summary) {
 		return interpreter.getResidual(summary);
 	}
 
-	public String getMemReq(MemorySummary summary) {
+	public String getMemReq(PaperMemorySummary summary) {
 		return interpreter.getMemReq(summary);
 	}
 
 	
-	public boolean hasEscapeDetail(MemorySummary summary) {
+	public boolean hasEscapeDetail(PaperMemorySummary summary) {
 		return interpreter.hasEscapeDetail(summary);
 	}
 	
-	public String getEscapeDetail(MemorySummary summary) {
+	public String getEscapeDetail(PaperMemorySummary summary) {
 		return interpreter.getEscapeDetail(summary);
 	}
 	
-	public boolean hasMemoryDetail(MemorySummary summary) {
+	public boolean hasMemoryDetail(PaperMemorySummary summary) {
 		return interpreter.hasMemoryDetail(summary);
 	}
 	
-	public String getMemoryDetail(MemorySummary summary) {
+	public String getMemoryDetail(PaperMemorySummary summary) {
 		return interpreter.getMemoryDetail(summary);
 	}
 	
-	public Map<String, String> getResidualPartitions(MemorySummary summary) {
+	public Map<String, String> getResidualPartitions(PaperMemorySummary summary) {
 		return interpreter.getResidualPartitions(summary);
 	}
 }

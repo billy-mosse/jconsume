@@ -9,9 +9,9 @@ import ar.uba.dc.analysis.memory.summary.MemorySummary;
 
 public class HtmlReportHelper {
 
-	private MemorySummaryInterpreter interpreter;
+	private MemorySummaryInterpreter<MemorySummary> interpreter;
 	
-	public HtmlReportHelper(MemorySummaryInterpreter interpreter) {
+	public HtmlReportHelper(MemorySummaryInterpreter<MemorySummary> interpreter) {
 		this.interpreter = interpreter;
 	}
 	

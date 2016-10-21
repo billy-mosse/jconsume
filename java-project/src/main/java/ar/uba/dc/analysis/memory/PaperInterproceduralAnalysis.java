@@ -241,7 +241,7 @@ public class PaperInterproceduralAnalysis {
 		
 		this.data = new HashMap<String, PaperMemorySummary>();
 		
-		ListIterator li = ordered_methods.listIterator(ordered_methods.size());
+		ListIterator<IntermediateRepresentationMethod> li = ordered_methods.listIterator();
 			
 		
 		while(li.hasNext())
