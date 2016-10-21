@@ -219,7 +219,7 @@
 		#foreach( $clazz in $classIndex.keySet() )
 			#set ($methodList = $classIndex.get($clazz))
 			<tr class="b">
-				<td>$clazz.name</td>
+				<td>$clazz</td>
 				<td>
 					<ul class="methodList">
 					#foreach($method in $methodList)
@@ -243,7 +243,7 @@
 	
 	#foreach( $clazz in $classIndex.keySet() )
 		<div class="section">
-			<h3>$clazz.name</h3>
+			<h3>$clazz</h3>
 		#set ($methodList = $classIndex.get($clazz))
 			#foreach($method in $methodList)
 				#methodSummary( $method )	

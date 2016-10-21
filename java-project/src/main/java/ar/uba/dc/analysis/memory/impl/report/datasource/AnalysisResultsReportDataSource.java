@@ -35,6 +35,7 @@ public class AnalysisResultsReportDataSource implements ReportDataSource<SootCla
 		for (MemorySummary summary : results.values()) {
 			log.debug("Sorting summary for [" + summary.getTarget() + "]");
 			SootClass clazz = summary.getTarget().getDeclaringClass();
+			
 			SortedSet<MemorySummary> summariesOfClass = summariesGroupedByClass.get(clazz);
 			if (summariesOfClass == null) {
 				summariesOfClass = new TreeSet<MemorySummary>(new BeanComparator("target.declaration"));

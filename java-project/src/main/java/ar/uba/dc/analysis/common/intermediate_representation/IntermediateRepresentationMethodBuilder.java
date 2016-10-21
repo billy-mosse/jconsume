@@ -11,6 +11,7 @@ import ar.uba.dc.analysis.escape.summary.repository.RAMSummaryRepository;
 import ar.uba.dc.analysis.memory.LifeTimeOracle;
 import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.invariant.InvariantProvider;
+import soot.SootClass;
 import soot.SootMethod;
 import soot.jimple.toolkits.callgraph.CallGraph;
 
@@ -45,7 +46,8 @@ public class IntermediateRepresentationMethodBuilder {
 
 		
 	
-		
+		SootClass clazz = m.getDeclaringClass();
+		String s = clazz.getName();
 		
 		this.irmethod = new IntermediateRepresentationMethod(m, order);
 		
