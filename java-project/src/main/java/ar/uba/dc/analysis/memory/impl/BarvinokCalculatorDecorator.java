@@ -3,9 +3,11 @@ package ar.uba.dc.analysis.memory.impl;
 import java.util.HashMap;
 import java.util.Map;
 
+import ar.uba.dc.analysis.common.Invocation;
 import ar.uba.dc.analysis.common.code.Statement;
 import ar.uba.dc.analysis.common.code.StatementVisitor;
 import ar.uba.dc.analysis.memory.expression.ParametricExpression;
+import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.barvinok.expression.PiecewiseQuasipolynomial;
 import ar.uba.dc.barvinok.expression.QuasiPolynomial;
 
@@ -46,6 +48,11 @@ public class BarvinokCalculatorDecorator extends BarvinokCalculatorAdapter {
 			Statement stmt) {
 		return calculatorAdapter.maximize(target, stmt);
 	}
+	
+	public ParametricExpression maximize(ParametricExpression target,
+			Invocation invocation, DomainSet invariant) {
+		return calculatorAdapter.maximize(target, invocation, invariant);
+	}
 
 	
 	public ParametricExpression summateIfClassCalledChangedDuringLoop(ParametricExpression target, ParametricExpression totalResiduals, Statement stmt) {
@@ -64,6 +71,13 @@ public class BarvinokCalculatorDecorator extends BarvinokCalculatorAdapter {
 			return this.summateOverride.get(stamentId);
 
 		return calculatorAdapter.summate(target, stmt);
+	}
+	
+	
+	public ParametricExpression summate(ParametricExpression target, Invocation invocation, DomainSet invariant) {
+
+
+		return calculatorAdapter.summate(target, invocation, invariant);
 	}
 
 	private boolean override(String stamentId) {

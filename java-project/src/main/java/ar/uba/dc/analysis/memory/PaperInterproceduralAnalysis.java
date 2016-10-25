@@ -266,7 +266,7 @@ public class PaperInterproceduralAnalysis {
 		//irMethods = irMethods;
 	}
 	
-	public CallSummaryInContext analyseCall(Line callInvocation)
+	public PaperCallSummaryInContext analyseCall(Line callInvocation)
 	{
 		
 		
@@ -299,9 +299,9 @@ public class PaperInterproceduralAnalysis {
 				} else {
 				
 					callAnalyzer.init(symbolicCalculator, expressionFactory);
-					callAnalyzer.process(invocation, invocationSummary);
+					callAnalyzer.process(invocation, invocationSummary, callInvocation.getInvariant());
 					
-					CallSummaryInContext result = callAnalyzer.buildSummary(invocation);
+					PaperCallSummaryInContext result = callAnalyzer.buildSummary(invocation);
 					return result;
 					
 					
@@ -311,9 +311,9 @@ public class PaperInterproceduralAnalysis {
 			else
 			{
 				callAnalyzer.init(symbolicCalculator, expressionFactory);
-				callAnalyzer.process(invocation, invocationSummary);
+				callAnalyzer.process(invocation, invocationSummary, callInvocation.getInvariant());
 				
-				CallSummaryInContext result = callAnalyzer.buildSummary(invocation);
+				PaperCallSummaryInContext result = callAnalyzer.buildSummary(invocation);
 				return result;
 			}
 			

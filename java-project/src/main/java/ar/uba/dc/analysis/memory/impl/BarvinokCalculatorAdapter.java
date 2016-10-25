@@ -10,6 +10,7 @@ import soot.jimple.AssignStmt;
 
 import ar.uba.dc.analysis.memory.CountingTheory;
 import ar.uba.dc.analysis.memory.SymbolicCalculator;
+import ar.uba.dc.analysis.common.Invocation;
 import ar.uba.dc.analysis.common.Line;
 import ar.uba.dc.analysis.common.code.NewStatement;
 import ar.uba.dc.analysis.common.code.Statement;
@@ -125,6 +126,19 @@ public class BarvinokCalculatorAdapter implements CountingTheory, SymbolicCalcul
 		
 		return expressionFactory.polynomial(result);
 	}
+	
+	@Override
+	public ParametricExpression maximize(ParametricExpression target, Invocation invocation, DomainSet invariant) {
+		PiecewiseQuasipolynomial polynomial = ((BarvinokParametricExpression) target).expr;
+		
+		PiecewiseQuasipolynomial result = calculator.upperBound(polynomial, invariant);
+		
+		if (log.isDebugEnabled()) {
+			log.debug("maximize(" + polynomial + ", " + invariant + ") = " + result);
+		}
+		
+		return expressionFactory.polynomial(result);
+	}
 
 	
 	
@@ -146,7 +160,12 @@ public class BarvinokCalculatorAdapter implements CountingTheory, SymbolicCalcul
 	public ParametricExpression summate(ParametricExpression target, Statement stmt) {		
 		DomainSet inv = invariantProvider.getInvariantWithBinding(stmt, InvariantProvider.Operation.SUMMATE);
 		return summateWithInvariant(target,stmt, inv);
-	}
+	}	
+	
+	@Override
+	public ParametricExpression summate(ParametricExpression target, Invocation invocation, DomainSet invariant) {
+		return summateWithInvariant(target, invocation, invariant);
+		}
 	
 	
 	public ParametricExpression summateWithInvariant(ParametricExpression target, Statement stmt, DomainSet inv) {
@@ -168,6 +187,21 @@ public class BarvinokCalculatorAdapter implements CountingTheory, SymbolicCalcul
 				log.debug("summate(" + polynomial + ", " + inv + ") = " + result);
 			}
 		}
+		return expressionFactory.polynomial(result);
+	}
+	
+	
+	public ParametricExpression summateWithInvariant(ParametricExpression target, Invocation invocation, DomainSet inv) {
+		PiecewiseQuasipolynomial polynomial = ((BarvinokParametricExpression) target).expr;
+		PiecewiseQuasipolynomial result = null;		
+		//FIXME esto es un hack para un ejemplo. Hacer un adapter con un file de rules para sobreescribir expresiones
+		
+		 result = calculator.sumConsumtion(polynomial, inv);
+		
+		if (log.isDebugEnabled()) {
+			log.debug("summate(" + polynomial + ", " + inv + ") = " + result);
+		}
+	
 		return expressionFactory.polynomial(result);
 	}
 
@@ -200,5 +234,5 @@ public class BarvinokCalculatorAdapter implements CountingTheory, SymbolicCalcul
 	public void setExpressionFactory(
 			BarvinokParametricExpressionFactory expressionFactory) {
 		this.expressionFactory = expressionFactory;
-	}
+	}	
 }

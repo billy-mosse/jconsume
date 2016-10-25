@@ -15,6 +15,7 @@ import org.apache.commons.logging.LogFactory;
 
 import soot.SootClass;
 import soot.SootMethod;
+import ar.uba.dc.analysis.common.Invocation;
 import ar.uba.dc.analysis.common.code.CallStatement;
 import ar.uba.dc.analysis.common.code.NewStatement;
 import ar.uba.dc.analysis.common.code.Statement;
@@ -159,4 +160,5 @@ public class SimpleInvariantProvider implements InvariantProvider, StatementVisi
 	public void setReader(SimpleReader reader) {
 		this.reader = reader;
 	}
+
 }

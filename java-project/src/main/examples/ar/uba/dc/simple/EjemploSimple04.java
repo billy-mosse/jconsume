@@ -77,7 +77,26 @@ public class EjemploSimple04 {
 		for(int i = 0;i<values.length ;i++)  {
 			sum += values[i].intValue(); //intValue esta devolviendo memReq 1 por defalut, creo, y deberia poner en invariants.spec que devuelva 0.
 		}	
-		return new Integer(sum); //residual = 1. Esto si esta en el heap porque tiene un new
+		//return new Integer(sum); //residual = 1. Esto si esta en el heap porque tiene un new
+
+
+		Integer i = a1();
+		return i;
+	}
+
+	public static Integer a1()
+	{
+		Integer j = a2();
+		return j;
+	}
+
+
+	public static Integer a2()
+	{
+		Integer k = new Integer(5);
+		Integer temp = new Integer(6);
+		temp+=1;
+		return k;
 	}
 	
 	/**

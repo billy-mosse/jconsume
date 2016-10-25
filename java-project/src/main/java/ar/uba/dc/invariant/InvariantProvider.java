@@ -4,6 +4,7 @@ import java.util.Set;
 
 import soot.SootMethod;
 import ar.uba.dc.analysis.memory.LifeTimeOracle;
+import ar.uba.dc.analysis.common.Invocation;
 import ar.uba.dc.analysis.common.code.Statement;
 import ar.uba.dc.barvinok.expression.DomainSet;
 import decorations.Binding;
@@ -30,8 +31,8 @@ public interface InvariantProvider {
 			return operationString;
 		}
 	};
-	
-	DomainSet getInvariantWithBinding(Statement stmt, Operation operation);
+
+	DomainSet getInvariantWithBinding(Statement stmt, Operation operation);	
 
 	DomainSet getInvariant(Statement stmt);
 	

@@ -1,7 +1,10 @@
 package ar.uba.dc.analysis.memory.impl.summary;
 
 import org.apache.commons.lang.NotImplementedException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
+import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethodBuilder;
 import ar.uba.dc.analysis.escape.graph.Node;
 import ar.uba.dc.analysis.escape.graph.PaperNode;
 import ar.uba.dc.analysis.escape.graph.node.GlobalNode;
@@ -60,6 +63,9 @@ public class PaperPointsToHeapPartition implements HeapPartition {
 		}
 	}	
 	
+	
+	private static Log log = LogFactory.getLog(PaperPointsToHeapPartition.class);
+
 	public PaperPointsToHeapPartition(HeapPartition heapPartition)
 	{
 		this.temporal = heapPartition.isTemporal();
@@ -82,6 +88,12 @@ public class PaperPointsToHeapPartition implements HeapPartition {
 			}
 			
 			SootMethod m = hp.getNode().belongsTo();
+			
+			if(hp.getNode().getContext().size() > 0)
+			{
+				log.debug("Hola");
+			}
+			
 			this.belongsTo = m.getDeclaringClass().toString() + "." +  m.getName();
 			
 		}
@@ -95,6 +107,11 @@ public class PaperPointsToHeapPartition implements HeapPartition {
 		this.temporal = temporal;
 		this.belongsTo = belongsTo;
 		this.node = node;
+	}
+
+
+	public PaperPointsToHeapPartition() {
+		// TODO Auto-generated constructor stub
 	}
 
 
