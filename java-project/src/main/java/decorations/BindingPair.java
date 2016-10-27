@@ -16,6 +16,10 @@ public class BindingPair {
 		return callee_parameter;
 	}
 
+	public String getCallee_parameter_with_prefix() {
+		return PREFIX + callee_parameter;
+	}
+
 	public void setCallee_parameter(String callee_parameter) {
 		this.callee_parameter = callee_parameter;
 	}
@@ -58,6 +62,6 @@ public class BindingPair {
 
 	public String toString()
 	{
-		return callee_parameter + " " + SEPARATOR + " " + PREFIX + callee_parameter; 
+		return caller_parameter + " " + SEPARATOR + " " + PREFIX + callee_parameter; 
 	}
 }

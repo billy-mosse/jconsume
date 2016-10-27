@@ -39,6 +39,8 @@ import ar.uba.dc.analysis.memory.impl.madeja.PaperMemorySummary;
 import ar.uba.dc.analysis.memory.impl.summary.EscapeBasedMemorySummary;
 import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
 import ar.uba.dc.analysis.memory.summary.MemorySummary;
+import ar.uba.dc.barvinok.expression.DomainSet;
+import ar.uba.dc.barvinok.expression.DomainSetUtils;
 import ar.uba.dc.soot.SootMethodFilter;
 import ar.uba.dc.util.location.MethodLocationStrategy;
 import soot.SootMethod;
@@ -278,6 +280,11 @@ public class PaperInterproceduralAnalysis {
 			//En realidad es sin los parametros, para que machee bien
 			PaperMemorySummary invocationSummary = this.data.get(IRUtils.key(invocation, callInvocation.getIrName()));
 			
+			
+			DomainSet lineInvariant = callInvocation.getInvariant();
+			DomainSetUtils.unify(lineInvariant, callInvocation.getBinding());
+			
+			
 			if(invocationSummary == null)
 			{
 				
@@ -299,7 +306,9 @@ public class PaperInterproceduralAnalysis {
 				} else {
 				
 					callAnalyzer.init(symbolicCalculator, expressionFactory);
-					callAnalyzer.process(invocation, invocationSummary, callInvocation.getInvariant());
+
+					
+					callAnalyzer.process(invocation, invocationSummary, lineInvariant);
 					
 					PaperCallSummaryInContext result = callAnalyzer.buildSummary(invocation);
 					return result;
@@ -311,7 +320,7 @@ public class PaperInterproceduralAnalysis {
 			else
 			{
 				callAnalyzer.init(symbolicCalculator, expressionFactory);
-				callAnalyzer.process(invocation, invocationSummary, callInvocation.getInvariant());
+				callAnalyzer.process(invocation, invocationSummary, lineInvariant);
 				
 				PaperCallSummaryInContext result = callAnalyzer.buildSummary(invocation);
 				return result;

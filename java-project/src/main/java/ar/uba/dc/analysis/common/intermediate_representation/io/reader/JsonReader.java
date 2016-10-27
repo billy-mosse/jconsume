@@ -307,12 +307,20 @@ protected Gson gson;
 			JsonArray jbindingPairs = jobject.get("bindingPairs").getAsJsonArray();
 			
 			Set<BindingPair> bindingPairs = new HashSet<BindingPair>();
+			
 			for(int i = 0; i < jbindingPairs.size(); i++)
 			{
 				BindingPair bp = context.deserialize(jbindingPairs.get(i), BindingPair.class);
 				bindingPairs.add(bp);				
 			}
-			binding.setBindingPairs(bindingPairs);
+			
+			if(bindingPairs != null)
+				binding.setBindingPairs(bindingPairs);
+			
+			//Set<String> variables = new TreeSet<String>();
+			
+			//JsonArray arr = jobject.get("variables").getAsJsonArray();
+			
 			
 			return binding;
 		}

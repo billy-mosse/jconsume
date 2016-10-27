@@ -152,8 +152,8 @@ public class OptimizedCalculator implements BarvinokCalculator {
 
 	public PiecewiseQuasipolynomial sumConsumtion(PiecewiseQuasipolynomial expr, DomainSet invariant) {
 		PiecewiseQuasipolynomial e = (PiecewiseQuasipolynomial) expr;
-		
 		PiecewiseQuasipolynomial result = null;
+	
 		
 		Long value = BarvinokUtils.toConstant(e);
 		if (value != null && value.equals(0L)) {

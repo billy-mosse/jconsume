@@ -54,8 +54,16 @@ public class Binding {
 
 	
 	public Set<String> getVariables() {
-		//return new TreeSet<String>(variables);
-		return null; //retorno todas las variables de los pairs
+
+		TreeSet<String> variables = new TreeSet<String>();
+		
+		for(BindingPair bindingPair : this.bindingPairs)
+		{
+			variables.add(bindingPair.getCallee_parameter_with_prefix());
+			variables.add(bindingPair.getCaller_parameter());
+		}
+		
+		return variables;
 	}
 	
 	
