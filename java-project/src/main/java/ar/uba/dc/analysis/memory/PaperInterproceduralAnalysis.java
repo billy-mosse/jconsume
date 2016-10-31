@@ -310,13 +310,8 @@ public class PaperInterproceduralAnalysis {
 				} else {
 				
 					callAnalyzer.init(symbolicCalculator, expressionFactory);
-
 					
 					callAnalyzer.process(invocation, invocationSummary, lineInvariant);
-					
-					PaperCallSummaryInContext result = callAnalyzer.buildSummary(invocation);
-					return result;
-					
 					
 				}
 				
@@ -324,10 +319,7 @@ public class PaperInterproceduralAnalysis {
 			else
 			{
 				callAnalyzer.init(symbolicCalculator, expressionFactory);
-				callAnalyzer.process(invocation, invocationSummary, lineInvariant);
-				
-				PaperCallSummaryInContext result = callAnalyzer.buildSummary(invocation);
-				return result;
+				callAnalyzer.process(invocation, invocationSummary, lineInvariant);				
 			}
 			
 			
@@ -338,8 +330,12 @@ public class PaperInterproceduralAnalysis {
 			{
 				
 			}*/
+			
 		}
-		return null;
+		
+		PaperCallSummaryInContext result = callAnalyzer.buildSummary(callInvocation);
+		return result;			
+
 	}
 	
 	public void run(CallGraph cg, SootMethodFilter filter, String mainClass){		

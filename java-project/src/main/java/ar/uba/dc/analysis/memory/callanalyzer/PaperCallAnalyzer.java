@@ -20,6 +20,9 @@ import ar.uba.dc.analysis.memory.impl.madeja.PaperMemorySummary;
 import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
 import ar.uba.dc.barvinok.expression.DomainSet;
 
+import ar.uba.dc.analysis.common.Line;
+
+
 public class PaperCallAnalyzer {
 	
 
@@ -37,7 +40,7 @@ public class PaperCallAnalyzer {
 	protected ParametricExpression summated_MAX_totalResiduals;
 	
 
-	protected Map<HeapPartition, ParametricExpression> residuals;
+	protected Map<PaperPointsToHeapPartition, ParametricExpression> residuals;
 	
 
 	protected SymbolicCalculator symbolicCalculator;
@@ -89,7 +92,7 @@ public class PaperCallAnalyzer {
 		
 			// Actualizamos el residual que aporta el call comparando esta implementacion con las otras procesadas.
 			// nos quedamos con el supremo para c/particion del residual
-		for (HeapPartition callerPartition : acumResiduals.keySet()) {
+		for (PaperPointsToHeapPartition callerPartition : acumResiduals.keySet()) {
 			ParametricExpression oldValue = residuals.get(callerPartition);
 			ParametricExpression newValue = acumResiduals.get(callerPartition);
 			if (oldValue != null) {
@@ -124,7 +127,7 @@ public class PaperCallAnalyzer {
 		this.symbolicCalculator = symbolicCalculator;
 		this.expressionFactory = expressionFactory;
 		
-		this.residuals = new HashMap<HeapPartition, ParametricExpression>();
+		this.residuals = new HashMap<PaperPointsToHeapPartition, ParametricExpression>();
 		//this.tempCall = expressionFactory.constant(0L);
 		this.resCap = expressionFactory.constant(0L);
 		this.memReq = expressionFactory.constant(0L);
@@ -137,11 +140,17 @@ public class PaperCallAnalyzer {
 	}
 	
 
-	public PaperCallSummaryInContext buildSummary(Invocation invocation) {
+	//Totalmente al pedo pongo el parametro
+	public PaperCallSummaryInContext buildSummary(Line callInvocation) {
 		PaperCallSummaryInContext result = new PaperCallSummaryInContext();
 		
 		result.setAcumResiduals(totalResiduals);
 		result.setMAX_memoryRequirementMinusRsd(MAX_memReqMinusRsd);
+		
+		for (PaperPointsToHeapPartition partition : residuals.keySet()) {
+			result.setResidual(partition, residuals.get(partition));
+		}	
+		
 		
 		return result;
 	}
