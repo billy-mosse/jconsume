@@ -90,8 +90,14 @@ public class EjemploSimple04 {
 		return j;
 	}
 
-
 	public static Integer a2()
+	{
+		Integer j = a3();
+		return j;
+	}
+
+
+	public static Integer a3()
 	{
 		Integer k = new Integer(5);
 		Integer temp = new Integer(6);

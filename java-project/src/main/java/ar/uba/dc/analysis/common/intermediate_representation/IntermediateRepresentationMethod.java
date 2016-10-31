@@ -22,10 +22,13 @@ import ar.uba.dc.analysis.escape.graph.Node;
 import ar.uba.dc.analysis.escape.graph.node.ContainerNode;
 import ar.uba.dc.analysis.escape.graph.node.GlobalNode;
 import ar.uba.dc.analysis.escape.graph.node.MethodNode;
+import ar.uba.dc.analysis.escape.graph.node.ParamNode;
 import ar.uba.dc.analysis.escape.graph.node.StmtNode;
 import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
 import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.soot.SootUtils;
+import ar.uba.dc.soot.StatementId;
+import ar.uba.dc.util.collections.CircularStack;
 import soot.RefLikeType;
 import soot.SootMethod;
 
@@ -284,35 +287,79 @@ public class IntermediateRepresentationMethod {
 	}
 
 
+	
+	//Esto no esta soportado para tamaño maximo  del CircularStack todavia
 	public void setEscapeInfo(EscapeSummary escapeSummary) {
 		Set<Node> escaping = escapeSummary.getEscaping();	
 		this.escapeNodes = new LinkedHashSet<PaperPointsToHeapPartition>();
 		for (Node n : escaping) {
 			
+			String fullName = "";
+
+			CircularStack<StatementId> context = n.getContext();
+			if(context != null)
+			{
+				StatementId id = context.getNewest();
+				if(id != null)
+				{
+					//SootMethod method = id.getMethodOfId();
+
+					
+					//TODO revisar que carajo es esto
+					SootMethod m = id.getId().getInvokeExpr().getMethod();
+					
+					//log.debug(m.getName());
+					
+					fullName = m.getDeclaringClass() + "." + m.getName();
+				}
+				else
+				{
+					fullName = n.belongsTo().getDeclaringClass() + "." + n.belongsTo().getName();
+				}
+			}
+			else
+			{
+				if(n.getClass() == ParamNode.class)
+				{
+					fullName = this.getDeclaringClass() + "." + this.getName();
+				}
+				else
+				{
+					fullName = n.belongsTo().getDeclaringClass() + "." + n.belongsTo().getName();
+				}		
+				
+			}
+			
+			this.escapeNodes.add(new PaperPointsToHeapPartition(false, n, fullName));
+
+			
+			/*
 			if(n.getClass() == StmtNode.class)
 			{
 				StmtNode stmtNode = (StmtNode) n;
-				this.escapeNodes.add(new PaperPointsToHeapPartition(false, n, stmtNode.belongsTo().getDeclaringClass() + "." + stmtNode.belongsTo().getName()));
+				
+				
+				this.escapeNodes.add(new PaperPointsToHeapPartition(false, n, fullName));
 			} 
 			else if(n.getClass() == MethodNode.class) //Podria chequear si tienen el metodo belongsTo(), pero no tengo internet para fijarme como se hace
 			{
 				MethodNode stmtNode = (MethodNode) n;
-				this.escapeNodes.add(new PaperPointsToHeapPartition(false, n, stmtNode.belongsTo().getDeclaringClass() + "." + stmtNode.belongsTo().getName()));
+				this.escapeNodes.add(new PaperPointsToHeapPartition(false, n, fullName));
 			} 
 			else if(n.getClass() == GlobalNode.class) //Podria chequear si tienen el metodo belongsTo(), pero no tengo internet para fijarme como se hace
 			{
 				GlobalNode stmtNode = (GlobalNode) n;
-				this.escapeNodes.add(new PaperPointsToHeapPartition(false, n, stmtNode.belongsTo().getDeclaringClass() + "." + stmtNode.belongsTo().getName()));
+				this.escapeNodes.add(new PaperPointsToHeapPartition(false, n, fullName));
 			}
 			else if(n.getClass() == ContainerNode.class) //Podria chequear si tienen el metodo belongsTo(), pero no tengo internet para fijarme como se hace
 			{
 				ContainerNode stmtNode = (ContainerNode) n;
-				this.escapeNodes.add(new PaperPointsToHeapPartition(false, n, stmtNode.belongsTo().getDeclaringClass() + "." + stmtNode.belongsTo().getName()));
+				this.escapeNodes.add(new PaperPointsToHeapPartition(false, n, fullName));
 			}
 			else
 			{
 				this.escapeNodes.add(new PaperPointsToHeapPartition(false, n, this.getDeclaringClass() + "." + this.getName()));
-			}
+			}*/
 		}
 		
 	}

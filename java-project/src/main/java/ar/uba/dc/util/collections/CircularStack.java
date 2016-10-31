@@ -96,6 +96,14 @@ public class CircularStack<E> implements Cloneable {
 		return stack.push(element);
 	}
 	
+	public E getNewest()
+	{
+		if(stack.size() > 0)
+			return stack.lastElement();
+		else
+			return null;
+	}
+	
 	public E pop() {
 		return stack.pop();
 	}
