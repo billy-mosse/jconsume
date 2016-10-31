@@ -66,6 +66,31 @@ public class Binding {
 		return variables;
 	}
 	
+	public Set<String> getCalleesAsVariables() {
+
+		TreeSet<String> variables = new TreeSet<String>();
+		
+		for(BindingPair bindingPair : this.bindingPairs)
+		{
+			variables.add(bindingPair.getCallee_parameter_with_prefix());
+			//variables.add(bindingPair.getCaller_parameter());
+		}
+		
+		return variables;
+	}
+	
+
+	public Set<String> getInductives() {
+
+		TreeSet<String> inductives = new TreeSet<String>();
+		
+		for(BindingPair bindingPair : this.bindingPairs)
+		{
+			inductives.add(bindingPair.getCallee_parameter_with_prefix());
+		}
+		
+		return inductives;
+	}
 	
 	public Binding()
 	{

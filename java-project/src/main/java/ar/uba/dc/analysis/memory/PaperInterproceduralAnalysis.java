@@ -282,6 +282,10 @@ public class PaperInterproceduralAnalysis {
 			
 			
 			DomainSet lineInvariant = callInvocation.getInvariant();
+			
+			DomainSet clone = lineInvariant.clone();
+			log.debug(clone.toString());
+			
 			DomainSetUtils.unify(lineInvariant, callInvocation.getBinding());
 			
 			

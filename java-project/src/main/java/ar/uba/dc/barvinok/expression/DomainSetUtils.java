@@ -22,9 +22,12 @@ public class DomainSetUtils {
 		String newConstraints = unif.unify(invariant.getConstraints(), binding.toString());	
 		
 		
+
+		if(binding.getCalleesAsVariables() != null)
+			invariant.addAllVariables(binding.getCalleesAsVariables());
 		
-		if(binding.getVariables() != null)
-			invariant.addAllVariables(binding.getVariables());
+		if(binding.getInductives() != null)
+			invariant.addAllInductives(binding.getInductives());
 		
 		invariant.setConstraints(newConstraints);		
 	}

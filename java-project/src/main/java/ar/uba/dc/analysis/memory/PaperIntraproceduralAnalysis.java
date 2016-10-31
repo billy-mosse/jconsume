@@ -181,7 +181,22 @@ public class PaperIntraproceduralAnalysis {
 			
 			acumResidualsFromCallees = sa.add(acumResidualsFromCallees, acumResidualsFromCallee);			
 			
-			memReq = MAX_memReqFromCallees;
+			
+			for (PaperPointsToHeapPartition partition : callSummary.getResidualPartitions()) {
+				ParametricExpression oldValue = summary.getResidual(partition);
+				ParametricExpression newValue = callSummary.getResidual(partition);
+				//callSummaryRes = sa.add(callSummaryRes, newValue );
+				if (oldValue != null) {
+					newValue = sa.add(oldValue, newValue);
+					if (log.isDebugEnabled()) {
+						log.debug("Update partition residual with [" + callSummary.getResidual(partition) + "]. Partition [" + partition + "], old value [" + oldValue + "], new value [" + newValue + "]");
+					}
+				}
+				summary.setResidual(partition, newValue);
+			}
+			
+			
+			
 			
 			/**
 			 * Tengo que procesar cada posible invocacion y tomar el max del ML y RSD, enchufarle la info de invariante e ir acumulando eso
@@ -193,6 +208,12 @@ public class PaperIntraproceduralAnalysis {
 			 * y creo que puede pasar que el parametro de la invocacion vaya cambiando o algo asi
 			 */
 		}
+		memReq = sa.add(memReq, acumResidualsFromCallees);
+		memReq = sa.add(memReq, MAX_memReqFromCallees);
+		
+		
+		//summary.setTemporal(sa.add(tempLocal, tempCalls, resCaptured));
+		
 		summary.setMemoryRequirement(memReq);
 
 		
