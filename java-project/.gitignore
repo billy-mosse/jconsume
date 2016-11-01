@@ -1,5 +1,8 @@
 velocity.log
 results/
 cmd_tmp
-.setting
+.settings
 target/test-classes
+change_to_master.sh
+gson*
+target/classes/ar
