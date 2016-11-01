@@ -35,9 +35,9 @@ public class PaperMethodNode implements PaperNode {
 	private IntermediateRepresentationMethod id;
 	
 	/** contexto del nodo. Es el stack con los {@link Stmt} de soot que representan los calls por los que fue pasando el nodo desde su creacion. */
-    private CircularStack<Invocation> context;
+    private CircularStack<String> context;
 	
-    private PaperMethodNode(IntermediateRepresentationMethod id, CircularStack<Invocation> context) {
+    private PaperMethodNode(IntermediateRepresentationMethod id, CircularStack<String> context) {
     	this.id = id;
     	this.context = context;
     	if (!nMap.containsKey(id)) { 
@@ -47,7 +47,7 @@ public class PaperMethodNode implements PaperNode {
     }
     
     public PaperMethodNode(IntermediateRepresentationMethod id, int sensitivity) {
-    	this(id, new CircularStack<Invocation>(sensitivity));
+    	this(id, new CircularStack<String>(sensitivity));
     }
 	
     public String toString() { 
@@ -92,13 +92,13 @@ public class PaperMethodNode implements PaperNode {
 	}
 
 	@Override
-	public void changeContext(Invocation invocation) {
+	public void changeContext(String invocation) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public CircularStack<Invocation> getContext() {
+	public CircularStack<String> getContext() {
 		// TODO Auto-generated method stub
 		return null;
 	}

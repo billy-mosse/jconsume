@@ -63,10 +63,6 @@ public class PaperParamNode implements PaperNode {
 		return id;
 	}
 
-	public void changeContext(StatementId callStmtId) {
-		// No hacemos nada. No hay contexto para estos nodos
-	}
-
 	public PaperParamNode clone() {
 		return this;
 	}
@@ -97,7 +93,7 @@ public class PaperParamNode implements PaperNode {
 	}
 */
 	@Override
-	public void changeContext(Invocation invocation) {
+	public void changeContext(String invocation) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -114,7 +110,7 @@ public class PaperParamNode implements PaperNode {
 	}
 
 	@Override
-	public CircularStack<Invocation> getContext() {
+	public CircularStack<String> getContext() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -1,5 +1,7 @@
 package ar.uba.dc.analysis.memory.impl.summary;
 
+import java.util.Iterator;
+
 import org.apache.commons.lang.NotImplementedException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,6 +17,8 @@ import ar.uba.dc.analysis.escape.graph.node.ParamNode;
 import ar.uba.dc.analysis.escape.graph.node.StmtNode;
 import ar.uba.dc.analysis.memory.HeapPartition;
 import ar.uba.dc.analysis.memory.HeapPartitionVisitor;
+import ar.uba.dc.soot.StatementId;
+import ar.uba.dc.util.collections.CircularStack;
 import soot.SootMethod;
 
 public class PaperPointsToHeapPartition implements HeapPartition {
@@ -42,7 +46,7 @@ public class PaperPointsToHeapPartition implements HeapPartition {
 	}	
 	
 	
-	public PaperPointsToHeapPartition(boolean temporal, Node node, String belongsTo)
+	public PaperPointsToHeapPartition(boolean temporal, Node node, CircularStack<String> context, String belongsTo)
 	{
 		this.temporal = temporal;
 		
@@ -55,7 +59,7 @@ public class PaperPointsToHeapPartition implements HeapPartition {
 		
 		if(node.getClass() == StmtNode.class)
 		{
-			this.node = new PaperStmtNode(node);
+			this.node = new PaperStmtNode(node, context);
 		}
 		else if(node.getClass() == ParamNode.class)
 		{
@@ -75,12 +79,29 @@ public class PaperPointsToHeapPartition implements HeapPartition {
 			PointsToHeapPartition hp = ((PointsToHeapPartition) heapPartition);
 			
 			Node origNode = hp.getNode();
+			
+			
+			CircularStack<StatementId> context = origNode.getContext();
+			CircularStack<String> ir_context = new CircularStack<String>();
+			
+			if(context != null)
+			{
+				Iterator<StatementId>ctxtIterator = context.iterator();
+				while(ctxtIterator.hasNext())
+				{
+					StatementId id = ctxtIterator.next();
+					String methodFullName = id.getMethodOfId().getDeclaringClass() + "." + id.getMethodOfId().getName();
+					ir_context.push(methodFullName);
+				}
+			}
+			
+			
 
 			
 			//TODO: hacer los otros.
 			if(origNode.getClass() == StmtNode.class)
 			{
-				this.node = new PaperStmtNode(origNode);
+				this.node = new PaperStmtNode(origNode, ir_context);
 			}
 			else if(origNode.getClass() == ParamNode.class)
 			{
@@ -88,11 +109,6 @@ public class PaperPointsToHeapPartition implements HeapPartition {
 			}
 			
 			SootMethod m = hp.getNode().belongsTo();
-			
-			if(hp.getNode().getContext().size() > 0)
-			{
-				log.debug("Hola");
-			}
 			
 			this.belongsTo = m.getDeclaringClass().toString() + "." +  m.getName();
 			

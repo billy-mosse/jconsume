@@ -46,8 +46,8 @@ public class IntermediateRepresentationMethodBuilder {
 
 		
 	
-		SootClass clazz = m.getDeclaringClass();
-		String s = clazz.getName();
+	//	SootClass clazz = m.getDeclaringClass();
+	//	String s = clazz.getName();
 		
 		this.irmethod = new IntermediateRepresentationMethod(m, order);
 		

@@ -32,13 +32,13 @@ public class PaperStmtNode implements PaperNode {
 	
 	protected int id;
 	protected boolean isInside;
-    protected CircularStack<Invocation> context;
+    protected CircularStack<String> context;
 
 	  
-	public PaperStmtNode(Node origNode) {
+	public PaperStmtNode(Node origNode, CircularStack<String> context) {
 		this.id = origNode.getNumber();
 		this.isInside = origNode.isInside();
-		this.context = new CircularStack<Invocation>();		
+		this.context = context;
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class PaperStmtNode implements PaperNode {
 	}
 
 	@Override
-	public void changeContext(Invocation invocation) {
+	public void changeContext(String invocation) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -84,7 +84,7 @@ public class PaperStmtNode implements PaperNode {
 	}
 
 	@Override
-	public CircularStack<Invocation> getContext() {
+	public CircularStack<String> getContext() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -58,7 +58,7 @@ public class PaperGlobalNode implements PaperNode {
 	}*/
 
 	@Override
-	public CircularStack<Invocation> getContext() {
+	public CircularStack<String> getContext() {
 		return null;
 	}
 
@@ -79,7 +79,7 @@ public class PaperGlobalNode implements PaperNode {
 	}
 	
 	@Override
-	public void changeContext(Invocation invocation) {
+	public void changeContext(String invocation) {
 		// no hacemos nada
 		
 	}

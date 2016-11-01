@@ -20,7 +20,7 @@ public class CircularStack<E> implements Cloneable {
 	public static final int INFINITE = -1;
 	
 	/** Capacidad del stack */
-	protected int maxElements;
+	protected transient int maxElements;
 	
 	protected Stack<E> stack;
 	

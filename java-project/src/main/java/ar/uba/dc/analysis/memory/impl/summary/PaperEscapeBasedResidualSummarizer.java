@@ -142,7 +142,7 @@ public class PaperEscapeBasedResidualSummarizer implements PaperResidualSummariz
 
 	protected String getImplementation(PaperPointsToHeapPartition hp) {
 		
-		CircularStack<Invocation> ctx = hp.getNode().getContext();
+		CircularStack<String> ctx = hp.getNode().getContext();
 		String impl = null;
 		
 		// El stack tiene como primer elemento al metodo invocado por el metodo al cual pertenece el summary 
@@ -151,7 +151,7 @@ public class PaperEscapeBasedResidualSummarizer implements PaperResidualSummariz
 		// pertenece el nodo (la que creo el nodo).
 		if (ctx.size() > 1) {
 			ctx.pop();
-			impl = ctx.peek().getCalled_implementation_signature();
+			impl = ctx.peek()/*.getCalled_implementation_signature()*/;
 		} else {
 			impl = IRUtils.key(hp.getNode().belongsTo());
 		}

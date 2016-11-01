@@ -2,6 +2,7 @@ package ar.uba.dc.analysis.common.intermediate_representation;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -288,16 +289,23 @@ public class IntermediateRepresentationMethod {
 
 
 	
+	public String getFullName()
+	{
+		return this.declaringClass + "." + this.name;
+	}
+	
+	
 	//Esto no esta soportado para tamaño maximo  del CircularStack todavia
 	public void setEscapeInfo(EscapeSummary escapeSummary) {
 		Set<Node> escaping = escapeSummary.getEscaping();	
 		this.escapeNodes = new LinkedHashSet<PaperPointsToHeapPartition>();
+		
+		
 		for (Node n : escaping) {
 			
-			String fullName = "";
-
 			CircularStack<StatementId> context = n.getContext();
-			if(context != null)
+			CircularStack<String> ir_context = new CircularStack<String>();
+			/*if(context != null)
 			{
 				StatementId id = context.getNewest();
 				if(id != null)
@@ -328,9 +336,26 @@ public class IntermediateRepresentationMethod {
 					fullName = n.belongsTo().getDeclaringClass() + "." + n.belongsTo().getName();
 				}		
 				
+			}*/
+			
+			
+			
+			if(context != null)
+			{
+				Iterator<StatementId>ctxtIterator = context.iterator();
+				while(ctxtIterator.hasNext())
+				{
+					StatementId id = ctxtIterator.next();
+					
+					SootMethod idMethod = id.getId().getInvokeExpr().getMethod();
+					String methodFullName = idMethod.getDeclaringClass() + "." + idMethod.getName();
+					ir_context.push(methodFullName);
+				}
 			}
 			
-			this.escapeNodes.add(new PaperPointsToHeapPartition(false, n, fullName));
+			
+			
+			this.escapeNodes.add(new PaperPointsToHeapPartition(false, n, ir_context, this.getFullName()));
 
 			
 			/*

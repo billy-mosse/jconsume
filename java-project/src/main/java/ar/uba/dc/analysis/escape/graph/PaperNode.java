@@ -19,9 +19,9 @@ public interface PaperNode extends Cloneable {
     public boolean isParam();
 
     //O es line?
-    public void changeContext(Invocation invocation);
+    public void changeContext(String invocation);
     
-	public CircularStack<Invocation> getContext();
+	public CircularStack<String> getContext();
 
 	
 	//public CircularStack<Invocation> getContext();
