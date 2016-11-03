@@ -41,6 +41,12 @@ public class PaperStmtNode implements PaperNode {
 		this.context = context;
 	}
 
+	public PaperStmtNode(int id, boolean isInside, CircularStack<String> context) {
+		this.id = id;
+		this.isInside = isInside;
+		this.context = context;		
+	}
+
 	@Override
 	public boolean isInside() {
 		// TODO Auto-generated method stub
@@ -61,14 +67,12 @@ public class PaperStmtNode implements PaperNode {
 
 	@Override
 	public void changeContext(String invocation) {
-		// TODO Auto-generated method stub
-		
+		this.context.push(invocation);
 	}
 
 	@Override
 	public PaperNode clone() {
-		// TODO Auto-generated method stub
-		return null;
+		return new PaperStmtNode(id, isInside, context.clone());
 	}
 
 	@Override
@@ -76,11 +80,23 @@ public class PaperStmtNode implements PaperNode {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public boolean equals(Object o) {
+    	if (o instanceof PaperStmtNode) {
+    		PaperStmtNode oo = (PaperStmtNode)o;
+    		boolean first = id== oo.id;
+    		boolean second = isInside == oo.isInside ;
+    		boolean third = context.equals(oo.context);
+    		return first && second && third;
+    	} else {
+    		return false;
+    	}
+    }
+	
 
 	@Override
-	public boolean accept(PaperNode escapeNode) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean accept(PaperNode node) {
+		return this.equals(node);
 	}
 
 	@Override

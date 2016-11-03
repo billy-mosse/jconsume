@@ -22,6 +22,8 @@ public class Invocation {
 	
 	private boolean isCallStatement;
 	private PaperPointsToHeapPartition heapPartition;
+	
+	protected String nameCalled;
 
 
 
@@ -36,6 +38,7 @@ public class Invocation {
 		this.class_called = m.getDeclaringClass().toString();
 		this.setCallStatement(true);
 		this.called_implementation_signature = m.getSignature();
+		this.nameCalled = m.getName();
 		
 
 		this.setParameters(new LinkedHashSet<IntermediateRepresentationParameter>());
@@ -53,7 +56,23 @@ public class Invocation {
 		this.setClass_called("");
 		this.called_implementation_signature = "";
 		this.heapPartition =  new PaperPointsToHeapPartition(heapPartition);
+		this.nameCalled = "";
 		
+	}
+	
+	public String getNameCalled() {
+		return nameCalled;
+	}
+
+
+	public void setNameCalled(String nameCalled) {
+		this.nameCalled = nameCalled;
+	}
+
+
+	public String getFullNameCalled()
+	{
+		return this.class_called + "." + this.nameCalled;
 	}
 
 	public PaperPointsToHeapPartition getHeapPartition() {

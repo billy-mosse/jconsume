@@ -93,8 +93,7 @@ public class PaperMethodNode implements PaperNode {
 
 	@Override
 	public void changeContext(String invocation) {
-		// TODO Auto-generated method stub
-		
+		this.context.push(invocation);
 	}
 
 	@Override
@@ -105,8 +104,7 @@ public class PaperMethodNode implements PaperNode {
 
 	@Override
 	public PaperNode clone() {
-		// TODO Auto-generated method stub
-		return null;
+		return new PaperMethodNode(id, context.clone());
 	}
 
 	@Override

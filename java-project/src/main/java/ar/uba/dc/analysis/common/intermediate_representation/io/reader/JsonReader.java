@@ -177,8 +177,21 @@ protected Gson gson;
 		    	PaperPointsToHeapPartition escapeNode = context.deserialize(jEscapeNodes.get(i), PaperPointsToHeapPartition.class);		    	
 		    	escapeNodes.add(escapeNode);
 		    }
+
+		    m.setEscapeNodes(escapeNodes);
 		    
-		    
+		    JsonArray jNodes = jobject.get("nodes").getAsJsonArray();
+			
+			Set<PaperPointsToHeapPartition> nodes = new LinkedHashSet<PaperPointsToHeapPartition>();
+			
+			
+		    for(int i = 0; i < jNodes.size(); i++)
+		    {
+		    	PaperPointsToHeapPartition node = context.deserialize(jNodes.get(i), PaperPointsToHeapPartition.class);		    	
+		    	nodes.add(node);
+		    }
+
+		    m.setNodes(nodes);
 		    
 		    
 		    
@@ -346,6 +359,8 @@ protected Gson gson;
 			
 			
 			invocation.setCalled_implementation_signature(jobject.get("called_implementation_signature").getAsString());
+			
+			invocation.setNameCalled(jobject.get("name_called").getAsString());
 			
 			
 			PaperPointsToHeapPartition hp = context.deserialize(jobject.get("hp"), PaperPointsToHeapPartition.class);

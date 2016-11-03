@@ -108,13 +108,24 @@ public class IntermediateRepresentationMethod {
 	private String declaringClass;
 	
 	protected String class_owner;
+
+	protected Set<PaperPointsToHeapPartition> nodes;
 	
 	
+	public Set<PaperPointsToHeapPartition> getNodes() {
+		return nodes;
+	}
+
+
+	public void setNodes(Set<PaperPointsToHeapPartition> nodes) {
+		this.nodes = nodes;
+	}
 	
-	
-	
-	
-	
+	public void setEscapeNodes(Set<PaperPointsToHeapPartition> escapeNodes) {
+		this.escapeNodes = escapeNodes;
+	}
+
+
 	public IntermediateRepresentationMethod()
 	{
 		
@@ -295,49 +306,19 @@ public class IntermediateRepresentationMethod {
 	}
 	
 	
+	
+	
 	//Esto no esta soportado para tamaño maximo  del CircularStack todavia
-	public void setEscapeInfo(EscapeSummary escapeSummary) {
+	public void setNodesInfo(EscapeSummary escapeSummary) {
 		Set<Node> escaping = escapeSummary.getEscaping();	
 		this.escapeNodes = new LinkedHashSet<PaperPointsToHeapPartition>();
+		
 		
 		
 		for (Node n : escaping) {
 			
 			CircularStack<StatementId> context = n.getContext();
-			CircularStack<String> ir_context = new CircularStack<String>();
-			/*if(context != null)
-			{
-				StatementId id = context.getNewest();
-				if(id != null)
-				{
-					//SootMethod method = id.getMethodOfId();
-
-					
-					//TODO revisar que carajo es esto
-					SootMethod m = id.getId().getInvokeExpr().getMethod();
-					
-					//log.debug(m.getName());
-					
-					fullName = m.getDeclaringClass() + "." + m.getName();
-				}
-				else
-				{
-					fullName = n.belongsTo().getDeclaringClass() + "." + n.belongsTo().getName();
-				}
-			}
-			else
-			{
-				if(n.getClass() == ParamNode.class)
-				{
-					fullName = this.getDeclaringClass() + "." + this.getName();
-				}
-				else
-				{
-					fullName = n.belongsTo().getDeclaringClass() + "." + n.belongsTo().getName();
-				}		
-				
-			}*/
-			
+			CircularStack<String> ir_context = new CircularStack<String>();	
 			
 			
 			if(context != null)
@@ -351,40 +332,39 @@ public class IntermediateRepresentationMethod {
 					String methodFullName = idMethod.getDeclaringClass() + "." + idMethod.getName();
 					ir_context.push(methodFullName);
 				}
-			}
-			
-			
+			}		
 			
 			this.escapeNodes.add(new PaperPointsToHeapPartition(false, n, ir_context, this.getFullName()));
-
 			
-			/*
-			if(n.getClass() == StmtNode.class)
+		}
+		
+		
+		//Podria hacer una funcion asi no escribo las cosas 2 veces
+		
+		Set<Node> allNodes = escapeSummary.getNodes();	
+		this.nodes = new LinkedHashSet<PaperPointsToHeapPartition>();
+		
+		for (Node n : allNodes) {
+			
+			CircularStack<StatementId> context = n.getContext();
+			CircularStack<String> ir_context = new CircularStack<String>();	
+			
+			
+			if(context != null)
 			{
-				StmtNode stmtNode = (StmtNode) n;
-				
-				
-				this.escapeNodes.add(new PaperPointsToHeapPartition(false, n, fullName));
-			} 
-			else if(n.getClass() == MethodNode.class) //Podria chequear si tienen el metodo belongsTo(), pero no tengo internet para fijarme como se hace
-			{
-				MethodNode stmtNode = (MethodNode) n;
-				this.escapeNodes.add(new PaperPointsToHeapPartition(false, n, fullName));
-			} 
-			else if(n.getClass() == GlobalNode.class) //Podria chequear si tienen el metodo belongsTo(), pero no tengo internet para fijarme como se hace
-			{
-				GlobalNode stmtNode = (GlobalNode) n;
-				this.escapeNodes.add(new PaperPointsToHeapPartition(false, n, fullName));
-			}
-			else if(n.getClass() == ContainerNode.class) //Podria chequear si tienen el metodo belongsTo(), pero no tengo internet para fijarme como se hace
-			{
-				ContainerNode stmtNode = (ContainerNode) n;
-				this.escapeNodes.add(new PaperPointsToHeapPartition(false, n, fullName));
-			}
-			else
-			{
-				this.escapeNodes.add(new PaperPointsToHeapPartition(false, n, this.getDeclaringClass() + "." + this.getName()));
-			}*/
+				Iterator<StatementId>ctxtIterator = context.iterator();
+				while(ctxtIterator.hasNext())
+				{
+					StatementId id = ctxtIterator.next();
+					
+					SootMethod idMethod = id.getId().getInvokeExpr().getMethod();
+					String methodFullName = idMethod.getDeclaringClass() + "." + idMethod.getName();
+					ir_context.push(methodFullName);
+				}
+			}		
+			
+			this.nodes.add(new PaperPointsToHeapPartition(false, n, ir_context, this.getFullName()));
+			
 		}
 		
 	}

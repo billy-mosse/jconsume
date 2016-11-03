@@ -268,7 +268,7 @@ public class PaperInterproceduralAnalysis {
 		//irMethods = irMethods;
 	}
 	
-	public PaperCallSummaryInContext analyseCall(Line callInvocation)
+	public PaperCallSummaryInContext analyseCall(Line callInvocation, IntermediateRepresentationMethod belongsTo)
 	{
 		
 		
@@ -286,9 +286,7 @@ public class PaperInterproceduralAnalysis {
 			DomainSet clone = lineInvariant.clone();
 			log.debug(clone.toString());
 			
-			DomainSetUtils.unify(lineInvariant, callInvocation.getBinding());
-			
-			
+			DomainSetUtils.unify(lineInvariant, callInvocation.getBinding());			
 			if(invocationSummary == null)
 			{
 				
@@ -311,7 +309,7 @@ public class PaperInterproceduralAnalysis {
 				
 					callAnalyzer.init(symbolicCalculator, expressionFactory);
 					
-					callAnalyzer.process(invocation, invocationSummary, lineInvariant);
+					callAnalyzer.process(invocation, invocationSummary, lineInvariant, belongsTo.getNodes(), belongsTo.getEscapeNodes());
 					
 				}
 				
@@ -319,7 +317,7 @@ public class PaperInterproceduralAnalysis {
 			else
 			{
 				callAnalyzer.init(symbolicCalculator, expressionFactory);
-				callAnalyzer.process(invocation, invocationSummary, lineInvariant);				
+				callAnalyzer.process(invocation, invocationSummary, lineInvariant, belongsTo.getNodes(), belongsTo.getEscapeNodes());				
 			}
 			
 			

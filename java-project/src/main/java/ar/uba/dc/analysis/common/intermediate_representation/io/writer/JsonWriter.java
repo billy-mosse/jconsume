@@ -134,7 +134,7 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 	        	parameters.add(context.serialize(p));
 	        }
 	        
-	        
+
 	        JsonArray escapeNodes = new JsonArray();
 	        
 	        for(PaperPointsToHeapPartition escapeNode : ir_method.getEscapeNodes())
@@ -143,6 +143,16 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 	        }
 	        
 	        result.add("escapeNodes", escapeNodes);
+	        
+
+	        JsonArray nodes = new JsonArray();
+	        
+	        for(PaperPointsToHeapPartition node : ir_method.getNodes())
+	        {
+	        	nodes.add(context.serialize(node));
+	        }
+	        
+	        result.add("nodes", nodes);
 	        
 	        //TODO: la verdad no necesito los parametros. Me parece que voy a volar xml y humanReadable, y todo lo que no necesite, y dejar solo json
 	        result.add("parameters", parameters);
@@ -323,6 +333,7 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 			}
 			result.add("parameters", arr);
 			result.add("called_implementation_signature", new JsonPrimitive (invocation.getCalled_implementation_signature()));
+			result.add("name_called", new JsonPrimitive (invocation.getNameCalled()));
 			result.add("hp",  context.serialize(invocation.getHeapPartition()));
 			
 	        return result;

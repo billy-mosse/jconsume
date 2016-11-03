@@ -1,4 +1,4 @@
- package ar.uba.dc.simple;
+package ar.uba.dc.simple;
 
 public class EjemploSimple04 {
 
@@ -29,7 +29,7 @@ public class EjemploSimple04 {
  	 * ArrayCountSize
 	 * @temporal: 1 
 	 * @residual: 2*n : n>=1
-	 *
+
 	 * ArrayCountOne
 	 * @temporal: 1 
 	 * @residual: n + 1 si n >= 1
@@ -49,11 +49,9 @@ public class EjemploSimple04 {
 	 * 
 	 * ArrayCountSize
 	 * @temporal: 2*j + 1 si j >= 1
-	 * @temporal: 1     si j <= 0
+	 * @temporal: 2     si j <= 0
 	 * @residual: 0
 	 * 
-	 * Nota: @temporal da 1 porque el vector va a ser de tamaño 0
-	 *
 	 * ArrayCountOne
 	 * @temporal: j + 2 si j >= 1
 	 * @temporal: 2     si j <= 0
@@ -73,36 +71,11 @@ public class EjemploSimple04 {
 	 * @residual: 1
 	 */
 	public static Integer m2(Integer[] values) {
-		int sum = 0;		//No confundirse, esto esta en el STACK, no en el HEAP
+		int sum = 0;		
 		for(int i = 0;i<values.length ;i++)  {
-			sum += values[i].intValue(); //intValue esta devolviendo memReq 1 por defalut, creo, y deberia poner en invariants.spec que devuelva 0.
+			sum += values[i].intValue(); 
 		}	
-		//return new Integer(sum); //residual = 1. Esto si esta en el heap porque tiene un new
-
-
-		Integer i = a1();
-		return i;
-	}
-
-	public static Integer a1()
-	{
-		Integer j = a2();
-		return j;
-	}
-
-	public static Integer a2()
-	{
-		Integer j = a3();
-		return j;
-	}
-
-
-	public static Integer a3()
-	{
-		Integer k = new Integer(5);
-		Integer temp = new Integer(6);
-		temp+=1;
-		return k;
+		return new Integer(sum); //residual = 1
 	}
 	
 	/**

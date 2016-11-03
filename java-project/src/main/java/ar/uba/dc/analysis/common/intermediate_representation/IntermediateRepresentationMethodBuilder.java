@@ -60,7 +60,7 @@ public class IntermediateRepresentationMethodBuilder {
 
 		this.irmethod.setMethodRequirements(invariantProvider.getRequeriments(m));
 		this.irmethod.setRelevant_parameters(invariantProvider.getRelevantParameters(m));
-		this.irmethod.setEscapeInfo(data.get(methodBody.belongsTo()));		
+		this.irmethod.setNodesInfo(data.get(methodBody.belongsTo()));
 		
 		this.setBody(methodBody);
 		

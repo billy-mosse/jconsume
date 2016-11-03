@@ -1,13 +1,18 @@
 package ar.uba.dc.analysis.memory.callanalyzer;
 
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import ar.uba.dc.analysis.common.Invocation;
 import ar.uba.dc.analysis.common.code.CallStatement;
+import ar.uba.dc.analysis.escape.EscapeSummary;
+import ar.uba.dc.analysis.escape.graph.Node;
+import ar.uba.dc.analysis.escape.graph.PaperNode;
 import ar.uba.dc.analysis.memory.CallSummary;
 import ar.uba.dc.analysis.memory.CallSummaryInContext;
 import ar.uba.dc.analysis.memory.HeapPartition;
@@ -18,8 +23,9 @@ import ar.uba.dc.analysis.memory.expression.ParametricExpression;
 import ar.uba.dc.analysis.memory.expression.ParametricExpressionFactory;
 import ar.uba.dc.analysis.memory.impl.madeja.PaperMemorySummary;
 import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
+import ar.uba.dc.analysis.memory.impl.summary.PointsToHeapPartition;
 import ar.uba.dc.barvinok.expression.DomainSet;
-
+import ar.uba.dc.soot.StatementId;
 import ar.uba.dc.analysis.common.Line;
 
 
@@ -51,7 +57,7 @@ public class PaperCallAnalyzer {
 	private static Log log = LogFactory.getLog(PaperCallAnalyzer.class);
 
 	
-	public void process(Invocation invocation, PaperMemorySummary invocationSummary, DomainSet invariant) {
+	public void process(Invocation invocation, PaperMemorySummary invocationSummary, DomainSet invariant, Set<PaperPointsToHeapPartition> nodes, Set<PaperPointsToHeapPartition> escapeNodes) {
 		ParametricExpression acumCaptured = expressionFactory.constant(0L);
 		// Calculamos cuanto residual aporta el calle a las particiones de caller. Este map se encarga de eso
 		Map<PaperPointsToHeapPartition, ParametricExpression> acumResiduals = new HashMap<PaperPointsToHeapPartition, ParametricExpression>();
@@ -63,7 +69,9 @@ public class PaperCallAnalyzer {
 		
 		for(PaperPointsToHeapPartition calleePartition : invocationSummary.getResidualPartitions())
 		{
-			PaperPointsToHeapPartition callerPartition = new PaperPointsToHeapPartition(); //magia
+			//PaperPointsToHeapPartition callerPartition = new PaperPointsToHeapPartition(); //magia
+			
+			PaperPointsToHeapPartition callerPartition = this.bind(calleePartition, invocation, invocationSummary, nodes, escapeNodes);	
 			
 			if(callerPartition != null)
 			{
@@ -121,6 +129,61 @@ public class PaperCallAnalyzer {
 		
 	}
 	
+	
+	//TODO:
+	//Arreglar esto, esta horrible (para que uso HPs si puedo usar nodos directamente?
+	//Los nomres tambien estan feos
+	private PaperPointsToHeapPartition bind(PaperPointsToHeapPartition hpCallee, Invocation invocation, PaperMemorySummary invocationSummary, Set<PaperPointsToHeapPartition> nodes, Set<PaperPointsToHeapPartition> escapeNodes) {
+		
+		// Ignoramos los parametros
+		if (hpCallee.getNode().isParam()) {
+			return null;
+		}
+		
+
+		
+			// Construyo el nodo en el caller que basicamente es el mismo nodo pero cambiando el contexto (el escape era k-sensitivo)
+		PaperNode escapeNode = hpCallee.getNode().clone();
+		escapeNode.changeContext(invocation.getFullNameCalled());
+		
+		// La particion puede estar como nodo o bien contenida dentro del mismo 
+		PaperNode nodeToBind = null;
+		for (PaperPointsToHeapPartition hp_callerNode : nodes) {
+			if (hp_callerNode.getNode().accept(escapeNode)) {
+				nodeToBind = hp_callerNode.getNode();
+				break;
+			}
+		}
+		
+			// Podria ocurrir que el callstmt sea un virtual call. En este caso el escape podria resolver 
+			// el polimorfismo y darse cuenta de que hay una implementacion que no es invocada pero para memoria
+			// no darnos cuenta. Si esto ocurre, no consideramos las particiones de la implementacion que escape
+			// ha ignorado. Esto es correcto porque si escape ignora implementaciones, en el summary de escape no 
+			// figuraran estos nodos y por tanto en el summary de memoria tampoco.
+		if (nodeToBind == null) {
+			return null;
+		}
+		
+			// A partir del summary me fijo si el nodo escapa o no.
+		
+		
+		boolean isTemporal = false;
+		
+		for(PaperPointsToHeapPartition hp : escapeNodes)
+		{
+			if(hp.equals(nodeToBind))
+				isTemporal = true;
+		}
+		
+		//Para que sirve esto?
+		//isTemporal = isTemporal || invariantProvider.captureAllPartitions(callStmt);
+	
+			// Con eso ya puedo armar el heapPartition del caller.
+		PaperPointsToHeapPartition hpCaller = new PaperPointsToHeapPartition(nodeToBind, isTemporal);
+		
+		return hpCaller;
+	}
+
 	public void init(SymbolicCalculator symbolicCalculator, ParametricExpressionFactory expressionFactory) {
 		log.debug("Analyse call with loop invariant");
 		//this.lifeTimeOracle = lifeTimeOracle;
