@@ -148,11 +148,19 @@ public class PaperCallAnalyzer {
 		
 		// La particion puede estar como nodo o bien contenida dentro del mismo 
 		PaperNode nodeToBind = null;
-		for (PaperPointsToHeapPartition hp_callerNode : nodes) {
-			if (hp_callerNode.getNode().accept(escapeNode)) {
-				nodeToBind = hp_callerNode.getNode();
-				break;
+		
+		try
+			{
+			for (PaperPointsToHeapPartition hp_callerNode : nodes) {
+				if (hp_callerNode.getNode().accept(escapeNode)) {
+					nodeToBind = hp_callerNode.getNode();
+					break;
+				}
 			}
+		}
+		catch (Exception e)
+		{
+			throw new Error();
 		}
 		
 			// Podria ocurrir que el callstmt sea un virtual call. En este caso el escape podria resolver 

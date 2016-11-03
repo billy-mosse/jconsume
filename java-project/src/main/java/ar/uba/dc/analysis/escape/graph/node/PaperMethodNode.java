@@ -28,30 +28,49 @@ public class PaperMethodNode implements PaperNode {
 	
 	
 	
-    private static final Map<IntermediateRepresentationMethod, Integer> nMap = new HashMap<IntermediateRepresentationMethod, Integer>();
-    private static int n = 0;
+    /*private static final Map<String, Integer> nMap = new HashMap<String, Integer>();
+    private static int n = 0;*/
+	
+	
+	//ME LA ESTOY JUGANDO A QUE HAY UN SOLO METHOD_NODE POR METODO. DEBERIA ENTENDER MEJOR ESTO....
 	
     /** Method that created the node */
-	private IntermediateRepresentationMethod id;
+	private int id;
 	
 	/** contexto del nodo. Es el stack con los {@link Stmt} de soot que representan los calls por los que fue pasando el nodo desde su creacion. */
     private CircularStack<String> context;
 	
-    private PaperMethodNode(IntermediateRepresentationMethod id, CircularStack<String> context) {
-    	this.id = id;
-    	this.context = context;
-    	if (!nMap.containsKey(id)) { 
-    		nMap.put(id, new Integer(n)); 
-    		n++; 
-    	}
+    
+    //El map habria que tirarlo a la mierda
+    public PaperMethodNode(MethodNode mNode, CircularStack<String> context, String belongsTo) {
+    	this.id = mNode.getNumber();
+    	this.context = context;    	
+    	
+    	/*if (!nMap.containsKey(id)) { 
+    		nMap.put(belongsTo, new Integer(id));
+    	}*/
     }
     
-    public PaperMethodNode(IntermediateRepresentationMethod id, int sensitivity) {
-    	this(id, new CircularStack<String>(sensitivity));
+    public PaperMethodNode(int id, CircularStack<String> context) {
+    	this.id = id;
+    	this.context = context;
     }
 	
-    public String toString() { 
-    	return "M_" + nMap.get(id);
+   /* public PaperMethodNode(Node origNode, CircularStack<String> context, String belongsTo) {
+    	this.context = context;
+    	this.id = 
+    	//this.id = origNode.
+	}*/
+
+	public PaperMethodNode(IntermediateRepresentationMethod ir_method, int sensitivity) {
+		
+		this.context = new CircularStack<String>(sensitivity);
+		this.id = 0;
+		
+	}
+
+	public String toString() { 
+    	return "M_" + id;
     }
     
     public String toJsonString() { 
@@ -59,15 +78,15 @@ public class PaperMethodNode implements PaperNode {
     }
     
     
-
+/*
     public int hashCode() { 
     	return id.hashCode() + context.hashCode(); 
-    }
+    }*/
     
     public boolean equals(Object o) {
     	if (o instanceof PaperMethodNode) {
     		PaperMethodNode oo = (PaperMethodNode) o;
-    		return id.equals(oo.id) && context.equals(oo.context);
+    		return id== oo.id && context.equals(oo.context);
     	} else { 
     		return false;
     	}
@@ -98,8 +117,7 @@ public class PaperMethodNode implements PaperNode {
 
 	@Override
 	public CircularStack<String> getContext() {
-		// TODO Auto-generated method stub
-		return null;
+		return new CircularStack<String>(context);
 	}
 
 	@Override

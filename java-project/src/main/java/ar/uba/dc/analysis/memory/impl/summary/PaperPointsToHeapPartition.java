@@ -10,7 +10,9 @@ import ar.uba.dc.analysis.common.intermediate_representation.IntermediateReprese
 import ar.uba.dc.analysis.escape.graph.Node;
 import ar.uba.dc.analysis.escape.graph.PaperNode;
 import ar.uba.dc.analysis.escape.graph.node.GlobalNode;
+import ar.uba.dc.analysis.escape.graph.node.MethodNode;
 import ar.uba.dc.analysis.escape.graph.node.PaperGlobalNode;
+import ar.uba.dc.analysis.escape.graph.node.PaperMethodNode;
 import ar.uba.dc.analysis.escape.graph.node.PaperParamNode;
 import ar.uba.dc.analysis.escape.graph.node.PaperStmtNode;
 import ar.uba.dc.analysis.escape.graph.node.ParamNode;
@@ -64,6 +66,15 @@ public class PaperPointsToHeapPartition implements HeapPartition {
 		else if(node.getClass() == ParamNode.class)
 		{
 			this.node = new PaperParamNode(node);
+		}
+		else if(node.getClass() == MethodNode.class)
+		{
+			MethodNode mNode = (MethodNode) node;
+			this.node = new PaperMethodNode(mNode, context, belongsTo);
+		}
+		else
+		{
+			throw new NotImplementedException();
 		}
 	}	
 	

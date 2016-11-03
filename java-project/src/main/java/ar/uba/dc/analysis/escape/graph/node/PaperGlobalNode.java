@@ -2,6 +2,9 @@ package ar.uba.dc.analysis.escape.graph.node;
 
 import soot.SootClass;
 import soot.SootMethod;
+
+import org.apache.commons.lang.NotImplementedException;
+
 import ar.uba.dc.analysis.common.Invocation;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
 import ar.uba.dc.analysis.escape.graph.Node;

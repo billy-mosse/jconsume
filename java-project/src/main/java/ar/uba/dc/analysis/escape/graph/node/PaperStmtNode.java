@@ -101,8 +101,7 @@ public class PaperStmtNode implements PaperNode {
 
 	@Override
 	public CircularStack<String> getContext() {
-		// TODO Auto-generated method stub
-		return null;
+		return new CircularStack<String>(context);
 	}
 	
 	

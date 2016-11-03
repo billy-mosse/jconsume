@@ -367,6 +367,8 @@ public class IntermediateRepresentationMethod {
 			
 		}
 		
+		log.debug("Nodos armados");
+		
 	}
 	
 	public Set<PaperPointsToHeapPartition> getEscapeNodes()

@@ -4,12 +4,14 @@ public class EjemploSimple04 {
 
 	/**
 	 * ArrayCountOne 
-	 * @temporal: 38 + 3/2 * args__length + 1/2 * args__length^2 	si args_length 	>= 2
-	 * @temporal: 39 + args__length 								si args__length = 1
-	 * @temporal: 37 												si args__length <= 0
+	 * @MemReq: 38 + 3/2 * args__length + 1/2 * args__length^2 + 1	si args_length 	>= 2
+	 * @MemReq: 39 + args__length + 1 								si args__length = 1
+	 * @MemReq: 37 + 1 												si args__length <= 0
 	 * @residual: 0
+	 * 
 	 */
 	public static void main(String[] args) {
+
 		String[] strings = new String[10]; //tempLocal = 1
 		strings[0] = new String("Suma 1 al temporal local"); //tempLocal = 1
 		int aux = 10; 
@@ -20,20 +22,54 @@ public class EjemploSimple04 {
 		
 		@SuppressWarnings("unused")
 		Integer[] sumArray = m3(args.length); //maxCall = 14 si args.length < 1 ; 16 si args.length == 1 ; 15 + 1/2 * args.length + 1/2 * args.length^2 si  args.length >= 2 
-											  //tempCall= 23 si args.length < 1 ; 23 + args.length si args.length >=1
+											  //tempCall= 23 si args.length < 1 ; 23 + args.length si args.length >=1	
 
+
+
+		//Asi podes ver como son los nodos de a0, a1 y a2.
+		// Llamo a a0 porque solo proceso los metodos de los que depende el main en el callgraph
+		Integer muyTemp = a0(); 
+		
+		muyTemp = muyTemp +1;
+		
 	}
+
+
+	/**
+	* @MemReq = 1
+	* @Rsd = 1
+	*/
+	public static Integer a0()
+	{
+		return a1();
+	}
+
+	/**
+	* @MemReq = 1
+	* @Rsd = 1
+	*/
+	public static Integer a1()
+	{
+		return a2();
+	}
+
+
+	/**
+	* @MemReq = 2
+	* @Rsd = 1 
+	*/
+	public static Integer a2()
+	{
+		Integer temp = new Integer(4);
+		return new Integer(2);
+	}
+
 	
 	/**
 	 *
  	 * ArrayCountSize
-	 * @temporal: 1 
+	 * @MemReq: 2*n + 1 : n >= 1 
 	 * @residual: 2*n : n>=1
-
-	 * ArrayCountOne
-	 * @temporal: 1 
-	 * @residual: n + 1 si n >= 1
-	 * @residual: 1     si n <= 0
 	 */
 	public static Integer[] m0(int n) {
 		@SuppressWarnings("unused")
@@ -48,15 +84,10 @@ public class EjemploSimple04 {
 	/**
 	 * 
 	 * ArrayCountSize
-	 * @temporal: 2*j + 1 si j >= 1
-	 * @temporal: 2     si j <= 0
+	 * @MemReq: 2*j + 1 si j >= 1
+	 * @MemReq: 2     si j <= 0
 	 * @residual: 0
-	 * 
-	 * ArrayCountOne
-	 * @temporal: j + 2 si j >= 1
-	 * @temporal: 2     si j <= 0
-	 * @residual: 0
-	 */
+	 */ 
 	public static void m1(int j) {
 		Integer[] vector = new Integer[j]; //tempLocal = 1 (j ArrayCountSize)
 		for(int i = 0;i<j ;i++)  {
@@ -67,7 +98,7 @@ public class EjemploSimple04 {
 	}
 	
 	/** 
-	 * @temporal: 0
+	 * @MemReq: 0
 	 * @residual: 1
 	 */
 	public static Integer m2(Integer[] values) {
@@ -81,15 +112,9 @@ public class EjemploSimple04 {
 	/**
 	 * 
 	 * ArrayCountSize
-	 * @temporal: 1 - k + k^2 : k >= 2
-	 * @temporal: 1 		  : k == 1 
+	 * @MemReq: 1 + k + k^2 : k >= 2
+	 * @MemReq: 2*k + 1 		  : k == 1 
 	 * @residual: 2*k : k >= 1
-	 * 
-	 * ArrayCountOne
-	 * @temporal: 1 + 1/2 * k + 1/2 * k^2 si k >= 2
-	 * @temporal: 1 + k		 			  si k == 1  viene de (1 + k)
-	 * @residual: 1 + k si k >= 1
-	 * @residual: 1     si k <= 0
 	 */
 	public static Integer[] m3(int k) {
 		Integer[] sumArray = new Integer[k]; //residual = 1 (k : k >= 1 ArrayCountSize)
@@ -100,9 +125,3 @@ public class EjemploSimple04 {
 		return sumArray;
 	}
 }
-
-/**
- * @temporal: 1 
- * @residual: n + 1 si n >= 1
- * @residual: 1     si n <= 0
- */
