@@ -64,11 +64,11 @@ public class PaperGlobalNode implements PaperNode {
 	public CircularStack<String> getContext() {
 		return null;
 	}
-
+/*
 	@Override
 	public IntermediateRepresentationMethod belongsTo() {
 		return null;
-	}
+	}*/
 
 	/*@Override
 	public StatementId popContext() {

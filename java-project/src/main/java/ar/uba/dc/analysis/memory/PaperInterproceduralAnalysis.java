@@ -309,7 +309,7 @@ public class PaperInterproceduralAnalysis {
 				
 					callAnalyzer.init(symbolicCalculator, expressionFactory);
 					
-					callAnalyzer.process(invocation, invocationSummary, lineInvariant, belongsTo.getNodes(), belongsTo.getEscapeNodes());
+					callAnalyzer.process(invocation, invocationSummary, lineInvariant, belongsTo.getNodes(), belongsTo.getEscapeNodes(), belongsTo.getFullName());
 					
 				}
 				
@@ -317,7 +317,7 @@ public class PaperInterproceduralAnalysis {
 			else
 			{
 				callAnalyzer.init(symbolicCalculator, expressionFactory);
-				callAnalyzer.process(invocation, invocationSummary, lineInvariant, belongsTo.getNodes(), belongsTo.getEscapeNodes());				
+				callAnalyzer.process(invocation, invocationSummary, lineInvariant, belongsTo.getNodes(), belongsTo.getEscapeNodes(), belongsTo.getFullName());				
 			}
 			
 			

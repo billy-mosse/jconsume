@@ -58,6 +58,7 @@ public class MethodNode implements Node {
     	return id.hashCode() + context.hashCode(); 
     }
     
+    @Override
     public boolean equals(Object o) {
     	if (o instanceof MethodNode) {
     		MethodNode oo = (MethodNode) o;

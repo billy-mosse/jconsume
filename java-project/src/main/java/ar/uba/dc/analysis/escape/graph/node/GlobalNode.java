@@ -25,6 +25,7 @@ public class GlobalNode implements Node {
     	return 69; 
     }
     
+    @Override
     public boolean equals(Object o) { 
     	return o instanceof GlobalNode; 
     }

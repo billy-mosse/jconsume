@@ -125,11 +125,11 @@ public class PaperMethodNode implements PaperNode {
 		return new PaperMethodNode(id, context.clone());
 	}
 
-	@Override
+	/*@Override
 	public IntermediateRepresentationMethod belongsTo() {
 		// TODO Auto-generated method stub
 		return null;
-	}
+	}*/
 
 	@Override
 	public boolean accept(PaperNode escapeNode) {

@@ -66,32 +66,7 @@ public class PaperParamNode implements PaperNode {
 	public PaperParamNode clone() {
 		return this;
 	}
-
-	/*@Override
-	public SootClass getType() {
-		return null;
-	}
-
-	@Override
-	public CircularStack<StatementId> getContext() {
-		return null;
-	}
-
-	@Override
-	public SootMethod belongsTo() {
-		return null;
-	}
-
-	@Override
-	public StatementId popContext() {
-		return null;
-	}
-
-	@Override
-	public boolean accept(Node node) {
-		return false;
-	}
-*/
+	
 	@Override
 	public void changeContext(String invocation) {
 		// TODO Auto-generated method stub
@@ -103,11 +78,11 @@ public class PaperParamNode implements PaperNode {
 		return false;
 	}
 
-	@Override
+	/*@Override
 	public IntermediateRepresentationMethod belongsTo() {
 		// TODO Auto-generated method stub
 		return null;
-	}
+	}*/
 
 	@Override
 	public CircularStack<String> getContext() {

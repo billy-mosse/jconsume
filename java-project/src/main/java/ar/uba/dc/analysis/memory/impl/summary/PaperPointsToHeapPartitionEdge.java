@@ -2,6 +2,8 @@ package ar.uba.dc.analysis.memory.impl.summary;
 
 import ar.uba.dc.util.collections.graph.Edge;
 
+
+//Clase no usada y que voy a tirar
 public class PaperPointsToHeapPartitionEdge implements Edge<PaperPointsToHeapPartition> {
 
 	protected String field; 

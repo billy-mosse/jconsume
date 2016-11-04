@@ -75,12 +75,18 @@ public class PaperStmtNode implements PaperNode {
 		return new PaperStmtNode(id, isInside, context.clone());
 	}
 
-	@Override
+	 public int hashCode() {		 
+	    	return id + context.hashCode(); 
+    }
+	
+	
+	/*@Override
 	public IntermediateRepresentationMethod belongsTo() {
 		// TODO Auto-generated method stub
 		return null;
-	}
+	}*/
 	
+	@Override
 	public boolean equals(Object o) {
     	if (o instanceof PaperStmtNode) {
     		PaperStmtNode oo = (PaperStmtNode)o;

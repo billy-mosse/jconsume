@@ -38,6 +38,33 @@ public class PaperPointsToHeapPartition implements HeapPartition {
 	public void setNode(PaperNode node) {
 		this.node = node;
 	}
+	
+
+	@Override
+	public int hashCode() {
+		return node.hashCode() + (temporal ? 69 : 0); 
+	}
+	
+	
+	@Override
+	public boolean equals(Object o)
+	{
+		if(o.getClass() == PaperPointsToHeapPartition.class)
+		{
+			try
+			{
+			PaperPointsToHeapPartition to_compare = (PaperPointsToHeapPartition)o;
+			return to_compare.equals(this.temporal) == this.temporal && this.belongsTo.equals(to_compare.belongsTo) && to_compare.node.equals(this.node);
+			}
+			catch(Exception e)
+			{
+				throw new Error("Hola");
+			}
+		}
+		
+		return false;
+	}
+	
 
 	
 
