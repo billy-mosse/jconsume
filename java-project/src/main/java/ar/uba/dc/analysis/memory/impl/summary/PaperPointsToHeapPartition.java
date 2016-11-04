@@ -15,8 +15,10 @@ import ar.uba.dc.analysis.escape.graph.node.PaperGlobalNode;
 import ar.uba.dc.analysis.escape.graph.node.PaperMethodNode;
 import ar.uba.dc.analysis.escape.graph.node.PaperParamNode;
 import ar.uba.dc.analysis.escape.graph.node.PaperStmtNode;
+import ar.uba.dc.analysis.escape.graph.node.PaperThisNode;
 import ar.uba.dc.analysis.escape.graph.node.ParamNode;
 import ar.uba.dc.analysis.escape.graph.node.StmtNode;
+import ar.uba.dc.analysis.escape.graph.node.ThisNode;
 import ar.uba.dc.analysis.memory.HeapPartition;
 import ar.uba.dc.analysis.memory.HeapPartitionVisitor;
 import ar.uba.dc.soot.StatementId;
@@ -98,6 +100,11 @@ public class PaperPointsToHeapPartition implements HeapPartition {
 		{
 			MethodNode mNode = (MethodNode) node;
 			this.node = new PaperMethodNode(mNode, context, belongsTo);
+		}
+		else if(node.getClass() == ThisNode.class)
+		{
+			//ThisNode mNode = (ThisNode) node;
+			this.node = new PaperThisNode();
 		}
 		else
 		{
@@ -188,8 +195,13 @@ public class PaperPointsToHeapPartition implements HeapPartition {
 
 	@Override
 	public String toHumanReadableString() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new NotImplementedException();
+	}
+	
+	@Override
+	public String toString()
+	{
+		return this.belongsTo + "." + (this.temporal ? "(Temp)" : "") + this.node.toString(); 
 	}
 
 }

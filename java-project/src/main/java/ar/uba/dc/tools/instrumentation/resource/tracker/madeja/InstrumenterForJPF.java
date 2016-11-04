@@ -101,7 +101,7 @@ public class InstrumenterForJPF  extends BodyTransformer {
 
 			if(!sootMethod.getDeclaringClass().getPackageName().startsWith(LISTENER_PACKAGE) 
 					/*&& this.repository.contains(sootMethod)*/) {
-				Chain units = body.getUnits();
+				Chain<Unit> units = body.getUnits();
 				Iterator<Unit> stmtIt = units.snapshotIterator();
 				
 				//Iterator<Unit> nextStmtIt = units.snapshotIterator();
@@ -144,7 +144,7 @@ public class InstrumenterForJPF  extends BodyTransformer {
 		 * @param nextStmtIt 
 		 */
 		@SuppressWarnings("unchecked")
-		private void processStmt(Body body, Chain units, Stmt s, EscapeAnalysisResult result) {
+		private void processStmt(Body body, Chain<Unit> units, Stmt s, EscapeAnalysisResult result) {
 
 			SootMethod sootMethod = body.getMethod();
 			

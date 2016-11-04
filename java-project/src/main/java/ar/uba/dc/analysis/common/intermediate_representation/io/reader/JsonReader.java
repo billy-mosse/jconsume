@@ -175,10 +175,15 @@ protected Gson gson;
 		    for(int i = 0; i < jEscapeNodes.size(); i++)
 		    {
 		    	PaperPointsToHeapPartition escapeNode = context.deserialize(jEscapeNodes.get(i), PaperPointsToHeapPartition.class);		    	
+		    	
+		    	escapeNode.belongsTo = m.getFullName();
 		    	escapeNodes.add(escapeNode);
 		    }
 
 		    m.setEscapeNodes(escapeNodes);
+		    
+		    
+		    
 		    
 		    JsonArray jNodes = jobject.get("nodes").getAsJsonArray();
 			
@@ -187,7 +192,8 @@ protected Gson gson;
 			
 		    for(int i = 0; i < jNodes.size(); i++)
 		    {
-		    	PaperPointsToHeapPartition node = context.deserialize(jNodes.get(i), PaperPointsToHeapPartition.class);		    	
+		    	PaperPointsToHeapPartition node = context.deserialize(jNodes.get(i), PaperPointsToHeapPartition.class);	
+		    	node.belongsTo = m.getFullName();
 		    	nodes.add(node);
 		    }
 

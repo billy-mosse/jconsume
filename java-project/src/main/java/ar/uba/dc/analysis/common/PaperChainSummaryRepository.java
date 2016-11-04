@@ -1,33 +1,31 @@
 package ar.uba.dc.analysis.common;
 
-import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
+import org.apache.commons.lang.NotImplementedException;
+
 import ar.uba.dc.config.Container;
-import soot.SootMethod;
 
 public class PaperChainSummaryRepository <T, S> implements SummaryRepository<T, S>, Container<SummaryRepository<T, S>>{
 
 	@Override
 	public void register(SummaryRepository<T, S> o) {
-		// TODO Auto-generated method stub
+		throw new NotImplementedException();
 		
 	}
 
 	@Override
 	public void unregister(SummaryRepository<T, S> o) {
-		// TODO Auto-generated method stub
+		throw new NotImplementedException();
 		
 	}
 
 	@Override
 	public T get(S method) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new NotImplementedException();
 	}
 
 	@Override
 	public boolean contains(S method) {
-		// TODO Auto-generated method stub
-		return false;
+		throw new NotImplementedException();
 	}
 	
 	

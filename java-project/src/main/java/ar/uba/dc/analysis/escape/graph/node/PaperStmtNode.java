@@ -110,6 +110,15 @@ public class PaperStmtNode implements PaperNode {
 		return new CircularStack<String>(context);
 	}
 	
-	
 
+	
+	@Override
+	public String toString()
+	{	
+    	if (this.isInside) {
+    		return "I_" + id; 
+    	} else {
+    		return "L_" + id;
+    	}
+	}
 }

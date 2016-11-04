@@ -312,7 +312,7 @@ public class SootUtils {
 	@SuppressWarnings("unchecked")
 	public static Set<IntermediateRepresentationParameter> getParameters(SootMethod target, boolean withType) {
 
-		List<Type> parameterTypes = new ArrayList(target.getParameterTypes());	
+		List<Type> parameterTypes = new ArrayList<Type>(target.getParameterTypes());	
 		
 		Set<IntermediateRepresentationParameter> parameters = new LinkedHashSet<IntermediateRepresentationParameter>();
 		

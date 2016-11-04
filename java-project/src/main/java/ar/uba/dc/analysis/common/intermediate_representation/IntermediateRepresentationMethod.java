@@ -102,7 +102,6 @@ public class IntermediateRepresentationMethod {
 	}
 	
 	
-	//TODO: ESTO ESTA MAL, NO DEBERIA EXISTIR PORQUE CADA NEW YA TIENE ASOCIADO SU NODO.
 	protected Set<PaperPointsToHeapPartition> escapeNodes;
 	
 	private String declaringClass;
@@ -160,8 +159,6 @@ public class IntermediateRepresentationMethod {
 	
 	public IntermediateRepresentationMethod(SootMethod m, long order)
 	{
-		//TODO: NO HACE FALTA PARSEAR. EL SOOTMETHOD YA TIENE TODO!!
-		
 		this.order = order;		
 
 		log.debug("____Construyendo " + m.toString());

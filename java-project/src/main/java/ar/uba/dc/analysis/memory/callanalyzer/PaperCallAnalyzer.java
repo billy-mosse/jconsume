@@ -179,7 +179,7 @@ public class PaperCallAnalyzer {
 		
 		for(PaperPointsToHeapPartition hp : escapeNodes)
 		{
-			if(hp.equals(nodeToBind))
+			if(hp.getNode().equals(nodeToBind))
 				isTemporal = true;
 		}
 		

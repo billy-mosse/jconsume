@@ -62,7 +62,7 @@ public class CircularStack<E> implements Cloneable {
 		if (o == this) return true;
 		if (!(o instanceof CircularStack)) return false;
 		
-		CircularStack s = (CircularStack) o;
+		CircularStack<E> s = (CircularStack<E>) o;
 		
 		return maxElements == s.maxElements && stack.equals(s.stack);
 	}
