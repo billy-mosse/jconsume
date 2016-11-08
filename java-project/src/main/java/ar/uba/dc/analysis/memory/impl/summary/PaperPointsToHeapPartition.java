@@ -77,6 +77,13 @@ public class PaperPointsToHeapPartition implements HeapPartition {
 		this.node = node;
 	}	
 	
+	public PaperPointsToHeapPartition(PaperNode node, boolean temporal, String belongsTo)
+	{
+		this.temporal = temporal;
+		this.node = node;
+		this.belongsTo = belongsTo;
+	}	
+	
 	
 	public PaperPointsToHeapPartition(boolean temporal, Node node, CircularStack<String> context, String belongsTo)
 	{

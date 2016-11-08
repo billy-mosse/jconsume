@@ -299,6 +299,8 @@ public class PaperInterproceduralAnalysis {
 				
 				ir_method.setParameters(invocation.getParameters());
 				
+				ir_method.setIsReturnRefLikeType(invocation.isReturnRefLikeType());
+				
 				invocationSummary = this.repository.get(ir_method);
 				
 				if (invocationSummary == null) {

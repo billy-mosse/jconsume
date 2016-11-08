@@ -180,9 +180,6 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 	        
 	        result.add("is_return_ref_like_type", new JsonPrimitive(ir_method.isReturnRefLikeType()));
 	        
-	        
-	        
-	        
 	        result.add("return_type", new JsonPrimitive(ir_method.getReturnType()));
 	        result.add("body", context.serialize(ir_method.getBody()));
 	        
@@ -335,6 +332,9 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 			result.add("called_implementation_signature", new JsonPrimitive (invocation.getCalled_implementation_signature()));
 			result.add("name_called", new JsonPrimitive (invocation.getNameCalled()));
 			result.add("hp",  context.serialize(invocation.getHeapPartition()));
+			
+	        result.add("is_return_ref_like_type", new JsonPrimitive(invocation.isReturnRefLikeType()));
+
 			
 	        return result;
 	    }

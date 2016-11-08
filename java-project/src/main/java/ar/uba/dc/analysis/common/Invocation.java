@@ -12,6 +12,7 @@ import ar.uba.dc.analysis.memory.HeapPartition;
 import ar.uba.dc.analysis.memory.impl.summary.EscapeBasedLifeTimeOracle;
 import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
 import ar.uba.dc.soot.SootUtils;
+import soot.RefLikeType;
 import soot.SootMethod;
 
 import com.google.common.base.*;
@@ -25,6 +26,7 @@ public class Invocation {
 	
 	protected String nameCalled;
 
+	protected boolean isReturnRefLikeType;
 
 
 	public Invocation()
@@ -39,6 +41,8 @@ public class Invocation {
 		this.setCallStatement(true);
 		this.called_implementation_signature = m.getSignature();
 		this.nameCalled = m.getName();
+		
+		this.isReturnRefLikeType = m.getReturnType() instanceof RefLikeType;
 		
 
 		this.setParameters(new LinkedHashSet<IntermediateRepresentationParameter>());
@@ -138,6 +142,16 @@ public class Invocation {
 
 	public void setCallStatement(boolean isCallStatement) {
 		this.isCallStatement = isCallStatement;
+	}
+	
+	public boolean isReturnRefLikeType()
+	{
+		return this.isReturnRefLikeType;
+	}	
+	
+	public void setIsReturnRefLikeType(boolean isReturnRefLikeType)
+	{
+		this.isReturnRefLikeType = isReturnRefLikeType;
 	}
 
 }

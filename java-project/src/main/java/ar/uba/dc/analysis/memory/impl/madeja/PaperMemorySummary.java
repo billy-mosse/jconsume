@@ -35,6 +35,8 @@ public class PaperMemorySummary {
 		this.temporal = initialTemporal;
 		this.memoryRequirement = initialMemoryRequirement;
 		this.residuals = new HashMap<PaperPointsToHeapPartition, ParametricExpression>();
+		this.globEscape = new HashSet<PaperPointsToHeapPartition>();
+		this.ret = new HashSet<PaperPointsToHeapPartition>();
 	}
 	
 	

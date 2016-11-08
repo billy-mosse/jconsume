@@ -387,7 +387,7 @@ protected Gson gson;
 		    	parameters.add(p);
 		    }
 		    
-		    
+		    invocation.setIsReturnRefLikeType(jobject.get("is_return_ref_like_type").getAsBoolean());
 		    
 		    invocation.setParameters(parameters);
 		    

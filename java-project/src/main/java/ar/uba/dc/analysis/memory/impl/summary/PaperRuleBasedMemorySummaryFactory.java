@@ -105,7 +105,7 @@ public class PaperRuleBasedMemorySummaryFactory implements SummaryFactory<PaperM
 		
 		if (ir_method.isReturnRefLikeType())
 		{
-			PaperPointsToHeapPartition methodHp = new PaperPointsToHeapPartition(new PaperMethodNode(ir_method, sensitivity), false);
+			PaperPointsToHeapPartition methodHp = new PaperPointsToHeapPartition(new PaperMethodNode(ir_method, sensitivity), false, ir_method.getFullName());
 			summary.returnPartition(methodHp);
 			summary.add(methodHp, resMemory);
 		}
