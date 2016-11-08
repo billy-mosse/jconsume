@@ -35,7 +35,7 @@ public class PaperStmtNode implements PaperNode {
     protected CircularStack<String> context;
 
 	  
-	public PaperStmtNode(Node origNode, CircularStack<String> context) {
+	public PaperStmtNode(StmtNode origNode, CircularStack<String> context) {
 		this.id = origNode.getNumber();
 		this.isInside = origNode.isInside();
 		this.context = context;

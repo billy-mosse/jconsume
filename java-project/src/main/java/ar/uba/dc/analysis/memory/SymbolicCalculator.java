@@ -29,5 +29,9 @@ public interface SymbolicCalculator {
 	public ParametricExpression summateIfClassCalledChangedDuringLoop(
 			ParametricExpression MAX_totalResidualsBeforeSummate, ParametricExpression totalResiduals,
 			Statement virtualInvoke);
+	
+	public ParametricExpression summateIfClassCalledChangedDuringLoop(
+			ParametricExpression MAX_totalResidualsBeforeSummate, ParametricExpression totalResiduals,
+			Invocation invocation, DomainSet invariant);
 
 }

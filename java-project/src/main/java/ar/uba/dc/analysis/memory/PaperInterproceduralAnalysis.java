@@ -272,7 +272,7 @@ public class PaperInterproceduralAnalysis {
 	{
 		
 		
-		ParametricExpression MAX_memreq = this.expressionFactory.constant(0L);
+		//ParametricExpression MAX_memreq = this.expressionFactory.constant(0L);
 		
 		for(Invocation invocation : callInvocation.getInvocations())
 		{
@@ -329,6 +329,12 @@ public class PaperInterproceduralAnalysis {
 				
 			}*/
 			
+		}
+		
+		if(callInvocation.getInvocations().size() > 0)
+		{
+			
+			callAnalyzer.calculateCorrectTotalResiduals(callInvocation.getInvocations().get(0), callInvocation.getInvariant().clone());
 		}
 		
 		PaperCallSummaryInContext result = callAnalyzer.buildSummary(callInvocation);

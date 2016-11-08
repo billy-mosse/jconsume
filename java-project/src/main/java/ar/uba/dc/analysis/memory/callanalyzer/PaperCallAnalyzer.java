@@ -175,12 +175,14 @@ public class PaperCallAnalyzer {
 			// A partir del summary me fijo si el nodo escapa o no.
 		
 		
-		boolean isTemporal = false;
+		boolean isTemporal = true;
 		
+		
+		//Primero consigo el nodo y despues me fijo si es temporal!
 		for(PaperPointsToHeapPartition hp : escapeNodes)
 		{
 			if(hp.getNode().equals(nodeToBind))
-				isTemporal = true;
+				isTemporal = false;
 		}
 		
 		//Para que sirve esto?
@@ -209,6 +211,11 @@ public class PaperCallAnalyzer {
 		this.summated_MAX_totalResiduals= expressionFactory.constant(0L);
 		
 		
+	}
+	
+	public void calculateCorrectTotalResiduals(Invocation invocation, DomainSet invariant)
+	{
+		totalResiduals = symbolicCalculator.summateIfClassCalledChangedDuringLoop(MAX_totalResidualsBeforeSummate, totalResiduals, invocation, invariant);
 	}
 	
 

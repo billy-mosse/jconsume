@@ -207,7 +207,8 @@ public class IntraproceduralAnalysis {
 			HeapPartition partition = ea.getPartition(newStmt);
 			
 			
-			memReq = sa.add(memReq, bound);
+			//Tengo que contar cuanto escapa por NEWs!!!
+			acumResidualsFromCallees = sa.add(acumResidualsFromCallees, bound);
 			
 			
 			

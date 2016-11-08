@@ -136,7 +136,9 @@ public class PaperIntraproceduralAnalysis {
 			Invocation inv = newLine.getInvocations().get(0);
 			PaperPointsToHeapPartition partition = inv.getHeapPartition();
 			
-			memReq = sa.add(memReq, bound);
+			
+			// Tengo que contar cuanto escapa por NEWs!!
+			acumResidualsFromCallees = sa.add(acumResidualsFromCallees, bound);
 			
 			if (!partition.isTemporal()) {
 				log.debug(" | | |- Partition escapes");

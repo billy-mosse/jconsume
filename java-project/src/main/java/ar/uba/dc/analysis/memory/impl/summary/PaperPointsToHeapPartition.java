@@ -13,6 +13,7 @@ import ar.uba.dc.analysis.escape.graph.node.GlobalNode;
 import ar.uba.dc.analysis.escape.graph.node.MethodNode;
 import ar.uba.dc.analysis.escape.graph.node.PaperGlobalNode;
 import ar.uba.dc.analysis.escape.graph.node.PaperMethodNode;
+import ar.uba.dc.analysis.escape.graph.node.PaperNodeUtils;
 import ar.uba.dc.analysis.escape.graph.node.PaperParamNode;
 import ar.uba.dc.analysis.escape.graph.node.PaperStmtNode;
 import ar.uba.dc.analysis.escape.graph.node.PaperThisNode;
@@ -87,29 +88,7 @@ public class PaperPointsToHeapPartition implements HeapPartition {
 		
 		this.belongsTo = belongsTo;
 		
-		
-		if(node.getClass() == StmtNode.class)
-		{
-			this.node = new PaperStmtNode(node, context);
-		}
-		else if(node.getClass() == ParamNode.class)
-		{
-			this.node = new PaperParamNode(node);
-		}
-		else if(node.getClass() == MethodNode.class)
-		{
-			MethodNode mNode = (MethodNode) node;
-			this.node = new PaperMethodNode(mNode, context, belongsTo);
-		}
-		else if(node.getClass() == ThisNode.class)
-		{
-			//ThisNode mNode = (ThisNode) node;
-			this.node = new PaperThisNode();
-		}
-		else
-		{
-			throw new NotImplementedException();
-		}
+		this.node = PaperNodeUtils.createPaperNodeFromNormalNode(node, context, belongsTo);
 	}	
 	
 	
@@ -143,19 +122,15 @@ public class PaperPointsToHeapPartition implements HeapPartition {
 			
 
 			
-			//TODO: hacer los otros.
-			if(origNode.getClass() == StmtNode.class)
-			{
-				this.node = new PaperStmtNode(origNode, ir_context);
-			}
-			else if(origNode.getClass() == ParamNode.class)
-			{
-				this.node = new PaperParamNode(origNode);
-			}
+			
 			
 			SootMethod m = hp.getNode().belongsTo();
 			
 			this.belongsTo = m.getDeclaringClass().toString() + "." +  m.getName();
+			
+			
+
+			this.node = PaperNodeUtils.createPaperNodeFromNormalNode(origNode, ir_context, belongsTo);
 			
 		}
 		else

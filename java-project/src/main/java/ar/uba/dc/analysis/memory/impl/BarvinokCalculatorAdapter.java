@@ -154,6 +154,16 @@ public class BarvinokCalculatorAdapter implements CountingTheory, SymbolicCalcul
 			return totalResiduals;
 	}
 	
+	@Override
+	public ParametricExpression summateIfClassCalledChangedDuringLoop(ParametricExpression target, ParametricExpression totalResiduals, Invocation invocation, DomainSet invariant) {
+		PiecewiseQuasipolynomial polynomial = ((BarvinokParametricExpression) target).expr;
+				
+		if(invariant.checkIfClassCalledChangedDuringLoop())
+			return summateWithInvariant(target, invocation, invariant);
+		else
+			return totalResiduals;
+		}
+	
 	
 	
 	@Override
