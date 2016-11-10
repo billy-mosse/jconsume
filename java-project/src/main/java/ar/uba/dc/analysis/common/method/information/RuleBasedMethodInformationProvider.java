@@ -20,6 +20,7 @@ import ar.uba.dc.analysis.common.method.information.rules.Rule;
 import ar.uba.dc.analysis.common.method.information.rules.RuleSet;
 import ar.uba.dc.analysis.common.method.information.rules.RuleSetRepository;
 import ar.uba.dc.analysis.memory.impl.summary.repository.PaperDefaultSummaryRepository;
+import ar.uba.dc.soot.SootUtils;
 
 public class RuleBasedMethodInformationProvider implements MethodInformationProvider {
 	
@@ -28,89 +29,89 @@ public class RuleBasedMethodInformationProvider implements MethodInformationProv
 	protected RuleSet rules;
 
 	public Boolean hasConservativaGraph(SootMethod method) {
-		return commonHasConservativaGraph(method.getDeclaringClass().getName());
+		return commonHasConservativaGraph(method.getDeclaringClass().toString(), method.getName());
 	}
 
-	public Boolean commonHasConservativaGraph(String methodClass) {
+	public Boolean commonHasConservativaGraph(String methodClass, String methodName) {
 		if (rules == null) {
 			init();
 		}
 
-		return isMethodOfType(methodClass, RuleSet.ALTER_TYPE);
+		return isMethodOfType(methodClass, methodName, RuleSet.ALTER_TYPE);
 	}	
 
 	public Boolean hasFreshGraph(SootMethod method) {
-		return commonHasFreshGraph(method.getDeclaringClass().getName());
+		return commonHasFreshGraph(method.getDeclaringClass().toString(), method.getName());
 	}
 	
 	
-	public Boolean commonHasFreshGraph(String methodClass) {
+	public Boolean commonHasFreshGraph(String methodClass, String methodName) {
 		if (rules == null) {
 			init();
 		}
 		
-		return isMethodOfType(methodClass, RuleSet.PURE_TYPE);
+		return isMethodOfType(methodClass, methodName, RuleSet.PURE_TYPE);
 	}
 	
 
 	public Boolean hasNonConservativaGraph(SootMethod method) {
-		return commonHasNonConservativaGraph(method.getDeclaringClass().getName());
+		return commonHasNonConservativaGraph(method.getDeclaringClass().toString(), method.getName());
 	}
 	
-	public Boolean commonHasNonConservativaGraph(String methodClass) {
+	public Boolean commonHasNonConservativaGraph(String methodClass, String methodName) {
 		if (rules == null) {
 			init();
 		}
 		
-		return isMethodOfType(methodClass, RuleSet.IMPURE_TYPE);
+		return isMethodOfType(methodClass, methodName, RuleSet.IMPURE_TYPE);
 	}
 	
 	
 
 	public Boolean isAnalyzable(SootMethod method) {
-		return commonIsAnalyzable(method.getDeclaringClass().getName());
+		return commonIsAnalyzable(method.getDeclaringClass().toString(), method.getName());
 	}
 	
-	public Boolean commonIsAnalyzable(String methodClass)
+	public Boolean commonIsAnalyzable(String methodClass, String methodName)
 	{
 		if (rules == null) {
 			init();
 		}
 
-		return commonFindRule(methodClass) == null;
+		return commonFindRule(methodClass, methodName) == null;
 	}
 	
 	
-	public Rule commonFindRule(String methodClass) {
-		return rules.find(methodClass);
+	public Rule commonFindRule(String methodClass, String methodName) {
+		return rules.find(methodClass, methodName);
 	}
 	
 	public Rule findRule(SootMethod method) {
-		return commonFindRule(method.getDeclaringClass().getName());
+		return commonFindRule(method.getDeclaringClass().toString(), method.getName());
 	}
 	
 	public Rule IR_findRule(IntermediateRepresentationMethod ir_method) {
-		return commonFindRule(ir_method.getDeclaringClass());
+		return commonFindRule(ir_method.getDeclaringClass().toString(), ir_method.getName());
 	}
 	
 	public Boolean isExcluded(SootMethod method) {
-		return commonIsExcluded(method.getDeclaringClass().getName());
+		return commonIsExcluded(method.getDeclaringClass().toString(), method.getName());
 	}
 	
-	public Boolean commonIsExcluded(String methodClass) {
+	public Boolean commonIsExcluded(String methodClass, String methodName) {
 		if (rules == null) {
 			init();
 		}
 		
-		return rules.findWithType(methodClass, RuleSet.EXCLUDE_TYPE) != null 
-				&& rules.findWithoutType(methodClass, RuleSet.EXCLUDE_TYPE) == null;
+		return rules.findWithType(methodClass, methodName, RuleSet.EXCLUDE_TYPE) != null 
+				&& rules.findWithoutType(methodClass, methodName, RuleSet.EXCLUDE_TYPE) == null;
 	}
 	
 
-	protected boolean isMethodOfType(String methodClass, String type) {
+	protected boolean isMethodOfType(String methodClass, String methodName, String type) {
 		Boolean ret = false;
 		
-		Rule rule = commonFindRule(methodClass);
+		Rule rule = commonFindRule(methodClass, methodName);
 		if (rule != null) {
 			ret = type.equals(rule.getType());
 		}
@@ -140,7 +141,7 @@ public class RuleBasedMethodInformationProvider implements MethodInformationProv
 	@Override
 	public Boolean isAnalyzable(IntermediateRepresentationMethod ir_method) {
 		
-		return commonIsAnalyzable(ir_method.getDeclaringClass());
+		return commonIsAnalyzable(ir_method.getDeclaringClass(), ir_method.getName());
 	}
 	
 	private static Log log = LogFactory.getLog(RuleBasedMethodInformationProvider.class);
@@ -148,24 +149,24 @@ public class RuleBasedMethodInformationProvider implements MethodInformationProv
 
 	@Override
 	public Boolean hasFreshGraph(IntermediateRepresentationMethod ir_method) {
-		return commonHasFreshGraph(ir_method.getDeclaringClass());
+		return commonHasFreshGraph(ir_method.getDeclaringClass(), ir_method.getName());
 	}
 
 	@Override
 	public Boolean hasConservativaGraph(IntermediateRepresentationMethod ir_method) {
 		
 
-		return commonHasConservativaGraph(ir_method.getDeclaringClass());	}
+		return commonHasConservativaGraph(ir_method.getDeclaringClass(), ir_method.getName());	}
 
 	@Override
 	public Boolean hasNonConservativaGraph(IntermediateRepresentationMethod ir_method) {
 
-		return commonHasNonConservativaGraph(ir_method.getDeclaringClass());
+		return commonHasNonConservativaGraph(ir_method.getDeclaringClass(), ir_method.getName());
 	}
 
 	@Override
 	public Boolean isExcluded(IntermediateRepresentationMethod ir_method) {
 
-		return commonIsExcluded(ir_method.getDeclaringClass());
+		return commonIsExcluded(ir_method.getDeclaringClass(), ir_method.getName());
 	}
 }

@@ -40,11 +40,11 @@ public class RuleSet {
 	/**
 	 * Un poco mas rapido porque filtra por tipo, pero no usa cache
 	 */
-	public Rule findWithType(final String methodClass, final String type) {
+	public Rule findWithType(final String methodClass, final String methodName, final String type) {
 		return (Rule) CollectionUtils.find(rules, new Predicate() {
 			public boolean evaluate(Object object) {
 				Rule rule = (Rule) object;
-				return (type == null || rule.getType().equals(type)) && rule.match(methodClass);
+				return (type == null || rule.getType().equals(type)) && rule.match(methodClass, methodName);
 			}
 		});
 	}
@@ -52,28 +52,28 @@ public class RuleSet {
 	/**
 	 * Un poco mas rapido porque filtra por tipo, pero no usa cache
 	 */
-	public Rule findWithoutType(final String methodClass, final String type) {
+	public Rule findWithoutType(final String methodClass, final String methodName, final String type) {
 		return (Rule) CollectionUtils.find(rules, new Predicate() {
 			public boolean evaluate(Object object) {
 				Rule rule = (Rule) object;
-				return (type == null || !rule.getType().equals(type)) && rule.match(methodClass);
+				return (type == null || !rule.getType().equals(type)) && rule.match(methodClass, methodName);
 			}
 		});
 	}
 	
-	public Rule find(final String methodClass) {
+	public Rule find(final String methodClass, final String methodName) {
 		if (cache == null) {
 			cache = new LRUMap(cacheSize);
 		}
 		
-		Rule rule = (Rule) cache.get(methodClass);
+		Rule rule = (Rule) cache.get(methodClass + "." + methodName);
 		
 		if (rule == null) {
-			rule = doFind(methodClass);
+			rule = doFind(methodClass, methodName);
 			if (rule != null) {
-				cache.put(methodClass, rule);
+				cache.put(methodClass + "." + methodName, rule);
 			} else {
-				cache.put(methodClass, Rule.NULL_CONST);
+				cache.put(methodClass + "." + methodName, Rule.NULL_CONST);
 			}
 		}
 		
@@ -84,12 +84,12 @@ public class RuleSet {
 		return rule;
 	}	
 	
-	protected Rule doFind(final String methodClass) {
+	protected Rule doFind(final String methodClass, final String methodName) {
 		return (Rule) CollectionUtils.find(rules, new Predicate() {
 			
 			public boolean evaluate(Object object) {
 				Rule rule = (Rule) object;
-				return rule.match(methodClass);
+				return rule.match(methodClass, methodName);
 			}
 		});
 	}

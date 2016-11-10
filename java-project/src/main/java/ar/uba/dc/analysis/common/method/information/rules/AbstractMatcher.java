@@ -13,15 +13,15 @@ public abstract class AbstractMatcher {
 	
 	protected String type;
 	
-	protected boolean match(String method) {
+	protected boolean match(String toMatch) {
 		boolean result = false;
 		
 		if (STARTS_WITH.equals(type)) {
-			result = method.startsWith(name);
+			result = toMatch.startsWith(name);
 		} else if (EQUALS.equals(type)) {
-			result = method.equals(name);
+			result = toMatch.equals(name);
 		} else if (ENDS_WITH.equals(type)) {
-			result = method.endsWith(name);
+			result = toMatch.endsWith(name);
 		}
 		
 		return result;

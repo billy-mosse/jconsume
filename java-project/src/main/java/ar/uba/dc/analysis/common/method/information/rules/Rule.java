@@ -29,12 +29,16 @@ public class Rule {
 		return type;
 	}
 
-	public boolean match(final String methodClass) {
+	public boolean match(final String methodClass, final String methodName) {
 		return CollectionUtils.find(matchers, new Predicate() {
 			
 			public boolean evaluate(Object object) {
 				PackageMatcher matcher = (PackageMatcher) object;
-				return matcher.match(methodClass);
+				
+
+				
+				return matcher.match(methodClass, methodName);
+				
 			}
 		}) != null;
 	}

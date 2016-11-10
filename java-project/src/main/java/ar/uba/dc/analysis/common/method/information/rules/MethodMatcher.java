@@ -4,8 +4,7 @@ import soot.SootMethod;
 
 public class MethodMatcher extends AbstractMatcher {
 
-	public boolean match(SootMethod method) {
-		return super.match(method.getName());
-	}
-	
+	public boolean match(String methodClass, String methodName) {
+		return super.match(methodName);
+	}	
 }

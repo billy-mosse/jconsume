@@ -388,6 +388,11 @@ public class SootUtils {
 	}
 	
 	
+	public static String getFullName(SootMethod method)
+	{
+		return method.getDeclaringClass() + "." + method.getName();	
+	}
+	
 	/*@SuppressWarnings("unchecked")
 	public Set<IntermediateRepresentationParameterWithType> getParametersWithType(SootMethod target, Class classname ) {
 
