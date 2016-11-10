@@ -3,6 +3,8 @@ package ar.uba.dc.analysis.memory.impl.runner;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.kohsuke.args4j.CmdLineException;
+import org.kohsuke.args4j.CmdLineParser;
 
 import soot.Main;
 import soot.jimple.toolkits.callgraph.EdgePredicate;
@@ -23,23 +25,33 @@ public class MainSootRunner {
 	private static Log log = LogFactory.getLog(MainSootRunner.class);
 	
 	public static void main(String[] args) {
+		
+		CommandLineValues values = new CommandLineValues(args);
+	    CmdLineParser parser = new CmdLineParser(values);
 
-		String propertiesFile = null;
+	    try {
+	        parser.parseArgument(args);
+	    } catch (CmdLineException e) {
+	        System.exit(1);
+	    }
+	    
+
+		/*String propertiesFile = null;
 		
 		if (args.length >= 2) {
 			if (StringUtils.isNotBlank(args[1])) {
 				propertiesFile = args[1];
 			}
-		}
+		}*/
 		
-		final Context context = ContextFactory.getContext(propertiesFile, false);
+		final Context context = ContextFactory.getContext(values.getPropertiesFile(), false);
 		 
-		String className = args[0];
-		String methodSignature = context.getString(Context.DEFAULT_MAIN_METHOD);
+		//String className = args[0];
+		//String methodSignature = context.getString(Context.DEFAULT_MAIN_METHOD);
 		
-		if (args.length >= 3 && StringUtils.isNotBlank(args[2])) {
+		/*if (args.length >= 3 && StringUtils.isNotBlank(args[2])) {
 			methodSignature = args[2];
-		}
+		}*/
 		
 		
 		EdgePredicate predicate = context.getFactory().getEdgePredicate();
@@ -47,21 +59,26 @@ public class MainSootRunner {
 			ReachableMethods.setEdgePredicate(predicate);
 		}
 		
-		log.info("Memory analysis was requested for [" + className + "] and method [" + methodSignature + "]");
+		log.info("Memory analysis was requested for [" + values.getProgramName() + "] and method [" + values.getMain() + "]");
 		
 		//aca hace el insertTransformer
-		if (context.getBoolean(Context.RUN_ESCAPE_ANALYSIS)) {
+		//if (context.getBoolean(Context.RUN_ESCAPE_ANALYSIS)) {
+		if(values.runIr())
+		{
 			PhaseInitializer initializer = context.getFactory().getEscapePhaseInitializer();
-			initializer.initialize(context, className);
+			initializer.initialize(context, values.getProgramName());
 		}
 		
 		//BILLY jtp: interprocedural
 		//BILLY wjtp: callgraph
-		SootUtils.insertTransformer("wjtp", "wjtp.memory", MemorySceneTransformer.v(context, className));
 		
-		//SootUtils.insertTransformer("wjtp", "wjtp.paperMemory", PaperMemorySceneTransformer.v(context, className));
+		if(values.runMemory())
+		{
+			//SootUtils.insertTransformer("wjtp", "wjtp.memory", MemorySceneTransformer.v(context, values.getProgramName()));
 		
-		String[] opts = SootUtils.buildOptions(context, className, methodSignature).toArray(new String[] {});
+			SootUtils.insertTransformer("wjtp", "wjtp.paperMemory", PaperMemorySceneTransformer.v(context, values.getProgramName()));
+		}
+		String[] opts = SootUtils.buildOptions(context, values.getProgramName(), values.getMain()).toArray(new String[] {});
 		
 		soot.Main.main(opts); 	
 	}
