@@ -311,17 +311,14 @@ public class PaperInterproceduralAnalysis {
 				
 					callAnalyzer.init(symbolicCalculator, expressionFactory);
 					
-					callAnalyzer.process(invocation, invocationSummary, lineInvariant, belongsTo.getNodes(), belongsTo.getEscapeNodes(), belongsTo.getFullName());
-					
-				}
-				
+					callAnalyzer.process(invocation, callInvocation, invocationSummary, lineInvariant, belongsTo.getNodes(), belongsTo.getEscapeNodes(), belongsTo.getFullName());					
+				}				
 			}
 			else
 			{
 				callAnalyzer.init(symbolicCalculator, expressionFactory);
-				callAnalyzer.process(invocation, invocationSummary, lineInvariant, belongsTo.getNodes(), belongsTo.getEscapeNodes(), belongsTo.getFullName());				
-			}
-			
+				callAnalyzer.process(invocation, callInvocation, invocationSummary, lineInvariant, belongsTo.getNodes(), belongsTo.getEscapeNodes(), belongsTo.getFullName());				
+			}			
 			
 			//MAX_memreq = symbolicCalculator.supreme(MAX_memreq, invocationSummary.getMemoryRequirement());
 			

@@ -176,7 +176,9 @@ protected Gson gson;
 		    {
 		    	PaperPointsToHeapPartition escapeNode = context.deserialize(jEscapeNodes.get(i), PaperPointsToHeapPartition.class);		    	
 		    	
-		    	escapeNode.belongsTo = m.getFullName();
+		    	
+		    	//el belongsTo no es necesariamente el metodo....entender por que
+		    	//escapeNode.belongsTo = m.getFullName();
 		    	escapeNodes.add(escapeNode);
 		    }
 
@@ -193,7 +195,7 @@ protected Gson gson;
 		    for(int i = 0; i < jNodes.size(); i++)
 		    {
 		    	PaperPointsToHeapPartition node = context.deserialize(jNodes.get(i), PaperPointsToHeapPartition.class);	
-		    	node.belongsTo = m.getFullName();
+		    	//node.belongsTo = m.getFullName();
 		    	nodes.add(node);
 		    }
 
@@ -259,6 +261,7 @@ protected Gson gson;
 
 			line.setName(jobject.get("name").getAsString());
 			line.setIrName(jobject.get("ir_name").getAsString());
+			line.setIrClass(jobject.get("ir_class").getAsString());
 			
 
 	    	log.debug("Deserializando " + line.getName());
@@ -438,8 +441,6 @@ protected Gson gson;
 		        throw new JsonParseException(e.getMessage());
 		    }
 		    return context.deserialize(jobject.get("instance"), klass);
-			
-			
 		}
 		
 	}

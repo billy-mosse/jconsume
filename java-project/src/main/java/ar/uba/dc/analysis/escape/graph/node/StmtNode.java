@@ -32,7 +32,7 @@ public class StmtNode implements Node {
     private static final Map<StatementId, Integer> nMap = new HashMap<StatementId, Integer>();
     private static int n = 0;
 
-    private static final Set<SootMethod> used = new HashSet<SootMethod>();
+    private static final Map<SootMethod, Integer> method_index= new HashMap<SootMethod, Integer>();
 	
     private static final Map<StatementId, Integer> new_nMap = new HashMap<StatementId, Integer>();
     private static int new_n = 0;
@@ -54,17 +54,19 @@ public class StmtNode implements Node {
 			nMap.put(id, new Integer(n)); 
 			n++; 
 		}
+
 		
-		//Si estoy en un nuevo metodo reseteo el contador
-		if(used.add(id.getMethodOfId()))
-		{
-			new_n = 0;
-		}
+		new_n = 0;
+		
+		if(method_index.containsKey(id.getMethodOfId()))
+			new_n = method_index.get(id.getMethodOfId());	
 		
 		if (!new_nMap.containsKey(id)) { 
-			new_nMap.put(id, new Integer(new_n));
-			new_n++; 
-		}
+			new_nMap.put(id, new Integer(new_n)); 
+			n++; 
+		}		
+		method_index.put(id.getMethodOfId(), new_n);
+		
     }
     
     public StmtNode(StatementId id, boolean inside, int sensitivity) {
@@ -73,9 +75,9 @@ public class StmtNode implements Node {
     
     public String toString() { 
     	if (inside) {
-    		return "I_" + nMap.get(id); 
+    		return "I_" + new_nMap.get(id); 
     	} else {
-    		return "L_" + nMap.get(id);
+    		return "L_" + new_nMap.get(id);
     	}
     }
     

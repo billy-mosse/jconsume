@@ -239,6 +239,7 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 
 			result.add("name", new JsonPrimitive( line.getName()));
 			result.add("ir_name", new JsonPrimitive( line.getIrName()));
+			result.add("ir_class", new JsonPrimitive( line.getIrClass()));
 			
 			result.add("line_number", new JsonPrimitive( line.getLineNumber()));
 			

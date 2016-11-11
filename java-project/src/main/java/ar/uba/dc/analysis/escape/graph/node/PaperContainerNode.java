@@ -39,8 +39,8 @@ public class PaperContainerNode implements PaperNode {
     	this.id = new LinkedHashSet<PaperNode>();
     	
     	for(Node n: origNode.getId())
-    	{
-    		PaperNode paperNode = PaperNodeUtils.createPaperNodeFromNormalNode(n, context, belongsTo);
+    	{	
+    		PaperNode paperNode = PaperNodeUtils.createPaperNodeFromNormalNode(n.clone(), PaperNodeUtils.getIrContext(n), belongsTo);
     		this.id.add(paperNode);    		
     	}
     	
@@ -83,7 +83,13 @@ public class PaperContainerNode implements PaperNode {
     public boolean equals(Object o) {
     	if (o instanceof PaperContainerNode) {
     		PaperContainerNode oo = (PaperContainerNode) o;
-    		return id.equals(oo.id) && inside == oo.inside && context.equals(oo.context) && belongsTo.equals(oo.belongsTo);
+    		
+    		boolean i1 = id.equals(oo.id);
+    		boolean i2 = inside == oo.inside ;
+    		boolean i3 = context.equals(oo.context);
+    		boolean i4 = belongsTo.equals(oo.belongsTo);    		
+    		
+    		return i1 && i2 && i3 && i4;
     	} else {
     		return false;
     	}
@@ -125,6 +131,9 @@ public class PaperContainerNode implements PaperNode {
 
 	@Override
 	public boolean accept(PaperNode node) {
+		
+		//Esto esta mal!!! deberia ser PaperContainerNode
+		
 		if (node.equals(this)) return true;
 		
 		boolean ret = false;

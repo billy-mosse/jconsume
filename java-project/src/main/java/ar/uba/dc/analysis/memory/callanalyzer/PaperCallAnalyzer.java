@@ -57,7 +57,7 @@ public class PaperCallAnalyzer {
 	private static Log log = LogFactory.getLog(PaperCallAnalyzer.class);
 
 	
-	public void process(Invocation invocation, PaperMemorySummary invocationSummary, DomainSet invariant, Set<PaperPointsToHeapPartition> nodes, Set<PaperPointsToHeapPartition> escapeNodes, String fullName) {
+	public void process(Invocation invocation, Line line, PaperMemorySummary invocationSummary, DomainSet invariant, Set<PaperPointsToHeapPartition> nodes, Set<PaperPointsToHeapPartition> escapeNodes, String fullName) {
 		ParametricExpression acumCaptured = expressionFactory.constant(0L);
 		// Calculamos cuanto residual aporta el calle a las particiones de caller. Este map se encarga de eso
 		Map<PaperPointsToHeapPartition, ParametricExpression> acumResiduals = new HashMap<PaperPointsToHeapPartition, ParametricExpression>();
@@ -71,7 +71,7 @@ public class PaperCallAnalyzer {
 		{
 			//PaperPointsToHeapPartition callerPartition = new PaperPointsToHeapPartition(); //magia
 			
-			PaperPointsToHeapPartition callerPartition = this.bind(calleePartition, invocation, invocationSummary, nodes, escapeNodes, fullName);	
+			PaperPointsToHeapPartition callerPartition = this.bind(calleePartition, line, invocationSummary, nodes, escapeNodes, fullName);	
 			
 			if(callerPartition != null)
 			{
@@ -133,7 +133,7 @@ public class PaperCallAnalyzer {
 	//TODO:
 	//Arreglar esto, esta horrible (para que uso HPs si puedo usar nodos directamente?
 	//Los nomres tambien estan feos
-	private PaperPointsToHeapPartition bind(PaperPointsToHeapPartition hpCallee, Invocation invocation, PaperMemorySummary invocationSummary, Set<PaperPointsToHeapPartition> nodes, Set<PaperPointsToHeapPartition> escapeNodes, String fullName) {
+	private PaperPointsToHeapPartition bind(PaperPointsToHeapPartition hpCallee, Line line, PaperMemorySummary invocationSummary, Set<PaperPointsToHeapPartition> nodes, Set<PaperPointsToHeapPartition> escapeNodes, String fullName) {
 		
 		// Ignoramos los parametros
 		if (hpCallee.getNode().isParam()) {
@@ -144,7 +144,7 @@ public class PaperCallAnalyzer {
 		
 			// Construyo el nodo en el caller que basicamente es el mismo nodo pero cambiando el contexto (el escape era k-sensitivo)
 		PaperNode escapeNode = hpCallee.getNode().clone();
-		escapeNode.changeContext(invocation.getFullNameCalled());
+		escapeNode.changeContext(line.getFullNameCalled());
 		
 		// La particion puede estar como nodo o bien contenida dentro del mismo 
 		PaperNode nodeToBind = null;
@@ -182,7 +182,10 @@ public class PaperCallAnalyzer {
 		for(PaperPointsToHeapPartition hp : escapeNodes)
 		{
 			if(hp.getNode().equals(nodeToBind))
+			{
 				isTemporal = false;
+				break;
+			}
 		}
 		
 		//Para que sirve esto?

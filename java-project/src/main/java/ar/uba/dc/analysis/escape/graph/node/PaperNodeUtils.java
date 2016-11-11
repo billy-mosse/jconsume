@@ -1,10 +1,14 @@
 package ar.uba.dc.analysis.escape.graph.node;
 
+import java.util.Iterator;
+
 import org.apache.commons.lang.NotImplementedException;
 
 import ar.uba.dc.analysis.escape.graph.Node;
 import ar.uba.dc.analysis.escape.graph.PaperNode;
+import ar.uba.dc.soot.StatementId;
 import ar.uba.dc.util.collections.CircularStack;
+import soot.SootMethod;
 
 public class PaperNodeUtils {
 	
@@ -38,6 +42,27 @@ public class PaperNodeUtils {
 		{
 			throw new NotImplementedException();
 		}
+	}
+	
+	
+	public static CircularStack<String> getIrContext(Node n)
+	{
+		CircularStack<StatementId> context = n.getContext();
+		CircularStack<String> ir_context = new CircularStack<String>();			
+		
+		if(context != null)
+		{
+			Iterator<StatementId>ctxtIterator = context.iterator();
+			while(ctxtIterator.hasNext())
+			{
+				StatementId id = ctxtIterator.next();
+				
+				SootMethod idMethod = id.getId().getInvokeExpr().getMethod();
+				String methodFullName = idMethod.getDeclaringClass() + "." + idMethod.getName();
+				ir_context.push(methodFullName);
+			}
+		}
+		return ir_context;
 	}
 
 }

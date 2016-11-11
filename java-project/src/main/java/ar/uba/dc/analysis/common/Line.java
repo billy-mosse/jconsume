@@ -42,8 +42,22 @@ public class Line {
 		
 	}
 	
+	public String getFullNameCalled()
+	{
+		return this.irClass + "." + this.irName;
+	}
+	
+	private String irClass;
+	
+	public String getIrClass() {
+		return irClass;
+	}
+
+	public void setIrClass(String irClass) {
+		this.irClass = irClass;
+	}
+	
 	public Line(Statement stmt, CallGraph callGraph, LifeTimeOracle lifetimeOracle) {
-		
 		
 		//TODO: descomentar esta linea
 		//this.setLineNumber(stmt.getStatement().getJavaSourceStartLineNumber());
@@ -54,12 +68,14 @@ public class Line {
 			CallStatement callStmt = (CallStatement)stmt;
 			this.setName(callStmt);
 			this.setIrName(callStmt.getStatement().getInvokeExpr().getMethod().getName());
+			this.setIrClass(callStmt.getStatement().getInvokeExpr().getMethod().getDeclaringClass().getName());
 		}
 		else
 		{
 			isCallStatement = false;
 			this.setName("new");
 			this.setIrName("new");
+			this.setIrClass(""); //I dont care
 		}
 		
 		

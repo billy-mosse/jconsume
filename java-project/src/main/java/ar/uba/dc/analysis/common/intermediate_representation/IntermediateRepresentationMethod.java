@@ -23,6 +23,7 @@ import ar.uba.dc.analysis.escape.graph.Node;
 import ar.uba.dc.analysis.escape.graph.node.ContainerNode;
 import ar.uba.dc.analysis.escape.graph.node.GlobalNode;
 import ar.uba.dc.analysis.escape.graph.node.MethodNode;
+import ar.uba.dc.analysis.escape.graph.node.PaperNodeUtils;
 import ar.uba.dc.analysis.escape.graph.node.ParamNode;
 import ar.uba.dc.analysis.escape.graph.node.StmtNode;
 import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
@@ -314,24 +315,15 @@ public class IntermediateRepresentationMethod {
 		
 		for (Node n : escaping) {
 			
-			CircularStack<StatementId> context = n.getContext();
-			CircularStack<String> ir_context = new CircularStack<String>();	
+			CircularStack<String> ir_context = PaperNodeUtils.getIrContext(n);
+			
+			String belongsTo = this.getFullName();
+
+			if(n instanceof StmtNode || n instanceof MethodNode || n instanceof ContainerNode)
+				belongsTo = n.belongsTo().getDeclaringClass() + "." + n.belongsTo().getName();
 			
 			
-			if(context != null)
-			{
-				Iterator<StatementId>ctxtIterator = context.iterator();
-				while(ctxtIterator.hasNext())
-				{
-					StatementId id = ctxtIterator.next();
-					
-					SootMethod idMethod = id.getId().getInvokeExpr().getMethod();
-					String methodFullName = idMethod.getDeclaringClass() + "." + idMethod.getName();
-					ir_context.push(methodFullName);
-				}
-			}		
-			
-			this.escapeNodes.add(new PaperPointsToHeapPartition(false, n, ir_context, this.getFullName()));
+			this.escapeNodes.add(new PaperPointsToHeapPartition(false, n, ir_context, belongsTo));
 			
 		}
 		
@@ -360,7 +352,12 @@ public class IntermediateRepresentationMethod {
 				}
 			}		
 			
-			this.nodes.add(new PaperPointsToHeapPartition(false, n, ir_context, this.getFullName()));
+			String belongsTo = this.getFullName();
+
+			if(n instanceof StmtNode || n instanceof MethodNode || n instanceof ContainerNode)
+				belongsTo = n.belongsTo().getDeclaringClass() + "." + n.belongsTo().getName();
+			
+			this.nodes.add(new PaperPointsToHeapPartition(false, n, ir_context, belongsTo));
 			
 		}
 		
