@@ -37,7 +37,7 @@ public class Program4
 	
 	public static List safeMap(List list, Op op) {
 		List cp = copy(list);
-		return Program3.map(cp, op);
+		return Program3.map(cp, op); // ML: 5 L + 4. Esc: 5 L + 1
 	}
 
 	public static List test(List ls, Op op){

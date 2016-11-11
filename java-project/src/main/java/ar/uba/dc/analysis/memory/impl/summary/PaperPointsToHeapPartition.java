@@ -29,7 +29,7 @@ import soot.SootMethod;
 public class PaperPointsToHeapPartition implements HeapPartition {
 
 	
-	protected boolean temporal; //creo que lo voy a tirar
+	protected boolean temporal; //creo que lo voy a tirar. TODO: tirar, posta.
 	protected PaperNode node;	
 	public String belongsTo;
 	

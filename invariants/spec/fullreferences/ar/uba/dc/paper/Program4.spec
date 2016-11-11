@@ -24,7 +24,8 @@
 
 
 			<call-site offset="3" srccode-offset="">
-				<constraints>$t.list.size == cp.size and cp.size==list.size</constraints>
+				<constraints>cp.size==list.size</constraints>
+				<binding>$t.list.size == cp.size</binding>
 			</call-site>
 		</method>
 

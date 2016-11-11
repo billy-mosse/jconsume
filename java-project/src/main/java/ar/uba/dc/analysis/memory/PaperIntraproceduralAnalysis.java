@@ -10,13 +10,20 @@ import org.apache.commons.logging.LogFactory;
 
 import ar.uba.dc.analysis.common.Invocation;
 import ar.uba.dc.analysis.common.Line;
+import ar.uba.dc.analysis.common.code.NewStatement;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
+import ar.uba.dc.analysis.escape.EscapeSummary;
+import ar.uba.dc.analysis.escape.graph.Node;
+import ar.uba.dc.analysis.escape.graph.node.PaperStmtNode;
+import ar.uba.dc.analysis.escape.graph.node.StmtNode;
 import ar.uba.dc.analysis.memory.expression.ParametricExpression;
 import ar.uba.dc.analysis.memory.expression.ParametricExpressionFactory;
 import ar.uba.dc.analysis.memory.impl.madeja.PaperMemorySummary;
 import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
+import ar.uba.dc.analysis.memory.impl.summary.PointsToHeapPartition;
 import ar.uba.dc.barvinok.expression.DomainSet;
 //import heros.solver.Pair;
+import ar.uba.dc.soot.StatementId;
 
 public class PaperIntraproceduralAnalysis {
 
@@ -84,10 +91,39 @@ public class PaperIntraproceduralAnalysis {
 	public void setCt(CountingTheory ct) {
 		this.ct = ct;
 	}
+	
+	/*public HeapPartition getPartition(Line newLine) {
+		StmtNode node = new StmtNode(new StatementId(newStmt.belongsTo(), newStmt.getStatement()), true, sensitivity);
+		
+		PaperStmtNode node = new PaperStmtNode();
+		
+			// Obtengo el escape summary del metodo bajo analisis
+		EscapeSummary escapeSummary = escapeSummaryProvider.get(newStmt.belongsTo());
+		
+			// Hay nodos que pueden representar a muchos news. Vemos si alguno de ellos escapa
+		boolean isTemporal = true;
+		Node finalNode = node;
+		
+		// A partir del summary me fijo si el nodo escapa o no
+		for (Node escapeNode : escapeSummary.getEscaping()) {
+			if (escapeNode.accept(node)) {
+				isTemporal = false;
+				finalNode = escapeNode;
+				break;
+			}
+		}
+		
+		// El invariantProvider puede pisar la decision tomada en base al summary
+		isTemporal = isTemporal || invariantProvider.captureAllPartitions(newStmt);
+		
+		PointsToHeapPartition hp = new PointsToHeapPartition(finalNode, isTemporal);
+		
+		return hp;
+	}	*/
 
 	public PaperMemorySummary run(IntermediateRepresentationMethod ir_method) {
 		
-		ParametricExpression MAX_memReqFromCallees = expressionFactory.constant(0L);		
+		ParametricExpression MAX_memReqMinusRsdFromCallees = expressionFactory.constant(0L);		
 		ParametricExpression acumResidualsFromCallees = expressionFactory.constant(0L);
 		
 		log.debug(" |- Intraprocedural Analysis for: " + ir_method.getName());
@@ -134,14 +170,19 @@ public class PaperIntraproceduralAnalysis {
 			if(newLine.getInvocations().size() != 1) throw new NotImplementedException("Hola! Ver que pasa aca");
 			
 			Invocation inv = newLine.getInvocations().get(0);
+			
+			//TODO: No tendre que hacer un getPartition() como el bind?
 			PaperPointsToHeapPartition partition = inv.getHeapPartition();
 			
-			
-			// Tengo que contar cuanto escapa por NEWs!!
-			acumResidualsFromCallees = sa.add(acumResidualsFromCallees, bound);
+					
 			
 			if (!partition.isTemporal()) {
 				log.debug(" | | |- Partition escapes");
+				
+				//Si escapa, MemReq = Esc = bound, entonces no tengo que tomar supremo entre (MemReq-Esc) y bound
+				// Porque el maximo entre algo y cero es ese algo
+				acumResidualsFromCallees = sa.add(acumResidualsFromCallees, bound);
+				
 				
 				ParametricExpression oldValue = summary.getResidual(partition);
 				
@@ -157,6 +198,10 @@ public class PaperIntraproceduralAnalysis {
 				summary.setResidual(partition, newValue);
 			} else {
 				log.debug(" | | |- Partition is temporal");
+				
+				//Si es temporal, MemReq - Esc = MemReq y tomo el supremo con eso!
+				MAX_memReqMinusRsdFromCallees = sa.add(MAX_memReqMinusRsdFromCallees, bound);
+				
 				//tempLocal = sa.add(tempLocal, bound);
 			}
 			
@@ -172,13 +217,13 @@ public class PaperIntraproceduralAnalysis {
 			
 			PaperCallSummaryInContext callSummary = interprocedural.analyseCall(callInvocation, ir_method);
 			
-			ParametricExpression memReqFromCallee = callSummary.getMAX_memoryRequirementMinusRsd();
+			ParametricExpression memReqMinusRsdFromCallee = callSummary.getMAX_memoryRequirementMinusRsd();
 			ParametricExpression acumResidualsFromCallee = callSummary.getAcumResiduals();
 					
 			
 			
 			//fruta para ver si anda
-			MAX_memReqFromCallees = sa.supreme(MAX_memReqFromCallees, memReqFromCallee);
+			MAX_memReqMinusRsdFromCallees = sa.supreme(MAX_memReqMinusRsdFromCallees, memReqMinusRsdFromCallee);
 			
 			
 			acumResidualsFromCallees = sa.add(acumResidualsFromCallees, acumResidualsFromCallee);			
@@ -211,7 +256,7 @@ public class PaperIntraproceduralAnalysis {
 			 */
 		}
 		memReq = sa.add(memReq, acumResidualsFromCallees);
-		memReq = sa.add(memReq, MAX_memReqFromCallees);
+		memReq = sa.add(memReq, MAX_memReqMinusRsdFromCallees);
 		
 		
 		//summary.setTemporal(sa.add(tempLocal, tempCalls, resCaptured));

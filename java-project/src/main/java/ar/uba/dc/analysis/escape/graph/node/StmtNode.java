@@ -63,7 +63,7 @@ public class StmtNode implements Node {
 		
 		if (!new_nMap.containsKey(id)) { 
 			new_nMap.put(id, new Integer(new_n)); 
-			n++; 
+			new_n++; 
 		}		
 		method_index.put(id.getMethodOfId(), new_n);
 		

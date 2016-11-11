@@ -208,6 +208,7 @@ public class IntraproceduralAnalysis {
 			
 			
 			//Tengo que contar cuanto escapa por NEWs!!!
+			//TODO: esto esta mal.
 			acumResidualsFromCallees = sa.add(acumResidualsFromCallees, bound);
 			
 			

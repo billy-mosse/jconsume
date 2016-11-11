@@ -293,7 +293,7 @@ public class PaperInterproceduralAnalysis {
 				IntermediateRepresentationMethod ir_method = new IntermediateRepresentationMethod();
 				
 				//TODO: el name no es el signature, es otra cosa
-				ir_method.setName(callInvocation.getIrName());		
+				ir_method.setName(invocation.getNameCalled());		
 				
 				ir_method.setDeclaringClass(invocation.getClass_called());
 				
