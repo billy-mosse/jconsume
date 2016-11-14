@@ -12,17 +12,21 @@ public class Program4
 	
 	
 	public static void main(String[] args) {
-		List list = new List();
+		
+		
+		
 		Op op = new Op();
 
-		List another_list = new List();
+		List another_list = new List(); //vamos a fingir que es una lista de listas
 
 		if (args[0]== "use Op2")
 			op = new Op2();
 		else
 			op = new Op();
 		
-		List new_list = safeMap(list,op);
+		//List new_list = safeMap(list,op);
+		
+		
 		test(another_list, op);
 	}
 	

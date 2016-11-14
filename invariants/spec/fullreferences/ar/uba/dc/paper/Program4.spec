@@ -4,12 +4,13 @@
 		<method decl="void main(java.lang.String[])">
 			<relevant-parameters>list.size, maxSize</relevant-parameters>
 
-			<call-site offset="5" srccode-offset="">
+			<!--<call-site offset="5" srccode-offset="">
 				<constraints>$t.list.size == list.size</constraints>
-			</call-site>
+			</call-site>-->
 
 			<call-site offset="6" srccode-offset="">
-				<constraints>$t.ls.size == another_list.size and $t.maxSize == maxSize</constraints>
+				<constraints>$t.ls.size == another_list.size</constraints>
+				<binding>$t.maxSize == maxSize</binding>
 			</call-site>
 
 		</method>
@@ -49,7 +50,8 @@
 			</call-site>
 
 			<call-site offset="3" srccode-offset="">
-				<constraints>@loop_invariant and $t.list.size == maxSize</constraints>
+				<constraints>@loop_invariant</constraints>
+				<binding>$t.list.size == maxSize</binding>
 			</call-site>
 
 			<call-site offset="4" srccode-offset="">
