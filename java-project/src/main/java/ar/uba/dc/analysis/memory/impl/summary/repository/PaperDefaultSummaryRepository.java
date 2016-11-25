@@ -36,10 +36,10 @@ public class PaperDefaultSummaryRepository implements SummaryRepository<PaperMem
     		log.debug("Method is conservaitve");
     	}
     	
-    	if (methodInformationProvider.hasNonConservativaGraph(method)) {
+    	if (methodInformationProvider.hasNonConservativeGraph(method)) {
     		// impure with side-effect, unless otherwise specified
     		elem = summaryFactory.conservativeGraph(method, true);
-    		log.debug("Method is non conservaitve");
+    		log.debug("Method is non conservative");
     	}
     	
     	return elem;

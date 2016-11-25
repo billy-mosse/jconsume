@@ -55,6 +55,7 @@ private static Log log = LogFactory.getLog(PaperMemorySceneTransformer.class);
 		log.info("Running memory analysis for [" + mainClass + "] and method [" + methodSignature + "]");
 		
 		
+		
 		aPaperMemoryAnalysis.run(Scene.v().getCallGraph(), context.getFactory().getDirectedGraphMethodFilter(), mainClass);
 		
 		

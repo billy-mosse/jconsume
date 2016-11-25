@@ -159,7 +159,7 @@ public class RuleBasedMethodInformationProvider implements MethodInformationProv
 		return commonHasConservativaGraph(ir_method.getDeclaringClass(), ir_method.getName());	}
 
 	@Override
-	public Boolean hasNonConservativaGraph(IntermediateRepresentationMethod ir_method) {
+	public Boolean hasNonConservativeGraph(IntermediateRepresentationMethod ir_method) {
 
 		return commonHasNonConservativaGraph(ir_method.getDeclaringClass(), ir_method.getName());
 	}

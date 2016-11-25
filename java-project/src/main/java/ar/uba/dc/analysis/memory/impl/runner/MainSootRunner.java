@@ -32,7 +32,7 @@ public class MainSootRunner {
 	    try {
 	        parser.parseArgument(args);
 	    } catch (CmdLineException e) {
-	        System.exit(1);
+	    	parser.printSingleLineUsage(System.err);
 	    }
 	    
 

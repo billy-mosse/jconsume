@@ -263,7 +263,7 @@ public class PaperInterproceduralAnalysis {
 			}
 		}
 		
-		log.info("Paper Analisis terminado");
+		log.info("Paper Analysis terminado");
 		
 		//irMethods = irMethods;
 	}

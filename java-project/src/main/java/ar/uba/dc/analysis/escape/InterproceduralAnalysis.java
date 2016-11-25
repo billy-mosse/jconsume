@@ -324,13 +324,13 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 	protected void internalWriteSummaries() {
 		
 		for (EscapeSummary summary : data.values()) {
-			log.info(" |- Writing summary of analyzed method: " + summary.getTarget());
+			log.debug(" |- Writing summary of analyzed method: " + summary.getTarget());
 			summaryWriter.write(summary);
 		}
 
 		if (writeUnanalysedSummaries) {
 			for (EscapeSummary summary : unanalysed.values()) {
-				log.info(" |- Writing summary of unanalyzed method: " + summary.getTarget());
+				log.debug(" |- Writing summary of unanalyzed method: " + summary.getTarget());
 				summaryWriter.write(summary);
 			}
 		}
@@ -340,7 +340,7 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 	protected void internalWriteIntermediateRepresentation() {
 		
 		
-		log.debug("Writing XML...");
+		/*log.debug("Writing XML...");
 		irWriter.setMainClass(this.mainClass);
 		//Si, ya se, podria meter todo en un solo FOR
 		for (IntermediateRepresentationMethod ir_method : ir_methods) {
@@ -359,13 +359,13 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 			ihrWriter.write(ir_method);
 		}
 		
-		log.debug("Done");
-		log.debug("Writing JSON...");
+		log.debug("Done");*/
+		log.info("Writing JSON Intermediate Representation...");
 
 		jsonWriter.setMainClass(this.mainClass);
 		for (IntermediateRepresentationMethod ir_method : ir_methods) {
 			//TODO: agregar los parametros o un mejor nombre para debug
-			log.info(" |- Writing summary of analyzed method: " + ir_method.getName());
+			log.debug(" |- Writing summary of analyzed method: " + ir_method.getName());
 			jsonWriter.write(ir_method);
 			
 			

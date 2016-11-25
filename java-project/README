@@ -281,6 +281,9 @@ En argumentos poner: ar.uba.dc.simple.EjemploSimple02 config.properties
 o era ar.uba.dc.simple.EjemploSimple04 config.properties "void main(java.lang.String[])" ?
 
 
+--program ar.uba.dc.jolden.em3d.Em3d --config config.properties --main "void main(java.lang.String[])" --ir --memory 
+
+
 En Main.class, ar.uba.dc.analysis.memory.impl.runner.MainSootRunner
 En Environment, agregar la variable classpath, con el valor correspondiente (la mía es ./bin/../target/classes:./bin/../../jpfHelper/bin:/home/billy/Projects/git2/jconsume//pruebas/:/home/billy/Projects/git2/jconsume//pruebas/jolden:/home/billy/Projects/git2/jconsume//java_project/:/home/billy/.m2/repository/ca/mcgill/sable/jasmin/2.4.0/jasmin-2.4.0.jar:/home/billy/.m2/repository/ca/mcgill/sable/polyglot/1.3.5/polyglot-1.3.5.jar:/home/billy/.m2/repository/ca/mcgill/sable/soot/2.4.0/soot-2.4.0.jar:/home/billy/.m2/repository/jep/jep/2.4.1/jep-2.4.1.jar:/home/billy/.m2/repository/com/verimag/madeja/1.0/madeja-1.0.jar:/home/billy/.m2/repository/com/thoughtworks/xstream/xstream/1.3.1/xstream-1.3.1.jar:/home/billy/.m2/repository/xpp3/xpp3_min/1.1.4c/xpp3_min-1.1.4c.jar:/home/billy/.m2/repository/commons-collections/commons-collections/3.2.1/commons-collections-3.2.1.jar:/home/billy/.m2/repository/commons-lang/commons-lang/2.5/commons-lang-2.5.jar:/home/billy/.m2/repository/commons-configuration/commons-configuration/1.6/commons-configuration-1.6.jar:/home/billy/.m2/repository/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar:/home/billy/.m2/repository/commons-beanutils/commons-beanutils/1.8.0/commons-beanutils-1.8.0.jar:/home/billy/.m2/repository/commons-io/commons-io/1.4/commons-io-1.4.jar:/home/billy/.m2/repository/log4j/log4j/1.2.12/log4j-1.2.12.jar:/home/billy/.m2/repository/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar:/home/billy/.m2/repository/org/apache/velocity/velocity/1.5/velocity-1.5.jar
 

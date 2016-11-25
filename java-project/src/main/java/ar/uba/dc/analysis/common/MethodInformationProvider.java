@@ -23,7 +23,7 @@ public interface MethodInformationProvider {
 
 	Boolean hasConservativaGraph(IntermediateRepresentationMethod ir_method);
 	
-	Boolean hasNonConservativaGraph(IntermediateRepresentationMethod ir_method);
+	Boolean hasNonConservativeGraph(IntermediateRepresentationMethod ir_method);
 
 	Boolean isExcluded(IntermediateRepresentationMethod ir_method);
 }

@@ -11,3 +11,35 @@ Que es lo que se usa?? Revisar la vieja forma....
 En Program2, el RSD de Map está mal. Debe ser por dog chow!
 
 No, mentira. Debe ser porque hay un problema con los nodos :(
+
+----
+
+Anda mal el cache de RuleSet.java
+
+----
+
+
+Tengo que calcular el volumen de formas cuadráticas. Ej:
+
+1 <= x^2 + y^2 <= k.
+
+x^2+y^2 -k = 0 . <--- Volumen más o por constante es una cota superior de las soluciones.
+
+----
+
+
+LinkedHashSet está eliminando repetidos porque no estoy mirando el id (en ContainerNode, I7 I2), que dice la línea a la que pertenece. Cambiar la estructura porque cuento repetidos. De todas maneras, no deberían tener el mismo id....
+
+
+El tema es que estoy reseteando el contador nMap cada vez que cambio de método, y NO PASA QUE cuando cambio a otro método me quedo en ese....
+
+
+-----
+
+No sé si poner una carpeta base que sea el nombre del programa, o dejarlo por clase.
+
+
+---
+
+
+Si es Rsd debería acotar por abajo cuando hay FOLDS. Lo estoy haciendo?

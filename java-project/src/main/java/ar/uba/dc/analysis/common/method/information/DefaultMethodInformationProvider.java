@@ -135,7 +135,7 @@ public class DefaultMethodInformationProvider implements MethodInformationProvid
 		return inArray(method.getDeclaringClass().toString(), method.getName(), pureMethods);
 	}
 	
-	public Boolean hasNonConservativaGraph(IntermediateRepresentationMethod ir_method) {
+	public Boolean hasNonConservativeGraph(IntermediateRepresentationMethod ir_method) {
 		return inArray(ir_method.getDeclaringClass(), ir_method.getName(), impureMethods);
 	}
 	

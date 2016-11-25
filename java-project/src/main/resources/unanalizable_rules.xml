@@ -24,6 +24,7 @@
 		<package name="java." type="startsWith">
 			<method name="&lt;init&gt;" type="equals" />
 		</package>
+
 	</rule>
 
 	<rule name="pure methods which consume 1 residual and 0 temporal resources" type="pure">

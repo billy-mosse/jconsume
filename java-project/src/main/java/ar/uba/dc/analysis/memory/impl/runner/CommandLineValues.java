@@ -7,17 +7,17 @@ import org.kohsuke.args4j.spi.BooleanOptionHandler;
 
 public class CommandLineValues {
 	@Option(name = "-p", aliases = { "--program" }, required = true,
-            usage = "program")
+            usage = "Program name. e.g. ar.uba.dc.simple.EjemploSimple04")
     private String programName;
 	
 
 	@Option(name = "-c", aliases = { "--config" }, required = true,
-            usage = "name")
+            usage = "Config properties file (config.properties)")
     private String propertiesFile;
 	
 
-	@Option(name = "-m", aliases = { "--main" }, required = true,
-            usage = "main")
+	@Option(name = "-m", aliases = { "--main"}, required = true,
+            usage = "main method. e.g. void main(java.lang.String[])")
     private String main;
     
     @Option(name="--ir",handler=BooleanOptionHandler.class,usage="Generate IR from escape analysis")
