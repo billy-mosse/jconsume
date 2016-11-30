@@ -334,23 +334,9 @@ public class IntermediateRepresentationMethod {
 		this.nodes = new LinkedHashSet<PaperPointsToHeapPartition>();
 		
 		for (Node n : allNodes) {
+				
 			
-			CircularStack<StatementId> context = n.getContext();
-			CircularStack<String> ir_context = new CircularStack<String>();	
-			
-			
-			if(context != null)
-			{
-				Iterator<StatementId>ctxtIterator = context.iterator();
-				while(ctxtIterator.hasNext())
-				{
-					StatementId id = ctxtIterator.next();
-					
-					SootMethod idMethod = id.getId().getInvokeExpr().getMethod();
-					String methodFullName = idMethod.getDeclaringClass() + "." + idMethod.getName();
-					ir_context.push(methodFullName);
-				}
-			}		
+			CircularStack<String> ir_context = PaperNodeUtils.getIrContext(n);	
 			
 			String belongsTo = this.getFullName();
 

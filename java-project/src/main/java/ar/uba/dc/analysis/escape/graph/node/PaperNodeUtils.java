@@ -57,9 +57,9 @@ public class PaperNodeUtils {
 			{
 				StatementId id = ctxtIterator.next();
 				
-				SootMethod idMethod = id.getId().getInvokeExpr().getMethod();
-				String methodFullName = idMethod.getDeclaringClass() + "." + idMethod.getName();
-				ir_context.push(methodFullName);
+				//SootMethod idMethod = id.getId().getInvokeExpr().getMethod();
+				//String methodFullName = idMethod.getDeclaringClass() + "." + idMethod.getName();
+				ir_context.push(id.toString());
 			}
 		}
 		return ir_context;

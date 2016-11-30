@@ -57,6 +57,8 @@ public class Line {
 		this.irClass = irClass;
 	}
 	
+	public String magicalStmtName;
+	
 	public Line(Statement stmt, CallGraph callGraph, LifeTimeOracle lifetimeOracle) {
 		
 		//TODO: descomentar esta linea
@@ -69,6 +71,7 @@ public class Line {
 			this.setName(callStmt);
 			this.setIrName(callStmt.getStatement().getInvokeExpr().getMethod().getName());
 			this.setIrClass(callStmt.getStatement().getInvokeExpr().getMethod().getDeclaringClass().getName());
+			this.magicalStmtName = stmt.getStatement().toString();
 		}
 		else
 		{
@@ -76,6 +79,7 @@ public class Line {
 			this.setName("new");
 			this.setIrName("new");
 			this.setIrClass(""); //I dont care
+			this.magicalStmtName = "";
 		}
 		
 		

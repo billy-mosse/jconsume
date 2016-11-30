@@ -26,12 +26,17 @@ import ar.uba.dc.soot.StatementId;
 import ar.uba.dc.util.collections.CircularStack;
 import soot.SootMethod;
 
+
 public class PaperPointsToHeapPartition implements HeapPartition {
 
 	
 	protected boolean temporal; //creo que lo voy a tirar. TODO: tirar, posta.
 	protected PaperNode node;	
 	public String belongsTo;
+	protected int number;
+	
+	//puede ser null si es un NEW
+	protected IntStringId comesFrom;
 	
 	public PaperNode getNode() {
 		return node;

@@ -78,6 +78,8 @@ public class IntermediateLanguageRepresentationBuilder {
 		log.debug("Creando el IR...");
 		
 		//No hace falta este orden pero me gusta la idea de que este ordenado topologicamente por si un dia me sirve
+		
+		//ha llegado el dia en que me sirve
 		SortedSet<SootMethod> queue = new TreeSet<SootMethod>(getOrderComparator());
 		queue.addAll(order.keySet());
 		

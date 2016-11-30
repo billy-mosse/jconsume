@@ -21,6 +21,7 @@ public class EjemploSimple06 {
 
 	public static Integer m2(Integer i)
 	{
+		Integer j = new Integer(4);
 		return new Integer(42);
 	}
 }

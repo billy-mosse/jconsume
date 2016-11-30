@@ -286,6 +286,9 @@ protected Gson gson;
 		    
 		    line.setBinding((Binding)context.deserialize(jobject.get("binding"), Binding.class));
 		    
+
+		    line.magicalStmtName = jobject.get("magical_stmt_name").getAsString();
+		    
 		    return line;
 		}
 	}

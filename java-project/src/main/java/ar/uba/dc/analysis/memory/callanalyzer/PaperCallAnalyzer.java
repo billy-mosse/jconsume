@@ -67,18 +67,29 @@ public class PaperCallAnalyzer {
 		ParametricExpression acumTotalResiduals = expressionFactory.constant(0L); //porque tengo que inicializarla para cada implementacion
 
 		
+		
+		//Esto esta bien porque las residual partitions....no son temp. Pero habria que cambiarlo, creo
 		for(PaperPointsToHeapPartition calleePartition : invocationSummary.getResidualPartitions())
 		{
 			//PaperPointsToHeapPartition callerPartition = new PaperPointsToHeapPartition(); //magia
 			
+			
+			//Al escapeNode del caller le agrego el contexto del callee
+			//y me fijo si matchea con alguno de los nodos del callee
+			//Y si engancha, me fijo si es temporal o no			
 			PaperPointsToHeapPartition callerPartition = this.bind(calleePartition, line, invocationSummary, nodes, escapeNodes, fullName);	
 			
 			if(callerPartition != null)
 			{
+				//Obtengo el rsd del callee asociado a ese nodo
 				ParametricExpression rsdFromPartition = invocationSummary.getResidual(calleePartition);
+				
+				//hago un summate sobre el invariante
 				ParametricExpression newValue = symbolicCalculator.summate(rsdFromPartition, invocation, invariant);
 				
-				//no va a tener mas de un fold piece
+				//lo acumulo
+				//rsdFromPartition > 0 => el nodo escapaba del callee
+				//tengo que contarlo cuando hago max memReq - Esc + sum Esc
 				acumTotalResiduals = symbolicCalculator.add(acumTotalResiduals, rsdFromPartition);
 
 				
@@ -129,13 +140,12 @@ public class PaperCallAnalyzer {
 		
 	}
 	
+
 	
-	//TODO:
-	//Arreglar esto, esta horrible (para que uso HPs si puedo usar nodos directamente?
-	//Los nomres tambien estan feos
 	private PaperPointsToHeapPartition bind(PaperPointsToHeapPartition hpCallee, Line line, PaperMemorySummary invocationSummary, Set<PaperPointsToHeapPartition> nodes, Set<PaperPointsToHeapPartition> escapeNodes, String fullName) {
 		
 		// Ignoramos los parametros
+
 		if (hpCallee.getNode().isParam()) {
 			return null;
 		}
@@ -143,8 +153,10 @@ public class PaperCallAnalyzer {
 
 		
 			// Construyo el nodo en el caller que basicamente es el mismo nodo pero cambiando el contexto (el escape era k-sensitivo)
+		
+		
 		PaperNode escapeNode = hpCallee.getNode().clone();
-		escapeNode.changeContext(line.getFullNameCalled());
+		escapeNode.changeContext(line.magicalStmtName);
 		
 		// La particion puede estar como nodo o bien contenida dentro del mismo 
 		PaperNode nodeToBind = null;
