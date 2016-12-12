@@ -23,7 +23,10 @@ import ar.uba.dc.analysis.memory.expression.ParametricExpression;
 import ar.uba.dc.analysis.memory.expression.ParametricExpressionFactory;
 import ar.uba.dc.analysis.memory.impl.madeja.PaperMemorySummary;
 import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
+import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartitionBinding;
 import ar.uba.dc.analysis.memory.impl.summary.PointsToHeapPartition;
+import ar.uba.dc.analysis.memory.impl.summary.RichPaperPointsToHeapPartition;
+import ar.uba.dc.analysis.memory.impl.summary.SimplePaperPointsToHeapPartition;
 import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.soot.StatementId;
 import ar.uba.dc.analysis.common.Line;
@@ -46,7 +49,7 @@ public class PaperCallAnalyzer {
 	protected ParametricExpression summated_MAX_totalResiduals;
 	
 
-	protected Map<PaperPointsToHeapPartition, ParametricExpression> residuals;
+	protected Map<SimplePaperPointsToHeapPartition, ParametricExpression> residuals;
 	
 
 	protected SymbolicCalculator symbolicCalculator;
@@ -60,16 +63,53 @@ public class PaperCallAnalyzer {
 	public void process(Invocation invocation, Line line, PaperMemorySummary invocationSummary, DomainSet invariant, Set<PaperPointsToHeapPartition> nodes, Set<PaperPointsToHeapPartition> escapeNodes, String fullName) {
 		ParametricExpression acumCaptured = expressionFactory.constant(0L);
 		// Calculamos cuanto residual aporta el calle a las particiones de caller. Este map se encarga de eso
-		Map<PaperPointsToHeapPartition, ParametricExpression> acumResiduals = new HashMap<PaperPointsToHeapPartition, ParametricExpression>();
+		Map<SimplePaperPointsToHeapPartition, ParametricExpression> acumResiduals = new HashMap<SimplePaperPointsToHeapPartition, ParametricExpression>();
 
 
 		
 		ParametricExpression acumTotalResiduals = expressionFactory.constant(0L); //porque tengo que inicializarla para cada implementacion
 
 		
+		for(PaperPointsToHeapPartitionBinding hpBinding : invocation.getHpBindings())
+		{
+			SimplePaperPointsToHeapPartition calleePartition = (SimplePaperPointsToHeapPartition) hpBinding.getCallee_hp();
+			SimplePaperPointsToHeapPartition callerPartition = (SimplePaperPointsToHeapPartition) hpBinding.getCaller_hp();
+			
+			boolean isTemporal = !escapeNodes.contains(callerPartition);
+			
+			
+			if(callerPartition != null)
+			{
+				//Obtengo el rsd del callee asociado a ese nodo
+				ParametricExpression rsdFromPartition = invocationSummary.getResidual(calleePartition);
+				
+				//hago un summate sobre el invariante
+				ParametricExpression newValue = symbolicCalculator.summate(rsdFromPartition, invocation, invariant);
+				
+				//lo acumulo
+				//rsdFromPartition > 0 => el nodo escapaba del callee
+				//tengo que contarlo cuando hago max memReq - Esc + sum Esc
+				acumTotalResiduals = symbolicCalculator.add(acumTotalResiduals, rsdFromPartition);
+
+				
+				if (!isTemporal) {
+					acumCaptured = symbolicCalculator.add(acumCaptured, rsdFromPartition);
+
+						// Actualizamos el aporte de esta implementacion al residual de la particion del caller
+					ParametricExpression oldValue = acumResiduals.get(callerPartition);
+					if (oldValue != null) {
+						newValue = symbolicCalculator.add(oldValue, newValue);
+					}
+					acumResiduals.put(callerPartition, newValue);					
+				}
+				
+			}
+			
+		}
+		
 		
 		//Esto esta bien porque las residual partitions....no son temp. Pero habria que cambiarlo, creo
-		for(PaperPointsToHeapPartition calleePartition : invocationSummary.getResidualPartitions())
+		/*for(SimplePaperPointsToHeapPartition calleePartition : invocationSummary.getResidualPartitions())
 		{
 			//PaperPointsToHeapPartition callerPartition = new PaperPointsToHeapPartition(); //magia
 			
@@ -77,7 +117,7 @@ public class PaperCallAnalyzer {
 			//Al escapeNode del caller le agrego el contexto del callee
 			//y me fijo si matchea con alguno de los nodos del callee
 			//Y si engancha, me fijo si es temporal o no			
-			PaperPointsToHeapPartition callerPartition = this.bind(calleePartition, line, invocationSummary, nodes, escapeNodes, fullName);	
+			RichPaperPointsToHeapPartition callerPartition = this.bind(invocation.getHpBindings(), nodes, escapeNodes);	
 			
 			if(callerPartition != null)
 			{
@@ -106,18 +146,21 @@ public class PaperCallAnalyzer {
 				
 			}
 		
-		}
+		}*/
 		
 		
 			// Actualizamos el residual que aporta el call comparando esta implementacion con las otras procesadas.
 			// nos quedamos con el supremo para c/particion del residual
 		for (PaperPointsToHeapPartition callerPartition : acumResiduals.keySet()) {
-			ParametricExpression oldValue = residuals.get(callerPartition);
-			ParametricExpression newValue = acumResiduals.get(callerPartition);
+			
+			SimplePaperPointsToHeapPartition simpleCallerPartition = (SimplePaperPointsToHeapPartition) callerPartition;
+			
+			ParametricExpression oldValue = residuals.get(simpleCallerPartition);
+			ParametricExpression newValue = acumResiduals.get(simpleCallerPartition);
 			if (oldValue != null) {
 				newValue = symbolicCalculator.supreme(oldValue, newValue);
 			}
-			residuals.put(callerPartition, newValue);
+			residuals.put(simpleCallerPartition, newValue);
 		}
 		
 		resCap = symbolicCalculator.add(resCap, acumCaptured);
@@ -142,11 +185,14 @@ public class PaperCallAnalyzer {
 	
 
 	
-	private PaperPointsToHeapPartition bind(PaperPointsToHeapPartition hpCallee, Line line, PaperMemorySummary invocationSummary, Set<PaperPointsToHeapPartition> nodes, Set<PaperPointsToHeapPartition> escapeNodes, String fullName) {
+	public static RichPaperPointsToHeapPartition bind(PaperPointsToHeapPartition hpCallee, Line line, Set<PaperPointsToHeapPartition> nodes, String fullName) {
 		
 		// Ignoramos los parametros
 
-		if (hpCallee.getNode().isParam()) {
+		
+		RichPaperPointsToHeapPartition richHpCallee = (RichPaperPointsToHeapPartition) hpCallee;
+		
+		if (richHpCallee.getNode().isParam()) {
 			return null;
 		}
 		
@@ -155,7 +201,7 @@ public class PaperCallAnalyzer {
 			// Construyo el nodo en el caller que basicamente es el mismo nodo pero cambiando el contexto (el escape era k-sensitivo)
 		
 		
-		PaperNode escapeNode = hpCallee.getNode().clone();
+		PaperNode escapeNode = richHpCallee.getNode().clone();
 		escapeNode.changeContext(line.magicalStmtName);
 		
 		// La particion puede estar como nodo o bien contenida dentro del mismo 
@@ -164,8 +210,9 @@ public class PaperCallAnalyzer {
 		try
 			{
 			for (PaperPointsToHeapPartition hp_callerNode : nodes) {
-				if (hp_callerNode.getNode().accept(escapeNode)) {
-					nodeToBind = hp_callerNode.getNode();
+				RichPaperPointsToHeapPartition richHpCallerNode = (RichPaperPointsToHeapPartition)hp_callerNode;
+				if (richHpCallerNode.getNode().accept(escapeNode)) {
+					nodeToBind = richHpCallerNode.getNode();
 					break;
 				}
 			}
@@ -187,24 +234,25 @@ public class PaperCallAnalyzer {
 			// A partir del summary me fijo si el nodo escapa o no.
 		
 		
-		boolean isTemporal = true;
+		//boolean isTemporal = true;
 		
 		
-		//Primero consigo el nodo y despues me fijo si es temporal!
+		/*//Primero consigo el nodo y despues me fijo si es temporal!
 		for(PaperPointsToHeapPartition hp : escapeNodes)
 		{
-			if(hp.getNode().equals(nodeToBind))
+			RichPaperPointsToHeapPartition richHpEscape = (RichPaperPointsToHeapPartition) hp;
+			if(richHpEscape.getNode().equals(nodeToBind))
 			{
 				isTemporal = false;
 				break;
 			}
-		}
+		}*/
 		
 		//Para que sirve esto?
 		//isTemporal = isTemporal || invariantProvider.captureAllPartitions(callStmt);
 	
 			// Con eso ya puedo armar el heapPartition del caller.
-		PaperPointsToHeapPartition hpCaller = new PaperPointsToHeapPartition(nodeToBind, isTemporal);
+		RichPaperPointsToHeapPartition hpCaller = new RichPaperPointsToHeapPartition(nodeToBind);
 		hpCaller.belongsTo = fullName;
 		
 		return hpCaller;
@@ -216,7 +264,7 @@ public class PaperCallAnalyzer {
 		this.symbolicCalculator = symbolicCalculator;
 		this.expressionFactory = expressionFactory;
 		
-		this.residuals = new HashMap<PaperPointsToHeapPartition, ParametricExpression>();
+		this.residuals = new HashMap<SimplePaperPointsToHeapPartition, ParametricExpression>();
 		//this.tempCall = expressionFactory.constant(0L);
 		this.resCap = expressionFactory.constant(0L);
 		this.memReq = expressionFactory.constant(0L);
@@ -241,8 +289,9 @@ public class PaperCallAnalyzer {
 		result.setAcumResiduals(totalResiduals);
 		result.setMAX_memoryRequirementMinusRsd(MAX_memReqMinusRsd);
 		
-		for (PaperPointsToHeapPartition partition : residuals.keySet()) {
-			result.setResidual(partition, residuals.get(partition));
+		for (PaperPointsToHeapPartition partition : residuals.keySet()) {			
+			
+			result.setResidual((SimplePaperPointsToHeapPartition) partition, residuals.get(partition));
 		}	
 		
 		

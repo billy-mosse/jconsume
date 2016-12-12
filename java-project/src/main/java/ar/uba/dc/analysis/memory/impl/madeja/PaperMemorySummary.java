@@ -9,9 +9,9 @@ import java.util.Set;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
 import ar.uba.dc.analysis.memory.HeapPartition;
 import ar.uba.dc.analysis.memory.expression.ParametricExpression;
+import ar.uba.dc.analysis.memory.impl.summary.RichPaperPointsToHeapPartition;
+import ar.uba.dc.analysis.memory.impl.summary.SimplePaperPointsToHeapPartition;
 import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
-import ar.uba.dc.analysis.memory.impl.summary.PointsToHeapPartition;
-import ar.uba.dc.analysis.memory.summary.MemorySummary;
 
 public class PaperMemorySummary {
 	protected Set<String> parameters;
@@ -20,13 +20,13 @@ public class PaperMemorySummary {
 	
 	protected ParametricExpression memoryRequirement;
 	
-	protected Map<PaperPointsToHeapPartition, ParametricExpression> residuals;
+	protected Map<SimplePaperPointsToHeapPartition, ParametricExpression> residuals;
 	
 	protected IntermediateRepresentationMethod target;
 	
-	protected Set<PaperPointsToHeapPartition> globEscape; 				// partition escaping globally
+	protected Set<SimplePaperPointsToHeapPartition> globEscape; 				// partition escaping globally
 	
-	protected Set<PaperPointsToHeapPartition> ret; 						// return -> partition
+	protected Set<SimplePaperPointsToHeapPartition> ret; 						// return -> partition
 	
 	
 	public PaperMemorySummary(IntermediateRepresentationMethod target, Set<String> methodParameters, ParametricExpression initialTemporal, ParametricExpression initialMemoryRequirement) {
@@ -34,9 +34,9 @@ public class PaperMemorySummary {
 		this.parameters = methodParameters;
 		this.temporal = initialTemporal;
 		this.memoryRequirement = initialMemoryRequirement;
-		this.residuals = new HashMap<PaperPointsToHeapPartition, ParametricExpression>();
-		this.globEscape = new HashSet<PaperPointsToHeapPartition>();
-		this.ret = new HashSet<PaperPointsToHeapPartition>();
+		this.residuals = new HashMap<SimplePaperPointsToHeapPartition, ParametricExpression>();
+		this.globEscape = new HashSet<SimplePaperPointsToHeapPartition>();
+		this.ret = new HashSet<SimplePaperPointsToHeapPartition>();
 	}
 	
 	
@@ -56,13 +56,13 @@ public class PaperMemorySummary {
 	public Set<String> getParameters() {
 		return this.parameters;
 	}
-
-	public ParametricExpression getResidual(HeapPartition aHeapPartition) {
+	
+	public ParametricExpression getResidual(SimplePaperPointsToHeapPartition aHeapPartition) {
 		return this.residuals.get(aHeapPartition);
 	}
 
-	public Set<PaperPointsToHeapPartition> getResidualPartitions() {
-		return new HashSet<PaperPointsToHeapPartition>(residuals.keySet());
+	public Set<SimplePaperPointsToHeapPartition> getResidualPartitions() {
+		return new HashSet<SimplePaperPointsToHeapPartition>(residuals.keySet());
 	}
 
 	public ParametricExpression getMemoryRequirement() {
@@ -70,7 +70,7 @@ public class PaperMemorySummary {
 	}
 		
 	public void setResidual(PaperPointsToHeapPartition aHeapPartition, ParametricExpression newValue) {
-		residuals.put(aHeapPartition, newValue);	
+		residuals.put((SimplePaperPointsToHeapPartition)aHeapPartition, newValue);	
 	}
 	
 	public void setMemoryRequirement(ParametricExpression newValue) {
@@ -81,14 +81,16 @@ public class PaperMemorySummary {
 	public void add(PaperPointsToHeapPartition paperGlobHp, ParametricExpression resMemory) {
 		// TODO Auto-generated method stub
 		
+		residuals.put((SimplePaperPointsToHeapPartition)paperGlobHp,  resMemory);
+		
 	}
 	
-	public void partitionEscapeGlobaly(PaperPointsToHeapPartition heapPartition) {
+	public void partitionEscapeGlobaly(SimplePaperPointsToHeapPartition heapPartition) {
 		globEscape.add(heapPartition);		
 	}
 	
 
-	public void returnPartition(PaperPointsToHeapPartition heapPartition) {
+	public void returnPartition(SimplePaperPointsToHeapPartition heapPartition) {
 		ret.add(heapPartition);		
 	}
 }

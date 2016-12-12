@@ -6,12 +6,19 @@ import java.util.List;
 import java.util.Map;
 
 import ar.uba.dc.analysis.memory.expression.ParametricExpression;
+import ar.uba.dc.analysis.memory.impl.summary.RichPaperPointsToHeapPartition;
+
 import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
+
+import ar.uba.dc.analysis.memory.impl.summary.SimplePaperPointsToHeapPartition;
 
 
 public class PaperCallSummaryInContext {
 
-	private Map<PaperPointsToHeapPartition, ParametricExpression> residuals = new HashMap<PaperPointsToHeapPartition, ParametricExpression>();
+	//por que no puedo poner la interfaz?
+	private Map<SimplePaperPointsToHeapPartition, ParametricExpression> residuals = new HashMap<SimplePaperPointsToHeapPartition, ParametricExpression>();
+	
+	
 	//private ParametricExpression temporalCall;
 	private ParametricExpression MAX_memoryRequirementMinusRsd;
 	private ParametricExpression acumResiduals;
@@ -28,11 +35,11 @@ public class PaperCallSummaryInContext {
 		return acumResiduals;
 	}
 
-	public List<PaperPointsToHeapPartition> getResidualPartitions() {
-		return new LinkedList<PaperPointsToHeapPartition>(residuals.keySet());
+	public List<SimplePaperPointsToHeapPartition> getResidualPartitions() {
+		return new LinkedList<SimplePaperPointsToHeapPartition>(residuals.keySet());
 	}
 
-	public ParametricExpression getResidual(PaperPointsToHeapPartition partition) {
+	public ParametricExpression getResidual(SimplePaperPointsToHeapPartition partition) {
 		return residuals.get(partition);
 	}
 
@@ -44,7 +51,7 @@ public class PaperCallSummaryInContext {
 		this.MAX_memoryRequirementMinusRsd = value;
 	}
 
-	public void setResidual(PaperPointsToHeapPartition partition, ParametricExpression value) {
+	public void setResidual(SimplePaperPointsToHeapPartition partition, ParametricExpression value) {
 		this.residuals.put(partition, value);
 	}
 

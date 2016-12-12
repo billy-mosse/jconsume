@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Map;
 
 import ar.uba.dc.analysis.memory.expression.ParametricExpression;
-import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
+import ar.uba.dc.analysis.memory.impl.summary.RichPaperPointsToHeapPartition;
 
 
 public class PaperCallSummary {
 
-	private Map<PaperPointsToHeapPartition, ParametricExpression> residuals = new HashMap<PaperPointsToHeapPartition, ParametricExpression>();
+	private Map<RichPaperPointsToHeapPartition, ParametricExpression> residuals = new HashMap<RichPaperPointsToHeapPartition, ParametricExpression>();
 	//private ParametricExpression temporalCall;
 	private ParametricExpression memoryRequirement;
 	private ParametricExpression residualCapured;
@@ -29,11 +29,11 @@ public class PaperCallSummary {
 		return residualCapured;
 	}
 
-	public List<PaperPointsToHeapPartition> getResidualPartitions() {
-		return new LinkedList<PaperPointsToHeapPartition>(residuals.keySet());
+	public List<RichPaperPointsToHeapPartition> getResidualPartitions() {
+		return new LinkedList<RichPaperPointsToHeapPartition>(residuals.keySet());
 	}
 
-	public ParametricExpression getResidual(PaperPointsToHeapPartition partition) {
+	public ParametricExpression getResidual(RichPaperPointsToHeapPartition partition) {
 		return residuals.get(partition);
 	}
 
@@ -45,7 +45,7 @@ public class PaperCallSummary {
 		this.memoryRequirement = value;
 	}
 
-	public void setResidual(PaperPointsToHeapPartition partition, ParametricExpression value) {
+	public void setResidual(RichPaperPointsToHeapPartition partition, ParametricExpression value) {
 		this.residuals.put(partition, value);
 	}
 

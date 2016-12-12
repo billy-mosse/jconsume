@@ -11,7 +11,7 @@ import ar.uba.dc.analysis.memory.HeapPartition;
 import ar.uba.dc.analysis.memory.expression.ParametricExpression;
 import ar.uba.dc.analysis.memory.impl.BarvinokParametricExpression;
 import ar.uba.dc.analysis.memory.impl.report.html.MemorySummaryInterpreter;
-import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
+import ar.uba.dc.analysis.memory.impl.summary.RichPaperPointsToHeapPartition;
 import ar.uba.dc.analysis.memory.summary.MemReqSummarizer;
 import ar.uba.dc.analysis.memory.summary.MemorySummary;
 import ar.uba.dc.analysis.memory.summary.PaperMemReqSummarizer;

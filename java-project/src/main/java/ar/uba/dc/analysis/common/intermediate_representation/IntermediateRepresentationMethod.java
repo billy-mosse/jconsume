@@ -1,10 +1,12 @@
 package ar.uba.dc.analysis.common.intermediate_representation;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.logging.Log;
@@ -27,6 +29,7 @@ import ar.uba.dc.analysis.escape.graph.node.PaperNodeUtils;
 import ar.uba.dc.analysis.escape.graph.node.ParamNode;
 import ar.uba.dc.analysis.escape.graph.node.StmtNode;
 import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
+import ar.uba.dc.analysis.memory.impl.summary.RichPaperPointsToHeapPartition;
 import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.soot.SootUtils;
 import ar.uba.dc.soot.StatementId;
@@ -312,25 +315,11 @@ public class IntermediateRepresentationMethod {
 		this.escapeNodes = new LinkedHashSet<PaperPointsToHeapPartition>();
 		
 		
-		
-		for (Node n : escaping) {
-			
-			CircularStack<String> ir_context = PaperNodeUtils.getIrContext(n);
-			
-			String belongsTo = this.getFullName();
-
-			if(n instanceof StmtNode || n instanceof MethodNode || n instanceof ContainerNode)
-				belongsTo = n.belongsTo().getDeclaringClass() + "." + n.belongsTo().getName();
-			
-			
-			this.escapeNodes.add(new PaperPointsToHeapPartition(false, n, ir_context, belongsTo));
-			
-		}
-		
-		
 		//Podria hacer una funcion asi no escribo las cosas 2 veces
 		
-		Set<Node> allNodes = escapeSummary.getNodes();	
+		Set<Node> allNodes = escapeSummary.getNodes();
+		
+		Map<Node, Integer> numbers = new HashMap<Node, Integer>();
 		this.nodes = new LinkedHashSet<PaperPointsToHeapPartition>();
 		
 		for (Node n : allNodes) {
@@ -343,9 +332,48 @@ public class IntermediateRepresentationMethod {
 			if(n instanceof StmtNode || n instanceof MethodNode || n instanceof ContainerNode)
 				belongsTo = n.belongsTo().getDeclaringClass() + "." + n.belongsTo().getName();
 			
-			this.nodes.add(new PaperPointsToHeapPartition(false, n, ir_context, belongsTo));
+			
+			
+			
+			//TODO: Cada hp tiene un nodo en este rinard. En madeja no!!!
+			numbers.put(n, RichPaperPointsToHeapPartition.counter);			
+			
+			this.nodes.add(new RichPaperPointsToHeapPartition(false, n, ir_context, belongsTo, RichPaperPointsToHeapPartition.counter));
+			
+			RichPaperPointsToHeapPartition.counter+=1;
+
+			
 			
 		}
+				
+				
+		for (Node n : escaping) {
+			
+			CircularStack<String> ir_context = PaperNodeUtils.getIrContext(n);
+			
+			String belongsTo = this.getFullName();
+
+			if(n instanceof StmtNode || n instanceof MethodNode || n instanceof ContainerNode)
+				belongsTo = n.belongsTo().getDeclaringClass() + "." + n.belongsTo().getName();
+			
+			Integer number;
+			
+			//TODO: podria hacer las dos cosas juntas
+			if(numbers.containsKey(n))
+			{
+				number = numbers.get(n);
+			}
+			else
+			{
+				number = RichPaperPointsToHeapPartition.counter;
+			}
+			
+			
+			this.escapeNodes.add(new RichPaperPointsToHeapPartition(false, n, ir_context, belongsTo, number));
+			RichPaperPointsToHeapPartition.counter+=1;
+		}
+		
+		RichPaperPointsToHeapPartition.counter = 0;
 		
 		log.debug("Nodos armados");
 		

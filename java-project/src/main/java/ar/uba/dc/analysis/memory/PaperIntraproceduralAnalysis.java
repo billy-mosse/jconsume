@@ -19,7 +19,8 @@ import ar.uba.dc.analysis.escape.graph.node.StmtNode;
 import ar.uba.dc.analysis.memory.expression.ParametricExpression;
 import ar.uba.dc.analysis.memory.expression.ParametricExpressionFactory;
 import ar.uba.dc.analysis.memory.impl.madeja.PaperMemorySummary;
-import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
+import ar.uba.dc.analysis.memory.impl.summary.RichPaperPointsToHeapPartition;
+import ar.uba.dc.analysis.memory.impl.summary.SimplePaperPointsToHeapPartition;
 import ar.uba.dc.analysis.memory.impl.summary.PointsToHeapPartition;
 import ar.uba.dc.barvinok.expression.DomainSet;
 //import heros.solver.Pair;
@@ -47,6 +48,7 @@ public class PaperIntraproceduralAnalysis {
 	public PaperIntraproceduralAnalysis() {
 		// TODO Auto-generated constructor stub
 	}
+
 
 	public PaperMemorySummaryFactory getSummaryFactory() {
 		return summaryFactory;
@@ -172,11 +174,11 @@ public class PaperIntraproceduralAnalysis {
 			Invocation inv = newLine.getInvocations().get(0);
 			
 			//TODO: No tendre que hacer un getPartition() como el bind?
-			PaperPointsToHeapPartition partition = inv.getHeapPartition();
+			SimplePaperPointsToHeapPartition partition = (SimplePaperPointsToHeapPartition) inv.getHeapPartition();
 			
 					
 			
-			if (!partition.isTemporal()) {
+			if(ir_method.getEscapeNodes().contains(partition)) {
 				log.debug(" | | |- Partition escapes");
 				
 				//Si escapa, MemReq = Esc = bound, entonces no tengo que tomar supremo entre (MemReq-Esc) y bound
@@ -229,7 +231,7 @@ public class PaperIntraproceduralAnalysis {
 			acumResidualsFromCallees = sa.add(acumResidualsFromCallees, acumResidualsFromCallee);			
 			
 			
-			for (PaperPointsToHeapPartition partition : callSummary.getResidualPartitions()) {
+			for (SimplePaperPointsToHeapPartition partition : callSummary.getResidualPartitions()) {
 				ParametricExpression oldValue = summary.getResidual(partition);
 				ParametricExpression newValue = callSummary.getResidual(partition);
 				//callSummaryRes = sa.add(callSummaryRes, newValue );

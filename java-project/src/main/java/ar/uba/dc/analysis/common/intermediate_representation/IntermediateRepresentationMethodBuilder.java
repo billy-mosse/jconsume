@@ -9,6 +9,8 @@ import ar.uba.dc.analysis.common.code.BasicMethodBody;
 import ar.uba.dc.analysis.common.code.MethodBody;
 import ar.uba.dc.analysis.escape.summary.repository.RAMSummaryRepository;
 import ar.uba.dc.analysis.memory.LifeTimeOracle;
+import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
+import ar.uba.dc.analysis.memory.impl.summary.RichPaperPointsToHeapPartition;
 import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.invariant.InvariantProvider;
 import soot.SootClass;
@@ -32,12 +34,12 @@ public class IntermediateRepresentationMethodBuilder {
 	}
 	
 	
-	private void setBody(BasicMethodBody methodBody)
+	private void setBody(BasicMethodBody methodBody, Set<IntermediateRepresentationMethod> ir_methods, Set<PaperPointsToHeapPartition> nodes, String fullName)
 	{	
-		this.irmethod.body = irbody_builder.build_body(methodBody);
+		this.irmethod.body = irbody_builder.build_body(methodBody, ir_methods, nodes, fullName);
 	}	
 	
-	public IntermediateRepresentationMethod buildMethod(BasicMethodBody methodBody, long order)
+	public IntermediateRepresentationMethod buildMethod(BasicMethodBody methodBody, long order, Set<IntermediateRepresentationMethod> ir_methods)
 	{
 		
 		SootMethod m = methodBody.belongsTo();
@@ -62,7 +64,7 @@ public class IntermediateRepresentationMethodBuilder {
 		this.irmethod.setRelevant_parameters(invariantProvider.getRelevantParameters(m));
 		this.irmethod.setNodesInfo(data.get(methodBody.belongsTo()));
 		
-		this.setBody(methodBody);
+		this.setBody(methodBody, ir_methods, this.irmethod.nodes, this.irmethod.getFullName());
 		
 		return this.irmethod;
 	}

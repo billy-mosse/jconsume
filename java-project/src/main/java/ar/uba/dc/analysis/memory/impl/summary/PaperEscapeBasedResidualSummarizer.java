@@ -46,10 +46,10 @@ public class PaperEscapeBasedResidualSummarizer implements PaperResidualSummariz
 	@Override
 	public ParametricExpression getResidual(PaperMemorySummary summary) {
 		// Como el proceso de summarizacion modifica las particiones, trabajamos sobre una copia
-		Set<PaperPointsToHeapPartition> heapPartitions = new HashSet<PaperPointsToHeapPartition>();
-		Map<PaperPointsToHeapPartition, ParametricExpression> mapping = new HashMap<PaperPointsToHeapPartition, ParametricExpression>();
-		for (PaperPointsToHeapPartition hp : summary.getResidualPartitions()) {
-			PaperPointsToHeapPartition php = (PaperPointsToHeapPartition) hp.clone();
+		Set<SimplePaperPointsToHeapPartition> heapPartitions = new HashSet<SimplePaperPointsToHeapPartition>();
+		Map<SimplePaperPointsToHeapPartition, ParametricExpression> mapping = new HashMap<SimplePaperPointsToHeapPartition, ParametricExpression>();
+		for (SimplePaperPointsToHeapPartition hp : summary.getResidualPartitions()) {
+			SimplePaperPointsToHeapPartition php = (SimplePaperPointsToHeapPartition) hp.clone();
 			heapPartitions.add(php);
 			mapping.put(php, summary.getResidual(php));
 		}
@@ -57,7 +57,7 @@ public class PaperEscapeBasedResidualSummarizer implements PaperResidualSummariz
 		return getResidual(heapPartitions, mapping);
 	}
 	
-	protected ParametricExpression getResidual(Set<PaperPointsToHeapPartition> heapPartitions, Map<PaperPointsToHeapPartition, ParametricExpression> mapping) {
+	protected ParametricExpression getResidual(Set<SimplePaperPointsToHeapPartition> heapPartitions, Map<SimplePaperPointsToHeapPartition, ParametricExpression> mapping) {
 		ParametricExpression residual = expressionFactory.constant(0L);
 		throw new NotImplementedException();
 		/*// Primero separamos las particiones en aquellas que se generaron por calls y 
@@ -140,7 +140,7 @@ public class PaperEscapeBasedResidualSummarizer implements PaperResidualSummariz
 		//return residual;
 	}
 
-	protected String getImplementation(PaperPointsToHeapPartition hp) {
+	protected String getImplementation(RichPaperPointsToHeapPartition hp) {
 		
 		CircularStack<String> ctx = hp.getNode().getContext();
 		String impl = null;

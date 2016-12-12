@@ -37,7 +37,7 @@ import ar.uba.dc.analysis.memory.expression.ParametricExpressionFactory;
 import ar.uba.dc.analysis.memory.impl.BarvinokParametricExpressionFactory;
 import ar.uba.dc.analysis.memory.impl.madeja.PaperMemorySummary;
 import ar.uba.dc.analysis.memory.impl.summary.EscapeBasedMemorySummary;
-import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
+import ar.uba.dc.analysis.memory.impl.summary.RichPaperPointsToHeapPartition;
 import ar.uba.dc.analysis.memory.summary.MemorySummary;
 import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.barvinok.expression.DomainSetUtils;
@@ -362,13 +362,18 @@ public class PaperInterproceduralAnalysis {
 		
 		listf(loc,files);
 		
-		for (final File fileEntry : files) {
+		ListIterator fileIt = files.listIterator();
+		
+		while (fileIt.hasNext()) {
+			
+			File fileEntry = (File) fileIt.next();
 			log.debug("Retriving location for summary: [" + fileEntry.toString() + "]");			
 			
 			if (fileEntry.exists()) {
 				try {
 					IntermediateRepresentationMethod method = jsonReader.read(new FileReader(fileEntry));
 					methods.put(IRUtils.key(method), method);
+					//addDependentMethods(method, fileIt);
 					
 				} catch (FileNotFoundException e) {
 					log.error("Error al recuperar el summary de escape para el metodo [" + fileEntry.toString() + "] a xml: " + e.getMessage(), e);
@@ -377,7 +382,7 @@ public class PaperInterproceduralAnalysis {
 			
 		}
 	}
-	
+
 	public void listf(String directoryPath, List<File> files) {
 
 		File directory = new File(directoryPath);

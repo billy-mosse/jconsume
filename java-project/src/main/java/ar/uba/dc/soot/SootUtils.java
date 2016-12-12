@@ -46,6 +46,7 @@ import soot.util.Chain;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationParameter;
 import ar.uba.dc.analysis.common.Invocation;
+import ar.uba.dc.analysis.common.Line;
 import ar.uba.dc.analysis.common.code.CallStatement;
 import ar.uba.dc.analysis.common.code.NewStatement;
 import ar.uba.dc.analysis.common.code.Statement;
@@ -53,7 +54,9 @@ import ar.uba.dc.analysis.common.intermediate_representation.IntermediateReprese
 import ar.uba.dc.analysis.memory.HeapPartition;
 import ar.uba.dc.analysis.memory.LifeTimeOracle;
 import ar.uba.dc.analysis.memory.impl.summary.EscapeBasedLifeTimeOracle;
+import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
 import ar.uba.dc.analysis.memory.impl.summary.PointsToHeapPartition;
+import ar.uba.dc.analysis.memory.impl.summary.RichPaperPointsToHeapPartition;
 import ar.uba.dc.config.Context;
 
 public class SootUtils {
@@ -360,7 +363,8 @@ public class SootUtils {
 		return parameters;
 	}
 
-	public static List<Invocation> getInvocations(Statement stmt, boolean isCallStatement, CallGraph callGraph, LifeTimeOracle lifetimeOracle) {
+	public static List<Invocation> getInvocations(Line line, Statement stmt, boolean isCallStatement, CallGraph callGraph, LifeTimeOracle lifetimeOracle,
+			Set<IntermediateRepresentationMethod> ir_methods, Set<PaperPointsToHeapPartition> nodes, String fullName) {
 		
 		List<Invocation> invocations = new LinkedList<Invocation>();
 		if(isCallStatement)
@@ -370,8 +374,9 @@ public class SootUtils {
 			
 			while (it.hasNext()) {
 				Edge edge = it.next();
-				SootMethod m = edge.tgt();
-				invocations.add(new Invocation(m));
+				SootMethod m = edge.tgt();				
+				Invocation inv = new Invocation(line, m, ir_methods, nodes, fullName);
+				invocations.add(inv);
 			}
 		}
 		else

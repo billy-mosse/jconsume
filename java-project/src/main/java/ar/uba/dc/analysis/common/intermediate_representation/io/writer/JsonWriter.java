@@ -1,6 +1,8 @@
 package ar.uba.dc.analysis.common.intermediate_representation.io.writer;
 
 
+import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
+import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartitionBinding;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -17,7 +19,7 @@ import ar.uba.dc.analysis.common.Line;
 import ar.uba.dc.analysis.common.SummaryWriter;
 import ar.uba.dc.analysis.escape.graph.PaperNode;
 import ar.uba.dc.analysis.escape.summary.io.xstream.XStreamFactory;
-import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
+import ar.uba.dc.analysis.memory.impl.summary.RichPaperPointsToHeapPartition;
 import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.util.location.MethodLocationStrategy;
 import decorations.Binding;
@@ -63,6 +65,8 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 		
 		builder.registerTypeAdapter(DomainSet.class, new DomainSetSerializer());
 		builder.registerTypeAdapter(PaperNode.class, new PaperNodeSerializer());
+		builder.registerTypeAdapter(PaperPointsToHeapPartition.class, new PaperPointsToHeapPartitionSerializer());
+		builder.registerTypeAdapter(PaperPointsToHeapPartitionBinding.class, new PaperPointsToHeapPartitionBindingSerializer());
 		
 		this.gson = builder.create();
 	}
@@ -139,7 +143,8 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 	        
 	        for(PaperPointsToHeapPartition escapeNode : ir_method.getEscapeNodes())
 	        {
-	        	escapeNodes.add(context.serialize(escapeNode));
+	        	String toSerialize = "SH_" + escapeNode.getNumber();
+	        	escapeNodes.add(toSerialize);
 	        }
 	        
 	        result.add("escapeNodes", escapeNodes);
@@ -149,7 +154,8 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 	        
 	        for(PaperPointsToHeapPartition node : ir_method.getNodes())
 	        {
-	        	nodes.add(context.serialize(node));
+	        	String toSerialize = "SH_" + node.getNumber();
+	        	nodes.add(toSerialize);
 	        }
 	        
 	        result.add("nodes", nodes);
@@ -337,14 +343,57 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 			result.add("parameters", arr);
 			result.add("called_implementation_signature", new JsonPrimitive (invocation.getCalled_implementation_signature()));
 			result.add("name_called", new JsonPrimitive (invocation.getNameCalled()));
-			result.add("hp",  context.serialize(invocation.getHeapPartition()));
+			//result.add("hp",  context.serialize(invocation.getHeapPartition()));
 			
 	        result.add("is_return_ref_like_type", new JsonPrimitive(invocation.isReturnRefLikeType()));
 
+	        
+	        JsonArray arr2 = new JsonArray();
+			
+			for(PaperPointsToHeapPartitionBinding hp_binding : invocation.getHpBindings())
+			{
+				arr2.add(context.serialize(hp_binding));
+			}
+			
+
+			result.add("hp_bindings", arr2);
+			
+			if(invocation.getHeapPartition() != null)
+			{
+				result.add("hp", context.serialize(invocation.getHeapPartition(), PaperPointsToHeapPartition.class));
+			}
 			
 	        return result;
 	    }
 	}
+	
+	
+	public static class PaperPointsToHeapPartitionSerializer implements JsonSerializer<PaperPointsToHeapPartition> 
+	{
+	    
+		public JsonElement serialize(final PaperPointsToHeapPartition hp, final Type type, final JsonSerializationContext context) {
+			JsonObject result = new JsonObject();
+			
+			result.add("name", new JsonPrimitive("SH_" + hp.getNumber()));
+			
+			
+	        return result;
+	    }
+	}
+	
+	public static class PaperPointsToHeapPartitionBindingSerializer implements JsonSerializer<PaperPointsToHeapPartitionBinding> 
+	{
+	    
+		public JsonElement serialize(final PaperPointsToHeapPartitionBinding hp_binding, final Type type, final JsonSerializationContext context) {
+			JsonObject result = new JsonObject();
+
+			result.add("hp_caller", context.serialize(hp_binding.getCaller_hp(), PaperPointsToHeapPartition.class));
+			result.add("hp_callee", context.serialize(hp_binding.getCallee_hp(), PaperPointsToHeapPartition.class));
+	        return result;
+	    }
+	}
+	
+	
 	
 	
 	public static class PaperNodeSerializer implements JsonSerializer<PaperNode> 

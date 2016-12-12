@@ -40,7 +40,7 @@ public class PaperRuleBasedMemorySummaryFactory implements SummaryFactory<PaperM
 	@SuppressWarnings("unchecked")
 	@Override
 	public PaperMemorySummary conservativeGraph(IntermediateRepresentationMethod method, boolean withEffect) {
-		Rule rule = informationProvider.IR_findRule(method);
+		/*Rule rule = informationProvider.IR_findRule(method);
 		ParametricExpression tempMemory = buildExpression(rule.getResources().getTemporal(), rule.getResources().getSyntax());
 		ParametricExpression resMemory = buildExpression(rule.getResources().getResidual(), rule.getResources().getSyntax());
 		ParametricExpression memReq = buildExpression(rule.getResources().getMemoryRequirement(), rule.getResources().getSyntax());
@@ -77,7 +77,7 @@ public class PaperRuleBasedMemorySummaryFactory implements SummaryFactory<PaperM
 		if (method.isReturnRefLikeType())
 			summary.returnPartition(paperGlobHp);
 		
-		return summary;
+		return summary;*/ return null;
 	}
 	
 	private ParametricExpression buildExpression(String value, String syntax) {
@@ -105,8 +105,8 @@ public class PaperRuleBasedMemorySummaryFactory implements SummaryFactory<PaperM
 		
 		if (ir_method.isReturnRefLikeType())
 		{
-			PaperPointsToHeapPartition methodHp = new PaperPointsToHeapPartition(new PaperMethodNode(ir_method, sensitivity), false, ir_method.getFullName());
-			summary.returnPartition(methodHp);
+			PaperPointsToHeapPartition methodHp = new SimplePaperPointsToHeapPartition(-1);
+			summary.returnPartition((SimplePaperPointsToHeapPartition)methodHp);
 			summary.add(methodHp, resMemory);
 		}
 		else

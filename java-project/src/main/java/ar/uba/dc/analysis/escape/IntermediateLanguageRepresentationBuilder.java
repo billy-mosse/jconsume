@@ -108,7 +108,7 @@ public class IntermediateLanguageRepresentationBuilder {
 			BasicMethodBody methodBody = methodDecorator.decorate_for_IR(method);
 			
 			
-			IntermediateRepresentationMethod m = irbuilder.buildMethod(methodBody, order);
+			IntermediateRepresentationMethod m = irbuilder.buildMethod(methodBody, order, ir_methods);
 			ir_methods.add(m);
 		}
 		

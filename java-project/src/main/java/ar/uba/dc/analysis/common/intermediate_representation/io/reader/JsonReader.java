@@ -48,6 +48,9 @@ import ar.uba.dc.analysis.escape.EscapeSummary;
 import ar.uba.dc.analysis.escape.graph.PaperNode;
 import ar.uba.dc.analysis.escape.summary.io.xstream.XStreamFactory;
 import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
+import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartitionBinding;
+import ar.uba.dc.analysis.memory.impl.summary.RichPaperPointsToHeapPartition;
+import ar.uba.dc.analysis.memory.impl.summary.SimplePaperPointsToHeapPartition;
 import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.soot.xstream.StatementIdConverter;
 import ar.uba.dc.util.location.MethodLocationStrategy;
@@ -73,6 +76,7 @@ protected Gson gson;
 		builder.registerTypeAdapter(DomainSet.class, new DomainSetDeserializer());
 		builder.registerTypeAdapter(PaperNode.class, new PaperNodeDeserializer());
 		builder.registerTypeAdapter(PaperPointsToHeapPartition.class, new PaperPointsToHeapPartitionDeserializer());
+		builder.registerTypeAdapter(PaperPointsToHeapPartitionBinding.class, new PaperPointsToHeapPartitionBindingDeserializer());
 		
 		
 		
@@ -174,8 +178,7 @@ protected Gson gson;
 			
 		    for(int i = 0; i < jEscapeNodes.size(); i++)
 		    {
-		    	PaperPointsToHeapPartition escapeNode = context.deserialize(jEscapeNodes.get(i), PaperPointsToHeapPartition.class);		    	
-		    	
+		    	PaperPointsToHeapPartition escapeNode = new SimplePaperPointsToHeapPartition(jEscapeNodes.get(i).getAsString());	
 		    	
 		    	//el belongsTo no es necesariamente el metodo....entender por que
 		    	//escapeNode.belongsTo = m.getFullName();
@@ -194,7 +197,7 @@ protected Gson gson;
 			
 		    for(int i = 0; i < jNodes.size(); i++)
 		    {
-		    	PaperPointsToHeapPartition node = context.deserialize(jNodes.get(i), PaperPointsToHeapPartition.class);	
+		    	PaperPointsToHeapPartition node = new SimplePaperPointsToHeapPartition(jNodes.get(i).getAsString());	
 		    	//node.belongsTo = m.getFullName();
 		    	nodes.add(node);
 		    }
@@ -375,10 +378,10 @@ protected Gson gson;
 			invocation.setNameCalled(jobject.get("name_called").getAsString());
 			
 			
-			PaperPointsToHeapPartition hp = context.deserialize(jobject.get("hp"), PaperPointsToHeapPartition.class);
+			//RichPaperPointsToHeapPartition hp = context.deserialize(jobject.get("hp"), RichPaperPointsToHeapPartition.class);
 			
 			
-			invocation.setHeapPartition(hp);
+			//invocation.setHeapPartition(hp);
 			
 			
 			JsonArray jparameters = jobject.get("parameters").getAsJsonArray();
@@ -393,16 +396,51 @@ protected Gson gson;
 		    	parameters.add(p);
 		    }
 		    
+		    invocation.setParameters(parameters);
+
+		    
+		    
+		    Set<PaperPointsToHeapPartitionBinding> hp_bindings = new HashSet<PaperPointsToHeapPartitionBinding>();
+			
+			JsonArray jbindings = jobject.get("hp_bindings").getAsJsonArray();
+
+			
+		    for(int i = 0; i < jbindings.size(); i++)
+		    {
+		    	//No necesita un custom deserializer porque tiene tipos primitivos adentro
+		    	PaperPointsToHeapPartitionBinding hp_binding = context.deserialize(jbindings.get(i), PaperPointsToHeapPartitionBinding.class);
+		    	hp_bindings.add(hp_binding);
+		    }
+
+		    invocation.setHpBindings(hp_bindings);
+		    invocation.setHeapPartition((PaperPointsToHeapPartition)context.deserialize(jobject.get("hp"), PaperPointsToHeapPartition.class));
+		    
 		    invocation.setIsReturnRefLikeType(jobject.get("is_return_ref_like_type").getAsBoolean());
 		    
-		    invocation.setParameters(parameters);
 		    
 		    return invocation;
 		    
 		}
 	}
 
+	public static class PaperPointsToHeapPartitionBindingDeserializer implements JsonDeserializer<PaperPointsToHeapPartitionBinding> 
+	{
+	    
+		@Override
+		public PaperPointsToHeapPartitionBinding deserialize(JsonElement json, Type type,
+		        JsonDeserializationContext context) throws JsonParseException {
+			JsonObject jobject = json.getAsJsonObject();
+			
+
+			PaperPointsToHeapPartition hp_caller = context.deserialize(jobject.get("hp_caller"), PaperPointsToHeapPartition.class);
+			PaperPointsToHeapPartition hp_callee = context.deserialize(jobject.get("hp_callee"), PaperPointsToHeapPartition.class);
+			
+			PaperPointsToHeapPartitionBinding hp_binding = new PaperPointsToHeapPartitionBinding(hp_callee, hp_caller);
+			
+			return hp_binding;
 		
+		}
+	}	
 	
 	public static class PaperPointsToHeapPartitionDeserializer implements JsonDeserializer<PaperPointsToHeapPartition> 
 	{
@@ -411,14 +449,9 @@ protected Gson gson;
 		public PaperPointsToHeapPartition deserialize(JsonElement json, Type type,
 		        JsonDeserializationContext context) throws JsonParseException {
 			JsonObject jobject = json.getAsJsonObject();
-			PaperPointsToHeapPartition hp;
-
-			String belongsTo = jobject.get("belongsTo").getAsString();
-			boolean temporal = jobject.get("temporal").getAsBoolean();
 			
-			PaperNode node = context.deserialize(jobject.get("node"), PaperNode.class);
-			
-			hp = new PaperPointsToHeapPartition(temporal, belongsTo, node);
+			String number =jobject.get("name").getAsString().substring(3); 
+			PaperPointsToHeapPartition hp = new SimplePaperPointsToHeapPartition(Integer.parseInt(number));
 			
 			return hp;
 		

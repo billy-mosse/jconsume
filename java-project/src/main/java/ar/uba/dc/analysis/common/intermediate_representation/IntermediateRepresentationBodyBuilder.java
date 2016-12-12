@@ -17,6 +17,8 @@ import ar.uba.dc.analysis.common.code.Statement;
 import ar.uba.dc.analysis.memory.IntraproceduralAnalysis;
 import ar.uba.dc.analysis.memory.LifeTimeOracle;
 import ar.uba.dc.analysis.memory.impl.summary.EscapeBasedLifeTimeOracle;
+import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
+import ar.uba.dc.analysis.memory.impl.summary.RichPaperPointsToHeapPartition;
 import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.invariant.InvariantProvider;
 import ar.uba.dc.invariant.spec.SpecInvariantProvider;
@@ -51,12 +53,13 @@ public class IntermediateRepresentationBodyBuilder {
 	}
 
 	
-	public Line buildLineFromStatement(Statement stmt, long counter)
+	public Line buildLineFromStatement(Statement stmt, long counter,
+			Set<IntermediateRepresentationMethod> ir_methods, Set<PaperPointsToHeapPartition> nodes, String fullName)
 	{
-		Line line = new Line(stmt, this.callGraph, this.lifetimeOracle);
+		Line line = new Line(stmt, this.callGraph, this.lifetimeOracle, ir_methods, nodes, fullName);
 		
 		//Esto no lo estoy escribiendo en el IR por ahora
-		line.setLabel(counter);		
+		line.setLabel(counter);
 		
 		
 		DomainSet inv = invariantProvider.getInvariant(stmt);
@@ -74,7 +77,8 @@ public class IntermediateRepresentationBodyBuilder {
 		return line;
 	}
 
-	public IntermediateRepresentationMethodBody build_body(BasicMethodBody methodBody) {
+	public IntermediateRepresentationMethodBody build_body(BasicMethodBody methodBody, Set<IntermediateRepresentationMethod> ir_methods, 
+			Set<PaperPointsToHeapPartition> nodes, String fullName) {
 		IntermediateRepresentationMethodBody ir_body = new IntermediateRepresentationMethodBody();
 		
 		Set<Line> lines = new LinkedHashSet<Line>();
@@ -84,7 +88,7 @@ public class IntermediateRepresentationBodyBuilder {
 			counter++;
 			log.debug("Processing statement: " + stmt.toString());
 			
-			Line line = buildLineFromStatement(stmt, counter);
+			Line line = buildLineFromStatement(stmt, counter, ir_methods, nodes, fullName);
 			lines.add(line);
 		}		
 		ir_body.setLines(lines);
