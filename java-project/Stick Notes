@@ -43,3 +43,18 @@ No sé si poner una carpeta base que sea el nombre del programa, o dejarlo por c
 
 
 Si es Rsd debería acotar por abajo cuando hay FOLDS. Lo estoy haciendo?
+
+---
+
+--program ar.uba.dc.simple.TwoCallsToSameMethod --config config.properties --main "void main(java.lang.String)" --ir --memory
+
+
+-----
+
+Che, importa que los parámetros de métodos no analizables escapen? Me parece que no! Porque no sé si se crean cosas nuevas o qué....
+
+---
+
+
+Program3/4 se rompen por el Iterator. Por un lado, Program4 no tiene el IR del iterator y deberia tenerlo!
+Por el otro, algo pasa con los bindings
