@@ -83,24 +83,35 @@ public class PaperCallAnalyzer {
 				//Obtengo el rsd del callee asociado a ese nodo
 				ParametricExpression rsdFromPartition = invocationSummary.getResidual(calleePartition);
 				
-				//hago un summate sobre el invariante
-				ParametricExpression newValue = symbolicCalculator.summate(rsdFromPartition, invocation, invariant);
 				
-				//lo acumulo
-				//rsdFromPartition > 0 => el nodo escapaba del callee
-				//tengo que contarlo cuando hago max memReq - Esc + sum Esc
-				acumTotalResiduals = symbolicCalculator.add(acumTotalResiduals, rsdFromPartition);
-
+				if(rsdFromPartition == null)
+				{
+					log.debug(invocation.toString());
+					log.debug(calleePartition.number);
+				}
 				
-				if (!isTemporal) {
-					acumCaptured = symbolicCalculator.add(acumCaptured, rsdFromPartition);
-
-						// Actualizamos el aporte de esta implementacion al residual de la particion del caller
-					ParametricExpression oldValue = acumResiduals.get(callerPartition);
-					if (oldValue != null) {
-						newValue = symbolicCalculator.add(oldValue, newValue);
+				if(rsdFromPartition != null)
+				{	
+					
+					//hago un summate sobre el invariante
+					ParametricExpression newValue = symbolicCalculator.summate(rsdFromPartition, invocation, invariant);
+					
+					//lo acumulo
+					//rsdFromPartition > 0 => el nodo escapaba del callee
+					//tengo que contarlo cuando hago max memReq - Esc + sum Esc
+					acumTotalResiduals = symbolicCalculator.add(acumTotalResiduals, rsdFromPartition);
+	
+					
+					if (!isTemporal) {
+						acumCaptured = symbolicCalculator.add(acumCaptured, rsdFromPartition);
+	
+							// Actualizamos el aporte de esta implementacion al residual de la particion del caller
+						ParametricExpression oldValue = acumResiduals.get(callerPartition);
+						if (oldValue != null) {
+							newValue = symbolicCalculator.add(oldValue, newValue);
+						}
+						acumResiduals.put(callerPartition, newValue);					
 					}
-					acumResiduals.put(callerPartition, newValue);					
 				}
 				
 			}

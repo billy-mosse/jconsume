@@ -386,7 +386,7 @@ public class SootUtils {
 			HeapPartition hp = lifetimeOracle.getPartition(newStmt);
 			//PointsToHeapPartition hp = new PointsToHeapPartition();
 			
-			invocations.add(new Invocation(newStmt, hp));
+			invocations.add(new Invocation(newStmt, hp, nodes));
 		}
 		return invocations;		
 		

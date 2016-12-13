@@ -341,9 +341,6 @@ public class IntermediateRepresentationMethod {
 			this.nodes.add(new RichPaperPointsToHeapPartition(false, n, ir_context, belongsTo, RichPaperPointsToHeapPartition.counter));
 			
 			RichPaperPointsToHeapPartition.counter+=1;
-
-			
-			
 		}
 				
 				

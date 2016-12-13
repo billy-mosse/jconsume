@@ -26,4 +26,8 @@ public class PaperPointsToHeapPartitionBinding {
 		this.caller_hp = caller_hp;
 	}
 
+	public String toString()
+	{
+		return this.callee_hp.toString() + "->" + this.caller_hp.toString();
+	}
 }

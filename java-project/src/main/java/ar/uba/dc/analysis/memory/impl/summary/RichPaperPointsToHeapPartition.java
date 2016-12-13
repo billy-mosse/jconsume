@@ -214,5 +214,10 @@ public class RichPaperPointsToHeapPartition implements PaperPointsToHeapPartitio
 	{
 		return this.belongsTo + "." + (this.temporal ? "(Temp)" : "") + this.node.toString(); 
 	}
+	
+	public String toSimpleString()
+	{
+		return (this.temporal ? "(Temp)" : "") + this.node.toString(); 
+	}
 
 }

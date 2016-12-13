@@ -43,4 +43,9 @@ public class SimplePaperPointsToHeapPartition implements PaperPointsToHeapPartit
 		return false;
 	}
 	
+	public String toString()
+	{
+		return "SH_" + this.number;
+	}
+	
 }

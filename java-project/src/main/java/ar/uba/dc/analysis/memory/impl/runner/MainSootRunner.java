@@ -74,9 +74,9 @@ public class MainSootRunner {
 		
 		if(values.runMemory())
 		{
-			//SootUtils.insertTransformer("wjtp", "wjtp.memory", MemorySceneTransformer.v(context, values.getProgramName()));
+			SootUtils.insertTransformer("wjtp", "wjtp.memory", MemorySceneTransformer.v(context, values.getProgramName()));
 		
-			SootUtils.insertTransformer("wjtp", "wjtp.paperMemory", PaperMemorySceneTransformer.v(context, values.getProgramName()));
+			//SootUtils.insertTransformer("wjtp", "wjtp.paperMemory", PaperMemorySceneTransformer.v(context, values.getProgramName()));
 		}
 		String[] opts = SootUtils.buildOptions(context, values.getProgramName(), values.getMain()).toArray(new String[] {});
 		

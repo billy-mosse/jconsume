@@ -51,6 +51,11 @@ public class Invocation {
 		
 	}
 	
+	public String toString()
+	{
+		return getFullNameCalled();
+	}
+	
 	private static Log log = LogFactory.getLog(Invocation.class);
 	
 	public Invocation(Line line, SootMethod m, Set<IntermediateRepresentationMethod> ir_methods, Set<PaperPointsToHeapPartition> nodes, String fullName)
@@ -119,12 +124,26 @@ public class Invocation {
 		}
 	}
 	
-	public Invocation(NewStatement newStmt, HeapPartition heapPartition) {			
+	
+	//No se deberian llamar nodes los nodes, sino heap Partitions
+	public Invocation(NewStatement newStmt, HeapPartition heapPartition, Set<PaperPointsToHeapPartition> nodes) {			
 		this.setCallStatement(false);
 		this.setParameters(newStmt.getIntermediateRepresentationParameters());
 		this.setClass_called("");
 		this.called_implementation_signature = "";
-		this.heapPartition =  new RichPaperPointsToHeapPartition(heapPartition);
+		
+		for(PaperPointsToHeapPartition node : nodes)
+		{
+			RichPaperPointsToHeapPartition richHp = (RichPaperPointsToHeapPartition) node;
+			if(richHp.toSimpleString().equals(heapPartition.toString()))
+			{
+				this.heapPartition =  richHp;
+				continue;
+			}
+		}
+		
+		
+		
 		this.nameCalled = "";
 		this.setHpBindings(new HashSet<PaperPointsToHeapPartitionBinding>());
 		

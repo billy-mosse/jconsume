@@ -23,47 +23,8 @@ public class EjemploSimple04 {
 		@SuppressWarnings("unused")
 		Integer[] sumArray = m3(args.length); //maxCall = 14 si args.length < 1 ; 16 si args.length == 1 ; 15 + 1/2 * args.length + 1/2 * args.length^2 si  args.length >= 2 
 											  //tempCall= 23 si args.length < 1 ; 23 + args.length si args.length >=1	
-
-
-
-		//Asi podes ver como son los nodos de a0, a1 y a2.
-		// Llamo a a0 porque solo proceso los metodos de los que depende el main en el callgraph
-		Integer muyTemp = a0(); 
-		
-		muyTemp = muyTemp +1;
 		
 	}
-
-
-	/**
-	* @MemReq = 1
-	* @Rsd = 1
-	*/
-	public static Integer a0()
-	{
-		return a1();
-	}
-
-	/**
-	* @MemReq = 1
-	* @Rsd = 1
-	*/
-	public static Integer a1()
-	{
-		return a2();
-	}
-
-
-	/**
-	* @MemReq = 2
-	* @Rsd = 1 
-	*/
-	public static Integer a2()
-	{
-		Integer temp = new Integer(4);
-		return new Integer(2);
-	}
-
 	
 	/**
 	 *
