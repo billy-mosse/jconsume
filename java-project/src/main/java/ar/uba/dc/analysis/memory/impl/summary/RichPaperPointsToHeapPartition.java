@@ -29,13 +29,11 @@ import soot.SootMethod;
 
 public class RichPaperPointsToHeapPartition implements PaperPointsToHeapPartition {
 	
-	public static int counter = 0;
+	public static Integer counter = 0;
 
-	
-	protected boolean temporal; //creo que lo voy a tirar. TODO: tirar, posta.
 	protected PaperNode node;	
-	public String belongsTo;
-	public int number;
+	private String belongsTo;
+	public Integer number;
 	
 	//puede ser null si es un NEW
 	protected IntStringId comesFrom;
@@ -52,7 +50,7 @@ public class RichPaperPointsToHeapPartition implements PaperPointsToHeapPartitio
 
 	@Override
 	public int hashCode() {
-		return node.hashCode() + (temporal ? 69 : 0); 
+		return node.hashCode(); 
 	}
 	
 	
@@ -63,8 +61,8 @@ public class RichPaperPointsToHeapPartition implements PaperPointsToHeapPartitio
 		{
 			try
 			{
-			RichPaperPointsToHeapPartition to_compare = (RichPaperPointsToHeapPartition)o;
-			return to_compare.equals(this.temporal) == this.temporal && this.belongsTo.equals(to_compare.belongsTo) && to_compare.node.equals(this.node);
+				RichPaperPointsToHeapPartition to_compare = (RichPaperPointsToHeapPartition)o;
+				return this.getBelongsTo().equals(to_compare.getBelongsTo()) && to_compare.node.equals(this.node) && this.number.equals(to_compare.number);
 			}
 			catch(Exception e)
 			{
@@ -78,22 +76,22 @@ public class RichPaperPointsToHeapPartition implements PaperPointsToHeapPartitio
 
 	
 
-	public RichPaperPointsToHeapPartition(PaperNode node, boolean temporal)
-	{
-		this.temporal = temporal;
-		this.node = node;
-	}	
-
 	public RichPaperPointsToHeapPartition(PaperNode node)
 	{
 		this.node = node;
 	}	
 	
-	public RichPaperPointsToHeapPartition(PaperNode node, boolean temporal, String belongsTo)
+	public RichPaperPointsToHeapPartition(PaperNode node, String belongsTo)
 	{
-		this.temporal = temporal;
 		this.node = node;
-		this.belongsTo = belongsTo;
+		this.setBelongsTo(belongsTo);
+	}	
+	
+	public RichPaperPointsToHeapPartition(PaperNode node, String belongsTo, Integer number)
+	{
+		this.node = node;
+		this.setBelongsTo(belongsTo);
+		this.number = number;
 	}	
 	
 	
@@ -112,26 +110,25 @@ public class RichPaperPointsToHeapPartition implements PaperPointsToHeapPartitio
 		
 		this.node = PaperNodeUtils.createPaperNodeFromNormalNode(node, context, belongsTo);
 	}	*/
+
 	
-	
-	public RichPaperPointsToHeapPartition(boolean temporal, Node node, CircularStack<String> context, String belongsTo, int number)
+	public RichPaperPointsToHeapPartition(Node node, CircularStack<String> context, String belongsTo, Integer number)
 	{
-		this.temporal = temporal;
 		
 		this.number = number;
 		
-		this.belongsTo = belongsTo;
+		this.setBelongsTo(belongsTo);
 		
 		this.node = PaperNodeUtils.createPaperNodeFromNormalNode(node, context, belongsTo);
 	}	
 	
 	@Override
-	public int getNumber() {
+	public Integer getNumber() {
 		return number;
 	}
 
 
-	public void setNumber(int number) {
+	public void setNumber(Integer number) {
 		this.number = number;
 	}
 
@@ -140,8 +137,6 @@ public class RichPaperPointsToHeapPartition implements PaperPointsToHeapPartitio
 
 	public RichPaperPointsToHeapPartition(HeapPartition heapPartition)
 	{
-		this.temporal = heapPartition.isTemporal();
-		
 		if(heapPartition.getClass() == PointsToHeapPartition.class)
 		{
 			PointsToHeapPartition hp = ((PointsToHeapPartition) heapPartition);
@@ -166,11 +161,11 @@ public class RichPaperPointsToHeapPartition implements PaperPointsToHeapPartitio
 			
 			SootMethod m = hp.getNode().belongsTo();
 			
-			this.belongsTo = m.getDeclaringClass().toString() + "." +  m.getName();
+			this.setBelongsTo(m.getDeclaringClass().toString() + "." +  m.getName());
 			
 			
 
-			this.node = PaperNodeUtils.createPaperNodeFromNormalNode(origNode, ir_context, belongsTo);
+			this.node = PaperNodeUtils.createPaperNodeFromNormalNode(origNode, ir_context, getBelongsTo());
 			
 		}
 		else
@@ -179,9 +174,8 @@ public class RichPaperPointsToHeapPartition implements PaperPointsToHeapPartitio
 		}		
 	}
 	
-	public RichPaperPointsToHeapPartition(boolean temporal, String belongsTo, PaperNode node) {
-		this.temporal = temporal;
-		this.belongsTo = belongsTo;
+	public RichPaperPointsToHeapPartition(String belongsTo, PaperNode node) {
+		this.setBelongsTo(belongsTo);
 		this.node = node;
 	}
 
@@ -191,14 +185,6 @@ public class RichPaperPointsToHeapPartition implements PaperPointsToHeapPartitio
 	}
 
 
-	public boolean isTemporal() {
-		// TODO Auto-generated method stub
-		return temporal;
-	}
-
-	public HeapPartition clone() {
-		return null;
-	}
 
 	public <T> T apply(HeapPartitionVisitor<T> visitor) {
 		// TODO Auto-generated method stub
@@ -212,12 +198,22 @@ public class RichPaperPointsToHeapPartition implements PaperPointsToHeapPartitio
 	@Override
 	public String toString()
 	{
-		return this.belongsTo + "." + (this.temporal ? "(Temp)" : "") + this.node.toString(); 
+		return this.getBelongsTo() + "." + this.node.toString(); 
 	}
 	
 	public String toSimpleString()
 	{
-		return (this.temporal ? "(Temp)" : "") + this.node.toString(); 
+		return this.node.toString(); 
+	}
+
+
+	public String getBelongsTo() {
+		return belongsTo;
+	}
+
+
+	public void setBelongsTo(String belongsTo) {
+		this.belongsTo = belongsTo;
 	}
 
 }

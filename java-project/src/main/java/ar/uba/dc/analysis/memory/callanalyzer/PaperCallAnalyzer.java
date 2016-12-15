@@ -217,13 +217,18 @@ public class PaperCallAnalyzer {
 		
 		// La particion puede estar como nodo o bien contenida dentro del mismo 
 		PaperNode nodeToBind = null;
+		Integer number = 0;
+		String belongsTo = "";
+		
 		
 		try
 			{
 			for (PaperPointsToHeapPartition hp_callerNode : nodes) {
 				RichPaperPointsToHeapPartition richHpCallerNode = (RichPaperPointsToHeapPartition)hp_callerNode;
 				if (richHpCallerNode.getNode().accept(escapeNode)) {
-					nodeToBind = richHpCallerNode.getNode();
+					nodeToBind = (PaperNode) richHpCallerNode.getNode();
+					number = richHpCallerNode.getNumber();
+					belongsTo = richHpCallerNode.getBelongsTo();
 					break;
 				}
 			}
@@ -262,11 +267,10 @@ public class PaperCallAnalyzer {
 		//Para que sirve esto?
 		//isTemporal = isTemporal || invariantProvider.captureAllPartitions(callStmt);
 	
-			// Con eso ya puedo armar el heapPartition del caller.
-		RichPaperPointsToHeapPartition hpCaller = new RichPaperPointsToHeapPartition(nodeToBind);
-		hpCaller.belongsTo = fullName;
+			// Con eso ya puedo armar el heapPartition del caller.		
+		RichPaperPointsToHeapPartition returnHp = new RichPaperPointsToHeapPartition(nodeToBind, belongsTo, number);
 		
-		return hpCaller;
+		return returnHp;
 	}
 
 	public void init(SymbolicCalculator symbolicCalculator, ParametricExpressionFactory expressionFactory) {

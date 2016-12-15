@@ -79,10 +79,8 @@ public class PaperMemorySummary {
 	}
 
 	public void add(PaperPointsToHeapPartition paperGlobHp, ParametricExpression resMemory) {
-		// TODO Auto-generated method stub
-		
-		residuals.put((SimplePaperPointsToHeapPartition)paperGlobHp,  resMemory);
-		
+		// TODO Auto-generated method stub		
+		residuals.put((SimplePaperPointsToHeapPartition)paperGlobHp,  resMemory);		
 	}
 	
 	public void partitionEscapeGlobaly(SimplePaperPointsToHeapPartition heapPartition) {

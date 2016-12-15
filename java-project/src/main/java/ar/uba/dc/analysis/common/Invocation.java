@@ -2,11 +2,11 @@ package ar.uba.dc.analysis.common;
 
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.objectweb.asm.tree.MethodNode;
 
 import ar.uba.dc.analysis.common.code.CallStatement;
 import ar.uba.dc.analysis.common.code.NewStatement;
@@ -14,6 +14,7 @@ import ar.uba.dc.analysis.common.code.Statement;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethodBuilder;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationParameter;
+import ar.uba.dc.analysis.escape.graph.Node;
 import ar.uba.dc.analysis.escape.graph.PaperNode;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationParameter;
 import ar.uba.dc.analysis.memory.HeapPartition;
@@ -31,7 +32,7 @@ import com.google.common.collect.Iterables;
 
 import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
 import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartitionBinding;
-
+import ar.uba.dc.analysis.memory.impl.summary.PointsToHeapPartition;
 import ar.uba.dc.analysis.escape.graph.node.PaperMethodNode;
 
 
@@ -60,6 +61,8 @@ public class Invocation {
 	
 	public Invocation(Line line, SootMethod m, Set<IntermediateRepresentationMethod> ir_methods, Set<PaperPointsToHeapPartition> nodes, String fullName)
 	{
+		
+		log.debug(m.toString());
 		this.class_called = m.getDeclaringClass().toString();
 		this.setCallStatement(true);
 		this.called_implementation_signature = m.getSignature();
@@ -103,7 +106,7 @@ public class Invocation {
 				
 				
 				String s1= line.getFullNameCalled();
-				String s2= rich_hp.belongsTo;
+				String s2= rich_hp.getBelongsTo();
 				
 				if(node.getClass() == PaperMethodNode.class && s1.equals(s2))
 				{
@@ -124,25 +127,33 @@ public class Invocation {
 		}
 	}
 	
-	
+	//Creo que no voy a usar numbers
 	//No se deberian llamar nodes los nodes, sino heap Partitions
-	public Invocation(NewStatement newStmt, HeapPartition heapPartition, Set<PaperPointsToHeapPartition> nodes) {			
+	public Invocation(NewStatement newStmt, HeapPartition heapPartition, 
+			Set<PaperPointsToHeapPartition> nodes, Map<Node, Integer> numbers) {			
 		this.setCallStatement(false);
 		this.setParameters(newStmt.getIntermediateRepresentationParameters());
 		this.setClass_called("");
 		this.called_implementation_signature = "";
 		
-		for(PaperPointsToHeapPartition node : nodes)
+		PointsToHeapPartition hp = (PointsToHeapPartition) heapPartition;
+		
+		Node n = hp.getNode();
+		
+		Integer number = -1;
+		if(numbers.containsKey(n))
 		{
-			RichPaperPointsToHeapPartition richHp = (RichPaperPointsToHeapPartition) node;
-			if(richHp.toSimpleString().equals(heapPartition.toString()))
+			number = numbers.get(n);
+			for(PaperPointsToHeapPartition node : nodes)
 			{
-				this.heapPartition =  richHp;
-				continue;
+				if(node.getNumber() == number)
+				{
+					RichPaperPointsToHeapPartition richHp = (RichPaperPointsToHeapPartition) node;
+					this.heapPartition =  richHp;
+					continue;
+				}
 			}
 		}
-		
-		
 		
 		this.nameCalled = "";
 		this.setHpBindings(new HashSet<PaperPointsToHeapPartitionBinding>());

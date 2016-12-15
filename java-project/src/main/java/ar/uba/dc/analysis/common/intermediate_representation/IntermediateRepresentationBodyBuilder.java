@@ -3,6 +3,7 @@ package ar.uba.dc.analysis.common.intermediate_representation;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.logging.Log;
@@ -14,6 +15,7 @@ import ar.uba.dc.analysis.common.code.CallStatement;
 import ar.uba.dc.analysis.common.code.MethodBody;
 import ar.uba.dc.analysis.common.code.NewStatement;
 import ar.uba.dc.analysis.common.code.Statement;
+import ar.uba.dc.analysis.escape.graph.Node;
 import ar.uba.dc.analysis.memory.IntraproceduralAnalysis;
 import ar.uba.dc.analysis.memory.LifeTimeOracle;
 import ar.uba.dc.analysis.memory.impl.summary.EscapeBasedLifeTimeOracle;
@@ -54,9 +56,9 @@ public class IntermediateRepresentationBodyBuilder {
 
 	
 	public Line buildLineFromStatement(Statement stmt, long counter,
-			Set<IntermediateRepresentationMethod> ir_methods, Set<PaperPointsToHeapPartition> nodes, String fullName)
+			Set<IntermediateRepresentationMethod> ir_methods, Set<PaperPointsToHeapPartition> nodes, String fullName, Map<Node, Integer> numbers)
 	{
-		Line line = new Line(stmt, this.callGraph, this.lifetimeOracle, ir_methods, nodes, fullName);
+		Line line = new Line(stmt, this.callGraph, this.lifetimeOracle, ir_methods, nodes, fullName, numbers);
 		
 		//Esto no lo estoy escribiendo en el IR por ahora
 		line.setLabel(counter);
@@ -78,7 +80,7 @@ public class IntermediateRepresentationBodyBuilder {
 	}
 
 	public IntermediateRepresentationMethodBody build_body(BasicMethodBody methodBody, Set<IntermediateRepresentationMethod> ir_methods, 
-			Set<PaperPointsToHeapPartition> nodes, String fullName) {
+			Set<PaperPointsToHeapPartition> nodes, String fullName, Map<Node, Integer> numbers) {
 		IntermediateRepresentationMethodBody ir_body = new IntermediateRepresentationMethodBody();
 		
 		Set<Line> lines = new LinkedHashSet<Line>();
@@ -88,7 +90,7 @@ public class IntermediateRepresentationBodyBuilder {
 			counter++;
 			log.debug("Processing statement: " + stmt.toString());
 			
-			Line line = buildLineFromStatement(stmt, counter, ir_methods, nodes, fullName);
+			Line line = buildLineFromStatement(stmt, counter, ir_methods, nodes, fullName, numbers);
 			lines.add(line);
 		}		
 		ir_body.setLines(lines);

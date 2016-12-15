@@ -308,18 +308,16 @@ public class IntermediateRepresentationMethod {
 	
 	
 	
-	
+
 	//Esto no esta soportado para tamaño maximo  del CircularStack todavia
-	public void setNodesInfo(EscapeSummary escapeSummary) {
+	public void setNodesInfo(EscapeSummary escapeSummary,Map<Node, Integer> numbers) {
 		Set<Node> escaping = escapeSummary.getEscaping();	
 		this.escapeNodes = new LinkedHashSet<PaperPointsToHeapPartition>();
 		
 		
 		//Podria hacer una funcion asi no escribo las cosas 2 veces
 		
-		Set<Node> allNodes = escapeSummary.getNodes();
-		
-		Map<Node, Integer> numbers = new HashMap<Node, Integer>();
+		Set<Node> allNodes = escapeSummary.getNodes();		
 		this.nodes = new LinkedHashSet<PaperPointsToHeapPartition>();
 		
 		for (Node n : allNodes) {
@@ -338,7 +336,7 @@ public class IntermediateRepresentationMethod {
 			//TODO: Cada hp tiene un nodo en este rinard. En madeja no!!!
 			numbers.put(n, RichPaperPointsToHeapPartition.counter);			
 			
-			this.nodes.add(new RichPaperPointsToHeapPartition(false, n, ir_context, belongsTo, RichPaperPointsToHeapPartition.counter));
+			this.nodes.add(new RichPaperPointsToHeapPartition(n, ir_context, belongsTo, RichPaperPointsToHeapPartition.counter));
 			
 			RichPaperPointsToHeapPartition.counter+=1;
 		}
@@ -353,21 +351,21 @@ public class IntermediateRepresentationMethod {
 			if(n instanceof StmtNode || n instanceof MethodNode || n instanceof ContainerNode)
 				belongsTo = n.belongsTo().getDeclaringClass() + "." + n.belongsTo().getName();
 			
-			Integer number;
+			Integer counter_number = new Integer(0);
 			
 			//TODO: podria hacer las dos cosas juntas
 			if(numbers.containsKey(n))
 			{
-				number = numbers.get(n);
+				counter_number = numbers.get(n);
 			}
 			else
 			{
-				number = RichPaperPointsToHeapPartition.counter;
+				counter_number = RichPaperPointsToHeapPartition.counter;
 			}
 			
 			
-			this.escapeNodes.add(new RichPaperPointsToHeapPartition(false, n, ir_context, belongsTo, number));
-			RichPaperPointsToHeapPartition.counter+=1;
+			this.escapeNodes.add(new RichPaperPointsToHeapPartition(n, ir_context, belongsTo, counter_number));
+			RichPaperPointsToHeapPartition.counter= RichPaperPointsToHeapPartition.counter + 1;
 		}
 		
 		RichPaperPointsToHeapPartition.counter = 0;

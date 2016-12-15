@@ -153,7 +153,7 @@ public class PaperEscapeBasedResidualSummarizer implements PaperResidualSummariz
 			ctx.pop();
 			impl = ctx.peek()/*.getCalled_implementation_signature()*/;
 		} else {
-			impl = hp.belongsTo;
+			impl = hp.getBelongsTo();
 		}
 		
 		return impl;

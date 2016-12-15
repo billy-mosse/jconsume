@@ -1,12 +1,12 @@
 package ar.uba.dc.analysis.memory.impl.summary;
 
 public class SimplePaperPointsToHeapPartition implements PaperPointsToHeapPartition {
-	public int number;
+	public Integer number;
 	
 	
 
 	
-	public SimplePaperPointsToHeapPartition(int number)
+	public SimplePaperPointsToHeapPartition(Integer number)
 	{
 		this.number = number;
 	}
@@ -21,7 +21,7 @@ public class SimplePaperPointsToHeapPartition implements PaperPointsToHeapPartit
 		return new SimplePaperPointsToHeapPartition(this.number);
 	}
 	
-	public int getNumber()
+	public Integer getNumber()
 	{
 		return this.number;
 	}
@@ -29,7 +29,7 @@ public class SimplePaperPointsToHeapPartition implements PaperPointsToHeapPartit
 	@Override
 	public int hashCode()
 	{
-		return this.number;
+		return this.number.intValue();
 	}
 	
 	@Override

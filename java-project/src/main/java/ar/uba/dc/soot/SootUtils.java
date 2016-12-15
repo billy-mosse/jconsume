@@ -45,6 +45,7 @@ import soot.tagkit.LineNumberTag;
 import soot.util.Chain;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationParameter;
+import ar.uba.dc.analysis.escape.graph.Node;
 import ar.uba.dc.analysis.common.Invocation;
 import ar.uba.dc.analysis.common.Line;
 import ar.uba.dc.analysis.common.code.CallStatement;
@@ -364,7 +365,8 @@ public class SootUtils {
 	}
 
 	public static List<Invocation> getInvocations(Line line, Statement stmt, boolean isCallStatement, CallGraph callGraph, LifeTimeOracle lifetimeOracle,
-			Set<IntermediateRepresentationMethod> ir_methods, Set<PaperPointsToHeapPartition> nodes, String fullName) {
+			Set<IntermediateRepresentationMethod> ir_methods, 
+			Set<PaperPointsToHeapPartition> nodes, String fullName, Map<Node, Integer> numbers) {
 		
 		List<Invocation> invocations = new LinkedList<Invocation>();
 		if(isCallStatement)
@@ -386,7 +388,7 @@ public class SootUtils {
 			HeapPartition hp = lifetimeOracle.getPartition(newStmt);
 			//PointsToHeapPartition hp = new PointsToHeapPartition();
 			
-			invocations.add(new Invocation(newStmt, hp, nodes));
+			invocations.add(new Invocation(newStmt, hp, nodes, numbers));
 		}
 		return invocations;		
 		

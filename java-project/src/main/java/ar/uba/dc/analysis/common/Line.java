@@ -1,6 +1,7 @@
 package ar.uba.dc.analysis.common;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.google.common.base.Function;
@@ -12,6 +13,7 @@ import ar.uba.dc.analysis.common.code.NewStatement;
 import ar.uba.dc.analysis.common.code.Statement;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationParameter;
+import ar.uba.dc.analysis.escape.graph.Node;
 import ar.uba.dc.analysis.memory.LifeTimeOracle;
 import ar.uba.dc.analysis.memory.expression.ParametricExpression;
 import ar.uba.dc.analysis.memory.impl.summary.EscapeBasedLifeTimeOracle;
@@ -64,7 +66,8 @@ public class Line {
 	public String magicalStmtName;
 	
 	public Line(Statement stmt, CallGraph callGraph, LifeTimeOracle lifetimeOracle,
-			Set<IntermediateRepresentationMethod> ir_methods, Set<PaperPointsToHeapPartition> nodes, String fullName) {
+			Set<IntermediateRepresentationMethod> ir_methods, Set<PaperPointsToHeapPartition> nodes, 
+			String fullName, Map<Node, Integer> numbers) {
 		
 		//TODO: descomentar esta linea
 		//this.setLineNumber(stmt.getStatement().getJavaSourceStartLineNumber());
@@ -91,7 +94,8 @@ public class Line {
 		
 		
 		this.label = stmt.getCounter();	
-		this.invocations = SootUtils.getInvocations(this, stmt, isCallStatement, callGraph, lifetimeOracle, ir_methods, nodes, fullName);
+		this.invocations = SootUtils.getInvocations(this, stmt, isCallStatement, callGraph, 
+				lifetimeOracle, ir_methods, nodes, fullName, numbers);
 	}
 	
 	public void setName(CallStatement callStmt)

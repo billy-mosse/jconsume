@@ -1,5 +1,7 @@
 package ar.uba.dc.analysis.common.intermediate_representation;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.logging.Log;
@@ -7,6 +9,7 @@ import org.apache.commons.logging.LogFactory;
 
 import ar.uba.dc.analysis.common.code.BasicMethodBody;
 import ar.uba.dc.analysis.common.code.MethodBody;
+import ar.uba.dc.analysis.escape.graph.Node;
 import ar.uba.dc.analysis.escape.summary.repository.RAMSummaryRepository;
 import ar.uba.dc.analysis.memory.LifeTimeOracle;
 import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
@@ -34,9 +37,9 @@ public class IntermediateRepresentationMethodBuilder {
 	}
 	
 	
-	private void setBody(BasicMethodBody methodBody, Set<IntermediateRepresentationMethod> ir_methods, Set<PaperPointsToHeapPartition> nodes, String fullName)
+	private void setBody(BasicMethodBody methodBody, Set<IntermediateRepresentationMethod> ir_methods, Set<PaperPointsToHeapPartition> nodes, String fullName, Map<Node, Integer> numbers)
 	{	
-		this.irmethod.body = irbody_builder.build_body(methodBody, ir_methods, nodes, fullName);
+		this.irmethod.body = irbody_builder.build_body(methodBody, ir_methods, nodes, fullName, numbers);
 	}	
 	
 	public IntermediateRepresentationMethod buildMethod(BasicMethodBody methodBody, long order, Set<IntermediateRepresentationMethod> ir_methods)
@@ -62,9 +65,12 @@ public class IntermediateRepresentationMethodBuilder {
 
 		this.irmethod.setMethodRequirements(invariantProvider.getRequeriments(m));
 		this.irmethod.setRelevant_parameters(invariantProvider.getRelevantParameters(m));
-		this.irmethod.setNodesInfo(data.get(methodBody.belongsTo()));
 		
-		this.setBody(methodBody, ir_methods, this.irmethod.nodes, this.irmethod.getFullName());
+		Map<Node, Integer> numbers = new HashMap<Node, Integer>();
+
+		this.irmethod.setNodesInfo(data.get(methodBody.belongsTo()), numbers);
+		
+		this.setBody(methodBody, ir_methods, this.irmethod.nodes, this.irmethod.getFullName(), numbers);
 		
 		return this.irmethod;
 	}

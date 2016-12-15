@@ -221,6 +221,10 @@ public class PaperIntraproceduralAnalysis {
 			
 			ParametricExpression memReqMinusRsdFromCallee = callSummary.getMAX_memoryRequirementMinusRsd();
 			ParametricExpression acumResidualsFromCallee = callSummary.getAcumResiduals();
+			
+			log.debug("_____________________" + callInvocation.getFullNameCalled());
+			log.debug("_____________________" + "memReqMinusRsdFromCallee: " + memReqMinusRsdFromCallee.toString());
+			log.debug("_____________________" + "acumResidualsFromCallee: " + acumResidualsFromCallee.toString());
 					
 			
 			
