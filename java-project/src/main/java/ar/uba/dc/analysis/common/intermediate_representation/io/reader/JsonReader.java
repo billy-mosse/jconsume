@@ -152,8 +152,8 @@ protected Gson gson;
 		    	m.setIsReturnRefLikeType(jobject.get("is_return_ref_like_type").getAsBoolean());
 		    
 
-		    if(jobject.has("sub_signature"))
-		    	m.setSubSignature(jobject.get("sub_signature").getAsString());
+		    if(jobject.has("subsignature"))
+		    	m.setSubSignature(jobject.get("subsignature").getAsString());
 
 		    	    
 		    IntermediateRepresentationMethodBody body = context.deserialize(jobject.get("body"), IntermediateRepresentationMethodBody.class);
