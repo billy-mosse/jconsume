@@ -27,8 +27,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 
 import ar.uba.dc.analysis.common.Invocation;
 import ar.uba.dc.analysis.common.Line;
@@ -36,23 +34,11 @@ import ar.uba.dc.analysis.common.SummaryReader;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationParameter;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethodBody;
-import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationParameter;
-import ar.uba.dc.analysis.common.intermediate_representation.io.writer.JsonWriter;
-//import ar.uba.dc.analysis.common.intermediate_representation.io.writer.JsonWriter.DefaultIntermediateRepresentationParameterSerializer;
-import ar.uba.dc.analysis.common.intermediate_representation.io.writer.JsonWriter.IntermediateRepresentationMethodBodySerializer;
-import ar.uba.dc.analysis.common.intermediate_representation.io.writer.JsonWriter.IntermediateRepresentationMethodSerializer;
-//import ar.uba.dc.analysis.common.intermediate_representation.io.writer.JsonWriter.IntermediateRepresentationParameterWithTypeSerializer;
-import ar.uba.dc.analysis.common.intermediate_representation.io.writer.JsonWriter.InvocationSerializer;
-import ar.uba.dc.analysis.common.intermediate_representation.io.writer.JsonWriter.LineSerializer;
-import ar.uba.dc.analysis.escape.EscapeSummary;
 import ar.uba.dc.analysis.escape.graph.PaperNode;
-import ar.uba.dc.analysis.escape.summary.io.xstream.XStreamFactory;
 import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
 import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartitionBinding;
-import ar.uba.dc.analysis.memory.impl.summary.RichPaperPointsToHeapPartition;
 import ar.uba.dc.analysis.memory.impl.summary.SimplePaperPointsToHeapPartition;
 import ar.uba.dc.barvinok.expression.DomainSet;
-import ar.uba.dc.soot.xstream.StatementIdConverter;
 import ar.uba.dc.util.location.MethodLocationStrategy;
 import decorations.Binding;
 import decorations.BindingPair;
@@ -124,25 +110,30 @@ protected Gson gson;
 		    JsonObject jobject = (JsonObject) json;
 
 			log.debug("json: " + jobject.toString());
-		    IntermediateRepresentationMethod m = new IntermediateRepresentationMethod();
+			
+			IntermediateRepresentationMethod m = new IntermediateRepresentationMethod();
+		    
 		    m.setName(jobject.get("name").getAsString());
 		    
-		    m.setDeclaringClass(jobject.get("declaring_class").getAsString());
+		    
+		    if(jobject.has("declaring_class"))
+		    		m.setDeclaringClass(jobject.get("declaring_class").getAsString());
 		    
 		    Set<IntermediateRepresentationParameter> parameters  = new LinkedHashSet<IntermediateRepresentationParameter>();
 		    
-		    
-		    JsonArray jparameters = jobject.get("parameters").getAsJsonArray();
-		    for(int i = 0; i < jparameters.size(); i++)
+		    if(jobject.has("parameters"))
 		    {
-		    	//No necesita un custom deserializer porque tiene tipos primitivos adentro
-		    	IntermediateRepresentationParameter p = context.deserialize(jparameters.get(i), IntermediateRepresentationParameter.class);
-		    	parameters.add(p);
+			    JsonArray jparameters = jobject.get("parameters").getAsJsonArray();
+			    for(int i = 0; i < jparameters.size(); i++)
+			    {
+			    	//No necesita un custom deserializer porque tiene tipos primitivos adentro
+			    	IntermediateRepresentationParameter p = context.deserialize(jparameters.get(i), IntermediateRepresentationParameter.class);
+			    	parameters.add(p);
+			    }
+			    
+	
+			    m.setParameters(parameters);
 		    }
-		    
-
-		    m.setParameters(parameters);
-		    
 		    
 		    Set<String> relevant_parameters = new TreeSet<String>();
 		    JsonArray jrelevant_parameters = jobject.get("relevant_parameters").getAsJsonArray();
@@ -154,17 +145,17 @@ protected Gson gson;
 		    }
 		    m.setRelevant_parameters(relevant_parameters);
 		    
-		    m.setReturnType(jobject.get("return_type").getAsString());
+		    if(jobject.has("return_type"))
+		    	m.setReturnType(jobject.get("return_type").getAsString());
 		    
-		    m.setIsReturnRefLikeType(jobject.get("is_return_ref_like_type").getAsBoolean());
+		    if(jobject.has("is_return_ref_like_type"))
+		    	m.setIsReturnRefLikeType(jobject.get("is_return_ref_like_type").getAsBoolean());
 		    
 
-		    m.setSubSignature(jobject.get("sub_signature").getAsString());
+		    if(jobject.has("sub_signature"))
+		    	m.setSubSignature(jobject.get("sub_signature").getAsString());
 
-		    m.setNumber(jobject.get("number").getAsInt());
-		    m.setDeclaration(jobject.get("declaration").getAsString());
-		    
-		    
+		    	    
 		    IntermediateRepresentationMethodBody body = context.deserialize(jobject.get("body"), IntermediateRepresentationMethodBody.class);
 		    
 		    
@@ -202,16 +193,10 @@ protected Gson gson;
 		    	nodes.add(node);
 		    }
 
-		    m.setNodes(nodes);
+		    m.setNodes(nodes);		    
 		    
+		    m.setDeclaration(jobject.get("declaration").getAsString());
 		    
-		    
-		    
-		   /* m.setBody(
-		    		(IntermediateRepresentationMethodBody) context.deserialize(jobject.get("body").getAsJsonObject(), 
-		    																	IntermediateRepresentationMethodBody.class));*/
-	    
-	    
 		    return m;
 		}			
 			
@@ -262,15 +247,15 @@ protected Gson gson;
 			
 			line.setInvariant(invariant);
 
-			line.setName(jobject.get("name").getAsString());
+			if(jobject.has("name"))
+				line.setName(jobject.get("name").getAsString());
+			
 			line.setIrName(jobject.get("ir_name").getAsString());
-			line.setIrClass(jobject.get("ir_class").getAsString());
-			
+			line.setIrClass(jobject.get("ir_class").getAsString());			
 
-	    	log.debug("Deserializando " + line.getName());
+	    	log.debug("Deserializando " + line.getName());			
 			
-			line.setLineNumber(jobject.get("line_number").getAsInt());
-			
+	    	//line.setLineNumber(jobject.get("line_number").getAsInt());			
 			
 			JsonArray jinvocations = jobject.get("invocations").getAsJsonArray();
 			
@@ -290,7 +275,7 @@ protected Gson gson;
 		    line.setBinding((Binding)context.deserialize(jobject.get("binding"), Binding.class));
 		    
 
-		    line.magicalStmtName = jobject.get("magical_stmt_name").getAsString();
+		    //line.magicalStmtName = jobject.get("magical_stmt_name").getAsString();
 		    
 		    return line;
 		}
@@ -370,24 +355,13 @@ protected Gson gson;
 
 			invocation.setClass_called(jobject.get("class_called").getAsString());			
 			
-			//invocation.setName( jobject.get("name").getAsString());
-			
-			
-			invocation.setCalled_implementation_signature(jobject.get("called_implementation_signature").getAsString());
+			//invocation.setCalled_implementation_signature(jobject.get("called_implementation_signature").getAsString());
 			
 			invocation.setNameCalled(jobject.get("name_called").getAsString());
-			
-			
-			//RichPaperPointsToHeapPartition hp = context.deserialize(jobject.get("hp"), RichPaperPointsToHeapPartition.class);
-			
-			
-			//invocation.setHeapPartition(hp);
-			
 			
 			JsonArray jparameters = jobject.get("parameters").getAsJsonArray();
 			
 			Set<IntermediateRepresentationParameter> parameters = new LinkedHashSet<IntermediateRepresentationParameter>();
-			
 			
 		    for(int i = 0; i < jparameters.size(); i++)
 		    {
@@ -416,7 +390,6 @@ protected Gson gson;
 		    invocation.setHeapPartition((PaperPointsToHeapPartition)context.deserialize(jobject.get("hp"), PaperPointsToHeapPartition.class));
 		    
 		    invocation.setIsReturnRefLikeType(jobject.get("is_return_ref_like_type").getAsBoolean());
-		    
 		    
 		    return invocation;
 		    

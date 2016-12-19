@@ -23,13 +23,20 @@ public abstract class AbstractInterproceduralAnalysis {
 	protected DirectedCallGraph directedCallGraph;
 	protected Map<SootMethod, Integer> order;
 	protected String mainClass; 
+	protected boolean debugIR;
 	
-	public void run(CallGraph cg, SootMethodFilter filter, SootMethod head) {
+	public void run(CallGraph cg, SootMethodFilter filter, SootMethod head)
+	{
+		run(cg,filter,head,false);
+	}
+	
+	public void run(CallGraph cg, SootMethodFilter filter, SootMethod head, boolean debugIR) {
 		Timer t = new Timer();
 		t.start();
 		log.debug("Building directed callgraph");
 		this.callGraph = cg;
 		this.directedCallGraph = new DirectedCallGraph(cg, filter, head);
+		this.debugIR = debugIR;
 		t.stop();
 		log.debug("Building directed callgraph took " + t.getElapsedTime() + " (" + t.getElapsedSeconds() + " seconds)");
 		this.mainClass = head.getDeclaringClass().toString();

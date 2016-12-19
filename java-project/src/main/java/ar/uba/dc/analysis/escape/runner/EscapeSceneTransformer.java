@@ -21,20 +21,27 @@ public class EscapeSceneTransformer extends SceneTransformer {
 	private Context context;
 	private String mainClass;
 	private String mainMethod;
+	private boolean debugIR;
+
+	public static EscapeSceneTransformer v(Context context, String mainClass, boolean debugIR) {
+		return v(context, mainClass, null, debugIR);
+	}
+	
 
 	public static EscapeSceneTransformer v(Context context, String mainClass) {
-		return v(context, mainClass, null);
+		return v(context, mainClass, null, false);
 	}
 	
-	public static EscapeSceneTransformer v(Context context, String mainClass, String mainMethod) {
-		return new EscapeSceneTransformer(context, mainClass, mainMethod);
+	public static EscapeSceneTransformer v(Context context, String mainClass, String mainMethod, boolean debugIR) {
+		return new EscapeSceneTransformer(context, mainClass, mainMethod, debugIR);
 	}
 	
-	private EscapeSceneTransformer(Context context, String mainClass, String mainMethod) {
+	private EscapeSceneTransformer(Context context, String mainClass, String mainMethod, boolean debugIR) {
 		super();
 		this.context = context;
 		this.mainClass = mainClass;
 		this.mainMethod = mainMethod;
+		this.debugIR = debugIR;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -53,7 +60,7 @@ public class EscapeSceneTransformer extends SceneTransformer {
 		
 		log.info("Running escape analysis for [" + mainClass + "] and method [" + methodSignature + "]");
 		
-		analysis.run(Scene.v().getCallGraph(), context.getFactory().getDirectedGraphMethodFilter(), main);
+		analysis.run(Scene.v().getCallGraph(), context.getFactory().getDirectedGraphMethodFilter(), main, debugIR);
 		
 		analysisTimer.stop();
 		

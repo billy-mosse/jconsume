@@ -10,6 +10,19 @@ public class CommandLineValues {
             usage = "Program name. e.g. ar.uba.dc.simple.EjemploSimple04")
     private String programName;
 	
+	@Option(name = "-d", aliases = { "--debugIR" })
+    private boolean debugIR;
+	
+
+	public boolean isDebugIR() {
+		return debugIR;
+	}
+
+
+	public void setDebugIR(boolean debugIR) {
+		this.debugIR = debugIR;
+	}
+
 
 	@Option(name = "-c", aliases = { "--config" }, required = true,
             usage = "Config properties file (config.properties)")

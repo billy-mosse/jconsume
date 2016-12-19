@@ -131,8 +131,9 @@ public class IntermediateRepresentationMethod {
 
 	public IntermediateRepresentationMethod()
 	{
-		
+
 	}
+	
 	private static Log log = LogFactory.getLog(IntermediateRepresentationMethod.class);
 
 	//protected SootMethod target;

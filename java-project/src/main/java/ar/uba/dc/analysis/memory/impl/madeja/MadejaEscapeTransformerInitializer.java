@@ -4,6 +4,8 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.apache.commons.lang.NotImplementedException;
+
 import madeja.analysis.IFixedPointMethodAnalysis;
 import madeja.analysis.IMethodAnalysis;
 import madeja.analysis.SceneAnalysis;
@@ -141,6 +143,12 @@ public class MadejaEscapeTransformerInitializer implements PhaseInitializer {
 			
 		}
 		
+	}
+
+
+	@Override
+	public void initialize(Context context, String className, boolean debugIR) {
+		initialize(context, className);	
 	}
 
 }

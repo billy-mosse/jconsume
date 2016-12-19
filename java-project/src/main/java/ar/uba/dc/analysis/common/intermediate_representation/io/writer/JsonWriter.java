@@ -17,9 +17,11 @@ import org.apache.commons.logging.LogFactory;
 import ar.uba.dc.analysis.common.Invocation;
 import ar.uba.dc.analysis.common.Line;
 import ar.uba.dc.analysis.common.SummaryWriter;
+import ar.uba.dc.analysis.escape.EscapeSummary;
 import ar.uba.dc.analysis.escape.graph.PaperNode;
 import ar.uba.dc.analysis.escape.summary.io.xstream.XStreamFactory;
 import ar.uba.dc.analysis.memory.impl.summary.RichPaperPointsToHeapPartition;
+import ar.uba.dc.analysis.memory.impl.summary.SimplePaperPointsToHeapPartition;
 import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.util.location.MethodLocationStrategy;
 import decorations.Binding;
@@ -50,14 +52,37 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 	
 	protected MethodLocationStrategy locationStrategy;
 	private String mainClass;
-	
+
+
 	public JsonWriter() {
+		
+	}
+	
+	public void registerTypeAdapters(boolean isDebug)
+	{
 		GsonBuilder builder = new GsonBuilder().setPrettyPrinting();
 		
-		builder.registerTypeAdapter(IntermediateRepresentationMethod.class, new IntermediateRepresentationMethodSerializer());
+		if(isDebug)
+		{
+			builder.registerTypeAdapter(IntermediateRepresentationMethod.class, new IntermediateRepresentationMethodDebugSerializer());
+		}
+		else
+		{
+			builder.registerTypeAdapter(IntermediateRepresentationMethod.class, new IntermediateRepresentationMethodMinimalisticSerializer());
+		}
+		
+		
 		//builder.registerTypeAdapter(IntermediateRepresentationParameterWithType.class, new IntermediateRepresentationParameterWithTypeSerializer());
 		builder.registerTypeAdapter(IntermediateRepresentationMethodBody.class, new IntermediateRepresentationMethodBodySerializer());	
-		builder.registerTypeAdapter(Line.class, new LineSerializer());
+
+		if(isDebug)
+		{
+			builder.registerTypeAdapter(Line.class, new LineDebugSerializer());
+		}
+		else
+		{
+			builder.registerTypeAdapter(Line.class, new LineMinimalisticSerializer());
+		}
 		
 		builder.registerTypeAdapter(Invocation.class, new InvocationSerializer());
 		//builder.registerTypeAdapter(IntermediateRepresentationParameter.class, new DefaultIntermediateRepresentationParameterSerializer());
@@ -71,7 +96,13 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 		this.gson = builder.create();
 	}
 	
-	public void write(IntermediateRepresentationMethod ir_method) {
+	
+	public void write(IntermediateRepresentationMethod ir_method)
+	{
+		write(ir_method, false);
+	}
+		
+	public void write(IntermediateRepresentationMethod ir_method, boolean debug) {
 		
 		log.debug("estoy escribiendo el metodo " + ir_method.toString());
 		
@@ -91,7 +122,6 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 			//writer.close();
 			
             BufferedWriter bwr = new BufferedWriter(new FileWriter(srcFile));
-            
             
             bwr.write(gson.toJson(ir_method));
             bwr.flush();
@@ -122,22 +152,16 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 		this.mainClass = mainClass;
 	}
 
-
-	public static class IntermediateRepresentationMethodSerializer implements JsonSerializer<IntermediateRepresentationMethod> 
+	public static class IntermediateRepresentationMethodMinimalisticSerializer implements JsonSerializer<IntermediateRepresentationMethod> 
 	{
 	    
 		public JsonElement serialize(final IntermediateRepresentationMethod ir_method, final Type type, final JsonSerializationContext context) {
 	        JsonObject result = new JsonObject();
 	        result.add("name", new JsonPrimitive (ir_method.getName()));
 	        
-	        JsonArray parameters = new JsonArray();
+	        result.add("declaring_class", new JsonPrimitive(ir_method.getDeclaringClass()));
 	        
-	        
-	        for(IntermediateRepresentationParameter p : ir_method.getParameters())
-	        {	        
-	        	parameters.add(context.serialize(p));
-	        }
-	        
+	        result.add("declaration", new JsonPrimitive(ir_method.getDeclaration()));	  
 
 	        JsonArray escapeNodes = new JsonArray();
 	        
@@ -160,35 +184,47 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 	        
 	        result.add("nodes", nodes);
 	        
-	        //TODO: la verdad no necesito los parametros. Me parece que voy a volar xml y humanReadable, y todo lo que no necesite, y dejar solo json
-	        result.add("parameters", parameters);
-	        JsonArray relevant_parameters = new JsonArray();
-	        
+	        JsonArray relevant_parameters = new JsonArray();	        
 	        
 	        for(String rp : ir_method.getRelevant_parameters())
 	        {	        
 	        	relevant_parameters.add(context.serialize(rp));
 	        }
 	        
-	        //TOOD: falta ver que pasa con method requirements
-	        
-	        //y el binding
-
-	        result.add("declaring_class", new JsonPrimitive(ir_method.getDeclaringClass()));
-
-	        result.add("number", new JsonPrimitive(ir_method.getNumber()));
-	        result.add("declaration", new JsonPrimitive(ir_method.getDeclaration()));
-	        result.add("sub_signature", new JsonPrimitive(ir_method.getSubSignature()));
-	        
-	        
-	        
 	        result.add("relevant_parameters", relevant_parameters);
+	        result.add("body", context.serialize(ir_method.getBody()));
+	        
+	        
+	        
+	        
+	        
+	        
+	        return result;
+	    }
+	}
+	
+	
+	public static class IntermediateRepresentationMethodDebugSerializer extends IntermediateRepresentationMethodMinimalisticSerializer 
+	{
+	    
+		public JsonElement serialize(final IntermediateRepresentationMethod ir_method, final Type type, final JsonSerializationContext context) {
+			
+			JsonObject result = (JsonObject) super.serialize(ir_method, type, context);
+			
+	        	        	
+	        JsonArray parameters = new JsonArray();
+	        
+	        
+	        for(IntermediateRepresentationParameter p : ir_method.getParameters())
+	        {	        
+	        	parameters.add(context.serialize(p));
+	        }	        
+	        
+	        result.add("parameters", parameters);
 	        
 	        result.add("is_return_ref_like_type", new JsonPrimitive(ir_method.isReturnRefLikeType()));
 	        
-	        result.add("return_type", new JsonPrimitive(ir_method.getReturnType()));
-	        result.add("body", context.serialize(ir_method.getBody()));
-	        
+	        result.add("return_type", new JsonPrimitive(ir_method.getReturnType()));	        
 	        
 	        return result;
 	    }
@@ -230,7 +266,7 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 	    }
 	}
 	
-	public static class LineSerializer implements JsonSerializer<Line> 
+	public static class LineMinimalisticSerializer implements JsonSerializer<Line> 
 	{
 	    
 		public JsonElement serialize(final Line line, final Type type, final JsonSerializationContext context) {
@@ -240,19 +276,15 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 			result.add("invariant", context.serialize(line.getInvariant()));
 			
 			
-			result.add("binding", context.serialize(line.getBinding()));			
-			
+			result.add("binding", context.serialize(line.getBinding()));
 
-			result.add("name", new JsonPrimitive( line.getName()));
 			result.add("ir_name", new JsonPrimitive( line.getIrName()));
 			result.add("ir_class", new JsonPrimitive( line.getIrClass()));
 			
 			
-			result.add("magical_stmt_name", new JsonPrimitive( line.magicalStmtName));
+			//result.add("magical_stmt_name", new JsonPrimitive( line.magicalStmtName));
 			
-			
-			
-			result.add("line_number", new JsonPrimitive( line.getLineNumber()));
+			//result.add("line_number", new JsonPrimitive( line.getLineNumber()));
 			
 			JsonArray arr = new JsonArray();
 			
@@ -263,6 +295,19 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 			
 			result.add("invocations", arr);
 			
+			
+	        return result;
+	    }
+	}
+	
+	
+	public static class LineDebugSerializer extends LineMinimalisticSerializer 
+	{
+	    
+		public JsonElement serialize(final Line line, final Type type, final JsonSerializationContext context) {
+			JsonObject result = (JsonObject) super.serialize(line, type, context);						
+
+			result.add("name", new JsonPrimitive( line.getName()));			
 			
 	        return result;
 	    }
@@ -341,7 +386,11 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 				arr.add(context.serialize(p));
 			}
 			result.add("parameters", arr);
-			result.add("called_implementation_signature", new JsonPrimitive (invocation.getCalled_implementation_signature()));
+			
+			
+			//result.add("called_implementation_signature", new JsonPrimitive (invocation.getCalled_implementation_signature()));
+			
+			
 			result.add("name_called", new JsonPrimitive (invocation.getNameCalled()));
 			//result.add("hp",  context.serialize(invocation.getHeapPartition()));
 			
@@ -374,9 +423,12 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 		public JsonElement serialize(final PaperPointsToHeapPartition hp, final Type type, final JsonSerializationContext context) {
 			JsonObject result = new JsonObject();
 			
+			
+			//if(hp.getClass() != SimplePaperPointsToHeapPartition.class)
+			//	throw new Error("Solo deberian ser simple");
+			
 			result.add("name", new JsonPrimitive("SH_" + hp.getNumber()));
-			
-			
+						
 	        return result;
 	    }
 	}
@@ -412,8 +464,6 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 	        return result;
 	    }
 	}
-	
-	
 	
 	
 	/*public static class IntermediateRepresentationParameterSerializer implements JsonSerializer<IntermediateRepresentationParameter> 

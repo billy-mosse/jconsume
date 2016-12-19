@@ -59,6 +59,7 @@ public class MainSootRunner {
 			ReachableMethods.setEdgePredicate(predicate);
 		}
 		
+		//TODO: Esto es una mentira! El metodo main esta por default ya....ni me importa lo que pongan de parametro
 		log.info("Memory analysis was requested for [" + values.getProgramName() + "] and method [" + values.getMain() + "]");
 		
 		//aca hace el insertTransformer
@@ -66,7 +67,7 @@ public class MainSootRunner {
 		if(values.runIr())
 		{
 			PhaseInitializer initializer = context.getFactory().getEscapePhaseInitializer();
-			initializer.initialize(context, values.getProgramName());
+			initializer.initialize(context, values.getProgramName(), values.isDebugIR());
 		}
 		
 		//BILLY jtp: interprocedural

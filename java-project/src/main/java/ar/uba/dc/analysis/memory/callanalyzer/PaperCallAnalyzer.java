@@ -196,7 +196,7 @@ public class PaperCallAnalyzer {
 	
 
 	
-	public static RichPaperPointsToHeapPartition bind(PaperPointsToHeapPartition hpCallee, Line line, Set<PaperPointsToHeapPartition> nodes, String fullName) {
+	public static SimplePaperPointsToHeapPartition bind(PaperPointsToHeapPartition hpCallee, Line line, Set<PaperPointsToHeapPartition> nodes, String fullName) {
 		
 		// Ignoramos los parametros
 
@@ -268,7 +268,7 @@ public class PaperCallAnalyzer {
 		//isTemporal = isTemporal || invariantProvider.captureAllPartitions(callStmt);
 	
 			// Con eso ya puedo armar el heapPartition del caller.		
-		RichPaperPointsToHeapPartition returnHp = new RichPaperPointsToHeapPartition(nodeToBind, belongsTo, number);
+		SimplePaperPointsToHeapPartition returnHp = new SimplePaperPointsToHeapPartition(number);
 		
 		return returnHp;
 	}

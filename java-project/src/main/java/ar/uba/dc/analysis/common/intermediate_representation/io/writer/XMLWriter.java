@@ -9,6 +9,7 @@ import org.apache.commons.logging.LogFactory;
 
 import ar.uba.dc.analysis.common.SummaryWriter;
 import ar.uba.dc.analysis.escape.summary.io.xstream.XStreamFactory;
+import ar.uba.dc.analysis.memory.impl.summary.EscapeBasedMemorySummary;
 import ar.uba.dc.util.location.MethodLocationStrategy;
 
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
@@ -33,8 +34,11 @@ public class XMLWriter implements SummaryWriter<IntermediateRepresentationMethod
 		this.mainClass = mainClass;
 	}
 
-	
 	public void write(IntermediateRepresentationMethod ir_method) {
+		write(ir_method, false);
+	}
+	
+	public void write(IntermediateRepresentationMethod ir_method, boolean debug) {
 		
 		String location = locationStrategy.getXMLLocation(ir_method, this.mainClass);
 		log.debug("Location for summary: [" + location + "]");
@@ -59,4 +63,5 @@ public class XMLWriter implements SummaryWriter<IntermediateRepresentationMethod
 	public void setLocationStrategy(MethodLocationStrategy locationStrategy) {
 		this.locationStrategy = locationStrategy;
 	}
+
 }

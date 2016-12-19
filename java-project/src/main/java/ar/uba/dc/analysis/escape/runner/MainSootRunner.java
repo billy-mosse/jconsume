@@ -20,6 +20,7 @@ public class MainSootRunner {
 
 	private static Log log = LogFactory.getLog(MainSootRunner.class);
 	
+	//TODO: Este main ya esta re obsoleto. Podria volarlo
 	public static void main(String[] args) {
 		String propertiesFile = null;
 		
@@ -45,7 +46,7 @@ public class MainSootRunner {
 		
 		log.info("Escape analysis was requested for [" + className + "] and method [" + methodSignature + "]");
 		
-		SootUtils.insertTransformer("wjtp", "wjtp.escape", EscapeSceneTransformer.v(context, className));
+		SootUtils.insertTransformer("wjtp", "wjtp.escape", EscapeSceneTransformer.v(context, className, false));
 		
 		String[] opts = SootUtils.buildOptions(context, className, methodSignature).toArray(new String[] {});
 		

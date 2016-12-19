@@ -129,7 +129,7 @@ public class Line {
 	
 	public boolean isNewStatement()
 	{
-		return this.name.equals("new");
+		return this.irName.equals("new");
 	}
 
 	public String toString()

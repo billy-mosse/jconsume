@@ -9,6 +9,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import ar.uba.dc.analysis.common.SummaryWriter;
+import ar.uba.dc.analysis.escape.EscapeSummary;
 import ar.uba.dc.analysis.escape.summary.io.xstream.XStreamFactory;
 import ar.uba.dc.util.location.MethodLocationStrategy;
 
@@ -29,7 +30,12 @@ public class HumanReadableWriter implements SummaryWriter<IntermediateRepresenta
 		this.xstream = XStreamFactory.getXStream();
 	}
 	
-	public void write(IntermediateRepresentationMethod ir_method) {
+	public void write(IntermediateRepresentationMethod summary)
+	{
+		write(summary, false);
+	}
+	
+	public void write(IntermediateRepresentationMethod ir_method, boolean debug) {
 		
 		log.debug("estoy escribiendo el metodo " + ir_method.toString());
 		

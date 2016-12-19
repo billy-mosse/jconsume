@@ -40,4 +40,5 @@ public class ChainWriter implements SummaryWriter<EscapeSummary>, Container<Summ
 		throw new java.lang.UnsupportedOperationException();
 		
 	}
+
 }

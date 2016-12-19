@@ -43,4 +43,5 @@ public class ChainWriter implements SummaryWriter<MemorySummary>, Container<Summ
 		throw new java.lang.UnsupportedOperationException();
 		
 	}
+
 }

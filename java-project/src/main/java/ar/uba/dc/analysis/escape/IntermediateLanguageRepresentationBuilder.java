@@ -2,6 +2,7 @@ package ar.uba.dc.analysis.escape;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
@@ -11,6 +12,8 @@ import java.util.TreeSet;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import ar.uba.dc.analysis.common.Invocation;
+import ar.uba.dc.analysis.common.Line;
 import ar.uba.dc.analysis.common.MethodInformationProvider;
 import ar.uba.dc.analysis.common.SummaryRepository;
 import ar.uba.dc.analysis.common.code.BasicMethodBody;
@@ -22,6 +25,9 @@ import ar.uba.dc.analysis.common.intermediate_representation.IntermediateReprese
 //import ar.uba.dc.analysis.common.AbstractInterproceduralAnalysis.IntComparator;
 import ar.uba.dc.analysis.escape.summary.repository.RAMSummaryRepository;
 import ar.uba.dc.analysis.memory.LifeTimeOracle;
+import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
+import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartitionBinding;
+import ar.uba.dc.analysis.memory.impl.summary.SimplePaperPointsToHeapPartition;
 import ar.uba.dc.invariant.InvariantProvider;
 import ar.uba.dc.invariant.spec.SpecInvariantProvider;
 import soot.SootMethod;
@@ -45,16 +51,15 @@ public class IntermediateLanguageRepresentationBuilder {
 	protected Map<SootMethod, Integer> order; 
 	protected MethodDecorator methodDecorator;
 	protected InvariantProvider invariantProvider;
-	private IntermediateRepresentationMethodBuilder irbuilder;
-	private IntermediateRepresentationBodyBuilder irbody_builder;
-	private String mainClass;
+	protected IntermediateRepresentationMethodBuilder irbuilder;
+	protected IntermediateRepresentationBodyBuilder irbody_builder;
+	protected String mainClass;
 
-	private CallGraph callGraph;
+	protected CallGraph callGraph;
 
-	private LifeTimeOracle lifetimeOracle;
+	protected LifeTimeOracle lifetimeOracle;
 	
-	
-	
+
 	
 	public IntermediateLanguageRepresentationBuilder(RAMSummaryRepository data, Map<SootMethod, Integer> order, SummaryRepository<EscapeSummary, SootMethod> repository, 
 			MethodInformationProvider methodInformationProvider, MethodDecorator methodDecorator, InvariantProvider invariantProvider, 
@@ -109,6 +114,8 @@ public class IntermediateLanguageRepresentationBuilder {
 			
 			
 			IntermediateRepresentationMethod m = irbuilder.buildMethod(methodBody, order, ir_methods);
+			
+			//convertRichPaperPointsToHeapPartitionsToSimplePaperPointsToHeapPartition(m);
 			ir_methods.add(m);
 		}
 		
@@ -117,6 +124,67 @@ public class IntermediateLanguageRepresentationBuilder {
 		return ir_methods;
 	}
 	
+	
+	//Al final no lo uso
+	private void convertRichPaperPointsToHeapPartitionsToSimplePaperPointsToHeapPartition(
+			IntermediateRepresentationMethod m) {
+		log.debug("bienvenido");
+		try
+		{	
+			Set<PaperPointsToHeapPartition> nodes = new LinkedHashSet<PaperPointsToHeapPartition>();
+			for(PaperPointsToHeapPartition hp : m.getNodes())
+			{
+				if(hp!=null)
+					nodes.add(new SimplePaperPointsToHeapPartition(hp.getNumber()));
+			}
+			m.setNodes(nodes);
+			
+			Set<PaperPointsToHeapPartition> escapeNodes = new LinkedHashSet<PaperPointsToHeapPartition>();
+
+			for(PaperPointsToHeapPartition hp : m.getEscapeNodes())
+			{
+
+				if(hp!=null)
+					escapeNodes.add(new SimplePaperPointsToHeapPartition(hp.getNumber()));
+			}
+			
+			for(Line l : m.getBody().getLines())
+			{
+				for(Invocation i: l.getInvocations())
+				{
+					PaperPointsToHeapPartition hp = i.getHeapPartition();
+
+					if(hp!=null)
+						i.setHeapPartition(new SimplePaperPointsToHeapPartition(hp.getNumber()));
+					
+					Set<PaperPointsToHeapPartitionBinding> hpBindings = new HashSet<PaperPointsToHeapPartitionBinding>();
+					for(PaperPointsToHeapPartitionBinding hpBinding : i.getHpBindings())
+					{
+						PaperPointsToHeapPartition calleeHp = hpBinding.getCallee_hp();
+
+						if(calleeHp!=null)
+							calleeHp = new SimplePaperPointsToHeapPartition(calleeHp.getNumber());
+						
+						PaperPointsToHeapPartition callerHp = hpBinding.getCaller_hp();
+
+						if(callerHp!=null)
+							callerHp = new SimplePaperPointsToHeapPartition(callerHp.getNumber());
+						
+						hpBindings.add(new PaperPointsToHeapPartitionBinding(calleeHp, callerHp));
+					}
+					
+					i.setHpBindings(hpBindings);
+				}
+			}
+		
+		}
+		catch(Exception e)
+		{
+			log.debug("hola");
+		}
+	}
+
+
 	//TODO: esto esta copiado de AbstractInterProceduralAnalysis. Pensar como hacer para que este una vez
 	protected Comparator<SootMethod> getOrderComparator() {
 		return new IntComparator();

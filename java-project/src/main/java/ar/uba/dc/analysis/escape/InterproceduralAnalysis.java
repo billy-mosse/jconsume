@@ -39,6 +39,7 @@ import java.util.List;
 
 
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
+import ar.uba.dc.analysis.common.intermediate_representation.io.writer.JsonWriter;
 
 public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis implements CallAnalyzer {
 	
@@ -163,8 +164,10 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 			//porque lo que hace es obtener toods los escaping nodes del metodo y los compara contra el nodo, comparando incluso ese stack
 			lifetimeOracle.setSensitivity(-1);
 			
-			IntermediateLanguageRepresentationBuilder irBuilder = new IntermediateLanguageRepresentationBuilder(data, order, repository, methodInformationProvider, methodDecorator,
-																												invariantProvider, outputFolder, callGraph, mainClass, lifetimeOracle);
+			IntermediateLanguageRepresentationBuilder irBuilder = new IntermediateLanguageRepresentationBuilder(data, order, repository, methodInformationProvider, 
+					methodDecorator,
+																												invariantProvider, outputFolder, callGraph, mainClass, 
+																												lifetimeOracle);
 			ir_methods = irBuilder.buildIntermediateLanguageRepresentation();
 			
 			internalWriteIntermediateRepresentation();
@@ -194,7 +197,8 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 	protected void internalDoAnalysis() {
 		SortedSet<SootMethod> queue = new TreeSet<SootMethod>(getOrderComparator());
 
-		// init
+		
+		// init		
 		for (SootMethod o : order.keySet()) { 
 			if (analyseKnownMethods || !repository.contains(o)) {
 				data.put(o, newInitialSummary(o));
@@ -363,6 +367,10 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 		log.info("Writing JSON Intermediate Representation...");
 
 		jsonWriter.setMainClass(this.mainClass);
+		
+		if(jsonWriter.getClass() == JsonWriter.class)
+			((JsonWriter) jsonWriter).registerTypeAdapters(this.debugIR);
+		
 		for (IntermediateRepresentationMethod ir_method : ir_methods) {
 			//TODO: agregar los parametros o un mejor nombre para debug
 			log.debug(" |- Writing summary of analyzed method: " + ir_method.getName());

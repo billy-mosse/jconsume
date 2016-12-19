@@ -12,7 +12,13 @@ public class EscapeSceneTransformerInitializer implements PhaseInitializer {
 
 	@Override
 	public void initialize(Context context, String className) {
-		EscapeSceneTransformer transformer = EscapeSceneTransformer.v(context, className);
+		EscapeSceneTransformer transformer = EscapeSceneTransformer.v(context, className, false);
+		SootUtils.insertTransformer("wjtp", "wjtp.escape", transformer);
+	}
+	
+	@Override
+	public void initialize(Context context, String className, boolean debugIR) {
+		EscapeSceneTransformer transformer = EscapeSceneTransformer.v(context, className, debugIR);
 		SootUtils.insertTransformer("wjtp", "wjtp.escape", transformer);
 	}
 

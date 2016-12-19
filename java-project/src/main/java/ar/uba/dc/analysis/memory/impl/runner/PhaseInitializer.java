@@ -6,8 +6,8 @@ import ar.uba.dc.config.Context;
  * @author martin
  *
  */
-public interface PhaseInitializer {
-
-	
+public interface PhaseInitializer {	
 	void initialize(Context context, String className);
+	void initialize(Context context, String className, boolean debugIR);
+
 }

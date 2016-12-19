@@ -226,5 +226,6 @@ public class GraphvizWriter implements SummaryWriter<EscapeBasedMemorySummary> {
 	public void setPainter(GraphvizPainter painter) {
 		this.painter = painter;
 	}
+
 	
 }
