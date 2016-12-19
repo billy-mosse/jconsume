@@ -8,3 +8,6 @@ gson*
 target/classes/ar
 /target/
 /results/
+/java-project/results/
+/java-project/results
+results
