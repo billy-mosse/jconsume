@@ -4,6 +4,10 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.apache.commons.lang.NotImplementedException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import soot.RefLikeType;
 import soot.SootMethod;
 import ar.uba.dc.analysis.common.SummaryFactory;
@@ -21,9 +25,7 @@ import ar.uba.dc.analysis.memory.impl.BarvinokParametricExpressionFactory;
 import ar.uba.dc.analysis.memory.impl.madeja.PaperMemorySummary;
 import ar.uba.dc.analysis.memory.summary.MemorySummary;
 import ar.uba.dc.barvinok.BarvinokSyntax;
-
-
-
+import ar.uba.dc.analysis.memory.PaperInterproceduralAnalysis;
 import ar.uba.dc.analysis.memory.SymbolicCalculator;
 
 
@@ -36,11 +38,16 @@ public class PaperRuleBasedMemorySummaryFactory implements SummaryFactory<PaperM
 	private int sensitivity;
 	private SymbolicCalculator symbolicCalculator;
 
+	private static Log log = LogFactory.getLog(PaperRuleBasedMemorySummaryFactory.class);
+
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	public PaperMemorySummary conservativeGraph(IntermediateRepresentationMethod method, boolean withEffect) {
-		/*Rule rule = informationProvider.IR_findRule(method);
+				
+		//TODO:probar
+		log.debug("Esto nunca fue probado");
+		Rule rule = informationProvider.IR_findRule(method);
 		ParametricExpression tempMemory = buildExpression(rule.getResources().getTemporal(), rule.getResources().getSyntax());
 		ParametricExpression resMemory = buildExpression(rule.getResources().getResidual(), rule.getResources().getSyntax());
 		ParametricExpression memReq = buildExpression(rule.getResources().getMemoryRequirement(), rule.getResources().getSyntax());
@@ -50,9 +57,8 @@ public class PaperRuleBasedMemorySummaryFactory implements SummaryFactory<PaperM
 		
 		PaperMemorySummary summary = new PaperMemorySummary(method, parameters, tempMemory, memReq);
 		
-		PointsToHeapPartition globHp = new PointsToHeapPartition(GlobalNode.node, false);
 		
-		PaperPointsToHeapPartition paperGlobHp = new PaperPointsToHeapPartition(globHp);
+		PaperPointsToHeapPartition paperGlobHp = new SimplePaperPointsToHeapPartition(-1);
 		
 		summary.add(paperGlobHp, resMemory);
 
@@ -65,9 +71,9 @@ public class PaperRuleBasedMemorySummaryFactory implements SummaryFactory<PaperM
 			
 			if(p.isRefLikeType())
 			{
-				PaperPointsToHeapPartition paramHp = new PaperPointsToHeapPartition(new PaperParamNode(i), false);
+				PaperPointsToHeapPartition paramHp = new SimplePaperPointsToHeapPartition(i);
 				summary.add(paramHp, expressionFactory.constant(0L));
-				summary.partitionEscapeGlobaly(paramHp);
+				summary.partitionEscapeGlobaly((SimplePaperPointsToHeapPartition)paramHp);
 			}
 			
 			i++;
@@ -75,9 +81,9 @@ public class PaperRuleBasedMemorySummaryFactory implements SummaryFactory<PaperM
 
 		// return value escapes globally
 		if (method.isReturnRefLikeType())
-			summary.returnPartition(paperGlobHp);
+			summary.returnPartition((SimplePaperPointsToHeapPartition)paperGlobHp);
 		
-		return summary;*/ return null;
+		return summary; 
 	}
 	
 	private ParametricExpression buildExpression(String value, String syntax) {
