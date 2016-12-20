@@ -134,7 +134,7 @@ public class Line {
 
 	public String toString()
 	{
-		return this.name;
+		return this.irName;
 	}
 	
 	private String getInvocationsToHumanReadableString() {

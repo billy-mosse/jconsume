@@ -293,6 +293,7 @@ public class PaperCallAnalyzer {
 	
 	public void calculateCorrectTotalResiduals(Invocation invocation, DomainSet invariant)
 	{
+		//TODO: no tengo la anotacion
 		totalResiduals = symbolicCalculator.summateIfClassCalledChangedDuringLoop(MAX_totalResidualsBeforeSummate, totalResiduals, invocation, invariant);
 	}
 	

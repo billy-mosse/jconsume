@@ -217,6 +217,8 @@ public class PaperIntraproceduralAnalysis {
 			
 			//TODO: si el summarie no existe o es un default, ver que hacer!!!
 			
+			log.debug(callInvocation.getName());
+			
 			PaperCallSummaryInContext callSummary = interprocedural.analyseCall(callInvocation, ir_method);
 			
 			ParametricExpression memReqMinusRsdFromCallee = callSummary.getMAX_memoryRequirementMinusRsd();

@@ -271,7 +271,8 @@ public class PaperInterproceduralAnalysis {
 	public PaperCallSummaryInContext analyseCall(Line callInvocation, IntermediateRepresentationMethod belongsTo)
 	{
 		
-		
+		callAnalyzer.init(symbolicCalculator, expressionFactory);
+
 		//ParametricExpression MAX_memreq = this.expressionFactory.constant(0L);
 		
 		for(Invocation invocation : callInvocation.getInvocations())
@@ -283,6 +284,7 @@ public class PaperInterproceduralAnalysis {
 			
 			DomainSet lineInvariant = callInvocation.getInvariant();
 			
+			//why???
 			DomainSet clone = lineInvariant.clone();
 			log.debug(clone.toString());
 			
@@ -309,14 +311,11 @@ public class PaperInterproceduralAnalysis {
 					
 				} else {
 				
-					callAnalyzer.init(symbolicCalculator, expressionFactory);
-					
 					callAnalyzer.process(invocation, callInvocation, invocationSummary, lineInvariant, belongsTo.getNodes(), belongsTo.getEscapeNodes(), belongsTo.getFullName());					
 				}				
 			}
 			else
 			{
-				callAnalyzer.init(symbolicCalculator, expressionFactory);
 				callAnalyzer.process(invocation, callInvocation, invocationSummary, lineInvariant, belongsTo.getNodes(), belongsTo.getEscapeNodes(), belongsTo.getFullName());				
 			}			
 			
