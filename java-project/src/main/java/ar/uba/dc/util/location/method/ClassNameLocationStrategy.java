@@ -14,17 +14,17 @@ public class ClassNameLocationStrategy extends AbstractMethodLocationStrategy {
 
 	public String getLocation(SootMethod method) {
 		
-		return getBasePath() + method.getDeclaringClass() + "/" + processMethodSignature(method.getSubSignature()) + getExtension();
+		return getBasePath() + method.getDeclaringClass() + "/" + processMethodSignature(method.getDeclaration()) + getExtension();
 	}
 	
 	@Override
 	public String getLocation(IntermediateRepresentationMethod ir_method) {
-		return getBasePath() + ir_method.getDeclaringClass() + "/" + processMethodSignature(ir_method.getSubSignature()) + getExtension();
+		return getBasePath() + ir_method.getDeclaringClass() + "/" + processMethodSignature(ir_method.getDeclaration()) + getExtension();
 	}
 	
 	public String getLocation(String type, IntermediateRepresentationMethod ir_method, String mainClass)
 	{		
-		return getBasePath() + type + "/" + mainClass + "/" + ir_method.getDeclaringClass() + "/" + ir_method.processMethodSignature() + getExtension();
+		return getBasePath() + type + "/" + mainClass + "/" + processMethodSignature(ir_method.getDeclaringClass() + "/" + ir_method.getMethodSignature() + getExtension());
 	}
 	
 	//TODO: sacar el processMethodSignature de las otras clases

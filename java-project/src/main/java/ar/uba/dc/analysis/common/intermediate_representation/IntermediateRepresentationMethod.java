@@ -62,13 +62,6 @@ public class IntermediateRepresentationMethod {
 	
 	protected String subSignature;
 
-	
-	
-	public String getSubSignature() {
-		return subSignature;
-	}
-
-
 	public void setSubSignature(String subSignature) {
 		this.subSignature = subSignature;
 	}
@@ -243,7 +236,7 @@ public class IntermediateRepresentationMethod {
 		StringBuffer sbf = new StringBuffer();
         
         //StringBuffer contents
-		sbf.append(this.processMethodSignature());		
+		sbf.append(this.getMethodSignature());		
 
     	sbf.append(System.getProperty("line.separator"));
         
@@ -289,7 +282,7 @@ public class IntermediateRepresentationMethod {
 	}
 
 
-	public String processMethodSignature() {		
+	public String getMethodSignature() {		
 		String s = (this.getParameters() != null ? Joiner.on(", ").skipNulls().join(Iterables.transform(this.getParameters(), new Function<IntermediateRepresentationParameter, String >()
 		{
 			public String apply(IntermediateRepresentationParameter parameter) { return parameter.getType() + " " + parameter.getName(); }

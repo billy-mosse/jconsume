@@ -60,8 +60,6 @@ public class IntermediateRepresentationMethodBuilder {
 		
 		this.irmethod.setNumber(n);
 		this.irmethod.setDeclaration(m.getDeclaration());
-		this.irmethod.setSubSignature(m.getSubSignature());
-		
 
 		this.irmethod.setMethodRequirements(invariantProvider.getRequeriments(m));
 		this.irmethod.setRelevant_parameters(invariantProvider.getRelevantParameters(m));

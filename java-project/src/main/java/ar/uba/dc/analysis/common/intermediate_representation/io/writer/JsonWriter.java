@@ -162,7 +162,6 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 	        result.add("declaring_class", new JsonPrimitive(ir_method.getDeclaringClass()));
 
 	        result.add("declaration", new JsonPrimitive(ir_method.getDeclaration()));	
-	        result.add("subsignature", new JsonPrimitive(ir_method.getSubSignature()));	  
 
 	        JsonArray escapeNodes = new JsonArray();
 	        
