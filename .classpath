@@ -11,7 +11,7 @@
 	<classpathentry kind="lib" path="dependencies/sootlib/polyglotclasses-1.3.5.jar"/>
 	<classpathentry kind="lib" path="dependencies/sootlib/polyglotsrc-1.3.5.jar"/>
 	<classpathentry kind="lib" path="dependencies/sootlib/sootclasses.jar"/>
-	<classpathentry kind="lib" path="dependencies/sootlib/soot-2.5.0.jar"/>
+	<classpathentry kind="lib" path="dependencies/sootlib/soot-2.4.0.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="java-project/target/classes"/>
 </classpath>

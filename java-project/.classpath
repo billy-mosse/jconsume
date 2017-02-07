@@ -33,7 +33,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="var" path="M2_REPO/ca/mcgill/sable/soot/2.5.0/soot-2.5.0.jar"/>
+	<classpathentry kind="var" path="M2_REPO/ca/mcgill/sable/soot/2.4.0/soot-2.4.0.jar"/>
 	<classpathentry kind="var" path="M2_REPO/ca/mcgill/sable/polyglot/1.3.5/polyglot-1.3.5.jar"/>
 	<classpathentry kind="var" path="M2_REPO/ca/mcgill/sable/jasmin/2.4.0/jasmin-2.4.0.jar"/>
 	<classpathentry kind="var" path="M2_REPO/com/verimag/madeja/1.0/madeja-1.0.jar"/>
