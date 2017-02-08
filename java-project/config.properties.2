@@ -1,0 +1,45 @@
+output.folder = ${user.dir}/results/madeja/
+
+# En linux uso esto
+application.classpath = ${java.home}/lib/rt.jar:${java.home}/lib/jce.jar:${user.dir}/target/classes
+
+instrumented.code.output.dir = ${user.dir}/results/madeja/instrumentation
+
+invariants.repository = ${user.dir}/invariants/spec/fullreferences
+
+# Estrategia de comparacion entre expresiones parametricas
+#barvinok.calculator.compare-strategy = add
+barvinok.calculator.compare-strategy = lazy
+
+# Marca que un metodo no puede ser analizado mas de X veces. Esto sirve para cortar la convergencia en metodos recursivos. 
+# En los ejemplos analizados no hay recursion, pero soot agrega recursion en los constructores estaticos para aproximar 
+# el momento en que son invocados. Esto genera recursion cuando no deberia haberla. Para esto cortamos a fuerza bruta
+# haciendo que todo metodo sea analizado una unica vez. 
+escape.recursion.watchdog = 1
+
+clear.escape.summary.output.dir = false
+clear.memory.summary.output.dir = false
+
+# Formato de salida de los summaries
+#escape.summary.printer = xml,dot
+#memory.summary.printer = xml,dot
+
+escape.summary.printer = 
+memory.summary.printer = 
+
+
+memory.interprocedural.loop.invariant = asume
+
+# Utilizamos estrategia de agrupar nodos
+escape.simplify.summary = true
+memory.residual.summarizer = add-all
+memory.summary.dot.glossOver = false
+
+# Utilizamos estrategia de coloreo
+#escape.simplify.summary = false
+#memory.residual.summarizer = color
+#memory.summary.dot.glossOver = true
+
+
+soot.option.keep_line_number = true
+soot.option.keep_offset = true
