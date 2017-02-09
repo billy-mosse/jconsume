@@ -6,11 +6,14 @@ import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartitionBinding;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.security.GeneralSecurityException;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -121,9 +124,15 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 			//writer.println(ir_method.toHumanReadableString());
 			//writer.close();
 			
-            BufferedWriter bwr = new BufferedWriter(new FileWriter(srcFile));
+            //BufferedWriter bwr = new BufferedWriter(new FileWriter(srcFile));
             
-            bwr.write(gson.toJson(ir_method));
+            BufferedWriter bwr = new BufferedWriter
+            	    (new OutputStreamWriter(new FileOutputStream(srcFile),"UTF-8"));
+            
+            
+            
+            String s =  StringEscapeUtils.unescapeJava(gson.toJson(ir_method)); 
+            bwr.write(s);
             bwr.flush();
             bwr.close();
 
@@ -320,6 +329,7 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 		public JsonElement serialize(final DomainSet invariant, final Type type, final JsonSerializationContext context) {
 			JsonObject result = new JsonObject();
 			result.add("expression", new JsonPrimitive(invariant.toHumanReadableString()));
+			
 			
 			JsonArray arr = new JsonArray();			
 			for(String s : invariant.getVariables())
