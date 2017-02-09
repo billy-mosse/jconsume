@@ -340,7 +340,7 @@ public class PaperInterproceduralAnalysis {
 
 	}
 	
-	public void run(CallGraph cg, SootMethodFilter filter, String mainClass){		
+	public void run(String mainClass){
 		doAnalysis(mainClass);		
 	}
 	

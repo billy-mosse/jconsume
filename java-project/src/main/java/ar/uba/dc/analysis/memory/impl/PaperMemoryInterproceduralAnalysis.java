@@ -50,14 +50,28 @@ public class PaperMemoryInterproceduralAnalysis extends PaperInterproceduralAnal
 	protected ReportWriter<String, PaperMemorySummary> reportWriter;
 	
 	//TODO los primeros dos parametros estan de mas :P
-	public void run(CallGraph cg, SootMethodFilter filter, String mainClass){		
-		super.doAnalysis(mainClass);		
+	public void run(String mainClass){
+		
+		Timer analysisTimer = new Timer();
+		analysisTimer.start();
+		Timer t = new Timer();
+		t.start();
+		
+		log.info("Running memory analysis for [" + mainClass + "]");
+		
+		super.doAnalysis(mainClass);	
+		
+		analysisTimer.stop();
+		
+		log.debug("Analysis finished");
 		
 		
 		//Esto probablemente no haga falta, y es costoso.....pero necesito el .getHeads()
 		Map<String, PaperMemorySummary> summaries = new HashMap<String, PaperMemorySummary>(data);
 		
 		reportWriter.write(new PaperAnalysisResultsReportDataSource(mainClass, summaries));
+		
+		log.debug("Report written.");
 	}
 	
 	

@@ -16,6 +16,7 @@ import soot.Scene;
 import soot.SceneTransformer;
 import soot.SootMethod;
 
+//TODO: volar esta clase
 public class PaperMemorySceneTransformer extends SceneTransformer{
 private static Log log = LogFactory.getLog(PaperMemorySceneTransformer.class);
 	
@@ -56,7 +57,7 @@ private static Log log = LogFactory.getLog(PaperMemorySceneTransformer.class);
 		
 		
 		
-		aPaperMemoryAnalysis.run(Scene.v().getCallGraph(), context.getFactory().getDirectedGraphMethodFilter(), mainClass);
+		//aPaperMemoryAnalysis.run(Scene.v().getCallGraph(), context.getFactory().getDirectedGraphMethodFilter(), mainClass);
 		
 		
 		analysisTimer.stop();
