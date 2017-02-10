@@ -99,13 +99,16 @@ public class DomainSet {
 		{
 			this.constraints = parts[1].contains(":") ? parts[1].substring(parts[1].indexOf(":") + 1).trim() : "";
 			
-			String inductives = parts[1].substring(parts[1].indexOf("[") + 1, parts[1].indexOf("]"));
-			
-			String[] inductivesArray = inductives.split(",");
-			for(String inductive : inductivesArray)
+			if(parts[1].contains("[") && parts[1].contains("]"))
 			{
-				this.inductives.add(inductive);
+				String inductives = parts[1].substring(parts[1].indexOf("[") + 1, parts[1].indexOf("]"));
 				
+				String[] inductivesArray = inductives.split(",");
+				for(String inductive : inductivesArray)
+				{
+					this.inductives.add(inductive);
+					
+				}
 			}
 		}
 		else

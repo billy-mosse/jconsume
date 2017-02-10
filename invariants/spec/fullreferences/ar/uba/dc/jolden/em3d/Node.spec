@@ -31,7 +31,8 @@
     		</creation-site>
     		
     		<call-site offset="0" >
-      			<constraints><![CDATA[$t.degree == degree]]></constraints>
+      			<!--<constraints><![CDATA[$t.degree == degree]]></constraints>-->
+      			<binding>$t.degree == degree</binding>
     		</call-site>
     		
     		<!--<call-site offset="1" >
@@ -45,7 +46,8 @@
 			</invariant>
 
     		<call-site offset="1">
-				<constraints>@loop_invariant and $t.degree == degree</constraints>
+				<constraints>@loop_invariant</constraints>
+				<binding>$t.degree == degree</binding>
     		</call-site>
 		</method>
 		

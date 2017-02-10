@@ -6,7 +6,8 @@
 			<requires><![CDATA[numvert > 0]]></requires>
 			
 			<call-site offset="1" srccode-offset="">
-      			<constraints><![CDATA[$t.size == numvert]]></constraints>
+      			<!--<constraints><![CDATA[$t.size == numvert]]></constraints>-->
+      			<binding>$t.size == numvert</binding>
       			
       			<!-- 
       				Cuando se solucione el problema de exists con la iscc vamos a poder poner este invariante

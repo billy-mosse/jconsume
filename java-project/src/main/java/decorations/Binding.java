@@ -35,7 +35,7 @@ public class Binding {
 		
 	public String toString()
 	{
-		return (this.bindingPairs != null ? Joiner.on(", ").skipNulls().join(Iterables.transform(this.bindingPairs, new Function<BindingPair, String >()
+		return (this.bindingPairs != null ? Joiner.on(" and ").skipNulls().join(Iterables.transform(this.bindingPairs, new Function<BindingPair, String >()
 		{
 			//esto seguro se puede hacer mejor
 			public String apply(BindingPair bindingPair) { return bindingPair.toString(); }

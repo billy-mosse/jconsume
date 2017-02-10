@@ -28,7 +28,8 @@
 			<requires><![CDATA[numvert > 0]]></requires>
     		
     		<call-site offset="1" >
-      			<constraints><![CDATA[$t.numvert == numvert]]></constraints>
+      			<!--<constraints><![CDATA[$t.numvert == numvert]]></constraints>-->
+      			<binding>$t.numvert == numvert</binding>
     		</call-site>
     	</method>
 		
@@ -37,7 +38,8 @@
 			<requires><![CDATA[numvert > 0]]></requires>
 			<!-- call-site offset="6,10"-->
       			 <call-site offset="5,9" >
-			<constraints><![CDATA[$t.numvert == numvert]]></constraints>
+			<!--<constraints><![CDATA[$t.numvert == numvert]]></constraints>-->
+			<binding>$t.numvert == numvert</binding>
     		</call-site>
 		</method>
 		
@@ -50,7 +52,8 @@
 			</invariant>
 			
 			<call-site offset="2" >
-      			<constraints><![CDATA[@loop and $t.numvert == numvert]]></constraints>
+      			<constraints><![CDATA[@loop]]></constraints>
+      			<binding>$t.numvert == numvert</binding>
     		</call-site>
 			
 			<call-site offset="3-4" >
@@ -71,7 +74,8 @@
     		</call-site> 
     		
     		<call-site offset="17" >
-      			<constraints><![CDATA[@loop and $t.this.array.elements.maxLength == vlist.size]]></constraints>
+      			<constraints><![CDATA[@loop]]></constraints>
+      			<binding>$t.this.array.elements.maxLength == vlist.size</binding>
     		</call-site> 
     		
     		<call-site offset="12-16,18-23" >
@@ -86,7 +90,8 @@
 			<requires><![CDATA[numvert > 0]]></requires>
 			
 			<call-site offset="1" >
-      			<constraints><![CDATA[$t.vlist.size == numvert]]></constraints>
+      			<!--<constraints><![CDATA[$t.vlist.size == numvert]]></constraints>-->
+      			<binding>$t.vlist.size == numvert</binding>
     		</call-site>
 		</method>
 

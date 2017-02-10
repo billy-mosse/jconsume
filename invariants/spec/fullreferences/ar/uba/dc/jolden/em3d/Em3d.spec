@@ -11,7 +11,8 @@
 			<requires><![CDATA[numDegree > 0]]></requires>
 			
 			<call-site offset="0" >
-      			<constraints><![CDATA[$t.numNodes == numNodes and $t.numIter == numIter and $t.numDegree == numDegree]]></constraints>
+      			<constraints><![CDATA[$t.numNodes == numNodes]]></constraints>
+      			<binding>$t.numIter == numIter and $t.numDegree == numDegree</binding>
     		</call-site>
 		</method>
 				
@@ -22,7 +23,8 @@
 			<requires><![CDATA[numDegree > 0]]></requires>
 			
 			<call-site offset="1" >
-      			<constraints><![CDATA[$t.numNodes == numNodes and $t.numIter == numIter and $t.numDegree == numDegree]]></constraints>
+      			<!--<constraints><![CDATA[$t.numNodes == numNodes and $t.numIter == numIter and $t.numDegree == numDegree]]></constraints>-->
+      			<binding>$t.numNodes == numNodes and $t.numIter == numIter and $t.numDegree == numDegree</binding>
     		</call-site>
 		</method>
 		
@@ -33,13 +35,15 @@
 			<requires><![CDATA[numDegree > 0]]></requires>
 			
 			<call-site offset="2" >
-      			<constraints><![CDATA[$t.numNodes == numNodes and $t.numDegree == numDegree]]></constraints>
+      			<!--<constraints><![CDATA[$t.numNodes == numNodes and $t.numDegree == numDegree]]></constraints>-->
+      			<binding>$t.numNodes == numNodes and $t.numDegree == numDegree</binding>
     		</call-site>
     		
     		<call-site offset="11" >
 				<variables>i</variables>
 				<inductives>i</inductives>
-      			<constraints><![CDATA[0 <= i < numIter and $t.numNodes == numNodes]]></constraints>
+      			<constraints><![CDATA[0 <= i < numIter]]></constraints>
+      			<binding>$t.numNodes == numNodes</binding>
     		</call-site>
 		</method>
 		

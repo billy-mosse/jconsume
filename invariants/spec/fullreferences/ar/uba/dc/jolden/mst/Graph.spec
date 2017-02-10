@@ -28,7 +28,8 @@
     		</call-site>
     		
     		<call-site offset="2" >
-      			<constraints><![CDATA[$t.numvert == numvert]]></constraints>
+      			<!--<constraints><![CDATA[$t.numvert == numvert]]></constraints>-->
+      			<binding>$t.numvert == numvert</binding>
     		</call-site>
     	</method>
 		
@@ -45,11 +46,13 @@
     		</creation-site>
 			
 			<call-site offset="0" >
-      			<constraints><![CDATA[@loop and $t.numvert == numvert]]></constraints>
+      			<constraints><![CDATA[@loop]]></constraints>
+      			<binding>$t.numvert == numvert</binding>
     		</call-site>
     		
     		<call-site offset="1" >
-      			<constraints><![CDATA[$t.numvert == numvert]]></constraints>
+      			<!--<constraints><![CDATA[$t.numvert == numvert]]></constraints>-->
+      			<binding>$t.numvert == numvert</binding>
     		</call-site>
 		</method>
 		

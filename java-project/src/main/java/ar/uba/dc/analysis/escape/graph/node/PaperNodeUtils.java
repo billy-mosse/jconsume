@@ -38,9 +38,14 @@ public class PaperNodeUtils {
 			ContainerNode cNode = (ContainerNode) origNode;
 			return new PaperContainerNode(cNode, context, belongsTo);
 		}
+		else if(origNode.getClass() == GlobalNode.class)
+		{
+			GlobalNode gNode = (GlobalNode) origNode;
+			return new PaperGlobalNode();
+		}
 		else
 		{
-			throw new NotImplementedException();
+			throw new NotImplementedException(origNode.getClass());
 		}
 	}
 	

@@ -11,15 +11,19 @@
 			<requires><![CDATA[numDegree > 0]]></requires>
 			
 			<call-site offset="2-3" >
-      			<constraints><![CDATA[$t.size == numNodes and $t.degree == numDegree]]></constraints>
+      			<!--<constraints><![CDATA[$t.size == numNodes and $t.degree == numDegree]]></constraints>-->
+      			<binding>$t.size == numNodes and $t.degree == numDegree</binding>
     		</call-site>
     		
     		<call-site offset="6-8,10-12,15,16,19,20,23-25,27-29" >
       			<constraints><![CDATA[1 <= i <= numNodes]]></constraints>
+      			<binding>$t.fromCount == numDegree</binding><!-- ni idea si esto esta bien, lo agregue para ver si anda -->
+
     		</call-site>
     		
     		<call-site offset="17,21" >
-      			<constraints><![CDATA[1 <= i <= numNodes and $t.fromCount == numDegree]]></constraints>
+      			<constraints><![CDATA[1 <= i <= numNodes]]></constraints><!-- and $t.fromCount == numDegree -->
+      			<binding>$t.fromCount == numDegree</binding>
     		</call-site>
 		</method>
 		
