@@ -2,6 +2,13 @@
 <spec>
 	<class decl="ar.uba.dc.paper.Program1">
 		<method decl="void main(java.lang.String[])">
+			<relevant-parameters>r</relevant-parameters>
+			<call-site offset="0" srccode-offset="">			
+				<constraints><![CDATA[1 <= n <= 3]]></constraints>	
+				<variables>n</variables>
+				<inductives>n</inductives>
+				<!--<binding>$t.n == r</binding>-->
+			</call-site>
 		</method>
 
 		<method decl="void triangle(ar.uba.dc.paper.A[][], int)">
@@ -12,7 +19,8 @@
 			</invariant>			
 
 			<call-site offset="0" srccode-offset="">
-				<constraints>@loop_invariant and $t.m == i</constraints>
+				<constraints>@loop_invariant</constraints>
+				<binding>$t.m == i</binding>
 			</call-site>
 		</method>
 

@@ -9,9 +9,9 @@ package ar.uba.dc.paper;
 public class Program1
 {
 	public static void main(String[] args) {
-		int n = 5;
-		A[][] a = new A[n][n];		
-		triangle(a, n);
+		int r = 5;
+		A[][] b = new A[r][r];		
+		triangle(b, r);
 	}
 
 

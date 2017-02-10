@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.management.RuntimeErrorException;
+
 import org.apache.commons.lang.NotImplementedException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -149,8 +151,7 @@ public class PaperIntraproceduralAnalysis {
 				calls.add(line);
 			}
 		}
-		
-		
+				
 		for(Line newLine : news)
 		{
 			//ParametricExpression bound = ct.count(newLine);

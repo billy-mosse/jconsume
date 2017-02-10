@@ -1,5 +1,9 @@
 package ar.uba.dc.barvinok.expression;
 
+import java.util.Set;
+import java.util.TreeSet;
+
+import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
 import ar.uba.dc.barvinok.expression.operation.DomainUnifier;
 import ar.uba.dc.barvinok.expression.operation.impl.DefaultDomainUnifier;
 import decorations.Binding;
@@ -12,13 +16,6 @@ public class DomainSetUtils {
 		
 		DomainUnifier unif = new DefaultDomainUnifier();		
 		
-		if(binding != null && binding.getBindingPairs().size() > 0)
-		{
-			String s = "";
-			s = "jose";
-			s += "jososo";
-		}
-		
 		String newConstraints = unif.unify(invariant.getConstraints(), binding.toString());	
 		
 		
@@ -30,6 +27,18 @@ public class DomainSetUtils {
 			invariant.addAllInductives(binding.getInductives());
 		
 		invariant.setConstraints(newConstraints);		
+	}
+
+	public static Set<String> removePrefix(Set<String> variables) {
+		Set<String> new_vars = new TreeSet<String>();
+		for(String s : variables)
+		{
+			if(s.startsWith("$t."))
+				new_vars.add(s.substring(3));
+			else
+				new_vars.add(s);				
+		}
+		return new_vars;
 	}
 	
 }

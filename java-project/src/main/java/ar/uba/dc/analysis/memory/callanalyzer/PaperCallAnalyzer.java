@@ -28,6 +28,7 @@ import ar.uba.dc.analysis.memory.impl.summary.PointsToHeapPartition;
 import ar.uba.dc.analysis.memory.impl.summary.RichPaperPointsToHeapPartition;
 import ar.uba.dc.analysis.memory.impl.summary.SimplePaperPointsToHeapPartition;
 import ar.uba.dc.barvinok.expression.DomainSet;
+import ar.uba.dc.barvinok.expression.DomainSetUtils;
 import ar.uba.dc.soot.StatementId;
 import ar.uba.dc.analysis.common.Line;
 
@@ -92,7 +93,10 @@ public class PaperCallAnalyzer {
 				
 				if(rsdFromPartition != null)
 				{	
-					
+					if(!DomainSetUtils.removePrefix(invariant.getVariables()).containsAll(rsdFromPartition.getParameters()))
+					{
+						throw new Error("Falta el binding");
+					}
 					//hago un summate sobre el invariante
 					ParametricExpression newValue = symbolicCalculator.summate(rsdFromPartition, invocation, invariant);
 					
@@ -183,6 +187,12 @@ public class PaperCallAnalyzer {
 		//Esto tal vez sea correcto
 		acumTotalResiduals = symbolicCalculator.boundIfHasFold(acumTotalResiduals);
 				
+		
+		
+		if(!DomainSetUtils.removePrefix(invariant.getVariables()).containsAll(invocationSummary.getMemoryRequirement().getParameters()))
+		{
+			throw new Error("Falta el binding");
+		}
 		//Tampoco ojo que el invariante de cada linea puede ser distinto
 		ParametricExpression memReqMinusRsd = symbolicCalculator.substract(symbolicCalculator.boundIfHasFold(invocationSummary.getMemoryRequirement()), acumTotalResiduals);
 		

@@ -259,7 +259,8 @@ public class PaperInterproceduralAnalysis {
 			}
 			catch(Error error)
 			{
-				log.debug(ir_method.getName());
+				//Tal vez deberia hacer que se rompa y fue
+				log.warn("El metodo " + ir_method.getName() + " no pudo ser analizado.");
 			}
 		}
 		
