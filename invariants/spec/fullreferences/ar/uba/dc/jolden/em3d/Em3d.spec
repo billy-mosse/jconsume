@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spec>
-	 <class decl="em3d.Em3d">
+	 <class decl="ar.uba.dc.jolden.em3d.Em3d">
 		 <method decl="void &lt;init&gt;()">
 			<relevant-parameters></relevant-parameters>
 			 <call-site offset="0" srccode-offset="17">
@@ -15,12 +15,13 @@
 		 <method decl="void main(java.lang.String[])">
 			<relevant-parameters>size_args_init</relevant-parameters>
 			 <call-site offset="0" srccode-offset="48">
-				<variables>size_args_init</variables>
+				<variables>size_args_init,N,D,I</variables>
 				<inductives>size_args_init</inductives>
-				<callee>em3d.Em3d: void mainOrig(java.lang.String[])</callee>
-				<binding>
-					$t.nN == 11 and $t.nD == 12 and $t.nI == 13
-				</binding>
+				<callee>ar.uba.dc.jolden.em3d.Em3d: void mainOrig(java.lang.String[])</callee>
+				<constraints>
+					<![CDATA[N == 20 && D == 5 && I == 1]]>
+				</constraints>
+				<binding>$t.nN == N and $t.nD == D and $t.nI == I</binding>
 			 </call-site>
 		</method>
 		 <method decl="void mainOrig(java.lang.String[])">
@@ -28,7 +29,7 @@
 			 <call-site offset="0" srccode-offset="52">
 				<variables>size___r0, size_args_init</variables>
 				<inductives>nN, nD, nI, size___r0, size_args_init</inductives>
-				<callee>em3d.Em3d: void parseCmdLine(java.lang.String[])</callee>
+				<callee>ar.uba.dc.jolden.em3d.Em3d: void parseCmdLine(java.lang.String[])</callee>
 				<constraints>
 					<![CDATA[size___r0 ==size_args_init && size___r0 == 4]]>
 				</constraints>
@@ -37,15 +38,12 @@
 			 <call-site offset="1" srccode-offset="53">
 				<variables>__i1, __i0, size_args_init</variables>
 				<inductives>__i1, __i0, size_args_init</inductives>
-				<callee>em3d.Em3d: void mainParameters(int,int,boolean,boolean)</callee>
+				<callee>ar.uba.dc.jolden.em3d.Em3d: void mainParameters(int,int,boolean,boolean)</callee>
 				<constraints>
-					<![CDATA[size_args_init == 4]]>
+					<![CDATA[size_args_init == 4 && __i0 == nD && __i1 == nN]]>
 					<!-- $t.numIters_init == __i0 && -->
 				</constraints>
-				<binding>$t.numNodes_init == __i1 and  
-					$t.numDegree_init == __i0 and  
-					__i0 == nD and __i1 == nN and  
-					$t.numIters_init == nI</binding>
+				<binding>$t.numNodes_init == __i1 and $t.numDegree_init == __i0 and $t.numIters_init == nI</binding>
 			 </call-site>
 		</method>
 		 <method decl="void mainParameters(int,int,boolean,boolean)">
@@ -69,7 +67,7 @@
 			 <call-site offset="2" srccode-offset="60">
 				<variables>__i2, __i3, numNodes_init, numDegree_init</variables>
 				<inductives>__i2, __i3, numNodes_init, numDegree_init</inductives>
-				<callee>em3d.BiGraph: em3d.BiGraph create(int,int,boolean)</callee>
+				<callee>ar.uba.dc.jolden.em3d.BiGraph: ar.uba.dc.jolden.em3d.BiGraph create(int,int,boolean)</callee>
 				<constraints>
 					<![CDATA[__i2 ==numNodes_init && __i3 ==numDegree_init && __i2 >__i3]]>
 				</constraints>
@@ -141,7 +139,7 @@
 			 <call-site offset="10" srccode-offset="70">
 				<variables>i, numNodes_init, numDegree_init, numIters_init</variables>
 				<inductives>i, numNodes_init, numDegree_init, numIters_init</inductives>
-				<callee>em3d.BiGraph: void compute()</callee>
+				<callee>ar.uba.dc.jolden.em3d.BiGraph: void compute()</callee>
 				<constraints>
 					<![CDATA[i >= 0 && i <numIters_init && numNodes_init >numDegree_init]]>
 				</constraints>
@@ -463,7 +461,7 @@
 			 <call-site offset="16" srccode-offset="120">
 				<variables>size_args, i, size_args_init</variables>
 				<inductives>size_args, i, size_args_init</inductives>
-				<callee>em3d.Em3d: void usage()</callee>
+				<callee>ar.uba.dc.jolden.em3d.Em3d: void usage()</callee>
 				<constraints>
 					<![CDATA[]]>
 				</constraints>
@@ -471,7 +469,7 @@
 			 <call-site offset="17" srccode-offset="123">
 				<variables>size_args_init</variables>
 				<inductives>size_args_init</inductives>
-				<callee>em3d.Em3d: void usage()</callee>
+				<callee>ar.uba.dc.jolden.em3d.Em3d: void usage()</callee>
 				<constraints>
 					<![CDATA[]]>
 				</constraints>

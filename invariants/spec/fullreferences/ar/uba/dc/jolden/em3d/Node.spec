@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spec>
-	 <class decl="em3d.Node">
-		 <method decl="em3d.Node[] fillTable(int,int)">
+	 <class decl="ar.uba.dc.jolden.em3d.Node">
+		 <method decl="ar.uba.dc.jolden.em3d.Node[] fillTable(int,int)">
 			<relevant-parameters>size_init, degree_init</relevant-parameters>
 			 <creation-site offset="0" srccode-offset="80">
 				<variables>__i0, size, size_init, degree_init, aux_1</variables>
@@ -20,7 +20,7 @@
 			 <call-site offset="0" srccode-offset="82">
 				<variables>size, __i1, size_init, degree_init</variables>
 				<inductives>size, __i1, size_init, degree_init</inductives>
-				<callee>em3d.Node: void &lt;init&gt;(int)</callee>
+				<callee>ar.uba.dc.jolden.em3d.Node: void &lt;init&gt;(int)</callee>
 				<constraints>
 					<![CDATA[size ==size_init && __i1 ==degree_init && size >__i1]]>
 				</constraints>
@@ -36,7 +36,7 @@
 			 <call-site offset="1" srccode-offset="85">
 				<variables>size, i, __i1, size_init, degree_init</variables>
 				<inductives>size, i, __i1, size_init, degree_init</inductives>
-				<callee>em3d.Node: void &lt;init&gt;(int)</callee>
+				<callee>ar.uba.dc.jolden.em3d.Node: void &lt;init&gt;(int)</callee>
 				<constraints>
 					<![CDATA[size ==size_init && __i1 ==degree_init && i >= 1 && size >i && size >__i1]]>
 				</constraints>
@@ -105,7 +105,7 @@
 			 <call-site offset="0" srccode-offset="183">
 				<variables></variables>
 				<inductives></inductives>
-				<callee>em3d.Node$1$Enumerate: void &lt;init&gt;(em3d.Node)</callee>
+				<callee>ar.uba.dc.jolden.em3d.Node$1$Enumerate: void &lt;init&gt;(ar.uba.dc.jolden.em3d.Node)</callee>
 				<constraints>
 					<![CDATA[]]>
 				</constraints>
@@ -172,7 +172,7 @@
 				</constraints>
 			 </creation-site>
 		</method>
-		 <method decl="void makeUniqueNeighbors(em3d.Node[])">
+		 <method decl="void makeUniqueNeighbors(ar.uba.dc.jolden.em3d.Node[])">
 			<relevant-parameters>size_f_this_init_toNodes, size_nodeTable_init</relevant-parameters>
 			 <call-site offset="0" srccode-offset="108">
 				<variables>filled, size_nodeTable, size_f_this_init_toNodes, size_nodeTable_init</variables>
