@@ -8,7 +8,7 @@
 				<inductives>l___l0, numNodes_init, numDegree_init</inductives>
 				<callee>ar.uba.dc.jolden.em3d.Node: void initSeed(long)</callee>
 				<constraints>
-					<![CDATA[l___l0 == 783 && l___l0 >numNodes_init && l___l0 >numDegree_init && numNodes_init >numDegree_init]]>
+					<![CDATA[l___l0 == 783 && numNodes_init >numDegree_init]]> <!-- && l___l0 >numNodes_init && l___l0 >numDegree_init  -->
 				</constraints>
 				<binding>$t.l_seed_init == l___l0</binding>
 			 </call-site>
