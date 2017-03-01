@@ -213,11 +213,6 @@ public class PaperIntraproceduralAnalysis {
 		for(Line callInvocation : calls)
 		{
 			
-			ParametricExpression bound = ct.count(callInvocation);
-			//TODO: deberia haber una estructura que guarde los summaries para no procesar nada dos veces
-			
-			//TODO: si el summarie no existe o es un default, ver que hacer!!!
-			
 			log.debug(callInvocation.getName());
 			
 			PaperCallSummaryInContext callSummary = interprocedural.analyseCall(callInvocation, ir_method);

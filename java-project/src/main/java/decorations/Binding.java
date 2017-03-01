@@ -80,7 +80,7 @@ public class Binding {
 	}
 	
 
-	public Set<String> getInductives() {
+	public Set<String> getCalleesAsInductives() {
 
 		TreeSet<String> inductives = new TreeSet<String>();
 		
