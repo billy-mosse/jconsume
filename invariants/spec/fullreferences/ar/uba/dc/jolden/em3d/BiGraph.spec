@@ -149,7 +149,9 @@
 				<inductives>_f___r5_fromCount, numNodes_init, numDegree_init, cont___r6, </inductives>
 				<callee>ar.uba.dc.jolden.em3d.Node: void makeFromNodes()</callee>
 				<constraints>
-					<![CDATA[cont___r6 == 1 && _f___r5_fromCount <numNodes_init && numNodes_init >numDegree_init && numNodes_init >cont___r6 && numDegree_init >cont___r6]]>
+					<!--<![CDATA[cont___r6 == 1 && _f___r5_fromCount <numNodes_init && numNodes_init >numDegree_init && numNodes_init >cont___r6 && numDegree_init >cont___r6]]>-->
+					<![CDATA[cont___r6 >= 1 && numNodes_init >=cont___r6 && _f___r5_fromCount ==numDegree_init && _f___r5_fromCount >= 0]]>
+					<!-- idem el otro makeFromNodes -->
 				</constraints>
 				<binding>$t._f_this_init_fromCount == _f___r5_fromCount</binding>
 			 </call-site>
@@ -182,7 +184,9 @@
 				<inductives>_f___r5_fromCount, numNodes_init, numDegree_init, cont___r6, </inductives>
 				<callee>ar.uba.dc.jolden.em3d.Node: void makeFromNodes()</callee>
 				<constraints>
-					<![CDATA[cont___r6 == 1 && _f___r5_fromCount <numNodes_init && numNodes_init >numDegree_init && numNodes_init >cont___r6 && numDegree_init >cont___r6]]>
+					<!--<![CDATA[cont___r6 >= 1 && _f___r5_fromCount <numNodes_init && numNodes_init >numDegree_init && numNodes_init >cont___r6 && numDegree_init >cont___r6]]>-->
+					<![CDATA[cont___r6 >= 1 && numNodes_init >=cont___r6 && _f___r5_fromCount >= 0 && _f___r5_fromCount ==numDegree_init]]>
+					<!-- no se dio cuenta que _f___r5_fromCount era DEGREE-->
 				</constraints>
 				<binding>$t._f_this_init_fromCount == _f___r5_fromCount</binding>
 			 </call-site>
@@ -216,6 +220,7 @@
 				<callee>ar.uba.dc.jolden.em3d.Node: void updateFromNodes()</callee>
 				<constraints>
 					<![CDATA[size_f___r5_coeffs ==size_f___r5_fromNodes && size_f___r5_toNodes ==numDegree_init && _f___r5_fromLength == 0 && cont___r6 == 1 && size_f___r5_coeffs >=_f___r5_fromLength && size_f___r5_coeffs <numNodes_init && _f___r5_fromLength <size_f___r5_toNodes && _f___r5_fromLength <numNodes_init && size_f___r5_toNodes <numNodes_init && size_f___r5_toNodes >cont___r6 && numNodes_init >cont___r6]]>
+					<!--<![CDATA[size_f___r5_coeffs ==size_f___r5_fromNodes && size_f___r5_toNodes ==numDegree_init && size_f___r5_coeffs >= 0 && _f___r5_fromLength == 0 && cont___r6 >= 1 && size_f___r5_coeffs >=_f___r5_fromLength && size_f___r5_coeffs <numNodes_init && _f___r5_fromLength <size_f___r5_toNodes && _f___r5_fromLength <numNodes_init && size_f___r5_toNodes <numNodes_init && numNodes_init >=cont___r6]]>--> <!-- esto al final no lo cambie -->
 				</constraints>
 				<binding>$t.size_f_this_init_coeffs == size_f___r5_coeffs and $t.size_f_this_init_fromNodes == size_f___r5_fromNodes and $t._f_this_init_fromLength == _f___r5_fromLength and $t.size_f_this_init_toNodes == size_f___r5_toNodes</binding>
 			 </call-site>
@@ -249,6 +254,7 @@
 				<callee>ar.uba.dc.jolden.em3d.Node: void updateFromNodes()</callee>
 				<constraints>
 					<![CDATA[size_f___r5_coeffs ==size_f___r5_fromNodes && size_f___r5_coeffs ==_f___r5_fromLength && size_f___r5_toNodes ==numDegree_init && cont___r6 == 1 && size_f___r5_coeffs <numNodes_init && size_f___r5_toNodes <numNodes_init && size_f___r5_toNodes >cont___r6 && numNodes_init >cont___r6]]>
+					<!--<![CDATA[size_f___r5_coeffs ==size_f___r5_fromNodes && size_f___r5_coeffs ==_f___r5_fromLength && size_f___r5_toNodes ==numDegree_init && size_f___r5_coeffs >= 0 && cont___r6 >= 1 && size_f___r5_coeffs <numNodes_init && size_f___r5_toNodes <numNodes_init && numNodes_init >=cont___r6]]>-->
 				</constraints>
 				<binding>$t.size_f_this_init_coeffs == size_f___r5_coeffs and $t.size_f_this_init_fromNodes == size_f___r5_fromNodes and $t._f_this_init_fromLength == _f___r5_fromLength and $t.size_f_this_init_toNodes == size_f___r5_toNodes</binding>
 			 </call-site>
