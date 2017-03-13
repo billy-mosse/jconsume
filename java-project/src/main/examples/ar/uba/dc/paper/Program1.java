@@ -8,8 +8,25 @@ package ar.uba.dc.paper;
 
 public class Program1
 {
-	public static void main(String[] args) {
-		int r = 5;
+	
+	public static final void main(String args[])
+	{
+		mainOrig(args);
+	}
+  
+  /**
+   * 
+   * @temporal 0
+   * @residual 0
+   */
+  public static final void mainOrig(String args[])
+  {
+	  int r = Integer.parseInt(args[0]);
+	  mainParameters(r);
+  }
+  
+  
+	public static void mainParameters(int r) {
 		A[][] b = new A[r][r];		
 		triangle(b, r);
 	}
