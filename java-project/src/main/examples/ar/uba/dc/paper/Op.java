@@ -12,6 +12,7 @@ public class Op
 		Random r;
 		r = new Random(d.getTime());
 		int v = ((Integer) o).intValue();
-		return new Integer(v * r.nextInt());
+		Object p = (int) (v * r.nextInt());
+		return p;
 	}
 }

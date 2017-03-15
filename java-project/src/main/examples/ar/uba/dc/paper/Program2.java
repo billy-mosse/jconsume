@@ -2,23 +2,23 @@ package ar.uba.dc.paper;
 
 import java.util.Iterator;
 
-import ar.uba.dc.util.List;
+import ar.uba.dc.util.ListC;
 
 public class Program2
 {
 	
 	public static void main(String[] args) {
-		List list = new List();
+		ListC list = new ListC();
 		
 		Op op = new Op();
 		
-		List new_list = map(list, op);
+		ListC new_list = map(list, op);
 
 	}
 
 	
-	public static List map(List list, Op op) {
-		List res = new List();
+	public static ListC map(ListC list, Op op) {
+		ListC res = new ListC();
 		Iterator it = list.iterator();
 		
 		// sum max (OP, OP2) , no lo sabe hacer y hace sum OP + OP2
