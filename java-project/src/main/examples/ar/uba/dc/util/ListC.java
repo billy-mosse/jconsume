@@ -25,6 +25,7 @@ public class ListC implements Collection {
 	 * @residual: 1
 	 */
 	@SuppressWarnings("unchecked")
+	@Override
 	public Iterator iterator() {
 		return new ListItr(this.head);
 	}
