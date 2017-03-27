@@ -26,6 +26,17 @@ public class DomainSetUtils {
 		if(binding.getCalleesAsInductives() != null)
 			invariant.addAllInductives(binding.getCalleesAsInductives());
 		
+		
+		//que pasa si agrego las callers como inductives tambien???
+		//TODO REVISAR
+		
+		if(binding.getCallersAsVariables() != null)
+			invariant.addAllVariables(binding.getCallersAsVariables());
+		
+		if(binding.getCallersAsInductives() != null)
+			invariant.addAllInductives(binding.getCallersAsInductives());
+		
+		
 		invariant.setConstraints(newConstraints);		
 	}
 
