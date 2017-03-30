@@ -92,6 +92,33 @@ public class Binding {
 		return inductives;
 	}
 	
+	
+	public Set<String> getCallersAsVariables() {
+
+		TreeSet<String> variables = new TreeSet<String>();
+		
+		for(BindingPair bindingPair : this.bindingPairs)
+		{
+			variables.add(bindingPair.getCaller_parameter());
+			//variables.add(bindingPair.getCaller_parameter());
+		}
+		
+		return variables;
+	}
+	
+
+	public Set<String> getCallersAsInductives() {
+
+		TreeSet<String> inductives = new TreeSet<String>();
+		
+		for(BindingPair bindingPair : this.bindingPairs)
+		{
+			inductives.add(bindingPair.getCaller_parameter());
+		}
+		
+		return inductives;
+	}
+	
 	public Binding()
 	{
 		bindingPairs = new HashSet<BindingPair>();
