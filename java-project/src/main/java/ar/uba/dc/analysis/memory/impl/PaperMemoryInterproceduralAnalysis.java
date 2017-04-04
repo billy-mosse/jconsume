@@ -11,6 +11,8 @@ import org.apache.commons.logging.LogFactory;
 
 import soot.SootMethod;
 import soot.jimple.toolkits.callgraph.CallGraph;
+import ar.uba.dc.analysis.common.Line;
+import ar.uba.dc.analysis.common.LineWithParent;
 import ar.uba.dc.analysis.common.SummaryWriter;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
 import ar.uba.dc.analysis.memory.InterproceduralAnalysis;
@@ -72,6 +74,17 @@ public class PaperMemoryInterproceduralAnalysis extends PaperInterproceduralAnal
 		reportWriter.write(new PaperAnalysisResultsReportDataSource(mainClass, summaries));
 		
 		log.debug("Report written.");
+
+		if(badLines.size() > 0)
+		{
+			log.debug("Hay lineas que dieron infinito. Revise sus invariantes");
+
+			for(LineWithParent badLine : badLines)
+			{
+				log.debug(badLine.belongsTo + " called " + badLine.line.toString() + " | " + badLine.line.getInvariant().toString());				
+			}
+
+		}
 	}
 	
 	

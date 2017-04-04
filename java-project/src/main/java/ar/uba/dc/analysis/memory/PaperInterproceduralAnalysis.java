@@ -22,6 +22,7 @@ import org.apache.commons.logging.LogFactory;
 
 import ar.uba.dc.analysis.common.Invocation;
 import ar.uba.dc.analysis.common.Line;
+import ar.uba.dc.analysis.common.LineWithParent;
 import ar.uba.dc.analysis.common.SummaryReader;
 import ar.uba.dc.analysis.common.SummaryRepository;
 import ar.uba.dc.analysis.common.code.CallStatement;
@@ -83,7 +84,7 @@ public class PaperInterproceduralAnalysis {
 	protected Map<String, PaperMemorySummary>  data;
 	
 	//Lineas con invariante que hace que de infinito
-	protected List<Line> badLines;
+	protected List<LineWithParent> badLines;
 	
 	
 	protected PaperMemorySummaryFactory summaryFactory;
@@ -245,7 +246,7 @@ public class PaperInterproceduralAnalysis {
 		orderIrMethods();
 		
 		this.data = new HashMap<String, PaperMemorySummary>();
-		this.badLines = new ArrayList<Line>();
+		this.badLines = new ArrayList<LineWithParent>();
 		
 		ListIterator<IntermediateRepresentationMethod> li = ordered_methods.listIterator();
 			

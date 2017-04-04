@@ -12,6 +12,7 @@ import org.apache.commons.logging.LogFactory;
 
 import ar.uba.dc.analysis.common.Invocation;
 import ar.uba.dc.analysis.common.Line;
+import ar.uba.dc.analysis.common.LineWithParent;
 import ar.uba.dc.analysis.common.code.NewStatement;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
 import ar.uba.dc.analysis.escape.EscapeSummary;
@@ -20,6 +21,8 @@ import ar.uba.dc.analysis.escape.graph.node.PaperStmtNode;
 import ar.uba.dc.analysis.escape.graph.node.StmtNode;
 import ar.uba.dc.analysis.memory.expression.ParametricExpression;
 import ar.uba.dc.analysis.memory.expression.ParametricExpressionFactory;
+import ar.uba.dc.analysis.memory.expression.ParametricExpressionUtils;
+import ar.uba.dc.analysis.memory.impl.BarvinokParametricExpressionUtils;
 import ar.uba.dc.analysis.memory.impl.madeja.PaperMemorySummary;
 import ar.uba.dc.analysis.memory.impl.summary.RichPaperPointsToHeapPartition;
 import ar.uba.dc.analysis.memory.impl.summary.SimplePaperPointsToHeapPartition;
@@ -33,7 +36,7 @@ public class PaperIntraproceduralAnalysis {
 	
 	public PaperIntraproceduralAnalysis(PaperInterproceduralAnalysis paperInterproceduralAnalysis,
 			PaperMemorySummaryFactory summaryFactory, CountingTheory ct,
-			ParametricExpressionFactory expressionFactory, SymbolicCalculator sa, List<Line> badLines) {
+			ParametricExpressionFactory expressionFactory, SymbolicCalculator sa, List<LineWithParent> badLines) {
 
 		this.interprocedural = paperInterproceduralAnalysis;
 		this.summaryFactory = summaryFactory;
@@ -69,7 +72,7 @@ public class PaperIntraproceduralAnalysis {
 	protected ParametricExpressionFactory expressionFactory;		
 	protected SymbolicCalculator sa;
 	protected PaperInterproceduralAnalysis interprocedural;
-	protected List<Line> badLines;
+	protected List<LineWithParent> badLines;
 	
 	
 	
@@ -167,6 +170,12 @@ public class PaperIntraproceduralAnalysis {
 			
 			ParametricExpression bound = ct.count(newLine);
 			
+			if (BarvinokParametricExpressionUtils.isInfinite(bound))
+			{
+				LineWithParent newLineWithParent = new LineWithParent(newLine, ir_method.toString());
+				this.badLines.add(newLineWithParent);
+			}
+			
 			log.debug(bound.toString());
 			
 			//TODO: preocuparse por polimorfismo
@@ -225,7 +234,13 @@ public class PaperIntraproceduralAnalysis {
 			log.debug("_____________________" + "memReqMinusRsdFromCallee: " + memReqMinusRsdFromCallee.toString());
 			log.debug("_____________________" + "acumResidualsFromCallee: " + acumResidualsFromCallee.toString());
 					
-			
+			if (BarvinokParametricExpressionUtils.isInfinite(memReqMinusRsdFromCallee) || 
+					BarvinokParametricExpressionUtils.isInfinite(acumResidualsFromCallee)
+					)
+			{
+				LineWithParent lineWithParent = new LineWithParent(callInvocation, ir_method.toString());
+				this.badLines.add(lineWithParent);
+			}
 			
 			//fruta para ver si anda
 			MAX_memReqMinusRsdFromCallees = sa.supreme(MAX_memReqMinusRsdFromCallees, memReqMinusRsdFromCallee);
