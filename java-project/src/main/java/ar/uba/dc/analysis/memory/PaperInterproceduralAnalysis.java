@@ -82,6 +82,9 @@ public class PaperInterproceduralAnalysis {
 	
 	protected Map<String, PaperMemorySummary>  data;
 	
+	//Lineas con invariante que hace que de infinito
+	protected List<Line> badLines;
+	
 	
 	protected PaperMemorySummaryFactory summaryFactory;
 	protected CountingTheory countingTheory;
@@ -242,6 +245,7 @@ public class PaperInterproceduralAnalysis {
 		orderIrMethods();
 		
 		this.data = new HashMap<String, PaperMemorySummary>();
+		this.badLines = new ArrayList<Line>();
 		
 		ListIterator<IntermediateRepresentationMethod> li = ordered_methods.listIterator();
 			
@@ -252,7 +256,7 @@ public class PaperInterproceduralAnalysis {
 			try{
 				log.debug("Processing " + IRUtils.key(ir_method) + "...");				
 				
-				PaperIntraproceduralAnalysis analysis = new PaperIntraproceduralAnalysis(this, summaryFactory, countingTheory, expressionFactory, symbolicCalculator);
+				PaperIntraproceduralAnalysis analysis = new PaperIntraproceduralAnalysis(this, summaryFactory, countingTheory, expressionFactory, symbolicCalculator, badLines);
 				//PaperIntraproceduralAnalysis analysis = new PaperIntraproceduralAnalysis();
 				PaperMemorySummary summary = analysis.run(ir_method);
 				data.put(IRUtils.key(ir_method), summary);				

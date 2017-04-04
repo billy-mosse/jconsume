@@ -33,13 +33,14 @@ public class PaperIntraproceduralAnalysis {
 	
 	public PaperIntraproceduralAnalysis(PaperInterproceduralAnalysis paperInterproceduralAnalysis,
 			PaperMemorySummaryFactory summaryFactory, CountingTheory ct,
-			ParametricExpressionFactory expressionFactory, SymbolicCalculator sa) {
+			ParametricExpressionFactory expressionFactory, SymbolicCalculator sa, List<Line> badLines) {
 
 		this.interprocedural = paperInterproceduralAnalysis;
 		this.summaryFactory = summaryFactory;
 		this.ct = ct;
 		this.expressionFactory  = expressionFactory;
 		this.sa = sa;
+		this.badLines = badLines;
 		
 	}
 
@@ -68,7 +69,7 @@ public class PaperIntraproceduralAnalysis {
 	protected ParametricExpressionFactory expressionFactory;		
 	protected SymbolicCalculator sa;
 	protected PaperInterproceduralAnalysis interprocedural;
-	
+	protected List<Line> badLines;
 	
 	
 	
