@@ -77,7 +77,8 @@ public class PaperMemoryInterproceduralAnalysis extends PaperInterproceduralAnal
 
 		if(badLines.size() > 0)
 		{
-			log.debug("Hay lineas que dieron infinito. Revise sus invariantes");
+			log.debug("There are some unconstrainedlines. Check their invariants.");
+			log.debug("From leaves to the root:");
 
 			for(LineWithParent badLine : badLines)
 			{
