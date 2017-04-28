@@ -65,9 +65,10 @@ public class QuasiPolynomial {
 		
 		String ret = "[" + vars + "] -> " + polynomial;
 		
-		if (!StringUtils.isEmpty(constraints)) {
+		//Por que esto es necesario?? Por que siempre termino agregandolo de nuevo?
+		/*if (!StringUtils.isEmpty(constraints)) {
 			ret += ": " + constraints;
-		}
+		}*/
 
 		
 		if (!StringUtils.isEmpty(constraints)) {

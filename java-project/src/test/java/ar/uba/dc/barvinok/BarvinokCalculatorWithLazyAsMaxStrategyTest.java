@@ -63,6 +63,7 @@ public class BarvinokCalculatorWithLazyAsMaxStrategyTest {
 		// Me devuelve constantes
 		DomainSet domain = new DomainSet("-3 <= i <= 4");
 		domain.addVariable("i");
+		domain.addInductive("i");
 		
 		PiecewiseQuasipolynomial m = calc.countExecutions(domain);
 		
@@ -77,7 +78,9 @@ public class BarvinokCalculatorWithLazyAsMaxStrategyTest {
 		domain.addParameter("m");
 		domain.addParameter("n");
 		domain.addVariable("i");
+		domain.addInductive("i");
 		domain.addVariable("j");
+		domain.addInductive("j");
 		
 		m = calc.countExecutions(domain);
 		
@@ -86,16 +89,17 @@ public class BarvinokCalculatorWithLazyAsMaxStrategyTest {
 		assertThat(m.getParameters(), hasItem("n"));
 		assertThat(m.getPieces().size(), is(equalTo(2)));
 		assertThat(m.getPieces().get(0).getVariables().size(), is(equalTo(0)));
-		assertThat(m.getPieces().get(0).getConstraints(), is(equalTo("n <= m && n >= 0")));
-		assertThat(m.getPieces().get(0).getPolynomial(), is(equalTo("1 + m + (1/2 + m)*n - (1/2)*n^2")));
+		assertThat(m.getPieces().get(0).getConstraints(), is(equalTo("0 <= n <= m")));
+		assertThat(m.getPieces().get(0).getPolynomial(), is(equalTo("1 + m + ((1/2) + m)*n - ((1/2))*n^2")));
 		assertThat(m.getPieces().get(1).getVariables().size(), is(equalTo(0)));
-		assertThat(m.getPieces().get(1).getConstraints(), is(equalTo("m >= 0 && n >= 1 + m")));
+		assertThat(m.getPieces().get(1).getConstraints(), is(equalTo("m >= 0 && n > m")));
 		assertThat(m.getPieces().get(1).getPolynomial(), is(equalTo("1 + (3/2)*m + (1/2)*m^2")));
 		
 		domain = new DomainSet("0 <= 2*i < arreglo.size and arreglo.size == size");
 		domain.addParameter("size");
 		domain.addVariable("arreglo.size");
 		domain.addVariable("i");
+		domain.addInductive("i");
 		
 		m = calc.countExecutions(domain);
 		assertThat(m.getParameters().size(), is(equalTo(1)));
@@ -125,7 +129,9 @@ public class BarvinokCalculatorWithLazyAsMaxStrategyTest {
 		domain.addParameter("m");
 		domain.addParameter("n");
 		domain.addVariable("i");
+		domain.addInductive("i");
 		domain.addVariable("j");
+		domain.addInductive("j");
 		
 		PiecewiseQuasipolynomial m = calc.countExecutions(domain);
 		
@@ -158,6 +164,7 @@ public class BarvinokCalculatorWithLazyAsMaxStrategyTest {
 		DomainSet d = new DomainSet("0 <= i < n");
 		d.addParameter("n");
 		d.addVariable("i");
+		d.addInductive("i");
 		
 		// Probar el caso de sumar con un polinimio 0
 		PiecewiseQuasipolynomial m = calc.sumConsumtion(BarvinokFactory.polynomial(new TreeSet<String>(), new QuasiPolynomial("0")), d);
@@ -173,6 +180,7 @@ public class BarvinokCalculatorWithLazyAsMaxStrategyTest {
 		d = new DomainSet("0 <= i < n");
 		d.addParameter("n");
 		d.addVariable("i");
+		d.addInductive("i");
 		
 		m = calc.sumConsumtion(BarvinokFactory.polynomial(new TreeSet<String>(), new QuasiPolynomial("1")), d);
 		assertThat(m.getParameters().size(), is(equalTo(1)));
@@ -186,6 +194,7 @@ public class BarvinokCalculatorWithLazyAsMaxStrategyTest {
 		d = new DomainSet("-3 <= i < n and $t.k == i");
 		d.addParameter("n");
 		d.addVariable("i");
+		d.addInductive("i");
 		d.addVariable("$t.k");
 		
 		Set<String> params = new TreeSet<String>();
@@ -204,6 +213,8 @@ public class BarvinokCalculatorWithLazyAsMaxStrategyTest {
 		d = new DomainSet("0 <= i <= n and $t.n == i");
 		d.addParameter("n");
 		d.addVariable("i");
+		d.addInductive("i");
+		
 		d.addVariable("$t.n");
 		
 		params = new TreeSet<String>();
@@ -224,6 +235,7 @@ public class BarvinokCalculatorWithLazyAsMaxStrategyTest {
 		d.addParameter("m");
 		d.addVariable("$t.i");
 		d.addVariable("$t.j");
+		d.addInductive("$t.j");
 		
 		params = new TreeSet<String>();
 		params.add("i");
@@ -241,7 +253,8 @@ public class BarvinokCalculatorWithLazyAsMaxStrategyTest {
 		
 		d = new DomainSet("0 <= i <= n and $t.k == i");
 		d.addParameter("n");
-		d.addVariable("i");
+		d.addVariable("i");;
+		d.addInductive("i");
 		d.addVariable("$t.k");
 		
 		PiecewiseQuasipolynomial p = new PiecewiseQuasipolynomial();
@@ -291,6 +304,7 @@ public class BarvinokCalculatorWithLazyAsMaxStrategyTest {
 		DomainSet d = new DomainSet("0 <= i and $t.n == i");
 		d.addParameter("n");
 		d.addVariable("i");
+		d.addInductive("i");
 		d.addVariable("$t.n");
 		
 		Set<String> params = new TreeSet<String>();
@@ -308,6 +322,7 @@ public class BarvinokCalculatorWithLazyAsMaxStrategyTest {
 		d = new DomainSet("0 <= i and $t.k == i");
 		d.addParameter("n");
 		d.addVariable("i");
+		d.addInductive("i");
 		d.addVariable("$t.k");
 		
 		PiecewiseQuasipolynomial p = new PiecewiseQuasipolynomial();
@@ -328,6 +343,7 @@ public class BarvinokCalculatorWithLazyAsMaxStrategyTest {
 		d = new DomainSet("0 <= i and $t.n == i");
 		d.addParameter("n");
 		d.addVariable("i");
+		d.addInductive("i");
 		d.addVariable("$t.n");
 		
 		params = new TreeSet<String>();
@@ -345,6 +361,7 @@ public class BarvinokCalculatorWithLazyAsMaxStrategyTest {
 		d = new DomainSet("0 <= i and $t.k == i");
 		d.addParameter("n");
 		d.addVariable("i");
+		d.addInductive("i");
 		d.addVariable("$t.k");
 		
 		p = new PiecewiseQuasipolynomial();
@@ -364,6 +381,7 @@ public class BarvinokCalculatorWithLazyAsMaxStrategyTest {
 		d = new DomainSet("0 <= i and $t.k == i");
 		d.addParameter("n");
 		d.addVariable("i");
+		d.addInductive("i");
 		d.addVariable("$t.k");
 		
 		p = new PiecewiseQuasipolynomial();
@@ -401,6 +419,7 @@ public class BarvinokCalculatorWithLazyAsMaxStrategyTest {
 		d.addParameter("n");
 		d.addParameter("m");
 		d.addVariable("$t.m");
+		d.addInductive("$t.m");
 		d.addVariable("$t.k");
 				
 		m = calc.sumConsumtion(BarvinokFactory.polynomial(params, new QuasiPolynomial("max(m*k + 10, 3)", "m > 0 and k >= m")), d);
@@ -1102,7 +1121,8 @@ public class BarvinokCalculatorWithLazyAsMaxStrategyTest {
 		assertThat(m.getPieces().get(0).getConstraints(), is(equalTo("n >= 0")));
 		assertThat(m.getPieces().get(0).getPolynomial(), is(equalTo("25")));
 		assertThat(m.getPieces().get(1).getVariables().size(), is(equalTo(0)));
-		assertThat(m.getPieces().get(1).getConstraints(), is(equalTo("n <= -1")));
+		assertThat(m.getPieces().get(1).getConstraints(), is(equalTo("n < 0")));
+		//assertThat(m.getPieces().get(1).getConstraints(), is(equalTo("n <= -1")));
 		assertThat(m.getPieces().get(1).getPolynomial(), is(equalTo("14")));
 		
 		m = calc.max(BarvinokFactory.constant(14L), p);

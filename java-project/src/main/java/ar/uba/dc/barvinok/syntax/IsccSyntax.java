@@ -153,7 +153,7 @@ public class IsccSyntax extends AbstractBarvinokSyntax {
 	}
 
 	public String toString(DomainSet value) {
-		Set<String> varsToElim = value.variablesToExclude();
+		Set<String> varsToElim = value.variablesToExclude(); //variables - inductivas
 		Set<String> varsToInclude = value.getVariables();
 		varsToInclude.removeAll(varsToElim);
 		String params = StringUtils.join(value.getParameters(), ',');
