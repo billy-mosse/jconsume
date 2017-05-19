@@ -15,8 +15,6 @@ import org.apache.commons.lang.StringUtils;
 import ar.uba.dc.analysis.escape.runner.RunCommand;
 import ar.uba.dc.util.ConsoleUtils;
 
-import org.junit.Assert;
-
 /**
  * @author martin
  *

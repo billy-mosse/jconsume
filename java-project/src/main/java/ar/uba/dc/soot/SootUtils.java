@@ -257,6 +257,8 @@ public class SootUtils {
 			options.add("-app");
 		}
 		
+		//options.add("-version");
+		
 		// No genera output propio de soot
 		options.add("-f");
 		options.add("none");

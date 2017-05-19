@@ -4,14 +4,12 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import soot.jimple.toolkits.callgraph.CallGraph;
 import ar.uba.dc.analysis.escape.InterproceduralAnalysis;
 import ar.uba.dc.config.Context;
 import ar.uba.dc.config.ContextFactory;
 import ar.uba.dc.soot.SootUtils;
 import ar.uba.dc.util.Timer;
-
-import org.junit.Assert;
+import soot.jimple.toolkits.callgraph.CallGraph;
 
 /**
  * Clase que se encarga de correr el analisis de escape sobre una clase y un metodo.

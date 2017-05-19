@@ -4,13 +4,13 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import soot.SootMethod;
-import soot.jimple.toolkits.callgraph.CallGraph;
 import ar.uba.dc.config.Context;
 import ar.uba.dc.config.ContextFactory;
 import ar.uba.dc.soot.SootMethodFilter;
 import ar.uba.dc.soot.SootUtils;
 import ar.uba.dc.util.Timer;
+import soot.SootMethod;
+import soot.jimple.toolkits.callgraph.CallGraph;
 
 /**
  * Clase que se encarga de correr el analisis de consumo sobre una clase y un metodo.

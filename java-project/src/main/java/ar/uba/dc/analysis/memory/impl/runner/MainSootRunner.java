@@ -6,6 +6,8 @@ import org.apache.commons.logging.LogFactory;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 
+import com.sun.tools.internal.jxc.ap.Options;
+
 import soot.Main;
 import soot.jimple.toolkits.callgraph.EdgePredicate;
 import soot.jimple.toolkits.callgraph.ReachableMethods;
@@ -70,7 +72,9 @@ public class MainSootRunner {
 			SootUtils.insertTransformer("wjtp", "wjtp.paperMemory", PaperMemorySceneTransformer.v(context, values.getProgramName()));
 		}*/
 		String[] opts = SootUtils.buildOptions(context, values.getProgramName(), values.getMain()).toArray(new String[] {});
+
 		
+		soot.options.Options.v().set_java_version(7);
 		soot.Main.main(opts);
 	}
 }
