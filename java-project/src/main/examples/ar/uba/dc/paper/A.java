@@ -8,5 +8,6 @@ package ar.uba.dc.paper;
 
 public class A {
 
+	public static int pi = 314;
 	int a;
 }
