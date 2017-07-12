@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import ar.uba.dc.util.ListC;
 
+//TODO me genera invariantes de mas para ListC y eso hace que haya relevantParameters que no aparecen en ningun binding
 public class Program2
 {
 	
