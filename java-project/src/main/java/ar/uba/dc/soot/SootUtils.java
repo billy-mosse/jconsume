@@ -235,7 +235,8 @@ public class SootUtils {
 	}
 
 	public static void insertTransformer(String pack, String phaseName,Transformer transformer) {
-		 PackManager.v().getPack(pack).add(new Transform(phaseName, transformer));
+
+		PackManager.v().getPack(pack).add(new Transform(phaseName, transformer));
 	}
 	
 	

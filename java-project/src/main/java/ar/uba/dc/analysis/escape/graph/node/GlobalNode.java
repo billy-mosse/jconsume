@@ -82,4 +82,9 @@ public class GlobalNode implements Node {
 		throw new Error("Esto jamas deberia ser llamado");
 	}
 	
+	@Override
+	public int compareTo(Node o) {
+		return this.toString().compareTo(o.toString());
+	}
+	
 }

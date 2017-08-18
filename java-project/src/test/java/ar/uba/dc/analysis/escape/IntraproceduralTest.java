@@ -29,6 +29,8 @@ import ar.uba.dc.soot.SootUtils;
 
 @RunWith(Theories.class)
 @SuppressWarnings("unused")
+
+//TODO no estan los ejemplos? por alguna razon no anda.
 public class IntraproceduralTest {
 
 	private Context ctx;
@@ -39,7 +41,9 @@ public class IntraproceduralTest {
 		Options.v().set_whole_program(true);
 		ctx = ContextFactory.getContext("test.properties");
 		SootUtils.setClasspath(ctx);
-		String basePath = ctx.getString("project.classes.classpath") + "/escape/summary/";
+		//hack choto:
+		//String basePath = ctx.getString("project.classes.classpath") + "/escape/summary/";
+		String basePath = "/home/billy/Projects/git/jconsume/java-project/target/test-classes/escape/summary/";
 		location.put(SootUtils.getMethod("ar.uba.dc.simple.EjemploSimple01", "void main(java.lang.String[])"), basePath + "ejemplosimple01");
 		location.put(SootUtils.getMethod("ar.uba.dc.rinard.BasicTest", "void main(java.lang.String[])"), basePath + "rinard");
 		location.put(SootUtils.getMethod("ar.uba.dc.jolden.mst.MST", "void main(java.lang.String[])"), basePath + "mst");

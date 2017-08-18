@@ -28,6 +28,10 @@ public class CommandLineValues {
             usage = "Config properties file (config.properties)")
     private String propertiesFile;
 	
+	/*@Option(name = "-o", aliases = { "--output-folder" }, required = false,
+            usage = "Output folder")
+    private String outputFolder;*/
+	
 
 	@Option(name = "-m", aliases = { "--main"}, required = true,
             usage = "main method. e.g. void main(java.lang.String[])")

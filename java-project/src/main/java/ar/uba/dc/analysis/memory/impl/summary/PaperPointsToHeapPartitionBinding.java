@@ -1,6 +1,6 @@
 package ar.uba.dc.analysis.memory.impl.summary;
 
-public class PaperPointsToHeapPartitionBinding {
+public class PaperPointsToHeapPartitionBinding implements Comparable<PaperPointsToHeapPartitionBinding>{
 	private PaperPointsToHeapPartition callee_hp;
 	public PaperPointsToHeapPartition getCallee_hp() {
 		return callee_hp;
@@ -29,5 +29,13 @@ public class PaperPointsToHeapPartitionBinding {
 	public String toString()
 	{
 		return this.callee_hp.toString() + "->" + this.caller_hp.toString();
+	}
+
+	@Override
+	public int compareTo(PaperPointsToHeapPartitionBinding o) {
+		int c1 = this.caller_hp.compareTo(o.caller_hp);
+		if (c1!= 0) return c1;
+		
+		return this.callee_hp.compareTo(o.callee_hp);
 	}
 }

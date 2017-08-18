@@ -36,13 +36,12 @@ _ Ejecutar el comando "sh install.sh" en la carpeta del archivo para que maven i
 _ Ejecutar el comando "mvn compile" para compilar el proyecto y forzar a que todas las dependencias
 sean bajadas al repositorio local de maven. El comando debe ejecutarse en el directorio root del proyecto (donde se encuentre el archivo pom.xml).  
 
-
-UPDATE: lo único realmente necesario es importar el proyecto desde eclipse como mvn proyect. Y tal vez agregar el classpath. Todo lo demás ya está hecho.
-
+Nota: es importante importar el proyecto desde eclipse como mvn project.
 
 Barvinok
 --------
 
+#TODO: la versión de barvinok que estamos usando es más nueva.
 La herramienta utiliza como soporte para operar con expresiones paramétricas la versión 0.32.1 de la libreria barvinok. La misma puede bajarse
 desde http://freshmeat.net/projects/barvinok/.
 
@@ -242,7 +241,7 @@ Para que la herramienta funcione es necesario verificar previamente dos configur
 - El archivo "bin/run.sh" contiene la invocacion a la Java Virtual Machine pasando como parametro el classpath. Es necesario verificar que las rutas del classpath esten bien apuntadas pues sino no se podran ejecutar
   las herramientas. En particular, solo es necesario verificar que la ruta al repositorio de maven este bien configurada.
 
-Analiazar otros ejemplos
+Analizar otros ejemplos
 ------------------------
 
 Invariantes
@@ -255,6 +254,8 @@ y que buscara dentro del directorio especificado por la propiedad invariants.rep
 Por ejemplo: los invariantes de la clase ar.uba.dc.simple.Rinard seran buscados en 
 	
 	${invariants.repository}/ar/uba/dc/simple/Rinard.spec
+
+Nota: está en proceso la agregación de una herramienta que calcule invariantes de loops automáticamente utilizando daikon.
 
 Classpath
 *********

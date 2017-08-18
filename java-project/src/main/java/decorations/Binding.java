@@ -1,6 +1,5 @@
 package decorations;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -17,7 +16,7 @@ public class Binding {
 	public Binding(String binding)
 	{
 
-		bindingPairs = new HashSet<BindingPair>();
+		bindingPairs = new TreeSet<BindingPair>();
 		if(binding != "")
 		{
 			String[] bindings = binding.split(" and ");
@@ -121,7 +120,7 @@ public class Binding {
 	
 	public Binding()
 	{
-		bindingPairs = new HashSet<BindingPair>();
+		bindingPairs = new TreeSet<BindingPair>();
 	}
 	
 	/*

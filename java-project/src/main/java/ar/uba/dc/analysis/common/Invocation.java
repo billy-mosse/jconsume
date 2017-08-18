@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -77,7 +78,7 @@ public class Invocation {
 			this.parameters.add((IntermediateRepresentationParameter)p);
 		}
 
-		this.setHpBindings(new HashSet<PaperPointsToHeapPartitionBinding>());
+		this.setHpBindings(new TreeSet<PaperPointsToHeapPartitionBinding>());
 		
 		boolean found = false;
 		for(IntermediateRepresentationMethod ir_method : ir_methods)

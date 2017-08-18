@@ -27,7 +27,7 @@ import ar.uba.dc.util.collections.CircularStack;
 import soot.SootMethod;
 
 
-public class RichPaperPointsToHeapPartition implements PaperPointsToHeapPartition {
+public class RichPaperPointsToHeapPartition implements PaperPointsToHeapPartition{
 	
 	public static Integer counter = 0;
 
@@ -214,6 +214,12 @@ public class RichPaperPointsToHeapPartition implements PaperPointsToHeapPartitio
 
 	public void setBelongsTo(String belongsTo) {
 		this.belongsTo = belongsTo;
+	}
+
+
+	@Override
+	public int compareTo(PaperPointsToHeapPartition o) {
+		return this.number.compareTo(o.getNumber());
 	}
 
 }

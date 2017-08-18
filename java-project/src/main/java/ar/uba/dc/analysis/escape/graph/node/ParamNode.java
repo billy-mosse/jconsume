@@ -95,4 +95,9 @@ public class ParamNode implements Node {
 		return this.id;
 	}
 	
+	@Override
+	public int compareTo(Node o) {
+		return this.toString().compareTo(o.toString());
+	}
+	
 }

@@ -1,6 +1,6 @@
 package ar.uba.dc.analysis.memory.impl.summary;
 
-public class SimplePaperPointsToHeapPartition implements PaperPointsToHeapPartition {
+public class SimplePaperPointsToHeapPartition implements PaperPointsToHeapPartition{
 	public Integer number;
 	
 	
@@ -46,6 +46,11 @@ public class SimplePaperPointsToHeapPartition implements PaperPointsToHeapPartit
 	public String toString()
 	{
 		return "SH_" + this.number;
+	}
+
+	@Override
+	public int compareTo(PaperPointsToHeapPartition o) {
+		return this.number.compareTo(o.getNumber());
 	}
 	
 }

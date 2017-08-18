@@ -1,6 +1,6 @@
 package ar.uba.dc.analysis.common.intermediate_representation;
 
-public class IntermediateRepresentationParameter{
+public class IntermediateRepresentationParameter implements Comparable<IntermediateRepresentationParameter>{
 	
 	protected String name;
 	protected boolean isRefLikeType;
@@ -41,6 +41,11 @@ public class IntermediateRepresentationParameter{
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	@Override
+	public int compareTo(IntermediateRepresentationParameter o) {
+		return this.name.compareTo(o.name);
 	}
 
 }

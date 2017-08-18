@@ -1,6 +1,6 @@
 package decorations;
 
-public class BindingPair {
+public class BindingPair implements Comparable<BindingPair>{
 	protected String caller_parameter;
 	protected String callee_parameter;
 
@@ -63,5 +63,13 @@ public class BindingPair {
 	public String toString()
 	{
 		return caller_parameter + " " + SEPARATOR + " " + PREFIX + callee_parameter; 
+	}
+
+	@Override
+	public int compareTo(BindingPair o) {
+		int c1 = this.caller_parameter.compareTo(o.caller_parameter);
+		if (c1 != 0) return c1;
+		
+		return this.callee_parameter.compareTo(o.callee_parameter);
 	}
 }

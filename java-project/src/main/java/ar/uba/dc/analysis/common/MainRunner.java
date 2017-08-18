@@ -11,7 +11,6 @@ import ar.uba.dc.config.ContextFactory;
 
 public class MainRunner {
 
-	private Context context;
 
 	public static void main(String[] args) {
 		CommandLineValues values = new CommandLineValues(args);

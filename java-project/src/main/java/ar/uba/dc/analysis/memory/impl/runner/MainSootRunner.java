@@ -8,6 +8,7 @@ import org.kohsuke.args4j.CmdLineParser;
 
 import com.sun.tools.internal.jxc.ap.Options;
 
+import soot.G;
 import soot.Main;
 import soot.jimple.toolkits.callgraph.EdgePredicate;
 import soot.jimple.toolkits.callgraph.ReachableMethods;
@@ -45,6 +46,7 @@ public class MainSootRunner {
 			methodSignature = args[2];
 		}*/
 		
+		G.reset();
 		
 		EdgePredicate predicate = context.getFactory().getEdgePredicate();
 		if (predicate != null) {
@@ -52,7 +54,7 @@ public class MainSootRunner {
 		}
 		
 		//TODO: Esto es una mentira! El metodo main esta por default ya....ni me importa lo que pongan de parametro
-		log.info("Memory analysis was requested for [" + values.getProgramName() + "] and method [" + values.getMain() + "]");
+		log.info("Escape analysis was requested for [" + values.getProgramName() + "] and method [" + values.getMain() + "]");
 		
 		//aca hace el insertTransformer
 		//if (context.getBoolean(Context.RUN_ESCAPE_ANALYSIS)) {

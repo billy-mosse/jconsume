@@ -178,4 +178,9 @@ public class StmtNode implements Node {
 		return new_nMap.get(id);
 	}
 	
+	@Override
+	public int compareTo(Node o) {
+		return this.toString().compareTo(o.toString());
+	}
+	
 }

@@ -64,7 +64,7 @@ public class PaperInterproceduralAnalysis {
 	
 	
 	protected SummaryReader<IntermediateRepresentationMethod> jsonReader;
-	protected String mainClass;
+	private String mainClass;
 	
 	public SummaryReader<IntermediateRepresentationMethod> getJsonReader() {
 		return jsonReader;
@@ -241,8 +241,8 @@ public class PaperInterproceduralAnalysis {
 
 	public void doAnalysis(String mainClass)
 	{
-		this.mainClass = mainClass;
-		getIrMethods();
+		this.setMainClass(mainClass);
+		getIrMethods(getLocationStrategy().getBasePath());
 		orderIrMethods();
 		
 		this.data = new HashMap<String, PaperMemorySummary>();
@@ -351,13 +351,18 @@ public class PaperInterproceduralAnalysis {
 	}
 	
 	protected Map<String, IntermediateRepresentationMethod> methods;
-	public void getIrMethods()
+	
+	public Map<String, IntermediateRepresentationMethod> getMethods() {
+		return methods;
+	}
+
+	public void getIrMethods(String basePath)
 	{
 		
 		methods = new HashMap<String, IntermediateRepresentationMethod>();
 		
 		
-		String loc = getLocationStrategy().getBasePath() + "json/" + mainClass + "/";
+		String loc = basePath + "json/" + getMainClass() + "/";
 		
 		
 		
@@ -478,6 +483,15 @@ public class PaperInterproceduralAnalysis {
 		return new IntComparator();
 	}
 
+	public String getMainClass() {
+		return mainClass;
+	}
+
+	public void setMainClass(String mainClass) {
+		this.mainClass = mainClass;
+	}
+
+
 	// queue class
 	class IntComparator implements Comparator<SootMethod> {
 		public int compare(SootMethod o1, SootMethod o2) {
@@ -488,8 +502,6 @@ public class PaperInterproceduralAnalysis {
 			else if(v1!=null) return v1.intValue();
 			else return 0;
 		}
-	};
-	
-	
+	}
 
 }

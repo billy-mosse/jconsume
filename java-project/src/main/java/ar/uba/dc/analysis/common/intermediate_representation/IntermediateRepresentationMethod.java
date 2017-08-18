@@ -1,8 +1,8 @@
 package ar.uba.dc.analysis.common.intermediate_representation;
 
-import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -108,7 +108,7 @@ public class IntermediateRepresentationMethod {
 	// protected SootMethod target;
 
 	private void setParametersFromSootMethod(SootMethod target) {
-		this.parameters = new LinkedHashSet<IntermediateRepresentationParameter>();
+		this.parameters = new TreeSet<IntermediateRepresentationParameter>();
 		Set<IntermediateRepresentationParameter> s = SootUtils.getParameters(target, true);
 		for (IntermediateRepresentationParameter p : s) {
 			this.parameters.add(p);
@@ -256,14 +256,18 @@ public class IntermediateRepresentationMethod {
 	// Esto no esta soportado para tamaño maximo del CircularStack todavia
 	public void setNodesInfo(EscapeSummary escapeSummary, Map<Node, Integer> numbers) {
 		Set<Node> escaping = escapeSummary.getEscaping();
-		this.escapeNodes = new LinkedHashSet<PaperPointsToHeapPartition>();
+		this.escapeNodes = new TreeSet<PaperPointsToHeapPartition>();
 
 		// Podria hacer una funcion asi no escribo las cosas 2 veces
 
 		Set<Node> allNodes = escapeSummary.getNodes();
-		this.nodes = new LinkedHashSet<PaperPointsToHeapPartition>();
 
-		for (Node n : allNodes) {
+		TreeSet<Node> allOrderedNodes = new TreeSet<Node>(allNodes);
+		TreeSet<Node> allOrderedEscapingNodes = new TreeSet<Node>(escaping);
+				
+		this.nodes = new TreeSet<PaperPointsToHeapPartition>();
+
+		for (Node n : allOrderedNodes) {
 
 			CircularStack<String> ir_context = PaperNodeUtils.getIrContext(n);
 
@@ -281,7 +285,7 @@ public class IntermediateRepresentationMethod {
 			RichPaperPointsToHeapPartition.counter += 1;
 		}
 
-		for (Node n : escaping) {
+		for (Node n : allOrderedEscapingNodes) {
 
 			CircularStack<String> ir_context = PaperNodeUtils.getIrContext(n);
 

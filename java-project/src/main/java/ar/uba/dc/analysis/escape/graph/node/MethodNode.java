@@ -122,4 +122,9 @@ public class MethodNode implements Node {
 		return nMap.get(id);
 	}
 	
+	@Override
+	public int compareTo(Node o) {
+		return this.toString().compareTo(o.toString());
+	}
+	
 }

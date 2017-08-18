@@ -11,7 +11,7 @@ import ar.uba.dc.util.collections.CircularStack;
  * only if they have the same kind and were constructed using the same
  * arguments (structural equality).
  */
-public interface Node extends Cloneable { 
+public interface Node extends Cloneable, Comparable<Node> { 
 
     /** Is it an inside node ? */
     public boolean isInside();
