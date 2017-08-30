@@ -15,11 +15,11 @@ JCONSUME_PATH=/home/billy/Projects/git/jconsume/java-project
 
 cd $JCONSUME_GLOBAL_PATH
 
-sh doAll.sh $1Test $2
+sh doAll.sh $1 $2 $3
 
 cd $JCONSUME_PATH
 
-sh doAll.sh "--program" $1 "--ir" "--memory"
+sh doAll.sh "--program" $1.$2 "--ir" "--memory"
 
 
 # $1 es NombrePrograma. La idea es que haya un Test que lo llame 100 veces.
