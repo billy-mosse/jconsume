@@ -1,5 +1,8 @@
 package ar.uba.dc.daikon;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Ejemplo bien basico con loop simple
  * @author billy
@@ -15,11 +18,15 @@ public class Ins0 {
 	{
 		for(int i = 1; i < n; i++)
 		{
-			System.out.println(i);
-			Integer obj = new Integer(4);
-			obj+=1;
+			m(i);
 		}
 		
+	}
+	
+	public static void m(int i)
+	{
+		Integer entero = new Integer(i);
+		entero += 1;
 	}
 }
 
