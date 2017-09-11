@@ -4,7 +4,6 @@
 #export CLASSPATH=/home/billy/Downloads/asm-3.3.1.jar:/home/billy/Projects/git/jconsume/dependencies/sootlib/soot-2.5.0.jar:/home/billy/Projects/git/jconsume/dependencies/sootlib/sootclasses-2.5.0.jar:/usr/lib/jvm/java-8-oracle/jre/lib/rt.jar:.
 
 
-export CLASSPATH=/home/billy/Projects/git/jconsume-global/jconsume-global/asm-3.1.jar:/home/billy/Projects/git/jconsume/dependencies/sootlib/soot-2.5.0.jar:/home/billy/Projects/git/jconsume/dependencies/sootlib/sootclasses-2.5.0.jar:/usr/lib/jvm/java-7-oracle/jre/lib/rt.jar:.
 
 
 #export CLASSPATH=/home/billy/Downloads/asm-6.0_BETA/lib/asm-6.0_BETA.jar:/home/billy/Downloads/soot-trunk.jar:/usr/lib/jvm/java-8-oracle/jre/lib/rt.jar:.
@@ -15,15 +14,38 @@ export CLASSPATH=/home/billy/Projects/git/jconsume-global/jconsume-global/asm-3.
 
 #TODO guardar todos los .class en una carpeta especial. Listarlos y decompilar a todos. Necesitare hacerlos en orden?
 
-rm sootOutput/dava/src/ar/uba/dc/daikon/*
+#rm sootOutput/dava/src/ar/uba/dc/daikon/*
 
 
-cp InstrumentedMethod.java sootOutput/dava/src/ar/uba/dc/daikon/
-mv InstrumentedMethod.java ar/uba/dc/daikon/
+MYPATH=`echo $1 | sed 's/\./\//g'`
 
+
+export CLASSPATH=/home/billy/Projects/git/jconsume-global/jconsume-global/asm-3.1.jar:/home/billy/Projects/git/jconsume/dependencies/sootlib/soot-2.5.0.jar:/home/billy/Projects/git/jconsume/dependencies/sootlib/sootclasses-2.5.0.jar:/usr/lib/jvm/java-7-oracle/jre/lib/rt.jar:$1.$2Test:.
+
+
+cp InstrumentedMethod.java sootOutput/dava/src/$MYPATH
+mv InstrumentedMethod.java $1.$2Test/$MYPATH
 touch InstrumentedMethod.java
 
-java soot.Main -f dava $1.$2
+#cd $1.$2Test
+#for f in $1.$2Test/$MYPATH/*.class; do java soot.Main -f dava $f; done;
+
+#for f in $1.$2Test/$MYPATH/*.class; do echo "java soot.Main -f dava $1.${f##*/}"; java soot.Main -f dava $1.${f##*/};done;
+
+for f in $1.$2Test/$MYPATH/*.class; do g="${f##*/}"; h="${g%.*}"; java soot.Main -f dava $1.$h; done;
+
+#java soot.Main -f dava $1.$2
+
+#java soot.Main -f dava $1.$2Test
+
+#java soot.Main -f dava ar.uba.dc.daikon.A
+
+javac -g sootOutput/dava/src/$MYPATH/*.java
+
+
+#######################
+
+
 
 
 #/home/billy/Projects/git/jconsume/java-project/src/main/examples
@@ -31,14 +53,13 @@ java soot.Main -f dava $1.$2
 
 #java -cp /home/billy/Downloads/soot-trunk.jar soot.Main -cp .:/usr/lib/jvm/java-8-oracle/jre/lib/rt.jar:/home/billy/Downloads/asm-6.0_BETA/lib/asm-6.0_BETA.jar -f dava $1.$2
 
-java soot.Main -f dava $1.$2Test
+
 
 
 #Hack feo
 #java soot.Main -f dava ar.uba.dc.daikon.RichNumber
 
 
-java soot.Main -f dava ar.uba.dc.daikon.A
 
 
 #cp ar/uba/dc/daikon/InstrumentedMethod.java .
@@ -50,7 +71,6 @@ java soot.Main -f dava ar.uba.dc.daikon.A
 
 #javac -g InstrumentedMethod.java $2.java $2Test.java
 
-javac -g sootOutput/dava/src/ar/uba/dc/daikon/*.java
 
 #cd sootOutput/dava/src
 
