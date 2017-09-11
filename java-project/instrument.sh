@@ -79,14 +79,14 @@ cd out
 echo Fase 3: Daikon for generating invariants
 
 
-./__daikon.sh $FULLNAMETEST 10 > $FULLNAMETEST.txt
+./__daikon.sh $FULLNAMETEST 10 > $1.$2Test/$FULLNAMETEST.txt
 
-mv $FULLNAMETEST.indFake $FULLNAMETEST.ind
+mv $1.$2Test/$FULLNAMETEST.indFake $1.$2Test/$FULLNAMETEST.ind
 
-sed -i -n -e '/===========================================================================/,$p' $FULLNAMETEST.txt
+sed -i -n -e '/===========================================================================/,$p' $1.$2Test/$FULLNAMETEST.txt
 
 #./printInv.sh $1 > $1.txt
 
 
 echo Fase 4: Imprimir invariantes para formato de jconsume
-. ./spec.sh $FULLNAMETEST
+. ./spec.sh
