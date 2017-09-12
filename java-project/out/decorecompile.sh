@@ -23,9 +23,9 @@ MYPATH=`echo $1 | sed 's/\./\//g'`
 export CLASSPATH=/home/billy/Projects/git/jconsume-global/jconsume-global/asm-3.1.jar:/home/billy/Projects/git/jconsume/dependencies/sootlib/soot-2.5.0.jar:/home/billy/Projects/git/jconsume/dependencies/sootlib/sootclasses-2.5.0.jar:/usr/lib/jvm/java-7-oracle/jre/lib/rt.jar:$1.$2Test:.
 
 
-cp InstrumentedMethod.java sootOutput/dava/src/$MYPATH
-mv InstrumentedMethod.java $1.$2Test/$MYPATH
-touch InstrumentedMethod.java
+cp $1.$2Test/InstrumentedMethod.java sootOutput/dava/src/$MYPATH
+mv $1.$2Test/InstrumentedMethod.java $1.$2Test/$MYPATH
+touch $1.$2Test/InstrumentedMethod.java
 
 #cd $1.$2Test
 #for f in $1.$2Test/$MYPATH/*.class; do java soot.Main -f dava $f; done;

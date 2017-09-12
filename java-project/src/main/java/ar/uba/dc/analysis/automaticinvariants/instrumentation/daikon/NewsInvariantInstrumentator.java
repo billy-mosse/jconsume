@@ -214,12 +214,12 @@ public class NewsInvariantInstrumentator {
 		//Scene.v().addClass(IntrumentedMethodClass);
 		
 		
+		String fullOutputDir = outputDir + "/" + args[0];
 		String[] optsDefault = { 
 				"-app", 
 				"-f", "c", //J es jimple, j es jimp (jimple simplificado)
-				"-d",outputDir,
 				"-W", //Cambie w por W. Sera lo mismo? HACK TODO: revisar
-				
+				"-d", fullOutputDir,
 				"-java-version", "1.8",
 
 				//"-version",
@@ -298,9 +298,9 @@ public class NewsInvariantInstrumentator {
 			FileOutputStream streamIM = null;
 			if(optsDefault[2].equals("c") || optsDefault[2].equals("J"))
 				// streamIM = new  FileOutputStream(outputDir+"/InstrumentedMethod.jimple");
-				streamIM = new FileOutputStream(outputDir+"/InstrumentedMethod.java");
+				streamIM = new FileOutputStream(fullOutputDir+"/InstrumentedMethod.java");
 			else
-				streamIM = new FileOutputStream(outputDir+"/DummyInstrumentedMethod.jimple");
+				streamIM = new FileOutputStream(fullOutputDir+"/DummyInstrumentedMethod.jimple");
 			PrintStream outIM = new PrintStream(streamIM);
 			pwIM = new PrintWriter(outIM,true);
 			
@@ -314,7 +314,7 @@ public class NewsInvariantInstrumentator {
 				catch (Exception e) {
 				}
 			}
-			
+
 			soot.options.Options sootOpt =	soot.options.Options.v();
 		
 	        sootOpt.set_src_prec(soot.options.Options.src_prec_class);
@@ -324,8 +324,7 @@ public class NewsInvariantInstrumentator {
 	        sootOpt.set_main_class(args[0]);
 	        sootOpt.set_keep_line_number(true);
 	        
-			
-				        
+							        
 	        Scene.v().setSootClassPath(args[2]);
 	        
 
@@ -365,9 +364,9 @@ public class NewsInvariantInstrumentator {
 //			pwIM.flush();
 			
 			
-			FileOutputStream streamCS = new FileOutputStream("out/" + args[0] + ".cs");
-			FileOutputStream streamCC = new FileOutputStream("out/" + args[0] + ".cc");
-			FileOutputStream streamInductivesFakes = new FileOutputStream("out/" + args[0] + ".indFake");
+			FileOutputStream streamCS = new FileOutputStream(fullOutputDir + "/" + args[0] + ".cs");
+			FileOutputStream streamCC = new FileOutputStream(fullOutputDir + "/" + args[0] + ".cc");
+			FileOutputStream streamInductivesFakes = new FileOutputStream(fullOutputDir + "/" + args[0] + ".indFake");
 
 			PrintStream outCS = new PrintStream(streamCS);
 			PrintStream outCC = new PrintStream(streamCC);
