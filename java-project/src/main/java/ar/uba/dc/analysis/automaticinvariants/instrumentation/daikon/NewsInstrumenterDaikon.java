@@ -289,6 +289,8 @@ class NewsInstrumenterDaikon extends LoopFinder {
 
 	@Override
 	protected void internalTransform(Body body, String phaseName, Map options) {
+		synchronized (getInstance()) {
+			
 		if(!NewsInvariantInstrumentator.isInCG(body.getMethod()))
 			return;
 	
@@ -397,7 +399,7 @@ class NewsInstrumenterDaikon extends LoopFinder {
 		Iterator stmtIt2 = units.snapshotIterator();
 		Stmt s2 = skipNonInstrumentableStmts(units, codeInitVars, stmtIt2, isInit);
 		
-		
+		}		
 	}
 
 
