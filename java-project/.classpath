@@ -78,6 +78,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="/home/billy/.m2/repository/heros/heros/0.0.1-SNAPSHOT/heros-0.0.1-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="/home/billy/Downloads/herosclasses-trunk.jar"/>
 	<classpathentry kind="lib" path="/home/billy/Downloads/herosclasses-trunk-sources.jar"/>
 	<classpathentry kind="lib" path="/home/billy/Downloads/heros-trunk.jar"/>

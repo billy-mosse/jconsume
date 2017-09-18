@@ -20,19 +20,28 @@
 MYPATH=`echo $1 | sed 's/\./\//g'`
 
 
-export CLASSPATH=/home/billy/Projects/git/jconsume-global/jconsume-global/asm-3.1.jar:/home/billy/Projects/git/jconsume/dependencies/sootlib/soot-2.5.0.jar:/home/billy/Projects/git/jconsume/dependencies/sootlib/sootclasses-2.5.0.jar:/usr/lib/jvm/java-7-oracle/jre/lib/rt.jar:$1.$2Test:.
+export CLASSPATH=/home/billy/Projects/git/jconsume-global/jconsume-global/asm-3.1.jar:/home/billy/Projects/git/jconsume/dependencies/sootlib/soot-2.5.0.jar:/home/billy/Projects/git/jconsume/dependencies/sootlib/sootclasses-2.5.0.jar:/usr/lib/jvm/java-7-oracle/jre/lib/rt.jar:$1.$2/dava/src:$1.$2/:.
 
 
-cp $1.$2Test/InstrumentedMethod.java sootOutput/dava/src/$MYPATH
-mv $1.$2Test/InstrumentedMethod.java $1.$2Test/$MYPATH
-touch $1.$2Test/InstrumentedMethod.java
+
+
+mkdir -p $1.$2/dava/src/
+#cp $1.$2Test/InstrumentedMethod.java $1.$2Test/dava/src/
+
+
+mkdir -p $1.$2/dava/src/$MYPATH
+mv $1.$2/InstrumentedMethod.java $1.$2/dava/src/$MYPATH
+touch $1.$2/dava/src/InstrumentedMethod.java
 
 #cd $1.$2Test
 #for f in $1.$2Test/$MYPATH/*.class; do java soot.Main -f dava $f; done;
 
 #for f in $1.$2Test/$MYPATH/*.class; do echo "java soot.Main -f dava $1.${f##*/}"; java soot.Main -f dava $1.${f##*/};done;
 
-for f in $1.$2Test/$MYPATH/*.class; do g="${f##*/}"; h="${g%.*}"; java soot.Main -f dava $1.$h; done;
+
+#java soot.Main -f dava ar.uba.dc.daikon.Ins2 -d ar.uba.dc.daikon.Ins2
+
+for f in $1.$2/$MYPATH/*.class; do g="${f##*/}"; h="${g%.*}"; echo "java soot.Main -f dava $1.$h -d $1.$2"; java soot.Main -f dava $1.$h -d $1.$2; echo "Done;"; done;
 
 #java soot.Main -f dava $1.$2
 
@@ -40,10 +49,14 @@ for f in $1.$2Test/$MYPATH/*.class; do g="${f##*/}"; h="${g%.*}"; java soot.Main
 
 #java soot.Main -f dava ar.uba.dc.daikon.A
 
-javac -g sootOutput/dava/src/$MYPATH/*.java
+#quite
+cp ../src/main/examples/$MYPATH/$2Test.java $1.$2/dava/src/$MYPATH/
+
+#quite
+javac -g $1.$2/dava/src/$MYPATH/*.java
 
 
-#######################
+#######################	
 
 
 
