@@ -97,6 +97,10 @@ class NewsInstrumenterDaikon extends LoopFinder {
 	 * @param body
 	 * @return
 	 */
+	
+	//Este metodo obtiene los parametros del metodo (?)
+	//Creo que deberia partirlo en dos cosas: una que guarde los parametros para el bytecode
+	//y otro que guarde los enterizados
 	private ListDIParameters extractMethodParams(Body body)
 	{
 		ListDIParameters info2 = new ListDIParameters();
@@ -105,18 +109,41 @@ class NewsInstrumenterDaikon extends LoopFinder {
 		List lives = analisisVivas.getLiveInitialFlow();
 		
 		//hack feo....es realmente inductivesfilter el tipo?
+		//no entiendo que hace este if.
 		if(analisisVivas.getThisRef()!=null) // && body.getMethod().getName().indexOf("<init>")==-1
 		{
-			addParameter(body, info2, (InductivesFilter) analisisVivas, lives, analisisVivas.getThisRef(),analisisVivas.getThisRef());
+			addParameter(body, info2, (InductivesFilter) analisisVivas, lives, analisisVivas.getThisRef(),analisisVivas.getThisRef(), false);
 		}
 		for (Iterator iter = parameters.iterator(); iter.hasNext();) {
 			Local parameter = (Local) iter.next();
-			addParameter(body, info2, (InductivesFilter) analisisVivas, lives, parameter,parameter);
+			addParameter(body, info2, (InductivesFilter) analisisVivas, lives, parameter,parameter, false);
 		}
 		
 		return info2;
 	}
 	
+	
+	
+	private ListDIParameters getEnterizedFields(ListDIParameters args, Body body)
+	{
+		ListDIParameters info2 = new ListDIParameters();
+		GlobalLive analisisVivas = (GlobalLive) GLVMain.analysisCache.get(body.getMethod());
+		List parameters = analisisVivas.getParameters();
+		List lives = analisisVivas.getLiveInitialFlow();
+		
+		//hack feo....es realmente inductivesfilter el tipo?
+		//no entiendo que hace este if.
+		if(analisisVivas.getThisRef()!=null) // && body.getMethod().getName().indexOf("<init>")==-1
+		{
+			addParameter(body, info2, (InductivesFilter) analisisVivas, lives, analisisVivas.getThisRef(),analisisVivas.getThisRef(), true);
+		}
+		for (Iterator iter = parameters.iterator(); iter.hasNext();) {
+			Local parameter = (Local) iter.next();
+			addParameter(body, info2, (InductivesFilter) analisisVivas, lives, parameter,parameter, true);
+		}
+		
+		return info2;
+	}
 
 	
 	/**
@@ -127,8 +154,9 @@ class NewsInstrumenterDaikon extends LoopFinder {
 	 * @param parameter
 	 */
 	
-	//Esta es la papota
-	private void addParameter(Body body, ListDIParameters info2, InductivesFilter analisisVivas, List lives, Local parameter, Local parameterFilter) {
+	//Quiero agregar los valores enterizados de los parametros a una lista aparte
+	//pero sin modificar el bytecode!!
+	private void addParameter(Body body, ListDIParameters info2, InductivesFilter analisisVivas, List lives, Local parameter, Local parameterFilter, boolean enterized) {
 		if(lives!=null)
 		{
 			List liveVars= analisisVivas.liveVars(lives);
@@ -137,11 +165,20 @@ class NewsInstrumenterDaikon extends LoopFinder {
 			{
 				DIParameter dip=null;
 				List filter = analisisVivas.getDerivedVars(parameterFilter,lives);
+				
+				//que es este if?
 				if(filter.size()>0)
 				{
 					dip = null;
 				}
-				dip = DIParameterFactory.createDIParameter(parameter,filter,body,true);
+				if(enterized)
+				{
+					dip = DIParameterFactory.createDIParameter2(parameter,filter,body,true);
+				}
+				else
+				{
+					dip = DIParameterFactory.createDIParameter(parameter,filter,body,true);
+				}
 				if(dip!=null)
 					info2.add(dip);
 			}
@@ -308,7 +345,7 @@ class NewsInstrumenterDaikon extends LoopFinder {
 		
 		if(isMethodToSkip(sClass,body.getMethod()))
 			return;
-		if(body.getMethod().getDeclaringClass().toString().equals("VarTest"))
+		if(body.getMethod().getDeclaringClass().toString().equals("ar.uba.dc.analysis.automaticinvariants.VarTest"))
 			return;
 		
 		/*
@@ -483,9 +520,16 @@ class NewsInstrumenterDaikon extends LoopFinder {
 		for(Iterator itParam = lParameters.iterator(); itParam.hasNext(); )
 		{
 			DIParameter param = (DIParameter)itParam.next();
+			String s = param.getName();
+			if(s.equals("n"))
+			{
+				System.out.println("Holis");
+			}
 			DIParameter  varInit=null;
 
 			Collection filter = new Vector();
+			
+			//TODO por aca cerca hay algo de derived vars que esta re de mas
 			if(param instanceof DI_Object)
 			{
 				DI_Object paramObject  =(DI_Object)param;
@@ -646,11 +690,13 @@ class NewsInstrumenterDaikon extends LoopFinder {
 			// Si la parte izq es de tipo iterator...
 			if(Utils.isIterator(lv) )
 			{
+				
+				//No se donde carajo hace un ++ para el iterador!!!!!
 				DI_Iterator it_cont  = new DI_Iterator((Local)lv);
 				//DI_Iterator it_cont  = new DI_Iterator("_it",IntType.v());
 				if(!extraParams.contains(it_cont))
 				{
-					// extraParams.add(it_cont);
+					 extraParams.add(it_cont);
 				}
 				if(as.containsInvokeExpr() || Utils.isIterator(rv))
 				{
@@ -676,11 +722,11 @@ class NewsInstrumenterDaikon extends LoopFinder {
 					// hasta aqui
 					//List code = it_cont.codeForVar();
 					
-//					if(loopHeader!=null)
-//					{
-//						units.insertBefore(code, loopHeader);
-//					}
-//					else
+					if(loopHeader!=null)
+					{
+						units.insertBefore(code, loopHeader);
+					}
+					else
 						units.insertBefore(code, s);
 					isIterator = true;
 				}
@@ -789,6 +835,9 @@ class NewsInstrumenterDaikon extends LoopFinder {
 	}
 
 	
+	//Este getCallArgs deberia devolver valores enterizados de los relevant parameters para el .spec
+	//no vuelve a ser usado hasta generar el spec? si, lo usamos justo despues...
+	//deberia tener de parametro iAna o el initialFlow o algo para poder hacer las cosas bien
 	private ListDIParameters getCallArgs(Stmt s, Body body, InductiveVariablesInfo IVInfo) {
 		
 		ListDIParameters info2 = new ListDIParameters();
@@ -821,7 +870,7 @@ class NewsInstrumenterDaikon extends LoopFinder {
 		{
 			InstanceInvokeExpr iie = (InstanceInvokeExpr)ie;
 			Value argThis=iie.getBase();
-			addParameter(body, info2, (InductivesFilter) analisisVivasCallee, livesCallee, (Local)argThis,analisisVivasCallee.getThisRef());
+			addParameter(body, info2, (InductivesFilter) analisisVivasCallee, livesCallee, (Local)argThis,analisisVivasCallee.getThisRef(), false);
 		}
 		i=0;
 		for (Iterator iter = args.iterator(); iter.hasNext();) {
@@ -829,7 +878,7 @@ class NewsInstrumenterDaikon extends LoopFinder {
 			if(arg instanceof Local)
 			{
 				Local lArg = (Local)arg;
-				addParameter(body, info2, (InductivesFilter) analisisVivasCallee, livesCallee, lArg,(Local)parameters.get(i));
+				addParameter(body, info2, (InductivesFilter) analisisVivasCallee, livesCallee, lArg,(Local)parameters.get(i), false);
 			}
 			else
 			{
@@ -845,7 +894,8 @@ class NewsInstrumenterDaikon extends LoopFinder {
 		return info2;
 	}
 
-	
+	//Un pequeño comentario: antes primero haciamos el analisis de relevantes
+	//y despues enterizabamos los fields "encontrados"
 	
 	private List instrumentarCSoCallSite(String tipo, int orden, Stmt s,
 			GlobalLive analisisVivas,
@@ -888,7 +938,7 @@ class NewsInstrumenterDaikon extends LoopFinder {
 			for (Iterator iter = localVivas.iterator(); iter.hasNext();) {
 				Local viva = (Local) iter.next();
 				// OJO addParameter(body, paramsIntru, analisisInductivas, vivas, viva,viva);
-				addParameter(body, paramsIntru, (InductivesFilter) analisisVivas, vivas, viva,viva);
+				addParameter(body, paramsIntru, (InductivesFilter) analisisVivas, vivas, viva,viva, false);
 			}
 		}
 		else
@@ -969,10 +1019,16 @@ class NewsInstrumenterDaikon extends LoopFinder {
 
 			
 			// ListDIParameters args = getCallArgs(s,body,null);
+			//RELEVANTES Aca es donde tengo que agregar las relevantes enterizadas
+			//pero para el binding?
+			//ojo que 
+			//no, ccArgs es para los metodos
 			ListDIParameters args = getCallArgs(s,body,null);
 			
+			ListDIParameters enterizedArgs = getEnterizedFields(args, body);
 			
-			ccArgsMap.put(insSite, args.clone());
+			
+			ccArgsMap.put(insSite, enterizedArgs.clone());
 			
 			// ccArgsMap.put(insSite, argsMapList);
 			
@@ -1018,6 +1074,12 @@ class NewsInstrumenterDaikon extends LoopFinder {
 			//	Agrego los params_init al metodo a instrumentar
 			allParams.addAll(paramsIntru);
 			allParams.addAll(lParametersInit);
+			
+			//no tengo que agregar solo los parameters_init
+			//sino tambien los parameters
+			//asi tengo la igualdad r = r_init en el invariante
+			//(ejemplo de Ins19)
+			allParams.addAll(lParameters);
 			
 			
 			// Agrega los parametros extras (por ejemplo, iteradores)

@@ -96,6 +96,8 @@ public class SpecInvariantWriter {
 		if (args.length > 1)
 			siw.destinationPath = args[1];
 
+		
+		System.out.println(siw.destinationPath);
 		siw.fetchInvariants();
 		// TO-DO: sacar el nombre de la clase del string
 
@@ -429,6 +431,10 @@ public class SpecInvariantWriter {
 			writeCallSiteFooter(cs);
 		}
 
+		
+		//Algo importante: a partir del archivo .cc genera el binding
+		//en el .cc deberian aparecer las relevantes, de alguna manera, en el orden correcto
+		//uh esto no va andar
 		private String generateCallInvariant(CallSiteMapInfo ccInfo, String inv, Set newInductives) {
 			StringBuffer callInvariant = new StringBuffer(inv);
 			if (ccInfo != null) // && ccInfo.methodCallee.indexOf("add(")!=-1)
@@ -873,17 +879,35 @@ public class SpecInvariantWriter {
 			if (l2.indexOf("HG") != -1) {
 				System.out.print("");
 			}
+			
+			if(l2.equals("ar_uba_dc_daikon_Ins0_00013"))
+			{
+				System.out.println("hola");
+			}
+			
 			String inv = ir.getCreationSiteInv(l2);
 			// Se saco el prefijo de clase y nro de linea que no
 			// me hace falta
 			if (inv != null) {
 				inv = removePrefix(prefijo, inv);
 			}
+			
+			
+			if(inv.contains("inargs"))
+			{
+				System.out.println("hola");
+			}
+			
 			return inv;
 		}
 
+		//dejo este metodo aparte porque seguro voy a tener que hacer cosas con las _f_
 		private String removePrefix(String prefijo, String inv) {
-			String[] invList = inv.trim().split(prefijo + "_");
+			
+			inv = inv.replaceAll(prefijo + "_","");
+			
+			//TODO: cambiar _f_ por __ para los fields
+			/*String[] invList = inv.trim().split(prefijo + "_");
 			inv = "";
 			for (int i = 0; i < invList.length; i++) {
 				String myInv = invList[i].trim();
@@ -892,7 +916,7 @@ public class SpecInvariantWriter {
 						myInv = "_" + myInv;
 					inv += myInv;
 				}
-			}
+			}*/
 			return inv;
 		}
 
@@ -947,11 +971,19 @@ public class SpecInvariantWriter {
 			for (int i = 0; i < invList.length; i++) {
 				String s = invList[i];
 				
-				//Hack horrible
-				if(s.contains("has") || s.contains("\"") || s.contains("contains") || s.contains("elements"))
-					continue;
+				if(s.contains("inargs"))
+				{
+					System.out.println("Hola!");
+				}
 
-				s = s.replace(".", "__");
+				if(!s.contains("$t."))
+					s = s.replace(".", "__");
+				
+				
+				/*if(s.contains("$t"))
+				{
+					System.out.println("hola");
+				}*/
 				s = s.replace("(", "__");
 				s = s.replace(")", "__");
 				s = s.replace("[", "__");

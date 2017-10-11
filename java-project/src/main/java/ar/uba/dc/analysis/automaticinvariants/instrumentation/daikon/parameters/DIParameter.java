@@ -92,7 +92,9 @@ public abstract class DIParameter  {
 	{
 		List res = new Vector();
 		boolean b = hasDerivedVariables();
-		if(false)
+		
+		//Puedo preguntar si es iterator tambien
+		if(b)
 			res = getDerivedVariables().toList();
 		else
 		{
@@ -210,6 +212,7 @@ public abstract class DIParameter  {
 			return null;
 	}
 	
+	//algun dia voy a entender como implementar un buen equals
 	// Me importa solo la local para identificar un parametro
 	/* (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)
@@ -217,8 +220,8 @@ public abstract class DIParameter  {
 	@Override
 	public boolean equals(Object arg0) {
 		DIParameter dip =(DIParameter) arg0;
-		return this.getName().equals(dip.getName());
-		// return this.var.equals(dip.var) && nameVar.equals(dip.nameVar);
+		//return this.getName().equals(dip.getName());
+		 return this.var.equals(dip.var) && nameVar.equals(dip.nameVar) && this.getName().equals(dip.getName()) && this.getClass().equals(dip.getClass());
 		// return this.getLocal().equals(dip.getLocal());
 	}
 	/* (non-Javadoc)

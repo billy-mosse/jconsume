@@ -72,9 +72,15 @@ public class InvariantReader {
 		String res="";
 		for (Iterator iter = l.iterator(); iter.hasNext();) {
 			String element = (String) iter.next();
+			
+			//Otro hack horrible
+			if(element.contains("has") || element.contains("\"") || element.contains("contains") || element.contains("elements") || element.contains(" in ") || element.contains(".getClass()"))
+			{
+				continue;
+			}
+			
+			res+=", ";
 			res+=element;
-			if(iter.hasNext())
-				res+=", ";
 		}
 		return res;
 	}

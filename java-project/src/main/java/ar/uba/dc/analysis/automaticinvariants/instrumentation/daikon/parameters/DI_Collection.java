@@ -31,6 +31,10 @@ public class DI_Collection extends DI_Sizeable {
 	public DI_Collection(Local var) {
 		super(var);
 	}
+	
+	public DI_Collection(Local var, boolean _) {
+		super(var, true);
+	}
 	/**
 	 * @param vn
 	 * @param type

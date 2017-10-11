@@ -157,7 +157,10 @@ public class NewsInvariantInstrumentator {
 			System.out.println("Syntax: NewsInvariantInstrumentator[soot options]");
 			System.exit(0);
 		}
-		Scene.v().addBasicClass("VarTest",SootClass.SIGNATURES);
+		
+		Scene.v().addBasicClass("ar.uba.dc.analysis.automaticinvariants.VarTest",SootClass.SIGNATURES);
+		
+		//Scene.v().addBasicClass("VarTest",SootClass.SIGNATURES);
 		//Scene.v().addBasicClass("ar.uba.dc.daikon.RichNumberPublic",SootClass.SIGNATURES);
 		
         //EdgeFilter ef = new EdgeFilter(pred);
@@ -215,20 +218,35 @@ public class NewsInvariantInstrumentator {
 		
 		
 		String fullOutputDir = outputDir + "/" + args[0];
+		//System.out.println(fullOutputDir);
 		String[] optsDefault = { 
 				"-app", 
 				"-f", "c", //J es jimple, j es jimp (jimple simplificado)
-				"-W", //Cambie w por W. Sera lo mismo? HACK TODO: revisar
 				"-d", fullOutputDir,
-				"-java-version", "1.8",
 
 				//"-version",
 				"-p", "cg", "enabled:true",
+				
+				
+				//vamos a sacarlo y poner full-resolver
+				"-w", //w es whole program  mode. W es optimizations
+				//"-ignore-resolution-errors",
+				
+				
+				"-write-local-annotations",
+				//"full-resolver",
+				"-validate", //a ver que onda
 				 
+				
+				 //lo deje a ver que pasa
+				 "-asm-backend",
 				 
-				 //"-asm-backend",
+				 //This option sets the JDK version of the standard library being analyzed so that Soot can simulate the native methods in the specific version of the library.
 				 "-p", "cg", "jdkver:8", //lo saque a ver que pasa.
 				 
+				 //verion java del output
+				"-java-version", "1.8",
+
 				 
 				//"-version",
 				 
@@ -259,14 +277,76 @@ public class NewsInvariantInstrumentator {
 				"-p","jb.dae", "enabled:false",
 				"-p","jb.ule", "enabled:false",
 				"-p","jb.cp", "enabled:false",
+				
+
+				//"-p", "jop", "enabled:false",
+				//"-p", "jop.bcm", "enabled:false",
+				//"-p", "jop.lcm", "enabled:false",
+				
+				// Only Stack Locals (only-stack-locals)
+				//(default value: false)
+				//Only eliminate dead assignments to locals that represent stack locations in the original bytecode.
+
+				
+				 //The Dead Assignment Eliminator eliminates assignment statements to locals whose values are not subsequently used,
+				 //unless evaluating the right-hand side of the assignment may cause side-effects. 
+				"-p","jop.dae","enabled:false",
+				
+				
 				//"-version",
-				"-p", "jj",	"use-original-names:true", 
+				//"-p", "jj",	"use-original-names:true", 
+				
+				// The Dead Assignment Eliminator eliminates assignment statements to locals
+				//whose values are not subsequently used,
+				//unless evaluating the right-hand side of the assignment may cause side-effects. 
 				"-p","jj.dae", "enabled:false",
+				
+				
+				/*************************************/
+
+				"-p", "jop.uce1", "enabled:false",
+				"-p", "jop.cpf", "enabled:false",
+				"-p", "jop.cp", "enabled:false",
+				"-p", "jop.uce2", "enabled:false",
+				
+				
+				/*************************************/
+				
+				// This phase performs cascaded copy propagation.
+				//If the propagator encounters situations of the form: A: a = ...; ... B: x = a; ... C: ... = ... x;
+				//where a and x are each defined only once (at A and B, respectively),
+				//then it can propagate immediately without checking between B and C for redefinitions of a.
+				//In this case the propagator is global. Otherwise, if a has multiple definitions
+				//then the propagator checks for redefinitions and propagates copies only within extended basic blocks. 
+				"-p", "jj.dae", "enabled:false",
+				
+				
+				// The Unused Local Eliminator removes any unused locals from the method. 
 				 "-p","jj.ule", "enabled:false",
 				
+				 //Provides link tags at a statement to all of the satements dominators.
+				 //no se que son los dominators
 				 "-p","jap.dmt","enabled:true",
-				 "-p", "jb.ulp", "unsplit-original-locals:false",
-				 "-p", "jj.ulp", "unsplit-original-locals:false"
+				 
+				 //Los cambie a true
+				 
+				 // The Unsplit-originals Local Packer executes only when the `use-original-names' option is chosen for the `jb' phase.
+				 //The Local Packer attempts to minimize the number of local variables required in a method
+				 //by reusing the same variable for disjoint DU-UD webs
+				 //Conceptually, it is the inverse of the Local Splitter.
+				 // Use the variable names in the original source as a guide when determining how to share local variables among non-interfering variable usages.
+				 //This recombines named locals which were split by the Local Splitter. 
+				 "-p", "jb.ulp", "unsplit-original-locals:true",
+				 
+				 
+				 // The Unsplit-originals Local Packer executes only when the `use-original-names' option is chosen for the `jb' phase.
+				 //The Local Packer attempts to minimize the number of local variables required in a method
+				 //by reusing the same variable for disjoint DU-UD webs.
+				 //Conceptually, it is the inverse of the Local Splitter.
+				 // Use the variable names in the original source as a guide when determining how to share local variables among non-interfering variable usages.
+				 // This recombines named locals which were split by the Local Splitter. 
+				 //no entiendo la diferencia con la option de jb.ulp
+				 "-p", "jj.ulp", "unsplit-original-locals:true"
 				
 				//TODO: mañana cambiar esto por args[0] y chequear que anda
 				//"-main-class", args[0]/*, args[0]*/
@@ -284,6 +364,11 @@ public class NewsInvariantInstrumentator {
 			//	new Transform("jtp.prueba", TestLV.v()));
 		
 		// Elimino el analisis de inductivas
+		
+		
+		//Esto es multithreading?
+		//Probar wjtp
+		//Esta andando devolver dava en java 7!
 		PackManager.v().getPack("jtp").add(
 				new Transform("jtp.inductives", InductivesFinder.v()));
 		
@@ -318,11 +403,12 @@ public class NewsInvariantInstrumentator {
 			soot.options.Options sootOpt =	soot.options.Options.v();
 		
 	        sootOpt.set_src_prec(soot.options.Options.src_prec_class);
-	        sootOpt.set_java_version(soot.options.Options.java_version_1_8);
+	      //  sootOpt.set_java_version(soot.options.Options.java_version_1_7);
 	        sootOpt.set_asm_backend(true);      
 	        sootOpt.set_keep_offset(true);
 	        sootOpt.set_main_class(args[0]);
 	        sootOpt.set_keep_line_number(true);
+	        sootOpt.set_write_local_annotations(true);
 	        
 							        
 	        Scene.v().setSootClassPath(args[2]);
@@ -342,7 +428,7 @@ public class NewsInvariantInstrumentator {
 			if(mainClass.contains("."))
 			{
 				mainClass = mainClass.substring(0, mainClass.lastIndexOf("."));
-				pwIM.println("package " + mainClass + ";");
+				//pwIM.println("package " + mainClass + ";");
 			}
 			
 			

@@ -67,6 +67,36 @@ public class DIParameterFactory {
 		
 		return null;
 	}
+	
+	public static DIParameter createDIParameter2(Local var, Collection filter, Body body, boolean recursive)
+	{
+		if(isCollection(var))
+			return new DI_Collection(var, true);
+		else if(isString(var))
+			return new DI_String(var);
+		else if(isArray(var))
+			return new DI_Array(var);
+		else if(isDouble(var))
+			return new DI_Double(var);
+		else if(isLong(var))
+			return new DI_Long(var);
+		else if(isByte(var))
+			return new DI_Byte(var);
+		else if(isNum(var))
+			return new DI_Int(var);
+		else if(isInteger(var))
+			return new DI_Integer(var);
+//		else if(isIterator(var))
+//			return new DI_Iterator(var);
+		else if(isObject(var) && recursive)
+		{
+			SootClass c = Scene.v().getSootClass(var.getType().toString());
+			return new DI_Object(var, c, body, filter, true);
+		}
+		
+		return null;
+	}
+	
 	public static DIParameter createDIParameter(String vn, Type t, Collection filter, Body body, boolean recursive)
 	{
 		if(isTypeCollection(t))

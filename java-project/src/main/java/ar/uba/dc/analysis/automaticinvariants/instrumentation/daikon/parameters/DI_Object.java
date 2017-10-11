@@ -92,6 +92,15 @@ public class DI_Object extends DIParameter {
 		// TODO Auto-generated constructor stub
 	}
 	
+	public DI_Object(Local var,  SootClass c, Body body, Collection filter, boolean _) {
+		super(var);
+		thisRef = var;
+		this.c = c;
+		generateFilteredFieldReferences2(c,body,thisRef,filter);
+		System.out.print("CHAPA:"+var+" "+c+" "+derivedVars);
+		// TODO Auto-generated constructor stub
+	}
+	
 	private void generateFilteredFieldReferences(SootClass c, Body body, Local thisRef, Collection filter) {
 		
 		//System.out.println("DiegoClass:"+c.getName()+" "+fields.size()+" "+fields);
@@ -123,14 +132,66 @@ public class DI_Object extends DIParameter {
 						var = Jimple.v().newStaticFieldRef(f.makeRef());
 						thisRefName = c.getName().replaceAll("\\.","_");
 					}
-					if(Utils.isPossibleArgument(var))
+					
+					//saque el && false
+					if(Utils.isPossibleArgument(var) && false)
 					{
 						hasFields = true; 
-						/*DI_Field fieldParam = new DI_Field(f, thisRef,null, body);
+						DI_Field fieldParam = new DI_Field(f, thisRef,null, body);
 						derivedVars.add(fieldParam);
 						fieldParam.setFather(this);
 						if(!analyzedfields.contains(f))
-							analyzedfields.add(f);*/
+							analyzedfields.add(f);
+					}
+				}
+				
+			}
+		}
+		return;
+	}
+	
+	
+private void generateFilteredFieldReferences2(SootClass c, Body body, Local thisRef, Collection filter) {
+		
+		//System.out.println("DiegoClass:"+c.getName()+" "+fields.size()+" "+fields);
+		//	para cada campo que es int, collection, array o String habria que
+		// 	generar una variable nueva, con el codigo que obtiene el size y usarlo de
+		// argumento
+		derivedVars.clear();
+		for (Iterator itChain = filter.iterator(); itChain.hasNext();) {
+
+			// Value v= (Value)itChain.next();
+			
+			// if(v instanceof FieldRef)
+			{
+				// FieldRef fieldRef = (FieldRef)v;
+				SootField f = (SootField)itChain.next();
+				// SootField f = fieldRef.getField();
+				String thisRefName;
+				FieldRef var;
+				
+				if(!f.isPrivate())
+				{
+					if(!f.isStatic()  && thisRef!=null) //Lo agregue yo el isPrivate. Billy
+					{
+						var = Jimple.v().newInstanceFieldRef(thisRef, f.makeRef());
+						thisRefName = thisRef.getName();
+					}
+					else
+					{
+						var = Jimple.v().newStaticFieldRef(f.makeRef());
+						thisRefName = c.getName().replaceAll("\\.","_");
+					}
+					
+					//saque el && false
+					if(Utils.isPossibleArgument(var))
+					{
+						hasFields = true; 
+						DI_Field fieldParam = new DI_Field(f, thisRef,null, body);
+						derivedVars.add(fieldParam);
+						fieldParam.setFather(this);
+						if(!analyzedfields.contains(f))
+							analyzedfields.add(f);
 					}
 				}
 				
@@ -243,7 +304,10 @@ public class DI_Object extends DIParameter {
 	 */
 	@Override
 	public boolean hasDerivedVariables() {
-		return true;
+		
+		//Por ahora no enterizamos objetos
+		//capaz haga falta solo para los parametros
+		return false;
 	}
 	/**
 	 * @return Returns the fields.

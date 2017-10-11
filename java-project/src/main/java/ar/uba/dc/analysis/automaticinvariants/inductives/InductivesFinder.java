@@ -44,87 +44,115 @@ public class InductivesFinder extends LoopFinder implements InductivesFilter{
 	
 	public static Map analysisCache = new HashMap(); 
 
+   /* @Override
+    protected void internalTransform(String phaseName, Map options) {
+        SootClass sootClass = Scene.v().getSootClass("java.net.Socket");
+        System.out.println("Modificando a public");
+ 
+        for (SootField sootField : sootClass.getFields()){
+            sootField.setModifiers(Modifier.PUBLIC);
+        }
+        for (SootMethod method : sootClass.getMethods()){
+            System.out.println("Modificando: " + method.getName());
+            method.setModifiers(Modifier.PUBLIC);
+        }
+    }*/
+    
+	public static InductivesFinder getInstance() {
+		return instance;
+	}
+	
+	/**
+	 * Creo que este metodo consigue las relevantes para cada statement
+	 * Lo que yo deberia hacer es...guardar los parametros relevantes aparte? como hago eso?
+	 * puedo ir guardando aparte cada vez que aparece un field de parametro que es "inductivo"
+	 */
 	@Override
 	protected void internalTransform(Body body, String arg1, Map arg2) {
 		
-		if(!NewsInvariantInstrumentator.isInCG(body.getMethod()))
-			return;
-		super.internalTransform(body, arg1, arg2);
-		SootClass sClass = body.getMethod().getDeclaringClass();
-		
-		Chain units = body.getUnits();
-		
-		if(body.getMethod().getDeclaringClass().toString().equals("VarTest"))
-			return;
-		synchronized (this) {
-			if (!Scene.v().getMainClass().declaresMethod(
-					"void main(java.lang.String[])"))
-				throw new RuntimeException("couldn't find main() in mainClass");
-		}
+		//agrego esto para ver si el error que tira es porque NewsInstrumenterDaikon necesita algo de esto
+		//y como los jtp se corren en paralelo se termina rompiendo porque algo devuelve null
+		synchronized (getInstance()) {			
 
-		System.out.println("Analizando..." + body.getMethod().toString());
-		
-		// Perform Live Variables Analysis for each stmt of this method 
-		CompleteUnitGraph unitGraph = new CompleteUnitGraph(body);
-		BlockGraph blockGraph = new ClassicCompleteBlockGraph(body);
-		
-		if(body.getMethod().toString().indexOf("computeMST")!=-1)
-		{
-			System.out.println("Hola");
-		}
-		
-		GlobalLive gl = new GlobalLive(unitGraph);
-		
-		InductivesAnalysis iAna  = new InductivesAnalysis(unitGraph,loops(),gl, blockGraph);
-		
-		System.out.println("Metodo:"+body.getMethod().getSignature());
-		
-		// System.out.println(blockGraph);
-		
-		for (Iterator iter = units.snapshotIterator(); iter.hasNext();) {
-			Stmt s = (Stmt) iter.next();
-			String is = Utils.getLineNumber(s);
-			String prefijo = body.getMethod().getDeclaringClass().toString();
+			if(!NewsInvariantInstrumentator.isInCG(body.getMethod()))
+				return;
+			super.internalTransform(body, arg1, arg2);
+			SootClass sClass = body.getMethod().getDeclaringClass();
 			
-			FlowSet bs = (FlowSet)iAna.getFlowBefore(s);
-			FlowSet as = (FlowSet)iAna.getFlowAfter(s);
+			Chain units = body.getUnits();
 			
-			inductivesBefore.put(s,Collections.unmodifiableList(bs.toList()));
-			inductivesAfter.put(s,Collections.unmodifiableList(as.toList()));
-
-			
-			System.out.println("--");
-			System.out.println("Vivas:"+gl.getLiveLocalsBefore(s));
-			System.out.println("--");
-			System.out.println("b:"+getInductivesBefore(s));
-			System.out.println(prefijo+" "+is+" "+s);
-			System.out.println("a:"+getInductivesAfter(s));
-			System.out.println("--");
-			
-			
-			
-			InductivesFinderMain.inductivesMap.put(prefijo+"_"+is,bs.toList());
-			InductivesFinderMain.inductivesSTMTMap.put(s,bs.toList());
-			
-		}
-		/*
-		for (Iterator iter = units.snapshotIterator(); iter.hasNext();) {
-			Stmt s = (Stmt) iter.next();
-			System.out.println("-------------------");
-			System.out.print(Utils.getLineNumber(s)+" STMT: "+s+" ");
-			if(s instanceof IfStmt)
-			{
-				IfStmt ifs = (IfStmt)s;
-				System.out.print(Utils.getLineNumber( ifs.getTarget()) +" ");
+			if(body.getMethod().getDeclaringClass().toString().equals("ar.uba.dc.analysis.automaticinvariants.VarTest"))
+				return;
+			synchronized (this) {
+				if (!Scene.v().getMainClass().declaresMethod(
+						"void main(java.lang.String[])"))
+					throw new RuntimeException("couldn't find main() in mainClass");
 			}
-			if(isLoopHeader(s))
-				System.out.println(" ES HEADER!");
-			else
-				System.out.println();
+	
+			System.out.println("Analizando..." + body.getMethod().toString());
+			
+			// Perform Live Variables Analysis for each stmt of this method 
+			CompleteUnitGraph unitGraph = new CompleteUnitGraph(body);
+			BlockGraph blockGraph = new ClassicCompleteBlockGraph(body);
+			
+			if(body.getMethod().toString().indexOf("computeMST")!=-1)
+			{
+				System.out.println("Hola");
+			}
+			
+			GlobalLive gl = new GlobalLive(unitGraph);
+			
+			InductivesAnalysis iAna  = new InductivesAnalysis(unitGraph,loops(),gl, blockGraph);
+			
+			System.out.println("Metodo:"+body.getMethod().getSignature());
+			
+			
+			// System.out.println(blockGraph);
+			
+			for (Iterator iter = units.snapshotIterator(); iter.hasNext();) {
+				Stmt s = (Stmt) iter.next();
+				String is = Utils.getLineNumber(s);
+				String prefijo = body.getMethod().getDeclaringClass().toString();
+				
+				FlowSet bs = (FlowSet)iAna.getFlowBefore(s);
+				FlowSet as = (FlowSet)iAna.getFlowAfter(s);
+				
+				inductivesBefore.put(s,Collections.unmodifiableList(bs.toList()));
+				inductivesAfter.put(s,Collections.unmodifiableList(as.toList()));
+	
+				
+				System.out.println("--");
+				System.out.println("Vivas:"+gl.getLiveLocalsBefore(s));
+				System.out.println("--");
+				System.out.println("b:"+getInductivesBefore(s));
+				System.out.println(prefijo+" "+is+" "+s);
+				System.out.println("a:"+getInductivesAfter(s));
+				System.out.println("--");
+				
+				
+				
+				InductivesFinderMain.inductivesMap.put(prefijo+"_"+is,bs.toList());
+				InductivesFinderMain.inductivesSTMTMap.put(s,bs.toList());
+				
+			}
+			/*
+			for (Iterator iter = units.snapshotIterator(); iter.hasNext();) {
+				Stmt s = (Stmt) iter.next();
+				System.out.println("-------------------");
+				System.out.print(Utils.getLineNumber(s)+" STMT: "+s+" ");
+				if(s instanceof IfStmt)
+				{
+					IfStmt ifs = (IfStmt)s;
+					System.out.print(Utils.getLineNumber( ifs.getTarget()) +" ");
+				}
+				if(isLoopHeader(s))
+					System.out.println(" ES HEADER!");
+				else
+					System.out.println();
+			}
+			*/
+			analysisCache.put(body.getMethod(), this);
 		}
-		*/
-		analysisCache.put(body.getMethod(), this);
-		
 	}
 	
 	boolean isLoopHeader(Stmt s)

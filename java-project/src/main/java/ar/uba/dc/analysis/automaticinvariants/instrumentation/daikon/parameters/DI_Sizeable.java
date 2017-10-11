@@ -21,7 +21,7 @@ public class DI_Sizeable extends DIParameter {
 	/**
 	 * @param var
 	 */
-	//DI_Int sVar;
+	DI_Int sVar;
 	public DI_Sizeable(Local var) {
 		super(var);
 		String vn=var.getName();
@@ -31,6 +31,18 @@ public class DI_Sizeable extends DIParameter {
 		//	vn =  "size"+vn;
 		//sVar = new DI_Int(vn);
 		//this.derivedVars.add(sVar);
+		
+	}
+	
+	public DI_Sizeable(Local var, boolean _) {
+		super(var);
+		String vn=var.getName();
+		if(!vn.startsWith("_f_"))
+			vn =  "size_"+vn;
+		else
+			vn =  "size"+vn;
+		sVar = new DI_Int(vn);
+		this.derivedVars.add(sVar);
 		
 	}
 

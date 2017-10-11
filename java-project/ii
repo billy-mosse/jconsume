@@ -10,4 +10,4 @@ JAVA4BIN=$JAVA4HOME/bin
 #/home/billy/Projects/git/jconsume/dependencies/sootlib/sootclasses.jar:/home/billy/Projects/git/jconsume-global/jconsume-global/jdom.jar:/home/billy/Projects/git/jconsume/dependencies/sootlib/jasminclasses-2.4.0.jar:/home/billy/Projects/git/jconsume/dependencies/sootlib/polyglotclasses-1.3.5.jar:/home/billy/Projects/git/jconsume-global/jconsume-global/bin/:
 
 
-$JAVA4BIN/java -cp $CLASSPATH -Xmx400m ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.NewsInvariantInstrumentator $FULLNAMETEST -soot-classpath /usr/lib/jvm/java-8-oracle/jre/lib/rt.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jce.jar:/home/billy/Projects/git/jconsume/java-project/src/main/examples:/home/billy/Projects/git/jconsume/java-project/target/classes
+$JAVA4BIN/java -cp $CLASSPATH -Xmx400m ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.NewsInvariantInstrumentator $FULLNAMETEST -soot-classpath /usr/lib/jvm/java-7-oracle/jre/lib/rt.jar:/usr/lib/jvm/java-7-oracle/jre/lib/jce.jar:/home/billy/Projects/git/jconsume/java-project/src/main/examples:/home/billy/Projects/git/jconsume/java-project/target/classes
