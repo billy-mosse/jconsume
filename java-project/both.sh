@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+set -e
+
+
 die() {
 
 echo "$1" 
@@ -9,15 +12,15 @@ exit 1
 }
 
 
-JCONSUME_GLOBAL_PATH=/home/billy/Projects/git/jconsume-global/jconsume-global
+#JCONSUME_GLOBAL_PATH=/home/billy/Projects/git/jconsume-global/jconsume-global
 JCONSUME_PATH=/home/billy/Projects/git/jconsume/java-project
 
 
-cd $JCONSUME_GLOBAL_PATH
+#cd $JCONSUME_GLOBAL_PATH
 
-sh doAll.sh $1 $2 $3
+#sh doAll.sh $1 $2 $3
 
-cd $JCONSUME_PATH
+sh invariants_IM.sh $1 $2 $3
 
 sh doAll.sh "--program" $1.$2 "--ir" "--memory"
 
