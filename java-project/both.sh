@@ -22,7 +22,7 @@ JCONSUME_PATH=/home/billy/Projects/git/jconsume/java-project
 
 sh invariants_IM.sh $1 $2 $3
 
-sh doAll.sh "--program" $1.$2 "--ir" "--memory"
+sh memory.sh "--program" $1.$2 "--ir" "--memory"
 
 
 # $1 es NombrePrograma. La idea es que haya un Test que lo llame 100 veces.
