@@ -1,5 +1,7 @@
 Fecha: 21/12/2010 - Autores: Matias Grunberg y Gaston Krasny
 
+Fecha último update: 14/09/2017 - cómo pasa el tiempo. Autor: Guillermo Mosse
+
 Introduccion
 ============
 
