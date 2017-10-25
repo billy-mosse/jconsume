@@ -5,7 +5,7 @@
 echo Ejecutando Chicory
 
 #CHICORY=/home/billy/Projects/git/jconsume-global/jconsume-global/utils/daikon/ChicoryPremain.jar
-DAIKON_JAR=/home/billy/Downloads/daikon/daikon-5.5.2/daikon.jar
+DAIKON_JAR=/home/billy/Programs/daikon/daikon-5.5.14/daikon.jar
 
 #DAIKON_JAR=../utils/daikon/daikon4.jar
 
@@ -23,7 +23,7 @@ DAIKON_JAR=/home/billy/Downloads/daikon/daikon-5.5.2/daikon.jar
 
 
 
-CLASSPATH=/home/billy/Programs/daikon/daikon-5.5.2/daikon.jar:/usr/lib/jvm/java-8-oracle/jre/bin/jre/lib/rt.jar:/usr/lib/jvm/java-8-oracle/jre/bin/lib/tools.jar:/home/billy/Projects/git/jconsume/java-project/out/$1/
+CLASSPATH=/home/billy/Programs/daikon/daikon-5.5.14/daikon.jar:/usr/lib/jvm/java-8-oracle/jre/bin/jre/lib/rt.jar:/usr/lib/jvm/java-8-oracle/jre/bin/lib/tools.jar:/home/billy/Projects/git/jconsume/java-project/out/$1/
 
 
 #echo "DynComp"
@@ -41,7 +41,8 @@ echo "Chicory"
 # la verdad no estoy seguro, porque hice la prueba y no lo pisa
 # pero no estoy seguro de que hace exactamente, pese a la descripcion de la pagina
 #--instrument-clinit?
-java -cp $CLASSPATH daikon.Chicory "--output-dir=./daikon-output" "--ppt-select-pattern=InstrumentedMethod.*:::ENTER" --std-visibility --nesting-depth=3 --dtrace-file=$1Test.dtrace.gz $1Test $2
+#"--ppt-omit-pattern=List.a*"
+java -cp $CLASSPATH daikon.Chicory "--output-dir=./daikon-output" "--ppt-select-pattern=InstrumentedMethod.*:::ENTER" --nesting-depth=3 --dtrace-file=$1Test.dtrace.gz $1Test $2 --debug
 
 echo Ejecutando Daikon
 
@@ -49,5 +50,4 @@ echo Ejecutando Daikon
 
 
 java -cp $DAIKON_JAR::$CLASSPATH daikon.Daikon ./daikon-output/$1Test.dtrace.gz \
-"--ppt-select-pattern=InstrumentedMethod.*:::ENTER" --nohierarchy --config_option daikon.Daikon.enable_floats=false --config_option daikon.inv.binary.twoScalar.FloatEqual.enabled=false --config_option daikon.inv.binary.twoScalar.LinearBinaryFloat.enabled=false --config_option  daikon.inv.ternary.threeScalar.LinearTernaryFloat.enabled=false --config_option  daikon.inv.unary.scalar.Modulus.enabled=true --config_option  daikon.inv.unary.scalar.NonModulus.enabled=true --conf_limit 0.20 -o ./daikon-output/$1Test.inv.gz
-
+"--ppt-select-pattern=InstrumentedMethod.*:::ENTER" --nohierarchy --config_option daikon.Daikon.enable_floats=false --config_option daikon.inv.binary.twoScalar.FloatEqual.enabled=false --config_option daikon.inv.binary.twoScalar.LinearBinaryFloat.enabled=false --config_option daikon.inv.ternary.threeScalar.LinearTernaryFloat.enabled=false --config_option daikon.inv.unary.scalar.Modulus.enabled=false --config_option  daikon.inv.unary.scalar.NonModulus.enabled=false  --config_option daikon.inv.unary.scalar.LowerBound.enabled=true --config_option daikon.inv.binary.twoScalar.IntGreaterThan.enabled=true --config_option daikon.inv.binary.twoScalar.IntGreaterEqual.enabled=true --config_option daikon.inv.binary.twoScalar.IntLessThan.enabled=true --config_option daikon.inv.binary.twoScalar.IntNonEqual.enabled=true -o ./daikon-output/$1Test.inv.gz
