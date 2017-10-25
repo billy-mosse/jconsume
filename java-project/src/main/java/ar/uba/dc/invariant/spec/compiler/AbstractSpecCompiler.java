@@ -1,5 +1,6 @@
 package ar.uba.dc.invariant.spec.compiler;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -31,9 +32,10 @@ import ar.uba.dc.invariant.spec.compiler.exceptions.CompileException;
 import ar.uba.dc.invariant.spec.compiler.exceptions.DuplicateIdentifierException;
 import ar.uba.dc.invariant.spec.compiler.exceptions.SiteWithoutOffsetException;
 import ar.uba.dc.invariant.spec.compiler.exceptions.UnknownParameterException;
+import ar.uba.dc.util.List;
 import decorations.Binding;
 import decorations.CallDecoration;
-
+import javafx.util.Pair;
 
 
 import org.apache.commons.logging.Log;
@@ -120,9 +122,35 @@ public abstract class AbstractSpecCompiler implements SpecCompiler {
 			}
 			// ConstraintsInfo info = processConstraints(site.getConstraints(), methodSpec.getParameters());
 			ConstraintsInfo cInfo = processConstraints(site, methodSpec.getParameters());
-			sitesConstraintsInfo.put(site, cInfo);
 			
-			BindingInfo bInfo = processBinding(site, methodSpec.getParameters());
+			
+			
+			
+			if (cInfo != null)
+			{
+				//Aca tengo que hacer el hack de que si dos objetos son iguales
+				//y en constraintVariables aparecen fields de esos objetos
+				//entonces agregar a las constraints igualdades de los fields
+				//no deberia ser con strings esto, deberia tener una mejor estructura
+				String[] constraints = site.getConstraints().split("and");
+				ArrayList<String> new_constraints = new ArrayList<String>();
+
+				
+				
+				
+				
+				/*for(ConstraintPair constraint_pair : equal_objects)
+				{
+					String constraint1 = constraint_pair
+				}*/
+				
+				
+				
+				
+				sitesConstraintsInfo.put(site, cInfo);
+			}
+			
+			//BindingInfo bInfo = processBinding(site, methodSpec.getParameters());
 			//bInfo.removeAllVariables();
 			
 			//sitesBindingInfo.put(site,  bInfo);
@@ -148,6 +176,7 @@ public abstract class AbstractSpecCompiler implements SpecCompiler {
 				Set<String> variables = cInfo.getVariables();
 				invariant.addAllVariables(variables);
 				// Podria usar el constructor...
+				
 				invariant.addAllInductives(cInfo.getinductives());
 				
 				invariant.setClassCalledChangedDuringLoop(cInfo.checkIfClassCalledChangedDuringLoop());				
@@ -253,16 +282,32 @@ public abstract class AbstractSpecCompiler implements SpecCompiler {
 	protected ConstraintsInfo processConstraints(SiteSpecification site, Set<String> parameters) {
 		String constraints = site.getConstraints();
 		
-		
 		boolean class_called_changed_during_loop = false;
 		
 		ConstraintsInfo info = new ConstraintsInfo();
 		
-		if (StringUtils.isNotBlank(site.getConstraints())) {
-			info = parser.parse(constraints);			
-			info.getVariables().removeAll(parameters);
+		if(site.getInductives()!=null) {
+			StringTokenizer stn = new StringTokenizer(site.getInductives(), ",");
+			while (stn.hasMoreTokens()) {
+		        info.addInductive(stn.nextToken().trim());
+		     }
 		}
 		
+		if(site.getVariables()!=null) {
+			StringTokenizer stn = new StringTokenizer(site.getVariables(), ",");
+			while (stn.hasMoreTokens()) {
+		        info.addVariable(stn.nextToken().trim());
+		     }
+		}
+		
+		
+		if (StringUtils.isNotBlank(site.getConstraints())) {
+			parser.parse(site, info);
+			
+			//esta linea ahora esta de mas porque ya no agrego las variables que veo en las constraints,
+			//pero igual la voy a dejar por ahora
+			info.getVariables().removeAll(parameters);
+		}
 		
 		if(site instanceof CallSiteSpecification)
 		{
@@ -273,17 +318,25 @@ public abstract class AbstractSpecCompiler implements SpecCompiler {
 			}
 		}
 		
-		if(site.getInductives()!=null) {
-			StringTokenizer stn = new StringTokenizer(site.getInductives(), ",");
-			while (stn.hasMoreTokens()) {
-		        info.addInductive(stn.nextToken().trim());
-		     }
-		}
+		
+		
+		
+		
+		
+		
 		// Ojo!! Habria que borrarlas, ver lo de $t
 		// info.getinductives().removeAll(parameters);
 		
 		info.setClassCalledChangedDuringLoop(class_called_changed_during_loop);
+		
 		return info;
+		/*ArrayList<String> variablesAndParameters = new ArrayList<String>();
+		variablesAndParameters.addAll(info.getVariables());
+		variablesAndParameters.addAll(parameters);
+		if(variablesAndParameters.containsAll(info.getConstraintVariables()))
+			return info;
+		else
+			return null;*/
 	}
 
 	

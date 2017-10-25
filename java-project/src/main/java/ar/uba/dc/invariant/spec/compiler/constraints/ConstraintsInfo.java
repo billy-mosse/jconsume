@@ -6,6 +6,7 @@ import java.util.TreeSet;
 public class ConstraintsInfo {
 
 	private Set<String> variables = new TreeSet<String>();
+	private Set<String> constraintVariables = new TreeSet<String>();
 	private Set<String> inductives = new TreeSet<String>();
 	
 	/**
@@ -56,5 +57,15 @@ public class ConstraintsInfo {
 
 	public void setClassCalledChangedDuringLoop(boolean classCalledChangedDuringLoop) {
 		this.class_called_changed_during_loop = classCalledChangedDuringLoop;
+	}
+
+	public void addConstraintVariable(String variable) {
+		
+		this.constraintVariables.add(variable);
+	}
+	
+	public Set<String> getConstraintVariables()
+	{
+		return this.constraintVariables;
 	}
 }

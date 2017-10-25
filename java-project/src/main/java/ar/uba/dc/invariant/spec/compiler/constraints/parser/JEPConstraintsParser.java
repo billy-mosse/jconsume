@@ -1,10 +1,14 @@
 package ar.uba.dc.invariant.spec.compiler.constraints.parser;
 
+import java.util.Set;
+
+import org.jboss.util.NotImplementedException;
 import org.nfunk.jep.JEP;
 import org.nfunk.jep.Node;
 import org.nfunk.jep.ParseException;
 import org.nfunk.jep.function.Not;
 
+import ar.uba.dc.invariant.spec.bean.SiteSpecification;
 import ar.uba.dc.invariant.spec.compiler.constraints.ConstraintsInfo;
 import ar.uba.dc.invariant.spec.compiler.constraints.ConstraintsParser;
 
@@ -38,5 +42,10 @@ public class JEPConstraintsParser implements ConstraintsParser {
 		} catch (ParseException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@Override
+	public void parse(SiteSpecification site, ConstraintsInfo info) {
+		throw new NotImplementedException();
 	}
 }

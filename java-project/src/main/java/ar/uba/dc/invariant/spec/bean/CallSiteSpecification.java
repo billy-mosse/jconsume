@@ -11,6 +11,7 @@ public class CallSiteSpecification implements SiteSpecification {
 	private String id;
 	private String offset;
 	private String constraints;
+	//private String constraintVariables;
 	private String annotations;
 	private String variables;
 	private String inductives;
@@ -126,5 +127,22 @@ public class CallSiteSpecification implements SiteSpecification {
 		// TODO Auto-generated method stub
 		return inductives;
 	}
+
+	@Override
+	public String getVariables() {
+		return variables;
+	}
+
+	@Override
+	public void addConstraints(String new_constraints) {
+		if(new_constraints.length() > 0)
+			this.constraints = this.constraints + " and " + new_constraints;
+		
+	}
+
+	/*@Override
+	public String getConstraintVariables() {
+		return constraintVariables;
+	}*/
 	
 }

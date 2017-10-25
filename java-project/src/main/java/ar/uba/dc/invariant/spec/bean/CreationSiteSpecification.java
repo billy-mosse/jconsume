@@ -11,6 +11,7 @@ public class CreationSiteSpecification implements SiteSpecification {
 	private String id;
 	private String offset;
 	private String constraints;
+	//private String constraintVariables;
 	private String variables;
 	private String inductives;
 	private Boolean loopInvariant;
@@ -93,4 +94,22 @@ public class CreationSiteSpecification implements SiteSpecification {
 	public String getInductives() {
 		return inductives;
 	}
+
+	@Override
+	public String getVariables() {
+		return variables;
+	}
+	
+	@Override
+	public void addConstraints(String new_constraints) {
+		if(new_constraints.length() > 0)
+			this.constraints = this.constraints + " and " + new_constraints;
+		
+	}
+
+
+	/*@Override
+	public String getConstraintVariables() {
+		return constraintVariables;
+	}*/
 }

@@ -8,8 +8,11 @@ public interface SiteSpecification {
 	public String getOffset();
 	
 	public String getConstraints();
-	
+
 	public String getInductives();
+
+	public String getVariables();
+	//public String getConstraintVariables();
 	
 	//no debe tener estos metodos porque CreationSite no necesita annotations (por ahora)
 	//public String getAnnotations();
@@ -32,4 +35,6 @@ public interface SiteSpecification {
 	public void setImplementation(String implementation);
 
 	public void setOperator(String operator);
+
+	public void addConstraints(String new_constraints_string);
 }
