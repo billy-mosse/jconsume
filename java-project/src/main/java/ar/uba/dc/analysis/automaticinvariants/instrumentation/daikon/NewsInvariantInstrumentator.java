@@ -235,7 +235,7 @@ public class NewsInvariantInstrumentator {
 				
 				"-write-local-annotations",
 				//"full-resolver",
-				"-validate", //a ver que onda
+				//"-validate", //a ver que onda
 				 
 				
 				 //lo deje a ver que pasa
@@ -567,24 +567,34 @@ public class NewsInvariantInstrumentator {
 					)
 				{
 					// DIEGO OJO! Tiene que decir compatible!
+					//mhm, aca se fija que los argumentos y los parametros bindeen bien
+					//pero no se como machearlos....
+					//tampoco entiendo por que importan los argumentos
+					//ah, creo que es para hacer el binding despues
+					
+					
+					
+					
 					if(a.getLocal().getType().equals(p.getLocal().getType()) 
-							|| a.getDerivedVariables().size()>=p.getDerivedVariables().size()  )
+							|| a.getDerivedVariables2_size()>=p.getDerivedVariables2_size())
 					{	
 						
 						
 						//OK, creo que los parametros son los bla_derived
 						//tengo que cambiarlo para que admite parametros...posta
 						//HACK le puse false porque *supuestamente* ya no estamos usando mas esto
-						if(false/*a.hasDerivedVariables()*/)
+						//le saque el false 17-8-17
+						//lo puse como true 19-10-17 porque "confio" en que me conviene hacer esto siempre
+						if(true || a.hasDerivedVariables2())
 						{
 							//ListDIParameters la = a.getDerivedVariables();
 							//ListDIParameters lp = p.getDerivedVariables();
 							//ListDIParameters lpInit = pInit.getDerivedVariables();
-							ListDIParameters la = a.toListDIP();
-							ListDIParameters lp = p.toListDIP();
-							ListDIParameters lpInit = pInit.toListDIP();
+							ListDIParameters la = a.toListDIP2();
+							ListDIParameters lp = p.toListDIP2();
+							ListDIParameters lpInit = pInit.toListDIP2();
 //							
-							System.out.println("a p pinit");
+							//System.out.println("a p pinit");
 //							System.out.println(la);
 //							System.out.println(lp);
 //							System.out.println(lpInit);
@@ -610,10 +620,10 @@ public class NewsInvariantInstrumentator {
 										//	|| InductiveVariablesInfo.isAcceptedInductive(IVInfo, e_p)
 										//	|| InductiveVariablesInfo.isAcceptedInductive(IVInfo, e_pInit)
 											)
-									{
-										paramInitFil.addAll(e_pInit.toList());
-										paramFil.addAll(e_p.toList());
-										argFil.addAll(e_a.toList());
+									{ 
+										paramInitFil.addAll(e_pInit.toList2());
+										paramFil.addAll(e_p.toList2());
+										argFil.addAll(e_a.toList2());
 									}
 								}
 								

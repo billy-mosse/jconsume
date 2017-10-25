@@ -12,7 +12,7 @@ public class DI_Integer extends DI_Sizeable{
 	 * @param var
 	 */
 	public DI_Integer(Local var) {
-		super(var);
+		super(var, false);
 	}
 
 	/**

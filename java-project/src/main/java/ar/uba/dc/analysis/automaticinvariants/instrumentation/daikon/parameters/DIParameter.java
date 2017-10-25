@@ -32,6 +32,7 @@ public abstract class DIParameter  {
 	protected Local var;
 	protected String nameVar;
 	protected ListDIParameters derivedVars = new ListDIParameters();
+	protected ListDIParameters derivedVarsForSpec = new ListDIParameters();
 	private static Set localsPool = new HashSet(); 
 	
 	DIParameter()
@@ -56,7 +57,11 @@ public abstract class DIParameter  {
 	
 	public String getName()
 	{
-		return var.getName();
+
+		if(this.getClass().equals(DI_Iterator.class))
+			return "cont_" + var.getName();
+		else
+			return var.getName();
 	}
 	public Local getLocal()
 	{
@@ -74,10 +79,34 @@ public abstract class DIParameter  {
 		}
 		return b;
 	}
+	
+	public boolean hasDerivedVariables2()
+	{
+		boolean  b = !derivedVarsForSpec.isEmpty();
+		if(b)
+		{
+			System.out.println("Lleno");
+		}
+		else{
+			System.out.println("Vacio");
+		}
+		return b;
+	}
 	public ListDIParameters getDerivedVariables()
 	{
 		return derivedVars;
 	}
+	
+	public ListDIParameters getDerivedVariables2()
+	{
+		return derivedVarsForSpec;
+	}
+	
+	public int getDerivedVariables2_size()
+	{
+		return Math.max(derivedVarsForSpec.size(), 1);
+	}
+	
 	public List getDerivedVariablesNames()
 	{
 		List res = new Vector();
@@ -85,6 +114,20 @@ public abstract class DIParameter  {
 			DIParameter element = (DIParameter) iter.next();
 			// res.add(element.var.getName());
 			res.addAll(element.toStringList());
+		}
+		return res;
+	}
+	
+	public List getDerivedVariablesNames2()
+	{
+		List res = new Vector();
+		for (Iterator iter = derivedVarsForSpec.iterator(); iter.hasNext();) {
+			DIParameter element = (DIParameter) iter.next();
+			// res.add(element.var.getName());
+			
+			
+			//Por que antes era .toStringList
+			res.addAll(element.toStringList2());
 		}
 		return res;
 	}
@@ -103,11 +146,38 @@ public abstract class DIParameter  {
 		return res;
 	}
 	
+	public List toList2()
+	{
+		List res = new Vector();
+		boolean b = hasDerivedVariables2();
+		
+		//Puedo preguntar si es iterator tambien
+		if(b)
+			res = getDerivedVariables2().toList2();
+		else
+		{
+			res.add(getLocal());
+		}
+		return res;
+	}
+	
 	public ListDIParameters toListDIP()
 	{
 		ListDIParameters res = new ListDIParameters();
 		if(hasDerivedVariables())
 			res = getDerivedVariables().toListDIP();
+		else
+		{
+			res.add(this);
+		}
+		return res;
+	}
+	
+	public ListDIParameters toListDIP2()
+	{
+		ListDIParameters res = new ListDIParameters();
+		if(hasDerivedVariables2())
+			res = getDerivedVariables2().toListDIP();
 		else
 		{
 			res.add(this);
@@ -123,6 +193,22 @@ public abstract class DIParameter  {
 		//en realidad creo que si funciona registrar solo el field....por que no lo hago?
 		if(false)
 			res = getDerivedVariablesNames();
+		else
+		{
+			res.add(getName());
+		}
+		return res;
+	}
+	
+	public List toStringList2()
+	{
+		List res = new Vector();
+		
+		//BILLY hago que nunca se fije si tiene variables derivadas porque a mi me interesa registrar el objeto entero por ahora
+		//tal vez mas adelante vea que fuwnciona tambien registrar solo el field
+		//en realidad creo que si funciona registrar solo el field....por que no lo hago?
+		if(hasDerivedVariables2())
+			res = getDerivedVariablesNames2();
 		else
 		{
 			res.add(getName());

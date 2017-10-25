@@ -3,6 +3,7 @@ package ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.invariantw
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -11,6 +12,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.Vector;
+
+import org.apache.commons.lang.StringUtils;
 
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.CCReader;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.CSReader;
@@ -407,7 +410,7 @@ public class SpecInvariantWriter {
 			writeRevelantVariables(cs.getVars());
 
 			// Lo calculo antes para tener los bindinds
-			String inv = getInvariantForSite(l);
+			String inv = getInvariantForSite(l, cs.getVars());
 			if (inv == null)
 				inv = "";
 			Set newInductives = new HashSet();
@@ -718,7 +721,7 @@ public class SpecInvariantWriter {
 
 		private void writeCreationSite(CreationSiteMapInfo cs) {
 			String l = cs.getInsSite();
-			String inv = getInvariantForSite(l);
+			String inv = getInvariantForSite(l, cs.getVars());
 			writeCreationSiteHeader(cs);
 			List vars = cs.getVars();
 			Set paramsArr = new HashSet();
@@ -870,7 +873,7 @@ public class SpecInvariantWriter {
 			}
 		}
 
-		private String getInvariantForSite(String l) {
+		private String getInvariantForSite(String l, List vars) {
 			String l2 = l.replaceAll("\\.", "_");
 			// Este es para eliminar prefijos de los invariant
 			String prefijo = l2.replaceAll("\\$", "__");
@@ -880,11 +883,6 @@ public class SpecInvariantWriter {
 				System.out.print("");
 			}
 			
-			if(l2.equals("ar_uba_dc_daikon_Ins0_00013"))
-			{
-				System.out.println("hola");
-			}
-			
 			String inv = ir.getCreationSiteInv(l2);
 			// Se saco el prefijo de clase y nro de linea que no
 			// me hace falta
@@ -892,19 +890,43 @@ public class SpecInvariantWriter {
 				inv = removePrefix(prefijo, inv);
 			}
 			
+			/*String[] constraints = inv.split(",");
 			
-			if(inv.contains("inargs"))
+			List new_constraints = new ArrayList<String>();
+			
+			
+			//hack asqueroso
+			//leccion aprendida: 
+			//hay que hacerlo bien. Los terminos pueden ser mezcla de numeros y variables de .indFake
+			//hay que hacerlo con cuidado
+			for (int i = 0; i < constraints.length; i++)
 			{
-				System.out.println("hola");
+				String constraint = constraints[i];
+				String[] sides = constraint.split("<=|>=|==");
+				if(sides.length < 2) continue;
+				String s0 = sides[0].trim();
+				String s1 = sides[1].trim();
+				if (sides.length == 2 && 
+						(StringUtils.isNumeric(s0) || vars.contains(s0)) &&
+								(StringUtils.isNumeric(s1) || vars.contains(s1)))
+					new_constraints.add(constraint);
 			}
+			
+			inv = StringUtils.join(new_constraints, ",");*/
+					
+			
+			
+			
 			
 			return inv;
 		}
 
 		//dejo este metodo aparte porque seguro voy a tener que hacer cosas con las _f_
 		private String removePrefix(String prefijo, String inv) {
-			
+
 			inv = inv.replaceAll(prefijo + "_","");
+			
+			inv = inv.replaceAll("\\[\\]","");
 			
 			//TODO: cambiar _f_ por __ para los fields
 			/*String[] invList = inv.trim().split(prefijo + "_");
@@ -984,10 +1006,17 @@ public class SpecInvariantWriter {
 				{
 					System.out.println("hola");
 				}*/
-				s = s.replace("(", "__");
-				s = s.replace(")", "__");
-				s = s.replace("[", "__");
-				s = s.replace("]", "__");
+				
+				
+				//TODO revisar que no haya invariantes con ")" que no provengan de size!
+				//Tal vez si si la relacion es lineal pero con cuentas con parentesis??
+				s = s.replace("size(", "size_");
+				s = s.replace(")", "");
+				
+				
+				//s = s.replace("[", "__");
+
+				//s = s.replace("]", "__");
 
 				if (s.contains("$t.")) {
 					if (resBi.length() > 0)

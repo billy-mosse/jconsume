@@ -73,8 +73,15 @@ public class InvariantReader {
 		for (Iterator iter = l.iterator(); iter.hasNext();) {
 			String element = (String) iter.next();
 			
-			//Otro hack horrible
-			if(element.contains("has") || element.contains("\"") || element.contains("contains") || element.contains("elements") || element.contains(" in ") || element.contains(".getClass()"))
+			//Otro hack horrible: no nos interesan constraints que:
+			if(element.contains("has") 
+					|| element.contains("\"") //sean sobre un string
+					|| element.contains("contains") //sobre contencion de un vector
+					|| element.contains("elements") //sobre cantidad de elementos de un vector
+					|| element.contains(" in ") //sobre pertenencia
+					|| element.contains(".getClass()") //sobre clase de objeto
+					|| (element.contains("[") && element.contains("]") && !element.contains("[]")) //accediendo a un array
+					)
 			{
 				continue;
 			}

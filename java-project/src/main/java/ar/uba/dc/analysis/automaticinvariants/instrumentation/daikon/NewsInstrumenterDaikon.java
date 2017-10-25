@@ -1027,7 +1027,7 @@ class NewsInstrumenterDaikon extends LoopFinder {
 			
 			ListDIParameters enterizedArgs = getEnterizedFields(args, body);
 			
-			
+			//por que carajo esto anda?
 			ccArgsMap.put(insSite, enterizedArgs.clone());
 			
 			// ccArgsMap.put(insSite, argsMapList);
@@ -1113,6 +1113,7 @@ class NewsInstrumenterDaikon extends LoopFinder {
 			
 			List allParamsString = new Vector();
 			
+			//esto por ahora va a seguir siendo false
 			if(NewsInvariantInstrumentator.inductivesAsRelevants )
 			{
 				//if(insSite.indexOf("00570c00005")!=-1) 
@@ -1128,7 +1129,7 @@ class NewsInstrumenterDaikon extends LoopFinder {
 			}
 			else
 			{
-				allParamsString =allParams.toStringList();
+				allParamsString =allParams.toStringList2();
 			}
 			newsMap.put(insSite,  new CreationSiteMapInfo(insSite, orden, allParamsString, nameMethodDec,tipo,creationSiteType,newArrayParamsList.toList()));
 				
@@ -1197,6 +1198,8 @@ class NewsInstrumenterDaikon extends LoopFinder {
 	 * @param paramsInstru
 	 * @return
 	 */
+	
+	//vale la pena que ponga un mega hack que haga que si una variable es un iterador no la cuente?
 	private List crearInvocacionMetodo(SootMethod m, Body body, ListDIParameters paramsInstru, 
 									ListDIParameters allParams, InductiveVariablesInfo IVInfo) 
 	{

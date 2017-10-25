@@ -40,8 +40,9 @@ public class Utils {
 	public static SootClass varTestClass;
 	
 	static {
-	   // varTestClass    = Scene.v().loadClass("VarTest", SootClass.SIGNATURES);
+	    //varTestClass    = Scene.v().loadClass("VarTest", SootClass.SIGNATURES);
 		varTestClass    = Scene.v().loadClassAndSupport("ar.uba.dc.analysis.automaticinvariants.VarTest");
+		//varTestClass    = Scene.v().loadClass("ar.uba.dc.analysis.automaticinvariants.VarTest", SootClass.SIGNATURES);
 	  }
 	
 

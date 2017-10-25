@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Vector;
 
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.InductiveVariablesInfo;
+import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.Utils;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.DIParameter;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.ListDIParameters;
 import soot.Local;
@@ -42,6 +43,17 @@ public class ListDIParameters extends Vector implements List{
 		}
 		return res;
 	}
+	
+	public List toList2()
+	{
+		List res = new Vector();
+		for (Iterator iter = this.iterator(); iter.hasNext();) {
+			DIParameter element = (DIParameter) iter.next();
+			if(element!=null) res.addAll(element.toList2());
+		}
+		return res;
+	}
+	
 	public ListDIParameters toListDIP()
 	{
 		ListDIParameters res = new ListDIParameters();
@@ -72,6 +84,26 @@ public class ListDIParameters extends Vector implements List{
 				System.out.print("");
 			}
 			res.addAll(element.toStringList());
+		}
+		return res;
+	}
+	
+	public List toStringList2()
+	{
+		List res = new Vector();
+		for (Iterator iter = iterator(); iter.hasNext();) {
+			DIParameter element = (DIParameter) iter.next();
+			
+			//Esto me parece un poco horrible
+			//con el otro and me parece mucho muy horrible
+			if (Utils.isIterator(element.getLocal()) && element.getClass().equals(DI_Object.class))
+				continue;
+			
+			if(element==null)
+			{
+				System.out.print("");
+			}
+			res.addAll(element.toStringList2());
 		}
 		return res;
 	}
