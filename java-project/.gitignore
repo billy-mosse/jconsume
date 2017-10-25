@@ -8,6 +8,8 @@ change_to_master.sh
 gson*
 target/classes/ar
 /target/
+out/
+../invariants
 
 # Created by https://www.gitignore.io/api/java
 
