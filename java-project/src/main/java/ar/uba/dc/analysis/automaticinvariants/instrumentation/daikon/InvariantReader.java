@@ -76,11 +76,18 @@ public class InvariantReader {
 			//Otro hack horrible: no nos interesan constraints que:
 			if(element.contains("has") 
 					|| element.contains("\"") //sean sobre un string
+					|| element.contains("elementwise") //sean sobre un array
 					|| element.contains("contains") //sobre contencion de un vector
-					|| element.contains("elements") //sobre cantidad de elementos de un vector
+					|| element.contains("lexically") //sobre contencion de un vector
+					|| element.contains(" elements") //sobre cantidad de elementos de un vector
 					|| element.contains(" in ") //sobre pertenencia
+					|| element.contains(" reverse ") //sobre array
 					|| element.contains(".getClass()") //sobre clase de objeto
+					|| element.contains(" one of ") //otro hack que se podria evitar
+					|| element.contains("== []") //hack horrible. TODO: ver como hacer para deshabilitar igualdades de arrays!!
+					|| element.contains(" null") //sobre nulls. Deberia usar una opcion de daikon pero no la encontre
 					|| (element.contains("[") && element.contains("]") && !element.contains("[]")) //accediendo a un array
+					|| containsDouble(element)
 					)
 			{
 				continue;
@@ -90,6 +97,24 @@ public class InvariantReader {
 			res+=element;
 		}
 		return res;
+	}
+	
+	
+	// "4.234 = A.f" tiene un double
+	// "A.f2.f3 = 5" no tiene un double
+	public static boolean containsDouble(String element)
+	{
+		char c;
+		for(int i = element.length()-2; i >= 1; i--){
+			c = element.charAt(i);
+			if(c =='.')
+			{
+				if(Character.isDigit(element.charAt(i+1)) && (Character.isDigit(element.charAt(i-1))))
+					return true;
+			}
+		}
+		
+		return false;
 	}
 	
 
