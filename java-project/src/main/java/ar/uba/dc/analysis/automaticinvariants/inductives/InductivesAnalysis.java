@@ -250,16 +250,11 @@ public class InductivesAnalysis extends BackwardFlowAnalysis{
     {
     	for(Object o : list)
     	{
-    		//Object unit = (Unit) o;
-    		String s = o.toString();
-    		s = s;
-    		
-    		String s2 = value.toString();
-    		s2 = s2;
-    		if (s.equals(s2))
-    		{
-    			return true;
-    		}
+    		//if (s.equals(s2) && o.getClass().equals(value.getClass()))    		
+			if(o.hashCode() != value.hashCode())
+			{
+				return true;
+			}
     	}
     	return false;
     }
