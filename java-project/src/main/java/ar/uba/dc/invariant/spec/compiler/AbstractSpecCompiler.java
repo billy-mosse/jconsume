@@ -177,7 +177,7 @@ public abstract class AbstractSpecCompiler implements SpecCompiler {
 				invariant.addAllVariables(variables);
 				// Podria usar el constructor...
 				
-				invariant.addAllInductives(cInfo.getinductives());
+				invariant.addAllInductives(cInfo.getInductives());
 				
 				invariant.setClassCalledChangedDuringLoop(cInfo.checkIfClassCalledChangedDuringLoop());				
 				
@@ -289,7 +289,11 @@ public abstract class AbstractSpecCompiler implements SpecCompiler {
 		if(site.getInductives()!=null) {
 			StringTokenizer stn = new StringTokenizer(site.getInductives(), ",");
 			while (stn.hasMoreTokens()) {
-		        info.addInductive(stn.nextToken().trim());
+				String s = stn.nextToken().trim();
+				if(s.length() > 0)
+				{
+					info.addInductive(s);
+				}
 		     }
 		}
 		

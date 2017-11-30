@@ -140,6 +140,7 @@ public class DomainSet {
 		String ret = StringUtils.EMPTY;
 		String params = StringUtils.join(parameters, ",");
 		String vars = StringUtils.join(variables, ",");
+		String inds = StringUtils.join(inductives, ",");
 		
 		if (params.length() > 0) {
 			ret += "[" + params + "] -> ";
@@ -147,8 +148,10 @@ public class DomainSet {
 		
 		ret += "{";
 		
+		
+		//cambio importante: estabamos tomando las variables como inductivas!
 		if (vars.length() > 0) {
-			ret += "[" + vars + "]: ";
+			ret += "[" + inds + "]: ";
 		} 
 		
 		ret += constraints + "}";

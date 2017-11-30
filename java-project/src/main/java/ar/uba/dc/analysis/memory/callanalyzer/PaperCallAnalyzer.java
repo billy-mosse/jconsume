@@ -95,6 +95,10 @@ public class PaperCallAnalyzer {
 				{	
 					if(!DomainSetUtils.removePrefix(invariant.getVariables()).containsAll(rsdFromPartition.getParameters()))
 					{
+						log.error("Falta el binding! " + invariant.toString());
+						log.error(rsdFromPartition.toString());
+						log.error(line.toString());
+						log.error(invocation.toString());
 						throw new Error("Falta el binding");
 					}
 					//hago un summate sobre el invariante

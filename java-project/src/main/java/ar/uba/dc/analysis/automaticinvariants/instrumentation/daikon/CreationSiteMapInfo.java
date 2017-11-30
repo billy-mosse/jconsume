@@ -91,6 +91,7 @@ public class CreationSiteMapInfo implements Comparable {
 		List vars = parseList(sVars);
 		List arrayParams = parseList(sArrayParams);
 
+		//esto quiere decir que en el metodo method hay una llamada a InstrumentedMethod con id insSite de tipo csType (CALL/CREATE)
 		return new CreationSiteMapInfo(insSite, order, vars,method,type,csType, arrayParams);
 	}
 	private static List parseList(String line)

@@ -18,7 +18,7 @@ public class DerivedVariable {
 		else
 		{
 			//TODO: ver como era el formato cuando era un field. Falta un  "_f_"
-			return this.name + "_" + this.field;
+			return this.name + "__f__" + this.field;
 		}
 		
 	}

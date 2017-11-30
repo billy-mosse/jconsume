@@ -35,7 +35,7 @@ public class ConstraintsInfo {
 	public Set<String> getVariables() {
 		return variables;
 	}
-	public Set<String> getinductives() {
+	public Set<String> getInductives() {
 		return inductives;
 	}
 	
