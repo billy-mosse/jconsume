@@ -334,8 +334,12 @@ public class DIParameterFactory {
 	}
 	
 	//importable = that can (and needs to) be imported for it to be used
-	//return null when it's local or non importable
-	//TODO: podria haber "mas de un" importable, por ejemplo con un map
+	//returns empty when it's local or non importable
+	/**
+	 * This method is used to correctly write the InstrumentedMethod classes
+	 * @param classname
+	 * @return all the internal collaborators of the class that should be imported in order to use it
+	 */
 	public static ArrayList<String> getImportables(String classname)
 	{
 		ArrayList<String> imp = new ArrayList<String>();
