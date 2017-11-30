@@ -1,9 +1,13 @@
 package ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon;
 
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -87,10 +91,15 @@ import soot.util.Chain;
 
 public class NewsInvariantInstrumentator {
 	private  static SootClass IntrumentedMethodClass=null;
+	private  static ArrayList<SootClass> IntrumentedMethodSootClasses=null;
 	private static PrintWriter pwIM;
 	private static InductivesReader inductivesReader= new InductivesReader();
 	private static String outputDir = "./out";
 	private static List listMethods = new Vector();
+	private static List listTypes = new Vector();
+	
+	//el String es el packageName
+	private static Map<String,InstrumentedMethodClass> instrumentedMethodClasses = new HashMap<String,InstrumentedMethodClass>();
 	public static boolean inductivesAsRelevants = false;
 
 	public static boolean isInCG(SootMethod m)
@@ -208,14 +217,18 @@ public class NewsInvariantInstrumentator {
 
 		
 		// Declare 'public class HelloWorld'
-		IntrumentedMethodClass = new SootClass("InstrumentedMethod",
+        //Una prueba para chequear que lo que voy a tener que hacer es tener muchos InstrumentedMethodClass
+        IntrumentedMethodSootClasses = new ArrayList<SootClass>();
+        
+        /*String packageName = args[0].substring(0,args[0].lastIndexOf("."));
+		IntrumentedMethodClass = new SootClass(packageName + ".InstrumentedMethod",
 				Modifier.PUBLIC);
+		
 		// 'extends Object'
 		IntrumentedMethodClass.setSuperclass(Scene.v().getSootClass(
 				"java.lang.Object"));
 		IntrumentedMethodClass.setModifiers(Modifier.PUBLIC);
-		//Scene.v().addClass(IntrumentedMethodClass);
-		
+		//Scene.v().addClass(IntrumentedMethodClass);*/
 		
 		String fullOutputDir = outputDir + "/" + args[0];
 		//System.out.println(fullOutputDir);
@@ -257,6 +270,7 @@ public class NewsInvariantInstrumentator {
 				"-src-prec","class",
 				"-keep-line-number", 
 				"-keep-bytecode-offset",
+				"-keep-offset",
 				//"-java-version","default",
 				// "-full-resolver",
 				// "-x", "immortal",
@@ -380,14 +394,14 @@ public class NewsInvariantInstrumentator {
 		try {
 			
 			// Generates sootOutput/InstrumentedMethod.jimple"
-			FileOutputStream streamIM = null;
+			/*FileOutputStream streamIM = null;
 			if(optsDefault[2].equals("c") || optsDefault[2].equals("J"))
 				// streamIM = new  FileOutputStream(outputDir+"/InstrumentedMethod.jimple");
 				streamIM = new FileOutputStream(fullOutputDir+"/InstrumentedMethod.java");
 			else
-				streamIM = new FileOutputStream(fullOutputDir+"/DummyInstrumentedMethod.jimple");
-			PrintStream outIM = new PrintStream(streamIM);
-			pwIM = new PrintWriter(outIM,true);
+				streamIM = new FileOutputStream(fullOutputDir+"/DummyInstrumentedMethod.jimple");*/
+			//PrintStream outIM = new PrintStream(streamIM);
+			//pwIM = new PrintWriter(outIM,true);
 			
 			// pwIM.write("public class InstrumentedMethod extends java.lang.Object \n{\n");
 			
@@ -405,13 +419,16 @@ public class NewsInvariantInstrumentator {
 	        sootOpt.set_src_prec(soot.options.Options.src_prec_class);
 	      //  sootOpt.set_java_version(soot.options.Options.java_version_1_7);
 	        sootOpt.set_asm_backend(true);      
-	        sootOpt.set_keep_offset(true);
+	        //sootOpt.set_keep_offset(true);
 	        sootOpt.set_main_class(args[0]);
-	        sootOpt.set_keep_line_number(true);
+	        //sootOpt.set_keep_line_number(false);
 	        sootOpt.set_write_local_annotations(true);
 	        
 							        
 	        Scene.v().setSootClassPath(args[2]);
+	        
+	        System.out.println(args[2]);
+	        System.out.println("____________________________________");
 	        
 
 			
@@ -433,10 +450,11 @@ public class NewsInvariantInstrumentator {
 			
 			
 			
-			pwIM.println("public class InstrumentedMethod {");
-			
+			/*pwIM.println("public class InstrumentedMethod {");
+			Iterator iter_types = getListMethodsTypes().iterator();
 			for (Iterator iter = listMethods.iterator(); iter.hasNext();) {
 				String element = (String) iter.next();
+				List types = (List) iter_types.next();
 				element=element.replaceAll("\\$","__");
 				pwIM.println("  public static void "+ element);
 				pwIM.println();
@@ -447,7 +465,7 @@ public class NewsInvariantInstrumentator {
 			
 			pwIM.flush();
 //			pwIM.write("}\n");
-//			pwIM.flush();
+//			pwIM.flush();*/
 			
 			
 			FileOutputStream streamCS = new FileOutputStream(fullOutputDir + "/" + args[0] + ".cs");
@@ -462,6 +480,7 @@ public class NewsInvariantInstrumentator {
 			showCallSites(NewsInstrumenterDaikon.getCcArgsMap(), NewsInstrumenterDaikon.getCcMethodsMap(),
 					NewsInstrumenterDaikon.getMethodMap(), outCC);
 			showFakeInductives(NewsInstrumenterDaikon.getNewsMap(), outInductivesFakes);
+			writeInstrumentedMethods(optsDefault[2], fullOutputDir);
 
 			} 
 		catch (Exception e) {
@@ -469,14 +488,72 @@ public class NewsInvariantInstrumentator {
 			e.printStackTrace();
 			}
 	}
+	
+	public static void writeInstrumentedMethods(String opt, String fullOutputDir)
+	{
+	    Iterator it = instrumentedMethodClasses.entrySet().iterator();
+		while (it.hasNext())
+		{
+			Map.Entry pair = (Map.Entry)it.next();
+			
+			String packageName = (String) pair.getKey();
+			InstrumentedMethodClass ins = (InstrumentedMethodClass) pair.getValue();
+			try
+			{
+				String subFolder = ins.packageName.replace(".", "/");
+				FileOutputStream streamIM = null;
+				File dirWithPackage=  new File(fullOutputDir + "/" + subFolder);
+				if(dirWithPackage.exists() && dirWithPackage.isDirectory())
+				{
+					if(opt.equals("c") || opt.equals("J"))
+						// streamIM = new  FileOutputStream(outputDir+"/InstrumentedMethod.jimple");
+						streamIM = new FileOutputStream(dirWithPackage.toString() + "/InstrumentedMethod.java");
+					else
+						streamIM = new FileOutputStream(dirWithPackage.toString()+ "/DummyInstrumentedMethod.jimple");
+					PrintStream outIM = new PrintStream(streamIM);
+					pwIM = new PrintWriter(outIM,true);
+					pwIM.println("package " + ins.packageName + ";");
+					
+					for(String sClass : ins.usedClasses)
+					{
+						pwIM.println("import " + sClass + ";");
+					}
+					
+					pwIM.println("public class InstrumentedMethod {");
+					for (Iterator iter_methods = ins.methods.iterator(); iter_methods.hasNext();) {
+						String element = (String) iter_methods.next();
+						element=element.replaceAll("\\$","__");
+						pwIM.println("  public static void "+ element);
+						pwIM.println();
+						pwIM.println();
+					}
+					pwIM.println("}");
+					
+					
+					pwIM.flush();
+				}
+				else
+				{
+					throw new Exception("Package doesn't exist");
+				}
+			}
+			catch (Exception e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+				}
+		}
+	}
 
 	private static void showCreationSites(Map csMap, PrintStream out) {
 
 		out.println("Instumentacion Sites");
 		for (Iterator it = csMap.keySet().iterator(); it.hasNext();) {
 			String cs = (String)it.next();
-			CreationSiteMapInfo csInfo = (CreationSiteMapInfo) csMap.get(cs);
-			out.println(cs + "=" + csInfo);
+			HashSet<CreationSiteMapInfo> csInfos = (HashSet<CreationSiteMapInfo>) csMap.get(cs);
+			for(CreationSiteMapInfo csInfo: csInfos)
+			{
+				out.println(cs + "=" + csInfo);
+			}
 		}
 	}
 	
@@ -485,11 +562,15 @@ public class NewsInvariantInstrumentator {
 		out.println("Inductives");
 		for (Iterator it = csMap.keySet().iterator(); it.hasNext();) {
 			String cs = (String)it.next();
-			CreationSiteMapInfo csInfo = (CreationSiteMapInfo) csMap.get(cs);
-			String list = csInfo.vars.toString();
-			list = list.replaceAll("\\$","__");
-			// list = list.replaceAll("\\$","_");
-			out.println(cs + "=" + list +";[]");
+			HashSet<CreationSiteMapInfo> csInfos = (HashSet<CreationSiteMapInfo>) csMap.get(cs);
+			for(CreationSiteMapInfo csInfo: csInfos)
+			{
+				String list = csInfo.vars.toString();
+				list = list.replaceAll("\\$","__");
+				// list = list.replaceAll("\\$","_");
+				out.println(cs + "=" + list +";[]");
+			}
+			
 		}
 	}
 
@@ -654,6 +735,9 @@ public class NewsInvariantInstrumentator {
 	public static SootClass getIntrumentedMethodClass() {
 		return IntrumentedMethodClass;
 	}
+	public static ArrayList<SootClass> getIntrumentedMethodSootClasses() {
+		return IntrumentedMethodSootClasses;
+	}
 	/**
 	 * @return Returns the pwIM.
 	 */
@@ -671,6 +755,15 @@ public class NewsInvariantInstrumentator {
 	 */
 	public static List getListMethods() {
 		return listMethods;
+	}
+	
+	public static List getListMethodsTypes() {
+		return listTypes;
+	}
+	
+	public static Map getInstrumentedMethodClasses()
+	{
+		return instrumentedMethodClasses;
 	}
 
 }

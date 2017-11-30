@@ -107,7 +107,7 @@ public class DI_Object extends DIParameter {
 		//	para cada campo que es int, collection, array o String habria que
 		// 	generar una variable nueva, con el codigo que obtiene el size y usarlo de
 		// argumento
-		derivedVars.clear();
+		derivedVarsForSpec.clear();
 		for (Iterator itChain = filter.iterator(); itChain.hasNext();) {
 
 			// Value v= (Value)itChain.next();
@@ -134,11 +134,11 @@ public class DI_Object extends DIParameter {
 					}
 					
 					//saque el && false
-					if(Utils.isPossibleArgument(var) && false)
+					if(Utils.isPossibleArgument(var))
 					{
 						hasFields = true; 
 						DI_Field fieldParam = new DI_Field(f, thisRef,null, body);
-						derivedVars.add(fieldParam);
+						derivedVarsForSpec.add(fieldParam);
 						fieldParam.setFather(this);
 						if(!analyzedfields.contains(f))
 							analyzedfields.add(f);
@@ -188,7 +188,7 @@ private void generateFilteredFieldReferences2(SootClass c, Body body, Local this
 					{
 						hasFields = true; 
 						DI_Field fieldParam = new DI_Field(f, thisRef,null, body);
-						derivedVars.add(fieldParam);
+						derivedVarsForSpec.add(fieldParam);
 						fieldParam.setFather(this);
 						if(!analyzedfields.contains(f))
 							analyzedfields.add(f);
@@ -228,7 +228,7 @@ private void generateFilteredFieldReferences2(SootClass c, Body body, Local this
 		//	para cada campo que es int, collection, array o String habria que
 		// 	generar una variable nueva, con el codigo que obtiene el size y usarlo de
 		// argumento
-		derivedVars.clear();
+		derivedVarsForSpec.clear();
 		for (Iterator itChain = fields.iterator(); itChain.hasNext();) {
 			SootField f = (SootField) itChain.next();
 			String thisRefName;
@@ -254,7 +254,7 @@ private void generateFilteredFieldReferences2(SootClass c, Body body, Local this
 					SootClass c2 = null;
 					// DIParameterFactory.createDIParameter(f.getName(),f.getType(),body, true);
 					DI_Field fieldParam = new DI_Field(f, thisRef,null, body);
-					derivedVars.add(fieldParam);
+					derivedVarsForSpec.add(fieldParam);
 					fieldParam.setFather(this);
 					if(!analyzedfields.contains(f))
 						analyzedfields.add(f);
@@ -307,7 +307,7 @@ private void generateFilteredFieldReferences2(SootClass c, Body body, Local this
 		
 		//Por ahora no enterizamos objetos
 		//capaz haga falta solo para los parametros
-		return false;
+		return derivedVarsForSpec.isEmpty();
 	}
 	/**
 	 * @return Returns the fields.

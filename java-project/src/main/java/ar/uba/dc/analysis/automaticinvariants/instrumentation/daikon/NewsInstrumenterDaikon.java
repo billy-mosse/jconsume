@@ -1,5 +1,6 @@
 package ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -8,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
+
+import org.apache.commons.lang.StringUtils;
 
 import ar.uba.dc.analysis.automaticinvariants.inductives.InductivesFilter;
 import ar.uba.dc.analysis.automaticinvariants.inductives.InductivesFinder;
@@ -85,12 +88,18 @@ class NewsInstrumenterDaikon extends LoopFinder {
 	//   methodMap : method -> P(var)
 	private Map methodMap = new HashMap();
 	private SootClass intrumentedClass = NewsInvariantInstrumentator.getIntrumentedMethodClass();
+	//private SootClass intrumentedClasses = NewsInvariantInstrumentator.getIntrumentedMethodClasses();
+
+	private Set<String> relevantClasses = new HashSet<String>();
+	private Set<String> already_processed = new HashSet<String>();
 	
 	// Para los iteradores
 	private Map itersMap = new HashMap();
 	
 	int ordenCreationSite = 0;
 	int ordenCallSite = 0;
+	
+	private Map lineNumbers = new HashMap();
 
 	
 	/**
@@ -193,7 +202,7 @@ class NewsInstrumenterDaikon extends LoopFinder {
 	 * @return
 	 */
 	protected SootMethod crearMetodo(String insSite, SootClass c, SootMethod mOrig,
-		String name, ListDIParameters allParams, InductiveVariablesInfo IVInfo) {
+		String name, ListDIParameters allParams, InductiveVariablesInfo IVInfo, InstrumentedMethodClass ins, SootClass InstrumentedMethodClass) {
 		
 		
 		Vector vTypes = new Vector();
@@ -229,13 +238,9 @@ class NewsInstrumenterDaikon extends LoopFinder {
 			Local var = (Local) itParams.next();
 				if(!var.getType().equals(IntType.v()))
 				{
+					//ya no es mas un problema!
 					System.out.print("Problema");
 					System.out.print(var.getType().toString());
-					
-					if(var.getType().toString().equals("ar.uba.dc.daikon.RichNumberPublic"))
-					{
-						System.out.println("Soy un richnumberpublic");
-					}
 				}
 				vTypes.add(var.getType());
 				vParams.add(var);
@@ -314,13 +319,20 @@ class NewsInstrumenterDaikon extends LoopFinder {
 			System.gc();
 			// NewsInvariantInstrumentator.getIntrumentedMethodClass().addMethod(method);
 			
-			intrumentedClass.addMethod(method);
+			System.out.println("\n");
+			System.out.println("METODO METODO: " + method.getName().toString());
+			
+			InstrumentedMethodClass.addMethod(method);
+			
 			String ss = "";
 			ss = method.getName()+"("+lParams+")";
 			// ss += "{ System.out.println(\"Entre a\"+ \" " + methodName+" \"); };";
 			ss+="{}";
 			ss += "\n";
-			NewsInvariantInstrumentator.getListMethods().add(ss);
+			ins.methods.add(ss);
+			relevantClasses.addAll(types);
+			
+			ins.usedClasses.addAll(types);
 			
 			
 			
@@ -330,120 +342,194 @@ class NewsInstrumenterDaikon extends LoopFinder {
 		}
 		return null;
 	}
+	
+	
+	protected SootMethod crearDummyMethod(SootClass sootClass) {
+			
+		
+		SootMethod method = new SootMethod("dummyMethodForInstrumentation", new ArrayList<Type>(), VoidType.v(), Modifier.PUBLIC | Modifier.STATIC);
+									
+		JimpleBody body = Jimple.v().newBody(method);
+		method.setActiveBody(body);
+				
+		Chain units = body.getUnits();
+		Local arg, tmpRef;
+				
+		units.add(Jimple.v().newReturnVoidStmt());
+				
+		System.gc();
+				
+		sootClass.addMethod(method);
+		return method;
+	}
 
 	@Override
 	protected void internalTransform(Body body, String phaseName, Map options) {
 		synchronized (getInstance()) {
 			
-		if(!NewsInvariantInstrumentator.isInCG(body.getMethod()))
-			return;
+			if(!NewsInvariantInstrumentator.isInCG(body.getMethod()))
+				return;
+		
+			if(body.getMethod().toString().equals("dummyMethodForInstrumentation"))
+			{
+				System.out.println("Estoy entrando aca pero creo que no deberia por la linea de arriba...aunque no estoy seguro");
+				return;
+			}
+			
+			super.internalTransform(body, phaseName, options);
+			
+		
+			//a ver que onda.
+			/*try {
+				TimeUnit.SECONDS.sleep(1);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}*/
+			SootClass sClass = body.getMethod().getDeclaringClass();
+			
+			if(relevantClasses.contains(sClass.toString()) && !already_processed.contains(sClass.toString()))
+			{
+				crearDummyMethod(sClass);
+				already_processed.add(sClass.toString());
+			}
+			
+			
+			
+			
+			String packageName = sClass.getPackageName();
+			InstrumentedMethodClass ins = new InstrumentedMethodClass(packageName);
+			
+			SootClass InstrumentedMethodClass = null;
+			for(Iterator it= NewsInvariantInstrumentator.getIntrumentedMethodSootClasses().iterator(); it.hasNext();)
+			{
+				SootClass sc = (SootClass) it.next();
+				if (sc.getPackageName().equals(packageName))
+				{
+					InstrumentedMethodClass = sc;
+				}				
+			}
+			if(InstrumentedMethodClass == null)
+			{
+				InstrumentedMethodClass = new SootClass(packageName + ".InstrumentedMethod",
+						Modifier.PUBLIC);
+				
+				// 'extends Object'
+				InstrumentedMethodClass.setSuperclass(Scene.v().getSootClass(
+						"java.lang.Object"));
+				InstrumentedMethodClass.setModifiers(Modifier.PUBLIC);
+				NewsInvariantInstrumentator.getIntrumentedMethodSootClasses().add(InstrumentedMethodClass);
+			}
+				
+			
+			Chain units = body.getUnits();
+			
+			if(isMethodToSkip(sClass,body.getMethod()))
+				return;
+			if(body.getMethod().getDeclaringClass().toString().equals("ar.uba.dc.analysis.automaticinvariants.VarTest"))
+				return;
+			
+			/*
+			if(body.getMethod().getDeclaringClass().getName().indexOf("Graph")!=-1 ||
+				body.getMethod().getDeclaringClass().getName().indexOf("Hashtable")!=-1
+					)
+				return;
+			*/		 
+			
+			ordenCreationSite = 0;
+			ordenCallSite = 0;
 	
-		super.internalTransform(body, phaseName, options);
+			
+			synchronized (this) {
+				if (!Scene.v().getMainClass().declaresMethod(
+						"void main(java.lang.String[])"))
+					throw new RuntimeException("couldn't find main() in mainClass");
+			}
 	
-		//a ver que onda.
-		/*try {
-			TimeUnit.SECONDS.sleep(1);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-		SootClass sClass = body.getMethod().getDeclaringClass();
-		Chain units = body.getUnits();
-		
-		if(isMethodToSkip(sClass,body.getMethod()))
-			return;
-		if(body.getMethod().getDeclaringClass().toString().equals("ar.uba.dc.analysis.automaticinvariants.VarTest"))
-			return;
-		
-		/*
-		if(body.getMethod().getDeclaringClass().getName().indexOf("Graph")!=-1 ||
-			body.getMethod().getDeclaringClass().getName().indexOf("Hashtable")!=-1
-				)
-			return;
-		*/		 
-		
-		ordenCreationSite = 0;
-		ordenCallSite = 0;
-
-		
-		synchronized (this) {
-			if (!Scene.v().getMainClass().declaresMethod(
-					"void main(java.lang.String[])"))
-				throw new RuntimeException("couldn't find main() in mainClass");
-		}
-
-		System.out.println("Analizando..." + body.getMethod().toString());
-		
-		DIParameter.setLocalsPool(new HashSet());
-
-		// Perform Live Variables Analysis for each stmt of this method 
-		CompleteUnitGraph unitGraph = new CompleteUnitGraph(body);
-		
-		// SimpleLiveLocals analisisVivas = new SimpleLiveLocals(unitGraph);
-		GlobalLive analisisVivas = (GlobalLive) GLVMain.analysisCache.get(body.getMethod());
-		
-		
-		//aca es de donde saca las inductivas
-		InductivesFinder analisisInductivas = (InductivesFinder)InductivesFinder.analysisCache.get(body.getMethod());
-		
-		dominator = new SimpleDominatorsFinder(unitGraph);
-		
-		
-		ListDIParameters lParameters = extractMethodParams(body);
-		lParameters.addToBody(body);
-		
-		List code = new Vector();
-		
-		ListDIParameters lParametersInit = generateParametersInitsWithCode(body, lParameters, code);
-		
-		
-		String methodNameDec = body.getMethod().getSignature();
-		String nameClass = body.getMethod().getDeclaringClass().getName();
-		System.out.println("\nAA:"+methodNameDec+";"+lParameters+";"+lParametersInit);
-		if (methodMap.get(methodNameDec) == null) {
-			methodMap.put(methodNameDec, new MethodMapInfo(lParameters,lParametersInit,nameClass ) );
-		}
-		
-		Iterator stmtIt = units.snapshotIterator();
-		boolean isInit = body.getMethod().getName().indexOf("<init>")!=-1;
-
-		// Stmt s = skipNonInstrumentableStmts(units, code, stmtIt, isInit);
-		Stmt s = skipNonInstrumentableStmts(units, code, stmtIt, false);
-		//	Adjust possible Gotos generated when adding size adaptations
-		adjustAddedCode(units, code);
-		
-		
-		
-		// Body instrumentation loop
-		ListDIParameters extraParams = new ListDIParameters();
-		// processStmt(body, units, analisisVivas, lParameters, lParametersInit, extraParams, s);
-		processStmt(body, units, analisisVivas, analisisInductivas, extraParams, s);
-		
-		while (stmtIt.hasNext()) {
-			s = (Stmt) stmtIt.next();
+			System.out.println("Analizando..." + body.getMethod().toString());
+			
+			DIParameter.setLocalsPool(new HashSet());
+	
+			// Perform Live Variables Analysis for each stmt of this method 
+			CompleteUnitGraph unitGraph = new CompleteUnitGraph(body);
+			
+			// SimpleLiveLocals analisisVivas = new SimpleLiveLocals(unitGraph);
+			GlobalLive analisisVivas = (GlobalLive) GLVMain.analysisCache.get(body.getMethod());
+			
+			
+			//aca es de donde saca las inductivas
+			InductivesFinder analisisInductivas = (InductivesFinder)InductivesFinder.analysisCache.get(body.getMethod());
+			
+			dominator = new SimpleDominatorsFinder(unitGraph);
+			
+			
+			ListDIParameters lParameters = extractMethodParams(body);
+			lParameters.addToBody(body);
+			
+			List code = new Vector();
+			
+			ListDIParameters lParametersInit = generateParametersInitsWithCode(body, lParameters, code);
+			
+			
+			String methodNameDec = body.getMethod().getSignature();
+			String nameClass = body.getMethod().getDeclaringClass().getName();
+			System.out.println("\nAA:"+methodNameDec+";"+lParameters+";"+lParametersInit);
+			if (methodMap.get(methodNameDec) == null) {
+				methodMap.put(methodNameDec, new MethodMapInfo(lParameters,lParametersInit,nameClass ) );
+			}
+			
+			Iterator stmtIt = units.snapshotIterator();
+			boolean isInit = body.getMethod().getName().indexOf("<init>")!=-1;
+	
+			// Stmt s = skipNonInstrumentableStmts(units, code, stmtIt, isInit);
+			Stmt s = skipNonInstrumentableStmts(units, code, stmtIt, false);
+			//	Adjust possible Gotos generated when adding size adaptations
+			adjustAddedCode(units, code);
+			
+			
+			
+			// Body instrumentation loop
+			ListDIParameters extraParams = new ListDIParameters();
 			// processStmt(body, units, analisisVivas, lParameters, lParametersInit, extraParams, s);
-			processStmt(body, units, analisisVivas, analisisInductivas, extraParams, s);
-		}
-		// System.out.println(body.getMethod()+":"+units);
-		List codeInitVars = new Vector();
-		for (Iterator iter = body.getLocals().iterator(); iter.hasNext();) {
-			Local var = (Local) iter.next();
-			if(Utils.isObject(var) && 
-					analisisVivas!=null && !analisisVivas.getParameters().contains(var) && analisisVivas.getThisRef()!=var)
-			{
-				codeInitVars.addAll(Utils.codeForAssig(NullConstant.v(),var));
+			processStmt(body, units, analisisVivas, analisisInductivas, extraParams, s, ins, InstrumentedMethodClass);
+			
+			while (stmtIt.hasNext()) {
+				s = (Stmt) stmtIt.next();
+				System.out.println("LINE NUMBER: " + s.getJavaSourceStartLineNumber());
+				Object o = s.getTags();
+				// processStmt(body, units, analisisVivas, lParameters, lParametersInit, extraParams, s);
+				processStmt(body, units, analisisVivas, analisisInductivas, extraParams, s, ins, InstrumentedMethodClass);
 			}
-			if(var.getName().startsWith("cont_") && Utils.isNum(var))
-			{
-				codeInitVars.addAll(Utils.codeForAssig(IntConstant.v(0),var));
+			// System.out.println(body.getMethod()+":"+units);
+			List codeInitVars = new Vector();
+			for (Iterator iter = body.getLocals().iterator(); iter.hasNext();) {
+				Local var = (Local) iter.next();
+				if(Utils.isObject(var) && 
+						analisisVivas!=null && !analisisVivas.getParameters().contains(var) && analisisVivas.getThisRef()!=var)
+				{
+					codeInitVars.addAll(Utils.codeForAssig(NullConstant.v(),var));
+				}
+				if(var.getName().startsWith("cont_") && Utils.isNum(var))
+				{
+					codeInitVars.addAll(Utils.codeForAssig(IntConstant.v(0),var));
+				}
+		
 			}
-	
+			
+			Iterator stmtIt2 = units.snapshotIterator();
+			Stmt s2 = skipNonInstrumentableStmts(units, codeInitVars, stmtIt2, isInit);
+			
+			InstrumentedMethodClass ins2 = (InstrumentedMethodClass) NewsInvariantInstrumentator.getInstrumentedMethodClasses().get(sClass.getPackageName());
+			if(ins2 != null)
+			{
+				ins2.methods.addAll(ins.methods);
+				ins2.usedClasses.addAll(ins.usedClasses);
+			}
+			else
+			{
+				NewsInvariantInstrumentator.getInstrumentedMethodClasses().put(sClass.getPackageName(), ins);
+			}
 		}
-		
-		Iterator stmtIt2 = units.snapshotIterator();
-		Stmt s2 = skipNonInstrumentableStmts(units, codeInitVars, stmtIt2, isInit);
-		
-		}		
 	}
 
 
@@ -641,7 +727,7 @@ class NewsInstrumenterDaikon extends LoopFinder {
 	private void processStmt(Body body, Chain units, 
 						GlobalLive analisisVivas, 
 						InductivesFilter analisisInductivas, 
-						ListDIParameters extraParams, Stmt s) {
+						ListDIParameters extraParams, Stmt s, InstrumentedMethodClass ins, SootClass InstrumentedMethodClass) {
 		
 		
 		boolean isIterator = false;
@@ -683,7 +769,7 @@ class NewsInstrumenterDaikon extends LoopFinder {
 //				List invStmts = instrumentarCSoCallSite("CS", s,
 //						analisisVivas, lParameters, lParametersInit, extraParams, body);
 				List invStmts = instrumentarCSoCallSite("CS", ordenCreationSite, s,
-						analisisVivas, analisisInductivas, lParameters, lParametersInit, extraParams, body);
+						analisisVivas, analisisInductivas, lParameters, lParametersInit, extraParams, body, ins, InstrumentedMethodClass);
 				ordenCreationSite++;
 				if (invStmts != null)
 				{
@@ -798,7 +884,7 @@ class NewsInstrumenterDaikon extends LoopFinder {
 //				List invStmts = instrumentarCSoCallSite("CC", s, analisisVivas,
 //						lParameters, lParametersInit, extraParams, body);
 				List invStmts = instrumentarCSoCallSite("CC", ordenCallSite, s, analisisVivas,analisisInductivas,
-						lParameters, lParametersInit, extraParams, body);
+						lParameters, lParametersInit, extraParams, body, ins, InstrumentedMethodClass);
 				if (invStmts != null) {
 					if(!isInternal(ie) )
 					{
@@ -857,7 +943,7 @@ class NewsInstrumenterDaikon extends LoopFinder {
 		
 		List args = ie.getArgs();
 		
-		GlobalLive analisisVivasCaller = (GlobalLive) GLVMain.analysisCache.get(body.getMethod());
+ 		GlobalLive analisisVivasCaller = (GlobalLive) GLVMain.analysisCache.get(body.getMethod());
 		List livesCaller = analisisVivasCaller.getLiveLocalsBefore(s);
 		
 		GlobalLive analisisVivasCallee = (GlobalLive) GLVMain.analysisCache.get(m);
@@ -907,13 +993,32 @@ class NewsInstrumenterDaikon extends LoopFinder {
 	private List instrumentarCSoCallSite(String tipo, int orden, Stmt s,
 			GlobalLive analisisVivas,
 			InductivesFilter analisisInductivas, ListDIParameters origLParameters,ListDIParameters origLParametersInit, 
-			ListDIParameters extraParams, Body body) {
+			ListDIParameters extraParams, Body body, InstrumentedMethodClass ins, SootClass InstrumentedMethodClass) {
 		
 		SootClass sc = body.getMethod().getDeclaringClass();
 		String  sLn = Utils.getLineNumber(s);
-		if(sLn.length() == 0)
-			sLn = Integer.toString(dummyLineNumber++)+"c0";
 		
+		ArrayList l = (ArrayList) lineNumbers.get(sLn);
+		
+		if(l==null)
+		{
+			l = new ArrayList();
+			l.add(0);
+			lineNumbers.put(sLn, l);
+		}
+		else
+		{
+			l.add(l.size());
+		}
+		
+		if(sLn.length() == 0)
+		{
+			sLn = Integer.toString(dummyLineNumber++)+"c0";
+		}
+		else
+		{
+			sLn = String.valueOf(100 * Integer.parseInt(sLn) +  + l.size()-1);
+		}
 		String insSite;
 
 		insSite = sc.toString() + "_" + sLn;
@@ -1034,8 +1139,10 @@ class NewsInstrumenterDaikon extends LoopFinder {
 			
 			ListDIParameters enterizedArgs = getEnterizedFields(args, body);
 			
-			//por que carajo esto anda?
-			ccArgsMap.put(insSite, enterizedArgs.clone());
+			//esto esta andando pero deberian estar enterizados.
+			//tal vez la igualdad podria ser por objetos y en base a eso los enterizo durante el consumo de memoria,
+			//como hago con los otros invariantes
+			ccArgsMap.put(insSite, args.clone());
 			
 			// ccArgsMap.put(insSite, argsMapList);
 			
@@ -1055,7 +1162,12 @@ class NewsInstrumenterDaikon extends LoopFinder {
 			
 		}
 		
-
+		//puede ser que tenga que crear un InstrumentedMethod
+		//solo por cada line number, sin repetir
+		//pero en un mismo line number puedan haber mas de un...que? instrumentation site? TODO: ver 
+		//me parece que pasa que puede haber un instrumentation site de tipo CALL y tipo CREATE en un mismo line number, por ejemplo
+		//como en un new
+		//la pregunta es: por que no andaba antes?
 		if (!newsMap.containsKey(insSite)) {
 			
 			String nombreMetodo = tipo + "_" + sLn;
@@ -1095,10 +1207,12 @@ class NewsInstrumenterDaikon extends LoopFinder {
 			
 			// Aplico opcionalmente las inductivas aqui
 			
-
+			System.out.println("Linea procesada: " + s.toString());
 			// Create a dummy method for the insSite with live variables and field
 			SootMethod sm = crearMetodo(insSite, sc, body.getMethod(), nombreMetodo,
-					allParams, inductivesInfo);
+					allParams, inductivesInfo, ins, InstrumentedMethodClass);
+			
+			
 			
 			
 			
@@ -1138,8 +1252,22 @@ class NewsInstrumenterDaikon extends LoopFinder {
 			{
 				allParamsString =allParams.toStringList2();
 			}
-			newsMap.put(insSite,  new CreationSiteMapInfo(insSite, orden, allParamsString, nameMethodDec,tipo,creationSiteType,newArrayParamsList.toList()));
+			
+			if(!newsMap.containsKey(insSite))
+			{
+				HashSet<CreationSiteMapInfo> infos = new HashSet<CreationSiteMapInfo>();
+				infos.add(new CreationSiteMapInfo(insSite, orden, allParamsString, nameMethodDec,tipo,creationSiteType,newArrayParamsList.toList()));
+				newsMap.put(insSite, infos);
+			}				
+			else
+			{
+				HashSet<CreationSiteMapInfo> infos = (HashSet<CreationSiteMapInfo>) newsMap.get(insSite);
+				infos.add(new CreationSiteMapInfo(insSite, orden, allParamsString, nameMethodDec,tipo,creationSiteType,newArrayParamsList.toList()));
+			}
 				
+			
+			HashSet types = allParams.getStringListTypes();
+			
 			return invStmts;
 			
 		} else {

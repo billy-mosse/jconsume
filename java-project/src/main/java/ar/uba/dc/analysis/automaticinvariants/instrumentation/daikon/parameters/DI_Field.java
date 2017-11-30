@@ -79,7 +79,7 @@ public class DI_Field extends DIParameter {
 		}
 		
 		//esto lo borre
-		fieldParam = DIParameterFactory.createDIParameter("_f_"+thisRefName +"_"+f.getName(),f.getType());
+		fieldParam = DIParameterFactory.createDIParameter(thisRefName + "__f__" + f.getName(),f.getType());
 		
 		
 		// fieldParam = DIParameterFactory.createDIParameter("_f_"+thisRefName +"_"+f.getName(),f.getType(), body, true);

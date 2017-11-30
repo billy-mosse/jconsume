@@ -6,6 +6,7 @@
  */
 package ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -74,6 +75,18 @@ public class ListDIParameters extends Vector implements List{
 		}
 		return res;
 	}
+	
+	public HashSet getStringListTypes()
+	{
+		HashSet res = new HashSet();
+		for (Iterator iter = iterator(); iter.hasNext();) {
+			DIParameter element = (DIParameter) iter.next();
+			String s = element.getLocal().getType().toString();
+			res.add(s);
+		}
+		return res;
+	}
+	
 	public List toStringList()
 	{
 		List res = new Vector();

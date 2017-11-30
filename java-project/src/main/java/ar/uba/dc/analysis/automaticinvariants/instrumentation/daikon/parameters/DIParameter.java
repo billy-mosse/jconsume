@@ -69,28 +69,12 @@ public abstract class DIParameter  {
 	}
 	public boolean hasDerivedVariables()
 	{
-		boolean  b = !derivedVars.isEmpty();
-		if(b)
-		{
-			System.out.println("Lleno");
-		}
-		else{
-			System.out.println("Vacio");
-		}
-		return b;
+		return !derivedVars.isEmpty();
 	}
 	
 	public boolean hasDerivedVariables2()
 	{
-		boolean  b = !derivedVarsForSpec.isEmpty();
-		if(b)
-		{
-			System.out.println("Lleno");
-		}
-		else{
-			System.out.println("Vacio");
-		}
-		return b;
+		return !derivedVarsForSpec.isEmpty();
 	}
 	public ListDIParameters getDerivedVariables()
 	{
