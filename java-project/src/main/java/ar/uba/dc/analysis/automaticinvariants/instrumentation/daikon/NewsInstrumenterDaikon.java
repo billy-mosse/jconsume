@@ -261,6 +261,7 @@ class NewsInstrumenterDaikon extends LoopFinder {
 			// System.out.println("Public:"+vParams);
 			String lParams="";
 			
+			HashSet<String> types = new HashSet<String>();
 			for (Iterator itChain = vParams.iterator(); itChain.hasNext();) {
 				Local var = (Local) itChain.next();
 				
@@ -287,6 +288,12 @@ class NewsInstrumenterDaikon extends LoopFinder {
 				//lParams+="int "+argName;
 					
 				lParams+=var.getType()  + " " + argName;
+				
+				ArrayList<String> importables = DIParameterFactory.getImportables(var.getType().toString());
+				
+				if(importables.size() > 0)
+					types.addAll(importables);
+				
 				i++;
 				
 				if(itChain.hasNext())

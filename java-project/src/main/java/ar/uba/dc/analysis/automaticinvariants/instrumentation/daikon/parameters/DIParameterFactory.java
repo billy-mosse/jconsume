@@ -6,7 +6,10 @@
  */
 package ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters;
 
+import java.util.ArrayList;
 import java.util.Collection;
+
+import org.apache.commons.lang.StringUtils;
 
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.DIParameter;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.DI_Array;
@@ -19,6 +22,7 @@ import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.DI_Object;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.DI_String;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.DI_ValueNull;
+import ar.uba.dc.util.List;
 import soot.Body;
 import soot.Local;
 import soot.Scene;
@@ -327,6 +331,38 @@ public class DIParameterFactory {
 	}
 	protected static boolean isTypeIterator(Type t) {
 		return t.toString().equals("java.util.Iterator");
+	}
+	
+	//importable = that can (and needs to) be imported for it to be used
+	//return null when it's local or non importable
+	//TODO: podria haber "mas de un" importable, por ejemplo con un map
+	public static ArrayList<String> getImportables(String classname)
+	{
+		ArrayList<String> imp = new ArrayList<String>();
+		if(isTypeInteger(classname) || classname.endsWith(".String") || classname.equals("double") || isTypeNum(classname))
+			return imp;
+
+		if(classname.contains("[]"))
+		{
+			classname = classname.substring(0,classname.indexOf("[]"));
+			imp.addAll(getImportables(classname));
+			return imp;
+		}
+		
+		if(classname.contains("<") && classname.contains(">"))
+		{
+			String s = StringUtils.substringBetween(classname, "<", ">");
+			
+			String[] classnames = s.split(",");
+			for(String c : classnames)
+			{
+				imp.addAll(getImportables(c));
+			}
+			return imp;
+		}
+		
+		imp.add(classname);
+		return imp;
 	}
 
 
