@@ -162,6 +162,9 @@ public class SpecInvariantWriter {
 				int callOffset = 0;
 				for (Object o2 : css) {
 					CreationSiteMapInfo cs = (CreationSiteMapInfo) o2;
+					System.out.println(cs.toString());
+					System.out.println(cs.getInsSite());
+					System.out.println("____");
 					// System.out.println("-- cs:"+cs);
 
 					boolean isCall = cs.isCall();
@@ -274,6 +277,28 @@ public class SpecInvariantWriter {
 		return Integer.parseInt(sln);
 		
 	}
+	
+	/*
+	 * private String extactLineNumberFromInsSite(String is) {
+		//System.out.println("entrando");
+		int pos_c  = is.lastIndexOf("c");
+		
+	
+		int pos_first_dash  = is.lastIndexOf("_");
+
+		String s2 = is.substring(0,pos_first_dash-1);
+		int pos_dash  = s2.lastIndexOf("_");
+
+		String sln = null;
+		if(pos_c!= -1 && pos_c > pos_dash)
+			sln = is.substring(pos_dash + 1, pos_c);
+		else
+			sln = is.substring(pos_dash + 1);
+		//System.out.println("saliendo");
+		return sln;
+		
+	}
+	 * */
 
 	private void processCreationSite(CreationSiteMapInfo cs) {
 		xmlSpec.writeCreationSite(cs);
@@ -282,6 +307,15 @@ public class SpecInvariantWriter {
 	private void processCall(CreationSiteMapInfo cs) {
 
 		CallSiteMapInfo ccInfo = ccr.getCallSiteInfo(cs.getInsSite());
+		if(ccInfo.toString().contains("<init"))
+		{
+			System.out.println(ccInfo.toString());
+			System.out.println();
+		}
+		if(cs.getInsSite().equals("ar.uba.dc.jolden.em3d.BiGraph_00105"))
+		{
+			System.out.println("Hola");
+		}
 		xmlSpec.writeCallSite(cs, ccInfo);
 
 	}
@@ -352,7 +386,14 @@ public class SpecInvariantWriter {
 
 			indent();
 			out.print("<relevant-parameters>");
-			out.print(extractStringVarList(params));
+			if(methodName.contains("void main(java.lang.String[])") && params==null)
+			{
+				out.print("size_args_init");
+			}
+			else
+			{
+				out.print(extractStringVarList(params));
+			}
 			out.println("</relevant-parameters>");
 		}
 
@@ -850,13 +891,18 @@ public class SpecInvariantWriter {
 			// inds.toString().replaceAll("\\[","").replaceAll("\\]","");
 			out.print(extractStringVarList(inds));
 			if (!newInd.isEmpty()) {
-				if (!inds.isEmpty())
-					out.print(", ");
+				
 
 				String s = extractStringParSet(newInd);
+				
+				
 				s = filterBindingVariables(s);
-
-				out.print(s);
+				
+				if (!inds.isEmpty() && s.length() > 0)
+				{
+					out.print(", ");
+					out.print(s);
+				}
 			}
 			out.println("</inductives>");
 		}
@@ -992,20 +1038,6 @@ public class SpecInvariantWriter {
 			StringBuffer resBi = new StringBuffer();
 			for (int i = 0; i < invList.length; i++) {
 				String s = invList[i];
-				
-				if(s.contains("inargs"))
-				{
-					System.out.println("Hola!");
-				}
-
-				if(!s.contains("$t."))
-					s = s.replace(".", "__");
-				
-				
-				/*if(s.contains("$t"))
-				{
-					System.out.println("hola");
-				}*/
 				
 				
 				//TODO revisar que no haya invariantes con ")" que no provengan de size!
