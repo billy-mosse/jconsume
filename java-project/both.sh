@@ -25,6 +25,12 @@ sh invariants_IM.sh $1 $2 $3
 sh memory.sh "--program" $1.$2 "--ir" "--memory"
 
 
+cd results/rinard
+
+DATE_WITH_TIME=`date "+%Y%m%d-%H%M%S"`
+cp -R report report_$1.$2
+#_$DATE_WITH_TIME
+
 # $1 es NombrePrograma. La idea es que haya un Test que lo llame 100 veces.
 # $2 es los parametros (100, por ejemplo, para que el loop del test llegue hasta 100)
 # $3 es NombrePrograma. Ya se,

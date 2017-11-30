@@ -9,7 +9,7 @@ DAIKON_JAR=/home/billy/Programs/daikon/daikon-5.5.2/daikon.jar
 
 #DAIKON_JAR=../utils/daikon/daikon4.jar
 
-
+JAVA_HOME=/usr/lib/jvm/java-8-oracle/jre/bin
 
 #$CLASSPATH=$CLASSPATH:/usr/lib/jvm/java-7-oracle/lib/tools.jar:/home/billy/Projects/git/jconsume-global/jconsume-global/src/examples:/home/billy/Projects/git/jconsume-global/jconsume-global/bin/pruebas:/home/billy/Projects/git/jconsume-global/jconsume-global/src/pruebas:/home/billy/Projects/git/jconsume-global/jconsume-global/out:/home/billy/Projects/git/jconsume-global/jconsume-global/src:/home/billy/Projects/git/jconsume-global/jconsume-global:/home/billy/Projects/git/jconsume-global/jconsume-global/bin/examples:/home/billy/Projects/git/jconsume-global/jconsume-global/bin:/usr/lib/jvm/java-7-oracle/bin:.:
 
@@ -43,11 +43,15 @@ echo "Chicory"
 #--instrument-clinit?
 #"--ppt-omit-pattern=List.a*"
 
+
+
+#TODO: dejar el pattern para InstrumentedMethod en general
+#creo que anda "--ppt-select-pattern=$.InstrumentedMethod.*:::ENTER"
 #"--ppt-select-pattern=ar\.uba\.dc\.daikon\.Ins5\.f\(*"
 #"--ppt-select-pattern=A\.doNothingForInstrmentedMethod\("
 #"--ppt-select-pattern=ar.\uba\.\dc\.daikon\.A:::PATTERN"
 #"--ppt-select-pattern=dummyMethod$"
-java -cp $CLASSPATH daikon.Chicory "--output-dir=./daikon-output" "--ppt-select-pattern=InstrumentedMethod.*:::ENTER" "--ppt-select-pattern=dummyMethod$" --dtrace-file=$1Test.dtrace.gz $1Test $2 
+java -cp $CLASSPATH daikon.Chicory "--output-dir=./daikon-output" "--ppt-select-pattern=.+\.InstrumentedMethod.*:::ENTER" "--ppt-select-pattern=dummyMethodForInstrumentation$" --dtrace-file=$1Test.dtrace.gz $1Test $2 
 
 echo Ejecutando Daikon
 
@@ -55,6 +59,6 @@ echo Ejecutando Daikon
 
 #--config_option daikon.inv.binary.twoScalar.LinearBinary.enabled=true ax+by+c=0. Ojo que este es un formato nuevo que barvinok aceptaria pero hay que tener cuidado a la hora de parsearlo
 java -cp $DAIKON_JAR::$CLASSPATH daikon.Daikon ./daikon-output/$1Test.dtrace.gz \
-"--ppt-select-pattern=InstrumentedMethod.*:::ENTER" --nohierarchy --config_option daikon.Daikon.enable_floats=true --config_option daikon.inv.binary.twoScalar.FloatEqual.enabled=false --config_option daikon.inv.binary.twoScalar.LinearBinaryFloat.enabled=false  --config_option daikon.inv.ternary.threeScalar.LinearTernaryFloat.enabled=false --config_option daikon.inv.unary.scalar.Modulus.enabled=false --config_option  daikon.inv.unary.scalar.NonModulus.enabled=false  --config_option daikon.inv.unary.scalar.LowerBound.enabled=true --config_option daikon.inv.binary.twoScalar.IntGreaterThan.enabled=true --config_option daikon.inv.binary.twoScalar.IntGreaterEqual.enabled=true --config_option daikon.inv.binary.twoScalar.IntLessThan.enabled=true --config_option daikon.inv.binary.twoScalar.IntNonEqual.enabled=true --config_option daikon.derive.Derivation.disable_derived_variables=true --config_option daikon.Debug.show_stack_trace=true --config_option daikon.derive.binary.SequenceFloatSubscript.enabled=false --config_option daikon.inv.unary.sequence.EltOneOf.enabled=false --config_option daikon.inv.binary.twoSequence.Reverse.enabled=false --config_option daikon.inv.binary.twoSequence.ReverseFloat.enabled=false --config_option  daikon.inv.binary.sequenceScalar.SeqIntEqual.enabled=false --config_option daikon.inv.binary.sequenceString.MemberString.enabled=false -o ./daikon-output/$1Test.inv.gz
+"--ppt-select-pattern=.+\.InstrumentedMethod.*:::ENTER" --nohierarchy --config_option daikon.Daikon.enable_floats=true --config_option daikon.inv.binary.twoScalar.FloatEqual.enabled=false --config_option daikon.inv.binary.twoScalar.LinearBinaryFloat.enabled=false  --config_option daikon.inv.ternary.threeScalar.LinearTernaryFloat.enabled=false --config_option daikon.inv.unary.scalar.Modulus.enabled=false --config_option  daikon.inv.unary.scalar.NonModulus.enabled=false  --config_option daikon.inv.unary.scalar.LowerBound.enabled=true --config_option daikon.inv.binary.twoScalar.IntGreaterThan.enabled=true --config_option daikon.inv.binary.twoScalar.IntGreaterEqual.enabled=true --config_option daikon.inv.binary.twoScalar.IntLessThan.enabled=true --config_option daikon.inv.binary.twoScalar.IntNonEqual.enabled=true --config_option daikon.derive.Derivation.disable_derived_variables=true --config_option daikon.Debug.show_stack_trace=true --config_option daikon.derive.binary.SequenceFloatSubscript.enabled=false --config_option daikon.inv.unary.sequence.EltOneOf.enabled=false --config_option daikon.inv.binary.twoSequence.Reverse.enabled=false --config_option daikon.inv.binary.twoSequence.ReverseFloat.enabled=false --config_option  daikon.inv.binary.sequenceScalar.SeqIntEqual.enabled=false --config_option daikon.inv.binary.sequenceString.MemberString.enabled=false --config_option daikon.inv.unary.sequence.EltLowerBound.enabled=false --config_option daikon.inv.unary.sequence.EltUpperBound.enabled=false -o ./daikon-output/$1Test.inv.gz
 
 #--config_option daikon.PrintInvariants.print_all=true
