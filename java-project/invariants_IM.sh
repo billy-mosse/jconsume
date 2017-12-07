@@ -23,7 +23,7 @@ JAVA4HOME=/usr/lib/jvm/java-8-oracle
 JAVA4BIN=$JAVA4HOME/bin
 
 
-CLASSPATH_JCONSUME_FOLDERS=/home/billy/Projects/git/jconsume/java-project/src/main/examples/:/home/billy/Projects/git/jconsume/java-project/target/classes/:/home/billy/Projects/git/jconsume/java-project/src/:/home/billy/Projects/git/jconsume/jpfHelper/src
+CLASSPATH_JCONSUME_FOLDERS=/home/billy/Projects/git/jconsume/java-project/target/classes/:/home/billy/Projects/git/jconsume/java-project/target/classes/:/home/billy/Projects/git/jconsume/java-project/src/:/home/billy/Projects/git/jconsume/jpfHelper/src
 
 
 
