@@ -22,6 +22,7 @@ import ar.uba.dc.analysis.common.code.Statement;
 import ar.uba.dc.analysis.common.code.StatementVisitor;
 import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.invariant.InvariantProvider;
+import ar.uba.dc.invariant.spec.compiler.constraints.parser.DerivedVariable;
 import ar.uba.dc.util.location.ClassLocationStrategy;
 import decorations.Binding;
 
@@ -123,6 +124,21 @@ public class SimpleInvariantProvider implements InvariantProvider, StatementVisi
 		}
 		
 		return parameters;
+	}
+	
+	public Set<DerivedVariable> getNewRelevantParameters(SootMethod method) {
+		Set<DerivedVariable> new_parameters = new TreeSet<DerivedVariable>();
+		
+		loadInvariants(method.getDeclaringClass());
+		
+		String keyPreffix = getKeyPreffix(method);
+		for (Entry<String, DomainSet> entry : dic.entrySet()) {
+			if (entry.getKey().startsWith(keyPreffix)) {
+				new_parameters.addAll(entry.getValue().getNewParameters());
+			}
+		}
+		
+		return new_parameters;
 	}
 
 	public DomainSet getRequeriments(SootMethod method) {

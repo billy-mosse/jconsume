@@ -3,6 +3,7 @@ package ar.uba.dc.analysis.common.intermediate_representation;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedSet;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -16,6 +17,7 @@ import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
 import ar.uba.dc.analysis.memory.impl.summary.RichPaperPointsToHeapPartition;
 import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.invariant.InvariantProvider;
+import ar.uba.dc.invariant.spec.compiler.constraints.parser.DerivedVariable;
 import soot.SootClass;
 import soot.SootMethod;
 import soot.jimple.toolkits.callgraph.CallGraph;
@@ -37,12 +39,12 @@ public class IntermediateRepresentationMethodBuilder {
 	}
 	
 	
-	private void setBody(BasicMethodBody methodBody, Set<IntermediateRepresentationMethod> ir_methods, Set<PaperPointsToHeapPartition> nodes, String fullName, Map<Node, Integer> numbers)
+	private void setBody(BasicMethodBody methodBody, Set<IntermediateRepresentationMethod> ir_methods, Set<PaperPointsToHeapPartition> nodes, String fullName, Map<Node, Integer> numbers, SortedSet<SootMethod> queue )
 	{	
-		this.irmethod.body = irbody_builder.build_body(methodBody, ir_methods, nodes, fullName, numbers);
+		this.irmethod.body = irbody_builder.build_body(methodBody, ir_methods, nodes, fullName, numbers, queue);
 	}	
 	
-	public IntermediateRepresentationMethod buildMethod(BasicMethodBody methodBody, long order, Set<IntermediateRepresentationMethod> ir_methods)
+	public IntermediateRepresentationMethod buildMethod(BasicMethodBody methodBody, long order, Set<IntermediateRepresentationMethod> ir_methods, SortedSet<SootMethod> queue )
 	{
 		
 		SootMethod m = methodBody.belongsTo();
@@ -62,13 +64,24 @@ public class IntermediateRepresentationMethodBuilder {
 		this.irmethod.setDeclaration(m.getDeclaration());
 
 		this.irmethod.setMethodRequirements(invariantProvider.getRequeriments(m));
-		this.irmethod.setRelevant_parameters(invariantProvider.getRelevantParameters(m));
+		
+		
+		this.irmethod.setRelevantParameters(invariantProvider.getRelevantParameters(m));
+		
+		
+		/*for(DerivedVariable newRelevantParameter : invariantProvider.getNewRelevantParameters(m))
+		{
+			this.irmethod.getRelevantParameters().add(newRelevantParameter.toString());
+		}*/
+		
+		
+		this.irmethod.setNewRelevantParameters(invariantProvider.getNewRelevantParameters(m));
 		
 		Map<Node, Integer> numbers = new HashMap<Node, Integer>();
 
 		this.irmethod.setNodesInfo(data.get(methodBody.belongsTo()), numbers);
 		
-		this.setBody(methodBody, ir_methods, this.irmethod.nodes, this.irmethod.getFullName(), numbers);
+		this.setBody(methodBody, ir_methods, this.irmethod.nodes, this.irmethod.getFullName(), numbers, queue);
 		
 		return this.irmethod;
 	}

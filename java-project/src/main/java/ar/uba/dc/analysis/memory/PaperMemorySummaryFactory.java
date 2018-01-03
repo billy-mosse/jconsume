@@ -20,7 +20,7 @@ public class PaperMemorySummaryFactory {
         		ParametricExpression initialMemoryRequirement = expressionFactory.constant(0L, ir_method.getMethodRequirements());
         		
         		
-        		PaperMemorySummary summary =  new PaperMemorySummary(ir_method, ir_method.getRelevant_parameters(), initialTemporal, initialMemoryRequirement);
+        		PaperMemorySummary summary =  new PaperMemorySummary(ir_method, ir_method.getRelevantParameters(), initialTemporal, initialMemoryRequirement);
                 return summary;
         }
 

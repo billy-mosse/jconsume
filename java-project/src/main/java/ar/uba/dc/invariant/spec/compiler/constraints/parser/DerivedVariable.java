@@ -1,6 +1,8 @@
 package ar.uba.dc.invariant.spec.compiler.constraints.parser;
 
-public class DerivedVariable {
+
+//TODO hacer una clase que herede de Set y que implemente un set de DerivedVariables
+public class DerivedVariable implements Comparable{
 	public DerivedVariable(String field, String name)
 	{
 		this.field = field;
@@ -28,5 +30,22 @@ public class DerivedVariable {
 	}
 	public String getName() {
 		return this.name;
+	}
+	
+	public int compareTo(DerivedVariable dv)
+	{
+		return this.toString().compareTo(dv.toString());
+	}
+	@Override
+	public int compareTo(Object o) {
+		if(o.getClass().equals(DerivedVariable.class) || o.getClass().equals(String.class))
+		{
+			return this.toString().compareTo(o.toString());
+		}
+		else
+		{
+			throw new Error("Can only compare to Derived Variables or Strings");
+		}
+		
 	}
 }

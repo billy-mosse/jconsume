@@ -10,6 +10,7 @@ import com.sun.tools.internal.jxc.ap.Options;
 
 import soot.G;
 import soot.Main;
+import soot.Scene;
 import soot.jimple.toolkits.callgraph.EdgePredicate;
 import soot.jimple.toolkits.callgraph.ReachableMethods;
 import ar.uba.dc.config.Context;
@@ -76,7 +77,6 @@ public class MainSootRunner {
 		String[] opts = SootUtils.buildOptions(context, values.getProgramName(), values.getMain()).toArray(new String[] {});
 
 		
-		soot.options.Options.v().set_java_version(7);
 		soot.Main.main(opts);
 	}
 }

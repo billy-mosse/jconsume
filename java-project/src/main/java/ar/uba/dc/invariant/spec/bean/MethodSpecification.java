@@ -9,11 +9,15 @@ import org.apache.commons.beanutils.BeanPropertyValueEqualsPredicate;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 
+import ar.uba.dc.invariant.spec.compiler.constraints.parser.DerivedVariable;
+
 public class MethodSpecification {
 
 	private String signature;
-	
+
 	private Set<String> parameters = new TreeSet<String>();
+	
+	private Set<DerivedVariable> new_parameters = new TreeSet<DerivedVariable>();
 	
 	private List<String> requirements = new ArrayList<String>();
 	
@@ -75,6 +79,10 @@ public class MethodSpecification {
 		return new TreeSet<String>(parameters);
 	}
 	
+	public Set<DerivedVariable> getNewParameters() {
+		return new TreeSet<DerivedVariable>(new_parameters);
+	}
+	
 	public void addAllParameters(Set<String> params) {
 		parameters.addAll(params);
 	}
@@ -87,6 +95,12 @@ public class MethodSpecification {
 		return (InvariantSpecification) CollectionUtils.find(invariants, new BeanPropertyValueEqualsPredicate("id", id));
 	}
 
+	
+
+	public void addAllNewParameters(Set<DerivedVariable> new_params) {
+		new_parameters.addAll(new_params);
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		return obj != null && 

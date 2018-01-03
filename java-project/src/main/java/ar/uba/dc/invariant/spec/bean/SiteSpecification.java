@@ -6,9 +6,9 @@ public interface SiteSpecification {
 	public String getId();
 	
 	public String getOffset();
-	
-	public String getConstraints();
 
+	public String getConstraints();
+	
 	public String getInductives();
 
 	public String getVariables();

@@ -11,6 +11,7 @@ import org.nfunk.jep.JEP;
 import org.nfunk.jep.ParseException;
 import org.nfunk.jep.function.Not;
 
+import ar.uba.dc.invariant.spec.bean.CallSiteSpecification;
 import ar.uba.dc.invariant.spec.bean.SiteSpecification;
 import ar.uba.dc.invariant.spec.compiler.constraints.ConstraintsInfo;
 import ar.uba.dc.invariant.spec.compiler.constraints.ConstraintsParser;
@@ -32,7 +33,13 @@ public class RegexpConstraintsParser implements ConstraintsParser {
 		this.parser.addFunction(INCLUDE_INVARIANT_FUNCTION, new Not());
 	}
 	
-	public void parse(SiteSpecification site, ConstraintsInfo info) {
+	
+	public void parse(SiteSpecification site, ConstraintsInfo info, Set<String> parameters, Set<DerivedVariable> new_parameters) {
+		if (site.getClass().equals(CallSiteSpecification.class))
+		{
+			CallSiteSpecification s = (CallSiteSpecification) site;
+			System.out.println(s.getBinding());
+		}
 		Set<String> variables = info.getVariables();
 		Set<String> inductives = info.getInductives();
 		String constraints = site.getConstraints();
@@ -91,7 +98,7 @@ public class RegexpConstraintsParser implements ConstraintsParser {
 					}
 					else
 					{
-						if(var.contains("__f__") )
+						if(var.contains("__f__"))
 						{
 							String name = var.substring(0, var.indexOf("__f__"));
 							String field = var.substring(var.indexOf("__f__") + 5);
@@ -134,8 +141,15 @@ public class RegexpConstraintsParser implements ConstraintsParser {
 							String field = dv.getField();
 							if (name.equals(c0))
 							{
+								
+								
 								//String field = s.replace(constraint_pair[0], "");
 								DerivedVariable dv2 = new DerivedVariable(field, c1);
+								
+
+								if(parameters.contains(c1))
+									new_parameters.add(dv2);
+								
 								String constraint2 = dv.toString() + " == " + dv2.toString();							
 								new_constraints.add(constraint2);
 								
@@ -152,6 +166,11 @@ public class RegexpConstraintsParser implements ConstraintsParser {
 							if (name.equals(c1))
 							{
 								DerivedVariable dv2 = new DerivedVariable(field, c0);
+								
+								if(parameters.contains(c0))
+									new_parameters.add(dv2);
+								
+								
 								String constraint2 = dv.toString() + " == " + dv2.toString();		
 								new_constraints.add(constraint2);
 								
@@ -169,6 +188,7 @@ public class RegexpConstraintsParser implements ConstraintsParser {
 				}
 			}
 			
+			variables.removeAll(new_parameters);
 			constraints = StringUtils.join(new_constraints, " and ");
 			site.setConstraints(constraints);
 			
@@ -178,7 +198,7 @@ public class RegexpConstraintsParser implements ConstraintsParser {
 		}
 	}
 	
-	public void parse2(SiteSpecification site, ConstraintsInfo info) {
+	public void parse_NOT_USED(SiteSpecification site, ConstraintsInfo info) {
 		Set<String> variables = info.getVariables();
 		String constraints = site.getConstraints();
 		

@@ -9,6 +9,7 @@ import soot.SootMethod;
 
 import ar.uba.dc.invariant.InvariantProvider.Operation;
 import ar.uba.dc.invariant.spec.compiler.CompiledClassInvariantProvider;
+import ar.uba.dc.invariant.spec.compiler.constraints.parser.DerivedVariable;
 import decorations.Binding;
 import ar.uba.dc.analysis.common.code.Statement;
 import ar.uba.dc.barvinok.expression.DomainSet;
@@ -29,6 +30,10 @@ public class AllwaysEmptyInvariantProvider extends AbstractClassInvariantProvide
 
 	public Set<String> getRelevantParameters(SootMethod method) {
 		return new TreeSet<String>();
+	}
+	
+	public Set<DerivedVariable> getNewRelevantParameters(SootMethod method) {
+		return new TreeSet<DerivedVariable>();
 	}
 
 	public DomainSet getRequirements(SootMethod method) {

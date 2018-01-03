@@ -38,6 +38,8 @@ public class BindingPair implements Comparable<BindingPair>{
 		}
 		else
 		{
+			pair[0]=pair[0].trim();
+			pair[1]=pair[1].trim();
 			boolean is0callee = pair[0].startsWith(PREFIX);
 			boolean is1callee = pair[1].startsWith(PREFIX);
 			if(is0callee && !is1callee)
@@ -58,6 +60,12 @@ public class BindingPair implements Comparable<BindingPair>{
 				}
 			}
 		}
+	}
+	
+	public BindingPair(String caller_parameter, String callee_parameter)
+	{
+		this.caller_parameter = caller_parameter;
+		this.callee_parameter = callee_parameter;
 	}
 
 	public String toString()

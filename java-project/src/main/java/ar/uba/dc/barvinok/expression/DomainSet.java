@@ -9,10 +9,13 @@ import org.apache.commons.logging.LogFactory;
 
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
+import ar.uba.dc.invariant.spec.compiler.constraints.parser.DerivedVariable;
+
 public class DomainSet {
 
 	@XStreamImplicit(itemFieldName="parameter")
 	private Set<String> parameters = new TreeSet<String>(); // AKA, free variables
+	private Set<DerivedVariable> new_parameters = new TreeSet<DerivedVariable>(); // AKA, free variables
 	
 	@XStreamImplicit(itemFieldName="variable")
 	// (NO! aqui estan poniendo las que aparecen en el invariante)
@@ -138,7 +141,21 @@ public class DomainSet {
 	
 	public String toString() {
 		String ret = StringUtils.EMPTY;
-		String params = StringUtils.join(parameters, ",");
+		
+		Set<String> all_parameters = new TreeSet();
+		
+		all_parameters.addAll(parameters);
+		
+		for(DerivedVariable dv : new_parameters)
+		{
+			all_parameters.add(dv.toString());
+		}
+		
+		
+		variables.removeAll(all_parameters);
+		
+		
+		String params = StringUtils.join(all_parameters, ",");
 		String vars = StringUtils.join(variables, ",");
 		String inds = StringUtils.join(inductives, ",");
 		
@@ -207,6 +224,10 @@ public class DomainSet {
 	public Set<String> getParameters() {
 		return new TreeSet<String>(parameters);
 	}
+
+	public Set<DerivedVariable> getNewParameters() {
+		return new TreeSet<DerivedVariable>(new_parameters);
+	}
 	
 	
 	public boolean checkIfClassCalledChangedDuringLoop() {
@@ -246,6 +267,10 @@ public class DomainSet {
 
 	public void addAllParameters(Set<String> params) {
 		this.parameters.addAll(params);
+	}
+	
+	public void addAllNewParameters(Set<DerivedVariable> new_params) {
+		this.new_parameters.addAll(new_params);
 	}
 
 	public void addAllVariables(Set<String> vars) {

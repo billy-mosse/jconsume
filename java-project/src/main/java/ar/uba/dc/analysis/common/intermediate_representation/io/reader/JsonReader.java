@@ -143,7 +143,7 @@ protected Gson gson;
 		    	
 		    	relevant_parameters.add(jrelevant_parameters.get(i).getAsString());
 		    }
-		    m.setRelevant_parameters(relevant_parameters);
+		    m.setRelevantParameters(relevant_parameters);
 		    
 		    if(jobject.has("return_type"))
 		    	m.setReturnType(jobject.get("return_type").getAsString());

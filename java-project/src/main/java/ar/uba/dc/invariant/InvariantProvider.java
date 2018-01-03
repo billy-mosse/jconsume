@@ -7,6 +7,7 @@ import ar.uba.dc.analysis.memory.LifeTimeOracle;
 import ar.uba.dc.analysis.common.Invocation;
 import ar.uba.dc.analysis.common.code.Statement;
 import ar.uba.dc.barvinok.expression.DomainSet;
+import ar.uba.dc.invariant.spec.compiler.constraints.parser.DerivedVariable;
 import decorations.Binding;
 
 /**
@@ -42,6 +43,7 @@ public interface InvariantProvider {
 	 * Retorna los parametros relevantes asociado a un metodo
 	 */
 	Set<String> getRelevantParameters(SootMethod method);
+	Set<DerivedVariable> getNewRelevantParameters(SootMethod method);
 
 	/**
 	 * Devuelve los requerimientos de un metodo. Los mismos son un predicado al igual que los invariantes

@@ -55,6 +55,18 @@ public class Line {
 	
 	private String irClass;
 	
+	
+	public Line clone()
+	{
+		Line l = new Line();
+		l.binding = this.binding;
+		l.invariant = this.invariant;
+		l.invocations = this.invocations;
+		l.irClass = this.irClass;
+		l.irName = this.irName;
+		l.name = this.name;
+		return l;
+	}
 	public String getIrClass() {
 		return irClass;
 	}

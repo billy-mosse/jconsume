@@ -195,7 +195,7 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 	        
 	        JsonArray relevant_parameters = new JsonArray();	        
 	        
-	        for(String rp : ir_method.getRelevant_parameters())
+	        for(String rp : ir_method.getRelevantParameters())
 	        {	        
 	        	relevant_parameters.add(context.serialize(rp));
 	        }

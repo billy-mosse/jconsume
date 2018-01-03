@@ -1,6 +1,7 @@
 package ar.uba.dc.invariant.spec.compiler.constraints.parser;
 
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.jboss.util.NotImplementedException;
 import org.nfunk.jep.JEP;
@@ -45,7 +46,7 @@ public class JEPConstraintsParser implements ConstraintsParser {
 	}
 
 	@Override
-	public void parse(SiteSpecification site, ConstraintsInfo info) {
+	public void parse(SiteSpecification site, ConstraintsInfo info, Set<String> parameters, Set<DerivedVariable> new_parameters) {
 		throw new NotImplementedException();
 	}
 }

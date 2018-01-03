@@ -26,6 +26,7 @@ import ar.uba.dc.invariant.spec.bean.ClassSpecification;
 import ar.uba.dc.invariant.spec.bean.Specification;
 import ar.uba.dc.invariant.spec.compiler.CompiledClassInvariantProvider;
 import ar.uba.dc.invariant.spec.compiler.compilation.AllwaysEmptyInvariantProvider;
+import ar.uba.dc.invariant.spec.compiler.constraints.parser.DerivedVariable;
 import ar.uba.dc.util.location.ClassLocationStrategy;
 import decorations.Binding;
 
@@ -83,6 +84,13 @@ public class SpecInvariantProvider implements InvariantProvider {
 			// recuperamos los parametros formales (aquellos q nos interesan para consumo
 		return invariantProvider.getRelevantParameters(method);
 	}
+	
+	public Set<DerivedVariable> getNewRelevantParameters(SootMethod method) {
+		// Obtenemos la clase a la que pretenece el metodo
+	loadProvider(method.getDeclaringClass());
+		// recuperamos los parametros formales (aquellos q nos interesan para consumo
+	return invariantProvider.getNewRelevantParameters(method);
+}
 	
 	public DomainSet getRequeriments(SootMethod method) {
 		// Obtenemos la clase a la que pretenece el metodo

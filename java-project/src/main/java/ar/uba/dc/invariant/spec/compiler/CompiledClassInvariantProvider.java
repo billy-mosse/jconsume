@@ -6,6 +6,7 @@ import soot.SootMethod;
 import ar.uba.dc.analysis.common.code.Statement;
 import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.invariant.InvariantProvider.Operation;
+import ar.uba.dc.invariant.spec.compiler.constraints.parser.DerivedVariable;
 import decorations.Binding;
 
 public interface CompiledClassInvariantProvider {
@@ -17,6 +18,7 @@ public interface CompiledClassInvariantProvider {
 	Binding getBinding(Statement stmt);
 
 	Set<String> getRelevantParameters(SootMethod method);
+	Set<DerivedVariable> getNewRelevantParameters(SootMethod method);
 
 	DomainSet getRequirements(SootMethod method);
 

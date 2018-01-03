@@ -144,6 +144,7 @@ public class PaperIntraproceduralAnalysis {
 
 		ParametricExpression memReq = expressionFactory.constant(0L);
 		
+		
 		for(Line line: ir_method.getBody().getLines())
 		{
 			if(line.isNewStatement())
@@ -223,6 +224,7 @@ public class PaperIntraproceduralAnalysis {
 		for(Line callInvocation : calls)
 		{
 			
+			Line c = callInvocation.clone();
 			log.debug(callInvocation.getName());
 			
 			PaperCallSummaryInContext callSummary = interprocedural.analyseCall(callInvocation, ir_method);

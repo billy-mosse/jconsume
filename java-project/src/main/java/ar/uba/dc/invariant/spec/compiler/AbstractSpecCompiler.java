@@ -28,6 +28,7 @@ import ar.uba.dc.invariant.spec.compiler.compilation.InvariantId;
 import ar.uba.dc.invariant.spec.compiler.compilation.InvariantId.Type;
 import ar.uba.dc.invariant.spec.compiler.constraints.ConstraintsInfo;
 import ar.uba.dc.invariant.spec.compiler.constraints.ConstraintsParser;
+import ar.uba.dc.invariant.spec.compiler.constraints.parser.DerivedVariable;
 import ar.uba.dc.invariant.spec.compiler.exceptions.CompileException;
 import ar.uba.dc.invariant.spec.compiler.exceptions.DuplicateIdentifierException;
 import ar.uba.dc.invariant.spec.compiler.exceptions.SiteWithoutOffsetException;
@@ -97,6 +98,8 @@ public abstract class AbstractSpecCompiler implements SpecCompiler {
 	
 
 	protected DefaultMethodInvariantAndBindingProvider compile(MethodSpecification methodSpec, ClassSpecification classSpec) {
+		SiteSpecification t = null;
+		
 		final DefaultMethodInvariantAndBindingProvider provider = new DefaultMethodInvariantAndBindingProvider();
 		log.debug("Generating provider for " + methodSpec.getSignature());
 
@@ -121,7 +124,7 @@ public abstract class AbstractSpecCompiler implements SpecCompiler {
 				throw new SiteWithoutOffsetException("Site at index " + sitesConstraintsInfo.size() + " of method " + methodSpec.getSignature() +  " at class " + classSpec.getClassName() + " has no offset specified");
 			}
 			// ConstraintsInfo info = processConstraints(site.getConstraints(), methodSpec.getParameters());
-			ConstraintsInfo cInfo = processConstraints(site, methodSpec.getParameters());
+			ConstraintsInfo cInfo = processConstraints(site, methodSpec);
 			
 			
 			
@@ -143,8 +146,16 @@ public abstract class AbstractSpecCompiler implements SpecCompiler {
 				{
 					String constraint1 = constraint_pair
 				}*/
-				
-				
+				if (site.getClass().equals(CallSiteSpecification.class))
+				{
+					CallSiteSpecification s = (CallSiteSpecification) site;
+					
+					//esto es un hack mio?
+					if(s.getBinding().equals("$t.numvert_init == __i1"))
+					{
+						t = site;
+					}
+				}
 				
 				
 				sitesConstraintsInfo.put(site, cInfo);
@@ -156,13 +167,16 @@ public abstract class AbstractSpecCompiler implements SpecCompiler {
 			//sitesBindingInfo.put(site,  bInfo);
 		}
 		
-			// Este metodo puede cambiar la informacion de variables y referencias mientras lleva todo a forma canonica
+		
+		// Este metodo puede cambiar la informacion de variables y referencias mientras lleva todo a forma canonica
 		toCanonicalForm(methodSpec);
 		
 		provider.setRequirements(requirementsInvariant);
-		
+
 		Set<String> params = methodSpec.getParameters();
 		provider.setParameters(params);
+		Set<DerivedVariable> new_params = methodSpec.getNewParameters();
+		provider.setNewParameters(new_params);
 		for (SiteSpecification site : methodSpec.getSitesSpecification()) {
 			for (final Long offset : expandOffset(site.getOffset())) {
 					// Creamos el invariante
@@ -170,8 +184,14 @@ public abstract class AbstractSpecCompiler implements SpecCompiler {
 				
 				
 				// Recuperamos la informacion (que pudo haber cambiado)
+				if (site.getClass().equals(CallSiteSpecification.class))
+				{
+					CallSiteSpecification s = (CallSiteSpecification) site;
+					System.out.println(s.getBinding());
+				}
 				ConstraintsInfo cInfo = sitesConstraintsInfo.get(site);
 				invariant.addAllParameters(params);
+				invariant.addAllNewParameters(new_params);
 				
 				Set<String> variables = cInfo.getVariables();
 				invariant.addAllVariables(variables);
@@ -189,6 +209,7 @@ public abstract class AbstractSpecCompiler implements SpecCompiler {
 				
 				if(site.getClass() == CallSiteSpecification.class)
 				{
+					CallSiteSpecification s = (CallSiteSpecification) site;
 					binding = new Binding(((CallSiteSpecification)site).getBinding());
 				}
 				
@@ -279,9 +300,10 @@ public abstract class AbstractSpecCompiler implements SpecCompiler {
 		return bInfo;
 	}
 	
-	protected ConstraintsInfo processConstraints(SiteSpecification site, Set<String> parameters) {
+	protected ConstraintsInfo processConstraints(SiteSpecification site, MethodSpecification methodSpecification) {
+		Set<String> parameters = methodSpecification.getParameters();
 		String constraints = site.getConstraints();
-		
+			
 		boolean class_called_changed_during_loop = false;
 		
 		ConstraintsInfo info = new ConstraintsInfo();
@@ -304,9 +326,12 @@ public abstract class AbstractSpecCompiler implements SpecCompiler {
 		     }
 		}
 		
+		TreeSet<DerivedVariable> new_parameters = new TreeSet<DerivedVariable>();
 		
 		if (StringUtils.isNotBlank(site.getConstraints())) {
-			parser.parse(site, info);
+			parser.parse(site, info, parameters, new_parameters);
+			
+			methodSpecification.addAllNewParameters(new_parameters);
 			
 			//esta linea ahora esta de mas porque ya no agrego las variables que veo en las constraints,
 			//pero igual la voy a dejar por ahora

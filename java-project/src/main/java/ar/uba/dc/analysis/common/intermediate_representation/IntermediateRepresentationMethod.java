@@ -21,6 +21,7 @@ import ar.uba.dc.analysis.escape.graph.node.StmtNode;
 import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
 import ar.uba.dc.analysis.memory.impl.summary.RichPaperPointsToHeapPartition;
 import ar.uba.dc.barvinok.expression.DomainSet;
+import ar.uba.dc.invariant.spec.compiler.constraints.parser.DerivedVariable;
 import ar.uba.dc.soot.SootUtils;
 import ar.uba.dc.util.collections.CircularStack;
 import soot.RefLikeType;
@@ -41,6 +42,8 @@ public class IntermediateRepresentationMethod {
 	protected long order;
 
 	protected Set<String> relevant_parameters;
+	
+	protected Set<DerivedVariable> new_relevant_parameters;
 
 	protected DomainSet methodRequirements;
 
@@ -171,12 +174,20 @@ public class IntermediateRepresentationMethod {
 		this.parameters = parameters;
 	}
 
-	public Set<String> getRelevant_parameters() {
+	public Set<String> getRelevantParameters() {
 		return relevant_parameters;
 	}
+	
+	public Set<DerivedVariable> getNewRelevantParameters() {
+		return new_relevant_parameters;
+	}
 
-	public void setRelevant_parameters(Set<String> relevant_parameters) {
+	public void setRelevantParameters(Set<String> relevant_parameters) {
 		this.relevant_parameters = relevant_parameters;
+	}
+	
+	public void setNewRelevantParameters(Set<DerivedVariable> new_relevant_parameters) {
+		this.new_relevant_parameters = new_relevant_parameters;
 	}
 
 	public DomainSet getMethodRequirements() {

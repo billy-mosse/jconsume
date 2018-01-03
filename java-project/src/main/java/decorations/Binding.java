@@ -50,6 +50,11 @@ public class Binding {
 	{
 		return this.bindingPairs;
 	}
+	
+	public void addBindingPairs(Set<BindingPair> newBindingPairs)
+	{
+		this.bindingPairs.addAll(newBindingPairs);
+	}
 
 	
 	public Set<String> getVariables() {

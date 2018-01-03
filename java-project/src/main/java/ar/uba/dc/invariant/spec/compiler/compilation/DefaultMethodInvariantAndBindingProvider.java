@@ -20,6 +20,7 @@ import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.barvinok.expression.operation.DomainUnifier;
 import ar.uba.dc.invariant.InvariantProvider.Operation;
 import ar.uba.dc.invariant.spec.compiler.compilation.InvariantId.Type;
+import ar.uba.dc.invariant.spec.compiler.constraints.parser.DerivedVariable;
 import decorations.Binding;
 import decorations.CallDecoration;
 
@@ -34,6 +35,8 @@ public class DefaultMethodInvariantAndBindingProvider {
 	
 	private static Log log = LogFactory.getLog(DefaultMethodInvariantAndBindingProvider.class);
 	protected Set<String> parameters = new TreeSet<String>();
+	protected Set<DerivedVariable> new_parameters = new TreeSet<DerivedVariable>();
+
 	protected DomainSet requirements = null;
 	
 	
@@ -276,8 +279,17 @@ public class DefaultMethodInvariantAndBindingProvider {
 		this.parameters = params;
 	}
 	
+	
+	public void setNewParameters(Set<DerivedVariable> new_params) {
+		this.new_parameters = new_params;
+	}
+	
 	public Set<String> getParameters() {
 		return new TreeSet<String>(parameters);
+	}
+	
+	public Set<DerivedVariable> getNewParameters() {
+		return new TreeSet<DerivedVariable>(new_parameters);
 	}
 
 	public void setRequirements(DomainSet requirements) {

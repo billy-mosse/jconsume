@@ -13,6 +13,7 @@ import soot.SootMethod;
 
 import ar.uba.dc.invariant.InvariantProvider.Operation;
 import ar.uba.dc.invariant.spec.compiler.CompiledClassInvariantProvider;
+import ar.uba.dc.invariant.spec.compiler.constraints.parser.DerivedVariable;
 import decorations.Binding;
 import ar.uba.dc.analysis.common.code.Statement;
 import ar.uba.dc.barvinok.expression.DomainSet;
@@ -88,6 +89,17 @@ public class DefaultClassInvariantProvider extends AbstractClassInvariantProvide
 		}
 		
 		return params;
+	}
+	
+	public Set<DerivedVariable> getNewRelevantParameters(SootMethod method) {
+		DefaultMethodInvariantAndBindingProvider provider = providers.get(method.getSubSignature());
+		Set<DerivedVariable> new_params = new TreeSet<DerivedVariable>();
+		
+		if (provider != null) {
+			new_params = provider.getNewParameters();
+		}
+		
+		return new_params;
 	}
 
 	public DomainSet getRequirements(SootMethod method) {

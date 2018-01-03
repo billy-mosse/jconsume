@@ -4,8 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -21,6 +23,7 @@ import ar.uba.dc.analysis.memory.impl.madeja.PaperMemorySummary;
 import ar.uba.dc.analysis.memory.impl.report.datasource.AnalysisResultsReportDataSource;
 import ar.uba.dc.analysis.memory.impl.report.datasource.PaperAnalysisResultsReportDataSource;
 import ar.uba.dc.analysis.memory.summary.MemorySummary;
+import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.soot.SootMethodFilter;
 import ar.uba.dc.util.Timer;
 import ar.uba.dc.util.location.MethodLocationStrategy;
@@ -82,12 +85,42 @@ public class PaperMemoryInterproceduralAnalysis extends PaperInterproceduralAnal
 
 			for(LineWithParent badLine : badLines)
 			{
-				log.debug(badLine.belongsTo + " called " + badLine.line.toString() + " | " + badLine.line.getInvariant().toString());				
+				log.debug(badLine.belongsTo + " called " + badLine.line.toString() + " | " + invariant_toString(badLine.line.getInvariant()));		
+				log.debug(badLine.line.getInvariant().getVariables());
+				log.debug("____________________");
 			}
 
 		}
 	}
 	
+	//TODO: borrar esta funcion
+	public String invariant_toString(DomainSet value) {
+		Set<String> varsToElim = value.variablesToExclude(); //variables - inductivas
+		Set<String> varsToInclude = value.getVariables();
+		varsToInclude.removeAll(varsToElim);
+		String params = StringUtils.join(value.getParameters(), ',');
+		String vars = StringUtils.join(varsToInclude, ',');
+		
+		String ret = "{ ";
+		
+		if (StringUtils.isNotEmpty(params) || StringUtils.isNotEmpty(vars)) {
+			ret += "[" + params + "] -> [" + vars + "]";
+		}
+		
+		
+		if(!varsToElim.isEmpty())  {
+			String stringElim = StringUtils.join(varsToElim, ',');
+			ret += ": exists "+stringElim+" ";
+		}
+		
+		if (StringUtils.isNotEmpty(value.getConstraints())) {
+			ret += " : " + value.getConstraints();
+		}
+		
+		ret += " }";
+		
+		return ret;
+	}
 	
 	@Override
 	protected void init() {

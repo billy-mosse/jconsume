@@ -112,8 +112,10 @@ public class IntermediateLanguageRepresentationBuilder {
 			//El MethodBody guarda los news y calls por separado y prefiero no procesarlos por separado
 			BasicMethodBody methodBody = methodDecorator.decorate_for_IR(method);
 			
+			System.out.println(method.toString());
 			
-			IntermediateRepresentationMethod m = irbuilder.buildMethod(methodBody, order, ir_methods);
+			//al final no necesito queue
+			IntermediateRepresentationMethod m = irbuilder.buildMethod(methodBody, order, ir_methods, queue);
 			
 			//convertRichPaperPointsToHeapPartitionsToSimplePaperPointsToHeapPartition(m);
 			ir_methods.add(m);
@@ -212,4 +214,5 @@ public class IntermediateLanguageRepresentationBuilder {
 			else return 0;
 		}
 	};
+	
 }

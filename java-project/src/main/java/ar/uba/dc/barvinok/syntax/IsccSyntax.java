@@ -184,12 +184,12 @@ public class IsccSyntax extends AbstractBarvinokSyntax {
 	
 	@Override
 	public String toString(PiecewiseQuasipolynomial value, boolean includeVariables) {
-		String params = StringUtils.join(value.getParameters(), ',');
+		//String params = StringUtils.join(value.getParameters(), ',');
 		String ret = "{ ";
 		String polynomials = StringUtils.EMPTY; 
 		
 		for (QuasiPolynomial q : value.getPieces()) {
-			polynomials += "; " + toString(q, params, includeVariables);
+			polynomials += "; " + toString(q, value.getParameters(), includeVariables);
 		}
 		
 		if (StringUtils.isNotEmpty(polynomials)) {
@@ -205,9 +205,15 @@ public class IsccSyntax extends AbstractBarvinokSyntax {
 		return toString(value, true);
 	}
 
-	protected String toString(QuasiPolynomial value, String params, boolean includeVariables) {
+	protected String toString(QuasiPolynomial value, Set<String> parameterList, boolean includeVariables) {
+		
+		String params = StringUtils.join(parameterList, ',');
 		//BILLY DEBUG: estoy borrando b sin querer
 		Set<String> varsToElim = value.variablesToExclude();
+		
+		//no quiero eliminar existencialmente los parametros
+		varsToElim.removeAll(parameterList);
+		
 		Set<String> varsToInclude = value.getVariables();
 		varsToInclude.removeAll(varsToElim);
 		String vars = StringUtils.join(varsToInclude, ',');
