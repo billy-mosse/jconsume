@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 import ar.uba.dc.util.List;
+import soot.SootClass;
 
 public class InstrumentedMethodClass {
 	public InstrumentedMethodClass(String packageName)
@@ -15,4 +16,5 @@ public class InstrumentedMethodClass {
 	public String packageName;
 	public ArrayList<String> methods;
 	public HashSet<String> usedClasses;
+	public SootClass sootClass;
 }
