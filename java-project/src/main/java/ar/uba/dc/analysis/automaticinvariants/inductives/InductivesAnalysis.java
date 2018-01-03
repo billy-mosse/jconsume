@@ -219,6 +219,7 @@ public class InductivesAnalysis extends BackwardFlowAnalysis{
     @Override
 	protected void flowThrough(Object inValue, Object unit, Object outValue)
     {
+    	
         FlowSet in = (FlowSet) inValue, out = (FlowSet) outValue;
 
         doGen(in,unit,out);
@@ -245,13 +246,17 @@ public class InductivesAnalysis extends BackwardFlowAnalysis{
 	 * @param out
 	 */
     
-    //hack horrible temporario
+
     private boolean contains(List list, Value value)
     {
     	for(Object o : list)
     	{
+
+    		//no se si preguntar por el hashcode esta bien.
+    		//Alguna vez CREO que paso que una variable estaba pero list.contains(value) daba false
+    		//¿sera porque usa el equals y el equals no usa el hashcode?
     		//if (s.equals(s2) && o.getClass().equals(value.getClass()))    		
-			if(o.hashCode() != value.hashCode())
+			if(o.hashCode() == value.hashCode())
 			{
 				return true;
 			}
@@ -459,6 +464,7 @@ public class InductivesAnalysis extends BackwardFlowAnalysis{
 				  inFiltered.add(v);
 		}
         
+        //preguntar si estan vivas esta totalmente de mas aca
         for (Iterator iter = addSet.iterator(); iter.hasNext();) {
 			Value v = (Value) iter.next();
 			    if(contains(vivas,v))
