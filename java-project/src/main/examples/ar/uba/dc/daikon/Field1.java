@@ -9,7 +9,6 @@ public class Field1
 		cosa = new A();
 		cosa.a = 0;
 		cosa.a = cosa.a + 1;
-		A.pi = 600;
 		
 		f();
 
@@ -18,6 +17,5 @@ public class Field1
 	
 	public static void f()
 	{
-		A.pi = 200;
 	}
 }

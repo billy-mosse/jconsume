@@ -5,7 +5,8 @@ public class RichNumberPublic {
 	
 	public RichNumberPublic(int num)
 	{
-		this.number = num + 1;
+		//InstrumentedMethod2.a2(this, num);
+		this.number = num;
 	}
 
 	public RichNumberPublic() {

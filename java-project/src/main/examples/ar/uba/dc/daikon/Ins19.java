@@ -1,12 +1,5 @@
 package ar.uba.dc.daikon;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import ar.uba.dc.util.ListC;
-import ar.uba.dc.util.ListItr;
-
 /**
  * @author billy
  * Modifico un relevant parameter en el medio del codigo, pero es un array
@@ -29,10 +22,9 @@ public class Ins19 {
 		int n = r.number;
 		for(int i = 1; i < n;i++)
 		{
-			//InstrumentedMethod2.a32(r,i);
-			//InstrumentedMethod2.a33(n,i);
+			//InstrumentedMethod2.a1(r,n,i);
 			Integer k = new Integer(i);
-			//System.out.println(k);
+			System.out.println(k);
 		}
 	}
 	

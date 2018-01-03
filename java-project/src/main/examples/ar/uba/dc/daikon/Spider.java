@@ -13,7 +13,7 @@ public class Spider extends Animal {
 		for(int i = 1; i <= 8; i++)
 		{
 			eyes_blinked +=1;
-			InstrumentedMethod2.a10(i);
+			//InstrumentedMethod..a10(i);
 		}		
 	}
 

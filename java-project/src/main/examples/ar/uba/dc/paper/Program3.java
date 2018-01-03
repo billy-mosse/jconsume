@@ -8,18 +8,32 @@ public class Program3
 {
 	
 	public static void main(String[] args) {
+		
+		
+		int k = Integer.parseInt(args[0]);
+		mainParameters(k, args[0]);
+
+	}
+	//no deberia necesitar partir esto en dos, no?
+	public static void mainParameters(int k, String u)
+	{
 		List list = new List();
+		for(int j = 0; j < k; j++)
+		{
+			list.add(new Integer(j));
+		}
 		
 		//Op op = new Op();
 		Op op;
 
-		if (args[0]== "use Op2")
+		if (u== "use Op2")
 			op = new Op2();
 		else
 			op = new Op();
 		
+		op = new Op();
+		
 		List new_list = map(list, op);
-
 	}
 
 	
@@ -29,9 +43,11 @@ public class Program3
 		Iterator it = list.iterator();
 		// sum max (OP, OP2) , no lo sabe hacer y hace sum OP + OP2
 		// si te das cuenta que op no cambia podrias hacer max (sum OP, sum OP2) 
+		//int i = 0;
 		while(it.hasNext())
 		//for(int i = 0; i< 5; i++)
 		{
+		//	i+=1;
 			Object li = it.next();
 			Object o = op.apply(li);
 			res.add(o);

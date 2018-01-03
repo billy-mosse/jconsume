@@ -11,7 +11,7 @@ public class Dog extends Animal {
 		for(int i = 1; i <= 2; i++)
 		{
 			eyes_blinked+=1;
-			InstrumentedMethod2.a10(i);
+			//InstrumentedMethod..a10(i);
 		}		
 	}
 	

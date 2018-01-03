@@ -15,7 +15,7 @@ public class Ins11 {
 	public static void main(String[] args) {
 		
 		int n = Integer.parseInt(args[0]);
-		InstrumentedMethod2.a4(n,args);
+		//InstrumentedMethod..a4(n,args);
 		mainParameters(n);		
 	}
 	
@@ -24,15 +24,15 @@ public class Ins11 {
 		List<Integer> l = new ArrayList<Integer>();
 		for(int i = 0; i <n; i++)
 		{
-			InstrumentedMethod2.a14(i,n);
+			//InstrumentedMethod..a14(i,n);
 			l.add(new Integer(i));
 		}
 			
 		
-		InstrumentedMethod2.a17(l,n);
+		//InstrumentedMethod..a17(l,n);
 		iterate(l);
 		
-		InstrumentedMethod2.a18(l,n);
+		//InstrumentedMethod..a18(l,n);
 		iterate2(l);
 		
 		
@@ -45,7 +45,7 @@ public class Ins11 {
 		while(it.hasNext())
 		{
 			j+=1;
-			InstrumentedMethod2.a19(l,it,j);
+			//InstrumentedMethod..a19(l,it,j);
 			Integer a = it.next();
 		}
 		
@@ -60,7 +60,7 @@ public class Ins11 {
 		while(it.hasNext())
 		{
 			i+=1;
-			InstrumentedMethod2.a20(l,it,i);
+			////InstrumentedMethod..a20(l,it,i);
 			Integer a = it.next();
 		}
 	}

@@ -5,7 +5,7 @@ import java.util.Iterator;
 public class List {
 
 	Cell head;
-	private int size = 0;
+	public int size = 0;
 
 	/**
 	 * @temporal: 0

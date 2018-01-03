@@ -26,8 +26,8 @@ public class Ins21 {
 		RichNumberPublic r2 = new RichNumberPublic(0);
 		for(r2.number = 1; r2.number < n;r2.number++)
 		{
-			//InstrumentedMethod2.a32(r,i);
-			//InstrumentedMethod2.a33(n,i);
+			////InstrumentedMethod..a32(r,i);
+			////InstrumentedMethod..a33(n,i);
 			Integer k = new Integer(r2.number);
 			//System.out.println(k);
 		}	

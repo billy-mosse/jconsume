@@ -14,7 +14,7 @@ public class Ins9 {
 	public static void main(String[] args) {
 		
 		int n = Integer.parseInt(args[0]);
-		//InstrumentedMethod.a4(n,args);
+		////InstrumentedMethod.a4(n,args);
 		mainParameters(n);		
 	}
 	
@@ -32,19 +32,19 @@ public class Ins9 {
 		//n = n+1;
 		for(int i = 0; i <n; i++)
 		{
-			//InstrumentedMethod.a14(i,n);
+			////InstrumentedMethod.a14(i,n);
 			l.add(new Integer(i));
 		}
 			
 		
-		//InstrumentedMethod.a17(l,n/2);
+		////InstrumentedMethod.a17(l,n/2);
 		/*int index1 = search2(l,n/2);
 		
 		int a = index1 + 1;
 		a = a+1;
 		
 		
-		//InstrumentedMethod.a18(l,n/2);
+		////InstrumentedMethod.a18(l,n/2);
 		int index2 = search(l, n/2);
 		
 		
@@ -68,7 +68,7 @@ public class Ins9 {
 		while(it.hasNext())
 		{
 			
-			//InstrumentedMethod.a15(l,k,index,cont,it);
+			////InstrumentedMethod.a15(l,k,index,cont,it);
 			cont+=1;
 			Integer i = it.next();
 			if (i == k)
@@ -89,7 +89,7 @@ public class Ins9 {
 		int cont = 0;
 		while(it.hasNext())
 		{
-			//InstrumentedMethod.a16(l,k,index,cont,it);
+			////InstrumentedMethod.a16(l,k,index,cont,it);
 
 			cont+=1;
 			Integer i = it.next();

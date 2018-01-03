@@ -12,7 +12,7 @@ public class Ins7 {
 	public static void main(String[] args) {
 		
 		int n = Integer.parseInt(args[0]);
-		InstrumentedMethod2.a4(n,args);
+		//InstrumentedMethod..a4(n,args);
 		mainParameters(n);		
 	}
 	
@@ -34,7 +34,7 @@ public class Ins7 {
 		
 		for(int i = 1 ; i < a.get_eyes_blinked(); i++)
 		{
-			InstrumentedMethod2.a11(i,a.eyes_blinked);
+			//InstrumentedMethod..a11(i,a.eyes_blinked);
 			System.out.println("El animal cerro y abrio el ojo " + i);
 		}
 		

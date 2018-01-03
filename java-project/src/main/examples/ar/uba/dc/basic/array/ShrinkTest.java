@@ -2,8 +2,6 @@ package ar.uba.dc.basic.array;
 
 import javax.sound.sampled.SourceDataLine;
 
-import javazoom.jl.decoder.JavaLayerException;
-
 public class ShrinkTest {
 
 	public void main(String[] args) {

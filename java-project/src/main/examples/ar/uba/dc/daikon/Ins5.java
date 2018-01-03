@@ -16,8 +16,10 @@ public class Ins5 {
 	public static void mainParameters(int n)
 	{
 		A cosa = new A();
-		cosa.setb(n);
+		//cosa.doSomeHeavyStuff();
+		//cosa.setb(n);
 		//f(cosa.a);
+		int r = 1;
 		for(cosa.a = 1; cosa.a < n; cosa.a++)
 		{
 			A otra_cosa = new A();

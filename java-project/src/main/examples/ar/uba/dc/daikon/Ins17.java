@@ -28,7 +28,7 @@ public class Ins17 {
 	{		
 		for(int i = 1; i < r.getNumber();i++)
 		{
-			//InstrumentedMethod2.a30(r,i,r.getNumber());
+			////InstrumentedMethod..a30(r,i,r.getNumber());
 			Integer k = new Integer(i);
 		}
 	}

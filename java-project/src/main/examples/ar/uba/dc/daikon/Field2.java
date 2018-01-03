@@ -12,7 +12,6 @@ public class Field2
 		cosa = new A();
 		cosa.a = cosa.a + 1;
 
-		A.pi = 600;
 
 	}
 }

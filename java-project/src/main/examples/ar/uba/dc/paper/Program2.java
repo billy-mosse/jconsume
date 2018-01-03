@@ -25,7 +25,8 @@ public class Program2
 		
 		for(int i = 0; i < r; i ++)
 		{
-			list.add(new Integer(i));
+			Integer integ = new Integer(i); 
+			list.add(integ);
 		}
 		
 		Op op = new Op();

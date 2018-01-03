@@ -28,8 +28,8 @@ public class Ins22 {
 	
 		for(int i = 1; i < r;i++)
 		{
-			//InstrumentedMethod2.a32(r,i);
-			//InstrumentedMethod2.a33(n,i);
+			////InstrumentedMethod..a32(r,i);
+			////InstrumentedMethod..a33(n,i);
 			Integer k = new Integer(i);
 			//System.out.println(k);
 		}

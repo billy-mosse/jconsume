@@ -12,7 +12,7 @@ public class A {
 	public int c;
 	private int b;
 	
-	public int getb()
+	/*public int getb()
 	{
 		return this.b;
 	}
@@ -25,11 +25,11 @@ public class A {
 	public static void createNew(int i)
 	{
 		Integer k = new Integer(i);
-	}
+	}*/
 	
 	public void doSomeHeavyStuff()
 	{
-		for(int i = 0; i < 100; i++)
+		for(int i = 0; i < 1; i++)
 		{
 			this.a = i;
 			for(int j = 0; j < 1100; j++)
@@ -40,6 +40,6 @@ public class A {
 		}
 	}
 	
-	public static void doNothingForInstrmentedMethod()
+	public static void dummyMethod()
 	{}
 }

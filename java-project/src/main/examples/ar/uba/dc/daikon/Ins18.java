@@ -28,7 +28,7 @@ public class Ins18 {
 	{		
 		for(int i = 1; i < r.number;i++)
 		{
-			InstrumentedMethod2.a31(r,i,r.number);
+			//InstrumentedMethod..a31(r,i,r.number);
 			Integer k = new Integer(i);
 		}
 	}

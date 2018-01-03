@@ -34,12 +34,12 @@ public class Ins16 {
 		for(int i = 0; i <  r.getNumber(); i++)
 		{
 
-			InstrumentedMethod2.a20(r,i,r.getNumber(),r_number_init);
-			InstrumentedMethod2.a23(r,i);
+			//InstrumentedMethod..a20(r,i,r.getNumber(),r_number_init);
+			//InstrumentedMethod..a23(r,i);
 			doNothing(i);
 		}
 				
-		InstrumentedMethod2.a21(r,r_number_init);
+		//InstrumentedMethod..a21(r,r_number_init);
 		r = DuplicateNumber(r);
 		
 		//Hago nada el doble de veces
@@ -47,7 +47,7 @@ public class Ins16 {
 		for(int i = 0; i <  r.getNumber(); i++)
 		{
 
-			InstrumentedMethod2.a22(r,i,r.getNumber(),r_number_init);
+			//InstrumentedMethod..a22(r,i,r.getNumber(),r_number_init);
 			doNothing(i);
 		}
 		

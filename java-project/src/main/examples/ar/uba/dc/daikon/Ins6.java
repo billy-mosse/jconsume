@@ -13,7 +13,7 @@ public class Ins6 {
 	public static void main(String[] args) {
 		
 		int n = Integer.parseInt(args[0]);
-		InstrumentedMethod2.a4(n,args);
+		//InstrumentedMethod..a4(n,args);
 		mainParameters(n);		
 	}
 	
@@ -24,7 +24,7 @@ public class Ins6 {
 		for(int i = 0; i < n; i++)
 		{
 			l[i] = new Integer(2*i - 3 * i * i);
-			InstrumentedMethod2.a9(l,n,i);
+			//InstrumentedMethod..a9(l,n,i);
 		}
 		
 		int pos = get_pos(l,4);
@@ -45,7 +45,7 @@ public class Ins6 {
 		int k = 0;
 		while(!found && k < l.length)
 		{
-			InstrumentedMethod2.a8(found,k,l,m);
+			//InstrumentedMethod..a8(found,k,l,m);
 			int temp = l[k];
 			if(temp == m)
 			{
