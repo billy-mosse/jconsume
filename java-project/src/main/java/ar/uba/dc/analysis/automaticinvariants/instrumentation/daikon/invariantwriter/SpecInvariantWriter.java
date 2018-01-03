@@ -12,6 +12,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -459,10 +461,15 @@ public class SpecInvariantWriter {
 
 			InductiveVariablesInfo inductives = indr.getiInfo(cs.getInsSite());
 			List inductivas = new Vector();
-			if (inductives != null) {
+			if (inductives != null)
+			{
+				inductivas.addAll(inductives.inductiveInfo);
+			}
+			
+			/*if (inductives != null) {
 				inductivas = InductiveVariablesInfo.filterInductives(cs.getVars(), inductives, "");
 			} else
-				inductivas.addAll(cs.getVars());
+				inductivas.addAll(cs.getVars());*/
 			// inductivas.addAll(newInductives);
 			writeInductiveVariables(inductivas, newInductives);
 
@@ -788,14 +795,26 @@ public class SpecInvariantWriter {
 
 			
 
-			
+			List inductiveVars = new Vector();
 
 			InductiveVariablesInfo inductives = indr.getiInfo(cs.getInsSite());
-			List inductiveVars = new Vector();
-			if (inductives != null) {
+			
+			List inductivas = new Vector();
+			if (inductives != null)
+			{
+				inductiveVars.addAll(inductives.inductiveInfo);
+			}
+			
+			
+			//Me parece que esta bien esto de agregar solo las inductivas que vienen de indFake (las que vienen del analisis de vivas)
+			
+			/*if (inductives != null) {
 				inductiveVars = InductiveVariablesInfo.filterInductives(cs.getVars(), inductives, "");
 			} else
-				inductiveVars.addAll(cs.getVars());
+				inductiveVars.addAll(cs.getVars());*/
+			
+			//bah, y agregamos las que vienen de paramsArr? Estilo contadores? Estas no estan en inductivesFake?
+			//TODO: hacer la prueba con un foreach
 			inductiveVars.addAll(paramsArr);
 
 			// writeInductiveVariables(inductives);
@@ -864,7 +883,7 @@ public class SpecInvariantWriter {
 
 		private String extractStringVarList(List vars) {
 			if (vars != null) {
-				String sVars = vars.toString().replaceAll("\\[", "").replaceAll("\\]", "");
+				String sVars = vars.toString().replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("\\.", "__f__");
 				return removeNonJavaSymbols(sVars);
 			}
 			return "";
@@ -889,8 +908,11 @@ public class SpecInvariantWriter {
 			out.print("<inductives>");
 			// String sInds=
 			// inds.toString().replaceAll("\\[","").replaceAll("\\]","");
+
 			out.print(extractStringVarList(inds));
-			if (!newInd.isEmpty()) {
+			
+			//no entiendo por que las variables del binding las contamos como inductivas!!
+			/*if (!newInd.isEmpty()) {
 				
 
 				String s = extractStringParSet(newInd);
@@ -903,7 +925,7 @@ public class SpecInvariantWriter {
 					out.print(", ");
 					out.print(s);
 				}
-			}
+			}*/
 			out.println("</inductives>");
 		}
 
@@ -1030,6 +1052,7 @@ public class SpecInvariantWriter {
 			if (inv == null)
 				return new String[2];
 
+			inv.replaceAll(".", "__f__"); //hack que deberia ser mucho mas prolijo
 			String[] constBind = new String[2];
 
 			// inv = inv.replaceAll("=", "==");
@@ -1042,8 +1065,34 @@ public class SpecInvariantWriter {
 				
 				//TODO revisar que no haya invariantes con ")" que no provengan de size!
 				//Tal vez si si la relacion es lineal pero con cuentas con parentesis??
-				s = s.replace("size(", "size_");
+				
+				
+				 //supongo que tambien lo podria hacer con regular expressions
+				
+				if(s.contains("size("))
+				{
+					 for(int j=0; j<s.length(); j++) {
+					     char c = s.charAt(j);
+					     if(c=='+' || c=='-' || c=='*' || c==')') {
+					    	 StringBuilder str = new StringBuilder(s);
+					    	 str.insert(j, "__f__size");
+					    	 s = str.toString();
+					    	 break;
+					     }
+					 }
+					 
+					 s= s.replace("size(", "");
+				}
+				 
+				if(s.contains("aux_14__f__toString__f__length("))
+				{
+					System.out.println("hola hola");
+				}
+				 
+				
+				s = s.replace("()", "");
 				s = s.replace(")", "");
+				s = s.replace("(", "");
 				
 				
 				//s = s.replace("[", "__");
@@ -1063,6 +1112,10 @@ public class SpecInvariantWriter {
 						resCo.append(" && ");
 
 					}
+
+					//hack horrible
+					s=s.replace(".", "__f__");
+					
 					resCo.append(s.trim());
 				}
 

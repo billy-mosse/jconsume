@@ -92,10 +92,6 @@ public class ListDIParameters extends Vector implements List{
 		List res = new Vector();
 		for (Iterator iter = iterator(); iter.hasNext();) {
 			DIParameter element = (DIParameter) iter.next();
-			if(element==null)
-			{
-				System.out.print("");
-			}
 			res.addAll(element.toStringList());
 		}
 		return res;
@@ -112,10 +108,6 @@ public class ListDIParameters extends Vector implements List{
 			if (Utils.isIterator(element.getLocal()) && element.getClass().equals(DI_Object.class))
 				continue;
 			
-			if(element==null)
-			{
-				System.out.print("");
-			}
 			res.addAll(element.toStringList2());
 		}
 		return res;
@@ -126,6 +118,8 @@ public class ListDIParameters extends Vector implements List{
 		List res = new Vector();
 		for (Iterator iter = this.toStringList().iterator(); iter.hasNext();) {
 			String element = (String) iter.next();
+			
+			
 			if(InductiveVariablesInfo.isAcceptedInductive(IVInfo, element))
 				res.add(element);
 		}

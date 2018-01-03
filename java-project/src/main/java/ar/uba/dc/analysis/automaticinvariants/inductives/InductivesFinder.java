@@ -208,6 +208,29 @@ public class InductivesFinder extends LoopFinder implements InductivesFilter{
 		return (List)inductivesBefore.get(s);
 	}
 
+	/*@Override
+	public List filtradas(List lives) {
+		List res = new Vector();
+		for (Iterator iterLive = lives.iterator(); iterLive.hasNext();) {
+			Value v = (Value) iterLive.next();
+			if(v instanceof Local)
+			{
+				if(!res.contains(v))
+					res.add(v);
+			}
+			else if(v instanceof InstanceFieldRef)
+			{
+				InstanceFieldRef ifr = (InstanceFieldRef)v;
+				String base = ifr.getBase().toString();
+				String field = ifr.getField().toString();
+				String s = base + "." + field;
+			}
+			
+		}
+		return res;
+	}*/
+	
+	
 	@Override
 	public List liveVars(List lives) {
 		List res = new Vector();

@@ -9,4 +9,5 @@ public interface InductivesFilter {
 	public List getDerivedVars(Value l,List lives);
 	public List getInductivesBefore(Stmt s);
 	public List getInductivesAfter(Stmt s);
+	//List filtradas(List lives);
 }

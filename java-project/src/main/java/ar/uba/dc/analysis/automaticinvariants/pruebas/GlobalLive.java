@@ -15,6 +15,8 @@ import ar.uba.dc.analysis.automaticinvariants.pruebas.GlobalLiveAnalysis;
 
 import java.util.*;
 
+import org.apache.commons.lang.NotImplementedException;
+
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.Utils;
 import soot.baf.BafBody;
 import soot.baf.internal.BIdentityInst;
@@ -225,6 +227,11 @@ public class GlobalLive implements LiveLocals,InductivesFilter {
 		public List getInductivesAfter(Stmt s) {
 			return this.getInductivesAfter(s);
 		}
+
+		/*@Override
+		public List filtradas(List lives) {
+			throw new NotImplementedException();
+		}*/
 	}
 
 

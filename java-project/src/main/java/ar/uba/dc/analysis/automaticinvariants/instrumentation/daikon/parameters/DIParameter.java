@@ -55,6 +55,8 @@ public abstract class DIParameter  {
 		this.nameVar = vn;
 	}
 	
+	
+	
 	public String getName()
 	{
 
@@ -173,7 +175,7 @@ public abstract class DIParameter  {
 		List res = new Vector();
 		
 		//BILLY hago que nunca se fije si tiene variables derivadas porque a mi me interesa registrar el objeto entero por ahora
-		//tal vez mas adelante vea que fuwnciona tambien registrar solo el field
+		//tal vez mas adelante vea que funciona tambien registrar solo el field
 		//en realidad creo que si funciona registrar solo el field....por que no lo hago?
 		if(false)
 			res = getDerivedVariablesNames();
@@ -191,7 +193,11 @@ public abstract class DIParameter  {
 		//BILLY hago que nunca se fije si tiene variables derivadas porque a mi me interesa registrar el objeto entero por ahora
 		//tal vez mas adelante vea que fuwnciona tambien registrar solo el field
 		//en realidad creo que si funciona registrar solo el field....por que no lo hago?
-		if(hasDerivedVariables2())
+		
+		
+		
+		//No quiero que el .ind tenga a todos los fields del objeto!
+		if(hasDerivedVariables2() && false)
 			res = getDerivedVariablesNames2();
 		else
 		{

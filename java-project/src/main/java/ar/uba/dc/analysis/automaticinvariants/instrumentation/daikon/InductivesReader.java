@@ -104,8 +104,11 @@ public class InductivesReader {
 		}
 		else
 		{
-			line = Integer.parseInt(is.substring(pos_dash +1));
-			res = is.substring(0,is.lastIndexOf("_")+1)+String.format("%05d",line);
+			
+			//Me parece que con esto ya estamos bien, porque quiero el insSite y...se llama asi
+			return is;
+			//line = Integer.parseInt(is.substring(pos_dash +1));
+			//res = is.substring(0,is.lastIndexOf("_")+1)+String.format("%05d",line);
 		}
 		
 		

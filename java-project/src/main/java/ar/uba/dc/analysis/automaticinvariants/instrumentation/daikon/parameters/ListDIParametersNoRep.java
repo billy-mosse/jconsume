@@ -28,7 +28,7 @@ public class ListDIParametersNoRep extends ListDIParameters {
 		// Hay un bug en Soot? Me genera una local con el mismo nombre
 		// pero la Local es diferentes
 		// if(getParameterFromName(dip.getName())!=null)
-		// Lo arregle cambiando hashCode y equals de DIParameter
+		// Lo arregle cambiando hashCode e equals de DIParameter
 		if(this.contains(dip))
 			return false;
 		return super.add(dip);

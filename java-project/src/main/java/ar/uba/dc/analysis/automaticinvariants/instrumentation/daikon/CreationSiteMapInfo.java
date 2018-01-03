@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Vector;
 
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.CreationSiteMapInfo;
+import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.ListDIParametersNoRep;
 
 public class CreationSiteMapInfo implements Comparable {
 //	// Esto es horrible pero es para agregar offsets cuando no habia
@@ -24,8 +25,10 @@ public class CreationSiteMapInfo implements Comparable {
 	String creationSiteType;
 	List csArrayParams;
 	int order;
-	
-	
+	List vivas;
+	List inductivesFake;
+	String methodCaller;
+	//ListDIParametersNoRep objectVars;
 
 	/**
 	 * @param vars
@@ -40,8 +43,43 @@ public class CreationSiteMapInfo implements Comparable {
 		this.creationSiteType=csType;
 		this.csArrayParams = csArrayP;
 		this.order = order;
+		
+		
 	}
 	
+	public CreationSiteMapInfo(String insSite, int order, List vars, String method, String type, String csType, List csArrayP, List vivas) {
+		super();
+		this.insSite = insSite;
+		this.vars = vars;
+		this.method = method;
+		this.type = type;
+		this.creationSiteType=csType;
+		this.csArrayParams = csArrayP;
+		this.order = order;
+		this.vivas = vivas;
+		
+	}
+	
+	public CreationSiteMapInfo(String insSite, int order, List vars, String method, String type, String csType, List csArrayP, List vivas, List inductivesFake, String methodName/*, ListDIParametersNoRep objectVars*/) {
+		super();
+		this.insSite = insSite;
+		this.vars = vars;
+		this.method = method;
+		this.type = type;
+		this.creationSiteType=csType;
+		this.csArrayParams = csArrayP;
+		this.order = order;
+		this.vivas = vivas;
+		this.inductivesFake = inductivesFake;
+		
+		this.methodCaller = methodName;
+		//this.objectVars = objectVars;
+	}
+	
+
+	/*public ListDIParametersNoRep getObjectVars() {
+		return objectVars;
+	}*/
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()

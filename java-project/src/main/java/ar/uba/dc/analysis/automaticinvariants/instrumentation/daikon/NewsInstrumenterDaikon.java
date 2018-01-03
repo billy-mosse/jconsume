@@ -1,6 +1,7 @@
 package ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon;
 
 import java.util.ArrayList;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -8,6 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Stack;
 import java.util.Vector;
 
 import org.apache.commons.lang.StringUtils;
@@ -42,6 +44,7 @@ import soot.jimple.AssignStmt;
 import soot.jimple.GotoStmt;
 import soot.jimple.IdentityStmt;
 import soot.jimple.IfStmt;
+import soot.jimple.InstanceFieldRef;
 import soot.jimple.InstanceInvokeExpr;
 import soot.jimple.IntConstant;
 import soot.jimple.InvokeExpr;
@@ -62,6 +65,10 @@ import soot.toolkits.graph.DominatorsFinder;
 import soot.toolkits.graph.SimpleDominatorsFinder;
 import soot.toolkits.scalar.LiveLocals;
 import soot.util.Chain;
+
+import java.util.Deque;
+import java.util.ArrayDeque;
+
 
 /**
  * InstrumentClass example. Instruments the given class to print out the number
@@ -85,6 +92,11 @@ class NewsInstrumenterDaikon extends LoopFinder {
 	// ccMethodsMap : cs -> method  
 	private Map ccMethodsMap = new HashMap();
 	private Map ccArgsMap = new HashMap();
+	
+	private Map relevantsMap = new HashMap();
+	
+	private Deque ccArgsMethodList = new ArrayDeque();
+	
 	//   methodMap : method -> P(var)
 	private Map methodMap = new HashMap();
 	private SootClass intrumentedClass = NewsInvariantInstrumentator.getIntrumentedMethodClass();
@@ -193,6 +205,38 @@ class NewsInstrumenterDaikon extends LoopFinder {
 			}
 		}
 	}
+	
+	
+	
+	private void addParameter_only_objects(Body body, ListDIParameters info2, InductivesFilter analisisVivas, List lives, Local parameter, Local parameterFilter, boolean enterized) {
+		if(lives!=null)
+		{
+			List liveVars= analisisVivas.liveVars(lives);
+			// OJO!!!!!!!!!
+			if(liveVars.contains(parameterFilter)) // || Utils.isNum(parameterFilter))
+			{
+				DIParameter dip=null;
+				List filter = new Vector();
+				
+				//que es este if?
+				if(filter.size()>0)
+				{
+					dip = null;
+				}
+				if(enterized)
+				{
+					dip = DIParameterFactory.createDIParameter2(parameter,filter,body,true);
+				}
+				else
+				{
+					dip = DIParameterFactory.createDIParameter(parameter,filter,body,true);
+				}
+				if(dip!=null)
+					info2.add(dip);
+			}
+		}
+	}
+	
 	/**
 	 * @param c
 	 * @param mOrig
@@ -219,11 +263,6 @@ class NewsInstrumenterDaikon extends LoopFinder {
 		
 		if(NewsInvariantInstrumentator.inductivesAsRelevants )
 		{
-			
-			if(insSite.indexOf("15c")!=-1)
-			{
-				System.out.println();
-			}
 			List paramsExpanded = allParams.toList(IVInfo);
 			paramsExp.addAll(paramsExpanded);
 		}
@@ -491,14 +530,14 @@ class NewsInstrumenterDaikon extends LoopFinder {
 			// Body instrumentation loop
 			ListDIParameters extraParams = new ListDIParameters();
 			// processStmt(body, units, analisisVivas, lParameters, lParametersInit, extraParams, s);
-			processStmt(body, units, analisisVivas, analisisInductivas, extraParams, s, ins, InstrumentedMethodClass);
+			processStmt(body, units, analisisVivas, analisisInductivas, extraParams, s, ins, InstrumentedMethodClass, body.getMethod().toString());
 			
 			while (stmtIt.hasNext()) {
 				s = (Stmt) stmtIt.next();
 				System.out.println("LINE NUMBER: " + s.getJavaSourceStartLineNumber());
 				Object o = s.getTags();
 				// processStmt(body, units, analisisVivas, lParameters, lParametersInit, extraParams, s);
-				processStmt(body, units, analisisVivas, analisisInductivas, extraParams, s, ins, InstrumentedMethodClass);
+				processStmt(body, units, analisisVivas, analisisInductivas, extraParams, s, ins, InstrumentedMethodClass, body.getMethod().toString());
 			}
 			// System.out.println(body.getMethod()+":"+units);
 			List codeInitVars = new Vector();
@@ -527,6 +566,19 @@ class NewsInstrumenterDaikon extends LoopFinder {
 			}
 			else
 			{
+				
+
+				SootClass intrumentedMethodClass = new SootClass(sClass.getPackageName() + ".InstrumentedMethod",
+						 				Modifier.PUBLIC);
+				intrumentedMethodClass.setSuperclass(Scene.v().getSootClass(
+						 				"java.lang.Object"));
+				intrumentedMethodClass.setModifiers(Modifier.PUBLIC);
+				
+		 		Scene.v().addClass(intrumentedMethodClass);
+		 		
+		 		ins.sootClass = intrumentedMethodClass;
+				
+		 		
 				NewsInvariantInstrumentator.getInstrumentedMethodClasses().put(sClass.getPackageName(), ins);
 			}
 		}
@@ -727,7 +779,7 @@ class NewsInstrumenterDaikon extends LoopFinder {
 	private void processStmt(Body body, Chain units, 
 						GlobalLive analisisVivas, 
 						InductivesFilter analisisInductivas, 
-						ListDIParameters extraParams, Stmt s, InstrumentedMethodClass ins, SootClass InstrumentedMethodClass) {
+						ListDIParameters extraParams, Stmt s, InstrumentedMethodClass ins, SootClass InstrumentedMethodClass, String methodName) {
 		
 		
 		boolean isIterator = false;
@@ -769,7 +821,7 @@ class NewsInstrumenterDaikon extends LoopFinder {
 //				List invStmts = instrumentarCSoCallSite("CS", s,
 //						analisisVivas, lParameters, lParametersInit, extraParams, body);
 				List invStmts = instrumentarCSoCallSite("CS", ordenCreationSite, s,
-						analisisVivas, analisisInductivas, lParameters, lParametersInit, extraParams, body, ins, InstrumentedMethodClass);
+						analisisVivas, analisisInductivas, lParameters, lParametersInit, extraParams, body, ins, InstrumentedMethodClass, methodName);
 				ordenCreationSite++;
 				if (invStmts != null)
 				{
@@ -884,7 +936,7 @@ class NewsInstrumenterDaikon extends LoopFinder {
 //				List invStmts = instrumentarCSoCallSite("CC", s, analisisVivas,
 //						lParameters, lParametersInit, extraParams, body);
 				List invStmts = instrumentarCSoCallSite("CC", ordenCallSite, s, analisisVivas,analisisInductivas,
-						lParameters, lParametersInit, extraParams, body, ins, InstrumentedMethodClass);
+						lParameters, lParametersInit, extraParams, body, ins, InstrumentedMethodClass, methodName);
 				if (invStmts != null) {
 					if(!isInternal(ie) )
 					{
@@ -986,6 +1038,278 @@ class NewsInstrumenterDaikon extends LoopFinder {
 		}
 		return info2;
 	}
+	
+	
+	
+	
+	//reescribi el metodo pero no quiero reemplazarlo todavia
+	//porque primero quiero que ande esto de que las inductivas se consideren a partir de las variables vivas
+	
+	
+	//Este metodo agarra un instrumentation site (ya sea callsite o creation site)
+	// y lo instrumenta, agregando un InstrumentedMethod.m() al body
+	// y guarda informacion de las variables relevantes para escribirlas en el indFake
+	//y probablemente hace algunas cosas mas que me estoy olvidando
+	/**
+	 * 
+	 * @param tipo
+	 * @param orden
+	 * @param s
+	 * @param analisisVivas
+	 * @param analisisInductivas
+	 * @param origLParameters
+	 * @param origLParametersInit
+	 * @param extraParams
+	 * @param body
+	 * @param ins
+	 * @param InstrumentedMethodClass
+	 * @return
+	 */
+	
+	/*
+	private List instrumentarCSoCallSite2(String tipo, int orden, Stmt s,
+			GlobalLive analisisVivas,
+			InductivesFilter analisisInductivas, ListDIParameters origLParameters,ListDIParameters origLParametersInit, 
+			ListDIParameters extraParams, Body body, InstrumentedMethodClass ins, SootClass InstrumentedMethodClass) {
+		
+		//Obtengo el "id" del statement
+		//El id va a ser 100 * LINE_NUMBER + contador
+		//porque puede pasar que mas de un statement tenga el mismo line number
+		String  sLn = Utils.getLineNumber(s);
+		Integer l = (Integer) lineNumbers.get(sLn);
+		if (l == null)
+		{
+			l = new Integer(0);
+			
+		}
+		else
+		{
+			//hubo colision asi que aumento el contador
+			l+=1;
+		}
+		
+		//no se deberia actualizar solo?
+		lineNumbers.put(sLn, l);
+		
+		if(sLn.length() == 0)
+		{
+			//hay statements sin line number asi que uso un numero especial, alejado de los otros, con "c0" para identificar que estoy en este caso
+			sLn = Integer.toString(dummyLineNumber++)+"c0";
+		}
+		else
+		{
+			sLn = String.valueOf(100 * Integer.parseInt(sLn) + l);
+		}
+		
+		
+		String insSite;
+
+		
+		SootClass sc = body.getMethod().getDeclaringClass();
+		
+		//Ejemplo Em3d_2301
+		insSite = sc.toString() + "_" + sLn;
+		
+		//El inductives reader, por como estan hechas las cosas ahora, da null (no estamos usando el resultado del analisis)
+		//en vez de usar las inductivas que salen de ver que variables afectan a la condicion del loop
+		//hacemos un analisis de vivas
+		//InductiveVariablesInfo inductivesInfo = NewsInvariantInstrumentator.getInductivesReader().getiInfo(insSite);
+		
+		//Estas son las que vamos a usar
+		//pueden ser variables enteras o fields de objetos
+		//recordar que en el archivo .ind hay que guardar info de las inductivas
+		//y las inductivas por ahora las estamos sobreaproximando con las vivas
+		//Estaba la decision erronea (hasta 15/12/2017) de que marcar como inductivas
+		//los objetos que le pasabamos como parametro a daikon
+		List vivas = analisisVivas.getLiveLocalsBefore(s);
+		
+		
+		List inductivesFake = new Vector<String>();
+		for (Iterator iterLive = vivas.iterator(); iterLive.hasNext();) {
+			Value v = (Value) iterLive.next();
+			if(!Utils.isObject(v))
+			{
+				if(v instanceof Local)
+				{
+					if(!inductivesFake.contains(v))
+						inductivesFake.add(v.toString());
+				}
+				else if(v instanceof InstanceFieldRef)
+				{
+					InstanceFieldRef ifr = (InstanceFieldRef)v;
+					String base = ifr.getBase().toString();
+					String field = ifr.getField().getName();
+					String var = base + "." + field;
+					inductivesFake.add(var);
+				}
+			}
+			
+		}
+		
+		
+		//localVivas tiene a los "objetos" vivos
+		List localVivas = analisisInductivas.liveVars(vivas);
+
+		ListDIParametersNoRep paramsIntru = new ListDIParametersNoRep();
+
+		ListDIParameters lParameters = new ListDIParameters();
+		ListDIParameters lParametersInit = new ListDIParameters();
+		lParameters =  origLParameters;
+		lParametersInit = origLParametersInit;
+		
+		
+		List newArrayParams = new Vector();
+		String creationSiteType = "";
+		
+		if (tipo.equals("CS")) {
+
+			AssignStmt as = (AssignStmt) s;
+			Value exp = as.getRightOp();
+			if(exp instanceof AnyNewExpr)
+			{
+				if(exp instanceof NewExpr)
+				{
+					NewExpr newExp = (NewExpr)exp;
+					creationSiteType = exp.getType().toString();
+				}
+				else if(exp instanceof NewArrayExpr)
+				{
+					NewArrayExpr newArrExp = (NewArrayExpr)exp;
+					newArrayParams.add(newArrExp.getSize());
+					creationSiteType = newArrExp.getBaseType().toString();
+				}
+				else if(exp instanceof NewMultiArrayExpr)
+				{
+					NewMultiArrayExpr newMArrExp = (NewMultiArrayExpr)exp;
+					newArrayParams.addAll(newMArrExp.getSizes());
+					creationSiteType = newMArrExp.getBaseType().toString();
+				}
+			}
+		} 
+		else
+		{
+	
+
+			ListDIParameters args = getCallArgs(s,body,null);
+			
+			
+			//para despues hacer el binding
+			ccArgsMap.put(insSite, args.clone());
+			
+			
+			paramsIntru.addAll(args);
+			
+			String nameMethodDec = s.getInvokeExpr().getMethod().getSignature();
+
+			String className = s.getInvokeExpr().getMethod().getDeclaringClass().getName();
+			
+			
+			//para el callee
+			ccMethodsMap.put(insSite, new Object[] {nameMethodDec,className} );
+			
+		}
+		
+		//supuestamenete SIEMPRE deberia entrar aca, si entiendo bien
+		if (!newsMap.containsKey(insSite)) {
+		
+			
+			String nombreMetodo = tipo + "_" + sLn;
+			
+			//Filtra segun la configuracion de inductivas
+			// OJO paramsIntru.filter(inductivesInfo);
+			// Agrego parametros de creacion de arrays
+			ListDIParameters newArrayParamsList = new ListDIParameters();
+			for (Iterator itParamArr = newArrayParams.iterator(); itParamArr.hasNext();) {
+				Value size = (Value) itParamArr.next();
+				if (size instanceof Local) {
+					DIParameter arrPar = DIParameterFactory.createDIParameter((Local)size); 
+					paramsIntru.add(arrPar);
+					newArrayParamsList.add(arrPar);
+					
+					
+					
+					inductivesFake.add(arrPar.getName());
+				}
+			}
+			
+			// Agrega los parametros al body del metodo 
+			paramsIntru.addToBody(body);
+			
+			ListDIParametersNoRep allParams = new ListDIParametersNoRep();
+			
+			//	Agrego los params_init al metodo a instrumentar
+			allParams.addAll(paramsIntru);
+			allParams.addAll(lParametersInit);
+			
+			//no tengo que agregar solo los parameters_init
+			//sino tambien los parameters
+			//asi tengo la igualdad r = r_init en el invariante
+			//(ejemplo de Ins19)
+			allParams.addAll(lParameters);
+			
+			
+			// Agrega los parametros extras (por ejemplo, iteradores)
+			allParams.addAll(extraParams);
+			inductivesFake.addAll(extraParams.toStringList());
+			
+			// OJO allParams.filter(inductivesInfo);
+			
+			// Aplico opcionalmente las inductivas aqui
+			
+			System.out.println("Linea procesada: " + s.toString());
+			// Create a dummy method for the insSite with live variables and field
+			SootMethod sm = crearMetodo(insSite, sc, body.getMethod(), nombreMetodo,
+					allParams, null, ins, InstrumentedMethodClass);
+			
+			
+			
+			
+			
+			//	Instrument an invocation  to the created dummy method 
+			List invStmts = null;
+			
+			if(sm!=null)
+			{
+				invStmts = crearInvocacionMetodo(sm, body, paramsIntru, allParams, null);
+				InvokeStmt is = (InvokeStmt)invStmts.get(invStmts.size()-1);
+				if(sm.getParameterCount()!=is.getInvokeExpr().getArgCount())
+				{
+					throw new RuntimeException("Problema con los metodos!");
+					
+				}
+			}
+			
+			String nameMethodDec = body.getMethod().getSignature();
+			
+			List allParamsString = new Vector();
+			
+			//esto por ahora va a seguir siendo false
+			if(NewsInvariantInstrumentator.inductivesAsRelevants )
+			{
+				
+				//Aca es donde se rompe!!!!!! cuando convierte parametros
+				allParamsString = allParams.toStringList(null);
+				
+			}
+			else
+			{
+				allParamsString =allParams.toStringList2();
+			}
+			
+			HashSet<CreationSiteMapInfo> infos = new HashSet<CreationSiteMapInfo>();
+			infos.add(new CreationSiteMapInfo(insSite, orden, allParamsString, nameMethodDec,tipo,creationSiteType,newArrayParamsList.toList(), vivas, inductivesFake));
+			newsMap.put(insSite, infos);
+			return invStmts;
+			
+		}
+		else
+		{
+			throw new Error("Esto no deberia pasar");
+		}
+	}*/
+
+	
+	
 
 	//Un pequeño comentario: antes primero haciamos el analisis de relevantes
 	//y despues enterizabamos los fields "encontrados"
@@ -993,13 +1317,12 @@ class NewsInstrumenterDaikon extends LoopFinder {
 	private List instrumentarCSoCallSite(String tipo, int orden, Stmt s,
 			GlobalLive analisisVivas,
 			InductivesFilter analisisInductivas, ListDIParameters origLParameters,ListDIParameters origLParametersInit, 
-			ListDIParameters extraParams, Body body, InstrumentedMethodClass ins, SootClass InstrumentedMethodClass) {
+			ListDIParameters extraParams, Body body, InstrumentedMethodClass ins, SootClass InstrumentedMethodClass, String methodName) {
 		
 		SootClass sc = body.getMethod().getDeclaringClass();
 		String  sLn = Utils.getLineNumber(s);
 		
 		ArrayList l = (ArrayList) lineNumbers.get(sLn);
-		
 		if(l==null)
 		{
 			l = new ArrayList();
@@ -1041,7 +1364,31 @@ class NewsInstrumenterDaikon extends LoopFinder {
 		ListDIParameters lParametersInit = new ListDIParameters();
 		
 		
+		List inductivesFake = new Vector<String>();
+		for (Iterator iterLive = vivas.iterator(); iterLive.hasNext();) {
+			Value v = (Value) iterLive.next();
+			
+			//me quedo solo con los "enteros" 20121219 pero no se si es muy correcto esto
+			if(!Utils.isObject(v))
+			{
+				if(v instanceof Local)
+				{
+					if(!inductivesFake.contains(v))
+						inductivesFake.add(v.toString());
+				}
+				else if(v instanceof InstanceFieldRef)
+				{
+					InstanceFieldRef ifr = (InstanceFieldRef)v;
+					String base = ifr.getBase().toString();
+					String field = ifr.getField().getName();
+					String var = base + "." + field;
+					inductivesFake.add(var);
+				}
+			}
+			
+		}
 		
+		List vivasFiltradas = new Vector();
 		if(inductivesInfo ==null || inductivesInfo.takeAllInductives())
 		{
 			List localVivas = analisisInductivas.liveVars(vivas);
@@ -1107,12 +1454,14 @@ class NewsInstrumenterDaikon extends LoopFinder {
 				{
 					NewExpr newExp = (NewExpr)exp;
 					creationSiteType = exp.getType().toString();
+					
 				}
 				else if(exp instanceof NewArrayExpr)
 				{
 					NewArrayExpr newArrExp = (NewArrayExpr)exp;
 					newArrayParams.add(newArrExp.getSize());
 					creationSiteType = newArrExp.getBaseType().toString();
+					
 				}
 				else if(exp instanceof NewMultiArrayExpr)
 				{
@@ -1120,7 +1469,7 @@ class NewsInstrumenterDaikon extends LoopFinder {
 					newArrayParams.addAll(newMArrExp.getSizes());
 					creationSiteType = newMArrExp.getBaseType().toString();
 				}
-				System.out.println("Magda: "+insSite+"="+creationSiteType+" "+newArrayParams);
+				//System.out.println("Magda: "+insSite+"="+creationSiteType+" "+newArrayParams);
 			}
 		} 
 		else
@@ -1142,7 +1491,16 @@ class NewsInstrumenterDaikon extends LoopFinder {
 			//esto esta andando pero deberian estar enterizados.
 			//tal vez la igualdad podria ser por objetos y en base a eso los enterizo durante el consumo de memoria,
 			//como hago con los otros invariantes
+			
+			String nameMethodDec = s.getInvokeExpr().getMethod().getSignature();
+
+			
 			ccArgsMap.put(insSite, args.clone());
+			
+			//...,caller,callee
+			
+			ccArgsMethodList.push(new CallInfo(insSite, (ListDIParameters) args.clone(), methodName, nameMethodDec));
+			
 			
 			// ccArgsMap.put(insSite, argsMapList);
 			
@@ -1154,7 +1512,6 @@ class NewsInstrumenterDaikon extends LoopFinder {
 //				
 //			}
 			
-			String nameMethodDec = s.getInvokeExpr().getMethod().getSignature();
 			//String nameMethodDec = s.getInvokeExpr().getMethod().getSubSignature();
 			String className = s.getInvokeExpr().getMethod().getDeclaringClass().getName();
 			
@@ -1182,6 +1539,8 @@ class NewsInstrumenterDaikon extends LoopFinder {
 					DIParameter arrPar = DIParameterFactory.createDIParameter((Local)size); 
 					paramsIntru.add(arrPar);
 					newArrayParamsList.add(arrPar);
+					inductivesFake.add(arrPar.getName());
+
 				}
 			}
 			
@@ -1214,8 +1573,6 @@ class NewsInstrumenterDaikon extends LoopFinder {
 			
 			
 			
-			
-			
 			//	Instrument an invocation  to the created dummy method 
 			List invStmts = null;
 			
@@ -1237,12 +1594,6 @@ class NewsInstrumenterDaikon extends LoopFinder {
 			//esto por ahora va a seguir siendo false
 			if(NewsInvariantInstrumentator.inductivesAsRelevants )
 			{
-				//if(insSite.indexOf("00570c00005")!=-1) 
-				if(insSite.indexOf("00442c00246")!=-1)
-				{
-					System.out.println();
-				}
-				
 				
 				//Aca es donde se rompe!!!!!! cuando convierte parametros
 				allParamsString = allParams.toStringList(inductivesInfo);
@@ -1253,20 +1604,8 @@ class NewsInstrumenterDaikon extends LoopFinder {
 				allParamsString =allParams.toStringList2();
 			}
 			
-			if(!newsMap.containsKey(insSite))
-			{
-				HashSet<CreationSiteMapInfo> infos = new HashSet<CreationSiteMapInfo>();
-				infos.add(new CreationSiteMapInfo(insSite, orden, allParamsString, nameMethodDec,tipo,creationSiteType,newArrayParamsList.toList()));
-				newsMap.put(insSite, infos);
-			}				
-			else
-			{
-				HashSet<CreationSiteMapInfo> infos = (HashSet<CreationSiteMapInfo>) newsMap.get(insSite);
-				infos.add(new CreationSiteMapInfo(insSite, orden, allParamsString, nameMethodDec,tipo,creationSiteType,newArrayParamsList.toList()));
-			}
-				
-			
-			HashSet types = allParams.getStringListTypes();
+			newsMap.put(insSite, new CreationSiteMapInfo(insSite, orden, allParamsString, nameMethodDec,tipo,creationSiteType,newArrayParamsList.toList(), vivas, inductivesFake, methodName));
+			relevantsMap.put(nameMethodDec, allParams);
 			
 			return invStmts;
 			
@@ -1339,6 +1678,8 @@ class NewsInstrumenterDaikon extends LoopFinder {
 									ListDIParameters allParams, InductiveVariablesInfo IVInfo) 
 	{
 		
+
+		
 		List code = paramsInstru.codeForParameters();
 		
 				
@@ -1387,6 +1728,15 @@ public static Map getNewsMap() {
 	}
 	public static Map getCcArgsMap() {
 		return getInstance().ccArgsMap;
+	}
+	
+	public static Map getRelevantsMap()
+	{
+		return getInstance().relevantsMap;
+	}
+	
+	public static Deque getArgsCallsList() {
+		return getInstance().ccArgsMethodList;
 	}
 	public static NewsInstrumenterDaikon getInstance() {
 		return instance;

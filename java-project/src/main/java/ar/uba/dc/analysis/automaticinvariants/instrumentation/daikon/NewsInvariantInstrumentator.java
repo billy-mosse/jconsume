@@ -5,86 +5,40 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Stack;
 import java.util.Vector;
 
+import ar.uba.dc.analysis.automaticinvariants.inductives.InductivesFinder;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.DIParameter;
-import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.DIParameterFactory;
-import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.DI_Iterator;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.DI_Object;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.DI_Value;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.ListDIParameters;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.ListDIParametersNoRep;
-import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.ListNoRep;
-import ar.uba.dc.analysis.automaticinvariants.pruebas.GLVMain;
-import ar.uba.dc.analysis.automaticinvariants.pruebas.GlobalLive;
-import ar.uba.dc.analysis.automaticinvariants.pruebas.TestLV;
-import ar.uba.dc.analysis.automaticinvariants.inductives.InductivesFilter;
-import ar.uba.dc.analysis.automaticinvariants.inductives.InductivesFinder;
-import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.CallSiteMapInfo;
-import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.CreationSiteMapInfo;
-import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.InductiveVariablesInfo;
-import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.InductivesReader;
-import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.MethodMapInfo;
-import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.NewsInstrumenterDaikon;
-import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.NewsInvariantInstrumentator;
-import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.Utils;
-import soot.Body;
-import soot.IntType;
-import soot.Local;
+import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.SimpleDIParameter;
+import ar.uba.dc.analysis.automaticinvariants.regions.CreationSiteInfo;
 import soot.MethodOrMethodContext;
-import soot.Modifier;
 import soot.PackManager;
-import soot.ResolutionFailedException;
 import soot.Scene;
 import soot.SootClass;
-import soot.SootField;
 import soot.SootMethod;
 import soot.Transform;
-import soot.Type;
-import soot.Unit;
-import soot.Value;
-import soot.VoidType;
-import soot.jimple.AnyNewExpr;
-import soot.jimple.AssignStmt;
-import soot.jimple.GotoStmt;
-import soot.jimple.IdentityStmt;
-import soot.jimple.IfStmt;
-import soot.jimple.InstanceInvokeExpr;
-import soot.jimple.IntConstant;
-import soot.jimple.InvokeExpr;
-import soot.jimple.InvokeStmt;
-import soot.jimple.Jimple;
-import soot.jimple.JimpleBody;
-import soot.jimple.NewArrayExpr;
-import soot.jimple.NewExpr;
-import soot.jimple.NewMultiArrayExpr;
-import soot.jimple.NullConstant;
-import soot.jimple.SpecialInvokeExpr;
-import soot.jimple.StaticInvokeExpr;
-import soot.jimple.Stmt;
-import soot.jimple.toolkits.annotation.logic.Loop;
-import soot.jimple.toolkits.annotation.logic.LoopFinder;
 import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.jimple.toolkits.callgraph.Edge;
 //import soot.jimple.toolkits.callgraph.EdgeFilter;
 import soot.jimple.toolkits.callgraph.EdgePredicate;
 import soot.jimple.toolkits.callgraph.ReachableMethods;
-import soot.toolkits.graph.CompleteUnitGraph;
-import soot.toolkits.graph.DominatorsFinder;
-import soot.toolkits.graph.SimpleDominatorsFinder;
-import soot.toolkits.scalar.LiveLocals;
-//import sun.security.action.GetLongAction;
-import soot.util.Chain;
+
+import java.util.Deque;
+import java.util.ArrayDeque;
+
+
 /**
  * Tomado del ejemplo del GotoInstrumenter
  */
@@ -97,6 +51,8 @@ public class NewsInvariantInstrumentator {
 	private static String outputDir = "./out";
 	private static List listMethods = new Vector();
 	private static List listTypes = new Vector();
+	
+	private static Map newRelevantsMap = new HashMap();
 	
 	//el String es el packageName
 	private static Map<String,InstrumentedMethodClass> instrumentedMethodClasses = new HashMap<String,InstrumentedMethodClass>();
@@ -360,10 +316,42 @@ public class NewsInvariantInstrumentator {
 				 // Use the variable names in the original source as a guide when determining how to share local variables among non-interfering variable usages.
 				 // This recombines named locals which were split by the Local Splitter. 
 				 //no entiendo la diferencia con la option de jb.ulp
-				 "-p", "jj.ulp", "unsplit-original-locals:true"
+				 "-p", "jj.ulp", "unsplit-original-locals:true",
 				
 				//TODO: mañana cambiar esto por args[0] y chequear que anda
 				//"-main-class", args[0]/*, args[0]*/
+				 
+				 
+				 // Estos son los que usa MainRunner
+				   "simplify-sccs:false",
+				"set-mass:false",
+				"double-set-old:hybrid",
+				"dump-solution:false",
+				"simple-edges-bidirectional:false",
+				"on-fly-cg:true",
+				"ignore-types:false",
+				"rta:false",
+				"string-constants:false",
+				"dump-pag:false",
+				"force-gc:false",
+				"double-set-new:hybrid",
+				"types-for-sites:false",
+				"merge-stringbuffer:true",
+				"simulate-natives:true",
+				"simplify-offline:false",
+				"propagator:worklist",
+				"pre-jimplify:false",
+				"field-based:false",
+				"topo-sort:false",
+				"dump-answer:false",
+				"add-tags:false",
+			   "dump-html:false",
+			   "dump-types:true",
+			   "vta:false",
+			   "class-method-var:true", 
+			   "-allow-phantom-refs"
+			 
+				  
 				};
 				// "-p", "jb.lp", "enabled:true", "-p", "jb.ulp", "enabled:false",
 				// "-p", "jb.ulp", "unsplit-original-locals:false" };
@@ -437,7 +425,7 @@ public class NewsInvariantInstrumentator {
 			soot.Main.main(opts);
 			
 			
-			Scene.v().addClass(IntrumentedMethodClass);
+			//Scene.v().addClass(IntrumentedMethodClass);
 			
 			
 			String mainClass = args[0];
@@ -478,7 +466,7 @@ public class NewsInvariantInstrumentator {
 
 			showCreationSites(NewsInstrumenterDaikon.getNewsMap(), outCS);
 			showCallSites(NewsInstrumenterDaikon.getCcArgsMap(), NewsInstrumenterDaikon.getCcMethodsMap(),
-					NewsInstrumenterDaikon.getMethodMap(), outCC);
+					NewsInstrumenterDaikon.getMethodMap(), NewsInstrumenterDaikon.getNewsMap(), NewsInstrumenterDaikon.getArgsCallsList(), NewsInstrumenterDaikon.getRelevantsMap(), outCC);
 			showFakeInductives(NewsInstrumenterDaikon.getNewsMap(), outInductivesFakes);
 			writeInstrumentedMethods(optsDefault[2], fullOutputDir);
 
@@ -549,11 +537,11 @@ public class NewsInvariantInstrumentator {
 		out.println("Instumentacion Sites");
 		for (Iterator it = csMap.keySet().iterator(); it.hasNext();) {
 			String cs = (String)it.next();
-			HashSet<CreationSiteMapInfo> csInfos = (HashSet<CreationSiteMapInfo>) csMap.get(cs);
-			for(CreationSiteMapInfo csInfo: csInfos)
-			{
-				out.println(cs + "=" + csInfo);
-			}
+			
+			//por que los toma como CreationSite? Son Instrumentation sites. Me parece que los usa "de comodin"
+			CreationSiteMapInfo csInfo = (CreationSiteMapInfo) csMap.get(cs);
+			out.println(cs + "=" + csInfo);
+
 		}
 	}
 	
@@ -562,32 +550,121 @@ public class NewsInvariantInstrumentator {
 		out.println("Inductives");
 		for (Iterator it = csMap.keySet().iterator(); it.hasNext();) {
 			String cs = (String)it.next();
-			HashSet<CreationSiteMapInfo> csInfos = (HashSet<CreationSiteMapInfo>) csMap.get(cs);
-			for(CreationSiteMapInfo csInfo: csInfos)
-			{
-				String list = csInfo.vars.toString();
-				list = list.replaceAll("\\$","__");
-				// list = list.replaceAll("\\$","_");
-				out.println(cs + "=" + list +";[]");
-			}
+			CreationSiteMapInfo csInfo = (CreationSiteMapInfo) csMap.get(cs);
+				
+			String list = csInfo.inductivesFake.toString();
+			//list = list.replaceAll("\\$","__");
+			
+			//algunas variables tienen numeral. Deberia cambiarlo por un __n__ o algo que no joda a $
+			list = list.replaceAll("#","_");
+			//list = list.replaceAll("$","__");
+			// list = list.replaceAll("\\$","_");
+			out.println(cs + "=" + list +";[]");
+			
 			
 		}
 	}
 
-	public static void showCallSites(Map ccArgsMap, Map ccMethodsMap, Map methodMap, PrintStream out) {
+	
+	//de aca van a salir los relevant parameters
+	public static void showCallSites(Map ccArgsMap, Map ccMethodsMap, Map methodMap, Map csMap, Deque argsMethodList, Map relevantsMap, PrintStream out) {
 		out.println("Call Sites");
-		for (Iterator it = ccArgsMap.keySet().iterator(); it.hasNext();) {
-			String callSite = (String) it.next();
-			CallSiteMapInfo ccInfo = getCallSiteInfo(callSite,ccArgsMap,ccMethodsMap, methodMap);
+		
+		Iterator<CallInfo> iter = argsMethodList.iterator();
+		
+		//Itero un LIFO porque soot me devuelve los metodos en el orden topologico inverso
+		//No uso STACK porque tiene un bug que me hace iterarlo como FIFO y yo quiero LIFO
+		while(iter.hasNext())
+		{
+			//cree una clase nueva CallInfo. Es parecida a CallSiteMapInfo pero quiero hacerlo en paralelo en vez de tocar esa clase asi no rompo codigo
+			//despues volare CallSiteMapInfo si no la necesito mas
+			CallInfo callInfo = iter.next();
+			
+			String callSite = callInfo.getInsSite();
+			ListDIParameters args = callInfo.getArgs();
+			CallSiteMapInfo ccInfo = getCallSiteInfo(callSite, args, ccArgsMap,ccMethodsMap, csMap, methodMap, callInfo, relevantsMap);
 
+			//TODO los params no tienen bien las derived variables como los params init
 			out.println(callSite + "=" + ccInfo);
 		}
 	}
-	private static CallSiteMapInfo getCallSiteInfo(String callSite, Map ccArgsMap, Map ccMethodsMap, Map methodMap)
+	/**
+	 * 
+	 * @param callSite
+	 * @param args
+	 * @param ccArgsMap
+	 * @param ccMethodsMap
+	 * @param csMap Esto tiene, entre otras cosas, informacion de las variables (tipo a.f) relevantes de cada instrumentation site
+	 * @param methodMap
+	 * @param callInfo 
+	 * @return
+	 */
+	private static CallSiteMapInfo getCallSiteInfo(String callSite, ListDIParameters args, Map ccArgsMap, Map ccMethodsMap, Map csMap, Map methodMap, CallInfo callInfo, Map relevantsMap)
 	{
-		 ListDIParameters args = (ListDIParameters) ccArgsMap.get(callSite);;
+		// ListDIParameters args = (ListDIParameters) ccArgsMap.get(callSite);;
 		
-		String m = (String) ((Object[])ccMethodsMap.get(callSite))[0];
+		
+		
+		
+			
+		//	ListDIParametersNoRep relevants = csInfo.getObjectVars();
+			
+		
+		
+		String m = (String) ((Object[])ccMethodsMap.get(callSite))[0];		
+		
+		System.out.println(callInfo.getCallee());
+		
+		
+		
+		//por que los toma como CreationSite? Son Instrumentation sites. Me parece que los usa "de comodin"
+		
+		
+		//TODO tengo que recorrerlos AL REVES porque con soot los fui metiendo en el orden inverso
+		
+		/*for (Iterator it = csMap.keySet().iterator(); it.hasNext();) {
+			String cs = (String)it.next();
+			CreationSiteMapInfo csInfo = (CreationSiteMapInfo) csMap.get(cs);
+
+			
+			System.out.println("Comparando con..." + csInfo.methodCaller);
+			if (csInfo.methodCaller.equals(callInfo.getCallee()))
+			{
+				System.out.println("Hola hola hola!");
+			}
+			
+		}		
+		*/
+		
+		
+		//args,callee,caller,args
+		//callInfo
+		
+		//Consigo los insSites pertenecientes al callee
+		
+		
+		
+		
+		//1) Consigo el binding entre objetos <--- Listo
+		//a) Mientras itero sobre los bindings, ya voy agregando los derived variables de tipo size de lista, length de string
+		//b) Mientras itero sobre los bindings, chequeo si alguna variable relevante del callee contiene a ese objeto.
+		//Tambien miro L(callee) para ello (voy a necesitar una estructura de datos mas)
+		//El "contiene" va a ser medio un hack de strings feo por ahora, creo
+		//Si pasa eso, "agrego el field" al binding de objetos, creando uno nuevo
+		// Agrego a L(caller) las variables que agregue al binding en el paso anterior
+		//
+		
+		
+		
+		CreationSiteMapInfo csInfo = (CreationSiteMapInfo) csMap.get(callSite);
+		
+				
+		//String caleeInductives = csInfo.inductivesFake.toString();
+		//list = list.replaceAll("\\$","__");
+		
+		//algunas variables tienen numeral. Deberia cambiarlo por un __n__ o algo que no joda a $
+		//inductives = inductives.replaceAll("#","_");
+		
 		MethodMapInfo mInfo = (MethodMapInfo) methodMap.get(m);
 		ListDIParameters params=null,paramsInit=null;
 		String nameClass = (String) ((Object[])ccMethodsMap.get(callSite))[1];
@@ -622,14 +699,11 @@ public class NewsInvariantInstrumentator {
 			System.out.println();
 		}
 		*/
+		ListDIParametersNoRep relevant_variables_callee = (ListDIParametersNoRep) relevantsMap.get(callInfo.getCallee());
 		
 		for(; itA.hasNext();)
 		{
 			DIParameter a = (DIParameter) itA.next();
-			if(a.toString().indexOf("size")!=-1)
-			{
-				System.out.println();
-			}
 			if(itP.hasNext())
 			{
 				DIParameter pInit = (DIParameter)itPinit.next();
@@ -656,7 +730,7 @@ public class NewsInvariantInstrumentator {
 					
 					
 					
-					if(a.getLocal().getType().equals(p.getLocal().getType()) 
+					if(true || a.getLocal().getType().equals(p.getLocal().getType()) 
 							|| a.getDerivedVariables2_size()>=p.getDerivedVariables2_size())
 					{	
 						
@@ -668,47 +742,193 @@ public class NewsInvariantInstrumentator {
 						//lo puse como true 19-10-17 porque "confio" en que me conviene hacer esto siempre
 						if(true || a.hasDerivedVariables2())
 						{
-							//ListDIParameters la = a.getDerivedVariables();
-							//ListDIParameters lp = p.getDerivedVariables();
-							//ListDIParameters lpInit = pInit.getDerivedVariables();
-							ListDIParameters la = a.toListDIP2();
-							ListDIParameters lp = p.toListDIP2();
-							ListDIParameters lpInit = pInit.toListDIP2();
-//							
-							//System.out.println("a p pinit");
-//							System.out.println(la);
-//							System.out.println(lp);
-//							System.out.println(lpInit);
-							if(!lp.isEmpty() && lpInit.isEmpty())
-							{
-								System.out.println("");
-							}
-							Iterator iter_lp = lp.iterator();
-							Iterator iter_lpInit = lpInit.iterator();
-							for (Iterator iter_la = la.iterator(); iter_la.hasNext();) {
-								DIParameter e_a = (DIParameter) iter_la.next();
-								if(iter_lp.hasNext())
+							
+							
+							
+							
+							if(false){
+								//ListDIParameters la = a.getDerivedVariables();
+								//ListDIParameters lp = p.getDerivedVariables();
+								//ListDIParameters lpInit = pInit.getDerivedVariables();
+								ListDIParameters la = a.toListDIP2();
+								ListDIParameters lp = p.toListDIP2();
+								ListDIParameters lpInit = pInit.toListDIP2();
+	//							
+								//System.out.println("a p pinit");
+	//							System.out.println(la);
+	//							System.out.println(lp);
+	//							System.out.println(lpInit);
+								if(!lp.isEmpty() && lpInit.isEmpty())
 								{
-									DIParameter e_p  = (DIParameter) iter_lp.next();
-									DIParameter e_pInit  = (DIParameter) iter_lpInit.next();
-									/* Diego 1-7-09 
-									if(InductiveVariablesInfo.isAcceptedInductive(IVInfo, e_a)
-									&& InductiveVariablesInfo.isAcceptedInductive(IVInfo, e_p)
-									&& InductiveVariablesInfo.isAcceptedInductive(IVInfo, e_pInit)
-									)
-									*/
-									if(InductiveVariablesInfo.isAcceptedInductive(IVInfo, e_a)
-										//	|| InductiveVariablesInfo.isAcceptedInductive(IVInfo, e_p)
-										//	|| InductiveVariablesInfo.isAcceptedInductive(IVInfo, e_pInit)
-											)
-									{ 
-										paramInitFil.addAll(e_pInit.toList2());
-										paramFil.addAll(e_p.toList2());
-										argFil.addAll(e_a.toList2());
+									System.out.println("");
+								}
+								Iterator iter_lp = lp.iterator();
+								Iterator iter_lpInit = lpInit.iterator();
+								for (Iterator iter_la = la.iterator(); iter_la.hasNext();) {
+									DIParameter e_a = (DIParameter) iter_la.next();
+									if(iter_lp.hasNext())
+									{
+										DIParameter e_p  = (DIParameter) iter_lp.next();
+										DIParameter e_pInit  = (DIParameter) iter_lpInit.next();
+										/* Diego 1-7-09 
+										if(InductiveVariablesInfo.isAcceptedInductive(IVInfo, e_a)
+										&& InductiveVariablesInfo.isAcceptedInductive(IVInfo, e_p)
+										&& InductiveVariablesInfo.isAcceptedInductive(IVInfo, e_pInit)
+										)
+										*/
+										if(InductiveVariablesInfo.isAcceptedInductive(IVInfo, e_a)
+											//	|| InductiveVariablesInfo.isAcceptedInductive(IVInfo, e_p)
+											//	|| InductiveVariablesInfo.isAcceptedInductive(IVInfo, e_pInit)
+												)
+										{ 
+											paramInitFil.addAll(e_pInit.toList2());
+											paramFil.addAll(e_p.toList2());
+											argFil.addAll(e_a.toList2());
+										}
 									}
+									
+								}
+							}
+							
+
+							String pInitName = pInit.getName();
+							String pName = p.getName();
+							String argName = a.getName();
+							
+							paramInitFil.add(pInitName);
+							paramFil.add(pName);
+							argFil.add(argName);
+							
+							
+							List new_relevants = new Vector();
+							
+							
+							
+							if (relevant_variables_callee != null)
+							{
+								for(Iterator iter = relevant_variables_callee.iterator(); iter.hasNext();)
+								{
+									DIParameter element = (DIParameter) iter.next();
+									String relevantVar = element.toString();
+									if(element.getName().equals(pName))
+									{
+										//int index = relevantVar.indexOf(pName);
+										
+										//String notBase = relevantVar.substring(index + pName.length());
+										
+										
+										SimpleDIParameter new_relevant = new SimpleDIParameter(argName);
+
+										//Por cada field relevante agrego a la lista el binding entre fields
+										for (Iterator dip_it= element.getDerivedVariables2().iterator(); dip_it.hasNext();)
+										{
+											DIParameter dip = (DIParameter) dip_it.next();
+											String fullName = dip.getName();
+											String notBase = fullName.substring(fullName.indexOf(element.getName()) + element.getName().length());
+											
+											
+											paramInitFil.add(pInitName + notBase);
+											argFil.add(argName + notBase);
+											paramFil.add(pName + notBase);
+
+											
+											new_relevant.derivedFields.add(notBase);
+											
+											
+											System.out.println(notBase);
+											
+										}
+										
+										if(new_relevant.derivedFields.size > 0)
+										{
+											new_relevants.add(new_relevant);
+										}
+										
+										System.out.println("Hola!");
+									}
+									
+								}
+							}
+							
+							
+							List new_relevantsCallee = (List) newRelevantsMap.get(callInfo.getCallee());
+							if(new_relevantsCallee != null)
+							{
+								for(Iterator iter = new_relevantsCallee.iterator(); iter.hasNext();)
+								{
+									SimpleDIParameter element = (SimpleDIParameter) iter.next();
+									if(element.name.equals(pName))
+									{
+										//int index = relevantVar.indexOf(pName);
+										
+										//String notBase = relevantVar.substring(index + pName.length());
+										
+										
+										SimpleDIParameter new_relevant = new SimpleDIParameter(argName);
+	
+										//Por cada field relevante agrego a la lista el binding entre fields
+										for (Iterator dip_it= element.derivedFields.iterator(); dip_it.hasNext();)
+										{
+											String notBase = (String) dip_it.next();
+											
+											
+											paramInitFil.add(pInitName + notBase);
+											argFil.add(argName + notBase);
+											paramFil.add(pName + notBase);
+	
+											
+											new_relevant.derivedFields.add(notBase);
+											
+											
+											System.out.println(notBase);
+											
+										}
+										
+										if(new_relevant.derivedFields.size > 0)
+										{
+											new_relevants.add(new_relevant);
+										}
+										
+										System.out.println("Hola!");
+									}
+									
+								}
+							}
+							
+							
+							/*if(pInit.getClass() != DI_Object.class)
+							{
+								SimpleDIParameter new_relevant = new SimpleDIParameter(pInit.getName());
+								String base = new_relevant.name;
+
+								for(Iterator itD = pInit.getDerivedVariables2().iterator(); itD.hasNext();)
+								{
+									
+									DIParameter dip = (DIParameter) itD.next();
+									
+									String notBase = dip.getName().substring(dip.getName().indexOf(base) + base.length());
+									
+									paramInitFil.add(pInitName + notBase);
+									argFil.add(argName + notBase);
+									paramFil.add(pName + notBase);
+
+									
+									new_relevant.derivedFields.add(notBase);
+									
+									
 								}
 								
-							}
+								if(new_relevant.derivedFields.size > 0)
+								{
+									new_relevants.add(new_relevant);
+								}
+							}*/
+							
+							newRelevantsMap.put(callInfo.getCaller(), new_relevants);
+							
+
+							
+							
 						}
 						else
 						{
@@ -720,7 +940,34 @@ public class NewsInvariantInstrumentator {
 				}
 			}
 		}
-	
+		
+		List<String> newParamInits = new ArrayList<String>();
+		
+		/*String[] inductivesArray = inductives.substring(1,inductives.length()-1).split(","); 
+		for(int i = 0; i < inductivesArray.length; i++)
+		{
+			String ind = inductivesArray[i].trim();
+			for(Iterator paramIt = paramInitFil.iterator(); paramIt.hasNext();)
+			{
+				String param = paramIt.next().toString().trim();
+				if (ind.contains("."))
+				{
+					String base = ind.split(".")[0];
+					if(base.contains(param))
+					{
+						newParamInits.add(ind);
+					}
+				}
+			}
+		}*/
+		
+		
+		
+		newParamInits.addAll(paramInitFil);
+		
+		
+		
+		
 		return new CallSiteMapInfo(argFil,
 				                   paramFil,
 								   paramInitFil, 

@@ -31,10 +31,11 @@ public class InductivesFinderMain {
 		String outputDir="out";
 
 		// Load java.lang.Object
-		Scene.v().loadClassAndSupport("java.lang.Object");
+        Scene.v().tryLoadClass("java.lang.Object", 0);
 		// Declare 'public class HelloWorld'
 
 		String[] optsDefault = { "-app", "-f", "c",
+				"-w",
 				"-d",outputDir,
 				"-src-prec","class",
 				"-keep-line-number", 
@@ -55,8 +56,8 @@ public class InductivesFinderMain {
 		for (int i = 0; i < args.length; i++)
 			opts[i + optsDefault.length] = args[i];
 
-		PackManager.v().getPack("jtp").add(
-				new Transform("jtp.prueba", TestLV.v()));
+		//PackManager.v().getPack("jtp").add(
+			//	new Transform("jtp.prueba", TestLV.v()));
 		
 		PackManager.v().getPack("jtp").add(
 				new Transform("jtp.instrumenter", InductivesFinder.v()));
@@ -80,7 +81,8 @@ public class InductivesFinderMain {
 //			catch (Exception e) {
 //			}
 			
-			
+	        Scene.v().setSootClassPath(args[2]);
+
 			soot.Main.main(opts);
 			
 //			pwIM.flush();
@@ -110,6 +112,7 @@ public class InductivesFinderMain {
 				inductives=inductives.replace('}',']');
 				outInductivesFakes.println(is+"="+inductives+";[]");
 			 }
+			System.out.println("Listo!");
 
 			} 
 		catch (Exception e) {

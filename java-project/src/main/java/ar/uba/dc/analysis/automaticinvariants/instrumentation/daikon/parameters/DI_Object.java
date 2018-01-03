@@ -44,7 +44,7 @@ public class DI_Object extends DIParameter {
 		thisRef = var;
 		this.c = c;
 		generateFieldReferences(c,body,thisRef);
-		System.out.print("CHAPA:"+var+" "+c+" "+derivedVars);
+		//System.out.print("CHAPA:"+var+" "+c+" "+derivedVars);
 		
 		
 		//Hasta que entienda que tiene que pasar primero por los threads.
@@ -88,7 +88,7 @@ public class DI_Object extends DIParameter {
 		thisRef = var;
 		this.c = c;
 		generateFilteredFieldReferences(c,body,thisRef,filter);
-		System.out.print("CHAPA:"+var+" "+c+" "+derivedVars);
+		//System.out.print("CHAPA:"+var+" "+c+" "+derivedVars);
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -97,7 +97,7 @@ public class DI_Object extends DIParameter {
 		thisRef = var;
 		this.c = c;
 		generateFilteredFieldReferences2(c,body,thisRef,filter);
-		System.out.print("CHAPA:"+var+" "+c+" "+derivedVars);
+		//System.out.print("CHAPA:"+var+" "+c+" "+derivedVars);
 		// TODO Auto-generated constructor stub
 	}
 	

@@ -20,7 +20,7 @@ import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.InductiveVa
  * Window - Preferences - Java - Code Style - Code Templates
  */
 public class InductiveVariablesInfo {
-	List  inductiveInfo;
+	public List  inductiveInfo;
 	List  excludeInfo;
 	
 	/**
@@ -100,6 +100,11 @@ public class InductiveVariablesInfo {
 						 )
 					)
 				);
+	}
+	
+	public String toString()
+	{
+		return inductiveInfo.toString();
 	}
 	
 	public static List filterInductives(List vars, InductiveVariablesInfo IVInfo,String cs)
