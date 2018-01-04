@@ -5,3 +5,15 @@ java-project/target/surefire-reports/
 java-project/velocity.log.1
 java-project/results/
 
+
+dependencies/sootlib/sootOutput/
+dependencies/sootlib/sootclasses-2.5.0.jar
+java-project/VarTest.java
+java-project/prueba.png
+java-project/prueba/
+java-project/prueba2/
+java-project/src/main/generated-sources/
+java-project/src/main/java/ar/uba/dc/barvinok/expression/ast/
+java-project/src/main/java/ar/uba/dc/billynok/
+java-project/src/test/java/ar/uba/dc/analysis/escape/PaperEscapeTest.java
+java-project/test.properties
