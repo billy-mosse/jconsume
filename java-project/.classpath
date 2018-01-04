@@ -83,5 +83,10 @@
 	<classpathentry kind="lib" path="/home/billy/Downloads/herosclasses-trunk-sources.jar"/>
 	<classpathentry kind="lib" path="/home/billy/Downloads/heros-trunk.jar"/>
 	<classpathentry kind="lib" path="/home/billy/Projects/git/jconsume/java-project/jdom.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

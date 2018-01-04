@@ -1,0 +1,38 @@
+Inductive Analysis:
+
+Por ahora estamos sobreaproximando, dejando como inductivas las variables que están vivas en el punto del programa correspondiente.
+
+Hacemos un Inductive Analysis que me gustaría entender un cacho más, pero igual NO LO ESTAMOS USANDO para hacer el filtro, y estamos dejando solo las vivas. Para usarlo primero deberíamos correr eso y DESPUÉS el programa (o, al menos, mantener las inductivas en memoria)
+
+No usarlo hace que dejemos variables vivas como inductivas, y eso pasa incluso aunque no haya loops! Por lo menos habría que diferenciar ese caso.
+
+---------------------
+
+Entonces,
+
+1) ¿Qué hace el Inductive Analysis?
+
+2) El live variable analysis ya me lo devuelve soot. ¿Cómo lo hace? Armarlo a partir de las slides de Diego
+
+
+-----
+
+
+1) 
+
+
+
+
+
+-----
+
+2) El análisis es "de abajo hacia arriba".
+
+La función de transferencia en un nodo n recibe X y devuelve las variables leídas en el nodo n UNIÓN (X - las variables escritas en el nodo n).
+
+out[n] := \cup \{in[m] | m \in succ(n) \}
+in[n] := transfer[n](out[n])
+
+(El grafo tiene que venir ordenado topoĺógicamente)
+
+¿Por qué? ¿Qué pasa cuando computás el último in? Obtenés la lista de variables que podés llegar a necesitar conocer el valor.

@@ -1,0 +1,124 @@
+\documentclass[10pt,a4paper,final]{report}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{listings}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\newtheorem{theorem}{Teorema}
+%TODO ver como arreglar esto de proof
+\newtheorem{lemma}{Lema}
+\newtheorem{definition}{Definición}
+\newtheorem{proposition}{Proposición}
+\newtheorem{observation}{Observación}
+\newtheorem{corollary}{Corolario}
+\newtheorem{example}{Ejemplo}
+\def\Q{\mathbb{Q}}
+\def\R{\mathbb{R}}
+\def\I{[a,b]} 
+
+\begin{document}
+
+\section{Live variable analysis}
+
+Es backward. En cada paso agrega los predecesores a un stack.
+
+
+\begin{align}
+transfer[n](X) = gen(n)\cup (X - kill(n))\\
+out[n] := \cup \{in[m] | m \in succ(n) \}\\
+in[n] := transfer[n](out[n])\\
+gen(n) = \text{Variables leídas en }n\\
+kill(n) = \text{Variables escritas en }n
+\end{align}
+
+\section{Inductive analysis}
+
+\begin{align}
+gen(n) =  \text{Variables de GOTO }\cup\text{ sizes de arrays/multiarrays}\\
+kill(n) = \emptyset\\
+transfer[n](X) = ?
+\end{align}
+
+Transfiere el $out$ al $in$.
+
+transfer[n](X) = ? \bigskip
+
+Describo la función de transferencia por partes:
+
+Primero se llena la lista $addSet$
+
+\begin{itemize}
+\item CASO x = f(b)
+Si el $out$ contiene a la variable $x$, entonces meto en $addSet$ a...$x$ y las variables de $f(b)$ que estén vivas en ese momento.
+
+\item CASO conditional $if\ x \neq\ 0\ GOTO\ s$
+
+Si el in contiene a una variable involucrada en la condición del GOTO, decimos que tiene una inductiva. En ese caso, volvemos a recorrer las variables de la condición, y metemos en $addSet$ las que están vivas (ignorando $s$)
+
+Para mí no deberíamos fijarnos si alguna variable de la condición está en el in. Si es un GOTO agregamos todas las variables y listo no?\bigskip
+
+\item Está comentado el caso invokeExpression, lo cual me parece un poco turbio.
+\end{itemize}
+
+
+
+
+
+
+%Me parece que hay un bug y que lo que debería agregar es a $x$ (es decir, lo que sería el left box) siempre y cuando esté viva. <--- No sé por qué pensé eso.
+
+Luego se genera $in$:
+
+$in = A_1 \cup A_2 \cup addset$,\\
+
+donde $A_1 = (genSet \cap vivas)$ y $A_2 = (out \cap vivas)$\\
+
+Observación: el killset no juega ningún rol.\\
+
+
+\begin{itemize}
+	\item En el código están swappeados el in y el out, no sé si porque cuando uno extiende BackwardFlowAnalysis de soot hay que llamarlos así y no al revés como en la teoría. Chequearlo
+	\item NO estamos usando el análisis de inductivas; está apagado un switch. Estamos usando como inductivas a las relevantes, que son las variables vivas.
+\end{itemize}
+
+-------------------------
+
+A ver, para abreviar, asumamos que todas las variables están vivas.
+
+Entonces $in = variables de\ GOTO \cup sizes de arrays \cup out \cup addSet$,
+
+donde $addSet$ tiene a las variables que modifican una variable del $out$ y también tiene todas las variables del stmt si el statement es un GOTO.
+
+el $addSet$ no hace falta que tenga lo segundo, porque ya forma parte del genSet :/
+
+Lo malo de todo esto es que se "propagan demasiado"...pudiendo salirse del loop.
+
+No sé está haciendo esto porque el switch está apagado, pero se deberían diferenciar las relevantes de las inductivas, con relevantes = live variables, inductivas = las del análisis.
+
+
+Tal vez una pequeña optimización podría ser hacer un killset. Podrían ser, por ejemplo, las variables que son usadas solamente fuera de los loops. Será muy difícil de hacer?
+
+Eso, o que la propagación sea siempre "dentro del loop", pero me suena a que esto es más difícil, por alguna razón............aunque supongo que es igual de dificíl.
+
+
+
+-------------------------
+
+Propuesta mía: yo quiero a las variables que se usan para modificar a las variables inductivas (propagar para ese lado), parecido a lo que hace el slicing de alexis.
+
+Bah, en realidad esto no funciona muy bien, porque seguramente se va un poco al carajo. Tengo que ver las variables que modifican la condición del loop pero "dentro del loop". Pero entender cuál es el cuerpo del loop me parece un poco complicado.
+
+---------------------------
+
+Algunas preguntas:
+
+\begin{itemize}
+	\item No estamos usando el análisis de inductivas :/ El archivo de indFake lo escribimos a partir de las variables vivas.
+\end{itemize}
+
+
+
+\end{document}
