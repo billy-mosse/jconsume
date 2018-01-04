@@ -6,6 +6,10 @@
 			<residual>{ 0 }</residual>
 			<memReq>{ 0 }</memReq>
 		</resources>
+
+		<package name="java.util." type="startsWith">
+			<method name="hasNext" type="equals" />
+		</package>
 		
 		<package name="javazoom.jl.decoder.JavaLayerException" type="equals">
 			<method name="printStackTrace" type="equals" />
@@ -25,6 +29,10 @@
 			<method name="&lt;init&gt;" type="equals" />
 		</package>
 
+		<package name="java.lang.String" type="equals">
+			<method name="length" type="equals" />
+		</package>
+
 	</rule>
 
 	<rule name="pure methods which consume 1 residual and 0 temporal resources" type="pure">
@@ -33,6 +41,10 @@
 			<residual>{ 1 }</residual>
 			<memReq>{ 1 }</memReq>
 		</resources>
+
+		<package name="java.util." type="startsWith">
+			<method name="add" type="equals" />
+		</package>
 		
 		<package name="java.lang.String" type="startsWith">
 			<method name="&lt;init&gt;" type="equals" />
@@ -42,6 +54,13 @@
 			<method name="valueOf" type="equals" />
 			<method name="parseInt" type="equals" />
 			<method name="clone" type="equals" />
+		</package>
+
+		<package name="java.util.ArrayList" type="equals">
+			<method name="iterator" type="equals" />
+		</package>
+		<package name="java.util." type="startsWith">
+			<method name="next" type="equals" />
 		</package>
 		
 		<package name="java." type="startsWith">
