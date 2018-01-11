@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.InvariantReader;
 
@@ -73,6 +75,16 @@ public class InvariantReader {
 		for (Iterator iter = l.iterator(); iter.hasNext();) {
 			String element = (String) iter.next();
 			
+			
+				//quiero machear var1[var2]...
+		        String patternString = ".+\\[(?!\\[).+\\].*";
+
+		        Pattern pattern = Pattern.compile(patternString);
+
+		        Matcher matcher = pattern.matcher(element);
+		        boolean matchesAccessArray = matcher.matches();
+		        
+			
 			//Otro hack horrible: no nos interesan constraints que:
 			if(element.contains("has") 
 					|| element.contains("\"") //sean sobre un string
@@ -86,7 +98,8 @@ public class InvariantReader {
 					|| element.contains(" one of ") //otro hack que se podria evitar
 					|| element.contains("== []") //hack horrible. TODO: ver como hacer para deshabilitar igualdades de arrays!!
 					|| element.contains(" null") //sobre nulls. Deberia usar una opcion de daikon pero no la encontre
-					|| (element.contains("[") && element.contains("]") && !element.contains("[]")) //accediendo a un array
+					//|| (element.contains("[") && element.contains("]")) //accediendo a un array
+					|| matchesAccessArray
 					|| containsDouble(element)
 					)
 			{
