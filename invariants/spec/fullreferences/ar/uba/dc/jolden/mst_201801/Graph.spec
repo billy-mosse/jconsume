@@ -20,13 +20,13 @@
 				<inductives>seed</inductives>
 				<callee>ar.uba.dc.jolden.mst.Graph: int mult(int,int)</callee>
 				<constraints>
-					<![CDATA[seed == seed_init && seed >= 1 && aux_21 == 31415821 && seed < aux_21]]>
+					<![CDATA[seed == seed_init && seed >= 1 && seed < aux_21]]>
 				</constraints>
 			 </call-site>
 		</method>
 		 <method decl="void &lt;init&gt;(int)">
 			<relevant-parameters>numvert_init</relevant-parameters>
-			 <call-site offset="0" srccode-offset="3200">
+			 <call-site offset="0" srccode-offset="3100">
 				<variables>numvert, this, numvert_init</variables>
 				<inductives>numvert</inductives>
 				<callee>java.lang.Object: void &lt;init&gt;()</callee>
@@ -43,9 +43,9 @@
 			 </creation-site>
 			 <creation-site offset="1" srccode-offset="3701">
 				<variables>numvert, this, i, __r2, v, numvert_init</variables>
-				<inductives>numvert, this__f__nodes, i, __r2</inductives>
+				<inductives>numvert</inductives> <!-- __r2, this__f__nodes, i -->
 				<constraints>
-					<![CDATA[numvert == numvert_init && numvert == __r2__f__size && i >= 0 && i <= __r2__f__size-1]]>
+					<![CDATA[numvert == numvert_init && i >= 0]]>
 				</constraints>
 			 </creation-site>
 			 <call-site offset="1" srccode-offset="3702">
@@ -53,70 +53,70 @@
 				<inductives>numvert, this__f__nodes, i, __r2</inductives>
 				<callee>ar.uba.dc.jolden.mst.Vertex: void &lt;init&gt;(ar.uba.dc.jolden.mst.Vertex,int)</callee>
 				<constraints>
-					<![CDATA[numvert == numvert_init && numvert == __r2__f__size && i >= 0 && i <= __r2__f__size-1]]>
+					<![CDATA[numvert == numvert_init && i >= 0]]>
 				</constraints>
 				<binding>$t.n_init == v and $t.numvert_init == numvert</binding>
 			 </call-site>
 			 <call-site offset="2" srccode-offset="4000">
 				<variables>numvert, this, numvert_init</variables>
-				<inductives>numvert, this__f__nodes</inductives>
+				<inductives>numvert</inductives>
 				<callee>ar.uba.dc.jolden.mst.Graph: void addEdges(int)</callee>
 				<constraints>
-					<![CDATA[numvert == numvert_init]]>
+					<![CDATA[numvert == numvert_init]]><!-- this__f__nodes -->
 				</constraints>
-				<binding>$t.this_init == this and $t.numvert_init == numvert</binding>
+				<binding>$t.numvert_init == numvert</binding>
 			 </call-site>
 		</method>
 		 <method decl="void addEdges(int)">
-			<relevant-parameters>this_init, numvert_init</relevant-parameters>
+			<relevant-parameters>numvert_init</relevant-parameters>
 			 <call-site offset="4" srccode-offset="9300">
-				<variables>count1, numvert, __r1, this, __r2, tmp, this_init, numvert_init</variables>
+				<variables>count1, numvert, __r1, this, tmp, this_init, numvert_init</variables>
 				<inductives>count1, numvert, __r1__f__array, __r1__f__size, this__f__nodes</inductives>
 				<callee>ar.uba.dc.jolden.mst.Vertex: ar.uba.dc.jolden.mst.Vertex next()</callee>
 				<constraints>
-					<![CDATA[numvert == numvert_init && __r1__f__size == __r1__f__array__f__size && count1 >= 1 && count1 <= numvert && numvert > __r1__f__size]]>
+					<![CDATA[numvert == numvert_init && count1 >= 1 && count1 <= numvert && numvert > __r1__f__size]]>
 				</constraints>
 			 </call-site>
 			 <call-site offset="0" srccode-offset="9400">
-				<variables>numvert, __r1, this, __r2, tmp, count1, this_init, numvert_init</variables>
-				<inductives>numvert, __r1__f__array, __r1__f__size, this__f__nodes, count1</inductives>
+				<variables>tmp, count1, numvert, __r1, this, this_init, numvert_init</variables>
+				<inductives>count1, numvert, __r1__f__array, __r1__f__size, this__f__nodes</inductives>
 				<callee>ar.uba.dc.jolden.mst.Vertex: ar.uba.dc.jolden.mst.Hashtable neighbors()</callee>
 				<constraints>
-					<![CDATA[numvert == numvert_init && __r1__f__size == __r1__f__array__f__size && count1 >= 0 && numvert > __r1__f__size && numvert > count1]]>
+					<![CDATA[numvert == numvert_init && count1 >= 0 && count1 < numvert && numvert > __r1__f__size]]>
 				</constraints>
 			 </call-site>
 			 <call-site offset="1" srccode-offset="9700">
-				<variables>numvert, __r1, this, __r2, tmp, count1, i, this_init, numvert_init</variables>
-				<inductives>numvert, __r1__f__array, __r1__f__size, this__f__nodes, count1, i</inductives>
+				<variables>tmp, count1, numvert, i, __r1, this, this_init, numvert_init</variables>
+				<inductives>count1, numvert, i, __r1__f__array, __r1__f__size, this__f__nodes</inductives>
 				<callee>ar.uba.dc.jolden.mst.Graph: int computeDist(int,int,int)</callee>
 				<constraints>
-					<![CDATA[numvert == numvert_init && __r1__f__size == __r1__f__array__f__size && __r1__f__size >= 2 && count1 >= 0 && i >= 0 && numvert > __r1__f__size && numvert > count1 && numvert > i]]>
+					<![CDATA[numvert == numvert_init && count1 >= 0 && i >= 0 && __r1__f__size >= 2 && count1 < numvert && numvert > i && numvert > __r1__f__size]]>
 				</constraints>
 				<binding>$t.i_init == i and $t.j_init == count1 and $t.numvert_init == numvert</binding>
 			 </call-site>
 			 <creation-site offset="0" srccode-offset="9800">
-				<variables>numvert, __r1, this, __r2, tmp, count1, i, __r6, __i2, this_init, numvert_init</variables>
-				<inductives>numvert, __r1__f__array, __r1__f__size, this__f__nodes, count1, i, __i2</inductives>
+				<variables>tmp, count1, numvert, __r1, this, i, __r6, __i0, this_init, numvert_init</variables>
+				<inductives>count1, numvert, __r1__f__size, i</inductives> <!-- __r1__f__array, this__f__nodes, __i0 -->
 				<constraints>
-					<![CDATA[numvert == numvert_init && __r1__f__size == __r1__f__array__f__size && __r1__f__size >= 2 && count1 >= 0 && i >= 0 && numvert > __r1__f__size && numvert > count1 && numvert > i && __i2 >= __r1__f__array__f__size-1]]>
+					<![CDATA[numvert == numvert_init && count1 >= 0 && __r1__f__size >= 2 && i >= 0 && count1 < numvert && numvert > __r1__f__size && numvert > i]]>
 				</constraints>
 			 </creation-site>
 			 <call-site offset="2" srccode-offset="9801">
-				<variables>numvert, __r1, this, __r2, tmp, count1, i, __r6, __i2, __r5, this_init, numvert_init</variables>
-				<inductives>numvert, __r1__f__array, __r1__f__size, this__f__nodes, count1, i, __i2</inductives>
+				<variables>tmp, count1, numvert, __r1, this, i, __r6, __i0, __r5, this_init, numvert_init</variables>
+				<inductives>count1, numvert, __r1__f__array, __r1__f__size, this__f__nodes, i, __i0</inductives>
 				<callee>java.lang.Integer: void &lt;init&gt;(int)</callee>
 				<constraints>
-					<![CDATA[numvert == numvert_init && __r1__f__size == __r1__f__array__f__size && __r1__f__size >= 2 && count1 >= 0 && i >= 0 && numvert > __r1__f__size && numvert > count1 && numvert > i && __i2 >= __r1__f__array__f__size-1]]>
+					<![CDATA[numvert == numvert_init && count1 >= 0 && __r1__f__size >= 2 && i >= 0 && count1 < numvert && numvert > __r1__f__size && numvert > i]]>
 				</constraints>
 			 </call-site>
 			 <call-site offset="3" srccode-offset="9802">
-				<variables>numvert, __r1, this, __r2, tmp, count1, i, __r6, __r5, this_init, numvert_init</variables>
-				<inductives>numvert, __r1__f__array, __r1__f__size, this__f__nodes, count1, i</inductives>
+				<variables>tmp, count1, numvert, __r1, this, i, __r6, __r5, this_init, numvert_init, __r1__f__array</variables>
+				<inductives>count1, numvert, __r1__f__size, i</inductives> <!-- this__f__nodes -->
 				<callee>ar.uba.dc.jolden.mst.Hashtable: void put(java.lang.Object,java.lang.Object)</callee>
 				<constraints>
-					<![CDATA[numvert == numvert_init && __r1__f__size == __r1__f__array__f__size && __r1__f__size >= 2 && count1 >= 0 && i >= 0 && numvert > __r1__f__size && numvert > count1 && numvert > i]]>
+					<![CDATA[numvert == numvert_init && count1 >= 0 && __r1__f__size >= 2 && i >= 0 && count1 < numvert && numvert > __r1__f__size && numvert > i]]>
 				</constraints>
-				<binding>$t.this_init == __r1 and $t.this_init__f__array == __r1__f__array and $t.this_init__f__array__f__size == __r1__f__array__f__size and $t.key_init == __r6 and $t.value_init == __r5</binding>
+				<binding></binding> <!-- $t.this_init == __r1 and $t.key_init == __r6 -->
 			 </call-site>
 		</method>
 	</class>

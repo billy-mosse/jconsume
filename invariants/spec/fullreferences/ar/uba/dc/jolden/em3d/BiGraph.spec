@@ -16,9 +16,9 @@
 				<inductives>n1__f__toNodes</inductives>
 				<callee>ar.uba.dc.jolden.em3d.Node: void updateFromNodes()</callee>
 				<constraints>
-					<![CDATA[n1__f__next__f__fromCount == n1__f__next__f__fromLength && n1__f__fromCount == n1__f__fromLength && numNodes_init == numNodes && numNodes_init == cont___r2 && numNodes_init == cont___r4 && numNodes_init == cont___r5 && numNodes_init == cont___r7 && numNodes_init == cont___r8 && numDegree_init == numDegree && cont___r9 >= 1 && n1__f__next__f__fromCount < numNodes_init && n1__f__fromCount < numNodes_init && numNodes_init > numDegree_init && numNodes_init >= cont___r9]]>
+					<![CDATA[n1__f__next__f__fromCount == n1__f__next__f__fromLength && n1__f__next__f__fromCount == n1__f__next__f__fromNodes__f__size && n1__f__next__f__fromCount == n1__f__next__f__coeffs__f__size && n1__f__fromCount == n1__f__fromLength && n1__f__fromCount == n1__f__fromNodes__f__size && n1__f__fromCount == n1__f__coeffs__f__size && numNodes_init == numNodes && numNodes_init == cont___r2 && numNodes_init == cont___r4 && numNodes_init == cont___r5 && numNodes_init == cont___r7 && numNodes_init == cont___r8 && numDegree_init == numDegree && numDegree_init == n1__f__next__f__toNodes__f__size && numDegree_init == n1__f__toNodes__f__size && cont___r9 >= 1 && n1__f__next__f__fromCount < numNodes_init && n1__f__fromCount < numNodes_init && numNodes_init > numDegree_init && numNodes_init >= cont___r9 && numNodes_init > n1__f__next__f__toNodes__f__size]]>
 				</constraints>
-				<binding>$t.this_init__f__toNodes == n1__f__toNodes</binding>
+				<binding>$t.this_init == n1 and $t.this_init__f__toNodes == n1__f__toNodes</binding>
 			 </call-site>
 			 <creation-site offset="0" srccode-offset="10501">
 				<variables>__r31, __r29, numNodes_init, numDegree_init, numNodes, numDegree, cont___r2, cont___r4, cont___r5, cont___r7, cont___r8, cont___r9</variables>
@@ -41,7 +41,7 @@
 				<inductives>numNodes, numDegree</inductives>
 				<callee>ar.uba.dc.jolden.em3d.Node: void initSeed(long)</callee>
 				<constraints>
-					<![CDATA[numNodes == numNodes_init && numDegree == numDegree_init && l_aux_25 == 783 && numNodes > numDegree && numNodes < l_aux_25 && numDegree < l_aux_25]]>
+					<![CDATA[numNodes == numNodes_init && numDegree == numDegree_init && numNodes > numDegree && numNodes < aux_25 && numDegree < aux_25]]>
 				</constraints>
 				<binding>$t.seed_init == aux_25</binding>
 			 </call-site>
@@ -59,7 +59,7 @@
 				<inductives>__r0, numNodes, numDegree</inductives>
 				<callee>ar.uba.dc.jolden.em3d.Node: ar.uba.dc.jolden.em3d.Node[] fillTable(int,int)</callee>
 				<constraints>
-					<![CDATA[__r0__f__fromCount == __r0__f__fromLength && numNodes == numNodes_init && numDegree == numDegree_init && numNodes > numDegree]]>
+					<![CDATA[numNodes == numNodes_init && numNodes == __r0__f__size && numDegree == numDegree_init && numDegree < __r0__f__size-1]]>
 				</constraints>
 				<binding>$t.size_init == numNodes and $t.degree_init == numDegree</binding>
 			 </call-site>
@@ -68,7 +68,7 @@
 				<inductives>__r0, __r1</inductives>
 				<callee>ar.uba.dc.jolden.em3d.Node: java.util.Enumeration elements()</callee>
 				<constraints>
-					<![CDATA[__r0__f__fromNodes == __r1__f__fromNodes && __r0__f__coeffs == __r1__f__coeffs && __r0__f__fromCount == __r0__f__fromLength && __r0__f__fromCount == __r1__f__fromCount && __r0__f__fromCount == __r1__f__fromLength && numNodes_init == numNodes && numDegree_init == numDegree && cont___r2 == 0 && numNodes_init > numDegree_init && numNodes_init > cont___r2 && numDegree_init > cont___r2]]>
+					<![CDATA[numNodes_init == numNodes && numNodes_init == __r0__f__size && numNodes_init == __r1__f__size && numDegree_init == numDegree && cont___r2 >= 0 && numDegree_init > cont___r2 && numDegree_init < __r0__f__size-1 && cont___r2 < __r0__f__size-1]]>
 				</constraints>
 				<binding>$t.this_init == __r29</binding>
 			 </call-site>
@@ -93,7 +93,7 @@
 				<inductives>__r0, __r1</inductives>
 				<callee>java.util.Enumeration: boolean hasMoreElements()</callee>
 				<constraints>
-					<![CDATA[__r0__f__fromNodes == __r1__f__fromNodes && __r0__f__coeffs == __r1__f__coeffs && __r0__f__fromCount == __r0__f__fromLength && __r0__f__fromCount == __r1__f__fromLength && numNodes_init == numNodes && numDegree_init == numDegree && cont___r2 >= 0 && numNodes_init > numDegree_init && numNodes_init >= cont___r2]]>
+					<![CDATA[numNodes_init == numNodes && numNodes_init == __r0__f__size && numNodes_init == __r1__f__size && numDegree_init == numDegree && cont___r2 >= 0 && numNodes_init >= cont___r2 && numDegree_init < __r0__f__size-1]]>
 				</constraints>
 			 </call-site>
 			 <call-site offset="7" srccode-offset="7000">
@@ -101,7 +101,7 @@
 				<inductives>__r0, __r1</inductives>
 				<callee>java.util.Enumeration: java.lang.Object nextElement()</callee>
 				<constraints>
-					<![CDATA[__r0__f__fromNodes == __r1__f__fromNodes && __r0__f__coeffs == __r1__f__coeffs && __r0__f__fromCount == __r0__f__fromLength && __r0__f__fromCount == __r1__f__fromLength && numNodes_init == numNodes && numDegree_init == numDegree && cont___r2 >= 1 && numNodes_init > numDegree_init && numNodes_init >= cont___r2]]>
+					<![CDATA[numNodes_init == numNodes && numNodes_init == __r0__f__size && numNodes_init == __r1__f__size && numDegree_init == numDegree && cont___r2 >= 1 && numNodes_init >= cont___r2 && numDegree_init < __r0__f__size-1]]>
 				</constraints>
 			 </call-site>
 			 <call-site offset="8" srccode-offset="7100">
@@ -109,16 +109,16 @@
 				<inductives>__r0, __r1, n1__f__toNodes</inductives>
 				<callee>ar.uba.dc.jolden.em3d.Node: void makeUniqueNeighbors(ar.uba.dc.jolden.em3d.Node[])</callee>
 				<constraints>
-					<![CDATA[__r0__f__fromNodes == __r1__f__fromNodes && __r0__f__coeffs == __r1__f__coeffs && __r0__f__fromCount == __r0__f__fromLength && __r0__f__fromCount == __r1__f__fromLength && n1__f__next__f__fromNodes == n1__f__fromNodes && n1__f__next__f__coeffs == n1__f__coeffs && n1__f__next__f__fromCount == n1__f__next__f__fromLength && n1__f__next__f__fromCount == n1__f__fromCount && n1__f__fromCount == n1__f__fromLength && numNodes_init == numNodes && numDegree_init == numDegree && n1__f__next__f__fromCount == 0 && n1__f__fromCount == 0 && cont___r2 >= 1 && n1__f__next__f__fromCount < numNodes_init && n1__f__next__f__fromCount < numDegree_init && n1__f__next__f__fromCount < cont___r2 && n1__f__fromCount < numNodes_init && n1__f__fromCount < numDegree_init && n1__f__fromCount < cont___r2 && numNodes_init > numDegree_init && numNodes_init >= cont___r2]]>
+					<![CDATA[n1__f__next__f__fromCount == n1__f__next__f__fromLength && n1__f__fromCount == n1__f__fromLength && numNodes_init == numNodes && numNodes_init == __r0__f__size && numNodes_init == __r1__f__size && numDegree_init == numDegree && numDegree_init == n1__f__toNodes__f__size && n1__f__next__f__fromCount <= 0 && n1__f__next__f__fromCount >= 0 && n1__f__fromCount <= 0 && n1__f__fromCount >= 0 && cont___r2 >= 1 && n1__f__next__f__fromCount < cont___r2 && n1__f__next__f__fromCount < __r0__f__size-1 && n1__f__next__f__fromCount < n1__f__next__f__toNodes__f__size-1 && n1__f__next__f__fromCount < n1__f__toNodes__f__size-1 && n1__f__fromCount < cont___r2 && n1__f__fromCount < __r0__f__size-1 && n1__f__fromCount < n1__f__next__f__toNodes__f__size-1 && n1__f__fromCount < n1__f__toNodes__f__size-1 && numNodes_init >= cont___r2 && numDegree_init < __r0__f__size-1]]>
 				</constraints>
-				<binding>$t.this_init__f__toNodes == n1__f__toNodes and $t.size_nodeTable_init == size___r1</binding>
+				<binding>$t.this_init == n1 and $t.this_init__f__toNodes == n1__f__toNodes and $t.nodeTable_init == __r1</binding>
 			 </call-site>
 			 <call-site offset="9" srccode-offset="7300">
 				<variables>__r31, __r29, __r0, numNodes_init, numDegree_init, numNodes, numDegree, cont___r2, cont___r4</variables>
 				<inductives>__r0</inductives>
 				<callee>ar.uba.dc.jolden.em3d.Node: java.util.Enumeration elements()</callee>
 				<constraints>
-					<![CDATA[__r0__f__fromCount == __r0__f__fromLength && numNodes_init == numNodes && numNodes_init == cont___r2 && numDegree_init == numDegree && cont___r4 == 0 && numNodes_init > numDegree_init && numNodes_init > cont___r4 && numDegree_init > cont___r4]]>
+					<![CDATA[numNodes_init == numNodes && numNodes_init == cont___r2 && numNodes_init == __r0__f__size && numDegree_init == numDegree && cont___r4 >= 0 && numDegree_init > cont___r4 && numDegree_init < __r0__f__size-1 && cont___r4 < __r0__f__size-1]]>
 				</constraints>
 				<binding>$t.this_init == __r31</binding>
 			 </call-site>
@@ -127,7 +127,7 @@
 				<inductives>__r0</inductives>
 				<callee>java.util.Enumeration: boolean hasMoreElements()</callee>
 				<constraints>
-					<![CDATA[numNodes_init == numNodes && numNodes_init == cont___r2 && numDegree_init == numDegree && cont___r4 >= 0 && numNodes_init > numDegree_init && numNodes_init >= cont___r4]]>
+					<![CDATA[numNodes_init == numNodes && numNodes_init == cont___r2 && numNodes_init == __r0__f__size && numDegree_init == numDegree && cont___r4 >= 0 && numNodes_init >= cont___r4 && numDegree_init < __r0__f__size-1]]>
 				</constraints>
 			 </call-site>
 			 <call-site offset="11" srccode-offset="7500">
@@ -135,7 +135,7 @@
 				<inductives>__r0</inductives>
 				<callee>java.util.Enumeration: java.lang.Object nextElement()</callee>
 				<constraints>
-					<![CDATA[numNodes_init == numNodes && numNodes_init == cont___r2 && numDegree_init == numDegree && cont___r4 >= 1 && numNodes_init > numDegree_init && numNodes_init >= cont___r4]]>
+					<![CDATA[numNodes_init == numNodes && numNodes_init == cont___r2 && numNodes_init == __r0__f__size && numDegree_init == numDegree && cont___r4 >= 1 && numNodes_init >= cont___r4 && numDegree_init < __r0__f__size-1]]>
 				</constraints>
 			 </call-site>
 			 <call-site offset="12" srccode-offset="7600">
@@ -143,16 +143,16 @@
 				<inductives>__r0, n1__f__toNodes</inductives>
 				<callee>ar.uba.dc.jolden.em3d.Node: void makeUniqueNeighbors(ar.uba.dc.jolden.em3d.Node[])</callee>
 				<constraints>
-					<![CDATA[n1__f__next__f__fromNodes == n1__f__fromNodes && n1__f__next__f__coeffs == n1__f__coeffs && n1__f__next__f__fromLength == n1__f__fromLength && numNodes_init == numNodes && numNodes_init == cont___r2 && numDegree_init == numDegree && n1__f__next__f__fromLength == 0 && n1__f__fromLength == 0 && cont___r4 >= 1 && n1__f__next__f__fromCount >= n1__f__next__f__fromLength && n1__f__next__f__fromCount >= n1__f__fromLength && n1__f__next__f__fromCount < numNodes_init && n1__f__next__f__fromLength <= n1__f__fromCount && n1__f__next__f__fromLength < numNodes_init && n1__f__next__f__fromLength < numDegree_init && n1__f__next__f__fromLength < cont___r4 && n1__f__fromCount >= n1__f__fromLength && n1__f__fromCount < numNodes_init && n1__f__fromLength < numNodes_init && n1__f__fromLength < numDegree_init && n1__f__fromLength < cont___r4 && numNodes_init > numDegree_init && numNodes_init >= cont___r4]]>
+					<![CDATA[numNodes_init == numNodes && numNodes_init == cont___r2 && numNodes_init == __r0__f__size && numDegree_init == numDegree && numDegree_init == n1__f__toNodes__f__size && n1__f__next__f__fromCount >= 0 && n1__f__next__f__fromLength <= 0 && n1__f__next__f__fromLength >= 0 && n1__f__fromCount >= 0 && n1__f__fromLength <= 0 && n1__f__fromLength >= 0 && cont___r4 >= 1 && n1__f__next__f__fromCount >= n1__f__next__f__fromLength && n1__f__next__f__fromCount >= n1__f__fromLength && n1__f__next__f__fromCount < __r0__f__size-1 && n1__f__next__f__fromLength <= n1__f__fromCount && n1__f__next__f__fromLength < cont___r4 && n1__f__next__f__fromLength < __r0__f__size-1 && n1__f__next__f__fromLength < n1__f__next__f__toNodes__f__size-1 && n1__f__next__f__fromLength < n1__f__toNodes__f__size-1 && n1__f__fromCount >= n1__f__fromLength && n1__f__fromCount < __r0__f__size-1 && n1__f__fromLength < cont___r4 && n1__f__fromLength < __r0__f__size-1 && n1__f__fromLength < n1__f__next__f__toNodes__f__size-1 && n1__f__fromLength < n1__f__toNodes__f__size-1 && numNodes_init >= cont___r4 && numDegree_init < __r0__f__size-1]]>
 				</constraints>
-				<binding>$t.this_init__f__toNodes == n1__f__toNodes and $t.size_nodeTable_init == size___r0</binding>
+				<binding>$t.this_init == n1 and $t.this_init__f__toNodes == n1__f__toNodes and $t.nodeTable_init == __r0</binding>
 			 </call-site>
 			 <call-site offset="14" srccode-offset="8100">
 				<variables>__r31, __r29, numNodes_init, numDegree_init, numNodes, numDegree, cont___r2, cont___r4, cont___r5</variables>
 				<inductives></inductives>
 				<callee>ar.uba.dc.jolden.em3d.Node: java.util.Enumeration elements()</callee>
 				<constraints>
-					<![CDATA[numNodes_init == numNodes && numNodes_init == cont___r2 && numNodes_init == cont___r4 && numDegree_init == numDegree && cont___r5 == 0 && numNodes_init > numDegree_init && numNodes_init > cont___r5 && numDegree_init > cont___r5]]>
+					<![CDATA[numNodes_init == numNodes && numNodes_init == cont___r2 && numNodes_init == cont___r4 && numDegree_init == numDegree && cont___r5 >= 0 && numNodes_init > numDegree_init && numNodes_init > cont___r5 && numDegree_init > cont___r5]]>
 				</constraints>
 				<binding>$t.this_init == __r29</binding>
 			 </call-site>
@@ -185,16 +185,16 @@
 				<inductives>n1__f__fromCount</inductives>
 				<callee>ar.uba.dc.jolden.em3d.Node: void makeFromNodes()</callee>
 				<constraints>
-					<![CDATA[n1__f__next__f__fromNodes == n1__f__fromNodes && n1__f__next__f__coeffs == n1__f__coeffs && n1__f__next__f__fromLength == n1__f__fromLength && numNodes_init == numNodes && numNodes_init == cont___r2 && numNodes_init == cont___r4 && numDegree_init == numDegree && n1__f__next__f__fromLength == 0 && n1__f__fromLength == 0 && cont___r5 >= 1 && n1__f__next__f__fromCount >= n1__f__next__f__fromLength && n1__f__next__f__fromCount >= n1__f__fromLength && n1__f__next__f__fromCount < numNodes_init && n1__f__next__f__fromLength <= n1__f__fromCount && n1__f__next__f__fromLength < numNodes_init && n1__f__next__f__fromLength < numDegree_init && n1__f__next__f__fromLength < cont___r5 && n1__f__fromCount >= n1__f__fromLength && n1__f__fromCount < numNodes_init && n1__f__fromLength < numNodes_init && n1__f__fromLength < numDegree_init && n1__f__fromLength < cont___r5 && numNodes_init > numDegree_init && numNodes_init >= cont___r5]]>
+					<![CDATA[numNodes_init == numNodes && numNodes_init == cont___r2 && numNodes_init == cont___r4 && numDegree_init == numDegree && numDegree_init == n1__f__next__f__toNodes__f__size && numDegree_init == n1__f__toNodes__f__size && n1__f__next__f__fromCount >= 0 && n1__f__next__f__fromLength <= 0 && n1__f__next__f__fromLength >= 0 && n1__f__fromCount >= 0 && n1__f__fromLength <= 0 && n1__f__fromLength >= 0 && cont___r5 >= 1 && n1__f__next__f__fromCount >= n1__f__next__f__fromLength && n1__f__next__f__fromCount >= n1__f__fromLength && n1__f__next__f__fromCount < numNodes_init && n1__f__next__f__fromLength <= n1__f__fromCount && n1__f__next__f__fromLength < numNodes_init && n1__f__next__f__fromLength < cont___r5 && n1__f__next__f__fromLength < n1__f__next__f__toNodes__f__size-1 && n1__f__next__f__fromLength < n1__f__toNodes__f__size-1 && n1__f__fromCount >= n1__f__fromLength && n1__f__fromCount < numNodes_init && n1__f__fromLength < numNodes_init && n1__f__fromLength < cont___r5 && n1__f__fromLength < n1__f__next__f__toNodes__f__size-1 && n1__f__fromLength < n1__f__toNodes__f__size-1 && numNodes_init > numDegree_init && numNodes_init >= cont___r5 && numNodes_init > n1__f__next__f__toNodes__f__size]]>
 				</constraints>
-				<binding>$t.this_init__f__fromCount == n1__f__fromCount</binding>
+				<binding>$t.this_init == n1</binding>
 			 </call-site>
 			 <call-site offset="18" srccode-offset="8600">
 				<variables>__r31, __r29, numNodes_init, numDegree_init, numNodes, numDegree, cont___r2, cont___r4, cont___r5, cont___r7</variables>
 				<inductives></inductives>
 				<callee>ar.uba.dc.jolden.em3d.Node: java.util.Enumeration elements()</callee>
 				<constraints>
-					<![CDATA[numNodes_init == numNodes && numNodes_init == cont___r2 && numNodes_init == cont___r4 && numNodes_init == cont___r5 && numDegree_init == numDegree && cont___r7 == 0 && numNodes_init > numDegree_init && numNodes_init > cont___r7 && numDegree_init > cont___r7]]>
+					<![CDATA[numNodes_init == numNodes && numNodes_init == cont___r2 && numNodes_init == cont___r4 && numNodes_init == cont___r5 && numDegree_init == numDegree && cont___r7 >= 0 && numNodes_init > numDegree_init && numNodes_init > cont___r7 && numDegree_init > cont___r7]]>
 				</constraints>
 				<binding>$t.this_init == __r31</binding>
 			 </call-site>
@@ -219,16 +219,16 @@
 				<inductives>n1__f__fromCount</inductives>
 				<callee>ar.uba.dc.jolden.em3d.Node: void makeFromNodes()</callee>
 				<constraints>
-					<![CDATA[n1__f__next__f__fromNodes == n1__f__fromNodes && n1__f__next__f__coeffs == n1__f__coeffs && n1__f__next__f__fromLength == n1__f__fromLength && numNodes_init == numNodes && numNodes_init == cont___r2 && numNodes_init == cont___r4 && numNodes_init == cont___r5 && numDegree_init == numDegree && n1__f__next__f__fromLength == 0 && n1__f__fromLength == 0 && cont___r7 >= 1 && n1__f__next__f__fromCount >= n1__f__next__f__fromLength && n1__f__next__f__fromCount >= n1__f__fromLength && n1__f__next__f__fromCount < numNodes_init && n1__f__next__f__fromLength <= n1__f__fromCount && n1__f__next__f__fromLength < numNodes_init && n1__f__next__f__fromLength < numDegree_init && n1__f__next__f__fromLength < cont___r7 && n1__f__fromCount >= n1__f__fromLength && n1__f__fromCount < numNodes_init && n1__f__fromLength < numNodes_init && n1__f__fromLength < numDegree_init && n1__f__fromLength < cont___r7 && numNodes_init > numDegree_init && numNodes_init >= cont___r7]]>
+					<![CDATA[n1__f__next__f__fromNodes == n1__f__fromNodes && n1__f__next__f__coeffs == n1__f__coeffs && numNodes_init == numNodes && numNodes_init == cont___r2 && numNodes_init == cont___r4 && numNodes_init == cont___r5 && numDegree_init == numDegree && numDegree_init == n1__f__next__f__toNodes__f__size && numDegree_init == n1__f__toNodes__f__size && n1__f__next__f__fromCount >= 0 && n1__f__next__f__fromLength <= 0 && n1__f__next__f__fromLength >= 0 && n1__f__fromCount >= 0 && n1__f__fromLength <= 0 && n1__f__fromLength >= 0 && cont___r7 >= 1 && n1__f__next__f__fromCount >= n1__f__next__f__fromLength && n1__f__next__f__fromCount >= n1__f__fromLength && n1__f__next__f__fromCount < numNodes_init && n1__f__next__f__fromLength <= n1__f__fromCount && n1__f__next__f__fromLength < numNodes_init && n1__f__next__f__fromLength < cont___r7 && n1__f__next__f__fromLength < n1__f__next__f__toNodes__f__size-1 && n1__f__next__f__fromLength < n1__f__toNodes__f__size-1 && n1__f__fromCount >= n1__f__fromLength && n1__f__fromCount < numNodes_init && n1__f__fromLength < numNodes_init && n1__f__fromLength < cont___r7 && n1__f__fromLength < n1__f__next__f__toNodes__f__size-1 && n1__f__fromLength < n1__f__toNodes__f__size-1 && numNodes_init > numDegree_init && numNodes_init >= cont___r7 && numNodes_init > n1__f__next__f__toNodes__f__size]]>
 				</constraints>
-				<binding>$t.this_init__f__fromCount == n1__f__fromCount</binding>
+				<binding>$t.this_init == n1</binding>
 			 </call-site>
 			 <call-site offset="22" srccode-offset="9300">
 				<variables>__r31, __r29, numNodes_init, numDegree_init, numNodes, numDegree, cont___r2, cont___r4, cont___r5, cont___r7, cont___r8</variables>
 				<inductives></inductives>
 				<callee>ar.uba.dc.jolden.em3d.Node: java.util.Enumeration elements()</callee>
 				<constraints>
-					<![CDATA[numNodes_init == numNodes && numNodes_init == cont___r2 && numNodes_init == cont___r4 && numNodes_init == cont___r5 && numNodes_init == cont___r7 && numDegree_init == numDegree && cont___r8 == 0 && numNodes_init > numDegree_init && numNodes_init > cont___r8 && numDegree_init > cont___r8]]>
+					<![CDATA[numNodes_init == numNodes && numNodes_init == cont___r2 && numNodes_init == cont___r4 && numNodes_init == cont___r5 && numNodes_init == cont___r7 && numDegree_init == numDegree && cont___r8 >= 0 && numNodes_init > numDegree_init && numNodes_init > cont___r8 && numDegree_init > cont___r8]]>
 				</constraints>
 				<binding>$t.this_init == __r29</binding>
 			 </call-site>
@@ -253,16 +253,16 @@
 				<inductives>n1__f__toNodes</inductives>
 				<callee>ar.uba.dc.jolden.em3d.Node: void updateFromNodes()</callee>
 				<constraints>
-					<![CDATA[n1__f__next__f__fromNodes == n1__f__next__f__fromNodes__f__next && n1__f__next__f__fromNodes__f__value == n1__f__next__f__coeffs && n1__f__next__f__fromNodes__f__toNodes == n1__f__next__f__fromNodes__f__fromNodes && n1__f__next__f__fromNodes__f__fromCount == n1__f__next__f__fromNodes__f__fromLength && n1__f__next__f__fromLength == n1__f__fromLength && n1__f__fromNodes == n1__f__fromNodes__f__next && n1__f__fromNodes__f__value == n1__f__coeffs && n1__f__fromNodes__f__toNodes == n1__f__fromNodes__f__fromNodes && n1__f__fromNodes__f__fromCount == n1__f__fromNodes__f__fromLength && numNodes_init == numNodes && numNodes_init == cont___r2 && numNodes_init == cont___r4 && numNodes_init == cont___r5 && numNodes_init == cont___r7 && numDegree_init == numDegree && n1__f__next__f__fromLength == 0 && n1__f__fromLength == 0 && cont___r8 >= 1 && n1__f__next__f__fromCount >= n1__f__next__f__fromLength && n1__f__next__f__fromCount >= n1__f__fromLength && n1__f__next__f__fromCount < numNodes_init && n1__f__next__f__fromLength <= n1__f__fromCount && n1__f__next__f__fromLength < numNodes_init && n1__f__next__f__fromLength < numDegree_init && n1__f__next__f__fromLength < cont___r8 && n1__f__fromCount >= n1__f__fromLength && n1__f__fromCount < numNodes_init && n1__f__fromLength < numNodes_init && n1__f__fromLength < numDegree_init && n1__f__fromLength < cont___r8 && numNodes_init > numDegree_init && numNodes_init >= cont___r8]]>
+					<![CDATA[n1__f__next__f__fromCount == n1__f__next__f__fromNodes__f__size && n1__f__next__f__fromCount == n1__f__next__f__coeffs__f__size && n1__f__next__f__fromLength == n1__f__fromLength && n1__f__fromCount == n1__f__fromNodes__f__size && n1__f__fromCount == n1__f__coeffs__f__size && numNodes_init == numNodes && numNodes_init == cont___r2 && numNodes_init == cont___r4 && numNodes_init == cont___r5 && numNodes_init == cont___r7 && numDegree_init == numDegree && numDegree_init == n1__f__next__f__toNodes__f__size && numDegree_init == n1__f__toNodes__f__size && n1__f__next__f__coeffs sorted by == && n1__f__next__f__fromLength <= 0 && n1__f__next__f__fromLength >= 0 && n1__f__coeffs sorted by == && n1__f__fromLength <= 0 && n1__f__fromLength >= 0 && cont___r8 >= 1 && n1__f__next__f__fromCount >= n1__f__next__f__fromLength && n1__f__next__f__fromCount >= n1__f__fromLength && n1__f__next__f__fromCount < numNodes_init && n1__f__next__f__fromLength <= n1__f__fromCount && n1__f__next__f__fromLength < numNodes_init && n1__f__next__f__fromLength < cont___r8 && n1__f__next__f__fromLength < n1__f__next__f__toNodes__f__size-1 && n1__f__next__f__fromLength < n1__f__toNodes__f__size-1 && n1__f__fromCount >= n1__f__fromLength && n1__f__fromCount < numNodes_init && n1__f__fromLength < numNodes_init && n1__f__fromLength < cont___r8 && n1__f__fromLength < n1__f__next__f__toNodes__f__size-1 && n1__f__fromLength < n1__f__toNodes__f__size-1 && numNodes_init > numDegree_init && numNodes_init >= cont___r8 && numNodes_init > n1__f__next__f__toNodes__f__size]]>
 				</constraints>
-				<binding>$t.this_init__f__toNodes == n1__f__toNodes</binding>
+				<binding>$t.this_init == n1 and $t.this_init__f__toNodes == n1__f__toNodes</binding>
 			 </call-site>
 			 <call-site offset="26" srccode-offset="9800">
 				<variables>__r31, __r29, numNodes_init, numDegree_init, numNodes, numDegree, cont___r2, cont___r4, cont___r5, cont___r7, cont___r8, cont___r9</variables>
 				<inductives></inductives>
 				<callee>ar.uba.dc.jolden.em3d.Node: java.util.Enumeration elements()</callee>
 				<constraints>
-					<![CDATA[numNodes_init == numNodes && numNodes_init == cont___r2 && numNodes_init == cont___r4 && numNodes_init == cont___r5 && numNodes_init == cont___r7 && numNodes_init == cont___r8 && numDegree_init == numDegree && cont___r9 == 0 && numNodes_init > numDegree_init && numNodes_init > cont___r9 && numDegree_init > cont___r9]]>
+					<![CDATA[numNodes_init == numNodes && numNodes_init == cont___r2 && numNodes_init == cont___r4 && numNodes_init == cont___r5 && numNodes_init == cont___r7 && numNodes_init == cont___r8 && numDegree_init == numDegree && cont___r9 >= 0 && numNodes_init > numDegree_init && numNodes_init > cont___r9 && numDegree_init > cont___r9]]>
 				</constraints>
 				<binding>$t.this_init == __r31</binding>
 			 </call-site>
@@ -293,7 +293,7 @@
 				<inductives></inductives>
 				<callee>ar.uba.dc.jolden.em3d.Node: java.util.Enumeration elements()</callee>
 				<constraints>
-					<![CDATA[cont___r1 == 0]]>
+					<![CDATA[cont___r1 >= 0]]>
 				</constraints>
 				<binding>$t.this_init == __r0</binding>
 			 </call-site>
@@ -318,7 +318,7 @@
 				<inductives>n__f__fromCount, n__f__fromNodes, n__f__coeffs, n__f__value</inductives>
 				<callee>ar.uba.dc.jolden.em3d.Node: void computeNewValue()</callee>
 				<constraints>
-					<![CDATA[n__f__next__f__toNodes__f__fromCount == n__f__next__f__toNodes__f__fromLength && n__f__next__f__fromNodes__f__fromCount == n__f__next__f__fromNodes__f__fromLength && n__f__next__f__fromCount == n__f__next__f__fromLength && n__f__toNodes__f__fromCount == n__f__toNodes__f__fromLength && n__f__fromNodes__f__fromCount == n__f__fromNodes__f__fromLength && n__f__fromCount == n__f__fromLength && cont___r1 >= 1]]>
+					<![CDATA[n__f__next__f__fromCount == n__f__next__f__fromLength && n__f__next__f__fromCount == n__f__next__f__fromNodes__f__size && n__f__next__f__fromCount == n__f__next__f__coeffs__f__size && n__f__fromCount == n__f__fromLength && n__f__fromCount == n__f__fromNodes__f__size && n__f__fromCount == n__f__coeffs__f__size && cont___r1 >= 1]]>
 				</constraints>
 			 </call-site>
 			 <call-site offset="4" srccode-offset="12301">
@@ -326,7 +326,7 @@
 				<inductives></inductives>
 				<callee>ar.uba.dc.jolden.em3d.Node: java.util.Enumeration elements()</callee>
 				<constraints>
-					<![CDATA[cont___r3 == 0 && cont___r1 > cont___r3]]>
+					<![CDATA[cont___r3 >= 0 && cont___r1 > cont___r3]]>
 				</constraints>
 				<binding>$t.this_init == __r2</binding>
 			 </call-site>
@@ -351,7 +351,7 @@
 				<inductives>n__f__fromCount, n__f__fromNodes, n__f__coeffs, n__f__value</inductives>
 				<callee>ar.uba.dc.jolden.em3d.Node: void computeNewValue()</callee>
 				<constraints>
-					<![CDATA[n__f__next__f__toNodes__f__fromCount == n__f__next__f__toNodes__f__fromLength && n__f__next__f__fromNodes__f__fromCount == n__f__next__f__fromNodes__f__fromLength && n__f__next__f__fromCount == n__f__next__f__fromLength && n__f__toNodes__f__fromCount == n__f__toNodes__f__fromLength && n__f__fromNodes__f__fromCount == n__f__fromNodes__f__fromLength && n__f__fromCount == n__f__fromLength && cont___r3 >= 1 && n__f__next__f__fromCount < cont___r1 && n__f__fromCount < cont___r1 && cont___r1 >= cont___r3]]>
+					<![CDATA[n__f__next__f__fromCount == n__f__next__f__fromLength && n__f__next__f__fromCount == n__f__next__f__fromNodes__f__size && n__f__next__f__fromCount == n__f__next__f__coeffs__f__size && n__f__fromCount == n__f__fromLength && n__f__fromCount == n__f__fromNodes__f__size && n__f__fromCount == n__f__coeffs__f__size && cont___r3 >= 1 && n__f__next__f__fromCount < cont___r1 && n__f__fromCount < cont___r1 && cont___r1 >= cont___r3 && cont___r1 > n__f__next__f__toNodes__f__size && cont___r1 > n__f__toNodes__f__size]]>
 				</constraints>
 			 </call-site>
 		</method>

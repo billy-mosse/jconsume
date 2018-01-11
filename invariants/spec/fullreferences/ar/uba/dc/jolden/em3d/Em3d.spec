@@ -10,26 +10,26 @@
 				<constraints>
 					<![CDATA[]]>
 				</constraints>
-				<binding>$t.size_args_init == size_args</binding>
+				<binding>$t.args_init == args</binding>
 			 </call-site>
 		</method>
 		 <method decl="void mainOrig(java.lang.String[])">
-			<relevant-parameters>size_args_init</relevant-parameters>
+			<relevant-parameters>args_init</relevant-parameters>
 			 <call-site offset="0" srccode-offset="5700">
 				<variables>args, args_init</variables>
 				<inductives>args</inductives>
 				<callee>ar.uba.dc.jolden.em3d.Em3d: void parseCmdLine(java.lang.String[])</callee>
 				<constraints>
-					<![CDATA[args == args_init && args == args_init]]>
+					<![CDATA[args == args_init]]>
 				</constraints>
-				<binding>$t.size_args_init == size_args</binding>
+				<binding>$t.args_init == args</binding>
 			 </call-site>
 			 <call-site offset="1" srccode-offset="5800">
 				<variables>__i1, __i0, args_init, args</variables>
 				<inductives>__i1, __i0</inductives>
 				<callee>ar.uba.dc.jolden.em3d.Em3d: void mainParameters(int,int,boolean,boolean)</callee>
 				<constraints>
-					<![CDATA[args_init == args && args_init == args && __i1 > __i0]]>
+					<![CDATA[args_init == args && __i1 > __i0 && __i1 > args_init__f__size && __i0 >= args_init__f__size-1]]>
 				</constraints>
 				<binding>$t.numNodes_init == __i1 and $t.numDegree_init == __i0</binding>
 			 </call-site>
@@ -57,7 +57,7 @@
 				<inductives>__r16__f__count, __r16__f__value, __l0, __r11__f__count, __r11__f__value, __r6__f__count, __r6__f__value, __r25__f__count, __r25__f__value, numNodes, numDegree</inductives>
 				<callee>ar.uba.dc.jolden.em3d.BiGraph: ar.uba.dc.jolden.em3d.BiGraph create(int,int,boolean)</callee>
 				<constraints>
-					<![CDATA[__r16 == __r11 && __r16 == __r6 && __r16 == __r25 && numNodes == numNodes_init && numDegree == numDegree_init && l___l0 > numNodes && l___l0 > numDegree && numNodes > numDegree]]>
+					<![CDATA[__r16 == __r11 && __r16 == __r6 && __r16 == __r25 && numNodes == numNodes_init && numDegree == numDegree_init && __l0 > numNodes && __l0 > numDegree && numNodes > numDegree]]>
 				</constraints>
 				<binding>$t.numNodes_init == numNodes and $t.numDegree_init == numDegree</binding>
 			 </call-site>
@@ -66,7 +66,7 @@
 				<inductives>__r16__f__count, __r16__f__value, __l0, __r11__f__count, __r11__f__value, __r6__f__count, __r6__f__value, __r25__f__count, __r25__f__value</inductives>
 				<callee>java.lang.System: long currentTimeMillis()</callee>
 				<constraints>
-					<![CDATA[__r16 == __r11 && __r16 == __r6 && __r16 == __r25 && numNodes_init == numNodes && numDegree_init == numDegree && l___l0 > numNodes_init && l___l0 > numDegree_init && numNodes_init > numDegree_init]]>
+					<![CDATA[__r16 == __r11 && __r16 == __r6 && __r16 == __r25 && numNodes_init == numNodes && numDegree_init == numDegree && __l0 > numNodes_init && __l0 > numDegree_init && numNodes_init > numDegree_init]]>
 				</constraints>
 			 </call-site>
 			 <creation-site offset="0" srccode-offset="11300">
@@ -128,7 +128,7 @@
 				<inductives>__r16__f__count, __r16__f__value, __l0, __r11__f__count, __r11__f__value, __r6__f__count, __r6__f__value, __l1</inductives>
 				<callee>java.lang.System: long currentTimeMillis()</callee>
 				<constraints>
-					<![CDATA[__r16 == __r11 && __r16 == __r6 && numNodes_init == numNodes && numDegree_init == numDegree && l___l0 < l___l1 && l___l0 > numNodes_init && l___l0 > numDegree_init && l___l1 > numNodes_init && l___l1 > numDegree_init && numNodes_init > numDegree_init]]>
+					<![CDATA[__r16 == __r11 && __r16 == __r6 && numNodes_init == numNodes && numDegree_init == numDegree && __l0 < __l1 && __l0 > numNodes_init && __l0 > numDegree_init && __l1 > numNodes_init && __l1 > numDegree_init && numNodes_init > numDegree_init]]>
 				</constraints>
 			 </call-site>
 			 <call-site offset="11" srccode-offset="11700">
@@ -136,7 +136,7 @@
 				<inductives>__r16__f__count, __r16__f__value, __l0, __r11__f__count, __r11__f__value, __l2, __r6__f__count, __r6__f__value, __l1, i</inductives>
 				<callee>ar.uba.dc.jolden.em3d.BiGraph: void compute()</callee>
 				<constraints>
-					<![CDATA[__r16 == __r11 && __r16 == __r6 && numNodes_init == numNodes && numDegree_init == numDegree && i == 0 && l___l0 < l___l2 && l___l0 < l___l1 && l___l0 > i && l___l0 > numNodes_init && l___l0 > numDegree_init && l___l2 >= l___l1 && l___l2 > i && l___l2 > numNodes_init && l___l2 > numDegree_init && l___l1 > i && l___l1 > numNodes_init && l___l1 > numDegree_init && i < numNodes_init && i < numDegree_init && numNodes_init > numDegree_init && 2650 * l___l2 - 2649 * l___l1 - 8893 * numNodes_init - 2143057731 == 0 && 27899 * l___l2 - 27898 * l___l1 + 5452 * numDegree_init - 2143979743 == 0]]>
+					<![CDATA[__r16 == __r11 && __r16 == __r6 && numNodes_init == numNodes && numDegree_init == numDegree && i >= 0 && __l0 < __l2 && __l0 < __l1 && __l0 > i && __l0 > numNodes_init && __l0 > numDegree_init && __l2 >= __l1 && __l2 > i && __l2 > numNodes_init && __l2 > numDegree_init && __l1 > i && __l1 > numNodes_init && __l1 > numDegree_init && i < numNodes_init && i < numDegree_init && numNodes_init > numDegree_init]]>
 				</constraints>
 				<binding>$t.this_init == __r0</binding>
 			 </call-site>
@@ -145,7 +145,7 @@
 				<inductives>__r16__f__count, __r16__f__value, __l0, __r11__f__count, __r11__f__value, __l2, __r6__f__count, __r6__f__value, __l1</inductives>
 				<callee>java.lang.System: long currentTimeMillis()</callee>
 				<constraints>
-					<![CDATA[__r16 == __r11 && __r16 == __r6 && numNodes_init == numNodes && numDegree_init == numDegree && l___l0 < l___l2 && l___l0 < l___l1 && l___l0 > numNodes_init && l___l0 > numDegree_init && l___l2 >= l___l1 && l___l2 > numNodes_init && l___l2 > numDegree_init && l___l1 > numNodes_init && l___l1 > numDegree_init && numNodes_init > numDegree_init && 2650 * l___l2 - 2649 * l___l1 - 8893 * numNodes_init - 2143057731 == 0 && 27899 * l___l2 - 27898 * l___l1 + 5452 * numDegree_init - 2143979743 == 0]]>
+					<![CDATA[__r16 == __r11 && __r16 == __r6 && numNodes_init == numNodes && numDegree_init == numDegree && __l0 < __l2 && __l0 < __l1 && __l0 > numNodes_init && __l0 > numDegree_init && __l2 >= __l1 && __l2 > numNodes_init && __l2 > numDegree_init && __l1 > numNodes_init && __l1 > numDegree_init && numNodes_init > numDegree_init]]>
 				</constraints>
 			 </call-site>
 			 <call-site offset="13" srccode-offset="12300">
@@ -299,25 +299,25 @@
 				<inductives></inductives>
 				<callee>java.io.PrintStream: void println(java.lang.String)</callee>
 				<constraints>
-					<![CDATA[numNodes_init == numNodes && numDegree_init == numDegree && numNodes_init > numDegree_init]]>
+					<![CDATA[numNodes_init == numNodes && numDegree_init == numDegree && numNodes_init > numDegree_init && numNodes_init > aux_6__f__toString__f__length]]>
 				</constraints>
 			 </call-site>
 		</method>
 		 <method decl="void parseCmdLine(java.lang.String[])">
-			<relevant-parameters>size_args_init</relevant-parameters>
+			<relevant-parameters>args_init</relevant-parameters>
 			 <call-site offset="1" srccode-offset="15300">
 				<variables>i, args, arg, aux_8, args_init</variables>
 				<inductives>i, args, arg__f__value</inductives>
 				<callee>java.lang.String: boolean equals(java.lang.Object)</callee>
 				<constraints>
-					<![CDATA[args == args_init && args == args_init && arg__f__toString <= aux_8__f__toString]]>
+					<![CDATA[args == args_init && arg__f__toString__f__length == aux_8__f__toString__f__length && i <= args__f__size-1 && arg__f__toString <= aux_8__f__toString && args__f__size-1 > arg__f__toString__f__length]]>
 				</constraints>
 			 </call-site>
 			 <creation-site offset="0" srccode-offset="15500">
 				<variables>args, arg, i, args_init</variables>
 				<inductives>args, arg__f__value, i</inductives>
 				<constraints>
-					<![CDATA[args == args_init && args == args_init && i == 1]]>
+					<![CDATA[args == args_init && i < args__f__size-1 && i < arg__f__toString__f__length && args__f__size-1 > arg__f__toString__f__length]]>
 				</constraints>
 			 </creation-site>
 			 <call-site offset="2" srccode-offset="15501">
@@ -325,7 +325,7 @@
 				<inductives>args, arg__f__value, i</inductives>
 				<callee>java.lang.Integer: void &lt;init&gt;(java.lang.String)</callee>
 				<constraints>
-					<![CDATA[args == args_init && args == args_init && i == 2 && arg__f__toString < __r12__f__toString]]>
+					<![CDATA[args == args_init && i == arg__f__toString__f__length && arg__f__toString < __r12__f__toString && i < args__f__size-1 && i <= __r12__f__toString__f__length && args__f__size-1 >= __r12__f__toString__f__length]]>
 				</constraints>
 			 </call-site>
 			 <call-site offset="3" srccode-offset="15502">
@@ -333,7 +333,7 @@
 				<inductives>args, arg__f__value, i, __r11__f__value</inductives>
 				<callee>java.lang.Integer: int intValue()</callee>
 				<constraints>
-					<![CDATA[args == args_init && args == args_init && i == 2]]>
+					<![CDATA[args == args_init && i == arg__f__toString__f__length && i < args__f__size-1]]>
 				</constraints>
 			 </call-site>
 			 <creation-site offset="1" srccode-offset="15600">
@@ -355,14 +355,14 @@
 				<inductives>args, arg__f__value, i</inductives>
 				<callee>java.lang.String: boolean equals(java.lang.Object)</callee>
 				<constraints>
-					<![CDATA[args == args_init && args == args_init && arg == aux_10 && i == 3 && arg__f__toString == aux_10__f__toString]]>
+					<![CDATA[args == args_init && arg == aux_10 && i == args__f__size-1 && i == args_init__f__size-1 && arg__f__toString__f__length == aux_10__f__toString__f__length && arg__f__toString == aux_10__f__toString && i > arg__f__toString__f__length]]>
 				</constraints>
 			 </call-site>
 			 <creation-site offset="2" srccode-offset="15900">
 				<variables>args, arg, i, args_init</variables>
 				<inductives>args, arg__f__value, i</inductives>
 				<constraints>
-					<![CDATA[args == args_init && args == args_init && i == 3]]>
+					<![CDATA[args == args_init && i == args__f__size-1 && i == args_init__f__size-1 && i > arg__f__toString__f__length]]>
 				</constraints>
 			 </creation-site>
 			 <call-site offset="6" srccode-offset="15901">
@@ -370,7 +370,7 @@
 				<inductives>args, arg__f__value, i</inductives>
 				<callee>java.lang.Integer: void &lt;init&gt;(java.lang.String)</callee>
 				<constraints>
-					<![CDATA[args == args_init && args == args_init && i == 4 && arg__f__toString < __r9__f__toString]]>
+					<![CDATA[args == args_init && i == args__f__size && i == args_init__f__size && arg__f__toString < __r9__f__toString && args__f__size-1 > arg__f__toString__f__length && args__f__size-1 > __r9__f__toString__f__length && arg__f__toString__f__length > __r9__f__toString__f__length]]>
 				</constraints>
 			 </call-site>
 			 <call-site offset="7" srccode-offset="15902">
@@ -378,7 +378,7 @@
 				<inductives>args, arg__f__value, i, __r8__f__value</inductives>
 				<callee>java.lang.Integer: int intValue()</callee>
 				<constraints>
-					<![CDATA[args == args_init && args == args_init && i == 4]]>
+					<![CDATA[args == args_init && i == args__f__size && i == args_init__f__size && args__f__size-1 > arg__f__toString__f__length]]>
 				</constraints>
 			 </call-site>
 			 <creation-site offset="3" srccode-offset="16000">
@@ -484,7 +484,7 @@
 				<inductives>args, arg__f__value, i</inductives>
 				<callee>java.lang.String: boolean startsWith(java.lang.String)</callee>
 				<constraints>
-					<![CDATA[args == args_init && args == args_init && arg__f__toString > __r1__f__toString && arg__f__toString > aux_7__f__toString && __r1__f__toString > aux_7__f__toString]]>
+					<![CDATA[args == args_init && i == arg__f__toString__f__length && arg__f__toString__f__length == __r1__f__toString__f__length && i >= 0 && arg__f__toString > __r1__f__toString && arg__f__toString > aux_7__f__toString && i < args__f__size-1 && i <= __r1__f__toString__f__length && __r1__f__toString > aux_7__f__toString && args__f__size-1 > arg__f__toString__f__length && args__f__size-1 > __r1__f__toString__f__length && args__f__size-1 > aux_7__f__toString__f__length && arg__f__toString__f__length > aux_7__f__toString__f__length && __r1__f__toString__f__length > aux_7__f__toString__f__length]]>
 				</constraints>
 			 </call-site>
 		</method>

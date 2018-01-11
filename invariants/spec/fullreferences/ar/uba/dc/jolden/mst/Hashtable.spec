@@ -3,54 +3,54 @@
 	 <class decl="ar.uba.dc.jolden.mst.Hashtable">
 		 <method decl="int hashMap(java.lang.Object)">
 			<relevant-parameters>this_init, this_init__f__size, key_init</relevant-parameters>
-			 <call-site offset="0" srccode-offset="3200">
+			 <call-site offset="0" srccode-offset="3201">
 				<variables>this, key, this_init, key_init</variables>
 				<inductives>this__f__size</inductives>
 				<callee>java.lang.Object: int hashCode()</callee>
 				<constraints>
-					<![CDATA[this == this_init && this__f__array == this_init__f__array && this__f__array == this_init__f__array && this__f__size == this_init__f__size && this__f__size == this__f__array__f__size && this__f__size == this_init__f__array__f__size && this__f__size >= 2]]>
+					<![CDATA[this == this_init && this__f__array == this_init__f__array && this__f__size == this_init__f__size && this__f__size == this__f__array__f__size && this__f__size == this_init__f__array__f__size && this__f__size >= 2]]>
 				</constraints>
 			 </call-site>
 		</method>
 		 <method decl="java.lang.Object get(java.lang.Object)">
-			<relevant-parameters>this_init, this_init__f__array, key_init</relevant-parameters>
+			<relevant-parameters>this_init, this_init__f__array, this_init__f__array__f__size, key_init</relevant-parameters>
 			 <call-site offset="0" srccode-offset="4100">
-				<variables>ent#2, __r3, key, this, this_init, key_init</variables>
+				<variables>ent#2, __r4, key, this, this_init, key_init</variables>
 				<inductives>this__f__array</inductives>
 				<callee>ar.uba.dc.jolden.mst.Hashtable: int hashMap(java.lang.Object)</callee>
 				<constraints>
-					<![CDATA[this == this_init && this__f__array == this_init__f__array && this__f__array == this_init__f__array && this__f__size == this_init__f__size && this__f__size == this__f__array__f__size && this__f__size == this_init__f__array__f__size && this__f__size >= 2]]>
+					<![CDATA[this == this_init && this__f__array == this_init__f__array && this__f__size == this_init__f__size && this__f__size == this__f__array__f__size && this__f__size == this_init__f__array__f__size && this__f__size >= 2]]>
 				</constraints>
 				<binding>$t.this_init == this and $t.this_init__f__size == this__f__size and $t.key_init == key</binding>
 			 </call-site>
-			 <call-site offset="1" srccode-offset="4801">
-				<variables>__r3, key, ent#2, this_init, key_init, this</variables>
+			 <call-site offset="2" srccode-offset="4700">
+				<variables>__r4, key, ent#2, this_init, key_init, this</variables>
 				<inductives></inductives>
 				<callee>ar.uba.dc.jolden.mst.HashEntry: ar.uba.dc.jolden.mst.HashEntry next()</callee>
 				<constraints>
-					<![CDATA[this_init == this && this_init__f__array == this__f__array && this_init__f__array == this__f__array && this_init__f__size == this__f__size && this_init__f__size == this_init__f__array__f__size && this_init__f__size == this__f__array__f__size && this_init__f__size >= 2]]>
+					<![CDATA[this_init == this && this_init__f__array == this__f__array && this_init__f__size == this__f__size && this_init__f__size == this_init__f__array__f__size && this_init__f__size == this__f__array__f__size && this_init__f__size >= 2]]>
 				</constraints>
 			 </call-site>
-			 <call-site offset="2" srccode-offset="4802">
-				<variables>ent#2, __r3, key, this_init, key_init, this</variables>
+			 <call-site offset="1" srccode-offset="4801">
+				<variables>ent#2, __r4, key, this_init, key_init, this</variables>
 				<inductives></inductives>
 				<callee>ar.uba.dc.jolden.mst.HashEntry: java.lang.Object key()</callee>
 				<constraints>
-					<![CDATA[this_init == this && this_init__f__array == this__f__array && this_init__f__array == this__f__array && this_init__f__size == this__f__size && this_init__f__size == this_init__f__array__f__size && this_init__f__size == this__f__array__f__size && this_init__f__size >= 2]]>
+					<![CDATA[this_init == this && this_init__f__array == this__f__array && this_init__f__size == this__f__size && this_init__f__size == this_init__f__array__f__size && this_init__f__size == this__f__array__f__size && this_init__f__size >= 2]]>
 				</constraints>
 			 </call-site>
-			 <call-site offset="3" srccode-offset="4803">
+			 <call-site offset="3" srccode-offset="4802">
 				<variables>ent#2, this_init, key_init, this, key</variables>
 				<inductives></inductives>
 				<callee>ar.uba.dc.jolden.mst.HashEntry: java.lang.Object entry()</callee>
 				<constraints>
-					<![CDATA[this_init == this && this_init__f__array == this__f__array && this_init__f__array == this__f__array && this_init__f__size == this__f__size && this_init__f__size == this_init__f__array__f__size && this_init__f__size == this__f__array__f__size && this_init__f__size >= 2]]>
+					<![CDATA[this_init == this && this_init__f__array == this__f__array && this_init__f__size == this__f__size && this_init__f__size == this_init__f__array__f__size && this_init__f__size == this__f__array__f__size && this_init__f__size >= 2]]>
 				</constraints>
 			 </call-site>
 		</method>
 		 <method decl="void &lt;init&gt;(int)">
 			<relevant-parameters>sz_init</relevant-parameters>
-			 <call-site offset="0" srccode-offset="1800">
+			 <call-site offset="0" srccode-offset="1900">
 				<variables>sz, this, sz_init</variables>
 				<inductives>sz</inductives>
 				<callee>java.lang.Object: void &lt;init&gt;()</callee>
@@ -67,13 +67,13 @@
 			 </creation-site>
 		</method>
 		 <method decl="void put(java.lang.Object,java.lang.Object)">
-			<relevant-parameters>this_init, this_init__f__array, key_init, value_init</relevant-parameters>
+			<relevant-parameters>this_init, this_init__f__array, this_init__f__array__f__size, key_init, value_init</relevant-parameters>
 			 <call-site offset="0" srccode-offset="5700">
 				<variables>this, key, value, this_init, key_init, value_init</variables>
 				<inductives>this__f__array</inductives>
 				<callee>ar.uba.dc.jolden.mst.Hashtable: int hashMap(java.lang.Object)</callee>
 				<constraints>
-					<![CDATA[this == this_init && this__f__array == this_init__f__array && this__f__array == this_init__f__array && this__f__size == this_init__f__size && this__f__size == this__f__array__f__size && this__f__size == this_init__f__array__f__size && this__f__size >= 2]]>
+					<![CDATA[this == this_init && this__f__array == this_init__f__array && this__f__size == this_init__f__size && this__f__size == this__f__array__f__size && this__f__size == this_init__f__array__f__size && this__f__size >= 2]]>
 				</constraints>
 				<binding>$t.this_init == this and $t.this_init__f__size == this__f__size and $t.key_init == key</binding>
 			 </call-site>
@@ -81,7 +81,7 @@
 				<variables>__i0, this, key, value, this_init, key_init, value_init</variables>
 				<inductives>__i0, this__f__array</inductives>
 				<constraints>
-					<![CDATA[this == this_init && this__f__array == this_init__f__array && this__f__array == this_init__f__array && this__f__size == this_init__f__size && this__f__size == this__f__array__f__size && this__f__size == this_init__f__array__f__size && __i0 >= 0 && this__f__size >= 2 && __i0 <= this__f__array__f__size-1]]>
+					<![CDATA[this == this_init && this__f__array == this_init__f__array && this__f__size == this_init__f__size && this__f__size == this__f__array__f__size && this__f__size == this_init__f__array__f__size && __i0 >= 0 && this__f__size >= 2 && __i0 <= this__f__array__f__size-1]]>
 				</constraints>
 			 </creation-site>
 			 <call-site offset="1" srccode-offset="5801">
@@ -89,7 +89,7 @@
 				<inductives>__i0, this__f__array</inductives>
 				<callee>ar.uba.dc.jolden.mst.HashEntry: void &lt;init&gt;(java.lang.Object,java.lang.Object,ar.uba.dc.jolden.mst.HashEntry)</callee>
 				<constraints>
-					<![CDATA[this == this_init && this__f__array == this_init__f__array && this__f__array == this_init__f__array && this__f__size == this_init__f__size && this__f__size == this__f__array__f__size && this__f__size == this_init__f__array__f__size && __i0 >= 0 && this__f__size >= 2 && __i0 <= this__f__array__f__size-1]]>
+					<![CDATA[this == this_init && this__f__array == this_init__f__array && this__f__size == this_init__f__size && this__f__size == this__f__array__f__size && this__f__size == this_init__f__array__f__size && __i0 >= 0 && this__f__size >= 2 && __i0 <= this__f__array__f__size-1]]>
 				</constraints>
 				<binding>$t.key_init == key and $t.entry_init == value and $t.next_init == __r2</binding>
 			 </call-site>
