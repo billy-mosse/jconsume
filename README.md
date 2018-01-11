@@ -1,4 +1,5 @@
-Autores: Matias Grunberg, Gaston Krasny Y Guillermo Mosse
+Autores: Diego Garbervetsky y Guillermo Mosse
+Colaboradores: Matias Grunberg, Gaston Krasny
 
 Introduccion
 ============
