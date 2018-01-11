@@ -61,7 +61,6 @@ echo "Compilo (los) InstrumentedMethod"
 #el {} es un placeholder para el resultado del find
 #A veces las variables tienen un numeral y es super molesto....
 #como hack los cambio por un guion bajo pero me gustaria ver si hay una opcion para que no genere nombres con guion bajo
-#-exec sed -i -e 's/#/_/g' {} \;
 find $FULLNAMETEST -name InstrumentedMethod.java -exec sed -i -e 's/#/_/g' {} \; -exec javac -g {} \;
 
 javac -g $FULLNAMETEST/$MYPATH/InstrumentedMethod.java || die "Problema en fase 2"

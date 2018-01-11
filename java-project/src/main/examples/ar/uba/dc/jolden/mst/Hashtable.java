@@ -54,7 +54,7 @@ public class Hashtable
    */
   public void put(Object key, Object value)
   {
-    int j = hashMap(key);  //maxCall = 0, tempCall = 0  (Ver q hace hasMap)
+    int j = hashMap(key);  //maxCall = 0, tempCall = 0  (Ver q hace hashMap)
     HashEntry ent = new HashEntry(key, value, array[j]); //residual = 1 (esto tengo q especificar?)
     array[j] = ent;
   }
