@@ -331,7 +331,14 @@ public abstract class AbstractSpecCompiler implements SpecCompiler {
 		if (StringUtils.isNotBlank(site.getConstraints())) {
 			parser.parse(site, info, parameters, new_parameters);
 			
-			methodSpecification.addAllNewParameters(new_parameters);
+			//al final no agregamos variables nuevas como parametros!
+			//methodSpecification.addAllNewParameters(new_parameters);
+			
+			for(DerivedVariable new_parameter : new_parameters)
+			{
+				info.getVariables().add(new_parameter.toString());
+			}
+			
 			
 			//esta linea ahora esta de mas porque ya no agrego las variables que veo en las constraints,
 			//pero igual la voy a dejar por ahora
