@@ -321,6 +321,11 @@ public class DIParameterFactory {
 	{
 		return t.equals("int"); /*|| t.equals("long")*/
 	}
+	
+	protected static boolean isTypeNum2(String t)
+	{
+		return t.equals("int") || t.equals("long");
+	}
 	protected static boolean isTypeInteger(String t)
 	{
 		return t.equals("java.lang.Integer");
@@ -343,7 +348,7 @@ public class DIParameterFactory {
 	public static ArrayList<String> getImportables(String classname)
 	{
 		ArrayList<String> imp = new ArrayList<String>();
-		if(isTypeInteger(classname) || classname.endsWith(".String") || classname.equals("double") || isTypeNum(classname))
+		if(isTypeInteger(classname) || classname.endsWith(".String") || classname.equals("double") || isTypeNum2(classname) || classname.startsWith("java.lang")) 
 			return imp;
 
 		if(classname.contains("[]"))

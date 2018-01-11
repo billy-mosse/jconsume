@@ -86,7 +86,7 @@ public class DI_Field extends DIParameter {
 		
 		this.var = fieldParam.getLocal();
 		this.nameVar=fieldParam.getName();
-		this.derivedVars=fieldParam.getDerivedVariables();
+		this.derivedVarsForSpec=fieldParam.getDerivedVariables2();
 		
 	}
 	private static String calculateThisReName(SootField f, Local thisRef, SootClass c) {
@@ -110,7 +110,8 @@ public class DI_Field extends DIParameter {
 	 */
 	public DI_Field(String vn, Type type) {
 		super(vn, type);
-		// TODO Auto-generated constructor stub
+		// TODO Auto-generated constructor stub		
+		
 	}
 	
 

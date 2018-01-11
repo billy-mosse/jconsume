@@ -172,14 +172,14 @@ public class SpecInvariantWriter {
 					boolean isCall = cs.isCall();
 					if (isCall) {
 						if (cs.getOrder() == -1)
-							cs.setOffset(newOffset);
+							cs.setOffset(callOffset);
 						processCall(cs);
-						newOffset++;
+						callOffset++;
 					} else {
 						if (cs.getOrder() == -1)
-							cs.setOffset(callOffset);
+							cs.setOffset(newOffset);
 						processCreationSite(cs);
-						callOffset++;
+						newOffset++;
 					}
 
 				}

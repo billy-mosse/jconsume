@@ -580,6 +580,8 @@ public class NewsInvariantInstrumentator {
 			//despues volare CallSiteMapInfo si no la necesito mas
 			CallInfo callInfo = iter.next();
 			
+			System.out.println(callInfo.toString());
+			
 			String callSite = callInfo.getInsSite();
 			ListDIParameters args = callInfo.getArgs();
 			CallSiteMapInfo ccInfo = getCallSiteInfo(callSite, args, ccArgsMap,ccMethodsMap, csMap, methodMap, callInfo, relevantsMap);
@@ -818,11 +820,18 @@ public class NewsInvariantInstrumentator {
 										
 										
 										SimpleDIParameter new_relevant = new SimpleDIParameter(argName);
-
+										
+										
+										Stack derived_parameters = new Stack();
+																				
+										derived_parameters.addAll(element.getDerivedVariables2());
 										//Por cada field relevante agrego a la lista el binding entre fields
-										for (Iterator dip_it= element.getDerivedVariables2().iterator(); dip_it.hasNext();)
+										
+										while(!derived_parameters.empty())
 										{
-											DIParameter dip = (DIParameter) dip_it.next();
+											
+											DIParameter dip = (DIParameter) derived_parameters.pop();
+											derived_parameters.addAll(dip.getDerivedVariables2());
 											String fullName = dip.getName();
 											String notBase = fullName.substring(fullName.indexOf(element.getName()) + element.getName().length());
 											

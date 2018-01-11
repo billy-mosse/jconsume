@@ -33,13 +33,13 @@ public class DI_Long extends DIParameter {
 	DI_Int lVar;
 	public DI_Long(Local var) {
 		super(var);
-		String vn=var.getName();
+		/*String vn=var.getName();
 		if(!vn.startsWith("_f_"))
 			vn = "l_"+vn;
 		else 
 			vn = "l"+vn;
 		lVar = new DI_Int(vn);
-		this.derivedVars.add(lVar);
+		this.derivedVars.add(lVar);*/
 	}
 
 	/**
@@ -48,20 +48,20 @@ public class DI_Long extends DIParameter {
 	 */
 	public DI_Long(String vn) {
 		super(vn, LongType.v());
-		if(!vn.startsWith("_f_"))
+		/*if(!vn.startsWith("_f_"))
 			vn = "l_"+vn;
 		else 
 			vn = "l"+vn;
 		lVar = new DI_Int(vn);
-		this.derivedVars.add(lVar);
+		this.derivedVars.add(lVar);*/
 	}
 	@Override
 	public List codeForVar() {
 		List code = new Vector();
-		SootMethod toCall = Utils.varTestClass.getMethod("int toInt(long)");
+		/*SootMethod toCall = Utils.varTestClass.getMethod("int toInt(long)");
 		StaticInvokeExpr invExpr = Jimple.v().newStaticInvokeExpr(toCall.makeRef(), var);
 		AssignStmt ass = Jimple.v().newAssignStmt(lVar.var, invExpr);
-		code.add(ass);
+		code.add(ass);*/
 		return code;
 	}
 

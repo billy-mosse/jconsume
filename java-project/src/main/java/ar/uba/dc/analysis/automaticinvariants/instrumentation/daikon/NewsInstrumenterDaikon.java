@@ -511,6 +511,9 @@ class NewsInstrumenterDaikon extends LoopFinder {
 			
 			
 			String methodNameDec = body.getMethod().getSignature();
+			
+			System.out.println(methodNameDec);
+			
 			String nameClass = body.getMethod().getDeclaringClass().getName();
 			System.out.println("\nAA:"+methodNameDec+";"+lParameters+";"+lParametersInit);
 			if (methodMap.get(methodNameDec) == null) {
@@ -665,11 +668,7 @@ class NewsInstrumenterDaikon extends LoopFinder {
 		for(Iterator itParam = lParameters.iterator(); itParam.hasNext(); )
 		{
 			DIParameter param = (DIParameter)itParam.next();
-			String s = param.getName();
-			if(s.equals("n"))
-			{
-				System.out.println("Holis");
-			}
+
 			DIParameter  varInit=null;
 
 			Collection filter = new Vector();

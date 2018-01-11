@@ -26,12 +26,12 @@ public class DI_Sizeable extends DIParameter {
 		super(var);
 		String vn=var.getName();
 		
-		/*if(!vn.startsWith("_f_"))
+		if(!vn.startsWith("_f_"))
 			vn =  "size_"+vn;
 		else
 			vn =  "size"+vn;
 		sVar = new DI_Int(vn);
-		this.derivedVarsForSpec.add(sVar);*/
+		this.derivedVarsForSpec.add(sVar);
 		
 		//if(!vn.startsWith("_f_"))
 		//	vn =  "size_"+vn;
@@ -44,6 +44,15 @@ public class DI_Sizeable extends DIParameter {
 	
 	public DI_Sizeable(Local var, boolean _) {
 		super(var);
+		
+		String vn=var.getName();
+		
+		if(!vn.startsWith("_f_"))
+			vn =  "size_"+vn;
+		else
+			vn =  "size"+vn;
+		sVar = new DI_Int(vn);
+		this.derivedVarsForSpec.add(sVar);
 	}
 
 	/**
@@ -52,6 +61,15 @@ public class DI_Sizeable extends DIParameter {
 	 */
 	public DI_Sizeable(String vn, Type type) {
 		super(vn, type);
+		
+		//este if ya no tiene sentido
+		//TODO sacarlo
+		if(!vn.startsWith("_f_"))
+			vn =  vn + "__f__size";
+		else
+			vn =  vn + "__f__size";
+		sVar = new DI_Int(vn);
+		this.derivedVarsForSpec.add(sVar);
 		//if(!vn.startsWith("_f_"))
 		//	vn =  "size_"+vn;
 		//else
