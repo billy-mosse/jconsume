@@ -1,6 +1,6 @@
 Autores: Diego Garbervetsky y Guillermo Mosse
 
-Participaron además del proyecto: Matias Grunberg, Gaston Krasny, Martin Rouaux.
+Participaron además del proyecto: Matias Grunberg, Gaston Krasny, Martin Rouaux, Edgardo Zoppi.
 
 
 Introduccion
