@@ -1538,7 +1538,9 @@ class NewsInstrumenterDaikon extends LoopFinder {
 					DIParameter arrPar = DIParameterFactory.createDIParameter((Local)size); 
 					paramsIntru.add(arrPar);
 					newArrayParamsList.add(arrPar);
-					inductivesFake.add(arrPar.getName());
+					
+					if(!inductivesFake.contains(arrPar.getName()))
+						inductivesFake.add(arrPar.getName());
 
 				}
 			}
@@ -1602,6 +1604,9 @@ class NewsInstrumenterDaikon extends LoopFinder {
 			{
 				allParamsString =allParams.toStringList2();
 			}
+			
+			System.out.println(methodName);
+			System.out.println(s.toString());
 			
 			newsMap.put(insSite, new CreationSiteMapInfo(insSite, orden, allParamsString, nameMethodDec,tipo,creationSiteType,newArrayParamsList.toList(), vivas, inductivesFake, methodName));
 			relevantsMap.put(nameMethodDec, allParams);
