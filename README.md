@@ -1,5 +1,7 @@
 Autores: Diego Garbervetsky y Guillermo Mosse
-Colaboradores: Matias Grunberg, Gaston Krasny
+
+Participaron además del proyecto: Matias Grunberg, Gaston Krasny, Martin Rouaux.
+
 
 Introduccion
 ============
