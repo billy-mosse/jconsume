@@ -81,6 +81,8 @@ public class RegexpConstraintsParser implements ConstraintsParser {
 				
 				new_constraints.add(constraints_array[i].trim());
 			}
+
+			variables.addAll(inductives);
 			
 			Set<DerivedVariable> derivedVariables = new HashSet<DerivedVariable>();
 			for(String var : variables)
@@ -106,20 +108,11 @@ public class RegexpConstraintsParser implements ConstraintsParser {
 						}
 					}
 					if(dv!=null)
-						derivedVariables.add(dv);
-					
-					//esto lo podria hacer mas adelante
-					
-					if(dv != null)
 					{
+						derivedVariables.add(dv);
 						variables.add(dv.toString());
 						
-						//¿Quiero agregar la derived variable como inductiva?
-						/*if(inductives.contains(var))
-						{
-							inductives.add(dv.toString());
-						}*/
-					}
+					}	
 				}
 			}
 			
@@ -145,6 +138,7 @@ public class RegexpConstraintsParser implements ConstraintsParser {
 								
 								//String field = s.replace(constraint_pair[0], "");
 								DerivedVariable dv2 = new DerivedVariable(field, c1);
+								variables.add(dv2.toString());
 								
 
 								if(parameters.contains(c1))
@@ -166,6 +160,7 @@ public class RegexpConstraintsParser implements ConstraintsParser {
 							if (name.equals(c1))
 							{
 								DerivedVariable dv2 = new DerivedVariable(field, c0);
+								variables.add(dv2.toString());
 								
 								if(parameters.contains(c0))
 									new_parameters.add(dv2);
