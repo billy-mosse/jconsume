@@ -252,7 +252,7 @@ public class DIParameterFactory {
 		return isTypeString(var.getType());
 	}
 
-	protected static boolean isTypeArray(Type t) {
+	public static boolean isTypeArray(Type t) {
 		boolean ok = false;
 		if (t.toString().endsWith("[]"))
 			ok = true;

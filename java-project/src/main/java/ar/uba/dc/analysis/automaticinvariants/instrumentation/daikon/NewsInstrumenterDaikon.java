@@ -14,6 +14,8 @@ import java.util.Vector;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.sun.jdi.ArrayType;
+
 import ar.uba.dc.analysis.automaticinvariants.inductives.InductivesFilter;
 import ar.uba.dc.analysis.automaticinvariants.inductives.InductivesFinder;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.DIParameter;
@@ -1380,8 +1382,18 @@ class NewsInstrumenterDaikon extends LoopFinder {
 					InstanceFieldRef ifr = (InstanceFieldRef)v;
 					String base = ifr.getBase().toString();
 					String field = ifr.getField().getName();
+					SootField o = ifr.getField();					
+					Type t = o.getType();
 					String var = base + "." + field;
-					inductivesFake.add(var);
+					if(DIParameterFactory.isTypeArray(t))
+					{
+						inductivesFake.add(var + ".size");
+					}
+					else
+					{
+						inductivesFake.add(var);
+					}
+
 				}
 			}
 			
@@ -1539,8 +1551,10 @@ class NewsInstrumenterDaikon extends LoopFinder {
 					paramsIntru.add(arrPar);
 					newArrayParamsList.add(arrPar);
 					
-					if(!inductivesFake.contains(arrPar.getName()))
-						inductivesFake.add(arrPar.getName());
+					
+					//creo que esto esta bien pero que no importa realmente
+					if(!inductivesFake.contains(arrPar.getName() + ".size"))
+						inductivesFake.add(arrPar.getName() + ".size");
 
 				}
 			}
