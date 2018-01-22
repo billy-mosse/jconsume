@@ -70,6 +70,8 @@ public class Binding {
 		return variables;
 	}
 	
+	//TODO este metodo esta re mal
+	/*
 	public Set<String> getCalleesAsVariables() {
 
 		TreeSet<String> variables = new TreeSet<String>();
@@ -82,22 +84,22 @@ public class Binding {
 		
 		return variables;
 	}
-	
+	*/
 
-	public Set<String> getCalleesAsInductives() {
+	public Set<String> getCallees() {
 
-		TreeSet<String> inductives = new TreeSet<String>();
+		TreeSet<String> variables = new TreeSet<String>();
 		
 		for(BindingPair bindingPair : this.bindingPairs)
 		{
-			inductives.add(bindingPair.getCallee_parameter_with_prefix());
+			variables.add(bindingPair.getCallee_parameter_with_prefix());
 		}
 		
-		return inductives;
+		return variables;
 	}
 	
 	
-	public Set<String> getCallersAsVariables() {
+	public Set<String> getCallers() {
 
 		TreeSet<String> variables = new TreeSet<String>();
 		
@@ -111,7 +113,7 @@ public class Binding {
 	}
 	
 
-	public Set<String> getCallersAsInductives() {
+	/*public Set<String> getCallersAsInductives() {
 
 		TreeSet<String> inductives = new TreeSet<String>();
 		
@@ -121,7 +123,7 @@ public class Binding {
 		}
 		
 		return inductives;
-	}
+	}*/
 	
 	public Binding()
 	{

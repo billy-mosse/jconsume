@@ -20,21 +20,21 @@ public class DomainSetUtils {
 		
 		
 		//Esto esta re mal. Pensar como deberia quedar realmente!
-		if(binding.getCalleesAsVariables() != null)
-			invariant.addAllVariables(binding.getCalleesAsVariables());
+		//if(binding.getCallees() != null)
+			//invariant.addAllInductives(binding.getCallees());
 		
-		if(binding.getCalleesAsInductives() != null)
-			invariant.addAllInductives(binding.getCalleesAsInductives());
+		if(binding.getCallees() != null)
+			invariant.addAllVariables(binding.getCallees());
 		
 		
 		//que pasa si agrego las callers como inductives tambien???
 		//TODO REVISAR
 		
-		if(binding.getCallersAsVariables() != null)
-			invariant.addAllVariables(binding.getCallersAsVariables());
+		if(binding.getCallers() != null)
+			invariant.addAllVariables(binding.getCallers());
 		
-		if(binding.getCallersAsInductives() != null)
-			invariant.addAllInductives(binding.getCallersAsInductives());
+		//if(binding.getCallers() != null)
+			//invariant.addAllInductives(binding.getCallers());
 		
 		
 		invariant.setConstraints(newConstraints);		

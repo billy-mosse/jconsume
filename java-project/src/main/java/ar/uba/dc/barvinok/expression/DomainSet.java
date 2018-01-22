@@ -173,6 +173,8 @@ public class DomainSet {
 		
 		ret += constraints + "}";
 	
+		//TODO: agregar los exists
+		
 		return ret;
 	}
 	

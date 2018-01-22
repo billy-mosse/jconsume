@@ -1,5 +1,6 @@
 package ar.uba.dc.barvinok.syntax;
 
+import java.util.Arrays;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -11,6 +12,7 @@ import ar.uba.dc.barvinok.BarvinokSyntax;
 import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.barvinok.expression.PiecewiseQuasipolynomial;
 import ar.uba.dc.barvinok.expression.QuasiPolynomial;
+import ar.uba.dc.util.List;
 
 public class IsccSyntax extends AbstractBarvinokSyntax {
 
@@ -214,8 +216,23 @@ public class IsccSyntax extends AbstractBarvinokSyntax {
 		//no quiero eliminar existencialmente los parametros
 		varsToElim.removeAll(parameterList);
 		
+		
+		
+		String[] variables = value.getPolynomial().split("[-+*/=\\ ^]");
+		
+		for(int i = 0; i < variables.length; i++)
+		{
+			String var = variables[i];
+			if (!StringUtils.isNumeric(var))
+			{
+				varsToElim.remove(var);
+			}
+			
+		}
+		
 		Set<String> varsToInclude = value.getVariables();
 		varsToInclude.removeAll(varsToElim);
+		
 		String vars = StringUtils.join(varsToInclude, ',');
 		
 		String ret = StringUtils.EMPTY;
@@ -229,6 +246,9 @@ public class IsccSyntax extends AbstractBarvinokSyntax {
 		}
 		
 		ret += value.getPolynomial();
+		
+		//Hack para un experimento
+		//varsToElim.removeAll(value.getVariables());
 		
 		if(!varsToElim.isEmpty())  {
 			String stringElim = StringUtils.join(varsToElim, ',');
