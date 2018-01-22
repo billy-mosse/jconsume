@@ -63,6 +63,11 @@ echo "Compilo (los) InstrumentedMethod"
 #como hack los cambio por un guion bajo pero me gustaria ver si hay una opcion para que no genere nombres con guion bajo
 find $FULLNAMETEST -name InstrumentedMethod.java -exec sed -i -e 's/#/_/g' {} \; -exec javac -g {} \;
 
+sed -i -e 's/#/_/g' $FULLNAMETEST/$FULLNAMETEST.cs
+sed -i -e 's/#/_/g' $FULLNAMETEST/$FULLNAMETEST.cc
+sed -i -e 's/#/_/g' $FULLNAMETEST/$FULLNAMETEST.indFake
+
+
 javac -g $FULLNAMETEST/$MYPATH/InstrumentedMethod.java || die "Problema en fase 2"
 
 
