@@ -6,7 +6,9 @@
  */
 package ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.Vector;
 
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.CreationSiteMapInfo;
@@ -26,7 +28,7 @@ public class CreationSiteMapInfo implements Comparable {
 	List csArrayParams;
 	int order;
 	List vivas;
-	List inductivesFake;
+	Set inductivesFake;
 	String methodCaller;
 	//ListDIParametersNoRep objectVars;
 
@@ -60,7 +62,7 @@ public class CreationSiteMapInfo implements Comparable {
 		
 	}
 	
-	public CreationSiteMapInfo(String insSite, int order, List vars, String method, String type, String csType, List csArrayP, List vivas, List inductivesFake, String methodName/*, ListDIParametersNoRep objectVars*/) {
+	public CreationSiteMapInfo(String insSite, int order, List vars, String method, String type, String csType, List csArrayP, List vivas, Set inductivesFake, String methodName/*, ListDIParametersNoRep objectVars*/) {
 		super();
 		this.insSite = insSite;
 		this.vars = vars;

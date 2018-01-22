@@ -1365,7 +1365,7 @@ class NewsInstrumenterDaikon extends LoopFinder {
 		ListDIParameters lParametersInit = new ListDIParameters();
 		
 		
-		List inductivesFake = new Vector<String>();
+		Set inductivesFake = new HashSet<String>();
 		for (Iterator iterLive = vivas.iterator(); iterLive.hasNext();) {
 			Value v = (Value) iterLive.next();
 			
@@ -1374,8 +1374,15 @@ class NewsInstrumenterDaikon extends LoopFinder {
 			{
 				if(v instanceof Local)
 				{
-					if(!inductivesFake.contains(v))
+					Type t = v.getType();
+					if(DIParameterFactory.isTypeArray(t))
+					{
+						inductivesFake.add(v.toString() + ".size");
+					}
+					else
+					{
 						inductivesFake.add(v.toString());
+					}
 				}
 				else if(v instanceof InstanceFieldRef)
 				{
