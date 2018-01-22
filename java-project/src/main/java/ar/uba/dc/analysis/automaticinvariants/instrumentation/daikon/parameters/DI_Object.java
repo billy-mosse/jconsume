@@ -120,7 +120,7 @@ public class DI_Object extends DIParameter {
 				String thisRefName;
 				FieldRef var;
 				
-				if(!f.isPrivate())
+				if(!f.isPrivate() || true)
 				{
 					if(!f.isStatic()  && thisRef!=null) //Lo agregue yo el isPrivate. Billy
 					{
