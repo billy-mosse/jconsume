@@ -1560,8 +1560,8 @@ class NewsInstrumenterDaikon extends LoopFinder {
 					
 					
 					//creo que esto esta bien pero que no importa realmente
-					if(!inductivesFake.contains(arrPar.getName() + ".size"))
-						inductivesFake.add(arrPar.getName() + ".size");
+					if(!inductivesFake.contains(arrPar.getName()))
+						inductivesFake.add(arrPar.getName());
 
 				}
 			}
