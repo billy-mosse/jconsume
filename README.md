@@ -2,6 +2,22 @@ Authors: Diego Garbervetsky y Guillermo Mosse
 
 Collaborators: Matias Grunberg, Gaston Krasny, Martin Rouaux, Edgardo Zoppi.
 
+Introduction
+============
+
+This document contains the necessary information to install the tool, execute it and understand the project's structure.
+
+The document is divided in several sections::
+	1) Dependencies
+		1.1) Maven
+		1.2) Barvinok
+		1.3) Graphviz
+	2) Project's structure
+	3) Developed tools
+	4) Tool configuration
+	5) Execution
+		5.1) Introduction
+		5.2) Some examples
 
 Dependencias
 ============
