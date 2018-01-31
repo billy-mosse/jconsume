@@ -8,6 +8,7 @@ Introduction
 This document contains the necessary information to install the tool, execute it and understand the project's structure.
 
 The document is divided in several sections::
+
 	1) Dependencies
 		1.1) Maven
 		1.2) Barvinok
