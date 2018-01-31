@@ -12,14 +12,15 @@ Maven
 Maven's documentation can be found in http://maven.apache.org/.
 
 In linux you can install it with the following command:
+```
 apt-get install maven
-
+```
 If using eclipse, once you installed maven, it might be a good idea to install the plugin. You can download it from here: http://m2eclipse.sonatype.org/
  
 
-_ After this, execute "sh install.sh" in the project folder jconsume/ so that maven installs some libraries.
+- After this, execute "sh install.sh" in the project folder jconsume/ so that maven installs some libraries.
 
-_ Execute also the command "mvn compile" to compile the project and to force all the dependencies to be downloaded to the local maven repository. The command must be executed in jconsume/java-project, where the pom.xml file is located.
+- Execute also the command "mvn compile" to compile the project and to force all the dependencies to be downloaded to the local maven repository. The command must be executed in jconsume/java-project, where the pom.xml file is located.
 
 If using eclipse, it's important to import the project as a maven project.
 
