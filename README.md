@@ -1,0 +1,38 @@
+Authors: Diego Garbervetsky y Guillermo Mosse
+
+Collaborators: Matias Grunberg, Gaston Krasny, Martin Rouaux, Edgardo Zoppi.
+
+
+Dependencias
+============
+
+Maven
+-----
+
+Maven's documentation can be found in http://maven.apache.org/.
+
+In linux you can install it with the following command:
+apt-get install maven
+
+If using eclipse, once you installed maven, it might be a good idea to install the plugin. You can download it from here: http://m2eclipse.sonatype.org/
+ 
+
+_ After this, execute "sh install.sh" in the project folder jconsume/ so that maven installs some libraries.
+
+_ Execute also the command "mvn compile" to compile the project and to force all the dependencies to be downloaded to the local maven repository. The command must be executed in jconsume/java-project, where the pom.xml file is located.
+
+If using eclipse, it's important to import the project as a maven project.
+
+Barvinok
+--------
+
+The tool utilizes barvinok as support to operate with parametric expression. You may download the 0.40 version (or try the latest one, but it doesn't usually maintain backwards compatibility) from http://barvinok.gforge.inria.fr/
+
+Barvinok's README can be found here: http://repo.or.cz/w/barvinok.git/blob/HEAD:/README
+
+However, to install NTL with GMP support I found these to be the best instructions: http://www.shoup.net/ntl/doc/tour-gmp.html
+
+Graphviz
+--------
+
+To generate summaries in a graph format the tool uses the dot command included in graphviz. Install it from http://www.graphviz.org/
