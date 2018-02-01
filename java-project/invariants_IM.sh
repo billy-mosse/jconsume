@@ -5,11 +5,29 @@ set -e
 
 die() {
 
-echo "$1.$2" 
+echo "$1" 
  2> error
 exit 1
 
 }
+
+assert() {
+  if ! eval $* ; then
+      echo
+      echo "===== Assertion failed:  \"$*\" ====="
+      echo "File \"$0\", line:$LINENO line:${BASH_LINENO[*]}"
+      echo line:$(caller 0)
+      exit 99
+  fi  
+}
+
+
+FULLNAMETEST=$1
+PACKAGE="${FULLNAMETEST%.*}"
+
+NAME="${FULLNAMETEST##*.}"
+
+#assert [[ $FULLNAMETEST == $PACKAGE.$NAME ]]
 
 M2_REPO=/home/billy/.m2/repository
 
@@ -35,8 +53,12 @@ CLASSPATH2=/home/billy/Downloads/heros-trunk.jar:/home/billy/Downloads/herosclas
 
 
 
-#no tengo la mas puta idea de por que si lo llamo FULLNAME no lo pasa bien
-FULLNAMETEST=$1.$2
+
+
+
+
+
+
 
 CLASSPATH=$CLASSPATH_JCONSUME_FOLDERS:$CLASSPATH_JARS:$CLASSPATH2
 
@@ -50,10 +72,10 @@ echo Fase 1: Instrumentation
 #exit 0
 echo Fase 2: Compilation of InstrumentedMehod Class for Daikon
 
-MYPATH=`echo $1 | sed 's/\./\//g'`
+MYPATH=`echo $PACKAGE | sed 's/\./\//g'`
 
 echo "Copio el Test class"
-cp target/classes/$MYPATH/$2Test.class out/$FULLNAMETEST/$MYPATH/
+cp target/classes/$MYPATH/${NAME}Test.class out/$FULLNAMETEST/$MYPATH/
 cd out
 
 echo "Compilo (los) InstrumentedMethod"
@@ -74,11 +96,11 @@ javac -g $FULLNAMETEST/$MYPATH/InstrumentedMethod.java || die "Problema en fase 
 echo Fase 3: Daikon for generating invariants
 
 
-./daikon.sh $FULLNAMETEST 10 > $1.$2/$FULLNAMETEST.txt || die "Problema en fase 3"
+./daikon.sh $FULLNAMETEST 10 > $FULLNAMETEST/$FULLNAMETEST.txt || die "Problema en fase 3"
 
-mv $1.$2/$FULLNAMETEST.indFake $1.$2/$FULLNAMETEST.ind
+mv $FULLNAMETEST/$FULLNAMETEST.indFake $FULLNAMETEST/$FULLNAMETEST.ind
 
-sed -i -n -e '/===========================================================================/,$p' $1.$2/$FULLNAMETEST.txt
+sed -i -n -e '/===========================================================================/,$p' $FULLNAMETEST/$FULLNAMETEST.txt
 
 
 echo Fase 4: Imprimir invariantes para formato de jconsume
