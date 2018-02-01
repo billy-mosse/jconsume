@@ -54,3 +54,36 @@ Graphviz
 --------
 
 To generate summaries in a graph format the tool uses the dot command included in graphviz. Install it from http://www.graphviz.org/
+
+Eclipse
+=======================
+
+Por ahora estamos pisando el file ReachableMethods de soot con uno nuestro, que se encuentra en target/classes/soot/jimple/toolkits/callgraph.
+
+If you run the tool from eclipse instead of from the command line, you have to replace soot's ReachableMethods.class by our custom one, that is located in target/lasses/soot/jimple/toolkits/callgraph. For that, you have to add it as a User Entry in Classpath and then put it first in Order and Export.
+
+
+Execution
+=======================
+
+Here we'll present several analysis toy examples and some of real programs (Em3d and MST)
+
+Toy example
+--------
+
+Ins4:
+
+Go to jconsume/java-project and run the following command:
+
+```sh invariants_IM.sh "ar.uba.dc.daikon" "Ins4" 10```
+
+This generates automatic invariants for the classes used in spec/fullreferences/
+
+Ins4 uses ListC.class and there is an inductive variable that must be removed.
+
+Go to spec/fullreferences/ar/uba/dc/util/ListC.spec and remove "this__f__size" as an inductive.
+
+
+Then go again to jconsume/java-project and run the following command:
+
+```sh memory.sh --program "ar.uba.dc.daikon.Ins4" --ir --memory```
