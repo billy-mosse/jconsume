@@ -23,3 +23,9 @@ CLASSPATH=/home/billy/Projects/git/jconsume/java-project/target/classes/:/home/b
 
 
 $JAVA4BIN/java -cp $CLASSPATH -Xmx400m "ar.uba.dc.analysis.common.MainRunner" "--config" "config.properties" "--main" "\"void main(java.lang.String[])\"" $*
+
+
+cd results/rinard
+
+DATE_WITH_TIME=`date "+%Y%m%d-%H%M%S"`
+cp -R report report_$2
