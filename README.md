@@ -71,19 +71,86 @@ Here we'll present several analysis toy examples and some of real programs (Em3d
 Toy example
 --------
 
-Ins4:
+**Ins0**
 
-Go to jconsume/java-project and run the following command:
+The simplest example: a for loop from 1 to n.
 
-```sh invariants_IM.sh "ar.uba.dc.daikon" "Ins4" 10```
+Just go to java-project and run the following command:
 
-This generates automatic invariants for the classes used in spec/fullreferences/
+```sh full_analysis.sh "ar.uba.dc.daikon.Ins0" 10```
 
-Ins4 uses ListC.class and there is an inductive variable that must be removed.
+The second parameter is for how many runs of the program (with increasing numeric parameters) are used to infer likely loop invariants.
 
-Go to spec/fullreferences/ar/uba/dc/util/ListC.spec and remove "this__f__size" as an inductive.
+This will calculate what we call the loop invariants [TODO explain elsewhere] and then use them to calculate the memory consumption of the program.
+
+Results can be seen in java-project/results/rinard/report_ar.uba.dc.daikon.Ins0/index.html
+
+**Ins1**
+
+This example is pretty similar to Ins0, but the loop goes up to the field of an object.
+
+As with Ins0, just go to java-project and run the following command:
+
+```sh full_analysis.sh "ar.uba.dc.daikon.Ins1" 10```
+
+This will calculate what we call the loop invariants [TODO explain elsewhere] and then use them to calculate the memory consumption of the program.
+
+Results can be seen in java-project/results/rinard/report_ar.uba.dc.daikon.Ins1/index.html
+
+______________________________________________
+
+
+Some exampled need to be ran in two parts, as the inductives analaysis overapproximates the set of inductive variables. For example, consider the following example:
+
+**Ins2**
+
+Go to java-project and run the following command:
+
+```sh invariants_IM.sh "ar.uba.dc.daikon.Ins4" 10```
+
+This generates automatic invariants for the classes used in invariants/spec/fullreferences/
+
+Ins4 uses ListC.class and there is an inductive variable that must be removed. We are currently tweaking th inductives analysis. In the future it will output a more adjusted over approximation of inductive variables.
+
+Go to java-project/spec/fullreferences/ar/uba/dc/daikon/Ins2.spec and remove "__r0__f__elementData__f__size" as an inductive.
+
+Then go again to jconsume/java-project and run the following command:
+
+```sh memory.sh --program "ar.uba.dc.daikon.Ins2" --ir --memory```
+
+This generates the memory consumption analysis. Results can be seen in java-project/results/rinard/report_ar.uba.dc.daikon.Ins4/index.html
+
+TODO: add the graph format.
+
+
+______________________________________________
+
+
+**Ins4**:
+
+Go to java-project and run the following command:
+
+```sh invariants_IM.sh "ar.uba.dc.daikon.Ins4" 10```
+
+This generates automatic invariants for the classes used in invariants/spec/fullreferences/
+
+Ins4 uses ListC.class and there is an inductive variable that must be removed. We are currently tweaking th inductives analysis. In the future it will output a more adjusted over approximation of inductive variables.
+
+Go to java-project/spec/fullreferences/ar/uba/dc/util/ListC.spec and remove "this__f__size" as an inductive.
 
 
 Then go again to jconsume/java-project and run the following command:
 
 ```sh memory.sh --program "ar.uba.dc.daikon.Ins4" --ir --memory```
+
+This generates the memory consumption analysis. Results can be seen in java-project/results/rinard/report_ar.uba.dc.daikon.Ins4/index.html
+
+TODO: add the graph format.
+
+______________________________________________
+
+There are more toy examples, under the name Ins#n ¡Explore them! We will continue to add an explain them soon.
+
+
+______________________________________________
+
