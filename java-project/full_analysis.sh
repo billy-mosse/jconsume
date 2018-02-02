@@ -20,9 +20,9 @@ JCONSUME_PATH=/home/billy/Projects/git/jconsume/java-project
 
 #sh doAll.sh $1 $2 $3
 
-sh invariants_IM.sh $1 $2 $3
+sh invariants_IM.sh $1 $2
 
-sh memory.sh "--program" $1.$2 "--ir" "--memory"
+sh memory.sh "--program" $1 "--ir" "--memory"
 
 
 cd results/rinard
