@@ -359,7 +359,7 @@
 			 </creation-site>
 			 <call-site offset="5" srccode-offset="6801">
 				<variables>__r16, __l0, __r12, __r8, __r3, pVertices, __i1, __r0, pVertices_init</variables>
-				<inductives>__r16__f__count, __r16__f__value__f__size, __l0, __r12__f__count, __r12__f__value__f__size, __r8__f__count, __r8__f__value__f__size, __r3__f__count, __r3__f__value__f__size, pVertices, __i1</inductives>
+				<inductives>__i1, pVertices</inductives><!-- REMOVE __r16__f__count, __r16__f__value__f__size, __l0, __r12__f__count, __r12__f__value__f__size, __r8__f__count, __r8__f__value__f__size, __r3__f__count, __r3__f__value__f__size -->
 				<callee>ar.uba.dc.jolden.mst.Graph: void &lt;init&gt;(int)</callee>
 				<constraints>
 					<![CDATA[__r16 == __r12 && __r16 == __r8 && __r16 == __r3 && pVertices == __i1 && pVertices == pVertices_init && __l0 > pVertices]]>

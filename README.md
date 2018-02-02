@@ -112,7 +112,7 @@ This generates automatic invariants for the classes used in invariants/spec/full
 
 Ins4 uses ListC.class and there is an inductive variable that must be removed. We are currently tweaking th inductives analysis. In the future it will output a more adjusted over approximation of inductive variables.
 
-Go to java-project/spec/fullreferences/ar/uba/dc/daikon/Ins2.spec and remove "__r0__f__elementData__f__size" as an inductive.
+Go to java-project/spec/fullreferences/ar/uba/dc/daikon/Ins2.spec and remove ```__r0__f__elementData__f__size``` as an inductive.
 
 Then go again to jconsume/java-project and run the following command:
 
@@ -153,4 +153,32 @@ There are more toy examples, under the name Ins#n ¡Explore them! We will contin
 
 
 ______________________________________________
+
+MST
+
+This is a real world program [...]
+
+Go to java-project and run the following command:
+
+```sh invariants_IM.sh "ar.uba.dc.daikon.Ins4" 10```
+
+This generates automatic invariants for the classes used in invariants/spec/fullreferences/
+
+Go to java-project/spec/fullreferences/ar/uba/dc/jolden/mst. Several inductive variables need to be removed from different files:
+
+
+File | Method | Site | Inductives
+--- | --- | --- | --- |--- |--- |--- |--- |--- |--- |--- |---
+MST.spec | ar.uba.dc.jolden.mst.BlueReturn BlueRule(ar.uba.dc.jolden.mst.Vertex,ar.uba.dc.jolden.mst.Vertex) | CreationSite #0 | \_\_r5\_\_f\_\_array\_\_f\_\_size, \_\_r5\_\_f\_\_size, \_\_r20\_\_f\_\_mindist, \_\_r1\_\_f\_\_size, \_\_r17\_\_f\_\_mindist, \_\_r1\_\_f\_\_array\_\_f\_\_size, vlist\_\_f\_\_mindist
+MST.spec | void mainParameters(int,boolean,boolean) | CreationSite #0 | \_\_r16\_\_f\_\_count, \_\_r16\_\_f\_\_value\_\_f\_\_size, \_\_r12\_\_f\_\_count, \_\_r12\_\_f\_\_value\_\_f\_\_size, \_\_r8\_\_f\_\_count, \_\_r8\_\_f\_\_value\_\_f\_\_size, \_\_r3\_\_f\_\_count, \_\_r3\_\_f\_\_value\_\_f\_\_size, pVertices, \_\_r25\_\_f\_\_count, \_\_r25\_\_f\_\_value\_\_f\_\_size
+MST.spec | void mainParameters(int,boolean,boolean) | CreationSite #1 | \_\_r16\_\_f\_\_count, \_\_r16\_\_f\_\_value\_\_f\_\_size, \_\_l0, \_\_r12\_\_f\_\_count, \_\_r12\_\_f\_\_value\_\_f\_\_size, \_\_r8\_\_f\_\_count, \_\_r8\_\_f\_\_value\_\_f\_\_size, \_\_r3\_\_f\_\_count, \_\_r3\_\_f\_\_value\_\_f\_\_size
+MST.spec | void parseCmdLine(java.lang.String[]) | CreationSite #0 | arg\_\_f\_\_value\_\_f\_\_size
+MST.spec | void parseCmdLine(java.lang.String[]) | CallSite #1 | arg\_\_f\_\_value\_\_f\_\_size, i
+
+
+Then go again to jconsume/java-project and run the following command:
+
+```sh memory.sh --program "ar.uba.dc.jolden.mst.MST" --ir --memory```
+
+This generates the memory consumption analysis. Results can be seen in java-project/results/rinard/report_ar.uba.dc.jolden.mst.MST/index.html
 
