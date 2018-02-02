@@ -174,11 +174,23 @@ Go to java-project/spec/fullreferences/ar/uba/dc/jolden/mst. Several inductive v
 | MST.spec | void mainParameters(int,boolean,boolean) | CreationSite #1 | \_\_r16\_\_f\_\_count, \_\_r16\_\_f\_\_value\_\_f\_\_size, \_\_l0, \_\_r12\_\_f\_\_count, \_\_r12\_\_f\_\_value\_\_f\_\_size, \_\_r8 |\_\_f\_\_count, \_\_r8\_\_f\_\_value\_\_f\_\_size, \_\_r3\_\_f\_\_count, \_\_r3\_\_f\_\_value\_\_f\_\_size
 | MST.spec | void parseCmdLine(java.lang.String[]) | CreationSite #0 | arg\_\_f\_\_value\_\_f\_\_size |
 | MST.spec | void parseCmdLine(java.lang.String[]) | CallSite #1 | arg\_\_f\_\_value\_\_f\_\_size, i |
+| Graph.spec | void &lt;init&gt;(int) | CreationSite #0 | numvert__f__size |
+| Graph.spec | void addEdges(int) | CreationSite #0 | \_r1\_\_f\_\_array\_\_f\_\_size, \_\_r1\_\_f\_\_size, \_\_i0 | 
+| Graph.spec | void addEdges(int) | CallSite #3 | \_\_r1\_\_f\_\_array\_\_f\_\_size, \_\_r1\_\_f\_\_size |
+| Hashtable.spec | void &lt;init&gt;(int) | CreationSite #0 | \_\_i0\_\_f\_\_size |
+| Vertex.spec | void &lt;init&gt;(ar.uba.dc.jolden.mst.Vertex,int) | CallSite #1 | \_\_i0 |
 
 
+TODO: explain what you must do with addEdges CallSite #3 binding 
+
+In CallSite #3, the binding need the following change:
+
+\_\_r1\_\_f\_\_array\_\_f\_\_size to this\_\_f\_\_nodes\_\_f\_\_size
+
+This is not a bug but an automated feature that is missing in the code [EXPAND]
 
 
-Then go again to jconsume/java-project and run the following command:
+After doing all this, go again to jconsume/java-project and run the following command:
 
 ```sh memory.sh --program "ar.uba.dc.jolden.mst.MST" --ir --memory```
 
