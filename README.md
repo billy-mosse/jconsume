@@ -167,8 +167,8 @@ This generates automatic invariants for the classes used in invariants/spec/full
 Go to java-project/spec/fullreferences/ar/uba/dc/jolden/mst. Several inductive variables need to be removed from different files:
 
 
-File | Method | Site | Inductives
-| --- | --- | --- | --- | --- |
+| File | Method | Site | Inductives |
+| ------------- | ------------- | -------------| ------------- | ------------- |
 | MST.spec | ar.uba.dc.jolden.mst.BlueReturn BlueRule(ar.uba.dc.jolden.mst.Vertex,ar.uba.dc.jolden.mst.Vertex) | CreationSite #0 | \_\_r5\_\_f\_\_array\_\_f\_\_size, \_\_r5\_\_f\_\_size, \_\_r20\_\_f\_\_mindist, \_\_r1\_\_f\_\_size, \_\_r17\_\_f\_\_mindist, \_\_r1\_\_f\_\_array\_\_f\_\_size, vlist\_\_f\_\_mindist |
 | MST.spec | void mainParameters(int,boolean,boolean) | CreationSite #0 | \_\_r16\_\_f\_\_count, \_\_r16\_\_f\_\_value\_\_f\_\_size, \_\_r12\_\_f\_\_count, \_\_r12\_\_f\_\_value\_\_f\_\_size, \_\_r8\_\_f\_\_count, \_\_r8\_\_f\_\_value\_\_f\_\_size, \_\_r3\_\_f\_\_count, \_\_r3\_\_f\_\_value\_\_f\_\_size, pVertices, \_\_r25\_\_f\_\_count, \_\_r25\_\_f\_\_value\_\_f\_\_size |
 | MST.spec | void mainParameters(int,boolean,boolean) | CreationSite #1 | \_\_r16\_\_f\_\_count, \_\_r16\_\_f\_\_value\_\_f\_\_size, \_\_l0, \_\_r12\_\_f\_\_count, \_\_r12\_\_f\_\_value\_\_f\_\_size, \_\_r8 |\_\_f\_\_count, \_\_r8\_\_f\_\_value\_\_f\_\_size, \_\_r3\_\_f\_\_count, \_\_r3\_\_f\_\_value\_\_f\_\_size
