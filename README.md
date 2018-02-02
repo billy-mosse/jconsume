@@ -168,12 +168,18 @@ Go to java-project/spec/fullreferences/ar/uba/dc/jolden/mst. Several inductive v
 
 
 File | Method | Site | Inductives
---- | --- | --- | --- |--- |--- |--- |--- |--- |--- |--- |---
-MST.spec | ar.uba.dc.jolden.mst.BlueReturn BlueRule(ar.uba.dc.jolden.mst.Vertex,ar.uba.dc.jolden.mst.Vertex) | CreationSite #0 | \_\_r5\_\_f\_\_array\_\_f\_\_size, \_\_r5\_\_f\_\_size, \_\_r20\_\_f\_\_mindist, \_\_r1\_\_f\_\_size, \_\_r17\_\_f\_\_mindist, \_\_r1\_\_f\_\_array\_\_f\_\_size, vlist\_\_f\_\_mindist
-MST.spec | void mainParameters(int,boolean,boolean) | CreationSite #0 | \_\_r16\_\_f\_\_count, \_\_r16\_\_f\_\_value\_\_f\_\_size, \_\_r12\_\_f\_\_count, \_\_r12\_\_f\_\_value\_\_f\_\_size, \_\_r8\_\_f\_\_count, \_\_r8\_\_f\_\_value\_\_f\_\_size, \_\_r3\_\_f\_\_count, \_\_r3\_\_f\_\_value\_\_f\_\_size, pVertices, \_\_r25\_\_f\_\_count, \_\_r25\_\_f\_\_value\_\_f\_\_size
-MST.spec | void mainParameters(int,boolean,boolean) | CreationSite #1 | \_\_r16\_\_f\_\_count, \_\_r16\_\_f\_\_value\_\_f\_\_size, \_\_l0, \_\_r12\_\_f\_\_count, \_\_r12\_\_f\_\_value\_\_f\_\_size, \_\_r8\_\_f\_\_count, \_\_r8\_\_f\_\_value\_\_f\_\_size, \_\_r3\_\_f\_\_count, \_\_r3\_\_f\_\_value\_\_f\_\_size
-MST.spec | void parseCmdLine(java.lang.String[]) | CreationSite #0 | arg\_\_f\_\_value\_\_f\_\_size
-MST.spec | void parseCmdLine(java.lang.String[]) | CallSite #1 | arg\_\_f\_\_value\_\_f\_\_size, i
+| --- | --- | --- | --- | --- |
+| MST.spec | ar.uba.dc.jolden.mst.BlueReturn BlueRule(ar.uba.dc.jolden.mst.Vertex,ar.uba.dc.jolden.mst.Vertex) | CreationSite #0 | \_\_r5\_\_f\_\_array\_\_f\_\_size, \_\_r5\_\_f\_\_size, \_\_r20\_\_f\_\_mindist, \_\_r1\_\_f\_\_size, \_\_r17\_\_f\_\_mindist, \_\_r1\_\_f\_\_array\_\_f\_\_size, vlist\_\_f\_\_mindist |
+| MST.spec | void mainParameters(int,boolean,boolean) | CreationSite #0 | \_\_r16\_\_f\_\_count, \_\_r16\_\_f\_\_value\_\_f\_\_size, \_\_r12\_\_f\_\_count, \_\_r12\_\_f\_\_value\_\_f\_\_size, \_\_r8\_\_f\_\_count, \_\_r8\_\_f\_\_value\_\_f\_\_size, \_\_r3\_\_f\_\_count, \_\_r3\_\_f\_\_value\_\_f\_\_size, pVertices, \_\_r25\_\_f\_\_count, \_\_r25\_\_f\_\_value\_\_f\_\_size |
+| MST.spec | void mainParameters(int,boolean,boolean) | CreationSite #1 | \_\_r16\_\_f\_\_count, \_\_r16\_\_f\_\_value\_\_f\_\_size, \_\_l0, \_\_r12\_\_f\_\_count, \_\_r12\_\_f\_\_value\_\_f\_\_size, \_\_r8 |\_\_f\_\_count, \_\_r8\_\_f\_\_value\_\_f\_\_size, \_\_r3\_\_f\_\_count, \_\_r3\_\_f\_\_value\_\_f\_\_size
+| MST.spec | void parseCmdLine(java.lang.String[]) | CreationSite #0 | arg\_\_f\_\_value\_\_f\_\_size |
+| MST.spec | void parseCmdLine(java.lang.String[]) | CallSite #1 | arg\_\_f\_\_value\_\_f\_\_size, i |
+
+
+| First Header | Second Header |
+| ------------- | ------------- |
+| Content Cell | Content Cell |
+| Content Cell | Content Cell |
 
 
 Then go again to jconsume/java-project and run the following command:
