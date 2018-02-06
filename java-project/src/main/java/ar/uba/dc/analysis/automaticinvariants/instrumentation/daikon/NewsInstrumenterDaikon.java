@@ -1584,6 +1584,37 @@ class NewsInstrumenterDaikon extends LoopFinder {
 			
 			// Agrega los parametros extras (por ejemplo, iteradores)
 			allParams.addAll(extraParams);
+			
+			
+			
+			//Solo nos queremos quedar con las "hojas" de los parametros, con las variables enteras
+			//Si las derived variables son objetos, seguimos recorriendo el arbol
+			Stack<ListDIParameters> list_list_params = new Stack<ListDIParameters>();
+			
+			if(!extraParams.isEmpty())
+				list_list_params.push(extraParams);
+
+			
+			while(!list_list_params.isEmpty())
+			{
+				ListDIParameters list_params = list_list_params.pop();
+				Iterator it = list_params.iterator();
+				while(it.hasNext())
+				{
+					DIParameter dip = (DIParameter) it.next();					
+					ListDIParameters list_derived = dip.getDerivedVariables2();
+					if(list_derived.isEmpty())
+					{
+						inductivesFake.add(dip.getName());
+					}
+					else
+					{
+						
+						list_list_params.push(list_derived);
+					}
+				}
+			}
+			
 			// OJO allParams.filter(inductivesInfo);
 			
 			// Aplico opcionalmente las inductivas aqui

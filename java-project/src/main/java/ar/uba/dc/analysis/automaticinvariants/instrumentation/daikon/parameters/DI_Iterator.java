@@ -48,6 +48,7 @@ public class DI_Iterator extends DIParameter {
 			vn = "cont"+vn;
 		cont  = new DI_Int(vn);
 		this.derivedVars.add(cont);
+		this.derivedVarsForSpec.add(cont);
 	}
 
 	/**
@@ -62,6 +63,7 @@ public class DI_Iterator extends DIParameter {
 			vn = "cont"+vn;
 		cont  = new DI_Int(vn);
 		this.derivedVars.add(cont);
+		this.derivedVarsForSpec.add(cont);
 	}
 	
 

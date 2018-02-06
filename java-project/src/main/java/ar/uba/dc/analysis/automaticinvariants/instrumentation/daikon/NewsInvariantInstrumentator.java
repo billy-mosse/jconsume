@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
+import java.util.TreeSet;
 import java.util.Vector;
 
 import ar.uba.dc.analysis.automaticinvariants.inductives.InductivesFinder;
@@ -685,9 +686,9 @@ public class NewsInvariantInstrumentator {
 		
 		InductiveVariablesInfo IVInfo = getInductivesReader().getiInfo(callSite);
 		
-		List paramInitFil = new Vector(), 
-		                 paramFil = new Vector(), 
-						 argFil=new Vector();
+		Set paramInitFil = new TreeSet(), 
+		                 paramFil = new TreeSet(), 
+						 argFil=new TreeSet();
 		
 				
 		Iterator itP = params.iterator();
@@ -974,12 +975,19 @@ public class NewsInvariantInstrumentator {
 		
 		newParamInits.addAll(paramInitFil);
 		
+
+		List argList = new ArrayList();
+		argList.addAll(argFil);
 		
+		List paramList = new ArrayList();
+		paramList.addAll(paramFil);
 		
+		List paramInitList = new ArrayList();
+		paramInitList.addAll(paramInitFil);
 		
-		return new CallSiteMapInfo(argFil,
-				                   paramFil,
-								   paramInitFil, 
+		return new CallSiteMapInfo(argList,
+				                   paramList,
+								   paramInitList, 
 								   m, nameClass);
 
 	}

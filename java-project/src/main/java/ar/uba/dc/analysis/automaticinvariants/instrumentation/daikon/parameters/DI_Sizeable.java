@@ -27,9 +27,9 @@ public class DI_Sizeable extends DIParameter {
 		String vn=var.getName();
 		
 		if(!vn.startsWith("_f_"))
-			vn =  "size_"+vn;
+			vn =  vn + "__f__size";
 		else
-			vn =  "size"+vn;
+			vn =  vn + "__f__size";
 		sVar = new DI_Int(vn);
 		this.derivedVarsForSpec.add(sVar);
 		
@@ -48,9 +48,9 @@ public class DI_Sizeable extends DIParameter {
 		String vn=var.getName();
 		
 		if(!vn.startsWith("_f_"))
-			vn =  "size_"+vn;
+			vn =  vn +  "__f__size";
 		else
-			vn =  "size"+vn;
+			vn =  vn + "__f__size";
 		sVar = new DI_Int(vn);
 		this.derivedVarsForSpec.add(sVar);
 	}
