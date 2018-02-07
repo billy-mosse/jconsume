@@ -68,7 +68,7 @@ Execution
 
 Here we'll present several analysis toy examples and some of real programs (Em3d and MST)
 
-Toy example
+Toy examples
 --------
 
 **Ins0**
@@ -154,7 +154,7 @@ There are more toy examples, under the name Ins#n ¡Explore them! We will contin
 
 ______________________________________________
 
-MST
+**MST**
 
 This is a real world program [...]
 
@@ -183,11 +183,11 @@ Go to java-project/spec/fullreferences/ar/uba/dc/jolden/mst. Several inductive v
 
 TODO: explain what you must do with addEdges CallSite #3 binding 
 
-In CallSite #3, the binding need the following change:
+In Graph.spec, method void "addEdges(int)", CallSite #3 (callee is "ar.uba.dc.jolden.mst.Hashtable: void put(java.lang.Object,java.lang.Object)"), the binding needs the following change:
 
 \_\_r1\_\_f\_\_array\_\_f\_\_size to this\_\_f\_\_nodes\_\_f\_\_size
 
-This is not a bug but an automated feature that is missing in the code [EXPAND]
+This is not a bug but an automated feature that is missing in the code.
 
 
 After doing all this, go again to jconsume/java-project and run the following command:
@@ -195,4 +195,29 @@ After doing all this, go again to jconsume/java-project and run the following co
 ```sh memory.sh --program "ar.uba.dc.jolden.mst.MST" --ir --memory```
 
 This generates the memory consumption analysis. Results can be seen in java-project/results/rinard/report_ar.uba.dc.jolden.mst.MST/index.html
+
+______________________________________________
+
+Paper programs
+
+**Program 1**
+
+Go to java-project and run the following command:
+
+```sh invariants_IM.sh "ar.uba.dc.paper.Program1" 10```
+
+This generates automatic invariants for the classes used in invariants/spec/fullreferences/
+
+Ins4 uses ListC.class and there is an inductive variable that must be removed. We are currently tweaking th inductives analysis. In the future it will output a more adjusted over approximation of inductive variables.
+
+Go to java-project/spec/fullreferences/ar/uba/dc/paper/Program1.spec and:
+
+Remove "\_\_r1\_\_f\_\_size" from CreationSite #0 and CallSite #0 of void "line(ar.uba.dc.paper.A[][],int)"" 
+
+
+Then go again to jconsume/java-project and run the following command:
+
+```sh memory.sh --program "ar.uba.dc.paper.Program1" --ir --memory```
+
+This generates the memory consumption analysis. Results can be seen in java-project/results/rinard/report_ar.uba.dc.paper.Program1/index.html
 
