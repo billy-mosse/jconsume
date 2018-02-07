@@ -58,8 +58,6 @@ To generate summaries in a graph format the tool uses the dot command included i
 Eclipse
 =======================
 
-Por ahora estamos pisando el file ReachableMethods de soot con uno nuestro, que se encuentra en target/classes/soot/jimple/toolkits/callgraph.
-
 If you run the tool from eclipse instead of from the command line, you have to replace soot's ReachableMethods.class by our custom one, that is located in target/lasses/soot/jimple/toolkits/callgraph. For that, you have to add it as a User Entry in Classpath and then put it first in Order and Export.
 
 
