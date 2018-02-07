@@ -20,7 +20,7 @@ The document is divided in several sections::
 		5.1) Introduction
 		5.2) Some examples
 
-Dependencias
+Dependencies
 ============
 
 Maven
