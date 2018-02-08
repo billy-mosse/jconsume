@@ -13,9 +13,9 @@ The document is divided in several sections::
 		1.1) Maven
 		1.2) Barvinok
 		1.3) Graphviz
-	2) Project's structure
-	3) Developed tools
-	4) Tool configuration
+	2) Project's structure (in construction)
+	3) Developed tools (in construction)
+	4) Tool configuration (in construction)
 	5) Execution
 		5.1) Introduction
 		5.2) Some examples
@@ -60,6 +60,50 @@ Eclipse
 
 If you run the tool from eclipse instead of from the command line, you have to replace soot's ReachableMethods.class by our custom one, that is located in target/lasses/soot/jimple/toolkits/callgraph. For that, you have to add it as a User Entry in Classpath and then put it first in Order and Export.
 
+
+Project structure
+=======================
+
+The project uses the structure suggested by maven as a base for the development. The folders are organized in the following way:
+
+- src/main/java: it contains tool's source files. In particular, the folder is organized in different packages:
+	- ar.uba.dc.analysis:
+		Code for escape and memory analysis
+	- ar.uba.dc.barvinok:
+		Code for communicating with barvinok's iscc calculator via the command line. The code is also used to parse and process the results.
+	- ar.uba.dc.config:
+		Code for generating the application's configuration, based on the configuration.properties file.
+		The tool uses the commons-configuration library, of apache (http://commons.apache.org/configuration/)
+	- ar.uba.dc.invariant:
+		Classes used to implement the invariant provider. These classes make possible 4 different formats:
+			- simple: es un diccionario <statement, invariant>
+			- fast: permite definir un archivo .spec donde no se permiten referencias a otros invariantes
+			- simple-reference: permite definir un archivo .spec donde se permiten referencias pero no se resuelve la clausura transitiva de las mismas
+			- full-reference: permite definir un archivo .spec donde se resuelven las clausuras transitivas
+		A diferencia del formato simple, para generar los invariantes de los otros tres formatos, se compila el archivo .spec de input. El formato del archivo es el mismo para los 3 tipos de invariantes compilables
+		Para mas informacion referirse al codigo fuente y propiedad "invariants.provider" del archivo application.properties. 
+	- ar.uba.dc.soot:
+		Contiene clases desarrolladas que involucran el uso del Framework de analisis de codigo soot (http://www.sable.mcgill.ca/soot/)
+	- ar.uba.dc.tools:
+		Contiene las herramientas auxiliares que fueron desarrolladas. 
+		Dentro de las herramientas no se incluyen los analisis de escape ni de consumo.
+		Para mas informacion ver la seccion "Herramientas desarrolladas"		 
+	- ar.uba.dc.util:
+		Clases utilitarias que resuelven funcionalidad comun a todos los modulos
+	- soot.jimple.toolkits.callgraph: 
+		Para poder cortar el callgraph y no incluir en el armado del mismo las clases del core de java se 
+		debio agregar este paquete. Esto permitio construir el callgraph de forma mas veloz
+- src/test: Test desarrollados para probar la herramienta. No se recomienda su ejecucion por linea de comandos puesto que algunos fallan. Solo funcionan completamente corriendolos desde eclipse
+- src/main/examples: 
+	Codigo utilizado de ejemplo para correr la herramienta. En el mismo esta el codigo de 
+	los ejemplos motivacionales, em3d, mst y jlayer.
+- bin/: Scripts para correr los analisis y las herramientas auxiliares desarrolladas. Cada script tiene un comentario que explica para que sirve la herramienta
+- invariants/: 
+		Repositorio de invariantes. Las corridas realizadas usan el formato full-reference. Se deja un ejemplo de los otros formatos a modo ilustrativo.
+		El modo full-reference es el más completo pero tambien es el que requiere más tiempo de compilacion. Los otros formatos existen accidentalmente, 
+		fueron una evolucion hasta llegar a tener el full-reference pero se dejaron porque se compilan mas rapido (aunque es mas dificil generalos manualmente).
+- results/: Resultados de las distintas corridas
+- <root>: El root contiene archivos que invocan a los scripts en la carpeta bin pero precargando algunos parametros. Esto facilita la ejecucion de los scripts.	
 
 Execution
 =======================
@@ -134,7 +178,7 @@ This generates automatic invariants for the classes used in invariants/spec/full
 
 Ins4 uses ListC.class and there is an inductive variable that must be removed. We are currently tweaking th inductives analysis. In the future it will output a more adjusted over approximation of inductive variables.
 
-Go to java-project/spec/fullreferences/ar/uba/dc/util/ListC.spec and remove "this__f__size" as an inductive.
+Go to java-project/spec/fullreferences/ar/uba/dc/util/ListC.spec and remove ```this__f__size``` as an inductive everywhere.
 
 
 Then go again to jconsume/java-project and run the following command:
@@ -183,7 +227,7 @@ TODO: explain what you must do with addEdges CallSite #3 binding
 
 In Graph.spec, method void "addEdges(int)", CallSite #3 (callee is "ar.uba.dc.jolden.mst.Hashtable: void put(java.lang.Object,java.lang.Object)"), the binding needs the following change:
 
-\_\_r1\_\_f\_\_array\_\_f\_\_size to this\_\_f\_\_nodes\_\_f\_\_size
+```\_\_r1\_\_f\_\_array\_\_f\_\_size``` to ```this\_\_f\_\_nodes\_\_f\_\_size```
 
 This is not a bug but an automated feature that is missing in the code.
 
@@ -210,7 +254,7 @@ Ins4 uses ListC.class and there is an inductive variable that must be removed. W
 
 Go to java-project/spec/fullreferences/ar/uba/dc/paper/Program1.spec and:
 
-Remove "\_\_r1\_\_f\_\_size" from CreationSite #0 and CallSite #0 of void "line(ar.uba.dc.paper.A[][],int)"" 
+Remove ```\_\_r1\_\_f\_\_size``` from CreationSite #0 and CallSite #0 of void "line(ar.uba.dc.paper.A[][],int)"" 
 
 
 Then go again to jconsume/java-project and run the following command:
