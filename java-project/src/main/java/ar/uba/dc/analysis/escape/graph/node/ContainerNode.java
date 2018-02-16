@@ -145,7 +145,32 @@ public class ContainerNode implements Node {
 	
 	@Override
 	public int compareTo(Node o) {
-		return this.toString().compareTo(o.toString());
+		int ret = this.toString().compareTo(o.toString());
+		if (ret != 0)
+		{
+			return ret;
+		}
+		else
+		{
+			if(this.context != null && o.getContext() == null)
+			{
+				ret = 1;
+			}
+			else
+			{
+				if(this.context == null && o.getContext() != null)
+				{
+					ret = -1;
+				}
+				else
+				{
+					if(this.context != null && o.getContext() != null)
+					{
+						ret = this.context.toString().compareTo(o.getContext().toString());
+					}
+				}
+			}
+		}
+		return ret;
 	}
-
 }
