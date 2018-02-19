@@ -76,12 +76,11 @@ The project uses the structure suggested by maven as a base for the development.
 		The tool uses the commons-configuration library, of apache (http://commons.apache.org/configuration/)
 	- ar.uba.dc.invariant:
 		Classes used to implement the invariant provider. These classes make possible 4 different formats:
-			- simple: es un diccionario <statement, invariant>
-			- fast: permite definir un archivo .spec donde no se permiten referencias a otros invariantes
-			- simple-reference: permite definir un archivo .spec donde se permiten referencias pero no se resuelve la clausura transitiva de las mismas
-			- full-reference: permite definir un archivo .spec donde se resuelven las clausuras transitivas
-		A diferencia del formato simple, para generar los invariantes de los otros tres formatos, se compila el archivo .spec de input. El formato del archivo es el mismo para los 3 tipos de invariantes compilables
-		Para mas informacion referirse al codigo fuente y propiedad "invariants.provider" del archivo application.properties. 
+			- simple: dictionary <statement, invariant>
+			- fast: lets you define a .spec file where references to other invariants are forbidden
+			- simple-reference: lets you define a .spec file where references to other invariants are possible but transitive closures are not solved
+			- full-reference: as last one, but this time transitive closures are solved
+		In contrast to the simple format, to generate the invariants of the other three formats, you must compile the input .spec files. The format of the file is the same for the three types of invariants. For more info check the source code and the "invariants.provider" property of the file application.properties.
 	- ar.uba.dc.soot:
 		Contiene clases desarrolladas que involucran el uso del Framework de analisis de codigo soot (http://www.sable.mcgill.ca/soot/)
 	- ar.uba.dc.tools:
@@ -263,3 +262,10 @@ Then go again to jconsume/java-project and run the following command:
 
 This generates the memory consumption analysis. Results can be seen in java-project/results/rinard/report_ar.uba.dc.paper.Program1/index.html
 
+**Porgram 2**
+
+This runs automatically.
+
+Just run:
+
+```sh full_analysis.sh "ar.uba.dc.paper.Program2" 10```
