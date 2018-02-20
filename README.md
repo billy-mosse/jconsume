@@ -101,8 +101,85 @@ The project uses the structure suggested by maven as a base for the development.
 
 Data flow
 ======================
-![Data Flow](https://github.com/billy-mosse/jconsume/blob/master/java-project/README_files/flow.png)
+![Data Flow](https://github.com/billy-mosse/jconsume/blob/master/java-project/README_files/flow2.png)
 
+What follows is a short summary of what the program does:
+
+
+
+###### Invariants
+--------
+As we want to compute the memory consumption of all methods of the program, we need to infer how many times each statement of a method is un. This is not a number but a polynomial expression that depends on the parameters of the method.
+
+We call those expressions _invariants_ and we compute them with a tool called [Daikon](https://plse.cs.washington.edu/daikon/download/doc/daikon.html).
+
+Daikon's main feature is to generate method invariants (pre and postconditions). We don't want exactly _that_ but we use Daikon via the following trick, described by an example.
+
+Consider the following code:
+
+```
+void m(int p)
+{
+	int n = 42;
+	System.out.println(n + " is an interesting number.");
+
+	int t=0;
+	for(int i=1; i<p;i++)
+	{
+		t+=2;
+		doSomeStuff(t);
+	}
+}
+
+```
+
+We want to know how many invocations to **doSomeStuff(t)** occur, depending on parameter **p**.
+
+We first perform a Live variable analysis to know which variables will be relevant for the invariant. This excludes variable **n**.
+
+Then we perform an inductive analysis to know which variables are the ones that actually count the number of iterations of the loop. Ideally, we get **{i,p}**, but as we are over approximating the memory consumption, a superset also works.
+
+(We have an experimental inductive analysis that basically gets all variable that the loop header condition depends on, but in the release we are over approximating the inductive analysis with the live variable analysis and then remove fake inductives, if any).
+
+Then we 'instrument' the code. For simplicity let's assume that we are only interested in the number of iterations to **doSomeStuff(t)**, though in reality we would be interested also in the call to **System.out.println**. The instrumented code looks like this:
+
+```
+void m(int p)
+{
+	int p_init = p; //NEW STATEMENT
+	int n = 42;
+	System.out.println(n + " is an interesting number.");
+
+	int t=0;
+	for(int i=1; i<p;i++)
+	{
+		t+=2;
+
+		InstrumentedMethod.dummyFunction_1(i,p,p_init, t) //NEW STATEMENT
+		doSomeStuff(t);
+	}
+}
+
+```
+
+What happened? We added a call to a dummy method. _That_ is what we are going to tell daikon to focus on. 
+
+We also added an assignement **p_init = p**. That's because sometimes the parameters change during the run of a method, and we want to generate loop invariants binded to the initial parameters of the method.
+
+Daikon will run the program several times with different parameters (assigned by us), will generate trace information **only** of **InstrumentedMethod.dummyFunction_1(int, int, int, int)**, and will return likely preconditions for it. This method does nothing, so a precondition (or postcondition, it's the same) of the method is actually an invariant of the loop. Between other invariants, we will see these:
+
+
+```p == p_init```
+
+```i >= 1```
+
+```i<p```
+
+```t <= 2*p```
+
+
+
+###### IR
 
 Execution
 =======================
