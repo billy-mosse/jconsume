@@ -61,6 +61,7 @@ Eclipse
 If you run the tool from eclipse instead of from the command line, you have to replace soot's ReachableMethods.class by our custom one, that is located in target/lasses/soot/jimple/toolkits/callgraph. For that, you have to add it as a User Entry in Classpath and then put it first in Order and Export.
 
 
+
 Project structure
 =======================
 
@@ -82,27 +83,26 @@ The project uses the structure suggested by maven as a base for the development.
 			- full-reference: as last one, but this time transitive closures are solved
 		In contrast to the simple format, to generate the invariants of the other three formats, you must compile the input .spec files. The format of the file is the same for the three types of invariants. For more info check the source code and the "invariants.provider" property of the file application.properties.
 	- ar.uba.dc.soot:
-		Contiene clases desarrolladas que involucran el uso del Framework de analisis de codigo soot (http://www.sable.mcgill.ca/soot/)
+		Contains classes developed that use the soot Framework (http://www.sable.mcgill.ca/soot/)
 	- ar.uba.dc.tools:
-		Contiene las herramientas auxiliares que fueron desarrolladas. 
-		Dentro de las herramientas no se incluyen los analisis de escape ni de consumo.
-		Para mas informacion ver la seccion "Herramientas desarrolladas"		 
+		Contains auxiliary tools (as in, not escape nor memory). For more information check "Developed Tools" sections.
 	- ar.uba.dc.util:
-		Clases utilitarias que resuelven funcionalidad comun a todos los modulos
+		Utilitarian classes common to all modules.
 	- soot.jimple.toolkits.callgraph: 
-		Para poder cortar el callgraph y no incluir en el armado del mismo las clases del core de java se 
-		debio agregar este paquete. Esto permitio construir el callgraph de forma mas veloz
-- src/test: Test desarrollados para probar la herramienta. No se recomienda su ejecucion por linea de comandos puesto que algunos fallan. Solo funcionan completamente corriendolos desde eclipse
+		In order to cut the callgraph and not include in its construction classes from the java core, this package had to be included. This let us build the callgraph faster.
+- src/test: Tests developed for the tool. Their execution via de command line is not recommended as some of them fail. It's better to run from eclipse.
 - src/main/examples: 
-	Codigo utilizado de ejemplo para correr la herramienta. En el mismo esta el codigo de 
-	los ejemplos motivacionales, em3d, mst y jlayer.
-- bin/: Scripts para correr los analisis y las herramientas auxiliares desarrolladas. Cada script tiene un comentario que explica para que sirve la herramienta
+	Example programs for the tool to analyze. Some real world programs, like em3d, mst and jlayer are included. For more information check Execution - some examples section.
+ bin/: Some scripts used by the tool.
 - invariants/: 
-		Repositorio de invariantes. Las corridas realizadas usan el formato full-reference. Se deja un ejemplo de los otros formatos a modo ilustrativo.
-		El modo full-reference es el más completo pero tambien es el que requiere más tiempo de compilacion. Los otros formatos existen accidentalmente, 
-		fueron una evolucion hasta llegar a tener el full-reference pero se dejaron porque se compilan mas rapido (aunque es mas dificil generalos manualmente).
-- results/: Resultados de las distintas corridas
-- <root>: El root contiene archivos que invocan a los scripts en la carpeta bin pero precargando algunos parametros. Esto facilita la ejecucion de los scripts.	
+		Invariants repository. We used the full-reference format. In the folder there also are some illustrative examples of the other formats.
+		Full-reference format is the most complete one but it also needs more compilation time. The other formats exist accidentally, as they were part of an evolution to get to the last format. We keep them because they compile faster (although they are harder to manually generate).
+- results/: Escape and memory results.
+
+Data flow
+======================
+![Data Flow](https://github.com/billy-mosse/jconsume/blob/master/java-project/README_files/flow.png)
+
 
 Execution
 =======================
