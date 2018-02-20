@@ -1,7 +1,5 @@
-#!/usr/bin/env bash
-
+#!/bin/bash
 set -e
-
 
 die() {
 
@@ -19,6 +17,19 @@ JCONSUME_PATH=/home/billy/Projects/git/jconsume/java-project
 #cd $JCONSUME_GLOBAL_PATH
 
 #sh doAll.sh $1 $2 $3
+
+
+
+
+if [ -n "$1" ]; then
+	DIRECTORY="results/rinard/escape/json/$1"
+	if [ -d "$DIRECTORY" ]; then
+    	rm -Rf $DIRECTORY
+	fi
+fi
+
+
+
 
 sh invariants_IM.sh $1 $2
 
