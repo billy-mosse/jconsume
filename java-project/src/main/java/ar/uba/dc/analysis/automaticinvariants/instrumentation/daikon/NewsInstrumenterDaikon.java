@@ -14,6 +14,7 @@ import java.util.Vector;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.sun.codemodel.internal.JAssignment;
 import com.sun.jdi.ArrayType;
 
 import ar.uba.dc.analysis.automaticinvariants.inductives.InductivesFilter;
@@ -40,6 +41,7 @@ import soot.SootMethod;
 import soot.Type;
 import soot.Unit;
 import soot.Value;
+import soot.ValueBox;
 import soot.VoidType;
 import soot.jimple.AnyNewExpr;
 import soot.jimple.AssignStmt;
@@ -60,6 +62,8 @@ import soot.jimple.NullConstant;
 import soot.jimple.SpecialInvokeExpr;
 import soot.jimple.StaticInvokeExpr;
 import soot.jimple.Stmt;
+import soot.jimple.internal.JInvokeStmt;
+import soot.jimple.internal.JimpleLocalBox;
 import soot.jimple.toolkits.annotation.logic.Loop;
 import soot.jimple.toolkits.annotation.logic.LoopFinder;
 import soot.toolkits.graph.CompleteUnitGraph;
@@ -248,7 +252,7 @@ class NewsInstrumenterDaikon extends LoopFinder {
 	 * @return
 	 */
 	protected SootMethod crearMetodo(String insSite, SootClass c, SootMethod mOrig,
-		String name, ListDIParameters allParams, InductiveVariablesInfo IVInfo, InstrumentedMethodClass ins, SootClass InstrumentedMethodClass) {
+		String name, ListDIParameters allParams, InductiveVariablesInfo IVInfo, InstrumentedMethodClass ins, SootClass InstrumentedMethodClass, List<Value> inits) {
 		
 		
 		Vector vTypes = new Vector();
@@ -270,6 +274,8 @@ class NewsInstrumenterDaikon extends LoopFinder {
 		}
 		else
 		{
+			
+			//TODO HACK Agrego los objetos o los fields?
 			paramsExp.addAll(allParams.toList());
 		}
 		
@@ -283,8 +289,20 @@ class NewsInstrumenterDaikon extends LoopFinder {
 					System.out.print("Problema");
 					System.out.print(var.getType().toString());
 				}
+				
+				boolean isBanned = false;
+				for(Iterator itValue = inits.iterator(); itValue.hasNext();)
+				{
+					Value v = (Value)itValue.next();
+					if (var.toString().equals(v.toString()))
+					{
+						isBanned = true;
+					}
+				}
+				
 				vTypes.add(var.getType());
 				vParams.add(var);
+				
 		}
 		
 		if(vParams.size()>0)
@@ -534,15 +552,19 @@ class NewsInstrumenterDaikon extends LoopFinder {
 			
 			// Body instrumentation loop
 			ListDIParameters extraParams = new ListDIParameters();
+			
+			List<Value> inits = new ArrayList<Value>(); 
 			// processStmt(body, units, analisisVivas, lParameters, lParametersInit, extraParams, s);
-			processStmt(body, units, analisisVivas, analisisInductivas, extraParams, s, ins, InstrumentedMethodClass, body.getMethod().toString());
+			processStmt(body, units, analisisVivas, analisisInductivas, extraParams, s, ins, InstrumentedMethodClass, body.getMethod().toString(), inits);
+			
+			
 			
 			while (stmtIt.hasNext()) {
 				s = (Stmt) stmtIt.next();
 				System.out.println("LINE NUMBER: " + s.getJavaSourceStartLineNumber());
 				Object o = s.getTags();
 				// processStmt(body, units, analisisVivas, lParameters, lParametersInit, extraParams, s);
-				processStmt(body, units, analisisVivas, analisisInductivas, extraParams, s, ins, InstrumentedMethodClass, body.getMethod().toString());
+				processStmt(body, units, analisisVivas, analisisInductivas, extraParams, s, ins, InstrumentedMethodClass, body.getMethod().toString(), inits);
 			}
 			// System.out.println(body.getMethod()+":"+units);
 			List codeInitVars = new Vector();
@@ -780,7 +802,7 @@ class NewsInstrumenterDaikon extends LoopFinder {
 	private void processStmt(Body body, Chain units, 
 						GlobalLive analisisVivas, 
 						InductivesFilter analisisInductivas, 
-						ListDIParameters extraParams, Stmt s, InstrumentedMethodClass ins, SootClass InstrumentedMethodClass, String methodName) {
+						ListDIParameters extraParams, Stmt s, InstrumentedMethodClass ins, SootClass InstrumentedMethodClass, String methodName, List<Value> inits) {
 		
 		
 		boolean isIterator = false;
@@ -811,6 +833,7 @@ class NewsInstrumenterDaikon extends LoopFinder {
 		}
 		if (s instanceof AssignStmt) {
 			AssignStmt as = (AssignStmt) s;
+			String ss = as.getLeftOp().toString();
 			Value exp = as.getRightOp();
 
 			// Si es un NEW se instrumenta como creation site
@@ -822,10 +845,20 @@ class NewsInstrumenterDaikon extends LoopFinder {
 //				List invStmts = instrumentarCSoCallSite("CS", s,
 //						analisisVivas, lParameters, lParametersInit, extraParams, body);
 				List invStmts = instrumentarCSoCallSite("CS", ordenCreationSite, s,
-						analisisVivas, analisisInductivas, lParameters, lParametersInit, extraParams, body, ins, InstrumentedMethodClass, methodName);
+						analisisVivas, analisisInductivas, lParameters, lParametersInit, extraParams, body, ins, InstrumentedMethodClass, methodName, inits);
 				ordenCreationSite++;
 				if (invStmts != null)
 				{
+					
+					//para que si hay algo entre un new y un specialinvoke init no se use al objeto como parametro
+					
+
+					Value v = as.getLeftOp();
+					inits.add(v);
+					
+					
+					
+					
 					units.insertBefore(invStmts, s);
 					adjustAddedCode(units, invStmts);
 				}
@@ -937,7 +970,7 @@ class NewsInstrumenterDaikon extends LoopFinder {
 //				List invStmts = instrumentarCSoCallSite("CC", s, analisisVivas,
 //						lParameters, lParametersInit, extraParams, body);
 				List invStmts = instrumentarCSoCallSite("CC", ordenCallSite, s, analisisVivas,analisisInductivas,
-						lParameters, lParametersInit, extraParams, body, ins, InstrumentedMethodClass, methodName);
+						lParameters, lParametersInit, extraParams, body, ins, InstrumentedMethodClass, methodName, inits);
 				if (invStmts != null) {
 					if(!isInternal(ie) )
 					{
@@ -945,6 +978,39 @@ class NewsInstrumenterDaikon extends LoopFinder {
 					}
 					else
 					{
+						//para que si hay algo entre un new y un specialinvoke init no se use al objeto como parametro
+						
+						if(s.getClass().equals(soot.jimple.internal.ImmediateBox.class))
+						{
+							soot.jimple.internal.ImmediateBox ib = (soot.jimple.internal.ImmediateBox) s;
+							Value v = ib.getValue();
+							inits.remove(v);
+						}
+						else
+						{
+							if(s.getClass().equals(JInvokeStmt.class))
+							{
+								JInvokeStmt as = (JInvokeStmt) s;		
+								List<ValueBox> l = as.getInvokeExpr().getUseBoxes();
+								Object o = l.get(0);
+								if(o.getClass().equals(JimpleLocalBox.class))
+								{
+									Value v =((JimpleLocalBox) o).getValue();
+									inits.remove(v);
+								}
+								else
+								{
+									if(o.getClass().equals(soot.jimple.internal.ImmediateBox.class))
+									{
+										soot.jimple.internal.ImmediateBox ib = (soot.jimple.internal.ImmediateBox) o;
+										Value v = ib.getValue();
+										inits.remove(v);
+									}
+								}
+							}
+						}
+
+						
 						// units.insertBefore(invStmts, s);
 						units.insertAfter(invStmts, s);
 					}
@@ -1318,7 +1384,7 @@ class NewsInstrumenterDaikon extends LoopFinder {
 	private List instrumentarCSoCallSite(String tipo, int orden, Stmt s,
 			GlobalLive analisisVivas,
 			InductivesFilter analisisInductivas, ListDIParameters origLParameters,ListDIParameters origLParametersInit, 
-			ListDIParameters extraParams, Body body, InstrumentedMethodClass ins, SootClass InstrumentedMethodClass, String methodName) {
+			ListDIParameters extraParams, Body body, InstrumentedMethodClass ins, SootClass InstrumentedMethodClass, String methodName, List<Value> inits) {
 		
 		SootClass sc = body.getMethod().getDeclaringClass();
 		String  sLn = Utils.getLineNumber(s);
@@ -1369,39 +1435,47 @@ class NewsInstrumenterDaikon extends LoopFinder {
 		for (Iterator iterLive = vivas.iterator(); iterLive.hasNext();) {
 			Value v = (Value) iterLive.next();
 			
-			//me quedo solo con los "enteros" 20121219 pero no se si es muy correcto esto
-			if(!Utils.isObject(v))
+			
+			if(!inits.contains(v))
 			{
-				if(v instanceof Local)
+				//me quedo solo con los "enteros" 20121219 pero no se si es muy correcto esto
+				if(!Utils.isObject(v))
 				{
-					Type t = v.getType();
-					if(DIParameterFactory.isTypeArray(t))
+					if(v instanceof Local)
 					{
-						inductivesFake.add(v.toString() + ".size");
+						Type t = v.getType();
+						if(DIParameterFactory.isTypeArray(t))
+						{
+							inductivesFake.add(v.toString() + ".size");
+						}
+						else
+						{
+							inductivesFake.add(v.toString());
+						}
 					}
-					else
+					else if(v instanceof InstanceFieldRef)
 					{
-						inductivesFake.add(v.toString());
+						InstanceFieldRef ifr = (InstanceFieldRef)v;
+						String base = ifr.getBase().toString();
+						String field = ifr.getField().getName();
+						SootField o = ifr.getField();					
+						Type t = o.getType();
+						String var = base + "." + field;
+						if(DIParameterFactory.isTypeArray(t))
+						{
+							inductivesFake.add(var + ".size");
+						}
+						else
+						{
+							inductivesFake.add(var);
+						}
+	
 					}
 				}
-				else if(v instanceof InstanceFieldRef)
-				{
-					InstanceFieldRef ifr = (InstanceFieldRef)v;
-					String base = ifr.getBase().toString();
-					String field = ifr.getField().getName();
-					SootField o = ifr.getField();					
-					Type t = o.getType();
-					String var = base + "." + field;
-					if(DIParameterFactory.isTypeArray(t))
-					{
-						inductivesFake.add(var + ".size");
-					}
-					else
-					{
-						inductivesFake.add(var);
-					}
-
-				}
+			}
+			else
+			{
+				System.out.println("Baneado!");
 			}
 			
 		}
@@ -1414,8 +1488,24 @@ class NewsInstrumenterDaikon extends LoopFinder {
 			
 			for (Iterator iter = localVivas.iterator(); iter.hasNext();) {
 				Local viva = (Local) iter.next();
+				
+				boolean isBanned = false;
+				for(Iterator itValue = inits.iterator(); itValue.hasNext();)
+				{
+					Value v = (Value)itValue.next();
+					//No esta bueno comparar strings...aunque no se me ocurre un caso donde haya colision de nombres de variables
+					//porque no puede ser que entre un create y un init se cambie el contexto
+					//TODO explicar mejor esto
+					if (viva.toString().equals(v.toString()))
+					{
+						isBanned = true;
+					}
+				}
 				// OJO addParameter(body, paramsIntru, analisisInductivas, vivas, viva,viva);
-				addParameter(body, paramsIntru, (InductivesFilter) analisisVivas, vivas, viva,viva, false);
+				
+				
+				if (!isBanned)
+					addParameter(body, paramsIntru, (InductivesFilter) analisisVivas, vivas, viva,viva, false);
 			}
 		}
 		else
@@ -1426,8 +1516,27 @@ class NewsInstrumenterDaikon extends LoopFinder {
 				Local var =Utils.getLocalForName(body.getLocals(),sVar);
 				if(var!=null)
 				{
-					DIParameter dip = DIParameterFactory.createDIParameter(var,body,true);
-					if(dip!=null) paramsIntru.add(dip);
+					
+					
+					
+					boolean isBanned = false;
+					for(Iterator itValue = inits.iterator(); itValue.hasNext();)
+					{
+						Value v = (Value)itValue.next();
+						//No esta bueno comparar strings...aunque no se me ocurre un caso donde haya colision de nombres de variables
+						//porque no puede ser que entre un create y un init se cambie el contexto
+						//TODO explicar mejor esto
+						if (var.toString().equals(v.toString()))
+						{
+							isBanned = true;
+						}
+					}
+					
+					if(!isBanned)
+					{
+						DIParameter dip = DIParameterFactory.createDIParameter(var,body,true);
+						if(dip!=null) paramsIntru.add(dip);
+					}
 					/* Antes filtraba por aqui los parameters ahora lo hace en filter
 					dip = origLParameters.getParameterFromLocal(var);
 					if(dip!=null)
@@ -1504,7 +1613,7 @@ class NewsInstrumenterDaikon extends LoopFinder {
 			//no, ccArgs es para los metodos
 			ListDIParameters args = getCallArgs(s,body,null);
 			
-			ListDIParameters enterizedArgs = getEnterizedFields(args, body);
+			//ListDIParameters enterizedArgs = getEnterizedFields(args, body);
 			
 			//esto esta andando pero deberian estar enterizados.
 			//tal vez la igualdad podria ser por objetos y en base a eso los enterizo durante el consumo de memoria,
@@ -1622,7 +1731,7 @@ class NewsInstrumenterDaikon extends LoopFinder {
 			System.out.println("Linea procesada: " + s.toString());
 			// Create a dummy method for the insSite with live variables and field
 			SootMethod sm = crearMetodo(insSite, sc, body.getMethod(), nombreMetodo,
-					allParams, inductivesInfo, ins, InstrumentedMethodClass);
+					allParams, inductivesInfo, ins, InstrumentedMethodClass, inits);
 			
 			
 			
@@ -1661,7 +1770,22 @@ class NewsInstrumenterDaikon extends LoopFinder {
 			System.out.println(s.toString());
 			
 			newsMap.put(insSite, new CreationSiteMapInfo(insSite, orden, allParamsString, nameMethodDec,tipo,creationSiteType,newArrayParamsList.toList(), vivas, inductivesFake, methodName));
-			relevantsMap.put(nameMethodDec, allParams);
+			
+			
+			//aca es donde tengo un bug y no estoy agregando list.size
+			
+			ListDIParametersNoRep ll = (ListDIParametersNoRep) relevantsMap.get(nameMethodDec);
+			if (ll != null)
+			{
+				//las agrega si no estan
+				ll.addAll(allParams);
+			}
+			else
+			{
+				relevantsMap.put(nameMethodDec, allParams);
+			}
+			
+			
 			
 			return invStmts;
 			

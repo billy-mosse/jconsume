@@ -535,7 +535,7 @@ public class NewsInvariantInstrumentator {
 
 	private static void showCreationSites(Map csMap, PrintStream out) {
 
-		out.println("Instumentacion Sites");
+		out.println("Instrumentation Sites");
 		for (Iterator it = csMap.keySet().iterator(); it.hasNext();) {
 			String cs = (String)it.next();
 			

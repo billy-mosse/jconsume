@@ -18,6 +18,8 @@ import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
+
+//Por que esto no es un Set?
 public class ListDIParametersNoRep extends ListDIParameters {
 	/* (non-Javadoc)
 	 * @see java.util.Collection#add(java.lang.Object)

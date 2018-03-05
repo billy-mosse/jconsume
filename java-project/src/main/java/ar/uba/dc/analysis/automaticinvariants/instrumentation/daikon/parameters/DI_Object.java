@@ -157,7 +157,7 @@ private void generateFilteredFieldReferences2(SootClass c, Body body, Local this
 		//	para cada campo que es int, collection, array o String habria que
 		// 	generar una variable nueva, con el codigo que obtiene el size y usarlo de
 		// argumento
-		derivedVars.clear();
+	derivedVarsForSpec.clear();
 		for (Iterator itChain = filter.iterator(); itChain.hasNext();) {
 
 			// Value v= (Value)itChain.next();
@@ -307,7 +307,21 @@ private void generateFilteredFieldReferences2(SootClass c, Body body, Local this
 		
 		//Por ahora no enterizamos objetos
 		//capaz haga falta solo para los parametros
-		return derivedVarsForSpec.isEmpty();
+		
+		
+		//A ver volvamos a entender esto
+		//hay dos conjuntos
+		//este, que deberia estar vacio y es un hack, para InstrumentedMethod, porque le estamos pasando objetos
+		//Y derivedVarsForSpec, que tiene los fields para escribir las cosas
+		return !derivedVars.isEmpty();
+	}
+	
+	@Override
+	public boolean hasDerivedVariables2() {
+		
+		//Por ahora no enterizamos objetos
+		//capaz haga falta solo para los parametros
+		return !derivedVarsForSpec.isEmpty();
 	}
 	/**
 	 * @return Returns the fields.
