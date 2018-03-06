@@ -477,7 +477,11 @@ public class NewsInvariantInstrumentator {
 			e.printStackTrace();
 			}
 	}
-	
+	/**
+	 * Writes the dummy methods for Instrumentation in the corresponding file
+	 * @param opt
+	 * @param fullOutputDir
+	 */
 	public static void writeInstrumentedMethods(String opt, String fullOutputDir)
 	{
 	    Iterator it = instrumentedMethodClasses.entrySet().iterator();
@@ -532,7 +536,11 @@ public class NewsInvariantInstrumentator {
 				}
 		}
 	}
-
+	/**
+	 * FORMAT: InsSite=#id;[liveVars];method-belongs-to;CC/CS;csArrayParams
+	 * @param csMap
+	 * @param out
+	 */
 	private static void showCreationSites(Map csMap, PrintStream out) {
 
 		out.println("Instrumentation Sites");

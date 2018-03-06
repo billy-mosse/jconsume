@@ -117,7 +117,7 @@ public class CSReader{
 	}
 	void analyzeLine(String line)
 	{
-		if(!line.startsWith("Instumentacion ") && !line.startsWith("--"))
+		if(!line.startsWith("Instrumentation ") && !line.startsWith("--"))
 		{
 			parseInfo(line);
 		}
