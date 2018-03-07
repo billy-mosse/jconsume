@@ -341,8 +341,6 @@ This generates the memory consumption analysis. Results can be seen in java-proj
 
 **Porgram 2**
 
-This runs automatically.
+Run ```invariants_IM.sh``` with the corresponding parameters and remove ```result``` as an inductive from CreationSite #2 in Op.spec. The file is in the same directory as Program2.spec (which should have just been generated) and Program1.spec (generated before).
 
-Just run:
-
-```sh full_analysis.sh "ar.uba.dc.paper.Program2" 10```
+Then run the memory analysis.
