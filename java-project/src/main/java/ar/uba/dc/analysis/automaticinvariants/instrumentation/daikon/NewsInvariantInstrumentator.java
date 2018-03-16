@@ -694,9 +694,9 @@ public class NewsInvariantInstrumentator {
 		
 		InductiveVariablesInfo IVInfo = getInductivesReader().getiInfo(callSite);
 		
-		Set paramInitFil = new TreeSet(), 
-		                 paramFil = new TreeSet(), 
-						 argFil=new TreeSet();
+		List paramInitFil = new ArrayList(), 
+		                 paramFil = new ArrayList(), 
+						 argFil=new ArrayList();
 		
 				
 		Iterator itP = params.iterator();
