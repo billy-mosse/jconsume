@@ -102,7 +102,7 @@ public class InductivesFinder extends LoopFinder implements InductivesFilter{
 			
 			GlobalLive gl = new GlobalLive(unitGraph);
 			
-			InductivesAnalysis iAna  = new InductivesAnalysis(unitGraph,loops(),gl, blockGraph);
+			NewInductivesAnalysis iAna  = new NewInductivesAnalysis(unitGraph,loops(),gl, blockGraph);
 			
 			System.out.println("Metodo:"+body.getMethod().getSignature());
 			

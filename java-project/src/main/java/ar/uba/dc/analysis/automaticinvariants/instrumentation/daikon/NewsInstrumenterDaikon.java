@@ -1417,6 +1417,8 @@ class NewsInstrumenterDaikon extends LoopFinder {
 		
 		InductiveVariablesInfo inductivesInfo = NewsInvariantInstrumentator.getInductivesReader().getiInfo(insSite);
 		
+		
+		List inductivas = analisisInductivas.getInductivesBefore(s);
 			// // Diego OJO 6/8/2009  GlobalLive analisisVivas2 = (GlobalLive) GLVMain.analysisCache.get(body.getMethod());
 		 List vivas = analisisVivas.getLiveLocalsBefore(s);
 		 // OJO List vivas = analisisInducativas.getInductivesBefore(s);
@@ -1432,7 +1434,7 @@ class NewsInstrumenterDaikon extends LoopFinder {
 		
 		
 		Set inductivesFake = new HashSet<String>();
-		for (Iterator iterLive = vivas.iterator(); iterLive.hasNext();) {
+		for (Iterator iterLive = inductivas.iterator(); iterLive.hasNext();) {
 			Value v = (Value) iterLive.next();
 			
 			
