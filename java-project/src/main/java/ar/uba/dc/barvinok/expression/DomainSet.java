@@ -106,11 +106,14 @@ public class DomainSet {
 			{
 				String inductives = parts[1].substring(parts[1].indexOf("[") + 1, parts[1].indexOf("]"));
 				
-				String[] inductivesArray = inductives.split(",");
-				for(String inductive : inductivesArray)
+				if(inductives.length() > 0)
 				{
-					this.inductives.add(inductive);
-					
+					String[] inductivesArray = inductives.split(",");
+					for(String inductive : inductivesArray)
+					{
+						this.inductives.add(inductive);
+						
+					}
 				}
 			}
 		}
