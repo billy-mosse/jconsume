@@ -1069,26 +1069,32 @@ public class SpecInvariantWriter {
 				
 				 //supongo que tambien lo podria hacer con regular expressions
 				
+				//TODO hacer regexp
 				if(s.contains("size("))
 				{
+					 String t = s.substring(0, s.indexOf("size("));
+					 String var;
 					 for(int j=0; j<s.length(); j++) {
 					     char c = s.charAt(j);
-					     if(c=='+' || c=='-' || c=='*' || c==')') {
+					     if(c=='+' || c=='-' || c=='*' || c==')' && s.indexOf("size(") < j) {
 					    	 StringBuilder str = new StringBuilder(s);
 					    	 str.insert(j, "__f__size");
 					    	 s = str.toString();
 					    	 break;
 					     }
+					 }					 
+					 s= s.replace("size(", "");
+					 s = s.replace(")", "");
+					 
+					 if(t.contains("==") && !(t.contains("+") || t.contains("-")))
+					 {
+						 t = t.substring(0, t.indexOf("=="));
+						 t=t.trim();
+						 s = s + " && " + t + ">=0";
 					 }
 					 
-					 s= s.replace("size(", "");
 				}
-				 
-				if(s.contains("aux_14__f__toString__f__length("))
-				{
-					System.out.println("hola hola");
-				}
-				 
+				  
 				
 				s = s.replace("()", "");
 				s = s.replace(")", "");
