@@ -1,6 +1,6 @@
-Authors: Diego Garbervetsky y Guillermo Mosse
+Authors: Diego Garbervetsky and Guillermo Mosse
 
-Collaborators: Matias Grunberg, Gaston Krasny, Martin Rouaux, Edgardo Zoppi.
+Collaborators: Matias Grunberg, Gaston Krasny, Martin Rouaux and Edgardo Zoppi.
 
 Introduction
 ============
@@ -303,7 +303,7 @@ TODO: explain what you must do with addEdges CallSite #3 binding
 
 In Graph.spec, method void "addEdges(int)", CallSite #3 (callee is "ar.uba.dc.jolden.mst.Hashtable: void put(java.lang.Object,java.lang.Object)"), the binding needs the following change:
 
-```\_\_r1\_\_f\_\_array\_\_f\_\_size``` to ```this\_\_f\_\_nodes\_\_f\_\_size```
+```__r1__f__array__f__size``` to ```this__f__nodes__f__size```
 
 This is not a bug but an automated feature that is missing in the code.
 
@@ -326,9 +326,11 @@ Go to java-project and run the following command:
 
 This generates automatic invariants for the classes used in invariants/spec/fullreferences/
 
-Ins4 uses ListC.class and there is an inductive variable that must be removed. We are currently tweaking th inductives analysis. In the future it will output a more adjusted over approximation of inductive variables.
+Ins4 uses ListC.class and there is an inductive variable that must be removed. We are currently tweaking the inductives analysis. In the future it will output a more adjusted over approximation of inductive variables.
 
 Go to java-project/spec/fullreferences/ar/uba/dc/paper/Program1.spec and:
+
+
 
 Remove ```\_\_r1\_\_f\_\_size``` from CreationSite #0 and CallSite #0 of void "line(ar.uba.dc.paper.A[][],int)"" 
 
@@ -344,3 +346,6 @@ This generates the memory consumption analysis. Results can be seen in java-proj
 Run ```invariants_IM.sh``` with the corresponding parameters and remove ```result``` as an inductive from CreationSite #2 in Op.spec. The file is in the same directory as Program2.spec (which should have just been generated) and Program1.spec (generated before).
 
 Then run the memory analysis.
+
+
+[comment]: <> Test
