@@ -216,7 +216,7 @@ This will calculate what we call the loop invariants [TODO explain elsewhere] an
 Results can be seen in java-project/results/rinard/report_ar.uba.dc.daikon.Ins1/index.html
 
 
-Feel free to explore Ins#N, with #N ranging from 1 to 25.
+**Feel free to explore Ins#N, with #N ranging from 1 to 25.**
 
 Ins3 is temporarily unavailable; descriptions for each example will be added soon.
 
