@@ -215,18 +215,14 @@ This will calculate what we call the loop invariants [TODO explain elsewhere] an
 
 Results can be seen in java-project/results/rinard/report_ar.uba.dc.daikon.Ins1/index.html
 
-______________________________________________
 
+Feel free to explore Ins#N, with #N ranging from 1 to 25.
 
-Some exampled need to be ran in two parts, as the inductives analaysis overapproximates the set of inductive variables. For example, consider the following example:
+Ins3 is temporarily unavailable; descriptions for each example will be added soon.
 
-**Ins2**
+<!-- Some examples need to be ran in two parts, as the inductives analaysis overapproximates the set of inductive variables. For example, consider the following example: -->
 
-Go to java-project and run the following command:
-
-```sh invariants_IM.sh "ar.uba.dc.daikon.Ins4" 10```
-
-This generates automatic invariants for the classes used in invariants/spec/fullreferences/
+<!-- This generates automatic invariants for the classes used in invariants/spec/fullreferences/
 
 Ins4 uses ListC.class and there is an inductive variable that must be removed. We are currently tweaking th inductives analysis. In the future it will output a more adjusted over approximation of inductive variables.
 
@@ -236,12 +232,10 @@ Then go again to jconsume/java-project and run the following command:
 
 ```sh memory.sh --program "ar.uba.dc.daikon.Ins2" --ir --memory```
 
-This generates the memory consumption analysis. Results can be seen in java-project/results/rinard/report_ar.uba.dc.daikon.Ins4/index.html
-
-TODO: add the graph format.
+This generates the memory consumption analysis. Results can be seen in java-project/results/rinard/report_ar.uba.dc.daikon.Ins4/index.html-->
 
 
-______________________________________________
+<!--______________________________________________
 
 
 **Ins4**:
@@ -268,16 +262,19 @@ TODO: add the graph format.
 ______________________________________________
 
 There are more toy examples, under the name Ins#n ¡Explore them! We will continue to add an explain them soon.
-
+-->
 
 ______________________________________________
 
 **MST**
 
-This is a real world program [...]
+This is a real world program!
 
-Go to java-project and run the following command:
+Go to java-project and just run the following command:
 
+```sh full_analysis.sh "ar.uba.dc.jolden.mst.MST" 5```
+
+<!--
 ```sh invariants_IM.sh "ar.uba.dc.daikon.Ins4" 10```
 
 This generates automatic invariants for the classes used in invariants/spec/fullreferences/
@@ -312,17 +309,20 @@ After doing all this, go again to jconsume/java-project and run the following co
 
 ```sh memory.sh --program "ar.uba.dc.jolden.mst.MST" --ir --memory```
 
-This generates the memory consumption analysis. Results can be seen in java-project/results/rinard/report_ar.uba.dc.jolden.mst.MST/index.html
+This generates the memory consumption analysis.-->
 
+Results can be seen in java-project/results/rinard/report_ar.uba.dc.jolden.mst.MST/index.html. They can be compared with our paper "Summary-based inference of quantitative bounds of live heap objects": https://dblp.org/rec/html/journals/scp/BrabermanGHY14
 ______________________________________________
 
 Paper programs
+
+The paper also has some simple examples. They are implemented and can be automatically analyzed; just follow the instructions:
 
 **Program 1**
 
 Go to java-project and run the following command:
 
-```sh invariants_IM.sh "ar.uba.dc.paper.Program1" 10```
+<!--```sh invariants_IM.sh "ar.uba.dc.paper.Program1" 10```
 
 This generates automatic invariants for the classes used in invariants/spec/fullreferences/
 
@@ -337,15 +337,17 @@ Remove ```\_\_r1\_\_f\_\_size``` from CreationSite #0 and CallSite #0 of void "l
 
 Then go again to jconsume/java-project and run the following command:
 
-```sh memory.sh --program "ar.uba.dc.paper.Program1" --ir --memory```
+```sh memory.sh --program "ar.uba.dc.paper.Program1" --ir --memory```-->
+
+```sh full_analysis.sh --program "ar.uba.dc.paper.Program1" --ir --memory```
 
 This generates the memory consumption analysis. Results can be seen in java-project/results/rinard/report_ar.uba.dc.paper.Program1/index.html
 
 **Porgram 2**
 
-Run ```invariants_IM.sh``` with the corresponding parameters and remove ```result``` as an inductive from CreationSite #2 in Op.spec. The file is in the same directory as Program2.spec (which should have just been generated) and Program1.spec (generated before).
+Same as before, but change the 1 for a 2.
 
-Then run the memory analysis.
+<!--Run ```invariants_IM.sh``` with the corresponding parameters and remove ```result``` as an inductive from CreationSite #2 in Op.spec. The file is in the same directory as Program2.spec (which should have just been generated) and Program1.spec (generated before).-->
 
 
 <!-- <> Test -->
