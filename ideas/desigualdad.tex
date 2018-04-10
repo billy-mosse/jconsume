@@ -1,0 +1,47 @@
+\documentclass[10pt,a4paper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\begin{document}
+
+Sobre la geometría tropical:
+
+La max plus algebra es una estructura (casi un anillo), con dominio $\mathbb{R} \cup \{\infty\}$donde la operación $\oplus$ es el máximo y la operación $\odot$ es la suma usual. (Ver 'First steps' en el git)
+
+Con un poco de trabajo, cambiando las cosas, uno define una operación de resta que tiene sentido y anda bien. Ver el libro 'Simetrizacion - resta' en el git.
+
+Se inyecta al anillo (creo) en el conjunto de pares y se definen las operaciones ahí, pudiéndose definir también una resta que es un swap, y se cocienta por una relación de equivalencia....
+
+[TODO: expandir]
+
+
+Esto permite hacer álgebra lineal! Trabajar con matrices y tomar determinantes.
+
+
+
+Sobre la desigualdad/identidad que quiero probar:
+
+como hay que tomar máximos y sumas, resulta bastante natural trabar con la max-plus algebra, i.e., con geometriá tropical.
+
+
+Para el caso $n=2$ (dos callees) la identidad sale de analizar el determinante de:
+
+\[
+\begin{bmatrix}
+e_1 && e_2\\
+t_1 && t_2
+\end{bmatrix}
+\]
+
+vista como matriz en $\mathbb{S}_{max}$. Más específicamente, la cuenta \textbf{es} la norma del determinante [TODO: escribir] \\
+
+
+Mi idea es que podemos usar esto para probar de manera elegante y sin tanto bardo lo que queremos [TODO: escribir la identidad] \bigskip
+
+
+Para el caso general, estoy usando matrices rectangulares (agregar columnas?). Está construida la noción de determinante de matriz rectangular. Es más, hay \textit{varias} construcciones. Yo estoy mirando la de Radic, que está en el git con el nombre de 'Matrices rectangulares - Radic'.
+
+Hay algunas propiedades interesantes de determinantes de matrices con dos filas que podría usar!
+
+\end{document}
