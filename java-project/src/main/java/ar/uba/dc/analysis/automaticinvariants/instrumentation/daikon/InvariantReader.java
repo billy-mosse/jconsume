@@ -98,6 +98,8 @@ public class InvariantReader {
 					|| element.contains(" one of ") //otro hack que se podria evitar
 					|| element.contains("== []") //hack horrible. TODO: ver como hacer para deshabilitar igualdades de arrays!!
 					|| element.contains(" null") //sobre nulls. Deberia usar una opcion de daikon pero no la encontre
+					|| element.contains("9999999") //Hack temporal para MST
+					|| element.contains("sorted by")
 					//|| (element.contains("[") && element.contains("]")) //accediendo a un array
 					|| matchesAccessArray
 					|| containsDouble(element)
