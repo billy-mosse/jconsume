@@ -314,7 +314,7 @@ This generates the memory consumption analysis.-->
 Results can be seen in java-project/results/rinard/report_ar.uba.dc.jolden.mst.MST/index.html. They can be compared with our paper "Summary-based inference of quantitative bounds of live heap objects": https://dblp.org/rec/html/journals/scp/BrabermanGHY14
 ______________________________________________
 
-Paper programs
+**Paper programs**
 
 The paper also has some simple examples. They are implemented and can be automatically analyzed; just follow the instructions:
 
