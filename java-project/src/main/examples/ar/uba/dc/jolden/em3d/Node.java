@@ -1,4 +1,5 @@
 package ar.uba.dc.jolden.em3d;
+
 import java.util.Enumeration;
 import java.util.Random;
 
@@ -15,7 +16,7 @@ final class Node
   /**
    * The next node in the list.
    **/
-  private Node next;
+  Node next;
   /**
    * Array of nodes to which we send our value.
    **/
@@ -211,18 +212,8 @@ final class Node
   @SuppressWarnings("unchecked")
 Enumeration elements()
   {
-    // a local class that implements the enumeration
-    class Enumerate implements Enumeration {
-      private Node current;
-      public Enumerate() { this.current = Node.this; } //temporal = 0, residual = 0
-      public boolean hasMoreElements() { return (current != null); } //temporal = 0, residual = 0
-      public Object nextElement() { //temporal = 0, residual = 0
-	Object retval = current;
-	current = current.next;
-	return retval;
-      }
-    }
-    return new Enumerate();
+    
+    return new Enumerate(this);
   }
 
   /**
