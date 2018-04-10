@@ -283,13 +283,8 @@ class NewsInstrumenterDaikon extends LoopFinder {
 		
 		for (Iterator itParams = paramsExp.iterator(); itParams.hasNext();) {
 			Local var = (Local) itParams.next();
-				if(!var.getType().equals(IntType.v()))
-				{
-					//ya no es mas un problema!
-					System.out.print("Problema");
-					System.out.print(var.getType().toString());
-				}
-				
+			
+			
 				boolean isBanned = false;
 				for(Iterator itValue = inits.iterator(); itValue.hasNext();)
 				{
@@ -1377,9 +1372,14 @@ class NewsInstrumenterDaikon extends LoopFinder {
 
 	
 	
-
+	private boolean isLocalInner(Value v)
+	{
+		return v.getType().toString().contains("$");
+	}
+	
 	//Un pequeño comentario: antes primero haciamos el analisis de relevantes
 	//y despues enterizabamos los fields "encontrados"
+	
 	
 	private List instrumentarCSoCallSite(String tipo, int orden, Stmt s,
 			GlobalLive analisisVivas,
@@ -1506,7 +1506,8 @@ class NewsInstrumenterDaikon extends LoopFinder {
 				// OJO addParameter(body, paramsIntru, analisisInductivas, vivas, viva,viva);
 				
 				
-				if (!isBanned)
+				
+				if (!isBanned && !isLocalInner(viva))
 					addParameter(body, paramsIntru, (InductivesFilter) analisisVivas, vivas, viva,viva, false);
 			}
 		}
@@ -1534,7 +1535,7 @@ class NewsInstrumenterDaikon extends LoopFinder {
 						}
 					}
 					
-					if(!isBanned)
+					if(!isBanned && !isLocalInner(var))
 					{
 						DIParameter dip = DIParameterFactory.createDIParameter(var,body,true);
 						if(dip!=null) paramsIntru.add(dip);
@@ -1634,7 +1635,16 @@ class NewsInstrumenterDaikon extends LoopFinder {
 			// ccArgsMap.put(insSite, argsMapList);
 			
 			
-			paramsIntru.addAll(args);
+			//paramsIntru.addAll(args);
+			for(Object arg_o : args)
+			{
+				DIParameter arg = (DIParameter) arg_o;
+				if (!isLocalInner(arg.getLocal()))
+				{
+					paramsIntru.add(arg);
+				}
+			}
+			
 //			for (Iterator iter = argsMapList.iterator(); iter.hasNext();) {
 //				Object[] element = (Object[]) iter.next();
 //				paramsIntru.add(element[0]);
@@ -1678,23 +1688,59 @@ class NewsInstrumenterDaikon extends LoopFinder {
 			}
 			
 			// Agrega los parametros al body del metodo 
+			//tal vez aca tenga que sacar los que tienen signo de pesos
 			paramsIntru.addToBody(body);
 			
 			ListDIParametersNoRep allParams = new ListDIParametersNoRep();
 			
 			//	Agrego los params_init al metodo a instrumentar
-			allParams.addAll(paramsIntru);
-			allParams.addAll(lParametersInit);
+			//allParams.addAll(paramsIntru);
+			
+			for(Object param_o : paramsIntru)
+			{
+				DIParameter param = (DIParameter) param_o;
+				if (!isLocalInner(param.getLocal()))
+				{
+					allParams.add(param);
+				}
+			}
+			
+			for(Object arg_o : lParametersInit)
+			{
+				DIParameter arg = (DIParameter) arg_o;
+				if (!isLocalInner(arg.getLocal()))
+				{
+					allParams.add(arg);
+				}
+			}
+			
+			for(Object arg_o : lParameters)
+			{
+				DIParameter arg = (DIParameter) arg_o;
+				if (!isLocalInner(arg.getLocal()))
+				{
+					allParams.add(arg);
+				}
+			}
+			
+			for(Object arg_o : extraParams)
+			{
+				DIParameter arg = (DIParameter) arg_o;
+				if (!isLocalInner(arg.getLocal()))
+				{
+					allParams.add(arg);
+				}
+			}
 			
 			//no tengo que agregar solo los parameters_init
 			//sino tambien los parameters
 			//asi tengo la igualdad r = r_init en el invariante
 			//(ejemplo de Ins19)
-			allParams.addAll(lParameters);
+			//allParams.addAll(lParameters);
 			
 			
 			// Agrega los parametros extras (por ejemplo, iteradores)
-			allParams.addAll(extraParams);
+			//allParams.addAll(extraParams);
 			
 			
 			
