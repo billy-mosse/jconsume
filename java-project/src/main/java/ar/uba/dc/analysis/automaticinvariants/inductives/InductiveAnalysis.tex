@@ -1,0 +1,43 @@
+\documentclass[10pt,a4paper,twoside]{report}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\begin{document}
+
+\textbf{Inductive Analysis}\\
+
+La idea es sobreaproximar las variables inductivas haciendo un dependence analysis, usando como base las variables del header de los loops. \\
+
+Va a ser un Backward Flow Analysis, porque....tengo que ir para atrás: una variable $a$ depende de $b$ en cierto program point si $b$ fue usado \textit{antes} para modificar el valor de $a$. \\
+
+Hay que definir los siguientes objetos:
+
+\begin{itemize}
+	\item genSet: se define para cada nodo (statement).
+	\item killSet: ídem killSet
+	\item in
+	\item out
+	\item Función de transferencia:
+	\item Operación suma del reticulado
+\end{itemize}
+
+y probar que todo anda bien.
+
+
+\begin{itemize}
+	\item genSet: el genSet de cada nodo (cada program point) va a ser vacío salvo que sea el header de un loop (o la creación de un array, que tratamos como el header de un loop)
+	\item killSet: por alguna razón Diego lo define como vacío. Yo habría pensado que debería tener algo, pero quizás lo pienso porque me confundo con el Live Variable Analysis.
+	\item La operación suma va a ser la unión, me parece, porque queremos quedarnos con todas las posibles variables inductivas.
+	\item Función de transferencia: gen(n) $\cup\ (X \setminus kill(n))$ , creo que es por defecto....pero debería hacer algo más complicado no?
+\end{itemize}
+
+Es backwards.
+
+En cada statement yo debería tener guardadas las variables inductivas (en el genSet) y además si el statement pisa el valor de una inductiva usando otras vars, las guardo como inductivas también; eso es lo que paso al out.
+
+
+
+
+
+\end{document}
