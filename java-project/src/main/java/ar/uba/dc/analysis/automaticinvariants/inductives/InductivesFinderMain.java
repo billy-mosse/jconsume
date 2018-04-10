@@ -34,8 +34,34 @@ public class InductivesFinderMain {
         Scene.v().tryLoadClass("java.lang.Object", 0);
 		// Declare 'public class HelloWorld'
 
-		String[] optsDefault = { "-app", "-f", "c",
-				"-w",
+		String[] optsDefault = { 
+				
+				"-app", 
+				"-f", "c", //J es jimple, j es jimp (jimple simplificado)
+
+				//"-version",
+				"-p", "cg", "enabled:true",
+				
+				
+				//vamos a sacarlo y poner full-resolver
+				"-w", //w es whole program  mode. W es optimizations
+				//"-ignore-resolution-errors",
+				
+				
+				"-write-local-annotations",
+				//"full-resolver",
+				//"-validate", //a ver que onda
+				 
+				
+				 //lo deje a ver que pasa
+				 "-asm-backend",
+				 
+				 //This option sets the JDK version of the standard library being analyzed so that Soot can simulate the native methods in the specific version of the library.
+				 "-p", "cg", "jdkver:8", //lo saque a ver que pasa.
+				 
+				 //verion java del output
+				"-java-version", "1.8",
+
 				"-d",outputDir,
 				"-src-prec","class",
 				"-keep-line-number", 

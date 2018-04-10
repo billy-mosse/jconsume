@@ -64,7 +64,8 @@ public class InductivesAnalysis extends BackwardFlowAnalysis{
 
     //estamos haciendo un analisis de dependencias de valores sobre un analisis de dependencias de control
     
-    //Solo estoy creando un genSet no vacio si estoy creando arrays [no se por que] o si estoy en un condicional
+    // Solo estoy creando un genSet no vacio si estoy creando arrays [no se por que] o si estoy en un condicional
+    // Es porque son los headers de "loops" (un array lo tomo como un loop)
     /**
 	 * @param g
 	 */
@@ -274,6 +275,7 @@ public class InductivesAnalysis extends BackwardFlowAnalysis{
  		FlowSet genSet = ((FlowSet) unitToGenerateSet.get(unit)).clone();
 		
  		FlowSet addSet = emptySet.clone();
+
  		// FlowSet addSet = (FlowSet)genSet.clone();
 		
 		FlowSet inFiltered = emptySet.clone();
@@ -352,7 +354,11 @@ public class InductivesAnalysis extends BackwardFlowAnalysis{
 	                    Value v = box.getValue();
 	                    // AQUI HAY QUE VER QUE NO SEA LOOP INVARIANT
 	                    if(contains(vivas,v) )
-	            			addSet.add(v);
+	                    {
+	                    	//no tiene mucho sentido esto, porque ya venia con el genSet
+	                    	addSet.add(v);
+	                    }
+	            			
 	                }
             	}
             }
@@ -452,6 +458,8 @@ public class InductivesAnalysis extends BackwardFlowAnalysis{
         }
         
         
+        
+        
         for (Iterator iter = genSet.iterator(); iter.hasNext();) {
 			Value v = (Value) iter.next();
 			    if(contains(vivas,v))
@@ -462,7 +470,13 @@ public class InductivesAnalysis extends BackwardFlowAnalysis{
 			Value v = (Value) iter.next();
 			    if(contains(vivas,v))
 				  inFiltered.add(v);
+		    
+			
 		}
+        
+        
+        
+        
         
         //preguntar si estan vivas esta totalmente de mas aca
         for (Iterator iter = addSet.iterator(); iter.hasNext();) {
