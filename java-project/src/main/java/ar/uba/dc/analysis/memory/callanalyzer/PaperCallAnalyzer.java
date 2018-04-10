@@ -102,7 +102,16 @@ public class PaperCallAnalyzer {
 						throw new Error("Falta el binding");
 					}
 					//hago un summate sobre el invariante
-					ParametricExpression newValue = symbolicCalculator.summate(rsdFromPartition, invocation, invariant);
+					
+					
+					//si el dominio no tiene inductivas, tiene sentido no hacer la suma? Y devolver el valor...
+					
+
+					ParametricExpression newValue;
+					if(invariant.getInductives().isEmpty() || invariant.getInductives().toString().equals("[]"))
+						newValue = symbolicCalculator.maximize(rsdFromPartition, invocation, invariant);
+					else
+						newValue = symbolicCalculator.summate(rsdFromPartition, invocation, invariant);
 					
 					//lo acumulo
 					//rsdFromPartition > 0 => el nodo escapaba del callee
@@ -200,9 +209,20 @@ public class PaperCallAnalyzer {
 		//Tampoco ojo que el invariante de cada linea puede ser distinto
 		ParametricExpression memReqMinusRsd = symbolicCalculator.substract(symbolicCalculator.boundIfHasFold(invocationSummary.getMemoryRequirement()), acumTotalResiduals);
 		
+		
+		
 		MAX_memReqMinusRsd = symbolicCalculator.supreme(MAX_memReqMinusRsd, symbolicCalculator.maximize(memReqMinusRsd, invocation, invariant));
 		
-		totalResiduals = symbolicCalculator.supreme(totalResiduals, symbolicCalculator.summate(acumTotalResiduals, invocation, invariant));
+		
+		ParametricExpression result;
+		
+		
+		if(invariant.getInductives().isEmpty() || invariant.getInductives().toString().equals("[]"))
+			result = symbolicCalculator.maximize(acumTotalResiduals, invocation, invariant);
+		else
+			result = symbolicCalculator.summate(acumTotalResiduals, invocation, invariant);
+		
+		totalResiduals = symbolicCalculator.supreme(totalResiduals, result);
 		
 		MAX_totalResidualsBeforeSummate = symbolicCalculator.supreme(MAX_totalResidualsBeforeSummate, acumTotalResiduals);	
 		
