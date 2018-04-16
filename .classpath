@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="java-project/src/main/examples"/>
+	<classpathentry kind="src" path="java-project/target/classes"/>
 	<classpathentry kind="src" path="jpfHelper/src"/>
 	<classpathentry kind="src" path="java-project/src/main/java"/>
 	<classpathentry kind="src" path="java-project/src/test/java"/>
