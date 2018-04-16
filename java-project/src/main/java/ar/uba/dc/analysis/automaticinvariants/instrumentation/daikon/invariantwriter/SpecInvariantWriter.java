@@ -390,7 +390,7 @@ public class SpecInvariantWriter {
 			out.print("<relevant-parameters>");
 			if(methodName.contains("void main(java.lang.String[])") && params==null)
 			{
-				out.print("size_args_init");
+				out.print("args_init__f__size");
 			}
 			else
 			{
