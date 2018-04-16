@@ -6,7 +6,7 @@ import java.util.Iterator;
 public class ListC implements Collection {
 
 	Cell head;
-	private int size = 0;
+	public int size = 0;
 
 	/**
 	 * @temporal: 0
