@@ -78,6 +78,12 @@ class Graph
     return nodes[0];
   }
 
+
+
+  //__r1__f__array__f__size se bindea con this_init__f__array__f__size
+
+
+
   /**
    * Add edges to the graph.  Edges are added to/from every node
    * in the graph and a distance is computed for each of them.

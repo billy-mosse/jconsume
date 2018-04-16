@@ -28,7 +28,7 @@ public class MSTTest {
 		{
 			String[] argsTest=new String[2]; //residual = args
 			argsTest[0]="-v";
-			argsTest[1]=Integer.toString( i +10   );
+			argsTest[1]=Integer.toString( i +10  );
 			MST.mainOrig(argsTest); 
 		} 
 	}

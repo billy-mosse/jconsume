@@ -35,7 +35,7 @@ class Vertex
   {
     mindist = 9999999;
     next = n;
-    neighbors = new Hashtable(numvert/4); //residual = 1 (porNEW) , residual = 1 (porCallConstructor Hasstable) (numvert ArrayCountSize)
+    neighbors = new Hashtable(numvert/4); //residual = 1 (porNEW) , residual = 1 (porCallConstructor Hashtable) (numvert ArrayCountSize)
   }
 
   /**
