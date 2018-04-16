@@ -3,6 +3,7 @@ package ar.uba.dc.analysis.memory;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import javax.management.RuntimeErrorException;
 
@@ -36,7 +37,7 @@ public class PaperIntraproceduralAnalysis {
 	
 	public PaperIntraproceduralAnalysis(PaperInterproceduralAnalysis paperInterproceduralAnalysis,
 			PaperMemorySummaryFactory summaryFactory, CountingTheory ct,
-			ParametricExpressionFactory expressionFactory, SymbolicCalculator sa, List<LineWithParent> badLines) {
+			ParametricExpressionFactory expressionFactory, SymbolicCalculator sa, List<LineWithParent> badLines, List<LineWithParent> badLinesCalls) {
 
 		this.interprocedural = paperInterproceduralAnalysis;
 		this.summaryFactory = summaryFactory;
@@ -44,6 +45,7 @@ public class PaperIntraproceduralAnalysis {
 		this.expressionFactory  = expressionFactory;
 		this.sa = sa;
 		this.badLines = badLines;
+		this.badLinesCalls = badLinesCalls;
 		
 	}
 
@@ -73,6 +75,7 @@ public class PaperIntraproceduralAnalysis {
 	protected SymbolicCalculator sa;
 	protected PaperInterproceduralAnalysis interprocedural;
 	protected List<LineWithParent> badLines;
+	protected List<LineWithParent> badLinesCalls;
 	
 	
 	
@@ -173,7 +176,12 @@ public class PaperIntraproceduralAnalysis {
 			
 			if (BarvinokParametricExpressionUtils.isInfinite(bound))
 			{
-				LineWithParent newLineWithParent = new LineWithParent(newLine, ir_method.toString());
+				DomainSet inv = newLine.getInvariant();
+				Set<String> unboundedInductives = ct.getUnboundedInductives(inv);
+				
+				
+				
+				LineWithParent newLineWithParent = new LineWithParent(newLine, ir_method.toString(), unboundedInductives);
 				this.badLines.add(newLineWithParent);
 			}
 			
@@ -220,7 +228,6 @@ public class PaperIntraproceduralAnalysis {
 			}
 			
 		}
-		
 		for(Line callInvocation : calls)
 		{
 			
@@ -240,8 +247,36 @@ public class PaperIntraproceduralAnalysis {
 					BarvinokParametricExpressionUtils.isInfinite(acumResidualsFromCallee)
 					)
 			{
-				LineWithParent lineWithParent = new LineWithParent(callInvocation, ir_method.toString());
-				this.badLines.add(lineWithParent);
+				
+				DomainSet inv = callInvocation.getInvariant();
+				Set<String> unboundedInductives = ct.getUnboundedInductives(inv);
+				
+				boolean isInfinite = !unboundedInductives.isEmpty();
+				
+				//El binding puede siempre ser con variables no acotadas del invariante asi que hay que revisarlo siempre
+				
+				//Ademas, tenemos los siguientes CASOS:
+				
+				//Consumo finito, invariante finito: no hago nada ams
+				
+				//Consumo infinito, invariante finito: si el consumo es infinito ya lo trate en el calleee asi que nada
+				
+				//Consumo finito, invariante infinito: tengo que ver que inductivas del invariante estan jodiendo
+				
+				//Consumo infinito, invariante infinito: tengo que ver que inductivas del invariante estan jodiendo
+				
+				//Asi que solo importa si el invariante es infinito. Vale la pena hacer un COUNT
+				
+				//esto es medio feo, pero estoy contando el invariante nomas
+				ParametricExpression bound = ct.count(callInvocation);
+				
+				if (BarvinokParametricExpressionUtils.isInfinite(bound))
+				{
+					unboundedInductives = ct.getUnboundedInductives(inv);
+				}
+				
+				LineWithParent lineWithParent = new LineWithParent(callInvocation, ir_method.toString(), unboundedInductives, callSummary.getUnboundedBindingVariables());
+				this.badLinesCalls.add(lineWithParent);
 			}
 			
 			//fruta para ver si anda

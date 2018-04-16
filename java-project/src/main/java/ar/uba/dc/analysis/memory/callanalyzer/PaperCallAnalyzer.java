@@ -21,6 +21,7 @@ import ar.uba.dc.analysis.memory.PaperCallSummaryInContext;
 import ar.uba.dc.analysis.memory.SymbolicCalculator;
 import ar.uba.dc.analysis.memory.expression.ParametricExpression;
 import ar.uba.dc.analysis.memory.expression.ParametricExpressionFactory;
+import ar.uba.dc.analysis.memory.impl.BarvinokParametricExpressionUtils;
 import ar.uba.dc.analysis.memory.impl.madeja.PaperMemorySummary;
 import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
 import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartitionBinding;
@@ -45,6 +46,17 @@ public class PaperCallAnalyzer {
 
 	protected ParametricExpression totalResiduals;
 	
+	public ParametricExpression getMAX_memReqMinusRsd() {
+		return MAX_memReqMinusRsd;
+	}
+
+
+
+	public ParametricExpression getTotalResiduals() {
+		return totalResiduals;
+	}
+
+
 	protected ParametricExpression MAX_totalResidualsBeforeSummate;
 	
 	protected ParametricExpression summated_MAX_totalResiduals;
@@ -342,7 +354,7 @@ public class PaperCallAnalyzer {
 		for (PaperPointsToHeapPartition partition : residuals.keySet()) {			
 			
 			result.setResidual((SimplePaperPointsToHeapPartition) partition, residuals.get(partition));
-		}	
+		}
 		
 		
 		return result;

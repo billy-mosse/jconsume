@@ -1,5 +1,6 @@
 package ar.uba.dc.barvinok.expression;
 
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -24,8 +25,6 @@ public class DomainSet {
 	private Set<String> inductives = new TreeSet<String>(); 
 	
 	private String constraints;
-	
-	
 	
 	//private String binding;
 	
@@ -300,6 +299,11 @@ public class DomainSet {
 
 	public String toHumanReadableString() {
 		return this.toString();
+	}
+
+	public void setInductives(Set<String> list) {
+		this.inductives = list;
+		
 	}
 	
 }

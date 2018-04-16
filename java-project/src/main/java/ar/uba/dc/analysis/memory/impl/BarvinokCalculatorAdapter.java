@@ -1,6 +1,10 @@
 package ar.uba.dc.analysis.memory.impl;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,6 +19,7 @@ import ar.uba.dc.analysis.common.Line;
 import ar.uba.dc.analysis.common.code.NewStatement;
 import ar.uba.dc.analysis.common.code.Statement;
 import ar.uba.dc.analysis.memory.expression.ParametricExpression;
+import ar.uba.dc.analysis.memory.expression.ParametricExpressionUtils;
 import ar.uba.dc.barvinok.BarvinokCalculator;
 import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.barvinok.expression.PiecewiseQuasipolynomial;
@@ -244,5 +249,45 @@ public class BarvinokCalculatorAdapter implements CountingTheory, SymbolicCalcul
 	public void setExpressionFactory(
 			BarvinokParametricExpressionFactory expressionFactory) {
 		this.expressionFactory = expressionFactory;
+	}
+
+	/**
+	 * This method checks if the invariant has unbounded inductives by counting it with barvinok but each time assuming
+	 * it has only one inductive. The counting is infinite iff the invariant is unbounded 
+	 */
+	@Override
+	public Set<String> getUnboundedInductives(DomainSet inv) {
+		TreeSet<String> unboundedInductives = new TreeSet<String>();
+		for(String inductive : inv.getInductives())
+		{
+			DomainSet one_inductive_invariant = inv.clone();
+			TreeSet<String> inductives =  new TreeSet<String>();
+			inductives.add(inductive);
+			one_inductive_invariant.setInductives(inductives);
+			
+			PiecewiseQuasipolynomial result = calculator.countExecutions(one_inductive_invariant);
+			if (BarvinokParametricExpressionUtils.isInfinite(expressionFactory.polynomial(result)))
+				unboundedInductives.add(inductive);
+
+		}
+		return unboundedInductives;
+	}
+
+	@Override
+	public Set<String> getUnboundedBindingVariables(DomainSet inv, Set<String> calleeVariables) {
+		TreeSet<String> unboundedBindingVariables = new TreeSet<String>();
+		for(String calleeVariable : calleeVariables)
+		{
+			DomainSet one_inductive_invariant = inv.clone();
+			TreeSet<String> inductives =  new TreeSet<String>();
+			inductives.add(calleeVariable);
+			one_inductive_invariant.setInductives(inductives);
+			
+			PiecewiseQuasipolynomial result = calculator.countExecutions(one_inductive_invariant);
+			if (BarvinokParametricExpressionUtils.isInfinite(expressionFactory.polynomial(result)))
+				unboundedBindingVariables.add(calleeVariable);
+
+		}
+		return unboundedBindingVariables;
 	}	
 }

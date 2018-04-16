@@ -14,6 +14,7 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
+import java.util.TreeSet;
 import java.util.concurrent.ThreadPoolExecutor.AbortPolicy;
 
 import org.apache.commons.io.FileUtils;
@@ -35,7 +36,9 @@ import ar.uba.dc.analysis.escape.InterproceduralAnalysis;
 import ar.uba.dc.analysis.memory.callanalyzer.PaperCallAnalyzer;
 import ar.uba.dc.analysis.memory.expression.ParametricExpression;
 import ar.uba.dc.analysis.memory.expression.ParametricExpressionFactory;
+import ar.uba.dc.analysis.memory.expression.ParametricExpressionUtils;
 import ar.uba.dc.analysis.memory.impl.BarvinokParametricExpressionFactory;
+import ar.uba.dc.analysis.memory.impl.BarvinokParametricExpressionUtils;
 import ar.uba.dc.analysis.memory.impl.madeja.PaperMemorySummary;
 import ar.uba.dc.analysis.memory.impl.summary.EscapeBasedMemorySummary;
 import ar.uba.dc.analysis.memory.impl.summary.RichPaperPointsToHeapPartition;
@@ -85,6 +88,7 @@ public class PaperInterproceduralAnalysis {
 	
 	//Lineas con invariante que hace que de infinito
 	protected List<LineWithParent> badLines;
+	protected List<LineWithParent> badLinesCalls;
 	
 	
 	protected PaperMemorySummaryFactory summaryFactory;
@@ -247,6 +251,7 @@ public class PaperInterproceduralAnalysis {
 		
 		this.data = new HashMap<String, PaperMemorySummary>();
 		this.badLines = new ArrayList<LineWithParent>();
+		this.badLinesCalls = new ArrayList<LineWithParent>();
 		
 		ListIterator<IntermediateRepresentationMethod> li = ordered_methods.listIterator();
 			
@@ -257,7 +262,7 @@ public class PaperInterproceduralAnalysis {
 			try{
 				log.debug("Processing " + IRUtils.key(ir_method) + "...");				
 				
-				PaperIntraproceduralAnalysis analysis = new PaperIntraproceduralAnalysis(this, summaryFactory, countingTheory, expressionFactory, symbolicCalculator, badLines);
+				PaperIntraproceduralAnalysis analysis = new PaperIntraproceduralAnalysis(this, summaryFactory, countingTheory, expressionFactory, symbolicCalculator, badLines, badLinesCalls);
 				//PaperIntraproceduralAnalysis analysis = new PaperIntraproceduralAnalysis();
 				PaperMemorySummary summary = analysis.run(ir_method);
 				data.put(IRUtils.key(ir_method), summary);				
@@ -281,6 +286,11 @@ public class PaperInterproceduralAnalysis {
 
 		//ParametricExpression MAX_memreq = this.expressionFactory.constant(0L);
 		
+		
+		DomainSet lineInvariant_without_binding = callInvocation.getInvariant();	
+		DomainSet lineInvariant = lineInvariant_without_binding.clone();
+		DomainSetUtils.unify(lineInvariant, callInvocation.getBinding());
+		Set<String> unboundedBindingVariables = new TreeSet<String>();
 		for(Invocation invocation : callInvocation.getInvocations())
 		{
 			
@@ -288,13 +298,7 @@ public class PaperInterproceduralAnalysis {
 			PaperMemorySummary invocationSummary = this.data.get(IRUtils.key(invocation, callInvocation.getIrName()));
 			
 			
-			DomainSet lineInvariant = callInvocation.getInvariant();
-			
-			//why???
-			DomainSet clone = lineInvariant.clone();
-			log.debug(clone.toString());
-			
-			DomainSetUtils.unify(lineInvariant, callInvocation.getBinding());			
+	
 			if(invocationSummary == null)
 			{
 				
@@ -332,6 +336,23 @@ public class PaperInterproceduralAnalysis {
 			{
 				
 			}*/
+			if(BarvinokParametricExpressionUtils.isInfinite(callAnalyzer.getTotalResiduals()) || BarvinokParametricExpressionUtils.isInfinite(callAnalyzer.getMAX_memReqMinusRsd()))
+			{
+				System.out.println("hola");
+				Set<String> calleeVariables = callInvocation.getBinding().getCallees();
+				//lineInvariant ya tiene de inductivas a las del binding?
+				
+				
+				//Es lo mismo chequear los callees que los callers no?
+				if(lineInvariant!=null && !lineInvariant.toString().equals(""))
+				{					
+					unboundedBindingVariables.addAll(countingTheory.getUnboundedBindingVariables(lineInvariant,calleeVariables));
+				}
+					
+				
+			}
+		
+			
 			
 		}
 		
@@ -342,6 +363,8 @@ public class PaperInterproceduralAnalysis {
 		}
 		
 		PaperCallSummaryInContext result = callAnalyzer.buildSummary(callInvocation);
+		result.setUnboundedBindingVariables(unboundedBindingVariables);
+		
 		return result;			
 
 	}

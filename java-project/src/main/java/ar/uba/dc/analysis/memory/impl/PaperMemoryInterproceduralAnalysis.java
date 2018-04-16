@@ -80,16 +80,38 @@ public class PaperMemoryInterproceduralAnalysis extends PaperInterproceduralAnal
 
 		if(badLines.size() > 0)
 		{
-			log.debug("There are some unconstrainedlines. Check their invariants.");
+			log.debug("There are some unconstrained NEWS. Check their invariants.");
 			log.debug("From leaves to the root:");
-
 			for(LineWithParent badLine : badLines)
 			{
-				log.debug(badLine.belongsTo + " called " + badLine.line.toString() + " | " + invariant_toString(badLine.line.getInvariant()));		
-				log.debug(badLine.line.getInvariant().getVariables());
-				log.debug("____________________");
-			}
+				log.debug(badLine.belongsTo + " called " + badLine.line.toString());
+				log.debug("invariant: " + invariant_toString(badLine.line.getInvariant()));
+				log.debug("The NEW had the following unbounded inductives: ");
+				log.debug(badLine.unboundedInductives);
+				log.debug("______________________");
+			}			
+		}
+		if(!badLinesCalls.isEmpty())
+		{
+			log.debug("There are some unconstrained CALLS. Check their invariants.");
+			log.debug("From leaves to the root:");
 
+			for(LineWithParent badLine : badLinesCalls)
+			{
+				log.debug(badLine.belongsTo + " called " + badLine.line.toString());
+				log.debug("invariant: " + invariant_toString(badLine.line.getInvariant()));
+				if(!badLine.unboundedInductives.isEmpty())
+				{
+					log.debug("The CALL had the following unbounded inductives: ");
+					log.debug(badLine.unboundedInductives);
+				}
+				if(badLine.unboundedBindingVariables != null && !badLine.unboundedBindingVariables.isEmpty())
+				{
+					log.debug("The following callee parameters are binded to unbounded variables of the caller");
+					log.debug(badLine.unboundedBindingVariables);
+				}
+				log.debug("______________________");
+			}
 		}
 	}
 	

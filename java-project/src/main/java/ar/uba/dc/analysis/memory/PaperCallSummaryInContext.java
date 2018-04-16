@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import ar.uba.dc.analysis.memory.expression.ParametricExpression;
 import ar.uba.dc.analysis.memory.impl.summary.RichPaperPointsToHeapPartition;
@@ -22,6 +23,8 @@ public class PaperCallSummaryInContext {
 	//private ParametricExpression temporalCall;
 	private ParametricExpression MAX_memoryRequirementMinusRsd;
 	private ParametricExpression acumResiduals;
+	private Set<String> unboundedBindingVariables;
+
 	
 	/*public ParametricExpression getTemporalCall() {
 		return temporalCall;
@@ -55,7 +58,17 @@ public class PaperCallSummaryInContext {
 		this.residuals.put(partition, value);
 	}
 
+	public Set<String> getUnboundedBindingVariables() {
+		return unboundedBindingVariables;
+	}
+
+	public void setUnboundedBindingVariables(Set<String> unboundedBindingVariables) {
+		this.unboundedBindingVariables = unboundedBindingVariables;
+	}
+
 	public void setAcumResiduals(ParametricExpression value) {
 		this.acumResiduals = value;
 	}
+	
+	
 }
