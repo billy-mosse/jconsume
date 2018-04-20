@@ -44,7 +44,7 @@ import java.util.ArrayDeque;
  * Tomado del ejemplo del GotoInstrumenter
  */
 
-public class NewsInvariantInstrumentator {
+public class ProgramInstrumentatorForDaikonMain {
 	private  static SootClass IntrumentedMethodClass=null;
 	private  static ArrayList<SootClass> IntrumentedMethodSootClasses=null;
 	private static PrintWriter pwIM;
@@ -61,26 +61,26 @@ public class NewsInvariantInstrumentator {
 
 	public static boolean isInCG(SootMethod m)
 	{
-		NewsInvariantInstrumentator.computeReachableMethods();
-		if(NewsInvariantInstrumentator.cgMethods!=null)
+		ProgramInstrumentatorForDaikonMain.computeReachableMethods();
+		if(ProgramInstrumentatorForDaikonMain.cgMethods!=null)
 		{			
-			boolean found = NewsInvariantInstrumentator.cgMethods.contains(m);		
+			boolean found = ProgramInstrumentatorForDaikonMain.cgMethods.contains(m);		
 			return found;
 		}
 		return true;
 	}
 	public static void computeReachableMethods() {
-		if(NewsInvariantInstrumentator.cgMethods==null)
+		if(ProgramInstrumentatorForDaikonMain.cgMethods==null)
 		{
 			CallGraph cg  = Scene.v().getCallGraph();
 			if(cg!=null)
 			{
-				NewsInvariantInstrumentator.cgMethods = new HashSet();
+				ProgramInstrumentatorForDaikonMain.cgMethods = new HashSet();
 				for(Iterator it = cg.sourceMethods(); it.hasNext();)
 				{
 					MethodOrMethodContext mc = (MethodOrMethodContext)it.next();
 					if(mc!=null && mc.method()!=null) {
-						NewsInvariantInstrumentator.cgMethods.add(mc.method());
+						ProgramInstrumentatorForDaikonMain.cgMethods.add(mc.method());
 						System.out.println("M:"+mc.method().getSignature());
 					}
 				}	
@@ -376,7 +376,7 @@ public class NewsInvariantInstrumentator {
 				new Transform("jtp.inductives", InductivesFinder.v()));
 		
 		PackManager.v().getPack("jtp").add(
-				new Transform("jtp.instrumenter", NewsInstrumenterDaikon.v()));
+				new Transform("jtp.instrumenter", MethodInstrumenterForDaikon.v()));
 		
 		
 		
@@ -465,10 +465,10 @@ public class NewsInvariantInstrumentator {
 			PrintStream outCC = new PrintStream(streamCC);
 			PrintStream outInductivesFakes = new PrintStream(streamInductivesFakes);
 
-			showCreationSites(NewsInstrumenterDaikon.getNewsMap(), outCS);
-			showCallSites(NewsInstrumenterDaikon.getCcArgsMap(), NewsInstrumenterDaikon.getCcMethodsMap(),
-					NewsInstrumenterDaikon.getMethodMap(), NewsInstrumenterDaikon.getNewsMap(), NewsInstrumenterDaikon.getArgsCallsList(), NewsInstrumenterDaikon.getRelevantsMap(), outCC);
-			showFakeInductives(NewsInstrumenterDaikon.getNewsMap(), outInductivesFakes);
+			showCreationSites(MethodInstrumenterForDaikon.getNewsMap(), outCS);
+			showCallSites(MethodInstrumenterForDaikon.getCcArgsMap(), MethodInstrumenterForDaikon.getCcMethodsMap(),
+					MethodInstrumenterForDaikon.getMethodMap(), MethodInstrumenterForDaikon.getNewsMap(), MethodInstrumenterForDaikon.getArgsCallsList(), MethodInstrumenterForDaikon.getRelevantsMap(), outCC);
+			showFakeInductives(MethodInstrumenterForDaikon.getNewsMap(), outInductivesFakes);
 			writeInstrumentedMethods(optsDefault[2], fullOutputDir);
 
 			} 
@@ -727,7 +727,7 @@ public class NewsInvariantInstrumentator {
 					 )
 				{
 				*/
-				if(!NewsInvariantInstrumentator.inductivesAsRelevants
+				if(!ProgramInstrumentatorForDaikonMain.inductivesAsRelevants
 						|| ( (IVInfo!=null && !IVInfo.isInExcludeInfo(a.getName())) 
 								|| (a instanceof DI_Value && !((DI_Value)a).isNull() ) )
 					)

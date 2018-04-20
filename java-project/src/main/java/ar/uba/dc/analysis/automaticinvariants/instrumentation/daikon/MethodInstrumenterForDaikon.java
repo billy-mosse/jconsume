@@ -43,6 +43,7 @@ import soot.Unit;
 import soot.Value;
 import soot.ValueBox;
 import soot.VoidType;
+import soot.coffi.annotation;
 import soot.jimple.AnyNewExpr;
 import soot.jimple.AssignStmt;
 import soot.jimple.GotoStmt;
@@ -66,6 +67,7 @@ import soot.jimple.internal.JInvokeStmt;
 import soot.jimple.internal.JimpleLocalBox;
 import soot.jimple.toolkits.annotation.logic.Loop;
 import soot.jimple.toolkits.annotation.logic.LoopFinder;
+import soot.tagkit.AbstractHost;
 import soot.toolkits.graph.CompleteUnitGraph;
 import soot.toolkits.graph.DominatorsFinder;
 import soot.toolkits.graph.SimpleDominatorsFinder;
@@ -82,14 +84,14 @@ import java.util.ArrayDeque;
  * PackAdjuster by compiling it separately, into the soot package.
  */
 
-class NewsInstrumenterDaikon extends LoopFinder {
-	private static NewsInstrumenterDaikon instance = new NewsInstrumenterDaikon();
+class MethodInstrumenterForDaikon extends LoopFinder {
+	private static MethodInstrumenterForDaikon instance = new MethodInstrumenterForDaikon();
 	private static int dummyLineNumber = 100000;
-	private NewsInstrumenterDaikon() {super();}
+	private MethodInstrumenterForDaikon() {super();}
 
 	private DominatorsFinder dominator = null;
 	
-	public static NewsInstrumenterDaikon v() {
+	public static MethodInstrumenterForDaikon v() {
 		return instance;
 	}
 
@@ -105,7 +107,7 @@ class NewsInstrumenterDaikon extends LoopFinder {
 	
 	//   methodMap : method -> P(var)
 	private Map methodMap = new HashMap();
-	private SootClass intrumentedClass = NewsInvariantInstrumentator.getIntrumentedMethodClass();
+	private SootClass intrumentedClass = ProgramInstrumentatorForDaikonMain.getIntrumentedMethodClass();
 	//private SootClass intrumentedClasses = NewsInvariantInstrumentator.getIntrumentedMethodClasses();
 
 	private Set<String> relevantClasses = new HashSet<String>();
@@ -267,7 +269,7 @@ class NewsInstrumenterDaikon extends LoopFinder {
 		
 		ListNoRep paramsExp = new ListNoRep();
 		
-		if(NewsInvariantInstrumentator.inductivesAsRelevants )
+		if(ProgramInstrumentatorForDaikonMain.inductivesAsRelevants )
 		{
 			List paramsExpanded = allParams.toList(IVInfo);
 			paramsExp.addAll(paramsExpanded);
@@ -421,7 +423,7 @@ class NewsInstrumenterDaikon extends LoopFinder {
 	protected void internalTransform(Body body, String phaseName, Map options) {
 		synchronized (getInstance()) {
 			
-			if(!NewsInvariantInstrumentator.isInCG(body.getMethod()))
+			if(!ProgramInstrumentatorForDaikonMain.isInCG(body.getMethod()))
 				return;
 		
 			if(body.getMethod().toString().equals("dummyMethodForInstrumentation"))
@@ -455,7 +457,7 @@ class NewsInstrumenterDaikon extends LoopFinder {
 			InstrumentedMethodClass ins = new InstrumentedMethodClass(packageName);
 			
 			SootClass InstrumentedMethodClass = null;
-			for(Iterator it= NewsInvariantInstrumentator.getIntrumentedMethodSootClasses().iterator(); it.hasNext();)
+			for(Iterator it= ProgramInstrumentatorForDaikonMain.getIntrumentedMethodSootClasses().iterator(); it.hasNext();)
 			{
 				SootClass sc = (SootClass) it.next();
 				if (sc.getPackageName().equals(packageName))
@@ -472,12 +474,12 @@ class NewsInstrumenterDaikon extends LoopFinder {
 				InstrumentedMethodClass.setSuperclass(Scene.v().getSootClass(
 						"java.lang.Object"));
 				InstrumentedMethodClass.setModifiers(Modifier.PUBLIC);
-				NewsInvariantInstrumentator.getIntrumentedMethodSootClasses().add(InstrumentedMethodClass);
+				ProgramInstrumentatorForDaikonMain.getIntrumentedMethodSootClasses().add(InstrumentedMethodClass);
 			}
 				
 			
 			Chain units = body.getUnits();
-			
+						
 			if(isMethodToSkip(sClass,body.getMethod()))
 				return;
 			if(body.getMethod().getDeclaringClass().toString().equals("ar.uba.dc.analysis.automaticinvariants.VarTest"))
@@ -557,7 +559,6 @@ class NewsInstrumenterDaikon extends LoopFinder {
 			while (stmtIt.hasNext()) {
 				s = (Stmt) stmtIt.next();
 				System.out.println("LINE NUMBER: " + s.getJavaSourceStartLineNumber());
-				Object o = s.getTags();
 				// processStmt(body, units, analisisVivas, lParameters, lParametersInit, extraParams, s);
 				processStmt(body, units, analisisVivas, analisisInductivas, extraParams, s, ins, InstrumentedMethodClass, body.getMethod().toString(), inits);
 			}
@@ -580,7 +581,7 @@ class NewsInstrumenterDaikon extends LoopFinder {
 			Iterator stmtIt2 = units.snapshotIterator();
 			Stmt s2 = skipNonInstrumentableStmts(units, codeInitVars, stmtIt2, isInit);
 			
-			InstrumentedMethodClass ins2 = (InstrumentedMethodClass) NewsInvariantInstrumentator.getInstrumentedMethodClasses().get(sClass.getPackageName());
+			InstrumentedMethodClass ins2 = (InstrumentedMethodClass) ProgramInstrumentatorForDaikonMain.getInstrumentedMethodClasses().get(sClass.getPackageName());
 			if(ins2 != null)
 			{
 				ins2.methods.addAll(ins.methods);
@@ -601,7 +602,7 @@ class NewsInstrumenterDaikon extends LoopFinder {
 		 		ins.sootClass = intrumentedMethodClass;
 				
 		 		
-				NewsInvariantInstrumentator.getInstrumentedMethodClasses().put(sClass.getPackageName(), ins);
+				ProgramInstrumentatorForDaikonMain.getInstrumentedMethodClasses().put(sClass.getPackageName(), ins);
 			}
 		}
 	}
@@ -1415,7 +1416,7 @@ class NewsInstrumenterDaikon extends LoopFinder {
 
 		// Obatin variables to add to the instrumented methdo
 		
-		InductiveVariablesInfo inductivesInfo = NewsInvariantInstrumentator.getInductivesReader().getiInfo(insSite);
+		InductiveVariablesInfo inductivesInfo = ProgramInstrumentatorForDaikonMain.getInductivesReader().getiInfo(insSite);
 		
 		
 		List inductivas = analisisInductivas.getInductivesBefore(s);
@@ -1802,7 +1803,7 @@ class NewsInstrumenterDaikon extends LoopFinder {
 			List allParamsString = new Vector();
 			
 			//esto por ahora va a seguir siendo false
-			if(NewsInvariantInstrumentator.inductivesAsRelevants )
+			if(ProgramInstrumentatorForDaikonMain.inductivesAsRelevants )
 			{
 				
 				//Aca es donde se rompe!!!!!! cuando convierte parametros
@@ -1911,7 +1912,7 @@ class NewsInstrumenterDaikon extends LoopFinder {
 		List code = paramsInstru.codeForParameters();
 		
 				
-		List paramsExpanded = NewsInvariantInstrumentator.inductivesAsRelevants? allParams.toList(IVInfo):allParams.toList();
+		List paramsExpanded = ProgramInstrumentatorForDaikonMain.inductivesAsRelevants? allParams.toList(IVInfo):allParams.toList();
 		
 		ListNoRep paramsExp = new ListNoRep();
 		paramsExp.addAll(paramsExpanded);
@@ -1966,7 +1967,7 @@ public static Map getNewsMap() {
 	public static Deque getArgsCallsList() {
 		return getInstance().ccArgsMethodList;
 	}
-	public static NewsInstrumenterDaikon getInstance() {
+	public static MethodInstrumenterForDaikon getInstance() {
 		return instance;
 	}
 	public static Map getCcMethodsMap() {
