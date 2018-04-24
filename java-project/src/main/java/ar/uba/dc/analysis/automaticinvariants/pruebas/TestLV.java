@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.NewsInvariantInstrumentator;
+import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.ProgramInstrumentatorForDaikonMain;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.Utils;
 import ar.uba.dc.analysis.automaticinvariants.pruebas.GlobalLive;
 import ar.uba.dc.analysis.automaticinvariants.pruebas.TestLV;
@@ -32,7 +32,7 @@ public class TestLV extends BodyTransformer
 	 * @see soot.BodyTransformer#internalTransform(soot.Body, java.lang.String, java.util.Map)
 	 */
 	protected void internalTransform(Body b, String phaseName, Map options) {
-		if(!NewsInvariantInstrumentator.isInCG(b.getMethod()))
+		if(!ProgramInstrumentatorForDaikonMain.isInCG(b.getMethod()))
 			return;
 		Chain units= b.getUnits();
 		CompleteUnitGraph unitGraph = new CompleteUnitGraph(b);

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.NewsInvariantInstrumentator;
+import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.ProgramInstrumentatorForDaikonMain;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.Utils;
 import ar.uba.dc.analysis.automaticinvariants.pruebas.GlobalLive;
 import soot.Body;
@@ -74,7 +74,7 @@ public class InductivesFinder extends LoopFinder implements InductivesFilter{
 		//y como los jtp se corren en paralelo se termina rompiendo porque algo devuelve null
 		synchronized (getInstance()) {			
 
-			if(!NewsInvariantInstrumentator.isInCG(body.getMethod()))
+			if(!ProgramInstrumentatorForDaikonMain.isInCG(body.getMethod()))
 				return;
 			super.internalTransform(body, arg1, arg2);
 			SootClass sClass = body.getMethod().getDeclaringClass();
