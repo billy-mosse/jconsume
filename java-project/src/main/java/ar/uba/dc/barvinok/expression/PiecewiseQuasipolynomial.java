@@ -1,10 +1,12 @@
 package ar.uba.dc.barvinok.expression;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.apache.commons.collections.SetUtils;
 import org.apache.commons.lang.StringUtils;
 
 public class PiecewiseQuasipolynomial {
@@ -13,11 +15,40 @@ public class PiecewiseQuasipolynomial {
 	protected List<QuasiPolynomial> pieces = new ArrayList<QuasiPolynomial>();
 
 	
+	//TODO hacer con expresiones regulares
+	public PiecewiseQuasipolynomial(String sConsumption) {
+		int pStart = sConsumption.indexOf('[') + 1;
+		int pFinish = sConsumption.indexOf(']');
+		String params = sConsumption.substring(pStart, pFinish);
+		
+		if(params.equals(""))
+			this.parameters = new TreeSet<String>();
+		else
+			this.parameters = new TreeSet<String>(Arrays.asList(params.split(",")));
+		
+		int polStart = sConsumption.indexOf('{')+1;
+		String pols = sConsumption.trim().substring(polStart, sConsumption.length()-1).trim();
+		for(String pol: pols.split(";"))
+		{
+			this.pieces.add(QuasiPolynomial.fromRawString(pol));
+		}
+		
+	}
+
+
+	public PiecewiseQuasipolynomial() {
+		// TODO Auto-generated constructor stub
+	}
+
+
 	@Override
 	public int hashCode() {
 		return parameters.hashCode() + pieces.hashCode(); 
 	}
 
+	
+	
+	
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;

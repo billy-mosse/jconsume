@@ -50,7 +50,7 @@ public class Invocation {
 
 	public Invocation()
 	{
-		
+		this.hpBindings = new HashSet<PaperPointsToHeapPartitionBinding>();
 	}
 	
 	public String toString()

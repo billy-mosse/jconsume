@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -213,8 +214,9 @@ public class PaperCallAnalyzer {
 		acumTotalResiduals = symbolicCalculator.boundIfHasFold(acumTotalResiduals);
 				
 		
-		
-		if(!DomainSetUtils.removePrefix(invariant.getVariables()).containsAll(invocationSummary.getMemoryRequirement().getParameters()))
+		TreeSet t1 = (TreeSet)DomainSetUtils.removePrefix(invariant.getVariables());
+		TreeSet t2 = (TreeSet)invocationSummary.getMemoryRequirement().getParameters();
+		if(!t1.containsAll(t2))
 		{
 			throw new Error("Falta el binding");
 		}

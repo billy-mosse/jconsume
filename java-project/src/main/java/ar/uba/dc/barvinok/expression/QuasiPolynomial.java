@@ -1,5 +1,6 @@
 package ar.uba.dc.barvinok.expression;
 
+import java.util.Arrays;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -30,6 +31,31 @@ public class QuasiPolynomial {
 				&& constraints.equals(q.constraints);
 	}
 	
+	//TODO hacer regexp
+	public static QuasiPolynomial fromRawString(String s)
+	{
+		//ejemplo
+		//{[] -> 2 + n_init: n_init >= 2; [] -> 3: n_init <= 1}
+		
+		String[] v = s.split(":");
+		assert(v.length <= 2);
+		
+		QuasiPolynomial p;
+		if(v.length ==1)
+			p = new QuasiPolynomial(v[0]);
+		else
+			p = new QuasiPolynomial(v[0],v[1]);
+		
+		
+		
+		//no se si los quasipolynomials tienen un campo inductivas
+		//para saber de donde venia el consumo
+		//y esto se usa mas adelante.
+		//En ese caso, tal vez va a haber problemas si usamos anotaciones para el consumo
+		//porque no tenemos inductivas asociadas
+		return p;
+	}
+	
 	public QuasiPolynomial(String polynomial) {
 		this(polynomial, StringUtils.EMPTY);
 	}
@@ -48,6 +74,10 @@ public class QuasiPolynomial {
 		this.polynomial = polynomial;
 		this.constraints = constraints;
 		this.inductives = inductives;
+	}
+
+	public QuasiPolynomial() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public String asString() {

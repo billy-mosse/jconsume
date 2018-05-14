@@ -30,8 +30,11 @@ import ar.uba.dc.analysis.common.code.CallStatement;
 import ar.uba.dc.analysis.common.intermediate_representation.IRUtils;
 //import ar.uba.dc.analysis.common.AbstractInterproceduralAnalysis.IntComparator;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
-import ar.uba.dc.analysis.common.intermediate_representation.io.reader.JsonReader;
+import ar.uba.dc.analysis.common.intermediate_representation.io.reader.JsonIRReader;
 import ar.uba.dc.analysis.common.intermediate_representation.io.reader.XMLReader;
+import ar.uba.dc.analysis.common.method.information.Annotation;
+import ar.uba.dc.analysis.common.method.information.AnnotationsContainer;
+import ar.uba.dc.analysis.common.method.information.MethodAnnotationsHelper;
 import ar.uba.dc.analysis.escape.InterproceduralAnalysis;
 import ar.uba.dc.analysis.memory.callanalyzer.PaperCallAnalyzer;
 import ar.uba.dc.analysis.memory.expression.ParametricExpression;
@@ -66,16 +69,28 @@ public class PaperInterproceduralAnalysis {
 
 	
 	
-	protected SummaryReader<IntermediateRepresentationMethod> jsonReader;
+	protected SummaryReader<IntermediateRepresentationMethod> jsonIRReader;
 	private String mainClass;
 	
-	public SummaryReader<IntermediateRepresentationMethod> getJsonReader() {
-		return jsonReader;
+	public SummaryReader<IntermediateRepresentationMethod> getJsonIRReader() {
+		return jsonIRReader;
 	}
 
-	public void setJsonReader(SummaryReader<IntermediateRepresentationMethod> jsonReader) {
-		this.jsonReader = jsonReader;
+	public void setJsonIRReader(SummaryReader<IntermediateRepresentationMethod> jsonIRReader) {
+		this.jsonIRReader = jsonIRReader;
 	}
+	
+	protected SummaryReader<AnnotationsContainer> jsonAnnotationsReader;
+	
+	public SummaryReader<AnnotationsContainer> getJsonAnnotationsReader() {
+		return jsonAnnotationsReader;
+	}
+
+	public void setJsonAnnotationsReader(SummaryReader<AnnotationsContainer> jsonAnnotationsReader) {
+		this.jsonAnnotationsReader = jsonAnnotationsReader;
+	}
+	
+	
 
 	protected List<String> marked_temporarily;
 	protected List<String> marked_permanently;
@@ -96,7 +111,10 @@ public class PaperInterproceduralAnalysis {
 	protected ParametricExpressionFactory expressionFactory;
 	protected SymbolicCalculator symbolicCalculator;
 	
-	protected SummaryRepository<PaperMemorySummary, IntermediateRepresentationMethod> repository;
+	protected MethodAnnotationsHelper methodAnnotationsHelper;
+	
+	protected SummaryRepository<PaperMemorySummary, IntermediateRepresentationMethod> defaultSummaryRepository;
+	protected SummaryRepository<PaperMemorySummary, IntermediateRepresentationMethod> annotationsSummaryRepository;
 
 	
 	protected PaperCallAnalyzer callAnalyzer;
@@ -114,12 +132,12 @@ public class PaperInterproceduralAnalysis {
 		this.callAnalyzer = callAnalyzer;
 	}
 
-	public SummaryRepository<PaperMemorySummary, IntermediateRepresentationMethod> getRepository() {
-		return repository;
+	public SummaryRepository<PaperMemorySummary, IntermediateRepresentationMethod> getDefaultSummaryRepository() {
+		return defaultSummaryRepository;
 	}
 
-	public void setRepository(SummaryRepository<PaperMemorySummary, IntermediateRepresentationMethod> repository) {
-		this.repository = repository;
+	public void setDefaultSummaryRepository(SummaryRepository<PaperMemorySummary, IntermediateRepresentationMethod> defaultSummaryRepository) {
+		this.defaultSummaryRepository = defaultSummaryRepository;
 	}
 
 	public PaperMemorySummaryFactory getSummaryFactory() {
@@ -247,6 +265,9 @@ public class PaperInterproceduralAnalysis {
 	{
 		this.setMainClass(mainClass);
 		getIrMethods(getLocationStrategy().getBasePath());
+		getAnnotations(getLocationStrategy().getBasePath() + "../");
+
+		
 		orderIrMethods();
 		
 		this.data = new HashMap<String, PaperMemorySummary>();
@@ -255,7 +276,6 @@ public class PaperInterproceduralAnalysis {
 		
 		ListIterator<IntermediateRepresentationMethod> li = ordered_methods.listIterator();
 			
-		
 		while(li.hasNext())
 		{
 			IntermediateRepresentationMethod ir_method = (IntermediateRepresentationMethod) li.next();
@@ -291,69 +311,89 @@ public class PaperInterproceduralAnalysis {
 		DomainSet lineInvariant = lineInvariant_without_binding.clone();
 		DomainSetUtils.unify(lineInvariant, callInvocation.getBinding());
 		Set<String> unboundedBindingVariables = new TreeSet<String>();
-		for(Invocation invocation : callInvocation.getInvocations())
+		
+		
+		IntermediateRepresentationMethod dummyMethod;
+		if(callInvocation.getInvocations().isEmpty())
 		{
+			dummyMethod = new IntermediateRepresentationMethod();
 			
+			//TODO: el name no es el signature, es otra cosa
+			dummyMethod.setName(callInvocation.getIrName());		
+			
+			dummyMethod.setDeclaringClass(callInvocation.getIrClass());
+			
+
+			
+			PaperMemorySummary invocationSummary = this.methodAnnotationsHelper.get(dummyMethod);
+			if(invocationSummary == null)
+			{
+				throw new RuntimeException("Memory summary for method [" + dummyMethod.getName() + "] not found. Is this method unanalizable? Is it in a recursive call chain?");
+				
+			} 
+			else {
+				Invocation dummyInvocation = new Invocation();
+				callAnalyzer.process(dummyInvocation, callInvocation, invocationSummary, lineInvariant, belongsTo.getNodes(), belongsTo.getEscapeNodes(), belongsTo.getFullName());					
+			}
+			
+			
+		}
+		
+		for(Invocation invocation : callInvocation.getInvocations())
+		{					
+				
 			//En realidad es sin los parametros, para que machee bien
 			PaperMemorySummary invocationSummary = this.data.get(IRUtils.key(invocation, callInvocation.getIrName()));
 			
-			
-	
-			if(invocationSummary == null)
+			if(invocationSummary ==null)
 			{
 				
-				IntermediateRepresentationMethod ir_method = new IntermediateRepresentationMethod();
-				
+				dummyMethod = new IntermediateRepresentationMethod();
 				//TODO: el name no es el signature, es otra cosa
-				ir_method.setName(invocation.getNameCalled());		
+				dummyMethod.setName(invocation.getNameCalled());		
 				
-				ir_method.setDeclaringClass(invocation.getClass_called());
+				dummyMethod.setDeclaringClass(invocation.getClass_called());
 				
-				ir_method.setParameters(invocation.getParameters());
+				dummyMethod.setParameters(invocation.getParameters());
 				
-				ir_method.setIsReturnRefLikeType(invocation.isReturnRefLikeType());
-				
-				invocationSummary = this.repository.get(ir_method);
+				dummyMethod.setIsReturnRefLikeType(invocation.isReturnRefLikeType());
+				invocationSummary = this.defaultSummaryRepository.get(dummyMethod);
 				
 				if (invocationSummary == null) {
 					// No hay se genero un summary en esta corrida ni existia en el repositorio. No podemos continuar. Informamos al usuario de esto 
-					throw new RuntimeException("Memory summary for method [" + ir_method.getName() + "] not found. Is this method unanalizable? Is it in a recursive call chain?");
+					throw new RuntimeException("Memory summary for method [" + dummyMethod.getName() + "] not found. Is this method unanalizable? Is it in a recursive call chain?");
 					
 				} else {
 				
 					callAnalyzer.process(invocation, callInvocation, invocationSummary, lineInvariant, belongsTo.getNodes(), belongsTo.getEscapeNodes(), belongsTo.getFullName());					
-				}				
+				}
 			}
 			else
 			{
-				callAnalyzer.process(invocation, callInvocation, invocationSummary, lineInvariant, belongsTo.getNodes(), belongsTo.getEscapeNodes(), belongsTo.getFullName());				
-			}			
-			
-			//MAX_memreq = symbolicCalculator.supreme(MAX_memreq, invocationSummary.getMemoryRequirement());
-			
-			
-			/*for(PaperPointsToHeapPartition hp: invocationSummary.getResidualPartitions())
-			{
-				
-			}*/
-			if(BarvinokParametricExpressionUtils.isInfinite(callAnalyzer.getTotalResiduals()) || BarvinokParametricExpressionUtils.isInfinite(callAnalyzer.getMAX_memReqMinusRsd()))
-			{
-				System.out.println("hola");
-				Set<String> calleeVariables = callInvocation.getBinding().getCallees();
-				//lineInvariant ya tiene de inductivas a las del binding?
-				
-				
-				//Es lo mismo chequear los callees que los callers no?
-				if(lineInvariant!=null && !lineInvariant.toString().equals(""))
-				{					
-					unboundedBindingVariables.addAll(countingTheory.getUnboundedBindingVariables(lineInvariant,calleeVariables));
-				}
-					
-				
-			}
+				callAnalyzer.process(invocation, callInvocation, invocationSummary, lineInvariant, belongsTo.getNodes(), belongsTo.getEscapeNodes(), belongsTo.getFullName());
+			}						
+									
+		}		
 		
+		//MAX_memreq = symbolicCalculator.supreme(MAX_memreq, invocationSummary.getMemoryRequirement());
+		
+		
+		/*for(PaperPointsToHeapPartition hp: invocationSummary.getResidualPartitions())
+		{
+			
+		}*/
+		if(BarvinokParametricExpressionUtils.isInfinite(callAnalyzer.getTotalResiduals()) || BarvinokParametricExpressionUtils.isInfinite(callAnalyzer.getMAX_memReqMinusRsd()))
+		{
+			System.out.println("hola");
+			Set<String> calleeVariables = callInvocation.getBinding().getCallees();
+			//lineInvariant ya tiene de inductivas a las del binding?
 			
 			
+			//Es lo mismo chequear los callees que los callers no?
+			if(lineInvariant!=null && !lineInvariant.toString().equals(""))
+			{					
+				unboundedBindingVariables.addAll(countingTheory.getUnboundedBindingVariables(lineInvariant,calleeVariables));
+			}	
 		}
 		
 		if(callInvocation.getInvocations().size() > 0)
@@ -404,7 +444,7 @@ public class PaperInterproceduralAnalysis {
 			
 			if (fileEntry.exists()) {
 				try {
-					IntermediateRepresentationMethod method = jsonReader.read(new FileReader(fileEntry));
+					IntermediateRepresentationMethod method = jsonIRReader.read(new FileReader(fileEntry));
 					methods.put(IRUtils.key(method), method);
 					//addDependentMethods(method, fileIt);
 					
@@ -413,6 +453,49 @@ public class PaperInterproceduralAnalysis {
 				}
 			}
 			
+		}
+	}
+	
+	protected HashMap<String, Annotation> annotations;
+	
+	public void getAnnotations(String basePath)
+	{
+		
+		HashMap<String, Annotation> annotations = new HashMap<String, Annotation>();
+				
+		String loc = basePath + "annotations/" + getMainClass() + "/";
+		
+		
+		
+		
+		
+		List<File> files = new ArrayList<File>();
+		AnnotationsContainer annContainer = new AnnotationsContainer();
+
+		File directory = new File(loc);
+		if(directory.exists())
+		{
+			listf(loc,files);		
+			ListIterator fileIt = files.listIterator();
+			log.debug("Retrieving annotations...");
+			while (fileIt.hasNext()) {
+				
+				File fileEntry = (File) fileIt.next();
+				log.debug("Retriving location for summary: [" + fileEntry.toString() + "]");			
+				
+				if (fileEntry.exists()) {
+					try {
+						
+						annContainer = jsonAnnotationsReader.read(new FileReader(fileEntry));
+						
+						this.methodAnnotationsHelper = new MethodAnnotationsHelper(annContainer);
+						
+					} catch (FileNotFoundException e) {
+						log.error("Error al recuperar el summary de escape para el metodo [" + fileEntry.toString() + "] a xml: " + e.getMessage(), e);
+					}
+				}
+				
+			}
 		}
 	}
 
@@ -433,12 +516,12 @@ public class PaperInterproceduralAnalysis {
 
 
 	public SummaryReader<IntermediateRepresentationMethod> getReader() {
-		return jsonReader;
+		return jsonIRReader;
 	}
 
 
-	public void setReader(SummaryReader<IntermediateRepresentationMethod>  jsonReader) {
-		this.jsonReader = jsonReader;
+	public void setReader(SummaryReader<IntermediateRepresentationMethod>  jsonIRReader) {
+		this.jsonIRReader = jsonIRReader;
 	}
 
 

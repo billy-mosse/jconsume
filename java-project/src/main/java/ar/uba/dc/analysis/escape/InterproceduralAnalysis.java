@@ -39,7 +39,7 @@ import java.util.List;
 
 
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
-import ar.uba.dc.analysis.common.intermediate_representation.io.writer.JsonWriter;
+import ar.uba.dc.analysis.common.intermediate_representation.io.writer.JsonIRWriter;
 
 public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis implements CallAnalyzer {
 	
@@ -63,7 +63,7 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 
 	private SummaryWriter<IntermediateRepresentationMethod> ihrWriter;
 	
-	private SummaryWriter<IntermediateRepresentationMethod> jsonWriter;
+	private SummaryWriter<IntermediateRepresentationMethod> jsonIRWriter;
 	
 	protected SummaryReader<IntermediateRepresentationMethod> irReader;	
 	
@@ -366,15 +366,15 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 		log.debug("Done");*/
 		log.info("Writing JSON Intermediate Representation...");
 
-		jsonWriter.setMainClass(this.mainClass);
+		jsonIRWriter.setMainClass(this.mainClass);
 		
-		if(jsonWriter.getClass() == JsonWriter.class)
-			((JsonWriter) jsonWriter).registerTypeAdapters(this.debugIR);
+		if(jsonIRWriter.getClass() == JsonIRWriter.class)
+			((JsonIRWriter) jsonIRWriter).registerTypeAdapters(this.debugIR);
 		
 		for (IntermediateRepresentationMethod ir_method : ir_methods) {
 			//TODO: agregar los parametros o un mejor nombre para debug
 			log.debug(" |- Writing summary of analyzed method: " + ir_method.getName());
-			jsonWriter.write(ir_method);
+			jsonIRWriter.write(ir_method);
 			
 			
 		}
@@ -499,11 +499,11 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 		this.ihrWriter = ihrWriter;
 	}
 
-	public SummaryWriter<IntermediateRepresentationMethod> getJsonWriter() {
-		return jsonWriter;
+	public SummaryWriter<IntermediateRepresentationMethod> getJsonIRWriter() {
+		return jsonIRWriter;
 	}
 
-	public void setJsonWriter(SummaryWriter<IntermediateRepresentationMethod> jsonWriter) {
-		this.jsonWriter = jsonWriter;
+	public void setJsonIRWriter(SummaryWriter<IntermediateRepresentationMethod> jsonIRWriter) {
+		this.jsonIRWriter = jsonIRWriter;
 	}
 }

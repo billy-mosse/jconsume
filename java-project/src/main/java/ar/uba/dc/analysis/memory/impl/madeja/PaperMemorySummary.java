@@ -16,7 +16,7 @@ import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
 public class PaperMemorySummary {
 	protected Set<String> parameters;
 	
-	protected ParametricExpression temporal;
+//	protected ParametricExpression temporal;
 	
 	protected ParametricExpression memoryRequirement;
 	
@@ -32,7 +32,7 @@ public class PaperMemorySummary {
 	public PaperMemorySummary(IntermediateRepresentationMethod target, Set<String> methodParameters, ParametricExpression initialTemporal, ParametricExpression initialMemoryRequirement) {
 		this.target = target;
 		this.parameters = methodParameters;
-		this.temporal = initialTemporal;
+	//	this.temporal = initialTemporal;
 		this.memoryRequirement = initialMemoryRequirement;
 		this.residuals = new HashMap<SimplePaperPointsToHeapPartition, ParametricExpression>();
 		this.globEscape = new HashSet<SimplePaperPointsToHeapPartition>();
@@ -41,6 +41,21 @@ public class PaperMemorySummary {
 	
 	
 	
+
+
+	public PaperMemorySummary(IntermediateRepresentationMethod target,ParametricExpression temp, ParametricExpression mem) {
+		this.target = target;
+	//	this.temporal = temp;
+		this.memoryRequirement = mem;
+		this.parameters = mem.getParameters(); //esto esta horrible
+		this.residuals = new HashMap<SimplePaperPointsToHeapPartition, ParametricExpression>();
+		this.globEscape = new HashSet<SimplePaperPointsToHeapPartition>();
+		this.ret = new HashSet<SimplePaperPointsToHeapPartition>();
+		
+	}
+
+
+
 
 
 	public IntermediateRepresentationMethod getTarget() {
