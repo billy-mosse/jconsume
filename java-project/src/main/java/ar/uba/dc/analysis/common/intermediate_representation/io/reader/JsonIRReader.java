@@ -44,14 +44,14 @@ import decorations.Binding;
 import decorations.BindingPair;
 
 
-public class JsonReader implements SummaryReader<IntermediateRepresentationMethod> {
-	private static Log log = LogFactory.getLog(JsonReader.class);
+public class JsonIRReader implements SummaryReader<IntermediateRepresentationMethod> {
+	private static Log log = LogFactory.getLog(JsonIRReader.class);
 
 protected Gson gson;
 	
 	protected MethodLocationStrategy locationStrategy;
 	
-	public JsonReader() {
+	public JsonIRReader() {
 		GsonBuilder builder = new GsonBuilder().setPrettyPrinting();
 
 		builder.registerTypeAdapter(IntermediateRepresentationMethod.class, new IntermediateRepresentationMethodDeserializer());

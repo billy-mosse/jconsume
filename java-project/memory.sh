@@ -28,4 +28,4 @@ $JAVA4BIN/java -cp $CLASSPATH -Xmx400m "ar.uba.dc.analysis.common.MainRunner" "-
 cd results/rinard
 
 DATE_WITH_TIME=`date "+%Y%m%d-%H%M%S"`
-cp -R report report_$2
+cp -R report historical_reports/report_$2

@@ -45,9 +45,9 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
-public class JsonWriter implements SummaryWriter<IntermediateRepresentationMethod>{
+public class JsonIRWriter implements SummaryWriter<IntermediateRepresentationMethod>{
 
-	private static Log log = LogFactory.getLog(JsonWriter.class);
+	private static Log log = LogFactory.getLog(JsonIRWriter.class);
 	
 	//protected XStream xstream;
 	
@@ -57,7 +57,7 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 	private String mainClass;
 
 
-	public JsonWriter() {
+	public JsonIRWriter() {
 		
 	}
 	
@@ -109,7 +109,7 @@ public class JsonWriter implements SummaryWriter<IntermediateRepresentationMetho
 		
 		log.debug("estoy escribiendo el metodo " + ir_method.toString());
 		
-		String location = locationStrategy.getJsonLocation(ir_method, mainClass);
+		String location = locationStrategy.getJsonIRLocation(ir_method, mainClass);
 		log.debug("Location for summary: [" + location + "]");
 		
 		File srcFile = new File(location);
