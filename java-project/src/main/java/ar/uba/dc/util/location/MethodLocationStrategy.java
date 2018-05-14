@@ -9,7 +9,7 @@ import ar.uba.dc.analysis.common.intermediate_representation.IntermediateReprese
  * Estrategia de busqueda de un archivo por metodo. 
  * 
  * Esta intefaz permite determinar donde se encuentra en el file system un archivo 
- * asociado un {@link SootMethod}.
+ * asociado un {@link IntermediateRepresentationMethod}.
  * 
  * El contenido del archivo dependera de lo que se este buscando.
  * 
@@ -40,6 +40,7 @@ public interface MethodLocationStrategy {
 	public String getBasePath();
 
 	public String getHumanReadableLocation(IntermediateRepresentationMethod ir_method, String mainClass);
+
+	public String getJsonIRLocation(IntermediateRepresentationMethod ir_method, String mainClass);
 	
-	public String getJsonLocation(IntermediateRepresentationMethod ir_method, String mainClass);
 }

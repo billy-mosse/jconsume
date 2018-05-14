@@ -180,7 +180,7 @@ public class RepositoryCorrector extends BodyTransformer {
 					}
 					
 					@Override
-					public String getJsonLocation(IntermediateRepresentationMethod ir_method, String mainClass) {
+					public String getJsonIRLocation(IntermediateRepresentationMethod ir_method, String mainClass) {
 						throw new java.lang.UnsupportedOperationException();
 					}
 				};

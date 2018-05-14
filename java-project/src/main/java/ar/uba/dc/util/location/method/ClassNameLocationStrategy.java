@@ -39,7 +39,7 @@ public class ClassNameLocationStrategy extends AbstractMethodLocationStrategy {
 	}
 	
 	@Override
-	public String getJsonLocation(IntermediateRepresentationMethod ir_method, String mainClass) {
+	public String getJsonIRLocation(IntermediateRepresentationMethod ir_method, String mainClass) {
 		return getLocation("json", ir_method, mainClass);
 	}
 
