@@ -757,7 +757,7 @@ public class ProgramInstrumentatorForDaikonMain {
 							
 							
 							
-							if(false){
+							if(true){
 								//ListDIParameters la = a.getDerivedVariables();
 								//ListDIParameters lp = p.getDerivedVariables();
 								//ListDIParameters lpInit = pInit.getDerivedVariables();
@@ -792,9 +792,9 @@ public class ProgramInstrumentatorForDaikonMain {
 											//	|| InductiveVariablesInfo.isAcceptedInductive(IVInfo, e_pInit)
 												)
 										{ 
-											paramInitFil.addAll(e_pInit.toList2());
-											paramFil.addAll(e_p.toList2());
-											argFil.addAll(e_a.toList2());
+											paramInitFil.addAll(e_pInit.toListOnlyDerivedVariables());
+											paramFil.addAll(e_p.toListOnlyDerivedVariables());
+											argFil.addAll(e_a.toListOnlyDerivedVariables());
 										}
 									}
 									
@@ -806,9 +806,9 @@ public class ProgramInstrumentatorForDaikonMain {
 							String pName = p.getName();
 							String argName = a.getName();
 							
-							paramInitFil.add(pInitName);
+							/*paramInitFil.add(pInitName);
 							paramFil.add(pName);
-							argFil.add(argName);
+							argFil.add(argName);*/
 							
 							
 							List new_relevants = new Vector();

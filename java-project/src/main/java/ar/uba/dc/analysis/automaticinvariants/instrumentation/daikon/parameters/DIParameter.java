@@ -132,18 +132,30 @@ public abstract class DIParameter  {
 		return res;
 	}
 	
-	public List toList2()
+	public List toListDerivedVariablesForSpec()
 	{
 		List res = new Vector();
 		boolean b = hasDerivedVariables2();
 		
 		//Puedo preguntar si es iterator tambien
 		if(b)
-			res = getDerivedVariables2().toList2();
+			res = getDerivedVariables2().toListDerivedVariablesForSpec();
 		else
 		{
 			res.add(getLocal());
 		}
+		return res;
+	}
+	
+	public List toListOnlyDerivedVariables()
+	{
+		List res = new Vector();
+		
+		//Puedo preguntar si es iterator tambien
+		if( hasDerivedVariables2())
+			res = getDerivedVariables2().toListOnlyDerivedVariables();
+		
+		
 		return res;
 	}
 	
