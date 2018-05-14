@@ -132,6 +132,8 @@ public class SpecInvariantWriter {
 			String classAndMethod = (String) o;
 
 			String className = extractClassName(classAndMethod);
+			
+			//asumir que la clase no tiene guion bajo rompe todo
 			String method = extractFullMethodSignature(classAndMethod);
 
 			if (!className.equals(currentClass)) {
