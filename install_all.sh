@@ -75,3 +75,13 @@ sudo apt-get install automake
 cd ..
 
 cp -R barvinok-0.40 $CWD 
+
+###############################################################
+
+cd dependencies
+
+sh install.sh
+
+cd ../java-project
+
+mvn compile
