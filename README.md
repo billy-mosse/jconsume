@@ -35,7 +35,7 @@ apt-get install maven
 If using eclipse, once you installed maven, it might be a good idea to install the plugin. You can download it from here: http://m2eclipse.sonatype.org/
  
 
-- After this, execute "sh install.sh" in the project folder jconsume/ so that maven installs some libraries.
+- After this, go to the dependencies folder and execute the script "install.sh". so that maven installs some libraries.
 
 - Execute also the command "mvn compile" to compile the project and to force all the dependencies to be downloaded to the local maven repository. The command must be executed in jconsume/java-project, where the pom.xml file is located.
 
