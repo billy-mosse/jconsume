@@ -1,6 +1,6 @@
 package ar.uba.dc.paper;
 
-import ar.uba.dc.util.List;
+import ar.uba.dc.util.ListE;
 
 /**
  * @author billy

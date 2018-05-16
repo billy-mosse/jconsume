@@ -33,7 +33,6 @@ import ar.uba.dc.invariant.spec.compiler.exceptions.CompileException;
 import ar.uba.dc.invariant.spec.compiler.exceptions.DuplicateIdentifierException;
 import ar.uba.dc.invariant.spec.compiler.exceptions.SiteWithoutOffsetException;
 import ar.uba.dc.invariant.spec.compiler.exceptions.UnknownParameterException;
-import ar.uba.dc.util.List;
 import decorations.Binding;
 import decorations.CallDecoration;
 import javafx.util.Pair;

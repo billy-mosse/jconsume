@@ -3,7 +3,7 @@ package ar.uba.dc.ismm;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import ar.uba.dc.util.List;
+import ar.uba.dc.util.ListE;
 
 
 
@@ -12,19 +12,19 @@ public class MotivatingExample2 {
 
 
 	public static void main(String[] args) {
-		List list = generateList(args[0]);
+		ListE list = generateList(args[0]);
 		boolean firstTransformer = Boolean.parseBoolean(args[1]);
 		Transform transform = getTransform(firstTransformer);
 		test(list,transform);
 	}
 
 	
-	private static List generateList(String integerList) {
-		List list = new List();
+	private static ListE generateList(String integerList) {
+		ListE list = new ListE();
 		String[] sizes = integerList.split(",");
 		for (String stringSize : sizes) {
 			int size = Integer.parseInt(stringSize);
-			List newList = new List();
+			ListE newList = new ListE();
 			for(int j=0;j<size;j++) {
 				newList.add(new Integer(j));
 			}
@@ -83,8 +83,8 @@ public class MotivatingExample2 {
 	  * @residual 6*list.size + 1 : list.size >= 1 
 	  */
 	@SuppressWarnings("unchecked")
-	public static List map(List list, Transform transform) {
-	  List res =  new List(); //residual = 1
+	public static ListE map(ListE list, Transform transform) {
+	  ListE res =  new ListE(); //residual = 1
 	  for (Iterator it = list.iterator(); it.hasNext();) { //tempCall = 1
 	    Object o = transform.apply(it.next()); //residual = 5*list.size (4 de Transform2 y 1 de Transform) //maxCall = 2 (2 de transfor vs 1 de transform2)
 	    res.add(o); //residual = list.size
@@ -97,8 +97,8 @@ public class MotivatingExample2 {
 	  * @residual list.size + 1 : list.size >= 1
 	  */
 	@SuppressWarnings("unchecked")
-	public static List copy(List ls) {
-	  List res = new List(); //residual = 1
+	public static ListE copy(ListE ls) {
+	  ListE res = new ListE(); //residual = 1
 	  for (Iterator it = ls.iterator(); it.hasNext();) //tempCall = 1
 	    res.add(it.next()); //residual = list.size
 	  return res;
@@ -118,8 +118,8 @@ public class MotivatingExample2 {
      * @temporal 5 + list.size : list.size >=1
 	 * @residual 1 + 6*list.size : list.size >=1
 	 */
-	public static List safeMap(List list,Transform transform) {
-	  List cp = copy(list); //tempCall = list.size + 1, maxCall = 1
+	public static ListE safeMap(ListE list,Transform transform) {
+	  ListE cp = copy(list); //tempCall = list.size + 1, maxCall = 1
 	  return map(cp, transform); //residual = 1 + 6*list.size , tempCall = 0 , maxCall = 4 
 	}
 
@@ -138,10 +138,10 @@ public class MotivatingExample2 {
 	  * 
 	  */
 	@SuppressWarnings("unchecked")
-	public static List test(List ls, Transform transform){
-	  List res = new List();  //residual = 1
+	public static ListE test(ListE ls, Transform transform){
+	  ListE res = new ListE();  //residual = 1
 	  for(Iterator it = ls.iterator(); it.hasNext();) //tempCall = 1
-	     res.add(safeMap((List) it.next(), transform)); 
+	     res.add(safeMap((ListE) it.next(), transform)); 
 	  return res;
 	}
 	

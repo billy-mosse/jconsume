@@ -16,7 +16,7 @@ import ar.uba.dc.invariant.spec.bean.SiteSpecification;
 import ar.uba.dc.invariant.spec.compiler.constraints.ConstraintsInfo;
 import ar.uba.dc.invariant.spec.compiler.constraints.ConstraintsParser;
 import ar.uba.dc.invariant.spec.compiler.constraints.ReferenceResolver;
-import ar.uba.dc.util.List;
+import ar.uba.dc.util.ListE;
 
 public class RegexpConstraintsParser implements ConstraintsParser {
 

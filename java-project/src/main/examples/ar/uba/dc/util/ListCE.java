@@ -3,9 +3,9 @@ package ar.uba.dc.util;
 import java.util.Collection;
 import java.util.Iterator;
 
-public class ListC implements Collection {
+public class ListCE implements Collection {
 
-	Cell head;
+	CellE head;
 	public int size = 0;
 
 	/**
@@ -15,7 +15,7 @@ public class ListC implements Collection {
 	
 	@Override
 	public boolean add(Object e) {
-		this.head = new Cell(e, this.head);
+		this.head = new CellE(e, this.head);
 		this.size++;
 		return true;
 	}
@@ -27,7 +27,7 @@ public class ListC implements Collection {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Iterator iterator() {
-		return new ListItr(this.head);
+		return new ListItrE(this.head);
 	}
 
 	public int size() {

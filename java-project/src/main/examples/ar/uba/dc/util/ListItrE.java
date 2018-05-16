@@ -4,15 +4,15 @@ import java.util.Iterator;
 
 
 @SuppressWarnings("unchecked")
-public class ListItr implements Iterator {
+public class ListItrE implements Iterator {
 
-	Cell cell;
+	CellE cell;
 
 	/**
 	 * @temporal: 0
 	 * @residual: 0
 	 */
-	public ListItr(Cell head) {
+	public ListItrE(CellE head) {
 		cell = head;
 	}
 

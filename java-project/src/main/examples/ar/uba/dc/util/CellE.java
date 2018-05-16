@@ -1,15 +1,15 @@
 package ar.uba.dc.util;
 
-public class Cell {
+public class CellE {
    
 	Object data;
-	Cell next;
+	CellE next;
 
 	/**
 	 * @temporal: 0
 	 * @residual: 0
 	 */
-	public Cell(Object d, Cell n) {
+	public CellE(Object d, CellE n) {
 		data = d;
 		next = n;
 	}

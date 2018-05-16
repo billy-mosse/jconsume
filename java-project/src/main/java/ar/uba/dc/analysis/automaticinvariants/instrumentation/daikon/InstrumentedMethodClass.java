@@ -3,7 +3,7 @@ package ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import ar.uba.dc.util.List;
+import ar.uba.dc.util.ListE;
 import soot.SootClass;
 
 public class InstrumentedMethodClass {

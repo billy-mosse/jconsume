@@ -2,9 +2,9 @@ package ar.uba.dc.util;
 
 import java.util.Iterator;
 
-public class List {
+public class ListE {
 
-	Cell head;
+	CellE head;
 	public int size = 0;
 
 	/**
@@ -12,7 +12,7 @@ public class List {
 	 * @residual: 1
 	 */
 	public void add(Object e) {
-		this.head = new Cell(e, this.head);
+		this.head = new CellE(e, this.head);
 		this.size++;
 	}
 
@@ -22,7 +22,7 @@ public class List {
 	 */
 	@SuppressWarnings("unchecked")
 	public Iterator iterator() {
-		return new ListItr(this.head);
+		return new ListItrE(this.head);
 	}
 
 	public int size() {

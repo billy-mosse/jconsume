@@ -1,7 +1,7 @@
 package ar.uba.dc.daikon;
 
-import ar.uba.dc.util.ListC;
-import ar.uba.dc.util.ListItr;
+import ar.uba.dc.util.ListCE;
+import ar.uba.dc.util.ListItrE;
 
 /**
  * Tiene un foreach, pero tambien un contador agregado a mano
@@ -18,13 +18,13 @@ public class Ins4 {
 	
 	public static void mainParameters(int n)
 	{
-		ListC l = new ListC();
+		ListCE l = new ListCE();
 		for(int i = 1; i < n; i++)
 		{
 			l.add(new Integer(i));
 		}
 
-		ListItr it = (ListItr) l.iterator();
+		ListItrE it = (ListItrE) l.iterator();
 		while(it.hasNext())
 		{	
 			Integer j = (Integer) it.next();

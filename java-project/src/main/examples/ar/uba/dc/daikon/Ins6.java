@@ -1,7 +1,7 @@
 package ar.uba.dc.daikon;
 
-import ar.uba.dc.util.ListC;
-import ar.uba.dc.util.ListItr;
+import ar.uba.dc.util.ListCE;
+import ar.uba.dc.util.ListItrE;
 
 /**
  * Tiene un boolean

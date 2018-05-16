@@ -45,7 +45,7 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis {
 
 	protected Set<SootMethod> excludedMethods = new HashSet<SootMethod>();
 	
-	protected SummaryRepository<MemorySummary, SootMethod>repository;
+	protected SummaryRepository<MemorySummary, SootMethod> repository;
 	
 	protected ParametricExpressionFactory expressionFactory;
 	

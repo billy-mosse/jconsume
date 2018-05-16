@@ -12,7 +12,6 @@ import ar.uba.dc.barvinok.BarvinokSyntax;
 import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.barvinok.expression.PiecewiseQuasipolynomial;
 import ar.uba.dc.barvinok.expression.QuasiPolynomial;
-import ar.uba.dc.util.List;
 
 public class IsccSyntax extends AbstractBarvinokSyntax {
 

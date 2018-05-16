@@ -7,7 +7,7 @@ import java.util.TreeSet;
 
 import ar.uba.dc.invariant.spec.bean.SiteSpecification;
 import ar.uba.dc.invariant.spec.compiler.constraints.parser.DerivedVariable;
-import ar.uba.dc.util.List;
+import ar.uba.dc.util.ListE;
 
 public interface ConstraintsParser {
 

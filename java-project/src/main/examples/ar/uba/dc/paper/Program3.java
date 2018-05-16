@@ -2,7 +2,7 @@ package ar.uba.dc.paper;
 
 import java.util.Iterator;
 
-import ar.uba.dc.util.List;
+import ar.uba.dc.util.ListE;
 
 public class Program3
 {
@@ -17,7 +17,7 @@ public class Program3
 	//no deberia necesitar partir esto en dos, no?
 	public static void mainParameters(int k, String u)
 	{
-		List list = new List();
+		ListE list = new ListE();
 		for(int j = 0; j < k; j++)
 		{
 			list.add(new Integer(j));
@@ -33,12 +33,12 @@ public class Program3
 		
 		op = new Op();
 		
-		List new_list = map(list, op);
+		ListE new_list = map(list, op);
 	}
 
 	
-	public static List map(List list, Op op) {
-		List res = new List();
+	public static ListE map(ListE list, Op op) {
+		ListE res = new ListE();
 
 		Iterator it = list.iterator();
 		// sum max (OP, OP2) , no lo sabe hacer y hace sum OP + OP2

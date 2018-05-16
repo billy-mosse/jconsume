@@ -3,14 +3,14 @@ package ar.uba.dc.ismm;
 import java.util.Date;
 import java.util.Random;
 
-import ar.uba.dc.util.Transformer;
+import ar.uba.dc.util.TransformerE;
 
 /**
  * @author martin
  *
  */
 @SuppressWarnings("unused")
-public class Transform implements Transformer {
+public class Transform implements TransformerE {
 	 
 	/**
 	 * Residual = 1
