@@ -209,7 +209,7 @@ public class ProgramInstrumentatorForDaikonMain {
 				 
 				
 				 //lo deje a ver que pasa
-				 "-asm-backend",
+				 //"-asm-backend",
 				 
 				 //This option sets the JDK version of the standard library being analyzed so that Soot can simulate the native methods in the specific version of the library.
 				 "-p", "cg", "jdkver:8", //lo saque a ver que pasa.
@@ -291,7 +291,7 @@ public class ProgramInstrumentatorForDaikonMain {
 				//then the propagator checks for redefinitions and propagates copies only within extended basic blocks. 
 				"-p", "jj.dae", "enabled:false",
 				
-				
+				//"-version",
 				// The Unused Local Eliminator removes any unused locals from the method. 
 				 "-p","jj.ule", "enabled:false",
 				
@@ -407,7 +407,11 @@ public class ProgramInstrumentatorForDaikonMain {
 		
 	        sootOpt.set_src_prec(soot.options.Options.src_prec_class);
 	      //  sootOpt.set_java_version(soot.options.Options.java_version_1_7);
-	        sootOpt.set_asm_backend(true);      
+	        
+	        
+	        sootOpt.set_asm_backend(true);
+	        //esto lo saque porque sino no anda pero estoy usando la version incorrecta de soot
+	        //sootOpt.set_asm_backend(true);      
 	        //sootOpt.set_keep_offset(true);
 	        sootOpt.set_main_class(args[0]);
 	        //sootOpt.set_keep_line_number(false);
@@ -792,9 +796,10 @@ public class ProgramInstrumentatorForDaikonMain {
 											//	|| InductiveVariablesInfo.isAcceptedInductive(IVInfo, e_pInit)
 												)
 										{ 
-											paramInitFil.addAll(e_pInit.toListOnlyDerivedVariables());
-											paramFil.addAll(e_p.toListOnlyDerivedVariables());
-											argFil.addAll(e_a.toListOnlyDerivedVariables());
+											
+											paramInitFil.addAll(e_pInit.toListOnlyEnterizedVariables());
+											paramFil.addAll(e_p.toListOnlyEnterizedVariables());
+											argFil.addAll(e_a.toListOnlyEnterizedVariables());
 										}
 									}
 									
@@ -845,9 +850,18 @@ public class ProgramInstrumentatorForDaikonMain {
 											String notBase = fullName.substring(fullName.indexOf(element.getName()) + element.getName().length());
 											
 											
-											paramInitFil.add(pInitName + notBase);
-											argFil.add(argName + notBase);
-											paramFil.add(pName + notBase);
+											boolean contains = false;
+											for(Object item : paramInitFil)
+											{
+												if (item.toString().equals(pInitName+notBase))
+													contains =true;												
+											}
+											if(!contains)
+											{
+												paramInitFil.add(pInitName + notBase);
+												argFil.add(argName + notBase);
+												paramFil.add(pName + notBase);
+											}
 
 											
 											new_relevant.derivedFields.add(notBase);
@@ -862,7 +876,6 @@ public class ProgramInstrumentatorForDaikonMain {
 											new_relevants.add(new_relevant);
 										}
 										
-										System.out.println("Hola!");
 									}
 									
 								}
@@ -890,9 +903,18 @@ public class ProgramInstrumentatorForDaikonMain {
 											String notBase = (String) dip_it.next();
 											
 											
-											paramInitFil.add(pInitName + notBase);
-											argFil.add(argName + notBase);
-											paramFil.add(pName + notBase);
+											boolean contains = false;
+											for(Object item : paramInitFil)
+											{
+												if (item.toString().equals(pInitName+notBase))
+													contains =true;												
+											}
+											if(!contains)
+											{
+												paramInitFil.add(pInitName + notBase);
+												argFil.add(argName + notBase);
+												paramFil.add(pName + notBase);
+											}
 	
 											
 											new_relevant.derivedFields.add(notBase);
