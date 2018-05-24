@@ -58,7 +58,7 @@ public abstract class AbstractMethodLocationStrategy implements MethodLocationSt
 		}
 	}
 
-	protected String getExtension() {
+	public String getExtension() {
 		return extension;
 	}
 }

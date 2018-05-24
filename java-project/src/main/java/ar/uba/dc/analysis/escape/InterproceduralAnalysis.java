@@ -63,7 +63,7 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 
 	private SummaryWriter<IntermediateRepresentationMethod> ihrWriter;
 	
-	private SummaryWriter<IntermediateRepresentationMethod> jsonIRWriter;
+	private SummaryWriter<IntermediateRepresentationMethod> jsonIrWriter;
 	
 	protected SummaryReader<IntermediateRepresentationMethod> irReader;	
 	
@@ -366,15 +366,15 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 		log.debug("Done");*/
 		log.info("Writing JSON Intermediate Representation...");
 
-		jsonIRWriter.setMainClass(this.mainClass);
+		jsonIrWriter.setMainClass(this.mainClass);
 		
-		if(jsonIRWriter.getClass() == JsonIRWriter.class)
-			((JsonIRWriter) jsonIRWriter).registerTypeAdapters(this.debugIR);
+		if(jsonIrWriter.getClass() == JsonIRWriter.class)
+			((JsonIRWriter) jsonIrWriter).registerTypeAdapters(this.debugIR);
 		
 		for (IntermediateRepresentationMethod ir_method : ir_methods) {
 			//TODO: agregar los parametros o un mejor nombre para debug
 			log.debug(" |- Writing summary of analyzed method: " + ir_method.getName());
-			jsonIRWriter.write(ir_method);
+			jsonIrWriter.write(ir_method);
 			
 			
 		}
@@ -500,10 +500,10 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 	}
 
 	public SummaryWriter<IntermediateRepresentationMethod> getJsonIRWriter() {
-		return jsonIRWriter;
+		return jsonIrWriter;
 	}
 
-	public void setJsonIRWriter(SummaryWriter<IntermediateRepresentationMethod> jsonIRWriter) {
-		this.jsonIRWriter = jsonIRWriter;
+	public void setJsonIRWriter(SummaryWriter<IntermediateRepresentationMethod> jsonWriter) {
+		this.jsonIrWriter = jsonWriter;
 	}
 }

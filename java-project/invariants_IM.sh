@@ -62,6 +62,9 @@ CLASSPATH_ECLIPSE=/home/billy/.m2/repository/ca/mcgill/sable/soot/3.0.0-SNAPSHOT
 
 CLASSPATH=$CLASSPATH_JCONSUME_FOLDERS:$CLASSPATH_JARS:$CLASSPATH_ECLIPSE:$CLASSPATH_JARS:$CLASSPATH2
 
+
+#echo before comment
+#: <<'END'
 rm -f -R out/$FULLNAMETEST 
 mkdir -p out/$FULLNAMETEST
 
@@ -95,8 +98,9 @@ javac -g $FULLNAMETEST/$MYPATH/InstrumentedMethod.java || die "Problema en fase 
 
 echo Fase 3: Daikon for generating invariants
 
-
 ./daikon.sh $FULLNAMETEST 5 > $FULLNAMETEST/$FULLNAMETEST.txt || die "Problema en fase 3"
+#END
+
 
 mv $FULLNAMETEST/$FULLNAMETEST.indFake $FULLNAMETEST/$FULLNAMETEST.ind
 

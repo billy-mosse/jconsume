@@ -72,14 +72,6 @@ public class PaperInterproceduralAnalysis {
 	protected SummaryReader<IntermediateRepresentationMethod> jsonIRReader;
 	private String mainClass;
 	
-	public SummaryReader<IntermediateRepresentationMethod> getJsonIRReader() {
-		return jsonIRReader;
-	}
-
-	public void setJsonIRReader(SummaryReader<IntermediateRepresentationMethod> jsonIRReader) {
-		this.jsonIRReader = jsonIRReader;
-	}
-	
 	protected SummaryReader<AnnotationsContainer> jsonAnnotationsReader;
 	
 	public SummaryReader<AnnotationsContainer> getJsonAnnotationsReader() {
@@ -132,6 +124,7 @@ public class PaperInterproceduralAnalysis {
 		this.callAnalyzer = callAnalyzer;
 	}
 
+	
 	public SummaryRepository<PaperMemorySummary, IntermediateRepresentationMethod> getDefaultSummaryRepository() {
 		return defaultSummaryRepository;
 	}
@@ -515,12 +508,12 @@ public class PaperInterproceduralAnalysis {
 
 
 
-	public SummaryReader<IntermediateRepresentationMethod> getReader() {
+	public SummaryReader<IntermediateRepresentationMethod> getJsonIrReader() {
 		return jsonIRReader;
 	}
 
 
-	public void setReader(SummaryReader<IntermediateRepresentationMethod>  jsonIRReader) {
+	public void setJsonIRReader(SummaryReader<IntermediateRepresentationMethod>  jsonIRReader) {
 		this.jsonIRReader = jsonIRReader;
 	}
 

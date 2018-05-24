@@ -56,12 +56,12 @@ public class ListDIParameters extends Vector implements List{
 	}
 	
 	
-	public List toListOnlyDerivedVariables()
+	public List toListOnlyEnterizedVariables()
 	{
 		List res = new Vector();
 		for (Iterator iter = this.iterator(); iter.hasNext();) {
 			DIParameter element = (DIParameter) iter.next();
-			if(element!=null) res.addAll(element.toListOnlyDerivedVariables());
+			if(element!=null) res.addAll(element.toListOnlyEnterizedVariables());
 		}
 		return res;
 	}

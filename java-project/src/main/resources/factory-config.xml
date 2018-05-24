@@ -233,7 +233,7 @@
 								<statementVisitor config-class="ar.uba.dc.analysis.memory.code.impl.visitor.IdStatementVisitor"/> 
 								<calculatorAdapter config-class="ar.uba.dc.analysis.memory.impl.BarvinokCalculatorAdapter" config-factory="custom" config-ref-to="analysis.memory.barvinok-calculator-adapter" />
 							</symbolicCalculator>
-							<repository config-class="ar.uba.dc.analysis.common.ChainSummaryRepository" config-factory="container" config-source="analysis.memory.paperRepositories" config-select="hardcoded" config-default="hardcoded" />
+							<defaultSummaryRepository config-class="ar.uba.dc.analysis.common.ChainSummaryRepository" config-factory="container" config-source="analysis.memory.paperRepositories" config-select="hardcoded" config-default="hardcoded" />
 							<callAnalyzer config-class="ar.uba.dc.analysis.memory.callanalyzer.PaperCallAnalyzer" config-factory="custom" />
 
 							<reportWriter config-class="ar.uba.dc.analysis.memory.impl.report.html.HtmlPaperReportWriter"
@@ -268,8 +268,8 @@
 			
 			<repositories>
 				<repository config-class="ar.uba.dc.analysis.memory.impl.summary.repository.FileSystemSummaryRepository">
-					<!--<locationStrategy config-class="ar.uba.dc.util.location.method.${memory.summary.repository.layout}LocationStrategy" extension=".xml" basePath="${memory.summary.repository.dir}" />
-					<reader config-class="ar.uba.dc.analysis.memory.impl.summary.io.reader.XMLReader" />-->
+					<locationStrategy config-class="ar.uba.dc.util.location.method.${memory.summary.repository.layout}LocationStrategy" extension=".xml" basePath="${memory.summary.repository.dir}" />
+					<reader config-class="ar.uba.dc.analysis.memory.impl.summary.io.reader.XMLReader" />
 				</repository>
 				<hardcoded config-class="ar.uba.dc.analysis.memory.impl.summary.repository.DefaultSummaryRepository" config-factory="custom">
 					<methodInformationProvider config-class="ar.uba.dc.analysis.common.MethodInformationProvider" config-factory="custom" config-ref-to="analysis.common.method-information-provider"/>
