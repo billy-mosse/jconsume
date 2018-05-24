@@ -336,6 +336,7 @@ This relevant parameter will have to be bound with a variable in the caller, so 
 
 ```<binding>$t.this_init__f__eNodes__f__fromCount == __r0__f__eNodes__f__fromCount</binding>```
 
+(or the name of the variable bounded by numNodes_init instead of ```__r0__f__eNodes__f__fromCount``` if it was named differently - named depend on how the jimple was generated)
 
 Finally, go back to the Bigraph.spec. The ```create``` method has 2 calls to ```makeFromNodes```, and the binding is wrong.
 
