@@ -268,7 +268,7 @@ ______________________________________________
 
 **MST**
 
-This is a real world program!
+This is a real world program! It's part of the Jolden benchmark.
 
 Go to java-project and just run the following command:
 
@@ -312,6 +312,49 @@ After doing all this, go again to jconsume/java-project and run the following co
 This generates the memory consumption analysis.-->
 
 Results can be seen in java-project/results/rinard/report_ar.uba.dc.jolden.mst.MST/index.html. They can be compared with our paper "Summary-based inference of quantitative bounds of live heap objects": https://dblp.org/rec/html/journals/scp/BrabermanGHY14
+
+
+**Em3d**
+
+This is another real world program, also part of the Jolden benchmark.
+
+
+Go to java-project and just run the following command:
+
+```sh invariants_IM.sh "ar.uba.dc.jolden.em3d.Em3d" 5```
+
+This time 2 manual fixed are needed.
+
+Now go to the invariants folder ($jconsume/java-project/invariants/spec/fullreferences/ar/uba/dc/jolden/em3d).
+
+Open the BiGraph.spec file and find the ```compute``` method. Add the following relevant parameter: ```this_init__f__eNodes__f__fromCount```
+
+(You just need to add ```<relevant-parameters>this_init__f__eNodes__f__fromCount</relevant-parameters>``` before the first instrumentation site)
+
+This relevant parameter will have to be bound with a variable in the caller, so you need to open Em3d.spec, find the ```mainParameters``` method. There's a call to the ```compute``` method there. ADd the following binding (just below the constraints):
+
+
+```<binding>$t.this_init__f__eNodes__f__fromCount == __r0__f__eNodes__f__fromCount</binding>```
+
+
+Finally, go back to the Bigraph.spec. The ```create``` method has 2 calls to ```makeFromNodes```, and the binding is wrong.
+
+So change 
+
+```<binding>$t.this_init__f__fromCount == n1__f__fromCount</binding>```
+
+
+to
+
+```<binding>$t.this_init__f__fromCount == numDegree</binding>```
+
+in both calls.
+
+There. Now you can run ```sh memory.sh "ar.uba.dc.jolden.em3d.Em3d"``` and you'll get the memory consumption. The results can be compared with the paper, just like MST.
+
+
+
+
 ______________________________________________
 
 **Paper programs**
