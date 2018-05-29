@@ -223,6 +223,8 @@
 							 <locationStrategy config-class="ar.uba.dc.util.location.method.${escape.summary.output.layout}LocationStrategy" extension=".json" basePath="${escape.summary.output.dir}" />
 							 <jsonIRReader config-class="ar.uba.dc.analysis.common.intermediate_representation.io.reader.JsonIRReader" />
 
+							 <jsonAnnotationsReader config-class="ar.uba.dc.analysis.common.method.information.JsonAnnotationsReader" />
+
 
 							 <summaryFactory config-class="ar.uba.dc.analysis.memory.PaperMemorySummaryFactory">
 						 		<expressionFactory config-class="ar.uba.dc.analysis.memory.impl.BarvinokParametricExpressionFactory" />
