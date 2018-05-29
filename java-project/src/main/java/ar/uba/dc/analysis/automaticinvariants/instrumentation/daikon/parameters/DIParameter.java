@@ -147,13 +147,19 @@ public abstract class DIParameter  {
 		return res;
 	}
 	
-	public List toListOnlyDerivedVariables()
+	public List toListOnlyEnterizedVariables()
 	{
 		List res = new Vector();
 		
 		//Puedo preguntar si es iterator tambien
 		if( hasDerivedVariables2())
-			res = getDerivedVariables2().toListOnlyDerivedVariables();
+			res = getDerivedVariables2().toListOnlyEnterizedVariables();
+		else
+		{
+			String t = getLocal().getType().toString();
+			if(t.equals("int") || t.equals("long") || t.equals("java.lang.Integer"))
+				res.add(getLocal());
+		}
 		
 		
 		return res;
