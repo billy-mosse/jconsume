@@ -503,7 +503,7 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 		return jsonIrWriter;
 	}
 
-	public void setJsonIRWriter(SummaryWriter<IntermediateRepresentationMethod> jsonWriter) {
-		this.jsonIrWriter = jsonWriter;
+	public void setJsonIRWriter(SummaryWriter<IntermediateRepresentationMethod> jsonIRWriter) {
+		this.jsonIrWriter = jsonIRWriter;
 	}
 }
