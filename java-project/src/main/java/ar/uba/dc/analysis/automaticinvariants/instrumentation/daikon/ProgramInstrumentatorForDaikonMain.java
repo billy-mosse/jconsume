@@ -30,6 +30,7 @@ import soot.Scene;
 import soot.SootClass;
 import soot.SootMethod;
 import soot.Transform;
+import soot.jimple.internal.JimpleLocal;
 import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.jimple.toolkits.callgraph.Edge;
 //import soot.jimple.toolkits.callgraph.EdgeFilter;
@@ -618,9 +619,6 @@ public class ProgramInstrumentatorForDaikonMain {
 	{
 		// ListDIParameters args = (ListDIParameters) ccArgsMap.get(callSite);;
 		
-		
-		
-		
 			
 		//	ListDIParametersNoRep relevants = csInfo.getObjectVars();
 			
@@ -628,7 +626,6 @@ public class ProgramInstrumentatorForDaikonMain {
 		
 		String m = (String) ((Object[])ccMethodsMap.get(callSite))[0];		
 		
-		System.out.println(callInfo.getCallee());
 		
 		
 		
@@ -745,216 +742,215 @@ public class ProgramInstrumentatorForDaikonMain {
 					
 					
 					
-					if(true || a.getLocal().getType().equals(p.getLocal().getType()) 
-							|| a.getDerivedVariables2_size()>=p.getDerivedVariables2_size())
-					{	
+					//if(true || a.getLocal().getType().equals(p.getLocal().getType()) 
+					//		|| a.getDerivedVariables2_size()>=p.getDerivedVariables2_size())
+					//{	
 						
 						
-						//OK, creo que los parametros son los bla_derived
-						//tengo que cambiarlo para que admite parametros...posta
-						//HACK le puse false porque *supuestamente* ya no estamos usando mas esto
-						//le saque el false 17-8-17
-						//lo puse como true 19-10-17 porque "confio" en que me conviene hacer esto siempre
-						if(true || a.hasDerivedVariables2())
+					//OK, creo que los parametros son los bla_derived
+					//tengo que cambiarlo para que admite parametros...posta
+					//HACK le puse false porque *supuestamente* ya no estamos usando mas esto
+					//le saque el false 17-8-17
+					//lo puse como true 19-10-17 porque "confio" en que me conviene hacer esto siempre
+					//if(true || a.hasDerivedVariables2())
+					
+						
+						
+						
+						
+						
+					//ListDIParameters la = a.getDerivedVariables();
+					//ListDIParameters lp = p.getDerivedVariables();
+					//ListDIParameters lpInit = pInit.getDerivedVariables();
+					ListDIParameters la = a.toListDIP2();
+					ListDIParameters lp = p.toListDIP2();
+					ListDIParameters lpInit = pInit.toListDIP2();
+
+					Iterator iter_lp = lp.iterator();
+					Iterator iter_lpInit = lpInit.iterator();
+					for (Iterator iter_la = la.iterator(); iter_la.hasNext();) {
+						DIParameter e_a = (DIParameter) iter_la.next();
+						if(iter_lp.hasNext())
 						{
-							
-							
-							
-							
-							if(true){
-								//ListDIParameters la = a.getDerivedVariables();
-								//ListDIParameters lp = p.getDerivedVariables();
-								//ListDIParameters lpInit = pInit.getDerivedVariables();
-								ListDIParameters la = a.toListDIP2();
-								ListDIParameters lp = p.toListDIP2();
-								ListDIParameters lpInit = pInit.toListDIP2();
-	//							
-								//System.out.println("a p pinit");
-	//							System.out.println(la);
-	//							System.out.println(lp);
-	//							System.out.println(lpInit);
-								if(!lp.isEmpty() && lpInit.isEmpty())
+							DIParameter e_p  = (DIParameter) iter_lp.next();
+							DIParameter e_pInit  = (DIParameter) iter_lpInit.next();
+							/* Diego 1-7-09 
+							if(InductiveVariablesInfo.isAcceptedInductive(IVInfo, e_a)
+							&& InductiveVariablesInfo.isAcceptedInductive(IVInfo, e_p)
+							&& InductiveVariablesInfo.isAcceptedInductive(IVInfo, e_pInit)
+							)
+							*/
+							if(InductiveVariablesInfo.isAcceptedInductive(IVInfo, e_a)
+								//	|| InductiveVariablesInfo.isAcceptedInductive(IVInfo, e_p)
+								//	|| InductiveVariablesInfo.isAcceptedInductive(IVInfo, e_pInit)
+									)
+							{ 
+								List l_pInit = e_pInit.toListOnlyEnterizedVariables();
+								List l_p = e_p.toListOnlyEnterizedVariables();
+								List l_e = e_a.toListOnlyEnterizedVariables();
+								
+								
+								//puede pasar que un arg no sea relevante (por ser object) pero un parametro si (por ser entero)
+								//una solucion posible para este problema es controlar que las cantidades sean las mismas
+								//una mejor solucion seria que la transformacion a List de e_pInit, e_p y e_a se hagan en paralelo
+								//y se tengan en cuenta solo las derivaciones (recursivas) que hay para los 3 objetos a la vez
+								//pero no vale la pena
+								if(l_pInit.size() == l_p.size() && l_p.size() == l_e.size())
 								{
-									System.out.println("");
-								}
-								Iterator iter_lp = lp.iterator();
-								Iterator iter_lpInit = lpInit.iterator();
-								for (Iterator iter_la = la.iterator(); iter_la.hasNext();) {
-									DIParameter e_a = (DIParameter) iter_la.next();
-									if(iter_lp.hasNext())
-									{
-										DIParameter e_p  = (DIParameter) iter_lp.next();
-										DIParameter e_pInit  = (DIParameter) iter_lpInit.next();
-										/* Diego 1-7-09 
-										if(InductiveVariablesInfo.isAcceptedInductive(IVInfo, e_a)
-										&& InductiveVariablesInfo.isAcceptedInductive(IVInfo, e_p)
-										&& InductiveVariablesInfo.isAcceptedInductive(IVInfo, e_pInit)
-										)
-										*/
-										if(InductiveVariablesInfo.isAcceptedInductive(IVInfo, e_a)
-											//	|| InductiveVariablesInfo.isAcceptedInductive(IVInfo, e_p)
-											//	|| InductiveVariablesInfo.isAcceptedInductive(IVInfo, e_pInit)
-												)
-										{ 
-											
-											paramInitFil.addAll(e_pInit.toListOnlyEnterizedVariables());
-											paramFil.addAll(e_p.toListOnlyEnterizedVariables());
-											argFil.addAll(e_a.toListOnlyEnterizedVariables());
-										}
-									}
-									
+									paramInitFil.addAll(l_pInit);
+									paramFil.addAll(l_p);
+									argFil.addAll(l_e);
 								}
 							}
-							
+						}
+						
+					}
+					
+					
 
-							String pInitName = pInit.getName();
-							String pName = p.getName();
-							String argName = a.getName();
-							
-							/*paramInitFil.add(pInitName);
-							paramFil.add(pName);
-							argFil.add(argName);*/
-							
-							
-							List new_relevants = new Vector();
-							
-							
-							
-							if (relevant_variables_callee != null)
+					String pInitName = pInit.getName();
+					String pName = p.getName();
+					String argName = a.getName();
+					
+					/*paramInitFil.add(pInitName);
+					paramFil.add(pName);
+					argFil.add(argName);*/
+					
+					
+					List new_relevants = new Vector();
+					
+					
+					
+					//aca hago el binding entre las variables relevantes enteras del callee
+					//y las del caller
+					if (relevant_variables_callee != null)
+					{
+						for(Iterator iter = relevant_variables_callee.iterator(); iter.hasNext();)
+						{
+							DIParameter element = (DIParameter) iter.next();
+							String relevantVar = element.toString();
+							if(element.getName().equals(pName))
 							{
-								for(Iterator iter = relevant_variables_callee.iterator(); iter.hasNext();)
+								//int index = relevantVar.indexOf(pName);
+								
+								//String notBase = relevantVar.substring(index + pName.length());
+								
+								
+								SimpleDIParameter new_relevant = new SimpleDIParameter(argName);
+								
+								
+								Stack derived_parameters = new Stack();
+																		
+								derived_parameters.addAll(element.getDerivedVariables2());
+								//Por cada field relevante agrego a la lista el binding entre fields
+								
+								for(Object o : element.toListOnlyFieldEnterizedVariables())
 								{
-									DIParameter element = (DIParameter) iter.next();
-									String relevantVar = element.toString();
-									if(element.getName().equals(pName))
+									JimpleLocal dip = (JimpleLocal) o;
+									String fullName = dip.toString();
+									String notBase = fullName.substring(fullName.indexOf(element.getName()) + element.getName().length());
+									boolean contains = false;
+									for(Object item : paramInitFil)
 									{
-										//int index = relevantVar.indexOf(pName);
-										
-										//String notBase = relevantVar.substring(index + pName.length());
-										
-										
-										SimpleDIParameter new_relevant = new SimpleDIParameter(argName);
-										
-										
-										Stack derived_parameters = new Stack();
-																				
-										derived_parameters.addAll(element.getDerivedVariables2());
-										//Por cada field relevante agrego a la lista el binding entre fields
-										
-										while(!derived_parameters.empty())
-										{
-											
-											DIParameter dip = (DIParameter) derived_parameters.pop();
-											derived_parameters.addAll(dip.getDerivedVariables2());
-											String fullName = dip.getName();
-											String notBase = fullName.substring(fullName.indexOf(element.getName()) + element.getName().length());
-											
-											
-											boolean contains = false;
-											for(Object item : paramInitFil)
-											{
-												if (item.toString().equals(pInitName+notBase))
-													contains =true;												
-											}
-											if(!contains)
-											{
-												paramInitFil.add(pInitName + notBase);
-												argFil.add(argName + notBase);
-												paramFil.add(pName + notBase);
-											}
-
-											
-											new_relevant.derivedFields.add(notBase);
-											
-											
-											System.out.println(notBase);
-											
-										}
-										
-										if(new_relevant.derivedFields.size > 0)
-										{
-											new_relevants.add(new_relevant);
-										}
-										
+										if (item.toString().equals(pInitName+notBase))
+											contains =true;												
 									}
 									
-								}
-							}
-							
-							
-							List new_relevantsCallee = (List) newRelevantsMap.get(callInfo.getCallee());
-							if(new_relevantsCallee != null)
-							{
-								for(Iterator iter = new_relevantsCallee.iterator(); iter.hasNext();)
-								{
-									SimpleDIParameter element = (SimpleDIParameter) iter.next();
-									if(element.name.equals(pName))
+									//creo que esto esta de mas
+									if(!contains)
 									{
-										//int index = relevantVar.indexOf(pName);
-										
-										//String notBase = relevantVar.substring(index + pName.length());
-										
-										
-										SimpleDIParameter new_relevant = new SimpleDIParameter(argName);
-	
-										//Por cada field relevante agrego a la lista el binding entre fields
-										for (Iterator dip_it= element.derivedFields.iterator(); dip_it.hasNext();)
-										{
-											String notBase = (String) dip_it.next();
-											
-											
-											boolean contains = false;
-											for(Object item : paramInitFil)
-											{
-												if (item.toString().equals(pInitName+notBase))
-													contains =true;												
-											}
-											if(!contains)
-											{
-												paramInitFil.add(pInitName + notBase);
-												argFil.add(argName + notBase);
-												paramFil.add(pName + notBase);
-											}
-	
-											
-											new_relevant.derivedFields.add(notBase);
-											
-											
-											System.out.println(notBase);
-											
-										}
-										
-										if(new_relevant.derivedFields.size > 0)
-										{
-											new_relevants.add(new_relevant);
-										}
-										
-										System.out.println("Hola!");
+										paramInitFil.add(pInitName + notBase);
+										argFil.add(argName + notBase);
+										paramFil.add(pName + notBase);
 									}
-									
-								}
-							}
-							
-							
-							/*if(pInit.getClass() != DI_Object.class)
-							{
-								SimpleDIParameter new_relevant = new SimpleDIParameter(pInit.getName());
-								String base = new_relevant.name;
+									new_relevant.derivedFields.add(notBase);
 
-								for(Iterator itD = pInit.getDerivedVariables2().iterator(); itD.hasNext();)
+								}
+								
+								if(new_relevant.derivedFields.size > 0)
+								{
+									new_relevants.add(new_relevant);
+								}
+								
+								/*while(!derived_parameters.empty())
 								{
 									
-									DIParameter dip = (DIParameter) itD.next();
+									DIParameter dip = (DIParameter) derived_parameters.pop();
+									derived_parameters.addAll(dip.getDerivedVariables2());
+									String fullName = dip.getName();
+									String notBase = fullName.substring(fullName.indexOf(element.getName()) + element.getName().length());
 									
-									String notBase = dip.getName().substring(dip.getName().indexOf(base) + base.length());
 									
-									paramInitFil.add(pInitName + notBase);
-									argFil.add(argName + notBase);
-									paramFil.add(pName + notBase);
+									boolean contains = false;
+									for(Object item : paramInitFil)
+									{
+										if (item.toString().equals(pInitName+notBase))
+											contains =true;												
+									}
+									if(!contains)
+									{
+										paramInitFil.add(pInitName + notBase);
+										argFil.add(argName + notBase);
+										paramFil.add(pName + notBase);
+									}
 
 									
 									new_relevant.derivedFields.add(notBase);
 									
+									
+									System.out.println(notBase);
+									
+								}
+								
+								if(new_relevant.derivedFields.size > 0)
+								{
+									new_relevants.add(new_relevant);
+								}*/
+								
+							}
+							
+						}
+					}
+					
+					
+					//ver binding.pdf para una explicacion del algoritmo
+					
+					//tal vez se generaron nuevas a partir de un callee de un callee
+					List new_relevantsCallee = (List) newRelevantsMap.get(callInfo.getCallee());
+					if(new_relevantsCallee != null)
+					{
+						for(Iterator iter = new_relevantsCallee.iterator(); iter.hasNext();)
+						{
+							SimpleDIParameter element = (SimpleDIParameter) iter.next();
+							if(element.name.equals(pName))
+							{
+								//int index = relevantVar.indexOf(pName);
+								
+								//String notBase = relevantVar.substring(index + pName.length());
+								
+								
+								SimpleDIParameter new_relevant = new SimpleDIParameter(argName);
+
+								//Por cada field relevante agrego a la lista el binding entre fields
+								for (Iterator dip_it= element.derivedFields.iterator(); dip_it.hasNext();)
+								{
+									String notBase = (String) dip_it.next();
+									
+									
+									boolean contains = false;
+									for(Object item : paramInitFil)
+									{
+										if (item.toString().equals(pInitName+notBase))
+											contains =true;												
+									}
+									if(!contains)
+									{
+										paramInitFil.add(pInitName + notBase);
+										argFil.add(argName + notBase);
+										paramFil.add(pName + notBase);
+									}
+									
+									new_relevant.derivedFields.add(notBase);									
 									
 								}
 								
@@ -962,28 +958,54 @@ public class ProgramInstrumentatorForDaikonMain {
 								{
 									new_relevants.add(new_relevant);
 								}
-							}*/
+							}
 							
-							newRelevantsMap.put(callInfo.getCaller(), new_relevants);
-							
-
-							
-							
-						}
-						else
-						{
-							paramInitFil.add(pInit.getName());
-							paramFil.add(p.getName());
-							argFil.add(a.getName());
 						}
 					}
+					
+					
+					/*if(pInit.getClass() != DI_Object.class)
+					{
+						SimpleDIParameter new_relevant = new SimpleDIParameter(pInit.getName());
+						String base = new_relevant.name;
+
+						for(Iterator itD = pInit.getDerivedVariables2().iterator(); itD.hasNext();)
+						{
+							
+							DIParameter dip = (DIParameter) itD.next();
+							
+							String notBase = dip.getName().substring(dip.getName().indexOf(base) + base.length());
+							
+							paramInitFil.add(pInitName + notBase);
+							argFil.add(argName + notBase);
+							paramFil.add(pName + notBase);
+
+							
+							new_relevant.derivedFields.add(notBase);
+							
+							
+						}
+						
+						if(new_relevant.derivedFields.size > 0)
+						{
+							new_relevants.add(new_relevant);
+						}
+					}*/
+					
+					//agrego las que ahora son relevantes para el caller
+					newRelevantsMap.put(callInfo.getCaller(), new_relevants);
+							
+
+					
 				}
 			}
 		}
 		
-		List<String> newParamInits = new ArrayList<String>();
 		
-		/*String[] inductivesArray = inductives.substring(1,inductives.length()-1).split(","); 
+		
+		/*
+	 	List<String> newParamInits = new ArrayList<String>();
+		String[] inductivesArray = inductives.substring(1,inductives.length()-1).split(","); 
 		for(int i = 0; i < inductivesArray.length; i++)
 		{
 			String ind = inductivesArray[i].trim();
@@ -999,11 +1021,13 @@ public class ProgramInstrumentatorForDaikonMain {
 					}
 				}
 			}
-		}*/
-		
-		
-		
+		}
 		newParamInits.addAll(paramInitFil);
+		*/
+		
+		
+		
+	
 		
 
 		List argList = new ArrayList();
