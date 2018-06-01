@@ -22,7 +22,6 @@ import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.DI_Object;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.DI_String;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.DI_ValueNull;
-import ar.uba.dc.util.ListE;
 import soot.Body;
 import soot.Local;
 import soot.Scene;

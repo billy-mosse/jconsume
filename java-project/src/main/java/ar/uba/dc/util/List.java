@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 public class List {
 
-	CellE head;
+	Cell head;
 	public int size = 0;
 
 	/**
@@ -12,7 +12,7 @@ public class List {
 	 * @residual: 1
 	 */
 	public void add(Object e) {
-		this.head = new CellE(e, this.head);
+		this.head = new Cell(e, this.head);
 		this.size++;
 	}
 
@@ -22,7 +22,7 @@ public class List {
 	 */
 	@SuppressWarnings("unchecked")
 	public Iterator iterator() {
-		return new ListItrE(this.head);
+		return new ListItr(this.head);
 	}
 
 	public int size() {

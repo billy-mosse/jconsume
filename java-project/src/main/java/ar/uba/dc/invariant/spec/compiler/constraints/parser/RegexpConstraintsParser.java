@@ -1,6 +1,5 @@
 package ar.uba.dc.invariant.spec.compiler.constraints.parser;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -16,7 +15,6 @@ import ar.uba.dc.invariant.spec.bean.SiteSpecification;
 import ar.uba.dc.invariant.spec.compiler.constraints.ConstraintsInfo;
 import ar.uba.dc.invariant.spec.compiler.constraints.ConstraintsParser;
 import ar.uba.dc.invariant.spec.compiler.constraints.ReferenceResolver;
-import ar.uba.dc.util.ListE;
 
 public class RegexpConstraintsParser implements ConstraintsParser {
 

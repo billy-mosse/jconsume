@@ -210,7 +210,7 @@ public class ProgramInstrumentatorForDaikonMain {
 				 
 				
 				 //lo deje a ver que pasa
-				 //"-asm-backend",
+				 "-asm-backend",
 				 
 				 //This option sets the JDK version of the standard library being analyzed so that Soot can simulate the native methods in the specific version of the library.
 				 "-p", "cg", "jdkver:8", //lo saque a ver que pasa.
@@ -410,7 +410,7 @@ public class ProgramInstrumentatorForDaikonMain {
 	      //  sootOpt.set_java_version(soot.options.Options.java_version_1_7);
 	        
 	        
-	        sootOpt.set_asm_backend(true);
+	     //   sootOpt.set_asm_backend(true);
 	        //esto lo saque porque sino no anda pero estoy usando la version incorrecta de soot
 	        //sootOpt.set_asm_backend(true);      
 	        //sootOpt.set_keep_offset(true);
