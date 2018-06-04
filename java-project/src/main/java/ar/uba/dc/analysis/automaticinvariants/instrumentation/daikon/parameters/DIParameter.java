@@ -165,6 +165,17 @@ public abstract class DIParameter  {
 		return res;
 	}
 	
+	public List toListOnlyFieldEnterizedVariables()
+	{
+		List res = new Vector();
+		
+		//Puedo preguntar si es iterator tambien
+		if( hasDerivedVariables2())
+			res = getDerivedVariables2().toListOnlyEnterizedVariables();
+		
+		return res;
+	}
+	
 	public ListDIParameters toListDIP()
 	{
 		ListDIParameters res = new ListDIParameters();
