@@ -2,8 +2,8 @@
 
 DAIKONPARENT=/home/billy/Downloads/daikontest
 
-wget http://plse.cs.washington.edu/daikon/download/daikon-5.6.4.tar.gz
-tar zxf daikon-5.6.4.tar.gz
+wget http://plse.cs.washington.edu/daikon/history/daikon-5.5.2/daikon-5.5.2.tar.gz
+tar zxf daikon-5.5.2.tar.gz
 
 # The absolute pathname of the directory that contains Daikon
 export DAIKONDIR=$DAIKONPARENT/daikon-5.6.4
