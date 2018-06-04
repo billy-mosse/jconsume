@@ -1,3 +1,5 @@
+#https://plse.cs.washington.edu/daikon/download/doc/daikon.html#Installing-Daikon
+
 DAIKONPARENT=/home/billy/Downloads/daikontest
 
 wget http://plse.cs.washington.edu/daikon/download/daikon-5.6.4.tar.gz
