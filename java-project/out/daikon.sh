@@ -2,6 +2,9 @@
 
 #CLASSPATH=$CLASSPATH:../pruebas/test:../pruebas/jolden:../pruebas/jGrandeV2/:../pruebas/:../pruebas/flanagan.jar:jdom.jar:bin:/home/billy/.m2/repository/ca/mcgill/sable/jasmin/2.4.0/jasmin-2.4.0.jar:/home/billy/.m2/repository/ca/mcgill/sable/polyglot/1.3.5/polyglot-1.3.5.jar:/home/billy/.m2/repository/ca/mcgill/sable/soot/2.4.0/soot-2.4.0.jar:/home/billy/Projects/git/jconsume-global/jconsume-global/src/examples
 
+
+
+
 echo Ejecutando Chicory
 
 #CHICORY=/home/billy/Projects/git/jconsume-global/jconsume-global/utils/daikon/ChicoryPremain.jar
@@ -10,6 +13,9 @@ DAIKON_JAR=/home/billy/Programs/daikon/daikon-5.5.2/daikon.jar
 #DAIKON_JAR=../utils/daikon/daikon4.jar
 
 JAVA_HOME=/usr/lib/jvm/java-8-oracle/jre/bin
+
+PROJECT_FOLDER=$PROJECT_FOLDER
+
 
 #$CLASSPATH=$CLASSPATH:/usr/lib/jvm/java-7-oracle/lib/tools.jar:/home/billy/Projects/git/jconsume-global/jconsume-global/src/examples:/home/billy/Projects/git/jconsume-global/jconsume-global/bin/pruebas:/home/billy/Projects/git/jconsume-global/jconsume-global/src/pruebas:/home/billy/Projects/git/jconsume-global/jconsume-global/out:/home/billy/Projects/git/jconsume-global/jconsume-global/src:/home/billy/Projects/git/jconsume-global/jconsume-global:/home/billy/Projects/git/jconsume-global/jconsume-global/bin/examples:/home/billy/Projects/git/jconsume-global/jconsume-global/bin:/usr/lib/jvm/java-7-oracle/bin:.:
 
@@ -23,7 +29,7 @@ JAVA_HOME=/usr/lib/jvm/java-8-oracle/jre/bin
 
 
 
-CLASSPATH=/home/billy/Programs/daikon/daikon-5.5.14/daikon.jar:/usr/lib/jvm/java-8-oracle/jre/bin/jre/lib/rt.jar:/usr/lib/jvm/java-8-oracle/jre/bin/lib/tools.jar:/home/billy/Projects/git/jconsume/java-project/out/$1/:/home/billy/Projects/git/jconsume/java-project/src/main/examples/
+CLASSPATH=/home/billy/Programs/daikon/daikon-5.5.14/daikon.jar:/usr/lib/jvm/java-8-oracle/jre/bin/jre/lib/rt.jar:/usr/lib/jvm/java-8-oracle/jre/bin/lib/tools.jar:$PROJECT_FOLDER/out/$1/:$PROJECT_FOLDER/src/main/examples/
 
 
 #echo "DynComp"
