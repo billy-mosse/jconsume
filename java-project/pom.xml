@@ -30,7 +30,7 @@
               <configuration>
                 <sources>
                   <source>src/main/java</source>
-                  <source>/home/billy/Projects/git/jconsume/java-project/src/main/examples</source>
+                  <source>src/main/examples</source>
                   <source>../src/main/examples</source>
                   <source>src/jpfHelper/src</source>
                 </sources>
