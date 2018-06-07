@@ -14,6 +14,7 @@ DAIKON_JAR=$HOME/Programs/daikon/daikon-5.5.14/daikon.jar
 
 JAVA_HOME=/usr/lib/jvm/java-8-oracle/jre/bin
 
+PROJECT_FOLDER=$HOME/Projects/git/jconsume/java-project
 
 
 #$CLASSPATH=$CLASSPATH:/usr/lib/jvm/java-7-oracle/lib/tools.jar:/home/billy/Projects/git/jconsume-global/jconsume-global/src/examples:/home/billy/Projects/git/jconsume-global/jconsume-global/bin/pruebas:/home/billy/Projects/git/jconsume-global/jconsume-global/src/pruebas:/home/billy/Projects/git/jconsume-global/jconsume-global/out:/home/billy/Projects/git/jconsume-global/jconsume-global/src:/home/billy/Projects/git/jconsume-global/jconsume-global:/home/billy/Projects/git/jconsume-global/jconsume-global/bin/examples:/home/billy/Projects/git/jconsume-global/jconsume-global/bin:/usr/lib/jvm/java-7-oracle/bin:.:
