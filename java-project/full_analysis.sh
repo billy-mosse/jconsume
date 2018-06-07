@@ -11,7 +11,7 @@ exit 1
 
 
 #JCONSUME_GLOBAL_PATH=/home/billy/Projects/git/jconsume-global/jconsume-global
-JCONSUME_PATH=/home/billy/Projects/git/jconsume/java-project
+JCONSUME_PATH=$HOME/Projects/git/jconsume/java-project
 
 
 #cd $JCONSUME_GLOBAL_PATH
