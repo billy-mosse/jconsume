@@ -34,11 +34,11 @@ make install
 
 cd ..
 
-wget http://www.shoup.net/ntl/ntl-11.0.0.tar.gz
+wget http://www.shoup.net/ntl/ntl-6.2.1.tar.gz
 
-tar -xvzf ntl-11.0.0.tar.gz
+tar -xvzf ntl-6.2.1.tar.gz
 
-cd ntl-11.0.0/src
+cd ntl-6.2.1/src
 
 ./configure PREFIX=$HOME/sw GMP_PREFIX=$HOME/sw/
 
@@ -58,11 +58,11 @@ mkdir -p barvinok
 
 cd barvinok
 
-wget -P . http://barvinok.gforge.inria.fr/barvinok-0.40.tar.bz2
+wget -P . http://barvinok.gforge.inria.fr/barvinok-0.39.tar.bz2
 
-tar -xvjf barvinok-0.40.tar.bz2
+tar -xvjf barvinok-0.39.tar.bz2
 
-cd barvinok-0.40
+cd barvinok-0.39
 
 #It whines about automake 1.14 but after reinstalling apparently it works...
 #No, in reality it works to install it outside the folder (???)
@@ -74,7 +74,7 @@ sudo apt-get install automake
 
 cd ..
 
-cp -R barvinok-0.40 $CWD 
+cp -R barvinok-0.39 $CWD 
 
 ###############################################################
 
