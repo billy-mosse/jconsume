@@ -41,6 +41,11 @@ public class BH
   static double DTIME = 0.0125;
   private static double TSTOP = 2.0;
 
+  public static void main(String args[])
+  {
+  	mainOrig(args);
+  }
+  
   public static void mainOrig(String args[])
   {
       	parseCmdLine(args);
