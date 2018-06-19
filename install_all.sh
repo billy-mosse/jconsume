@@ -1,6 +1,20 @@
+#This makes it stop if an error is encountered
+set -e
+
 sudo apt-get update
 
+
+#Install maven to manage the project
 sudo apt-get install maven
+
+
+#Install java
+sudo add-apt-repository ppa:webupd8team/java
+
+sudo apt-get install oracle-java8-installer
+
+#You will have to press enter to accept the installation
+
 
 mkdir -p barvinok
 
@@ -14,7 +28,7 @@ wget https://gmplib.org/download/gmp/gmp-6.1.0.tar.lz
 
 sudo apt-get install lzip
 
-tar --lzip -xvfgmp-6.1.0.tar.lz
+tar --lzip -xvf gmp-6.1.0.tar.lz
 
 cd gmp-6.1.0
 
@@ -40,7 +54,7 @@ tar -xvzf ntl-6.2.1.tar.gz
 
 cd ntl-6.2.1/src
 
-./configure PREFIX=$HOME/sw GMP_PREFIX=$HOME/sw/
+./configure PREFIX=$HOME/sw GMP_PREFIX=$HOME/sw/ NTL_GMP_LIP=on NTL_STD_CXX=on
 
 make
 
@@ -70,18 +84,26 @@ sudo apt-get remove automake
 
 sudo apt-get install automake
 
-./configure --prefix=$HOME/sw
+./configure --prefix=$HOME/sw --with-gmp-prefix=$HOME/sw --with-ntl-prefix=$HOME/sw NTL_GMP_LIP=on
+
+make
+
+make check
+
+make install
 
 cd ..
 
-cp -R barvinok-0.39 $CWD 
+mv barvinok-0.39 $CWD 
 
-###############################################################
+cd $CWD
 
-cd dependencies
+sh dependencies/install.sh
 
-sh install.sh
+cd java-project
 
-cd ../java-project
+mvn install
 
-mvn compile
+mvn clean compile
+
+export CLASSPATH=$CLASSPATH:.
