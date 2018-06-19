@@ -99,9 +99,11 @@ mv barvinok-0.39 $CWD
 
 cd $CWD
 
-sh dependencies/install.sh
+cd ../dependencies
 
-cd java-project
+sh install.sh
+
+cd ../java-project
 
 mvn install
 
