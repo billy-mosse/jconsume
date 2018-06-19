@@ -3,13 +3,14 @@ set -e
 
 sudo apt-get update
 
-
 #Install maven to manage the project
 sudo apt-get install maven
 
 
 #Install java
 sudo add-apt-repository ppa:webupd8team/java
+
+sudo apt-get update
 
 sudo apt-get install oracle-java8-installer
 
