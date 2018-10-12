@@ -39,7 +39,6 @@ M2_REPO=$HOME/.m2/repository
 M2_REPOSITORY_PATH=$HOME/.m2/repository
 
 
-PROJECT_FOLDER=$HOME/Projects/git/jconsume/java-project
 
 JAVA4HOME=/usr/lib/jvm/java-8-oracle
 JAVA4BIN=$JAVA4HOME/bin
