@@ -12,10 +12,14 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeMap;
 
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
+
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.CCReader;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.CSReader;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.CallSiteMapInfo;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.CreationSiteMapInfo;
+import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
 
 
 public class CSReader{
@@ -88,9 +92,19 @@ public class CSReader{
 		res=input.readLine();
 		return res;
 	}
+	
+	protected JsonReader jsonReader;
+	
 	public void analyze(String fileName) throws FileNotFoundException
 	{
-			input = new BufferedReader (new FileReader(fileName));
+		//	input = new BufferedReader (new FileReader(fileName));
+			
+			
+			
+			jsonReader = new JsonReader(new FileReader(fileName));
+			
+			jsonReader.setLenient(true);			
+			
 			analyzeFile();
 
 	}
@@ -104,12 +118,34 @@ public class CSReader{
 			this.methodsMap = new TreeMap();
 			this.varsMap = new HashMap();
 			
-			while(input.ready())
+			JsonInstrumentationSiteReader reader = new JsonInstrumentationSiteReader();
+			
+			while(jsonReader.hasNext() && !jsonReader.peek().equals(JsonToken.END_DOCUMENT))
+			{
+				CreationSiteMapInfo csInfo = reader.read(jsonReader);
+				String insSite = csInfo.getInsSite();
+				
+				creationSiteMap.put(insSite,csInfo);
+				
+				String className = insSite.substring(0,insSite.lastIndexOf("_"));
+				
+				Set mSet = (Set)methodsMap.get(className +"_"+csInfo.getMethod()); 
+				if (mSet==null)
+					mSet = new HashSet();
+				mSet.add(insSite);
+				
+				methodsMap.put(className +"_"+ csInfo.getMethod(),mSet);
+				
+			}
+			
+
+			
+			/*while(input.ready())
 			{
 				String res=readLine();
 				// System.out.println(res);
 				analyzeLine(res);
-			}
+			}*/
 		}
 		catch (IOException e)
 		{

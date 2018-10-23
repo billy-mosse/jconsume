@@ -2,14 +2,18 @@ package ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.invariantw
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Stack;
 import java.util.TreeSet;
 import java.util.Vector;
 import java.util.regex.Matcher;
@@ -17,13 +21,23 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 
+import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.BindingAnnotation;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.CCReader;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.CSReader;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.CallSiteMapInfo;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.CreationSiteMapInfo;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.InductiveVariablesInfo;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.InductivesReader;
+import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.InstrumentationSiteInvariantsReader;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.InvariantReader;
+import ar.uba.dc.analysis.common.Invocation;
+import ar.uba.dc.analysis.common.Line;
+import ar.uba.dc.analysis.common.intermediate_representation.IRUtils;
+import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
+import ar.uba.dc.analysis.memory.PaperInterproceduralAnalysis.NotDAGException;
+import ar.uba.dc.annotations.AnnotationSiteInvariantForJson;
+import ar.uba.dc.annotations.InstrumentationSiteInvariant;
+import ar.uba.dc.invariant.spec.compiler.constraints.parser.DerivedVariable;
 
 /*import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.ClassBasedEdgeFactory;
@@ -55,6 +69,7 @@ public class SpecInvariantWriter {
 	InvariantReader ir = new InvariantReader(true);
 	CCReader ccr = new CCReader();
 	CSReader csr = new CSReader();
+	InstrumentationSiteInvariantsReader anr = new InstrumentationSiteInvariantsReader();
 	InductivesReader indr = new InductivesReader();
 
 	String strClass;
@@ -70,7 +85,6 @@ public class SpecInvariantWriter {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-
 		String[] optsDefault = { "-app", "-f", "n",
 				// "-d","\.",
 				"-allow-phantom-refs", "-src-prec", "class", "-keep-line-number", "-keep-bytecode-offset", "-p", "jb",
@@ -116,8 +130,177 @@ public class SpecInvariantWriter {
 		// }
 
 		// siw.out = System.out;
+		
+		
 		siw.writeSpecs();
 
+	}
+	
+	
+	
+	
+	public class NotDAGException extends Exception {
+		public NotDAGException(String message)
+		{
+			super(message);				
+		}
+		
+	}
+	
+	
+	/*
+	public void visit(IntermediateRepresentationMethod ir_method) throws NotDAGException
+	{
+		//log.debug("visiting " + key(ir_method) +  "...");
+		if(marked_temporarily.contains(IRUtils.key(ir_method)))
+		{
+			throw new NotDAGException("El grafo no es un DAG. Tiene ciclos");
+		}
+		
+		if(!marked_permanently.contains(IRUtils.key(ir_method)))
+		{
+			marked_temporarily.add(IRUtils.key(ir_method));
+			
+			
+			for(String s_name : getSuccesors(ir_method))
+			{
+				//log.debug("-------------" + s_name + " is succesor of " + key(ir_method));
+				IntermediateRepresentationMethod succ = methods.get(s_name); 
+				
+				if(succ != null)
+					this.visit(succ);
+				
+			}
+			
+			ordered_methods.add(ir_method);
+			marked_temporarily.remove(IRUtils.key(ir_method));
+			
+			//log.debug("+++Adding to set " + key(ir_method));
+			marked_permanently.add(IRUtils.key(ir_method));
+		}
+	}
+	
+	public void orderIrMethods()
+	{
+		Stack<IntermediateRepresentationMethod> unordered_methods = new Stack<IntermediateRepresentationMethod>();
+		for(IntermediateRepresentationMethod ir_method : methods.values())
+		{
+			unordered_methods.add(ir_method);
+		}
+
+		marked_temporarily = new ArrayList<String>();
+		marked_permanently = new ArrayList<String>();
+		ordered_methods = new LinkedList<IntermediateRepresentationMethod>();
+		
+		for(IntermediateRepresentationMethod ir_method : unordered_methods)
+		{
+			try
+			{
+				visit(ir_method);
+			}
+			catch(NotDAGException exc)
+			{
+				//Cuando haya recursion hay que cambiar el algoritmo de pseudo top order
+				log.error("Graph not a DAG. Has recursion. Can't continue");
+				System.exit(1);
+			}
+		}
+		
+		log.debug("Listo! Metodos ordenados: ");
+		for(int i = 0; i < ordered_methods.size(); i++)
+		{
+			log.debug(IRUtils.key(ordered_methods.get(i)));
+		}
+	}*/
+	
+	
+	public void visit(SpecMethod m, List<String> markedTemporarily,
+			List<String> markedPermanently, List<SpecMethod> orderedMethods, Map<String, SpecMethod> unorderedMethodMap) throws NotDAGException
+	{
+		//log.debug("visiting " + key(ir_method) +  "...");
+		if(markedTemporarily.contains(m.getMethod()))
+		{
+			throw new NotDAGException("El grafo no es un DAG. Tiene ciclos");
+		}
+		
+		if(!markedPermanently.contains(m.getMethod()))
+		{
+			markedTemporarily.add(m.getMethod());
+			
+			
+			for(CreationSiteMapInfo cs_succ : m.getCallSites())
+			{
+				CallSiteMapInfo ccInfo = ccr.getCallSiteInfo(cs_succ.getInsSite());
+
+				//log.debug("-------------" + s_name + " is succesor of " + key(ir_method));
+				SpecMethod succ = unorderedMethodMap.get(ccInfo.getMethodCallee()); 
+				
+				if(succ != null)
+					this.visit(succ, markedTemporarily, markedPermanently, orderedMethods, unorderedMethodMap);
+				
+			}
+			
+			orderedMethods.add(m);
+			markedTemporarily.remove(m.getMethod());
+			
+			//log.debug("+++Adding to set " + key(ir_method));
+			markedPermanently.add(m.getMethod());
+		}
+	}
+	
+	private List<SpecMethod> getTopologicallyOrderedMethods()
+	{
+		Set ms = csr.getMethods();
+		Stack<SpecMethod> unordered_methods = new Stack<SpecMethod>();
+		Map<String, SpecMethod> unorderedMethodMap = new HashMap<String, SpecMethod>();
+		
+		//Primero obtengo los metodos
+		for (Object o : ms) {
+			SpecMethod m = new SpecMethod();
+			String classAndMethod = (String) o;
+			m.setClassAndMethod(classAndMethod);
+			String className = extractClassName(classAndMethod);
+			m.setClassName(className);
+			String method = extractFullMethodSignature(classAndMethod);
+			m.setMethod(method);
+			Set css = new TreeSet(csr.getCSs(classAndMethod, ccr));
+			if (css != null) {
+				int newOffset = 0;
+				int callOffset = 0;
+				for (Object o2 : css) {
+					CreationSiteMapInfo csInfo = (CreationSiteMapInfo) o2;
+					boolean isCall = csInfo.isCall();
+					if (isCall) {
+						m.addCallSite(csInfo);
+					}
+					else
+					{
+						m.addCreationSite(csInfo);
+					}
+				}
+			}
+			unordered_methods.add(m);
+			unorderedMethodMap.put(method, m);
+		}
+		
+		//Ahora los ordeno!
+		List<SpecMethod> orderedMethods = new LinkedList<SpecMethod>();
+		List<String> markedTemporarily = new ArrayList<String>();
+		List<String> markedPermanently = new ArrayList<String>();
+		for(SpecMethod m : unordered_methods)
+		{
+			try
+			{
+				visit(m, markedTemporarily, markedPermanently, orderedMethods, unorderedMethodMap);
+			}
+			catch(NotDAGException exc)
+			{
+				System.exit(1);
+			}
+		}
+		//todo cambiar
+		return orderedMethods;
+		
 	}
 
 	private void writeSpecs() {
@@ -127,40 +310,82 @@ public class SpecInvariantWriter {
 		String currentMethod = "";
 		boolean hasMethods = false;
 
-		Set ms = csr.getMethods();
-		for (Object o : ms) {
-			String classAndMethod = (String) o;
+		
+		
+		
+		
+		List<SpecMethod> orderedMethods = getTopologicallyOrderedMethods();
+		
+		//List ordered_methods = topologicalOrder(ms);
+		for (SpecMethod m : orderedMethods) {
+			
+			StringBuilder headerToPrint = new StringBuilder();
+			StringBuilder invariantsToPrint = new StringBuilder();
+			//String classAndMethod = (String) o;
 
-			String className = extractClassName(classAndMethod);
+			//String className = extractClassName(m.getClassAndMethod());
 			
 			//asumir que la clase no tiene guion bajo rompe todo
-			String method = extractFullMethodSignature(classAndMethod);
+			String method = extractFullMethodSignature(m.getClassAndMethod());
 
-			if (!className.equals(currentClass)) {
+			//creo que asume que las clases van en orden
+			if (!m.getClassName().equals(currentClass)) {
 				if (currentClass.length() != 0) {
 					if (hasMethods) {
 						endProcessMethod(currentMethod);
 						hasMethods = false;
 					}
-					endProcessClass(className);
+					//endProcessClass(m.getClassName());
+					out.close();
 
 				}
 
-				processNewClass(className);
-				currentClass = className;
-				processNewMethod(method);
+				processNewClass(headerToPrint, m.getClassName());
+				currentClass = m.getClassName();
+				
+				
+				processNewMethod(headerToPrint, method, currentClass);
 				hasMethods = true;
 				currentMethod = method;
-			} else if (!classAndMethod.equals(currentMethod)) {
+			} else if (!m.getClassAndMethod().equals(currentMethod)) {
 				if (currentMethod.length() != 0)
 					endProcessMethod(currentMethod);
-				processNewMethod(method);
+				processNewMethod(headerToPrint, method, currentClass);
 				hasMethods = true;
 				currentMethod = method;
 			}
 
 			// System.out.println(classAndMethod);
-			Set css = new TreeSet(csr.getCSs(classAndMethod, ccr));
+			
+			//Obtengo todos los insSites asociados al metodo (los obtuve del archivo .cs)
+			//y los proceso (pueden ser CALLs o Creation sites)
+			
+			//Si son call sites uso el archivo .cc para obtener la informacion asociada
+			//Set css = new TreeSet(csr.getCSs(classAndMethod, ccr));
+			
+			int newOffset = 0;
+			int callOffset = 0;
+			for(CreationSiteMapInfo csInfo : m.getCreationSites())
+			{
+				if (csInfo.getOrder() == -1)
+					csInfo.setOffset(newOffset);
+				processCreationSite(invariantsToPrint, csInfo, method);
+				newOffset++;
+			}
+			
+			for(CreationSiteMapInfo csInfo : m.getCallSites())
+			{
+				if (csInfo.getOrder() == -1)
+					csInfo.setOffset(callOffset);
+				processCall(invariantsToPrint, csInfo, method);
+				callOffset++;
+			}
+			
+			addNewRelevantParametersFromCallees(headerToPrint, method);
+			out.print(headerToPrint.toString());
+			out.print(invariantsToPrint.toString());
+			
+			/*
 			if (css != null) {
 				int newOffset = 0;
 				int callOffset = 0;
@@ -175,24 +400,46 @@ public class SpecInvariantWriter {
 					if (isCall) {
 						if (cs.getOrder() == -1)
 							cs.setOffset(callOffset);
-						processCall(cs);
+						processCall(cs, method);
 						callOffset++;
 					} else {
 						if (cs.getOrder() == -1)
 							cs.setOffset(newOffset);
-						processCreationSite(cs);
+						processCreationSite(cs, method);
 						newOffset++;
 					}
 
 				}
-			}
+			}*/
 		}
 		if (currentMethod.length() != 0)
 			endProcessMethod(currentMethod);
 		if (currentClass.length() != 0)
-			endProcessClass(currentClass);
+			out.close();
 
+		endProcessClasses();
 		// xmlSpec.writeXmlFooter();
+	}
+
+
+
+
+
+	private void addNewRelevantParametersFromCallees(StringBuilder headerToPrint, String methodName) {
+		
+		
+		if(anr.getAnnotations() != null)
+		{
+			for(AnnotationSiteInvariantForJson annotation : anr.getAnnotations())
+			{
+				if (annotation.getMethodName().equals(methodName))
+				{
+					int pos = headerToPrint.indexOf("</relevant-parameters>");
+					headerToPrint.insert(pos, ", " + StringUtils.join(annotation.getNewRelevantParameters(), ", "));
+				}	
+			}
+		}
+		
 	}
 
 	private void endProcessMethod(String methodName) {
@@ -200,15 +447,32 @@ public class SpecInvariantWriter {
 
 	}
 
-	private void endProcessClass(String className) {
-		xmlSpec.writeClassFooter(className);
-		xmlSpec.writeXmlFooter();
-		out.close();
+	
+	private void endProcessClasses()
+	{
+		for(String className : startedClasses)
+		{
+			
+			
+			try {
+				out = new PrintStream(			
+						new FileOutputStream(getFileName(className), true));
+				
+				
+				xmlSpec.currentClassName = className;
+				
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			xmlSpec.writeClassFooter(className);
+			xmlSpec.writeXmlFooter();
+			out.close();
+		}
 	}
-
-	private void processNewClass(String className) {
-		// sootClass = soot.Scene.v().loadClassAndSupport(className);
-
+	
+	String getFileName(String className)
+	{
 		int pos = className.lastIndexOf(".");
 		String packagePath = pos != -1 ? className.substring(0, pos) : "";
 		String onlyClass = className.substring(pos + 1);
@@ -217,34 +481,62 @@ public class SpecInvariantWriter {
 		
 		
 		fileName = destinationPath + "/" + packagePath.replace(".", "/") + "/" + onlyClass + ".spec";
-		
-		
-		File srcFile = new File(fileName);
-		
-		if (!srcFile.getParentFile().exists()) {
-			srcFile.getParentFile().mkdirs();
-		}
+		return fileName;
+	}
+
+	
+	List<String> startedClasses = new ArrayList<String>();
+	
+	private void processNewClass(StringBuilder headerToPrint, String className) {
+		// sootClass = soot.Scene.v().loadClassAndSupport(className);
+
+		String fileName = getFileName(className);
 
 		//boolean status = new File(destinationPath + "/" + packagePath).mkdir();
+		
+		xmlSpec.currentClassName = className;
 		try {
-			out = new PrintStream(fileName);
+			if(startedClasses.contains(className))
+			{
+				out = new PrintStream(			
+					new FileOutputStream(fileName, true));
+			}
+			else
+			{
+				File srcFile = new File(fileName);
+				
+				if (!srcFile.getParentFile().exists()) {
+					srcFile.getParentFile().mkdirs();
+				}
+				
+				out = new PrintStream(fileName);
+				startedClasses.add(className);
+				xmlSpec.classesLevel.put(className, 0);
+				xmlSpec.writeXmlHeader(headerToPrint);
+				// System.out.println("Class:"+className);
+				xmlSpec.writeClassHeader(headerToPrint, className);
+			}
+			
+			
+					
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		xmlSpec.writeXmlHeader();
-		// System.out.println("Class:"+className);
-		xmlSpec.writeClassHeader(className);
+		
 	}
 
-	private void processNewMethod(String methodName) {
+	private void processNewMethod(StringBuilder headerToPrint, String methodName, String className) {
+		
+		xmlSpec.currentClassName = className;
 		// System.out.println("- Method:"+methodName);
 		// Usa los "init"
 		List params = ccr.getMethodParams(methodName);
 		// System.out.println(params);
-		xmlSpec.writeMethodHeader(methodName, params);
+		xmlSpec.writeMethodHeader(headerToPrint, methodName, params);
 
+		
 		currentMethod = methodName;
 
 		// String mn = methodName.substring(methodName.indexOf(":")+1);
@@ -304,28 +596,21 @@ public class SpecInvariantWriter {
 	}
 	 * */
 
-	private void processCreationSite(CreationSiteMapInfo cs) {
-		xmlSpec.writeCreationSite(cs);
+	private void processCreationSite(StringBuilder invariantsToPrint, CreationSiteMapInfo cs, String methodName) {
+		xmlSpec.writeCreationSite(invariantsToPrint, cs, methodName);
 	}
 
-	private void processCall(CreationSiteMapInfo cs) {
+	private void processCall(StringBuilder invariantsToPrint, CreationSiteMapInfo cs, String methodName) {
 
 		CallSiteMapInfo ccInfo = ccr.getCallSiteInfo(cs.getInsSite());
-		if(ccInfo.toString().contains("<init"))
-		{
-			System.out.println(ccInfo.toString());
-			System.out.println();
-		}
-		if(cs.getInsSite().equals("ar.uba.dc.jolden.em3d.BiGraph_00105"))
-		{
-			System.out.println("Hola");
-		}
-		xmlSpec.writeCallSite(cs, ccInfo);
+		
+		xmlSpec.writeCallSite(invariantsToPrint, cs, ccInfo, methodName);
 
 	}
 
 	void fetchInvariants() {
 		try {
+			anr.analyze(strClass + ".ann");
 			ccr.analyze(strClass + ".cc");
 			csr.analyze(strClass + ".cs");
 			ir.analyze(strClass + ".txt");
@@ -337,101 +622,139 @@ public class SpecInvariantWriter {
 	}
 
 	class XMLSpecWriter {
-		int level = 0;
+		public Map<String, Integer> classesLevel = new HashMap<String, Integer>();
+		//int level = 0;
 
+		public String currentClassName;
+		private void indent(StringBuilder toPrint) {
+			Integer i = (classesLevel.get(currentClassName));
+			toPrint.append(sIndent(i));
+		}
+		
 		private void indent() {
-			out.print(sIndent(level));
+			Integer i = (classesLevel.get(currentClassName));
+			out.print(sIndent(i));
 		}
 
 		private String sIndent(int c) {
 			StringBuffer res = new StringBuffer();
-			for (int i = 0; i < level; i++)
+			for (int i = 0; i < classesLevel.get(currentClassName); i++)
 				res.append("\t");
 			return res.toString();
 		}
 
-		private void writeXmlHeader() {
-			indent();
-			out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-			out.println("<spec>");
-			level++;
+		
+		void addLine(StringBuilder b, String line)
+		{
+			b.append(line);
+			b.append(System.getProperty("line.separator"));
+		}
+		
+		private void writeXmlHeader(StringBuilder headerToPrint) {
+			indent(headerToPrint);
+			
+			addLine(headerToPrint, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+			addLine(headerToPrint,"<spec>");			
+			
+			incrementIndentationLevelForCurrentClass();
 		}
 
 		private void writeXmlFooter() {
-			level--;
+			decrementIndentationLevelForCurrentClass();
 			indent();
 			out.println("</spec>");
 		}
 
-		private void writeClassHeader(String className) {
-			indent();
-			out.print(" <class decl=");
-			out.print("\"");
-			out.print(className);
-			out.print("\"");
-			out.println(">");
-			level++;
+		private void writeClassHeader(StringBuilder headerToPrint, String className) {
+			indent(headerToPrint);
+			
+			headerToPrint.append(" <class decl=");
+			headerToPrint.append("\"");
+			headerToPrint.append(className);
+			headerToPrint.append("\"");
+			addLine(headerToPrint, ">");
+			incrementIndentationLevelForCurrentClass();
 		}
 
+		public void incrementIndentationLevelForCurrentClass()
+		{
+			Integer i = classesLevel.get(currentClassName);
+			classesLevel.put(currentClassName, i+1);
+		}
+		
+		public void decrementIndentationLevelForCurrentClass()
+		{
+			Integer i = classesLevel.get(currentClassName);
+			classesLevel.put(currentClassName, i-1);
+		}
+		
+		
 		private void writeClassFooter(String className) {
-			level--;
+			decrementIndentationLevelForCurrentClass();
 			indent();
 			out.println("</class>");
 		}
 
-		private void writeMethodHeader(String methodName, List params) {
-			indent();
-			out.print(" <method decl=");
-			out.print("\"");
-			out.print(XMLizar(extractMethodSignature(methodName)));
-			out.print("\"");
-			out.println(">");
-			level++;
+		private void writeMethodHeader(StringBuilder headerToPrint, String methodName, List params) {
+			indent(headerToPrint);
+			headerToPrint.append(" <method decl=");
+			headerToPrint.append("\"");
+			headerToPrint.append(XMLizar(extractMethodSignature(methodName)));
+			headerToPrint.append("\"");
+			addLine(headerToPrint, ">");
+			incrementIndentationLevelForCurrentClass();
 
-			indent();
-			out.print("<relevant-parameters>");
-			if(methodName.contains("void main(java.lang.String[])") && params==null)
+			indent(headerToPrint);
+			headerToPrint.append("<relevant-parameters>");
+			if(methodName.contains("void main(java.lang.String[])"))
 			{
-				out.print("args_init__f__size");
+				if(params==null)
+				{
+					params = new ArrayList<String>();
+				}
+				params.add("args_init__f__size");
 			}
-			else
-			{
-				out.print(extractStringVarList(params));
-			}
-			out.println("</relevant-parameters>");
+
+			
+			
+			
+			headerToPrint.append(extractStringVarList(params));
+				
+			addLine(headerToPrint, "</relevant-parameters>");
+			
 		}
 
 		private void writeMethodFooter(String methodName) {
-			level--;
+			decrementIndentationLevelForCurrentClass();
 			indent();
 			out.println("</method>");
 		}
 
-		private void writeCreationSiteHeader(CreationSiteMapInfo cs) {
+		private void writeCreationSiteHeader(StringBuilder invariantsToPrint, CreationSiteMapInfo cs) {
 			int order = getOrder(cs);
-			indent();
-			out.print(" <creation-site ");
-			out.print("offset=" + "\"" + order + "\"");
-			out.print(" srccode-offset=" + "\"" + extactLineNumberFromInsSite(cs.getInsSite()) + "\"");
-			out.println(">");
-			level++;
+			indent(invariantsToPrint);
+			invariantsToPrint.append(" <creation-site ");
+			invariantsToPrint.append("offset=" + "\"" + order + "\"");
+			invariantsToPrint.append(" srccode-offset=" + "\"" + extactLineNumberFromInsSite(cs.getInsSite()) + "\"");
+			addLine(invariantsToPrint, ">");
+			incrementIndentationLevelForCurrentClass();
 		}
 
-		private void writeCreationSiteFooter(CreationSiteMapInfo cs) {
-			level--;
-			indent();
-			out.println(" </creation-site>");
+		private void writeCreationSiteFooter(StringBuilder invariantsToPrint, CreationSiteMapInfo cs) {
+			decrementIndentationLevelForCurrentClass();
+			indent(invariantsToPrint);
+			addLine(invariantsToPrint, " </creation-site>");
 
 		}
 
-		private void writeCallSiteHeader(CreationSiteMapInfo cs) {
+		private void writeCallSiteHeader(StringBuilder invariantsToPrint, CreationSiteMapInfo cs) {
 
-			indent();
-			out.print(" <call-site ");
-			out.print("offset=" + "\"" + getOrder(cs) + "\"");
-			out.print(" srccode-offset=" + "\"" + extactLineNumberFromInsSite(cs.getInsSite()) + "\"");
-			out.println(">");
-			level++;
+			indent(invariantsToPrint);
+			invariantsToPrint.append(" <call-site ");
+			invariantsToPrint.append("offset=" + "\"" + getOrder(cs) + "\"");
+			invariantsToPrint.append(" srccode-offset=" + "\"" + extactLineNumberFromInsSite(cs.getInsSite()) + "\"");
+			addLine(invariantsToPrint, ">");
+			incrementIndentationLevelForCurrentClass();
 		}
 
 		private int getOrder(CreationSiteMapInfo cs) {
@@ -441,18 +764,21 @@ public class SpecInvariantWriter {
 			return order;
 		}
 
-		private void writeCallSiteFooter(CreationSiteMapInfo cs) {
-			level--;
-			indent();
-			out.println(" </call-site>");
+		private void writeCallSiteFooter(StringBuilder invariantsToPrint, CreationSiteMapInfo cs) {
+			decrementIndentationLevelForCurrentClass();
+			indent(invariantsToPrint);
+			addLine(invariantsToPrint, " </call-site>");
 
 		}
 
-		private void writeCallSite(CreationSiteMapInfo cs, CallSiteMapInfo ccInfo) {
+		private void writeCallSite(StringBuilder invariantsToPrint, CreationSiteMapInfo cs, CallSiteMapInfo ccInfo, String methodName) {
 			String l = cs.getInsSite();
 
-			writeCallSiteHeader(cs);
-			writeRevelantVariables(cs.getVars());
+			writeCallSiteHeader(invariantsToPrint, cs);
+			
+			
+			
+			
 
 			// Lo calculo antes para tener los bindinds
 			String inv = getInvariantForSite(l, cs.getVars());
@@ -473,15 +799,38 @@ public class SpecInvariantWriter {
 			} else
 				inductivas.addAll(cs.getVars());*/
 			// inductivas.addAll(newInductives);
-			writeInductiveVariables(inductivas, newInductives);
+			
+			
+			
+			List<String> vars = new ArrayList<String>();
+			
+			//List<AnnotationSiteInvariantForJson> toRemove = new ArrayList<AnnotationSiteInvariantForJson>();
+			List<String> extraConstraints = new ArrayList<String>();
+			for(AnnotationSiteInvariantForJson extraInvariant : anr.getAnnotations())
+			{
+				if(extraInvariant.getType() != null && extraInvariant.getType().equals("CC")
+						&& extraInvariant.getMethodName().equals(methodName) && extraInvariant.getIndex() == getOrder(cs))
+				{
+					//toRemove.add(extraInvariant);
+					extraConstraints.addAll(extraInvariant.getConstraints());
+					vars.addAll(extraInvariant.getNewVariables());
+					inductivas.addAll(extraInvariant.getNewInductives());
+				}
+			}
+
+			//anr.getAnnotations().removeAll(toRemove);
+			
+			writeRevelantVariables(invariantsToPrint, vars, cs );
+			
+			writeInductiveVariables(invariantsToPrint, inductivas, cs);
 
 			// writeInductiveVariables(inductives);
 
-			writeCallee(ccInfo);
+			writeCallee(invariantsToPrint, ccInfo);
 
-			writeInvariant(callInv);
+			writeCallSiteInvariant(invariantsToPrint, callInv, ccInfo, cs.getMethod(), extraConstraints, cs, vars, inductivas);
 
-			writeCallSiteFooter(cs);
+			writeCallSiteFooter(invariantsToPrint, cs);
 		}
 
 		
@@ -769,15 +1118,15 @@ public class SpecInvariantWriter {
 			return c;
 		}*/
 
-		private void writeCreationSite(CreationSiteMapInfo cs) {
+		private void writeCreationSite(StringBuilder invariantsToPrint, CreationSiteMapInfo cs, String methodName) {
 			String l = cs.getInsSite();
 			String inv = getInvariantForSite(l, cs.getVars());
-			writeCreationSiteHeader(cs);
+			writeCreationSiteHeader(invariantsToPrint, cs);
 			List vars = cs.getVars();
 			Set paramsArr = new HashSet();
 			int cont = 0;
 			String invArray = "";
-			for (Iterator iter = cs.getArrayParams().iterator(); iter.hasNext();) {
+			for (Iterator iter = cs.getCsArrayParams().iterator(); iter.hasNext();) {
 				cont++;
 				String parameterArray = "aux" + "_" + Integer.toString(cont);
 				String value = (String) iter.next();
@@ -829,37 +1178,60 @@ public class SpecInvariantWriter {
 
 
 			//filterByQuotient(vars, inductiveVars, inv);
+
+
 			
-			writeRevelantVariables(vars);
-			writeInductiveVariables(inductiveVars);
 			
-			writeInvariant(inv);
-			writeCreationSiteFooter(cs);
+			//List<AnnotationSiteInvariantForJson> toRemove = new ArrayList<AnnotationSiteInvariantForJson>();
+			List<String> extraConstraints = new ArrayList<String>();
+			for(AnnotationSiteInvariantForJson extraInvariant : anr.getAnnotations())
+			{
+				if(extraInvariant.getType() != null && extraInvariant.getType().equals("CS") 
+						&&  extraInvariant.getMethodName().equals(methodName) && extraInvariant.getIndex() == getOrder(cs))
+				{
+					//toRemove.add(extraInvariant);
+					extraConstraints.addAll(extraInvariant.getConstraints());
+					vars.addAll(extraInvariant.getNewVariables());
+					inductivas.addAll(extraInvariant.getNewInductives());
+				}
+			}
+
+			//anr.getAnnotations().removeAll(toRemove);
+			
+			
+			writeRevelantVariables(invariantsToPrint, vars, cs);
+			writeInductiveVariables(invariantsToPrint, inductiveVars, cs);
+			
+			writeCreationSiteInvariant(invariantsToPrint, inv, extraConstraints, cs, vars, inductivas);
+			writeCreationSiteFooter(invariantsToPrint, cs);
 		}
 
-		private void writeCallee(CallSiteMapInfo ccInfo) {
+		private void writeCallee(StringBuilder invariantsToPrint, CallSiteMapInfo ccInfo) {
 			if (ccInfo != null) {
-				indent();
-				out.print("<callee>");
+				indent(invariantsToPrint);
+				invariantsToPrint.append("<callee>");
 				String callee = ccInfo.getMethodCallee();
 				callee = callee.substring(1, callee.length() - 1);
-				out.print(XMLizar(callee));
-				out.println("</callee>");
+				invariantsToPrint.append(XMLizar(callee));
+				addLine(invariantsToPrint, "</callee>");
 			}
 
 		}
 
-		private void writeRevelantVariables(List vars) {
-			indent();
-			out.print("<variables>");
+		private void writeRevelantVariables(StringBuilder invariantsToPrint, List vars, CreationSiteMapInfo cs) {
+			indent(invariantsToPrint);
+			invariantsToPrint.append("<variables>");
 
 			// Sacar las que tienen $$$$.
 
-			String s = extractStringVarList(vars);
+			List varsWithoutObjects = new ArrayList();
+			varsWithoutObjects.addAll(vars);
+			varsWithoutObjects.removeAll(cs.getObjectVars());
+			String s = extractStringVarList(varsWithoutObjects);
 			s = filterBindingVariables(s);
 
-			out.print(s);
-			out.println("</variables>");
+			invariantsToPrint.append(s);
+			addLine(invariantsToPrint, "</variables>");
 		}
 
 		private String filterBindingVariables(String s) {
@@ -885,7 +1257,9 @@ public class SpecInvariantWriter {
 
 		private String extractStringVarList(List vars) {
 			if (vars != null) {
-				String sVars = vars.toString().replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("\\.", "__f__");
+				
+				
+				String sVars = vars.toString().replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("(size)\\((\\w+)\\)", "$2__f__$1").replaceAll("(?<!\\$t)[.]", "__f__");
 				return removeNonJavaSymbols(sVars);
 			}
 			return "";
@@ -900,18 +1274,24 @@ public class SpecInvariantWriter {
 			}
 			return "";
 		}
+		/*
+		private void writeInductiveVariables(StringBuilder invariantsToPrint, List inds) {
+			writeInductiveVariables(invariantsToPrint, inds);
+		}*/
 
-		private void writeInductiveVariables(List inds) {
-			writeInductiveVariables(inds, new HashSet());
-		}
-
-		private void writeInductiveVariables(List inds, Set newInd) {
-			indent();
-			out.print("<inductives>");
+		
+		//TODO que es newInd, ni se usa!
+		private void writeInductiveVariables(StringBuilder invariantsToPrint, List inds, CreationSiteMapInfo cs) {
+			indent(invariantsToPrint);
+			invariantsToPrint.append("<inductives>");
 			// String sInds=
 			// inds.toString().replaceAll("\\[","").replaceAll("\\]","");
 
-			out.print(extractStringVarList(inds));
+			List indsWithoutObjects = new ArrayList();
+			indsWithoutObjects.addAll(inds);
+			indsWithoutObjects.removeAll(cs.getObjectVars());
+			
+			invariantsToPrint.append(extractStringVarList(indsWithoutObjects));
 			
 			//no entiendo por que las variables del binding las contamos como inductivas!!
 			/*if (!newInd.isEmpty()) {
@@ -928,7 +1308,7 @@ public class SpecInvariantWriter {
 					out.print(s);
 				}
 			}*/
-			out.println("</inductives>");
+			addLine(invariantsToPrint, "</inductives>");
 		}
 
 		private void writeInductiveVariables(InductiveVariablesInfo ind) {
@@ -1012,49 +1392,325 @@ public class SpecInvariantWriter {
 			return inv;
 		}
 
-		private void writeInvariant(String inv) {
-			indent();
-			out.println("<constraints>");
-			level++;
+		private void writeCreationSiteInvariant(StringBuilder invariantsToPrint, String inv, List<String> extraConstraints, CreationSiteMapInfo cs, List vars, List inductivas) {			
+			
+			indent(invariantsToPrint);
 
-			String[] constBind = adaptInvariant(inv);
+			String[] constBind = adaptInvariant(inv, cs.getObjectVars());
+
+			String constraints = constBind[0];		
+			
+			
+			constraints = processObjects(constraints, null, cs.getObjectVars(), vars, inductivas);
+			
+			
+			
+			String extraConstraintsString = ConstraintUtils.adaptOneConstraint((StringUtils.join(extraConstraints, " && ")), cs.getObjectVars());
+			extraConstraintsString.replaceAll("$", "__");
+			
+			if(constraints != null && constraints.length() > 0)
+			{
+				if (extraConstraintsString.length() > 0)
+					constraints += " && " + extraConstraintsString;
+			}
+			else
+			{
+				constraints = extraConstraintsString;
+			}
+		
+			
+			
+					
+			if(constraints != null && !constraints.equals("null") && !constraints.equals(""))
+			{	
+				addLine(invariantsToPrint, "<constraints>");
+
+				incrementIndentationLevelForCurrentClass();
+				indent(invariantsToPrint);
+				invariantsToPrint.append("<![CDATA[");
+				invariantsToPrint.append(constraints);
+				addLine(invariantsToPrint, "]]>");
+				decrementIndentationLevelForCurrentClass();
+				indent(invariantsToPrint);
+				addLine(invariantsToPrint, "</constraints>");
+			}
+			else
+			{
+				incrementIndentationLevelForCurrentClass();
+				addLine(invariantsToPrint, "<constraints></constraints>");
+				decrementIndentationLevelForCurrentClass();
+			}
+			// out.println(newInv);
+			
+
+		}
+		
+		
+		private String processObjects(String constraints, String binding, List objectVars, List vars, List inductivas)
+		{
+
+			Set<DerivedVariable> derivedVariables = new HashSet<DerivedVariable>();
+			
+			if(binding != null && binding.length() > 0)
+			{
+				for (String singleBinding : binding.split(" and ")){
+					Pattern pattern = Pattern.compile("\\$t.(\\w+) == (\\w+)");
+					Matcher match = pattern.matcher(binding);
+					while (match.find()) {
+						//variables.add(match.group(1));
+						vars.add(match.group(2));
+					}
+				}
+			}
+			
+			//al pedo mergeamos el array y despues lo separamos
+			//TODO no mergear el array antes de esta funcion...
+			if(constraints != null)
+				{
+				String[] constraints_array = constraints.split("&&");
+				List<String> new_constraints = new ArrayList<String>();			
+				
+				if(objectVars.size() > 0)
+				{
+					
+					String regex = "^(";
+					Iterator itt = objectVars.iterator();
+					while(itt.hasNext())
+					{
+						String o = (String)itt.next();
+						regex += " " + o + "|" + o + " ";
+						if (itt.hasNext())
+							regex += "|";
+					}
+					regex+=")";
+					Pattern patternObj = Pattern.compile(regex);
+				
+					for(int i = 0;  i < constraints_array.length; i++)
+					{
+						String constraint = constraints_array[i].trim();
+						Matcher match = patternObj.matcher(constraint);
+						if(!match.find())
+						{
+							new_constraints.add(constraint);
+						}
+					}
+				}
+				else
+				{
+					new_constraints.addAll(Arrays.asList(constraints_array));
+				}
+				
+				List varsAndInductives = vars; varsAndInductives.addAll(inductivas);//esto no deberia ser necesario porque las variables deberian contener a las inductivas
+				Iterator<String> it = varsAndInductives.iterator();
+				while( it.hasNext())
+				{
+					String var = it.next();				
+					DerivedVariable dv = null;
+					//puede ser A.f1.f2
+					Pattern pattern1 = Pattern.compile("(cont)_(\\w+)");
+					Matcher match1 = pattern1.matcher(var);
+					if (match1.find()) {
+						//variables.add(match.group(1));
+						String name = match1.group(2);
+						dv = new DerivedVariable("size", name);
+						new_constraints.add(dv.toString() + ">= 0");
+					}
+					else
+					{
+						Pattern pattern2 = Pattern.compile("(\\w+)__f__(\\w+)");
+						Matcher match2 = pattern1.matcher(var);
+						if (match2.find()) {
+							//variables.add(match.group(1));
+							String name = match1.group(1);
+							String field = match1.group(2);
+							dv = new DerivedVariable(field, name);
+						}
+					}
+					
+					if(dv!=null)
+						derivedVariables.add(dv);
+				}
+				
+				
+				for(int i = 0 ; i < constraints_array.length; i++)
+				{
+					String constraint = constraints_array[i];
+					String[] constraint_pair = constraint.split("==");
+					if(constraint_pair.length == 2)
+					{
+						String c0 = constraint_pair[0].trim();
+						String c1 = constraint_pair[1].trim();
+						
+						//hack, deberia hacer un mejor chequeo para que el contains() no se rompa mas adelante
+						if(!StringUtils.isNumeric(c0) && !StringUtils.isNumeric(c1))
+						{							
+							for(DerivedVariable dv: derivedVariables)
+							{
+								String name = dv.getName();
+								String field = dv.getField();
+								if (name.equals(c0))
+								{
+									//String field = s.replace(constraint_pair[0], "");
+									DerivedVariable dv2 = new DerivedVariable(field, c1);
+									String constraint2 = dv.toString() + " == " + dv2.toString();							
+									new_constraints.add(constraint2);
+									
+									//si una variable es igual a un size no me agrega el >= 0 porque se deriva de que es un size!!
+									/*if(field.equals("size"))
+									{
+										String another_constraint = c1 + ">= 0";
+										new_constraints.add(another_constraint);
+									}*/
+									
+									
+									break;
+								}
+								if (name.equals(c1))
+								{
+									DerivedVariable dv2 = new DerivedVariable(field, c0);
+									String constraint2 = dv.toString() + " == " + dv2.toString();		
+									new_constraints.add(constraint2);
+									
+									/*if(field.equals("size"))
+									{
+										String another_constraint = c0 + ">= 0";
+										new_constraints.add(another_constraint);
+									}*/
+									
+									break;
+								}
+							
+							}
+						}
+					}
+				}
+				
+				return  String.join(" && ", new_constraints);
+			}
+			return null;
+			
+		}
+		
+		
+		
+		private void writeCallSiteInvariant(StringBuilder invariantsToPrint, String inv, CallSiteMapInfo ccInfo, String methodName, List<String> extraConstraints,
+				CreationSiteMapInfo cs, List vars, List inductivas) {			
+			
+			indent(invariantsToPrint);
+			
+
+			String[] constBind = adaptInvariant(inv, cs.getObjectVars());
 
 			String constraints = constBind[0];
+			
 			String binding = constBind[1];
-
+			
+		
+			
+			//Aca deberia adaptar las constraints y el binding para:
+			
+			//1) Propagar igualdades de objetos a igualdades de fields 
+			//2) Eliminar igualdades de objetos
+			
+			constraints = processObjects(constraints, binding, cs.getObjectVars(), vars, inductivas);
+			
 			if (binding != null && binding.length() > 0)
 				binding = binding.trim();
 
 			
-			if(constraints!="null" && constraints != null)
-			{	
-				indent();
-				out.print("<![CDATA[");
-				out.print(constraints);
-				out.println("]]>");
+			BindingAnnotation newBindingAnnotation = new BindingAnnotation(methodName);
+			AnnotationSiteInvariantForJson newAnnotation = new AnnotationSiteInvariantForJson(methodName);
+			for(BindingAnnotation bindingAnnotation : anr.getBindingAnnotations())
+			{
+				//No se si coinciden en formato todavia, ojo
+				if (bindingAnnotation.getCallee().equals(ccInfo.getMethodCallee()))
+				{
+					for (String param : bindingAnnotation.getNewRelevantParameters())
+					{
+						param = ConstraintUtils.adaptOneConstraint(param, null);
+						binding = binding += " and $t." + param + " == " + param;
+						newBindingAnnotation.addNewRelevantParameter(param);
+						newAnnotation.addNewRelevantParameter(param);
+						
+					}					 
+				}
 			}
-			// out.println(newInv);
-			level--;
-			indent();
-			out.println("</constraints>");
+			
+			if (newBindingAnnotation.getNewRelevantParameters().size() > 0)
+			{
+				anr.getBindingAnnotations().add(newBindingAnnotation);
+				anr.getAnnotations().add(newAnnotation);				
+			}
+			
+			
+			String extraConstraintsString = ConstraintUtils.adaptOneConstraint(StringUtils.join(extraConstraints, " && "), null);
+			
+
+					
+			if(constraints != null && !constraints.equals("null") && !constraints.equals(""))
+			{	
+				if (extraConstraintsString.length() > 0)
+					constraints += " && " + extraConstraintsString;
+
+				addLine(invariantsToPrint, "<constraints>");
+				incrementIndentationLevelForCurrentClass();
+
+				indent(invariantsToPrint);
+				invariantsToPrint.append("<![CDATA[");
+				invariantsToPrint.append(constraints);
+				addLine(invariantsToPrint, "]]>");
+				
+				// out.println(newInv);
+				decrementIndentationLevelForCurrentClass();
+				indent(invariantsToPrint);
+				addLine(invariantsToPrint, "</constraints>");
+			}
+			else
+			{
+				if(extraConstraintsString.length() > 0)
+				{
+					constraints = extraConstraintsString;
+					addLine(invariantsToPrint, "<constraints>");
+					incrementIndentationLevelForCurrentClass();
+
+					indent(invariantsToPrint);
+					invariantsToPrint.append("<![CDATA[");
+					invariantsToPrint.append(constraints);
+					addLine(invariantsToPrint, "]]>");
+					
+					// out.println(newInv);
+					decrementIndentationLevelForCurrentClass();
+					indent(invariantsToPrint);
+					addLine(invariantsToPrint, "</constraints>");
+				}
+				else
+				{
+					addLine(invariantsToPrint, "<constraints></constraints>");
+				}
+				
+
+			}
+			
 
 			// Este es un hack feo porque los creation sites no tienen binding
 			// asi que directamente aprovecho y pregunto
 			// si el binding es vacio....pero no deberia "intentar calcularlo"
 			// si estamos en un creation site
 			if (binding != null && binding.length() > 0) {
-				indent();
-				out.print("<binding>");
-				out.print(binding);
-				out.println("</binding>");
+				indent(invariantsToPrint);
+				invariantsToPrint.append("<binding>");
+				invariantsToPrint.append(binding);
+				addLine(invariantsToPrint, "</binding>");
 			}
 		}
 
-		String[] adaptInvariant(String inv) {
+		
+		
+		String[] adaptInvariant(String inv, List objectVars) {
 			if (inv == null)
 				return new String[2];
 
-			inv.replaceAll(".", "__f__"); //hack que deberia ser mucho mas prolijo
+			
 			String[] constBind = new String[2];
 
 			// inv = inv.replaceAll("=", "==");
@@ -1062,45 +1718,13 @@ public class SpecInvariantWriter {
 			StringBuffer resCo = new StringBuffer();
 			StringBuffer resBi = new StringBuffer();
 			for (int i = 0; i < invList.length; i++) {
+				
 				String s = invList[i];
+				s = ConstraintUtils.adaptOneConstraint(s, objectVars);
 				
 				
-				//TODO revisar que no haya invariantes con ")" que no provengan de size!
-				//Tal vez si si la relacion es lineal pero con cuentas con parentesis??
-				
-				
-				 //supongo que tambien lo podria hacer con regular expressions
-				
-				//TODO hacer regexp
-				if(s.contains("size("))
-				{
-					 String t = s.substring(0, s.indexOf("size("));
-					 String var;
-					 for(int j=0; j<s.length(); j++) {
-					     char c = s.charAt(j);
-					     if(c=='+' || c=='-' || c=='*' || c==')' && s.indexOf("size(") < j) {
-					    	 StringBuilder str = new StringBuilder(s);
-					    	 str.insert(j, "__f__size");
-					    	 s = str.toString();
-					    	 break;
-					     }
-					 }					 
-					 s= s.replace("size(", "");
-					 s = s.replace(")", "");
-					 
-					 if(t.contains("==") && !(t.contains("+") || t.contains("-")))
-					 {
-						 t = t.substring(0, t.indexOf("=="));
-						 t=t.trim();
-						 s = s + " && " + t + ">=0";
-					 }
-					 
-				}
-				  
-				
-				s = s.replace("()", "");
-				s = s.replace(")", "");
-				s = s.replace("(", "");
+				if (s.length() == 0)
+					continue;
 				
 				
 				//s = s.replace("[", "__");
@@ -1121,8 +1745,6 @@ public class SpecInvariantWriter {
 
 					}
 
-					//hack horrible
-					s=s.replace(".", "__f__");
 					
 					resCo.append(s.trim());
 				}
