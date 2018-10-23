@@ -12,6 +12,7 @@ import java.lang.annotation.Documented;
     String PiecewiseQuasipolynomial(); //This should be my custom class
 }
 
+@MyAnnotation
 public class AnnotationFailed {
 	public static void main(String[] args)
 	{
@@ -29,12 +30,16 @@ public class AnnotationFailed {
 	//I could annotate only the call to intersect(), that will be the following example (Annotation2)
 	
 	
+	
+	
 	//esto esta mal porque justamente tengo el codigo. El MemorySummary deberia ir a un metodo LLAMADO desde aqui.
 	@Deprecated
 	@MemorySummary(
 		formalParameters={"r"},
 		PiecewiseQuasipolynomial="2*r^2: r <= 3, 3*r^4 r>3"
 		)
+	
+	@MyAnnotation
 	private static void DoSomethingMysterious(Integer r) {
 		Area a = new Area();
 		Area b = new Area();
