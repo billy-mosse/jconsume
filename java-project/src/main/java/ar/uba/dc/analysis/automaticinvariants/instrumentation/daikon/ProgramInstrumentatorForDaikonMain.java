@@ -1,8 +1,11 @@
 package ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon;
 
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -24,6 +27,11 @@ import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.ListDIParametersNoRep;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.SimpleDIParameter;
 import ar.uba.dc.analysis.automaticinvariants.regions.CreationSiteInfo;
+import ar.uba.dc.analysis.common.Invocation;
+import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
+import ar.uba.dc.analysis.common.intermediate_representation.io.writer.JsonIRWriter.InvocationSerializer;
+import ar.uba.dc.analysis.common.method.information.JsonInstrumentationSiteInvariantsWriter;
+import ar.uba.dc.annotations.AnnotationSiteInvariantForJson;
 import soot.MethodOrMethodContext;
 import soot.PackManager;
 import soot.Scene;
@@ -39,6 +47,11 @@ import soot.jimple.toolkits.callgraph.ReachableMethods;
 
 import java.util.Deque;
 import java.util.ArrayDeque;
+
+import org.apache.commons.lang.StringEscapeUtils;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 
 /**
@@ -188,7 +201,7 @@ public class ProgramInstrumentatorForDaikonMain {
 		IntrumentedMethodClass.setModifiers(Modifier.PUBLIC);
 		//Scene.v().addClass(IntrumentedMethodClass);*/
 		
-		String fullOutputDir = outputDir + "/" + args[0];
+		fullOutputDir = outputDir + "/" + args[0];
 		//System.out.println(fullOutputDir);
 		String[] optsDefault = { 
 				"-app", 
@@ -210,7 +223,8 @@ public class ProgramInstrumentatorForDaikonMain {
 				 
 				
 				 //lo deje a ver que pasa
-				 "-asm-backend",
+				 //"-asm-backend",	
+				 //"-version",
 				 
 				 //This option sets the JDK version of the standard library being analyzed so that Soot can simulate the native methods in the specific version of the library.
 				 "-p", "cg", "jdkver:8", //lo saque a ver que pasa.
@@ -410,7 +424,7 @@ public class ProgramInstrumentatorForDaikonMain {
 	      //  sootOpt.set_java_version(soot.options.Options.java_version_1_7);
 	        
 	        
-	     //   sootOpt.set_asm_backend(true);
+	        sootOpt.set_asm_backend(true);
 	        //esto lo saque porque sino no anda pero estoy usando la version incorrecta de soot
 	        //sootOpt.set_asm_backend(true);      
 	        //sootOpt.set_keep_offset(true);
@@ -418,7 +432,9 @@ public class ProgramInstrumentatorForDaikonMain {
 	        //sootOpt.set_keep_line_number(false);
 	        sootOpt.set_write_local_annotations(true);
 	        
-							        
+	        sootOpt.set_xml_attributes(true);
+	        sootOpt.print_tags_in_output();
+	        
 	        Scene.v().setSootClassPath(args[2]);
 	        
 	        System.out.println(args[2]);
@@ -434,7 +450,7 @@ public class ProgramInstrumentatorForDaikonMain {
 			//Scene.v().addClass(IntrumentedMethodClass);
 			
 			
-			String mainClass = args[0];
+			mainClass = args[0];
 			
 			if(mainClass.contains("."))
 			{
@@ -461,6 +477,11 @@ public class ProgramInstrumentatorForDaikonMain {
 //			pwIM.write("}\n");
 //			pwIM.flush();*/
 			
+
+			
+
+            BufferedWriter bwrCS = new BufferedWriter
+            	    (new OutputStreamWriter(new FileOutputStream(fullOutputDir + "/" + args[0] + ".cs"),"UTF-8"));
 			
 			FileOutputStream streamCS = new FileOutputStream(fullOutputDir + "/" + args[0] + ".cs");
 			FileOutputStream streamCC = new FileOutputStream(fullOutputDir + "/" + args[0] + ".cc");
@@ -470,17 +491,66 @@ public class ProgramInstrumentatorForDaikonMain {
 			PrintStream outCC = new PrintStream(streamCC);
 			PrintStream outInductivesFakes = new PrintStream(streamInductivesFakes);
 
-			showCreationSites(MethodInstrumenterForDaikon.getNewsMap(), outCS);
+			showInstrumentationSites(MethodInstrumenterForDaikon.getNewsMap(), bwrCS);
 			showCallSites(MethodInstrumenterForDaikon.getCcArgsMap(), MethodInstrumenterForDaikon.getCcMethodsMap(),
 					MethodInstrumenterForDaikon.getMethodMap(), MethodInstrumenterForDaikon.getNewsMap(), MethodInstrumenterForDaikon.getArgsCallsList(), MethodInstrumenterForDaikon.getRelevantsMap(), outCC);
 			showFakeInductives(MethodInstrumenterForDaikon.getNewsMap(), outInductivesFakes);
 			writeInstrumentedMethods(optsDefault[2], fullOutputDir);
+		
+			writeAnnotations(fullOutputDir + "/" + args[0] + ".ann");
+			
+			
 
 			} 
 		catch (Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 			}
+	}
+	
+	static String mainClass;
+	static String fullOutputDir;
+	private static void writeAnnotations(String location) {
+		
+		List<AnnotationSiteInvariantForJson> siteInvariants = MethodInstrumenterForDaikon.getInstrumentationSiteInvariants(); 
+
+		if(siteInvariants.size() > 0)
+		{
+			File srcFile = new File(location);
+			
+			if (!srcFile.getParentFile().exists()) {
+				srcFile.getParentFile().mkdirs();
+			}
+					
+			try {
+				//xstream.toXML(ir_method, new FileWriter(srcFile, false));
+				//PrintWriter writer = new PrintWriter(srcFile, "UTF-8");
+				//writer.println(ir_method.toHumanReadableString());
+				//writer.close();
+				
+	            //BufferedWriter bwr = new BufferedWriter(new FileWriter(srcFile));
+	            
+	            BufferedWriter bwr = new BufferedWriter
+	            	    (new OutputStreamWriter(new FileOutputStream(srcFile),"UTF-8"));
+	            
+	            GsonBuilder builder = new GsonBuilder().setPrettyPrinting();
+				Gson gson = builder.create();
+	            
+	            JsonInstrumentationSiteInvariantsWriter jsonInstrumentationSiteInvariantsWriter = new JsonInstrumentationSiteInvariantsWriter(); 
+	    		for (AnnotationSiteInvariantForJson siteInvariant : siteInvariants) {
+	    			//TODO: agregar los parametros o un mejor nombre para debug
+	    			jsonInstrumentationSiteInvariantsWriter.write(siteInvariant, bwr, gson);			    			
+	    		}
+	            bwr.close();
+	            
+			} catch (IOException e) {
+				//log.error("Error al imprimir el summary para el site invariant [" + siteInvariant.toString() + "] a xml: " + e.getMessage(), e);
+			} catch(Exception e) {
+				//log.error("Que carajo esta pasando??");
+			}
+		}
+
+		
 	}
 	/**
 	 * Writes the dummy methods for Instrumentation in the corresponding file
@@ -541,23 +611,50 @@ public class ProgramInstrumentatorForDaikonMain {
 				}
 		}
 	}
+	
+	
+	
 	/**
 	 * FORMAT: InsSite=#id;[liveVars];method-belongs-to;CC/CS;csArrayParams
 	 * @param csMap
 	 * @param out
 	 */
-	private static void showCreationSites(Map csMap, PrintStream out) {
-
-		out.println("Instrumentation Sites");
+	private static void showInstrumentationSites(Map csMap, BufferedWriter bwrCS) {
+		
+		JsonInstrumentationSiteWriter writer = new JsonInstrumentationSiteWriter();
+		writer.registerTypeAdapters();
 		for (Iterator it = csMap.keySet().iterator(); it.hasNext();) {
 			String cs = (String)it.next();
 			
 			//por que los toma como CreationSite? Son Instrumentation sites. Me parece que los usa "de comodin"
 			CreationSiteMapInfo csInfo = (CreationSiteMapInfo) csMap.get(cs);
-			out.println(cs + "=" + csInfo);
+	
+			
+			//csInfo.setKey(cs);
+			
+			writer.write(csInfo, bwrCS);
+			
 
 		}
+		
+		
+		
 	}
+	
+	
+	/*private static void showInstrumentationSites(Map csMap, PrintStream out) {
+
+		out.println("Inductives");
+		for (Iterator it = csMap.keySet().iterator(); it.hasNext();) {
+			String cs = (String)it.next();
+			CreationSiteMapInfo csInfo = (CreationSiteMapInfo) csMap.get(cs);	
+			
+			out.println(cs + "=" + csInfo.toString());
+			
+			
+		}
+	}*/
+
 	
 	private static void showFakeInductives(Map csMap, PrintStream out) {
 

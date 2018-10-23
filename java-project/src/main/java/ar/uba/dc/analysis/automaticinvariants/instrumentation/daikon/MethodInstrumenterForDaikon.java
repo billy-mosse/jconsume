@@ -13,6 +13,7 @@ import java.util.Stack;
 import java.util.Vector;
 
 import org.apache.commons.lang.StringUtils;
+import org.jf.dexlib2.iface.AnnotationElement;
 
 import com.sun.codemodel.internal.JAssignment;
 import com.sun.jdi.ArrayType;
@@ -29,6 +30,8 @@ import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.ListNoRep;
 import ar.uba.dc.analysis.automaticinvariants.pruebas.GLVMain;
 import ar.uba.dc.analysis.automaticinvariants.pruebas.GlobalLive;
+import ar.uba.dc.annotations.AnnotationSiteInvariantForJson;
+import ar.uba.dc.annotations.InstrumentationSiteInvariant;
 import soot.Body;
 import soot.IntType;
 import soot.Local;
@@ -68,6 +71,14 @@ import soot.jimple.internal.JimpleLocalBox;
 import soot.jimple.toolkits.annotation.logic.Loop;
 import soot.jimple.toolkits.annotation.logic.LoopFinder;
 import soot.tagkit.AbstractHost;
+import soot.tagkit.AnnotationAnnotationElem;
+import soot.tagkit.AnnotationArrayElem;
+import soot.tagkit.AnnotationBooleanElem;
+import soot.tagkit.AnnotationElem;
+import soot.tagkit.AnnotationIntElem;
+import soot.tagkit.AnnotationTag;
+import soot.tagkit.Tag;
+import soot.tagkit.VisibilityAnnotationTag;
 import soot.toolkits.graph.CompleteUnitGraph;
 import soot.toolkits.graph.DominatorsFinder;
 import soot.toolkits.graph.SimpleDominatorsFinder;
@@ -102,7 +113,7 @@ class MethodInstrumenterForDaikon extends LoopFinder {
 	private Map ccArgsMap = new HashMap();
 	
 	private Map relevantsMap = new HashMap();
-	
+		
 	private Deque ccArgsMethodList = new ArrayDeque();
 	
 	//   methodMap : method -> P(var)
@@ -121,6 +132,11 @@ class MethodInstrumenterForDaikon extends LoopFinder {
 	
 	private Map lineNumbers = new HashMap();
 
+	
+	
+	
+	private List instrumentationSiteInvariants = new ArrayList<InstrumentationSiteInvariant>();
+	
 	
 	/**
 	 * @param body
@@ -449,6 +465,127 @@ class MethodInstrumenterForDaikon extends LoopFinder {
 				crearDummyMethod(sClass);
 				already_processed.add(sClass.toString());
 			}
+			
+			
+			//aca puedo hacer lo de los instrmentationsiteinvariants
+			//https://mailman.cs.mcgill.ca/pipermail/soot-list/2006-October/000862.html
+
+			for(Tag t : body.getMethod().getTags())
+			{			
+				if (t instanceof VisibilityAnnotationTag)
+				{
+					VisibilityAnnotationTag vTag = (VisibilityAnnotationTag) t;
+					for (AnnotationTag annotationTag : vTag.getAnnotations())
+					{
+						System.out.println(annotationTag.getName());
+						System.out.println(annotationTag.getClass());
+						if (annotationTag.getType().equals("Lar/uba/dc/annotations/InstrumentationSiteInvariantList;"))
+						{
+							System.out.println(annotationTag.getElems());
+							
+							//Esto creo que deberia ser un InstrumentationSiteInvariant
+							for (Object oo : annotationTag.getElems())
+							{
+								AnnotationArrayElem extraInvariants = (AnnotationArrayElem) oo;
+								
+								
+								for (Object ooo : extraInvariants.getValues())
+								{
+									AnnotationAnnotationElem ann = (AnnotationAnnotationElem) ooo; 
+									AnnotationTag oooo = ann.getValue();									
+									int index = -1;
+									
+									Object collect = oooo.getElems();
+									
+									AnnotationSiteInvariantForJson annotationSiteInvariantForJson = new AnnotationSiteInvariantForJson();
+									for (AnnotationElem ooooo : oooo.getElems())
+									{
+										
+										switch(ooooo.getName())
+										{
+											case "index":
+												AnnotationIntElem annotationIndex = (AnnotationIntElem) ooooo; 
+												annotationSiteInvariantForJson.setIndex(annotationIndex.getValue());
+												break;
+											case "isCallSite":
+												AnnotationIntElem annotationIsCallSite = (AnnotationIntElem) ooooo; 
+												if (annotationIsCallSite.getValue() == 1)
+													annotationSiteInvariantForJson.setType("CC");
+												else
+													annotationSiteInvariantForJson.setType("CS");
+
+												break;
+											case "constraints":
+												AnnotationArrayElem annotationConstraints = (AnnotationArrayElem) ooooo; 
+												
+												int numConstraints =  annotationConstraints.getNumValues();
+												List constraints = new ArrayList<String>(); 
+												for (int i = 0; i < numConstraints; i++)
+												{
+													String constraint = annotationConstraints.getValueAt(i).toString();
+													constraint = constraint.substring(constraint.indexOf("value:") + 6).trim();
+													constraints.add(constraint);
+												}
+												annotationSiteInvariantForJson.setConstraints(constraints);
+												break;
+											case "newRelevantParameters":
+												AnnotationArrayElem annotationNewRelevantParameters = (AnnotationArrayElem) ooooo; 
+												
+												int numNewRelevantParameters =  annotationNewRelevantParameters.getNumValues();
+												List newRelevantParameters = new ArrayList<String>();
+												for (int i = 0; i < numNewRelevantParameters; i++)
+												{
+													String newRelevantParameter = annotationNewRelevantParameters.getValueAt(i).toString();
+													newRelevantParameter = newRelevantParameter.substring(newRelevantParameter.indexOf("value:") + 6).trim();
+													newRelevantParameters.add(newRelevantParameter);
+												}
+												annotationSiteInvariantForJson.setNewRelevantParameters(newRelevantParameters);
+												break;
+											case "newInductives":
+												AnnotationArrayElem annotationNewInductives = (AnnotationArrayElem) ooooo; 
+												
+												int numNewInductives =  annotationNewInductives.getNumValues();
+												List newInductives = new ArrayList<String>();
+												for (int i = 0; i < numNewInductives; i++)
+												{
+													String newInductive = annotationNewInductives.getValueAt(i).toString();
+													newInductive = newInductive.substring(newInductive.indexOf("value:") + 6).trim();
+													newInductives.add(newInductive);
+												}
+												annotationSiteInvariantForJson.setNewInductives(newInductives);
+												break;
+											case "newVariables":
+												AnnotationArrayElem annotationNewVariables = (AnnotationArrayElem) ooooo; 
+												
+												int numNewVariables =  annotationNewVariables.getNumValues();
+												List newVariables = new ArrayList<String>();
+												for (int i = 0; i < numNewVariables; i++)
+												{
+													String newVariable = annotationNewVariables.getValueAt(i).toString();
+													newVariable = newVariable.substring(newVariable.indexOf("value:") + 6).trim();
+													newVariables.add(newVariable);
+												}
+												annotationSiteInvariantForJson.setNewVariables(newVariables);
+												break;
+										}
+									}
+									
+									annotationSiteInvariantForJson.setMethodName(body.getMethod().toString());
+									instrumentationSiteInvariants.add(annotationSiteInvariantForJson); //esta horrible esto porque se repite el index y lo del callsite...pero es mas facil asi para un prototipo
+									
+									
+								}
+								
+								//instrumentationSiteInvariants.put(key, value);
+							}
+						}
+					}				
+				}
+			}
+			
+			
+			
+			
 			
 			
 			
@@ -1048,6 +1185,18 @@ class MethodInstrumenterForDaikon extends LoopFinder {
 	//deberia tener de parametro iAna o el initialFlow o algo para poder hacer las cosas bien
 	private ListDIParameters getCallArgs(Stmt s, Body body, InductiveVariablesInfo IVInfo) {
 		
+
+		/*System.out.println(body.getTags());
+		
+						
+		System.out.println(body.getMethod().getTags());
+		System.out.println(s.getTags());
+		
+		SootClass sc = body.getMethod().getDeclaringClass();
+		System.out.println(body.getMethod().getDeclaringClass().getTags());*/
+		
+		
+		
 		ListDIParameters info2 = new ListDIParameters();
 		Vector res = new Vector();
 		InvokeExpr ie = s.getInvokeExpr();
@@ -1387,6 +1536,8 @@ class MethodInstrumenterForDaikon extends LoopFinder {
 			InductivesFilter analisisInductivas, ListDIParameters origLParameters,ListDIParameters origLParametersInit, 
 			ListDIParameters extraParams, Body body, InstrumentedMethodClass ins, SootClass InstrumentedMethodClass, String methodName, List<Value> inits) {
 		
+		
+		
 		SootClass sc = body.getMethod().getDeclaringClass();
 		String  sLn = Utils.getLineNumber(s);
 		
@@ -1574,7 +1725,8 @@ class MethodInstrumenterForDaikon extends LoopFinder {
 		
 		List newArrayParams = new Vector();
 		String creationSiteType = "";
-		
+		List<String> newArrayParamsListString = new ArrayList<String>();
+
 		if (tipo.equals("CS")) {
 			System.out.println("NEW in:" + insSite + " " + s.toString());
 			AssignStmt as = (AssignStmt) s;
@@ -1685,6 +1837,10 @@ class MethodInstrumenterForDaikon extends LoopFinder {
 					if(!inductivesFake.contains(arrPar.getName()))
 						inductivesFake.add(arrPar.getName());
 
+				}
+				else
+				{
+					newArrayParamsListString.add(size.toString());
 				}
 			}
 			
@@ -1799,8 +1955,9 @@ class MethodInstrumenterForDaikon extends LoopFinder {
 			}
 			
 			String nameMethodDec = body.getMethod().getSignature();
-			
+
 			List allParamsString = new Vector();
+			List allObjectsParamsString = new Vector();
 			
 			//esto por ahora va a seguir siendo false
 			if(ProgramInstrumentatorForDaikonMain.inductivesAsRelevants )
@@ -1808,17 +1965,23 @@ class MethodInstrumenterForDaikon extends LoopFinder {
 				
 				//Aca es donde se rompe!!!!!! cuando convierte parametros
 				allParamsString = allParams.toStringList(inductivesInfo);
+				allObjectsParamsString = allParams.filterNonObjects().toStringList(inductivesInfo);
 				
 			}
 			else
 			{
 				allParamsString =allParams.toStringList2();
+				allObjectsParamsString = allParams.filterNonObjects().toStringList();
 			}
 			
-			System.out.println(methodName);
-			System.out.println(s.toString());
+			for(Object o : newArrayParamsList.toList())
+			{
+				newArrayParamsListString.add(o.toString());
+			}
 			
-			newsMap.put(insSite, new CreationSiteMapInfo(insSite, orden, allParamsString, nameMethodDec,tipo,creationSiteType,newArrayParamsList.toList(), vivas, inductivesFake, methodName));
+			
+			
+			newsMap.put(insSite, new CreationSiteMapInfo(insSite, orden, allParamsString, allObjectsParamsString, nameMethodDec,tipo,creationSiteType,newArrayParamsListString, vivas, inductivesFake, methodName));
 			
 			
 			//aca es donde tengo un bug y no estoy agregando list.size
@@ -1955,6 +2118,11 @@ public static Map getNewsMap() {
 	public static Map getMethodMap() {
 		return getInstance().methodMap;
 	}
+	
+	public static List getInstrumentationSiteInvariants() {
+		return getInstance().instrumentationSiteInvariants;
+	}
+	
 	public static Map getCcArgsMap() {
 		return getInstance().ccArgsMap;
 	}
