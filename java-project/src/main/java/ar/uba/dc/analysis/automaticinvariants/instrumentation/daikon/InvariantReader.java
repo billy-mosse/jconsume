@@ -76,8 +76,8 @@ public class InvariantReader {
 			String element = (String) iter.next();
 			
 			
-				//quiero machear var1[var2]...
-		        String patternString = ".+\\[(?!\\[).+\\].*";
+				//quiero sacarme de encima list1[a] pero no list1[] == list2[]
+		        String patternString = ".+\\[\\S+].*";
 
 		        Pattern pattern = Pattern.compile(patternString);
 
@@ -96,10 +96,11 @@ public class InvariantReader {
 					|| element.contains(" reverse ") //sobre array
 					|| element.contains(".getClass()") //sobre clase de objeto
 					|| element.contains(" one of ") //otro hack que se podria evitar
-					|| element.contains("== []") //hack horrible. TODO: ver como hacer para deshabilitar igualdades de arrays!!
+					//|| element.contains("== []") //hack horrible. TODO: ver como hacer para deshabilitar igualdades de arrays!!
 					|| element.contains(" null") //sobre nulls. Deberia usar una opcion de daikon pero no la encontre
 					|| element.contains("9999999") //Hack temporal para MST
 					|| element.contains("sorted by")
+					|| element.contains("toString")
 					//|| (element.contains("[") && element.contains("]")) //accediendo a un array
 					|| matchesAccessArray
 					|| containsDouble(element)
@@ -109,9 +110,18 @@ public class InvariantReader {
 			}
 			
 			res+=", ";
-			res+=element;
+			
+			
+			
+			res+=translateElement(element);
 		}
 		return res;
+	}
+	
+	public static String translateElement(String element)
+	{
+		element = element.replaceAll("(.+)\\[\\] == \\[\\]", "$1.size == 0");
+		return element;
 	}
 	
 	
