@@ -24,11 +24,20 @@ public class MSTTest {
 	public static void main(String[] args) {
 		int count = Integer.parseInt(args[0]); 
 		
+		for(int i=5;i<=count;i++)  
+		{
+			String[] argsTest=new String[2]; //residual = args
+			argsTest[0]="-v";
+			argsTest[1]=Integer.toString(i );
+			MST.mainOrig(argsTest); 
+		} 
+		
+		
 		for(int i=1;i<=count;i++)  
 		{
 			String[] argsTest=new String[2]; //residual = args
 			argsTest[0]="-v";
-			argsTest[1]=Integer.toString( i +10  );
+			argsTest[1]=Integer.toString( 2*i +10  );
 			MST.mainOrig(argsTest); 
 		} 
 	}
