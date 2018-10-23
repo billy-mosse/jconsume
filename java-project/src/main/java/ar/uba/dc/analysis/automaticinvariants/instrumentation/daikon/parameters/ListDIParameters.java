@@ -179,5 +179,20 @@ public class ListDIParameters extends Vector implements List{
 		this.clear();
 		this.addAll(res);
 	}
+	public ListDIParameters filterNonObjects() {
+		ListDIParameters res = new ListDIParameters();
+		
+		for(Iterator iter = this.iterator(); iter.hasNext(); )
+		{
+			DIParameter element = (DIParameter) iter.next();
+			Class c = element.getClass(); 
+			if (!(c.equals(DI_Int.class) || c.equals(DI_Integer.class) || c.equals(DI_Long.class) || c.equals(DI_Iterator.class)))
+			{
+				res.add(element);
+			}
+		}
+		return res;
+		
+	}
 	
 }

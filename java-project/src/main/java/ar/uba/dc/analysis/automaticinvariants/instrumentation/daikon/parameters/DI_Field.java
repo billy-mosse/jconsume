@@ -47,7 +47,7 @@ public class DI_Field extends DIParameter {
 		// TODO Auto-generated method stub
 		return father;
 	}
-	SootClass c;
+	public SootClass c;
 	boolean isStatic;
 	DIParameter fieldParam;
 	/**

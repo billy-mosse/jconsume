@@ -31,24 +31,24 @@ public class DI_Collection extends DI_Sizeable {
 	public DI_Collection(Local var) {
 		super(var);
 		
-		String varName = var.getName();
+		/*String varName = var.getName();
 		if(!varName.startsWith("_f_"))
 			varName =  "size_" + varName;
 		else
 			varName =  "size"+varName;
 		sVar = new DI_Int(varName);
-		this.derivedVarsForSpec.add(sVar);
+		this.derivedVarsForSpec.add(sVar);*/
 	}
 	
 	public DI_Collection(Local var, boolean _) {
 		super(var, true);
-		String varName = var.getName();
+		/*String varName = var.getName();
 		if(!varName.startsWith("_f_"))
 			varName =  "size_" + varName;
 		else
 			varName =  "size"+varName;
 		sVar = new DI_Int(varName);
-		this.derivedVarsForSpec.add(sVar);
+		this.derivedVarsForSpec.add(sVar);*/
 
 	}
 	/**
@@ -58,12 +58,12 @@ public class DI_Collection extends DI_Sizeable {
 	public DI_Collection(String vn, Type type) {
 		super(vn, type);
 		
-		if(!vn.startsWith("_f_"))
+		/*if(!vn.startsWith("_f_"))
 			vn =  "size_" + vn;
 		else
 			vn =  "size"+vn;
 		sVar = new DI_Int(vn);
-		this.derivedVarsForSpec.add(sVar);
+		this.derivedVarsForSpec.add(sVar);*/
 	}
 	
 	/* (non-Javadoc)

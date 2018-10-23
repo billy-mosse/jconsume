@@ -59,7 +59,7 @@ public abstract class DIParameter  {
 	
 	public String getName()
 	{
-
+		//....por que?
 		if(this.getClass().equals(DI_Iterator.class))
 			return "cont_" + var.getName();
 		else

@@ -1,15 +1,15 @@
 package ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters;
 
-import ar.uba.dc.util.ListC;
+import ar.uba.dc.util.ListE;
 
 public class SimpleDIParameter {
 	public String name;
-	public ListC derivedFields;
+	public ListE derivedFields;
 	
 	public SimpleDIParameter(String name)
 	{
 		this.name = name;
-		this.derivedFields = new ListC();
+		this.derivedFields = new ListE();
 	}
 	
 	public String toString()
