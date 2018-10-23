@@ -292,81 +292,98 @@ public class PaperInterproceduralAnalysis {
 		//irMethods = irMethods;
 	}
 	
-	public PaperCallSummaryInContext analyseCall(Line callInvocation, IntermediateRepresentationMethod belongsTo)
+	public PaperCallSummaryInContext analyzeCall(Line callInvocation, IntermediateRepresentationMethod belongsTo)
 	{
 		
 		callAnalyzer.init(symbolicCalculator, expressionFactory);
 
-		//ParametricExpression MAX_memreq = this.expressionFactory.constant(0L);
-		
-		
+	
+		log.info(callInvocation.toString());
 		DomainSet lineInvariant_without_binding = callInvocation.getInvariant();	
 		DomainSet lineInvariant = lineInvariant_without_binding.clone();
 		DomainSetUtils.unify(lineInvariant, callInvocation.getBinding());
 		Set<String> unboundedBindingVariables = new TreeSet<String>();
 		
 		
-		IntermediateRepresentationMethod dummyMethod;
-		if(callInvocation.getInvocations().isEmpty())
-		{
-			dummyMethod = new IntermediateRepresentationMethod();
-			
-			//TODO: el name no es el signature, es otra cosa
-			dummyMethod.setName(callInvocation.getIrName());		
-			
-			dummyMethod.setDeclaringClass(callInvocation.getIrClass());
-			
+		//Primero me fijo si tiene anotacion de memory summary
+		//Despues, si fue analizado (NO DEBERIA SER ANALIZADO SI TIENE MEMORY SUMMARY, CAMBIAR ESO!!)
+		//Por ultimo, si esta en unanalizable methods
+		//(tienen ese orden de prioridad)
 
-			
-			PaperMemorySummary invocationSummary = this.methodAnnotationsHelper.get(dummyMethod);
-			if(invocationSummary == null)
-			{
-				throw new RuntimeException("Memory summary for method [" + dummyMethod.getName() + "] not found. Is this method unanalizable? Is it in a recursive call chain?");
-				
-			} 
-			else {
-				Invocation dummyInvocation = new Invocation();
-				callAnalyzer.process(dummyInvocation, callInvocation, invocationSummary, lineInvariant, belongsTo.getNodes(), belongsTo.getEscapeNodes(), belongsTo.getFullName());					
-			}
-			
-			
-		}
 		
-		for(Invocation invocation : callInvocation.getInvocations())
+		List<Invocation> invocations = callInvocation.getInvocations();
+		if(invocations.size() == 0)
+		{
+			/*1) Me fijo si tengo una anotacion o una unalizable rule
+			 * 2) Si tengo la uso (en ese orden)
+			 * 3) Sino, tiro warning/error
+			 * 
+			 * Dejar anotado en el codigo que esto puede ser unsound? Es unsound?
+			 * */
+		}
+		else
 		{					
+			for(Invocation invocation : invocations)
+			{	
 				
-			//En realidad es sin los parametros, para que machee bien
-			PaperMemorySummary invocationSummary = this.data.get(IRUtils.key(invocation, callInvocation.getIrName()));
-			
-			if(invocationSummary ==null)
-			{
-				
-				dummyMethod = new IntermediateRepresentationMethod();
-				//TODO: el name no es el signature, es otra cosa
-				dummyMethod.setName(invocation.getNameCalled());		
-				
-				dummyMethod.setDeclaringClass(invocation.getClass_called());
-				
-				dummyMethod.setParameters(invocation.getParameters());
-				
-				dummyMethod.setIsReturnRefLikeType(invocation.isReturnRefLikeType());
-				invocationSummary = this.defaultSummaryRepository.get(dummyMethod);
-				
-				if (invocationSummary == null) {
-					// No hay se genero un summary en esta corrida ni existia en el repositorio. No podemos continuar. Informamos al usuario de esto 
-					throw new RuntimeException("Memory summary for method [" + dummyMethod.getName() + "] not found. Is this method unanalizable? Is it in a recursive call chain?");
+				boolean invocationWasAnnotated = false;
+				IntermediateRepresentationMethod dummyMethod;
+				if(methodAnnotationsHelper != null)
+				{
+					dummyMethod = new IntermediateRepresentationMethod();
 					
-				} else {
-				
-					callAnalyzer.process(invocation, callInvocation, invocationSummary, lineInvariant, belongsTo.getNodes(), belongsTo.getEscapeNodes(), belongsTo.getFullName());					
+					//TODO: el name no es el signature, es otra cosa
+					dummyMethod.setName(invocation.getNameCalled());		
+					
+					dummyMethod.setDeclaringClass(callInvocation.getIrClass());
+					
+	
+					
+					PaperMemorySummary invocationSummary = this.methodAnnotationsHelper.get(dummyMethod);
+					if(invocationSummary != null)
+					{
+						invocationWasAnnotated = true;
+						Invocation dummyInvocation = new Invocation();
+						callAnalyzer.process(dummyInvocation, callInvocation, invocationSummary, lineInvariant, belongsTo.getNodes(), belongsTo.getEscapeNodes(), belongsTo.getFullName());					
+					}
 				}
+				
+				if(!invocationWasAnnotated)
+				{
+					PaperMemorySummary invocationSummary = this.data.get(IRUtils.key(invocation, callInvocation.getIrName()));
+					
+					if(invocationSummary ==null)
+					{
+						
+						dummyMethod = new IntermediateRepresentationMethod();
+						//TODO: el name no es el signature, es otra cosa
+						dummyMethod.setName(invocation.getNameCalled());		
+						
+						dummyMethod.setDeclaringClass(invocation.getClass_called());
+						
+						dummyMethod.setParameters(invocation.getParameters());
+						
+						dummyMethod.setIsReturnRefLikeType(invocation.isReturnRefLikeType());
+						invocationSummary = this.defaultSummaryRepository.get(dummyMethod);
+						
+						if (invocationSummary == null) {
+							// No hay se genero un summary en esta corrida ni existia en el repositorio. No podemos continuar. Informamos al usuario de esto 
+							throw new RuntimeException("Memory summary for method [" + dummyMethod.getName() + "] not found. Is this method unanalizable? Is it in a recursive call chain?");
+							
+						} else {
+						
+							callAnalyzer.process(invocation, callInvocation, invocationSummary, lineInvariant, belongsTo.getNodes(), belongsTo.getEscapeNodes(), belongsTo.getFullName());					
+						}
+					}
+					else
+					{
+						callAnalyzer.process(invocation, callInvocation, invocationSummary, lineInvariant, belongsTo.getNodes(), belongsTo.getEscapeNodes(), belongsTo.getFullName());
+					}	
+				}
+				
 			}
-			else
-			{
-				callAnalyzer.process(invocation, callInvocation, invocationSummary, lineInvariant, belongsTo.getNodes(), belongsTo.getEscapeNodes(), belongsTo.getFullName());
-			}						
-									
-		}		
+		
+		}
 		
 		//MAX_memreq = symbolicCalculator.supreme(MAX_memreq, invocationSummary.getMemoryRequirement());
 		
