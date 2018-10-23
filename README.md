@@ -23,6 +23,29 @@ The document is divided in several sections::
 Dependencies
 ============
 
+This section describes the dependencies of the project. A step-by-step description of the commands used to successfully install the tool in an openSUSE 64-bit Virtual Machine can be found in install_all.sh. The steps should be really similar in any Linux distribution.
+
+The steps would be:
+
+1) Download Virtualbox or the corresponding program you use to manage VM's in your OS.
+
+2) Download Ubuntu. I used this one: https://www.ubuntu.com/download/desktop/thank-you?version=18.04&architecture=amd64
+
+3) Create the VM
+
+4) Log in
+
+5) Download git with sudo apt-get install git
+
+6) Clone the repository from https://github.com/billy-mosse/jconsume with the command
+
+```git clone https://github.com/billy-mosse/jconsume.git```
+
+I ran first ```mkdir -p ~/Projects/git; cd ~Projects/git``` so that the repository would be there.
+
+7) Run the script install.sh. Maybe an error will be thrown when installing GMP, but it doesn't matter. If it happens, remove the -e flag from the script so that it doesn't stop and resume the installation.
+
+
 Maven
 -----
 
@@ -325,7 +348,7 @@ Go to java-project and just run the following command:
 
 This time 2 manual fixed are needed.
 
-Now go to the invariants folder ($jconsume/java-project/invariants/spec/fullreferences/ar/uba/dc/jolden/em3d).
+Now go to the invariants folder (jconsume/java-project/invariants/spec/fullreferences/ar/uba/dc/jolden/em3d).
 
 Open the BiGraph.spec file and find the ```compute``` method. Add the following relevant parameter: ```this_init__f__eNodes__f__fromCount```
 
