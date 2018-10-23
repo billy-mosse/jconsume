@@ -93,7 +93,8 @@ public class ToStringParserVisitor implements ParserVisitor {
 			return visitSpecialFunction(function, arg1, "[", "]");
 		}
 		
-		if (function.getPFMC() instanceof MaxMathCommand) {
+		//?
+		if (function.getPFMC() instanceof MaxMathCommand || function.getPFMC() instanceof FloorMathCommand) {
 			return visitSpecialFunction(function, arg1, function.getName() + "(", ")");
 		}
 		if (function.jjtGetNumChildren() == 1) {

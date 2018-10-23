@@ -37,6 +37,7 @@ public class JEPExpressionMapper implements ExpressionMapper {
 		parser.setAllowAssignment(false);
 		parser.setImplicitMul(false);
 		parser.addFunction("max", new MaxMathCommand());
+		parser.addFunction("floor", new FloorMathCommand());
 		toStringVisitor = new ToStringParserVisitor();
 		toStringVisitor.addAliasFor("&&", "and");
 		toStringVisitor.addAliasFor("||", "or");
