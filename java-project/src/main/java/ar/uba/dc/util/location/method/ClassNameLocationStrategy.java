@@ -1,6 +1,7 @@
 package ar.uba.dc.util.location.method;
 
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
+import ar.uba.dc.annotations.AnnotationSiteInvariantForJson;
 import soot.SootMethod;
 
 /**
@@ -41,6 +42,13 @@ public class ClassNameLocationStrategy extends AbstractMethodLocationStrategy {
 	@Override
 	public String getJsonIRLocation(IntermediateRepresentationMethod ir_method, String mainClass) {
 		return getLocation("json", ir_method, mainClass);
+	}
+
+	@Override
+	public String getJsonIRLocation(
+			AnnotationSiteInvariantForJson siteInvariant, String mainClass) {
+		//TODO method name es un nombre incorrecto
+		return getBasePath() +  "/siteInvatiants/" + siteInvariant.getMethodName();
 	}
 
 }

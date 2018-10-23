@@ -3,6 +3,7 @@ package ar.uba.dc.util.location;
 import soot.SootMethod;
 
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
+import ar.uba.dc.annotations.AnnotationSiteInvariantForJson;
 
 
 /**
@@ -42,5 +43,7 @@ public interface MethodLocationStrategy {
 	public String getHumanReadableLocation(IntermediateRepresentationMethod ir_method, String mainClass);
 
 	public String getJsonIRLocation(IntermediateRepresentationMethod ir_method, String mainClass);
+	
+	public String getJsonIRLocation(AnnotationSiteInvariantForJson siteInvariant, String mainClass);
 	
 }
