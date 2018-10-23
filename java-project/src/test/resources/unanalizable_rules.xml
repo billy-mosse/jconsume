@@ -5,7 +5,7 @@
 			<method name="hasMoreElements" type="equals" />
 			<method name="nextElement" type="equals" />
 			<method name="hasNext" type="equals" />
-			<method name="next" type="equals" />
+			<!--<method name="next" type="equals" />-->
 		</package>
 		
 		<package name="sun." type="startsWith">
@@ -67,6 +67,11 @@
 		<package name="java.util.ArrayList" type="equals">
 			<method name="iterator" type="equals" />
 		</package>
+
+		<package name="java.util.AbstractSequentialList" type="equals">
+			<method name="iterator" type="equals" />
+		</package>
+
 		<package name="java.util." type="startsWith">
 			<method name="next" type="equals" />
 		</package>
