@@ -1,6 +1,6 @@
 package ar.uba.dc.daikon;
 
-import ar.uba.dc.util.ListCE;
+import ar.uba.dc.util.ListE;
 import ar.uba.dc.util.ListItrE;
 
 /**
@@ -18,7 +18,7 @@ public class Ins4 {
 	
 	public static void mainParameters(int n)
 	{
-		ListCE l = new ListCE();
+		ListE l = new ListE();
 		for(int i = 1; i < n; i++)
 		{
 			l.add(new Integer(i));

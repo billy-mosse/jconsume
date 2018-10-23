@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import ar.uba.dc.util.ListCE;
 import ar.uba.dc.util.ListItrE;
 
 /**

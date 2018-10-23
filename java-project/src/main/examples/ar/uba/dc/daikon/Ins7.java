@@ -1,6 +1,5 @@
 package ar.uba.dc.daikon;
 
-import ar.uba.dc.util.ListCE;
 import ar.uba.dc.util.ListItrE;
 
 /**
