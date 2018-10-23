@@ -35,6 +35,8 @@ public class LazyAsCompareStrategy implements ComparePolynomialStrategy {
 		Map<String, String> mapping = new HashMap<String, String>();
 		PiecewiseQuasipolynomial result = calculator.execOperationOverExpressions(CommandLineCalculator.COMPARE_OPERATOR, mapping, new PiecewiseQuasipolynomial[] { p, q });
 		
+		result.fixImplicitMultiplication();
+		
 		result = calculator.expand(result, mapping);
 		
 		if (log.isDebugEnabled()) {
@@ -58,6 +60,7 @@ public class LazyAsCompareStrategy implements ComparePolynomialStrategy {
 		}
 		
 		cleanResult(result);
+		result.fixImplicitMultiplication();
 		
 		result = calculator.expand(result, mapping);
 		

@@ -17,6 +17,10 @@ public class CommandLineBarvinokExecutor implements BarvinokExecutor {
 	
 	protected String barvinokCmdPath;
 	
+	/* Barvinok bug:
+	 * 
+	 * sum { [[a,b,c,d] -> [f,i]] -> 2*f: exists e,g,h,k : e >= 0 and f > 0 and i >= 1 and k >= i and k - 2*b + i = 0 and h >= 0 and k >= 0 and k >= 1 and h < k and k >= b and h + k - 2*b + 1 = 0 and k <= c and h - i + 1 = 0 and h < b and b >= i and k = f};
+	 */
 	public String execCommand(String command) {
 		try {
 			/*if(this.firstTime) {

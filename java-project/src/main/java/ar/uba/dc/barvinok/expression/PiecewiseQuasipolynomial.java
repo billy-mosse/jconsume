@@ -2,6 +2,7 @@ package ar.uba.dc.barvinok.expression;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -121,5 +122,14 @@ public class PiecewiseQuasipolynomial {
 
 	public void clearPieces() {
 		pieces.clear();
+	}
+
+
+	public void fixImplicitMultiplication() {		
+		
+		for(QuasiPolynomial piece : pieces)
+		{
+			piece.fixImplicitMultiplication();
+		}
 	}
 }

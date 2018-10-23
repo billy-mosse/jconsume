@@ -148,4 +148,9 @@ public class QuasiPolynomial {
 	public void setPolynomial(String polynomial) {
 		this.polynomial = polynomial;
 	}
+
+	//Maybe we should also fix multiplication by constants
+	public void fixImplicitMultiplication() {
+		constraints = constraints.replaceAll("(\\d+)((\\w+\\s)|(\\w$))", "$1*$2");		
+	}
 }

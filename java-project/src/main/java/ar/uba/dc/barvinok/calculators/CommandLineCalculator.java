@@ -100,6 +100,7 @@ public class CommandLineCalculator implements BarvinokCalculator {
 		
 		PiecewiseQuasipolynomial pqs = syntax.parsePiecewiseQuasipolynomial(ret);
 		
+		pqs.fixImplicitMultiplication();
 		pqs = expand(pqs, mapping);
 		
 		if (log.isDebugEnabled()) {
@@ -140,6 +141,9 @@ public class CommandLineCalculator implements BarvinokCalculator {
 		} else {
 			result = execOperationOverDomain(SUM_OPERATION, invariant, expr, mapping);
 		}
+		
+		
+		result.fixImplicitMultiplication();
 		
 		result = expand(result, mapping);
 		
@@ -329,7 +333,7 @@ public class CommandLineCalculator implements BarvinokCalculator {
 			result = execOperationOverExpressions(SUBSTRACT_OPERATOR, mapping, polynomials);
 		}
 
-		
+		result.fixImplicitMultiplication();
 		result = expand(result, mapping);
 		
 		if (log.isDebugEnabled()) {
@@ -392,6 +396,7 @@ public class CommandLineCalculator implements BarvinokCalculator {
 			result = execOperationOverExpressions(ADD_OPERATOR, mapping, polynomials);
 		}
 		
+		result.fixImplicitMultiplication();
 		result = expand(result, mapping);
 		
 		if (log.isDebugEnabled()) {
