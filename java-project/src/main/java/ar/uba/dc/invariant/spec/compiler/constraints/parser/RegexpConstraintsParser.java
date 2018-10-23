@@ -32,15 +32,38 @@ public class RegexpConstraintsParser implements ConstraintsParser {
 	}
 	
 	
+	//TODO sacar lo de la propagacion, que ya lo hago en otro lado...
 	public void parse(SiteSpecification site, ConstraintsInfo info, Set<String> parameters, Set<DerivedVariable> new_parameters) {
-		if (site.getClass().equals(CallSiteSpecification.class))
-		{
-			CallSiteSpecification s = (CallSiteSpecification) site;
-			System.out.println(s.getBinding());
-		}
+
+
 		Set<String> variables = info.getVariables();
 		Set<String> inductives = info.getInductives();
 		String constraints = site.getConstraints();
+		
+		Set<DerivedVariable> derivedVariables = new HashSet<DerivedVariable>();
+
+		
+		//agrego los objeto.field que aparecen en el binding para la propagacion tambien
+		//en realidad solo tengo que agregar el local!
+		if (site.getClass().equals(CallSiteSpecification.class))
+		{
+			CallSiteSpecification s = (CallSiteSpecification) site;
+			String allBindings = s.getBinding();
+			if(allBindings.length() > 0)
+			{
+				for (String binding : allBindings.split(" and ")){
+					Pattern pattern = Pattern.compile("\\$t.(\\w+) == (\\w+)");
+					Pattern.compile("\\$t.(\\w+) == (\\w+)");
+					Matcher match = pattern.matcher(binding);
+					while (match.find()) {
+						//variables.add(match.group(1));
+						variables.add(match.group(2));
+					}
+				}
+			}
+			
+		}
+		
 		
 		String constraintToParse = new String(constraints).trim();
 		Pattern pattern = Pattern.compile("\\B@(\\S+)\\b");
@@ -48,7 +71,6 @@ public class RegexpConstraintsParser implements ConstraintsParser {
 		
 		while (match.find()) {
 			String ref = match.group(1);
-			info.addReference(ref);
 			constraintToParse = resolver.resolve(constraintToParse, ref, INCLUDE_INVARIANT_FUNCTION + "(\"" + ref + "\")");
 		}
 		
@@ -82,7 +104,6 @@ public class RegexpConstraintsParser implements ConstraintsParser {
 
 			variables.addAll(inductives);
 			
-			Set<DerivedVariable> derivedVariables = new HashSet<DerivedVariable>();
 			for(String var : variables)
 			{
 
@@ -90,11 +111,16 @@ public class RegexpConstraintsParser implements ConstraintsParser {
 				{
 					DerivedVariable dv = null;
 					boolean b = false;
+					
+					//esto ya es obsoleto porque los size_ los cambiamos por __f__size
 					if(var.contains("size_"))
 					{
 						String name = var.substring(5);
 						dv = new DerivedVariable("size", name);
-						new_constraints.add(dv.toString() + ">= 0");
+						
+						String new_constraint = dv.toString() + ">= 0";
+						if(!new_constraints.contains(new_constraint))
+							new_constraints.add(new_constraint);
 					}
 					else
 					{
@@ -103,6 +129,13 @@ public class RegexpConstraintsParser implements ConstraintsParser {
 							String name = var.substring(0, var.indexOf("__f__"));
 							String field = var.substring(var.indexOf("__f__") + 5);
 							dv = new DerivedVariable(field, name);
+							
+							if(field.equals("size"))
+							{
+								String new_constraint = dv.toString() + ">= 0";
+								if(!new_constraints.contains(new_constraint))
+									new_constraints.add(new_constraint);
+							}
 						}
 					}
 					if(dv!=null)
@@ -191,153 +224,6 @@ public class RegexpConstraintsParser implements ConstraintsParser {
 		}
 	}
 	
-	public void parse_NOT_USED(SiteSpecification site, ConstraintsInfo info) {
-		Set<String> variables = info.getVariables();
-		String constraints = site.getConstraints();
-		
-		String constraintToParse = new String(constraints).trim();
-		Pattern pattern = Pattern.compile("\\B@(\\S+)\\b");
-		Matcher match = pattern.matcher(constraints);
-		
-		while (match.find()) {
-			String ref = match.group(1);
-			info.addReference(ref);
-			constraintToParse = resolver.resolve(constraintToParse, ref, INCLUDE_INVARIANT_FUNCTION + "(\"" + ref + "\")");
-		}
-		
-		try {
-			constraintToParse = constraintToParse.replaceAll("(?i) and ", " && ");
-			constraintToParse = constraintToParse.replaceAll("(?i) or ", " || ");
-			
-			//TODO: se va a romper que haya ORs
-			String[] s = constraintToParse.split("&&");
-			
-			String[] constraints_array = constraints.split("&&");
-			HashSet<String> new_constraints = new HashSet<String>();
-			
-			
-			
-			parser.initSymTab();
-
-			System.out.println(constraintToParse);
-			for(int i = 0; i < s.length; i++)
-			{ 
-				System.out.println("HOLA_1");
-				parser.initSymTab();
-				String t = s[i].trim();
-				System.out.println(t);
-				parser.parse(t);
-				boolean consistent = true;
-				System.out.println("HOLA_2");
-
-				for (Object var : parser.getSymbolTable().keySet()) {
-					System.out.println(var);
-					//no quiero agregar las variables que veo en las constraints!
-					if (!variables.contains(var.toString()))
-					{
-						consistent = false;
-					}
-					
-					info.addConstraintVariable(var.toString());
-				}
-				if(consistent)
-				{
-					new_constraints.add(constraints_array[i].trim());
-				}
-			}
-			//TODO: convendria cambiar "_" por "__" cuando pongo un size porque puede pasar que
-			//una variable ya venga con "_" en el nombre
-			System.out.println("aca");
-			Set<DerivedVariable> derivedVariables = new HashSet<DerivedVariable>();
-			for(String var : variables)
-			{
-
-				if(!var.contains("cont_") && !var.contains("_init"))
-				{
-					DerivedVariable dv = null;
-					boolean b = false;
-					if(var.contains("size_"))
-					{
-						String name = var.substring(5);
-						dv = new DerivedVariable("size", name);
-						new_constraints.add(dv.toString() + ">= 0");
-					}
-					else
-					{
-						if(var.contains("__f__") )
-						{
-							String name = var.substring(0, var.indexOf("__f__"));
-							String field = var.substring(var.indexOf("__f__") + 5);
-							dv = new DerivedVariable(field, name);
-						}
-					}
-					if(dv!=null)
-						derivedVariables.add(dv);
-				}
-			}
-			
-			
-			//ArrayList<ConstraintPair> equal_objects = new ArrayList<ConstraintPair>();
-			for(int i = 0 ; i < constraints_array.length; i++)
-			{
-				String constraint = constraints_array[i];
-				String[] constraint_pair = constraint.split("==");
-				if(constraint_pair.length == 2)
-				{
-					String c0 = constraint_pair[0].trim();
-					String c1 = constraint_pair[1].trim();
-					
-					//hack, deberia hacer un mejor chequeo para que el contains() no se rompa mas adelante
-					if(!StringUtils.isNumeric(c0) && !StringUtils.isNumeric(c1))
-					{							
-						for(DerivedVariable dv: derivedVariables)
-						{
-							String name = dv.getName();
-							String field = dv.getField();
-							if (name.equals(c0))
-							{
-								//String field = s.replace(constraint_pair[0], "");
-								DerivedVariable dv2 = new DerivedVariable(field, c1);
-								String constraint2 = dv.toString() + " == " + dv2.toString();							
-								new_constraints.add(constraint2);
-								
-								//si una variable es igual a un size no me agrega el >= 0 porque se deriva de que es un size!!
-								/*if(field.equals("size"))
-								{
-									String another_constraint = c1 + ">= 0";
-									new_constraints.add(another_constraint);
-								}*/
-								
-								
-								break;
-							}
-							if (name.equals(c1))
-							{
-								DerivedVariable dv2 = new DerivedVariable(field, c0);
-								String constraint2 = dv.toString() + " == " + dv2.toString();		
-								new_constraints.add(constraint2);
-								
-								/*if(field.equals("size"))
-								{
-									String another_constraint = c0 + ">= 0";
-									new_constraints.add(another_constraint);
-								}*/
-								
-								break;
-							}
-						
-						}
-					}
-				}
-			}
-			
-			
-			constraints = StringUtils.join(new_constraints, " and ");
-			site.setConstraints(constraints);
-		} catch (ParseException e) {
-			throw new RuntimeException("Problemas al parsear la constraint [" + constraintToParse + "]: " + e.getMessage(), e);
-		}
-	}
 	
 	public ConstraintsInfo parse(String constraints) {
 		ConstraintsInfo info = new ConstraintsInfo();
