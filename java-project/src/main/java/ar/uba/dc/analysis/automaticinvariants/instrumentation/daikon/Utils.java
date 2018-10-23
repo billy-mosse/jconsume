@@ -90,8 +90,19 @@ public class Utils {
 		
 		return ok;
 	}
+	
+	public static boolean isPossibleArgument(Type t) {
+		boolean ok = false;
+		ok = isTypeCollection(t) || isTypeArray(t) || isTypeString(t);
+		
+		if (isTypeNum(t.toString()) || isTypeDouble(t.toString()))
+			ok = true;
+		
+		return ok;
+	}
 	protected static boolean hasSizeableFields(Value v)
 	{
+		Object o = v.getClass().getFields();
 		// OJO! Hay que mirar que tenga campos " sizeables"
 		return false;
 	}
@@ -107,6 +118,12 @@ public class Utils {
 	{
 		return v.getType().toString().equals("double") ||
 			v.getType().toString().equals("long");
+		
+	}
+	protected static boolean isTypeDouble(String t)
+	{
+		return t.toString().equals("double") ||
+			t.toString().equals("long");
 		
 	}
 		
