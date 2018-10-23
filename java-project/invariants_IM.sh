@@ -64,19 +64,19 @@ CLASSPATH_ECLIPSE=$HOME/.m2/repository/ca/mcgill/sable/soot/3.0.0-SNAPSHOT/soot-
 #CLASSPATH=$CLASSPATH_JCONSUME_FOLDERS:$CLASSPATH_ECLIPSE:$CLASSPATH_JARS:$CLASSPATH2
 
 CLASSPATH=$CLASSPATH_JCONSUME_FOLDERS:$CLASSPATH_JARS:$CLASSPATH_ECLIPSE:$CLASSPATH_JARS:$CLASSPATH2
-
+CLASSPATH_FOR_SPEC=$CLASSPATH
 
 #echo before comment
 #: <<'END'
 rm -f -R out/$FULLNAMETEST 
 mkdir -p out/$FULLNAMETEST
 
-echo Fase 1: Instrumentation 
-. ./ii $FULLNAMETEST > instrumenta.log || die "Problema en fase 1" 
+echo Phase 1: Instrumentation
+. $PROJECT_FOLDER/ii $PROJECT_FOLDER/out/$FULLNAMETEST > $PROJECT_FOLDER/out/instrumenta.log || die "Problema en Phase 1" 
 
 
 #exit 0
-echo Fase 2: Compilation of InstrumentedMehod Class for Daikon
+echo Phase 2: Compilation of InstrumentedMehod Class for Daikon
 
 MYPATH=`echo $PACKAGE | sed 's/\./\//g'`
 
@@ -89,26 +89,28 @@ echo "Compilo (los) InstrumentedMethod"
 #el {} es un placeholder para el resultado del find
 #A veces las variables tienen un numeral y es super molesto....
 #como hack los cambio por un guion bajo pero me gustaria ver si hay una opcion para que no genere nombres con guion bajo
-find $FULLNAMETEST -name InstrumentedMethod.java -exec sed -i -e 's/#/_/g' {} \; -exec javac -g {} \;
+find $PROJECT_FOLDER/out/$FULLNAMETEST -name InstrumentedMethod.java -exec sed -i -e 's/#/_/g' {} \; -exec javac -g {} \;
 
-sed -i -e 's/#/_/g' $FULLNAMETEST/$FULLNAMETEST.cs
-sed -i -e 's/#/_/g' $FULLNAMETEST/$FULLNAMETEST.cc
-sed -i -e 's/#/_/g' $FULLNAMETEST/$FULLNAMETEST.indFake
-
-
-javac -g $FULLNAMETEST/$MYPATH/InstrumentedMethod.java || die "Problema en fase 2"
+sed -i -e 's/#/_/g' $PROJECT_FOLDER/out/$FULLNAMETEST/$FULLNAMETEST.cs
+sed -i -e 's/#/_/g' $PROJECT_FOLDER/out/$FULLNAMETEST/$FULLNAMETEST.cc
+sed -i -e 's/#/_/g' $PROJECT_FOLDER/out/$FULLNAMETEST/$FULLNAMETEST.indFake
 
 
-echo Fase 3: Daikon for generating invariants
+javac -g $FULLNAMETEST/$MYPATH/InstrumentedMethod.java || die "Problema en Phase 2"
 
-./daikon.sh $FULLNAMETEST 5 > $FULLNAMETEST/$FULLNAMETEST.txt || die "Problema en fase 3"
+
+echo Phase 3: Daikon for generating invariants
+
+. $PROJECT_FOLDER/out/daikon.sh $FULLNAMETEST 5 > $FULLNAMETEST/$FULLNAMETEST.txt || die "Problema en Phase 3"
 #END
 
 
-mv $FULLNAMETEST/$FULLNAMETEST.indFake $FULLNAMETEST/$FULLNAMETEST.ind
+mv $PROJECT_FOLDER/out/$FULLNAMETEST/$FULLNAMETEST.indFake $PROJECT_FOLDER/out/$FULLNAMETEST/$FULLNAMETEST.ind
 
-sed -i -n -e '/===========================================================================/,$p' $FULLNAMETEST/$FULLNAMETEST.txt
+sed -i -n -e '/===========================================================================/,$p' $PROJECT_FOLDER/out/$FULLNAMETEST/$FULLNAMETEST.txt
 
 
-echo Fase 4: Imprimir invariantes para formato de jconsume
-. ./spec.sh
+echo Phase 4: Print invariants for jconsume format
+. ./spec.sh $CLASSPATH_FOR_SPEC 
+
+echo "Invariants ready."
