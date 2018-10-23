@@ -1,8 +1,10 @@
 package ar.uba.dc.paper;
 
 import java.util.Iterator;
+import java.util.List;
 
 import ar.uba.dc.util.ListE;
+
 
 public class Program3
 {
@@ -33,7 +35,7 @@ public class Program3
 		
 		op = new Op();
 		
-		ListE new_list = map(list, op);
+		ListE new_ListE = map(list, op);
 	}
 
 	
@@ -57,8 +59,8 @@ public class Program3
 	}
 
 
-	/*public static List map2(List list, Op op2) {
-		List res = new List();
+	/*public static ListE map2(ListE list, Op op2) {
+		ListE res = new List();
 
 
 		Iterator it = list.iterator();

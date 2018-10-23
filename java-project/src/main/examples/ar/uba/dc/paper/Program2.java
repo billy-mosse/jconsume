@@ -2,7 +2,7 @@ package ar.uba.dc.paper;
 
 import java.util.Iterator;
 
-import ar.uba.dc.util.ListCE;
+import ar.uba.dc.util.ListE;
 
 //TODO me genera invariantes de mas para ListC y eso hace que haya relevantParameters que no aparecen en ningun binding
 public class Program2
@@ -21,7 +21,7 @@ public class Program2
   
   
 	public static void mainParameters(int r) {
-		ListCE list = new ListCE();
+		ListE list = new ListE();
 		
 		for(int i = 0; i < r; i ++)
 		{
@@ -31,12 +31,12 @@ public class Program2
 		
 		Op op = new Op();
 		
-		ListCE new_list = map(list, op);
+		ListE new_list = map(list, op);
 
 	}
 
-	public static ListCE map(ListCE list, Op op) {
-		ListCE res = new ListCE();
+	public static ListE map(ListE list, Op op) {
+		ListE res = new ListE();
 		Iterator it = list.iterator();
 		
 		// sum max (OP, OP2) , no lo sabe hacer y hace sum OP + OP2
