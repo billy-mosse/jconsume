@@ -23,6 +23,7 @@ import ar.uba.dc.analysis.common.intermediate_representation.IntermediateReprese
 import ar.uba.dc.analysis.escape.EscapeSummary;
 import ar.uba.dc.analysis.escape.summary.io.reader.XMLReader;
 import ar.uba.dc.analysis.escape.summary.io.writer.XMLWriter;
+import ar.uba.dc.annotations.AnnotationSiteInvariantForJson;
 import ar.uba.dc.config.Context;
 import ar.uba.dc.config.ContextFactory;
 import ar.uba.dc.soot.SootUtils;
@@ -182,6 +183,13 @@ public class RepositoryCorrector extends BodyTransformer {
 					@Override
 					public String getJsonIRLocation(IntermediateRepresentationMethod ir_method, String mainClass) {
 						throw new java.lang.UnsupportedOperationException();
+					}
+					@Override
+					public String getJsonIRLocation(
+							AnnotationSiteInvariantForJson siteInvariant,
+							String mainClass) {
+						// TODO Auto-generated method stub
+						return null;
 					}
 				};
 				writer.setLocationStrategy(strategy);

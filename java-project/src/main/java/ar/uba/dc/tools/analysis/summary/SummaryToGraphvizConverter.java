@@ -15,6 +15,7 @@ import ar.uba.dc.analysis.common.SummaryReader;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
 import ar.uba.dc.analysis.escape.EscapeSummary;
 import ar.uba.dc.analysis.memory.impl.summary.EscapeBasedMemorySummary;
+import ar.uba.dc.annotations.AnnotationSiteInvariantForJson;
 import ar.uba.dc.config.Context;
 import ar.uba.dc.config.ContextFactory;
 import ar.uba.dc.soot.SootUtils;
@@ -121,6 +122,14 @@ public class SummaryToGraphvizConverter {
 				public String getJsonIRLocation(IntermediateRepresentationMethod ir_method, String mainClass) {
 					throw new java.lang.UnsupportedOperationException();
 				}
+
+				@Override
+				public String getJsonIRLocation(
+						AnnotationSiteInvariantForJson siteInvariant,
+						String mainClass) {
+					// TODO Auto-generated method stub
+					return null;
+				}
 				
 				
 			};
@@ -179,6 +188,15 @@ public class SummaryToGraphvizConverter {
 				@Override
 				public String getJsonIRLocation(IntermediateRepresentationMethod ir_method, String mainClass) {
 					throw new java.lang.UnsupportedOperationException();
+				}
+
+
+				@Override
+				public String getJsonIRLocation(
+						AnnotationSiteInvariantForJson siteInvariant,
+						String mainClass) {
+					// TODO Auto-generated method stub
+					return null;
 				}
 				
 			};
