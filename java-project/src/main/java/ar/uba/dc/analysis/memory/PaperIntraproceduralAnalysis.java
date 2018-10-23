@@ -234,7 +234,7 @@ public class PaperIntraproceduralAnalysis {
 			Line c = callInvocation.clone();
 			log.debug(callInvocation.getName());
 			
-			PaperCallSummaryInContext callSummary = interprocedural.analyseCall(callInvocation, ir_method);
+			PaperCallSummaryInContext callSummary = interprocedural.analyzeCall(callInvocation, ir_method);
 			
 			ParametricExpression memReqMinusRsdFromCallee = callSummary.getMAX_memoryRequirementMinusRsd();
 			ParametricExpression acumResidualsFromCallee = callSummary.getAcumResiduals();
