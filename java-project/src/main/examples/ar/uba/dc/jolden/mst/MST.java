@@ -75,7 +75,7 @@ public class MST
 		    long end1 = System.currentTimeMillis();
 		    
 		    if (pPrintResult || pPrintMsgs)
-		      System.out.println("MST has cost "+ dist); //tempLocal = 1
+		    	System.out.println("MST has cost "+ dist); //tempLocal = 1
 		
 		    if (pPrintMsgs) {
 		    	System.out.println("Build graph time "+ (end0 - start0)/1000.0); //tempLocal = 1

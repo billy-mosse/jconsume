@@ -21,11 +21,11 @@ class Graph
    * @param numvert the number of vertices in the graph
    *
    * ArrayCountSize
-   * @temporal 0
+   * @memReq 2*numvert^2 + 4 * numVert
    * @residual 2*numvert^2 + 4 * numVert
    *
    *ArrayCountOne
-   * @temporal 0
+   * @memReq 2*numvert^2 + 3 * numVert + 1 : numvert >= 1 ; 1 numvert <= 0
    * @residual 2*numvert^2 + 3 * numVert + 1 : numvert >= 1 ; 1 numvert <= 0
    */
   public Graph(int numvert) 
