@@ -101,6 +101,7 @@ public class InvariantReader {
 					|| element.contains("9999999") //Hack temporal para MST
 					|| element.contains("sorted by")
 					|| element.contains("toString")
+					|| element.contains("[].") //matchea propiedades del array. CREO que estan de mas.
 					//|| (element.contains("[") && element.contains("]")) //accediendo a un array
 					|| matchesAccessArray
 					|| containsDouble(element)

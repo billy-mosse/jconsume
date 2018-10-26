@@ -42,7 +42,10 @@ public class ConstraintUtils {
 		 m.appendTail(sb); // append the rest of the contents
 		 s = sb.toString();
 		 
-		 s = s.replaceAll("\\$(?!t\\.)", "__");
+		 s = s.replaceAll("(\\w) == (\\w) *\\(mod (\\d+)\\)", "$1 % $3 == $2 % $3");
+		 
+		 
+		 
 		 
 		 /**
 		  * Si tengo a.b.f, tengo que reemplazar . por __f__
