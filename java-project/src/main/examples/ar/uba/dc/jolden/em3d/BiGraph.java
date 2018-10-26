@@ -1,6 +1,9 @@
 package ar.uba.dc.jolden.em3d;
 import java.util.Enumeration;
 
+import ar.uba.dc.annotations.InstrumentationSiteInvariant;
+import ar.uba.dc.annotations.InstrumentationSiteInvariantList;
+
 
 
 /**
@@ -114,6 +117,17 @@ static BiGraph create(int numNodes, int numDegree, boolean verbose)
    * @residual 0
    */ 
   @SuppressWarnings("unchecked")
+  
+  //creo que deberia poder poner -1 en el index si solo quiero agregar un relevant parameter
+  //TODO hacer
+  @InstrumentationSiteInvariantList(invariants={
+			@InstrumentationSiteInvariant(
+			isCallSite=true,
+			index=0,
+			constraints={""},
+		    newRelevantParameters={"this_init.eNodes.fromCount"}, newInductives = {  }, newVariables = {  })}
+	)
+  
 void compute()
   {
     for (Enumeration e = eNodes.elements(); e.hasMoreElements(); ) { //maxCall = 0, tempCall = 1
