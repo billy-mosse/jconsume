@@ -1,6 +1,7 @@
 package ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class BindingAnnotation {
@@ -38,6 +39,16 @@ public class BindingAnnotation {
 	public BindingAnnotation(String callee, List<String> newRelevantParameters)
 	{
 		this.callee = callee;
+		
+		/*Iterator<String> it = newRelevantParameters.iterator();
+		List<String> newModifiedRelevantParameters = new ArrayList<String>();
+		while(it.hasNext())
+		{
+			String relevantParameter = it.next();
+			newModifiedRelevantParameters.add(relevantParameter.replaceAll("\\.", "__f__"));
+			
+		}*/
+		
 		this.newRelevantParameters = newRelevantParameters;
 	}
 

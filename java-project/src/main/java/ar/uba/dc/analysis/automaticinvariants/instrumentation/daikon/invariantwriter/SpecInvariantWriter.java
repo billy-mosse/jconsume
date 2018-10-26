@@ -318,6 +318,7 @@ public class SpecInvariantWriter {
 		
 		//List ordered_methods = topologicalOrder(ms);
 		for (SpecMethod m : orderedMethods) {
+			List oldRelevantParameters = new ArrayList();
 			
 			StringBuilder headerToPrint = new StringBuilder();
 			StringBuilder invariantsToPrint = new StringBuilder();
@@ -344,13 +345,13 @@ public class SpecInvariantWriter {
 				currentClass = m.getClassName();
 				
 				
-				processNewMethod(headerToPrint, method, currentClass);
+				processNewMethod(headerToPrint, method, currentClass, oldRelevantParameters);
 				hasMethods = true;
 				currentMethod = method;
 			} else if (!m.getClassAndMethod().equals(currentMethod)) {
 				if (currentMethod.length() != 0)
 					endProcessMethod(currentMethod);
-				processNewMethod(headerToPrint, method, currentClass);
+				processNewMethod(headerToPrint, method, currentClass, oldRelevantParameters);
 				hasMethods = true;
 				currentMethod = method;
 			}
@@ -377,7 +378,7 @@ public class SpecInvariantWriter {
 			{
 				if (csInfo.getOrder() == -1)
 					csInfo.setOffset(callOffset);
-				processCall(invariantsToPrint, csInfo, method);
+				processCall(invariantsToPrint, csInfo, method, oldRelevantParameters);
 				callOffset++;
 			}
 			
@@ -435,7 +436,13 @@ public class SpecInvariantWriter {
 				if (annotation.getMethodName().equals(methodName))
 				{
 					int pos = headerToPrint.indexOf("</relevant-parameters>");
-					headerToPrint.insert(pos, ", " + StringUtils.join(annotation.getNewRelevantParameters(), ", "));
+					
+					String relevantParametersString = StringUtils.join(annotation.getNewRelevantParameters(), ", ").replaceAll("\\.", "__f__");
+					//No tiene relevant parameters <-> tengo "</relevant-parameters></relevant-parameters>"
+					if (headerToPrint.charAt(pos-1) == '>')
+						headerToPrint.insert(pos, relevantParametersString);
+					else
+						headerToPrint.insert(pos, ", " + relevantParametersString);
 				}	
 			}
 		}
@@ -527,12 +534,13 @@ public class SpecInvariantWriter {
 		
 	}
 
-	private void processNewMethod(StringBuilder headerToPrint, String methodName, String className) {
+	private void processNewMethod(StringBuilder headerToPrint, String methodName, String className, List oldRelevantParameters) {
 		
 		xmlSpec.currentClassName = className;
 		// System.out.println("- Method:"+methodName);
 		// Usa los "init"
 		List params = ccr.getMethodParams(methodName);
+		oldRelevantParameters = params;
 		// System.out.println(params);
 		xmlSpec.writeMethodHeader(headerToPrint, methodName, params);
 
@@ -600,11 +608,11 @@ public class SpecInvariantWriter {
 		xmlSpec.writeCreationSite(invariantsToPrint, cs, methodName);
 	}
 
-	private void processCall(StringBuilder invariantsToPrint, CreationSiteMapInfo cs, String methodName) {
+	private void processCall(StringBuilder invariantsToPrint, CreationSiteMapInfo cs, String methodName, List oldRelevantParameters) {
 
 		CallSiteMapInfo ccInfo = ccr.getCallSiteInfo(cs.getInsSite());
 		
-		xmlSpec.writeCallSite(invariantsToPrint, cs, ccInfo, methodName);
+		xmlSpec.writeCallSite(invariantsToPrint, cs, ccInfo, methodName, oldRelevantParameters);
 
 	}
 
@@ -771,7 +779,7 @@ public class SpecInvariantWriter {
 
 		}
 
-		private void writeCallSite(StringBuilder invariantsToPrint, CreationSiteMapInfo cs, CallSiteMapInfo ccInfo, String methodName) {
+		private void writeCallSite(StringBuilder invariantsToPrint, CreationSiteMapInfo cs, CallSiteMapInfo ccInfo, String methodName, List oldRelevantParameters) {
 			String l = cs.getInsSite();
 
 			writeCallSiteHeader(invariantsToPrint, cs);
@@ -828,7 +836,7 @@ public class SpecInvariantWriter {
 
 			writeCallee(invariantsToPrint, ccInfo);
 
-			writeCallSiteInvariant(invariantsToPrint, callInv, ccInfo, cs.getMethod(), extraConstraints, cs, vars, inductivas);
+			writeCallSiteInvariant(invariantsToPrint, callInv, ccInfo, cs.getMethod(), extraConstraints, cs, vars, inductivas, oldRelevantParameters);
 
 			writeCallSiteFooter(invariantsToPrint, cs);
 		}
@@ -1594,7 +1602,7 @@ public class SpecInvariantWriter {
 		
 		
 		private void writeCallSiteInvariant(StringBuilder invariantsToPrint, String inv, CallSiteMapInfo ccInfo, String methodName, List<String> extraConstraints,
-				CreationSiteMapInfo cs, List vars, List inductivas) {			
+				CreationSiteMapInfo cs, List vars, List inductivas, List oldRelevantParameters) {			
 			
 			indent(invariantsToPrint);
 			
@@ -1628,8 +1636,16 @@ public class SpecInvariantWriter {
 					for (String param : bindingAnnotation.getNewRelevantParameters())
 					{
 						param = ConstraintUtils.adaptOneConstraint(param, null);
-						binding = binding += " and $t." + param + " == " + param;
-						newBindingAnnotation.addNewRelevantParameter(param);
+						if (binding.length() > 0)
+							binding = binding += " and $t." + param + " == " + param;
+						else
+							binding = "$t." + param + " == " + param;
+						
+						//Para que no se repitan los relevant parameters durante la propagacion de los parametros.
+						//Por ejemplo, en em3d pasa que hay una variable que no es detectada como relevant parameter, pero lo es.
+						if(!oldRelevantParameters.contains(param))
+							newBindingAnnotation.addNewRelevantParameter(param);
+						
 						newAnnotation.addNewRelevantParameter(param);
 						
 					}					 
