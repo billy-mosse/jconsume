@@ -151,6 +151,23 @@ public class QuasiPolynomial {
 
 	//Maybe we should also fix multiplication by constants
 	public void fixImplicitMultiplication() {
-		constraints = constraints.replaceAll("(\\d+)((\\w+\\s)|(\\w$))", "$1*$2");		
+		if(constraints.contains("/"))
+		{
+			/* 4a -> 4*a
+			 * 23a -> 23*a
+			 * 23,5a -> 23,5*a
+			 * Usar punto considero que esta de mas, porque barvinok no usa. Pero quien sabe si algun dia usemos otra herramienta que si?
+			 * 10.000.000a -> 10.000.000*a
+			 */
+			constraints = constraints.replaceAll("([0-9.,]+)([a-zA-Z]+)", "$1*$2");
+		}
+		else
+		{			
+			/*
+			 * 4/3a -> 4/(3*a)
+			 */
+			constraints = constraints.replaceAll("([0-9.,]+)([a-zA-Z]+)", "$1/($2 * $3)");
+		}
+				
 	}
 }
