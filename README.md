@@ -297,6 +297,8 @@ Go to java-project and just run the following command:
 
 ```sh full_analysis.sh "ar.uba.dc.jolden.mst.MST" 5```
 
+As daikon, the tool we use to generate program invariants, isn't exhaustive (no tool can be), sometimes we need to *annotate* them. An example of this feature can be seen in the constructor of the Vertex class of MST. There, you can find a InstrumentationSiteInvariantList with only one annotated invariant, that establishes a linear relationship between numvert and a temporal variable. The name of the temporal variable can be obtained from the file we generated with daikon, that is, Vertex.spec.
+
 <!--
 ```sh invariants_IM.sh "ar.uba.dc.daikon.Ins4" 10```
 
@@ -341,7 +343,19 @@ Results can be seen in java-project/results/rinard/report_ar.uba.dc.jolden.mst.M
 
 This is another real world program, also part of the Jolden benchmark.
 
+Go to java-project and just run the following command:
 
+```sh full_analysis.sh "ar.uba.dc.jolden.mst.MST" 5```
+
+As it happened with MST, this program also has annotated invariants not captured by daikon. There are three of them:
+
+1. 
+
+2. 
+
+3. 
+
+<!--
 Go to java-project and just run the following command:
 
 ```sh invariants_IM.sh "ar.uba.dc.jolden.em3d.Em3d" 5```
@@ -354,12 +368,12 @@ Open the BiGraph.spec file and find the ```compute``` method. Add the following 
 
 (You just need to add ```<relevant-parameters>this_init__f__eNodes__f__fromCount</relevant-parameters>``` before the first instrumentation site)
 
-This relevant parameter will have to be bound with a variable in the caller, so you need to open Em3d.spec, find the ```mainParameters``` method. There's a call to the ```compute``` method there. ADd the following binding (just below the constraints):
+This relevant parameter will have to be bound with a variable in the caller, so you need to open Em3d.spec, find the ```mainParameters``` method. There's a call to the ```compute``` method there. Add the following binding (just below the constraints):
 
 
 ```<binding>$t.this_init__f__eNodes__f__fromCount == __r0__f__eNodes__f__fromCount</binding>```
 
-(or the name of the variable bounded by numNodes_init instead of ```__r0__f__eNodes__f__fromCount``` if it was named differently - named depend on how the jimple was generated)
+(or the name of the variable bounded by numNodes_init instead of ```__r0__f__eNodes__f__fromCount``` if it was named differently, as it depends on how the jimple was generated)
 
 Finally, go back to the Bigraph.spec. The ```create``` method has 2 calls to ```makeFromNodes```, and the binding is wrong.
 
@@ -375,7 +389,7 @@ to
 in both calls.
 
 There. Now you can run ```sh memory.sh "ar.uba.dc.jolden.em3d.Em3d"``` and you'll get the memory consumption. The results can be compared with the paper, just like MST.
-
+--->
 
 
 
