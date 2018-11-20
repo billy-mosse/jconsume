@@ -114,7 +114,7 @@ public class Em3d
 			 " iteration(s)..."); //tempLocal = 1
     long start1 = System.currentTimeMillis();
     for (int i = 0; i < numIter; i++) { 
-      graph.compute();  //tempCall = 0, maxCall =2(condominio) , residual =0 
+      graph.compute(numNodes);  //tempCall = 0, maxCall =2(condominio) , residual =0 
     }
     long end1 = System.currentTimeMillis();
 
