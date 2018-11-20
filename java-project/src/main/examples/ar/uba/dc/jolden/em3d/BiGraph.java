@@ -60,12 +60,12 @@ final class BiGraph
 			@InstrumentationSiteInvariant(
 					isCallSite=true,
 					index=16,
-					constraints={"n1__f__fromCount == numDegree"},
+					constraints={"n1.fromCount == numDegree"},
 				    newRelevantParameters={}, newInductives = {  }, newVariables = {  }),
 		    @InstrumentationSiteInvariant(
 				isCallSite=true,
 				index=20,
-				constraints={"n1__f__fromCount == numDegree"},
+				constraints={"n1.fromCount == numDegree"},
 			    newRelevantParameters={}, newInductives = {  }, newVariables = {  })
 				    
   }
