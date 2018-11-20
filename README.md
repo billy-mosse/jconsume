@@ -347,13 +347,7 @@ Go to java-project and just run the following command:
 
 ```sh full_analysis.sh "ar.uba.dc.jolden.mst.MST" 5```
 
-As it happened with MST, this program also has annotated invariants not captured by daikon. There are three of them:
-
-1. 
-
-2. 
-
-3. 
+As it happened with MST, this program also has annotated invariants not captured by daikon. There are three of them: two for the method create(), and one for compute().
 
 <!--
 Go to java-project and just run the following command:
