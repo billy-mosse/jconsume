@@ -7,18 +7,31 @@ Introduction
 
 This document contains the necessary information to install the tool, execute it and understand the project's structure.
 
-The document is divided in several sections::
+The document is divided in several sections:
 
-	1) Dependencies
-		1.1) Maven
-		1.2) Barvinok
-		1.3) Graphviz
-	2) Project's structure (in construction)
-	3) Developed tools (in construction)
-	4) Tool configuration (in construction)
-	5) Execution
-		5.1) Introduction
-		5.2) Some examples
+	1) Description
+	2) Dependencies
+		2.1) Maven
+		2.2) Barvinok
+		2.3) Graphviz
+	3) Project's structure (in construction)
+	4) Developed tools (in construction)
+	5) Tool configuration (in construction)
+	6) Execution
+		6.1) Introduction
+		6.2) Some examples
+
+
+Description
+============
+
+JConsume 2.0 is a memory consumption analyzer for Java bytecode. It computes parametric expressions that over approximate the maximum number of simultaneously live objects ever created by a method, where by live we mean irreclaimable by any garbage collector. Computing the number of live objects is a key underlying step in all client analysis techniques aiming at computing dynamic-memory requirements.
+
+JConsume implements a new compositional quantitative analysis aimed at inferring non-linear upper-bounds on the number of irreclaimable objects that may be stored in the heap at any point in the execution of Java-like programs, including polymorphism and implicit memory management. The analysis is based on the compositional construction of live objects summaries for every method under analysis. More concretely, it over-approximates both a) the maximum amount of fresh objects which are simultaneously alive during the execution of the method and b) the number of created objects that may remain alive after the method finishes its execution.
+
+Summaries are built up using method local information (e.g., their own allocations) and precomputed summaries of called methods. Since the behavior of a method can vary a lot with the arguments it is called with, summaries are parametric in order to provide bounds that can depend on the arguments.
+
+For more information, see http://lafhis.dc.uba.ar/users/~diegog/JConsume2/ and the paper "Summary-based inference of quantitative bounds of live heap objects" (2014, Braverman, Garbervetsky, Hym, Yovine).
 
 Dependencies
 ============
