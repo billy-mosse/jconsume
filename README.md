@@ -200,7 +200,7 @@ void m(int p)
 
 What happened? We added a call to a dummy method. _That_ is what we are going to tell daikon to focus on. 
 
-We also added an assignement **p_init = p**. That's because sometimes the parameters change during the run of a method, and we want to generate loop invariants binded to the initial parameters of the method.
+We also added an assignment **p_init = p**. That's because sometimes the parameters change during the run of a method, and we want to generate loop invariants binded to the initial parameters of the method.
 
 Daikon will run the program several times with different parameters (assigned by us), will generate trace information **only** of **InstrumentedMethod.dummyFunction_1(int, int, int, int)**, and will return likely preconditions for it. This method does nothing, so a precondition (or postcondition, it's the same) of the method is actually an invariant of the loop. Between other invariants, we will see these:
 
@@ -220,7 +220,7 @@ Daikon will run the program several times with different parameters (assigned by
 Execution
 =======================
 
-Here we'll present several analysis toy examples and some of real programs (Em3d and MST)
+Here we'll present several analysis of toy examples and some of real programs (Em3d and MST).
 
 Toy examples
 --------
@@ -252,9 +252,11 @@ This will calculate what we call the loop invariants [TODO explain elsewhere] an
 Results can be seen in java-project/results/rinard/report_ar.uba.dc.daikon.Ins1/index.html
 
 
-**Feel free to explore Ins#N, with #N ranging from 1 to 25.**
+**Ins#N, with #N ranging from 1 to 25.**
 
-Ins3 is temporarily unavailable; descriptions for each example will be added soon.
+Feel free to explore them!
+
+<!--Ins3 is temporarily unavailable; descriptions for each example will be added soon. -->
 
 <!-- Some examples need to be ran in two parts, as the inductives analaysis overapproximates the set of inductive variables. For example, consider the following example: -->
 
@@ -349,7 +351,7 @@ After doing all this, go again to jconsume/java-project and run the following co
 
 This generates the memory consumption analysis.-->
 
-Results can be seen in java-project/results/rinard/report_ar.uba.dc.jolden.mst.MST/index.html. They can be compared with our paper "Summary-based inference of quantitative bounds of live heap objects": https://dblp.org/rec/html/journals/scp/BrabermanGHY14
+Results can be seen in java-project/results/rinard/report_ar.uba.dc.jolden.mst.MST/index.html. They can be compared with our paper "Summary-based inference of quantitative bounds of live heap objects" (Braberman, Garbervetsky, Hym, Yovine).
 
 
 **Em3d**
@@ -435,6 +437,7 @@ This generates the memory consumption analysis. Results can be seen in java-proj
 
 Same as before, but change the 1 for a 2.
 
+(To be continued)
 <!--Run ```invariants_IM.sh``` with the corresponding parameters and remove ```result``` as an inductive from CreationSite #2 in Op.spec. The file is in the same directory as Program2.spec (which should have just been generated) and Program1.spec (generated before).-->
 
 
