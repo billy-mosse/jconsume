@@ -140,11 +140,11 @@ static BiGraph create(int numNodes, int numDegree, boolean verbose)
   @InstrumentationSiteInvariantList(invariants={
 			@InstrumentationSiteInvariant(
 					isCallSite=true,
-					index=0,
-					constraints={"numNodes_init == cont_$r1"},
+					index=4,
+					constraints={"cont_$r1 == numNodes_init"},
 				    newRelevantParameters={"numNodes_init"}, newInductives = {  }, newVariables = {  })}
 	)  
-void compute(int numNodes)
+void compute()
   {
 	 //con un println anda joya. Me parece que si hay contadores tengo que agregar artificialmente a los relevantparameters?
 	  //hacer experimento y preguntarle a diego!
@@ -165,15 +165,7 @@ void compute(int numNodes)
     for (Enumeration e = hNodes.elements(); e.hasMoreElements(); ) { //maxCall = 0, tempCall =  1
       Node n = (Node) e.nextElement(); //maxCall = 0, tempCall = 0 
       n.computeNewValue(); //maxCall = 0, tempCall = 0
-
-     /* System.out.println("Hola2");
-      System.out.println(hNodes.fromCount);
-      System.out.println(hNodes.fromLength);
-      System.out.println(hNodes.value);
-      System.out.println(hNodes.fromNodes.length);
-      System.out.println(hNodes.toNodes.length);
-      System.out.println(i);
-      System.out.println("_____________________________");*/
+     
     }
   }
 
