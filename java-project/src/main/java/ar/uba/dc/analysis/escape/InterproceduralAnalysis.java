@@ -235,6 +235,7 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 						queue.addAll(l);
 					}
 				} else {
+					//esto es para salir del punto fijo.
 					log.info(" |- Avoid processing " + m.toString() + ". Recursion Watchdog is set to [" + recursionWatchDog + "] and the method has been processed [" + (nb.get(m) - 1) + "] times");
 				}
 			} else {
@@ -288,7 +289,10 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 			Edge edge = it.next();
 			SootMethod m = edge.tgt();
 			if (implementation == null || implementation.equals(m.getDeclaringClass())) {
+				//Comente la parte de que se excluyan los metodos de java., pero tal vez no deberia, porque hay un monton de metodos que ahora se analizan que no voy a resolver con notaciones.
 				if (!methodInformationProvider.isExcluded(m)) {
+					//TODO: ver que pasa con iterator!
+					
 					mergedSummaries++;
 					log.debug(" | | | |- mergin with [" + m.getDeclaringClass().getName() + ": " + m.getSubSignature() + "]");
 					Box<EscapeSummary> temp = new Box<EscapeSummary>(newInitialSummary(src.getValue().getTarget()));
