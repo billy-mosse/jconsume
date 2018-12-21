@@ -1454,7 +1454,7 @@ public class SpecInvariantWriter {
 		}
 		
 		
-		private String processObjects(String constraints, String binding, List objectVars, List vars, List inductivas)
+		private String processObjects(String constraints, String binding, Set objectVars, List vars, List inductivas)
 		{
 
 			Set<DerivedVariable> derivedVariables = new HashSet<DerivedVariable>();
@@ -1491,6 +1491,7 @@ public class SpecInvariantWriter {
 							regex += "|";
 					}
 					regex+=")";
+					System.out.println(regex);
 					Pattern patternObj = Pattern.compile(regex);
 				
 					for(int i = 0;  i < constraints_array.length; i++)
@@ -1660,7 +1661,7 @@ public class SpecInvariantWriter {
 			
 			
 			String extraConstraintsString = ConstraintUtils.adaptOneConstraint(StringUtils.join(extraConstraints, " && "), null);
-			
+			extraConstraintsString = extraConstraintsString.replaceAll("\\$", "__").replaceAll("\\.", "__f__");
 
 					
 			if(constraints != null && !constraints.equals("null") && !constraints.equals(""))
@@ -1722,7 +1723,7 @@ public class SpecInvariantWriter {
 
 		
 		
-		String[] adaptInvariant(String inv, List objectVars) {
+		String[] adaptInvariant(String inv, Set objectVars) {
 			if (inv == null)
 				return new String[2];
 

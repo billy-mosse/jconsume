@@ -24,7 +24,7 @@ public class CreationSiteMapInfo implements Comparable {
 	//private String key;
 	String insSite;
 	List vars;
-	List objectVars;
+	Set objectVars;
 
 	String method;
 	String type;
@@ -99,7 +99,7 @@ public class CreationSiteMapInfo implements Comparable {
 	 * @param vars
 	 * @param method
 	 */
-	public CreationSiteMapInfo(String insSite, int order, List vars, List objectVars, String method, String type, String csType, List csArrayP) {
+	public CreationSiteMapInfo(String insSite, int order, List vars, Set objectVars, String method, String type, String csType, List csArrayP) {
 		super();
 		this.insSite = insSite;
 		this.vars = vars;
@@ -111,7 +111,7 @@ public class CreationSiteMapInfo implements Comparable {
 		this.order = order;
 	}
 	
-	public CreationSiteMapInfo(String insSite, int order, List vars, List objectVars, String method, String type, String csType, List csArrayP, List vivas) {
+	public CreationSiteMapInfo(String insSite, int order, List vars, Set objectVars, String method, String type, String csType, List csArrayP, List vivas) {
 		super();
 		this.insSite = insSite;
 		this.vars = vars;
@@ -125,7 +125,7 @@ public class CreationSiteMapInfo implements Comparable {
 		
 	}
 	
-	public CreationSiteMapInfo(String insSite, int order, List vars, List objectVars, String method, String type, String csType, List csArrayP, List vivas, Set inductivesFake, String methodName/*, ListDIParametersNoRep objectVars*/) {
+	public CreationSiteMapInfo(String insSite, int order, List vars, Set objectVars, String method, String type, String csType, List csArrayP, List vivas, Set inductivesFake, String methodName/*, ListDIParametersNoRep objectVars*/) {
 		super();
 		this.insSite = insSite;
 		this.vars = vars;
@@ -149,7 +149,7 @@ public class CreationSiteMapInfo implements Comparable {
 
 	public CreationSiteMapInfo() {
 		this.vars = new ArrayList<String>();
-		this.objectVars = new ArrayList<String>();
+		this.objectVars = new HashSet<String>();
 		this.csArrayParams = new ArrayList<String>();
 		this.vivas = new ArrayList<String>();
 		this.inductivesFake = new HashSet<String>();
@@ -202,7 +202,9 @@ public class CreationSiteMapInfo implements Comparable {
 //		}
 
 		List vars = parseList(sVars);
-		List objectVars = parseList(objectSVars);
+		Set objectVars = parseSet(objectSVars);
+		
+		
 		List arrayParams = parseList(sArrayParams);
 
 		//esto quiere decir que en el metodo method hay una llamada a InstrumentedMethod con id insSite de tipo csType (CALL/CREATE)
@@ -223,6 +225,24 @@ public class CreationSiteMapInfo implements Comparable {
 		}
 		return v;
 	}
+	
+
+	private static Set parseSet(String line)
+	{
+		Set v = new HashSet();
+		line = line.substring(1,line.length()-1);
+	
+		String[] ls = line.split(",");
+		for(int i=0;i<ls.length;i++)
+		{
+			if(ls[i].trim().length()>0)
+			{
+				v.add(ls[i].trim());
+			}
+		}
+		return v;
+	}
+	
 	/**
 	 * @return Returns the method.
 	 */
@@ -292,15 +312,15 @@ public class CreationSiteMapInfo implements Comparable {
 		return (this.insSite+this.type).compareTo(cs.insSite+cs.type);
 	}
 
-	public List getObjectVars() {
+	public Set getObjectVars() {
 		return objectVars;
 	}
 
-	public void setObjectVars(List objectVars) {
+	public void setObjectVars(Set objectVars) {
 		if (objectVars != null)
 			this.objectVars = objectVars;
 		else
-			this.objectVars = new ArrayList();
+			this.objectVars = new HashSet();
 	}
 
 }

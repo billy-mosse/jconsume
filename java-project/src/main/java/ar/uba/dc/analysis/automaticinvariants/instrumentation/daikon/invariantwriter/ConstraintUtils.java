@@ -2,13 +2,15 @@ package ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.invariantw
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ConstraintUtils {
 
-	public static String adaptOneConstraint(String s, List objectVars)
+	public static String adaptOneConstraint(String s, Set objectVars)
 	{
 		//TODO revisar que no haya invariantes con ")" que no provengan de size!
 		//Tal vez si si la relacion es lineal pero con cuentas con parentesis??
@@ -77,7 +79,7 @@ public class ConstraintUtils {
 						 ss.append("__f__");
 						 
 						 if (objectVars == null)
-							 objectVars = new ArrayList();
+							 objectVars = new HashSet();
 						 
 						 if(!objectVars.contains(object))
 							 objectVars.add(object.toString());

@@ -56,7 +56,6 @@ public class JsonInstrumentationSiteInvariantsWriter
 
 public void write(AnnotationSiteInvariantForJson siteInvariant, BufferedWriter bwr, Gson gson) {
 		
-		log.debug("estoy escribiendo el siteInvariant " + siteInvariant.toString());
 		
 		//TODO usar FACTORY para esto
 		

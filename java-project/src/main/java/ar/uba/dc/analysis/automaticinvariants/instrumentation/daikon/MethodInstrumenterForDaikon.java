@@ -164,6 +164,8 @@ class MethodInstrumenterForDaikon extends LoopFinder {
 			addParameter(body, info2, (InductivesFilter) analisisVivas, lives, parameter,parameter, false);
 		}
 		
+		
+		
 		return info2;
 	}
 	
@@ -205,8 +207,10 @@ class MethodInstrumenterForDaikon extends LoopFinder {
 		if(lives!=null)
 		{
 			List liveVars= analisisVivas.liveVars(lives);
+			
 			// OJO!!!!!!!!!
-			if(liveVars.contains(parameterFilter)) // || Utils.isNum(parameterFilter))
+			// Es una buena idea tomar como relevant parameters a todos los parametros numericos?
+			if(liveVars.contains(parameterFilter) || Utils.isNum(parameterFilter))
 			{
 				DIParameter dip=null;
 				List filter = analisisVivas.getDerivedVars(parameterFilter,lives);
@@ -383,16 +387,9 @@ class MethodInstrumenterForDaikon extends LoopFinder {
 			// units.add(Jimple.v().newNopStmt());
 			units.add(Jimple.v().newReturnVoidStmt());
 			
-			if(methodName.equals("mst_MST_CC_49c37"))
-			{
-				System.out.println("Hola!");
-			}
 			
 			System.gc();
 			// NewsInvariantInstrumentator.getIntrumentedMethodClass().addMethod(method);
-			
-			System.out.println("\n");
-			System.out.println("METODO METODO: " + method.getName().toString());
 			
 			InstrumentedMethodClass.addMethod(method);
 			
@@ -975,8 +972,7 @@ class MethodInstrumenterForDaikon extends LoopFinder {
 				ListDIParameters lParameters = extractMethodParams(body);
 				ListDIParameters lParametersInit = extractParametersInits(body, lParameters);
 				
-//				List invStmts = instrumentarCSoCallSite("CS", s,
-//						analisisVivas, lParameters, lParametersInit, extraParams, body);
+
 				List invStmts = instrumentarCSoCallSite("CS", ordenCreationSite, s,
 						analisisVivas, analisisInductivas, lParameters, lParametersInit, extraParams, body, ins, InstrumentedMethodClass, methodName, inits);
 				ordenCreationSite++;
@@ -1538,6 +1534,21 @@ class MethodInstrumenterForDaikon extends LoopFinder {
 		
 		
 		
+		/*Set<String> annotatedRelevantParameters = new HashSet<String>();
+		
+		List<AnnotationSiteInvariantForJson> siteInvariants = this.getInstrumentationSiteInvariants();
+		for (AnnotationSiteInvariantForJson siteInvariant : siteInvariants) {
+			if(siteInvariant.getMethodName().equals(methodName))
+			{
+				for(String annotatedRelevantParameter : siteInvariant.getNewRelevantParameters())
+				{
+					annotatedRelevantParameters.add(annotatedRelevantParameter);
+				}
+			}
+			
+		}*/
+		
+		
 		SootClass sc = body.getMethod().getDeclaringClass();
 		String  sLn = Utils.getLineNumber(s);
 		
@@ -1981,7 +1992,7 @@ class MethodInstrumenterForDaikon extends LoopFinder {
 			
 			
 			
-			newsMap.put(insSite, new CreationSiteMapInfo(insSite, orden, allParamsString, allObjectsParamsString, nameMethodDec,tipo,creationSiteType,newArrayParamsListString, vivas, inductivesFake, methodName));
+			newsMap.put(insSite, new CreationSiteMapInfo(insSite, orden, allParamsString, new HashSet(allObjectsParamsString), nameMethodDec,tipo,creationSiteType,newArrayParamsListString, vivas, inductivesFake, methodName));
 			
 			
 			//aca es donde tengo un bug y no estoy agregando list.size

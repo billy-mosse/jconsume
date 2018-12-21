@@ -8,10 +8,12 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -52,6 +54,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 
 /**
@@ -536,11 +539,19 @@ public class ProgramInstrumentatorForDaikonMain {
 	            GsonBuilder builder = new GsonBuilder().setPrettyPrinting();
 				Gson gson = builder.create();
 	            
+				
+				Type listType = new TypeToken<List<AnnotationSiteInvariantForJson>>() {}.getType();
+				 String json = gson.toJson(siteInvariants, listType);
+				
 	            JsonInstrumentationSiteInvariantsWriter jsonInstrumentationSiteInvariantsWriter = new JsonInstrumentationSiteInvariantsWriter(); 
-	    		for (AnnotationSiteInvariantForJson siteInvariant : siteInvariants) {
+	            
+	            String s =  StringEscapeUtils.unescapeJava(json); 
+	            bwr.write(s);
+	            bwr.flush();
+	    		/*for (AnnotationSiteInvariantForJson siteInvariant : siteInvariants) {
 	    			//TODO: agregar los parametros o un mejor nombre para debug
 	    			jsonInstrumentationSiteInvariantsWriter.write(siteInvariant, bwr, gson);			    			
-	    		}
+	    		}*/
 	            bwr.close();
 	            
 			} catch (IOException e) {

@@ -27,6 +27,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
 
 import ar.uba.dc.analysis.common.Invocation;
 import ar.uba.dc.analysis.common.Line;
@@ -46,7 +48,7 @@ import decorations.Binding;
 import decorations.BindingPair;
 
 
-public class JsonInstrumentationSiteInvariantsReader implements SummaryReader<AnnotationSiteInvariantForJson> {
+public class JsonInstrumentationSiteInvariantsReader {
 	private static Log log = LogFactory.getLog(JsonInstrumentationSiteInvariantsReader.class);
 
 protected Gson gson;
@@ -55,8 +57,10 @@ protected Gson gson;
 	
 	public JsonInstrumentationSiteInvariantsReader() {
 		GsonBuilder builder = new GsonBuilder().setPrettyPrinting();
+		builder.setLenient();
 
 		this.gson = builder.create();
+		
 
 	}
 	
@@ -68,13 +72,12 @@ protected Gson gson;
 		this.locationStrategy = locationStrategy;
 	}
 
-	@Override
-	public AnnotationSiteInvariantForJson read(Reader reader) {
-		
+	public List<AnnotationSiteInvariantForJson> read(JsonReader reader) {	
 
+		
 		try {
-			AnnotationSiteInvariantForJson m = this.gson.fromJson(reader, AnnotationSiteInvariantForJson.class); 
-			return m;
+		    Type type = new TypeToken<List<AnnotationSiteInvariantForJson>>(){}.getType();
+			return gson.fromJson(reader, type);
 		} catch (Exception e) {
 			log.error("Error. " + e.getMessage(), e);
 			return null;
