@@ -11,4 +11,4 @@ JAVA4BIN=$JAVA4HOME/bin
 
 
 #Hack completamente asqueroso
-$JAVA4BIN/java -cp $CLASSPATH -Xmx400m ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.invariantwriter.SpecInvariantWriter $FULLNAMETEST/$FULLNAMETEST $PROJECT_FOLDER/invariants/spec/fullreferences
+$JAVA4BIN/java -cp $CLASSPATH_FOR_SPEC -Xmx400m ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.invariantwriter.SpecInvariantWriter $FULLNAMETEST/$FULLNAMETEST $PROJECT_FOLDER/invariants/spec/fullreferences

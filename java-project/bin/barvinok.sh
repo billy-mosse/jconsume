@@ -6,5 +6,5 @@ echo -e \\nResult : >> /tmp/log
 
 #"$ISCC"  < $1 | tee -a /tmp/log
 #$ISCC  < $1 | tee -a /tmp/log
-/usr/local/bin/iscc  < $1 | tee -a /tmp/log
+iscc  < $1 | tee -a /tmp/log
 
