@@ -5,9 +5,10 @@ jdk: oraclejdk8
 
 script: 
   - echo "Installing dependencies..."
-  - sh dependencies/install.sh
+  - cd dependencies
+  - sh install.sh
   - echo "Done."
-  - cd java-project 
+  - cd ../java-project 
   - mvn clean verify
 
 cache:
