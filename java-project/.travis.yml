@@ -1,1 +1,6 @@
 language: java
+
+# safelist
+branches:
+  only:
+  - master
