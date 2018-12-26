@@ -4,6 +4,9 @@ os: linux
 jdk: oraclejdk8
 
 script: 
+  - echo "Installing dependencies..."
+  - sh dependencies/install.sh
+  - echo "Done."
   - cd java-project 
   - mvn clean verify
 
