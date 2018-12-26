@@ -5,7 +5,7 @@ jdk: oraclejdk8
 
 script: 
   - cd java-project 
-  - mvn clean install
+  - mvn clean verify
 
 cache:
  directories:
