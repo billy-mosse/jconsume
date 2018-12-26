@@ -2,8 +2,11 @@ language: java
 sudo: false
 os: linux
 jdk: oraclejdk8
-install: 
-script: ./build.sh
+
+script: 
+  - cd project 
+  - mvn clean install
+
 cache:
  directories:
   - $HOME/.m2
