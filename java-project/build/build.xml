@@ -1,0 +1,562 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. --><project basedir="." default="build" name="jconsume2">
+    <property environment="env"/>
+    <property name="M2_REPO" value="../../../../.m2/repository"/>
+    <property name="ECLIPSE_HOME" value="../../../../../../usr/lib/eclipse"/>
+    <property name="junit.output.dir" value="junit"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.7"/>
+    <property name="source" value="1.7"/>
+    <path id="jconsume2.classpath">
+        <pathelement location="target/test-classes"/>
+        <pathelement location="target/classes"/>
+        <pathelement location="../../../../Downloads/soot-trunk.jar"/>
+        <pathelement location="${M2_REPO}/org/jdom/jdom/1.1/jdom-1.1.jar"/>
+        <pathelement location="${M2_REPO}/commons-io/commons-io/1.4/commons-io-1.4.jar"/>
+        <pathelement location="${M2_REPO}/ca/mcgill/sable/soot/3.0.0-SNAPSHOT/soot-3.0.0-SNAPSHOT.jar"/>
+        <pathelement location="${M2_REPO}/org/smali/dexlib2/2.2.2/dexlib2-2.2.2.jar"/>
+        <pathelement location="${M2_REPO}/org/smali/util/2.2.2/util-2.2.2.jar"/>
+        <pathelement location="${M2_REPO}/com/google/code/findbugs/jsr305/1.3.9/jsr305-1.3.9.jar"/>
+        <pathelement location="${M2_REPO}/com/google/guava/guava/19.0/guava-19.0.jar"/>
+        <pathelement location="${M2_REPO}/com/beust/jcommander/1.64/jcommander-1.64.jar"/>
+        <pathelement location="${M2_REPO}/org/ow2/asm/asm-debug-all/5.2/asm-debug-all-5.2.jar"/>
+        <pathelement location="${M2_REPO}/xmlpull/xmlpull/1.1.3.4d_b4_min/xmlpull-1.1.3.4d_b4_min.jar"/>
+        <pathelement location="${M2_REPO}/org/jboss/jboss-common-core/2.5.0.Final/jboss-common-core-2.5.0.Final.jar"/>
+        <pathelement location="${M2_REPO}/org/jboss/logging/jboss-logging-spi/2.1.2.GA/jboss-logging-spi-2.1.2.GA.jar"/>
+        <pathelement location="${M2_REPO}/pxb/android/axml/2.0.0-SNAPSHOT/axml-2.0.0-SNAPSHOT.jar"/>
+        <pathelement location="${M2_REPO}/ca/mcgill/sable/polyglot/1.3.5/polyglot-1.3.5.jar"/>
+        <pathelement location="${M2_REPO}/heros/heros/0.0.1-SNAPSHOT/heros-0.0.1-SNAPSHOT.jar"/>
+        <pathelement location="${M2_REPO}/org/functionaljava/functionaljava/4.2/functionaljava-4.2.jar"/>
+        <pathelement location="${M2_REPO}/org/slf4j/slf4j-api/1.7.5/slf4j-api-1.7.5.jar"/>
+        <pathelement location="${M2_REPO}/ca/mcgill/sable/jasmin/2.5.0-SNAPSHOT/jasmin-2.5.0-SNAPSHOT.jar"/>
+        <pathelement location="${M2_REPO}/ca/mcgill/sable/java_cup/0.9.2/java_cup-0.9.2.jar"/>
+        <pathelement location="${M2_REPO}/org/slf4j/slf4j-simple/1.7.5/slf4j-simple-1.7.5.jar"/>
+        <pathelement location="${M2_REPO}/uk/co/datumedge/hamcrest-json/0.2/hamcrest-json-0.2.jar"/>
+        <pathelement location="${M2_REPO}/org/skyscreamer/jsonassert/1.1.1/jsonassert-1.1.1.jar"/>
+        <pathelement location="${M2_REPO}/org/json/json/20090211/json-20090211.jar"/>
+        <pathelement location="${M2_REPO}/commons-collections/commons-collections/3.2.1/commons-collections-3.2.1.jar"/>
+        <pathelement location="${M2_REPO}/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"/>
+        <pathelement location="${M2_REPO}/com/googlecode/json-simple/json-simple/1.1.1/json-simple-1.1.1.jar"/>
+        <pathelement location="${M2_REPO}/junit/junit/4.8.1/junit-4.8.1.jar"/>
+        <pathelement location="${M2_REPO}/asm/asm/3.3.1/asm-3.3.1.jar"/>
+        <pathelement location="${M2_REPO}/com/verimag/madeja/1.0/madeja-1.0.jar"/>
+        <pathelement location="${M2_REPO}/com/thoughtworks/xstream/xstream/1.3.1/xstream-1.3.1.jar"/>
+        <pathelement location="${M2_REPO}/xpp3/xpp3_min/1.1.4c/xpp3_min-1.1.4c.jar"/>
+        <pathelement location="${M2_REPO}/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar"/>
+        <pathelement location="${M2_REPO}/log4j/log4j/1.2.12/log4j-1.2.12.jar"/>
+        <pathelement location="${M2_REPO}/org/hamcrest/hamcrest-all/1.1/hamcrest-all-1.1.jar"/>
+        <pathelement location="${M2_REPO}/commons-lang/commons-lang/2.5/commons-lang-2.5.jar"/>
+        <pathelement location="${M2_REPO}/commons-configuration/commons-configuration/1.6/commons-configuration-1.6.jar"/>
+        <pathelement location="${M2_REPO}/commons-digester/commons-digester/1.8/commons-digester-1.8.jar"/>
+        <pathelement location="${M2_REPO}/commons-beanutils/commons-beanutils/1.8.0/commons-beanutils-1.8.0.jar"/>
+        <pathelement location="${M2_REPO}/commons-beanutils/commons-beanutils-core/1.8.0/commons-beanutils-core-1.8.0.jar"/>
+        <pathelement location="${M2_REPO}/org/jmock/jmock/2.5.1/jmock-2.5.1.jar"/>
+        <pathelement location="${M2_REPO}/org/hamcrest/hamcrest-library/1.1/hamcrest-library-1.1.jar"/>
+        <pathelement location="${M2_REPO}/org/jmock/jmock-junit4/2.5.1/jmock-junit4-2.5.1.jar"/>
+        <pathelement location="${M2_REPO}/junit/junit-dep/4.4/junit-dep-4.4.jar"/>
+        <pathelement location="${M2_REPO}/org/jmock/jmock-legacy/2.5.1/jmock-legacy-2.5.1.jar"/>
+        <pathelement location="${M2_REPO}/org/objenesis/objenesis/1.0/objenesis-1.0.jar"/>
+        <pathelement location="${M2_REPO}/cglib/cglib-nodep/2.1_3/cglib-nodep-2.1_3.jar"/>
+        <pathelement location="${M2_REPO}/jep/jep/2.4.1/jep-2.4.1.jar"/>
+        <pathelement location="${M2_REPO}/org/apache/velocity/velocity/1.5/velocity-1.5.jar"/>
+        <pathelement location="${M2_REPO}/oro/oro/2.0.8/oro-2.0.8.jar"/>
+        <pathelement location="${M2_REPO}/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar"/>
+        <pathelement location="${M2_REPO}/xml-apis/xml-apis/1.0.b2/xml-apis-1.0.b2.jar"/>
+        <pathelement location="${M2_REPO}/commons-cli/commons-cli/1.2/commons-cli-1.2.jar"/>
+        <pathelement location="${M2_REPO}/com/google/code/gson/gson/2.6.2/gson-2.6.2.jar"/>
+        <pathelement location="${M2_REPO}/org/antlr/antlr4/4.5.3/antlr4-4.5.3.jar"/>
+        <pathelement location="${M2_REPO}/args4j/args4j-tools/2.33/args4j-tools-2.33.jar"/>
+        <pathelement location="${M2_REPO}/args4j/args4j/2.33/args4j-2.33.jar"/>
+        <pathelement location="../../../../../../usr/lib/jvm/java-8-oracle/lib/tools.jar"/>
+        <pathelement location="${M2_REPO}/org/antlr/antlr4-runtime/4.6/antlr4-runtime-4.6.jar"/>
+        <pathelement location="../../../../.m2/repository/org/jsoup/jsoup/1.11.3/jsoup-1.11.3.jar"/>
+    </path>
+    <path id="Maven Dependencies.libraryclasspath">
+        <pathelement location="../../../../.m2/repository/org/jsoup/jsoup/1.11.3/jsoup-1.11.3.jar"/>
+        <pathelement location="../../../../.m2/repository/org/jdom/jdom/1.1/jdom-1.1.jar"/>
+        <pathelement location="../../../../.m2/repository/ca/mcgill/sable/soot/3.0.0-SNAPSHOT/soot-3.0.0-SNAPSHOT.jar"/>
+        <pathelement location="../../../../.m2/repository/org/smali/dexlib2/2.2.2/dexlib2-2.2.2.jar"/>
+        <pathelement location="../../../../.m2/repository/org/smali/util/2.2.2/util-2.2.2.jar"/>
+        <pathelement location="../../../../.m2/repository/com/beust/jcommander/1.64/jcommander-1.64.jar"/>
+        <pathelement location="../../../../.m2/repository/com/google/code/findbugs/jsr305/1.3.9/jsr305-1.3.9.jar"/>
+        <pathelement location="../../../../.m2/repository/org/ow2/asm/asm-debug-all/5.2/asm-debug-all-5.2.jar"/>
+        <pathelement location="../../../../.m2/repository/xmlpull/xmlpull/1.1.3.4d_b4_min/xmlpull-1.1.3.4d_b4_min.jar"/>
+        <pathelement location="../../../../.m2/repository/org/jboss/jboss-common-core/2.5.0.Final/jboss-common-core-2.5.0.Final.jar"/>
+        <pathelement location="../../../../.m2/repository/org/jboss/logging/jboss-logging-spi/2.1.2.GA/jboss-logging-spi-2.1.2.GA.jar"/>
+        <pathelement location="../../../../.m2/repository/pxb/android/axml/2.0.0-SNAPSHOT/axml-2.0.0-SNAPSHOT.jar"/>
+        <pathelement location="../../../../.m2/repository/org/slf4j/slf4j-api/1.7.5/slf4j-api-1.7.5.jar"/>
+        <pathelement location="../../../../.m2/repository/org/slf4j/slf4j-simple/1.7.5/slf4j-simple-1.7.5.jar"/>
+        <pathelement location="../../../../.m2/repository/uk/co/datumedge/hamcrest-json/0.2/hamcrest-json-0.2.jar"/>
+        <pathelement location="../../../../.m2/repository/org/skyscreamer/jsonassert/1.1.1/jsonassert-1.1.1.jar"/>
+        <pathelement location="../../../../.m2/repository/org/json/json/20090211/json-20090211.jar"/>
+        <pathelement location="../../../../.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"/>
+        <pathelement location="../../../../.m2/repository/com/googlecode/json-simple/json-simple/1.1.1/json-simple-1.1.1.jar"/>
+        <pathelement location="../../../../.m2/repository/ca/mcgill/sable/polyglot/1.3.5/polyglot-1.3.5.jar"/>
+        <pathelement location="../../../../.m2/repository/ca/mcgill/sable/jasmin/2.5.0-SNAPSHOT/jasmin-2.5.0-SNAPSHOT.jar"/>
+        <pathelement location="../../../../.m2/repository/ca/mcgill/sable/java_cup/0.9.2/java_cup-0.9.2.jar"/>
+        <pathelement location="../../../../.m2/repository/heros/heros/0.0.1-SNAPSHOT/heros-0.0.1-SNAPSHOT.jar"/>
+        <pathelement location="../../../../.m2/repository/org/functionaljava/functionaljava/4.2/functionaljava-4.2.jar"/>
+        <pathelement location="../../../../.m2/repository/asm/asm/3.3.1/asm-3.3.1.jar"/>
+        <pathelement location="../../../../.m2/repository/com/verimag/madeja/1.0/madeja-1.0.jar"/>
+        <pathelement location="../../../../.m2/repository/com/thoughtworks/xstream/xstream/1.3.1/xstream-1.3.1.jar"/>
+        <pathelement location="../../../../.m2/repository/xpp3/xpp3_min/1.1.4c/xpp3_min-1.1.4c.jar"/>
+        <pathelement location="../../../../.m2/repository/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar"/>
+        <pathelement location="../../../../.m2/repository/junit/junit/4.8.1/junit-4.8.1.jar"/>
+        <pathelement location="../../../../.m2/repository/log4j/log4j/1.2.12/log4j-1.2.12.jar"/>
+        <pathelement location="../../../../.m2/repository/org/hamcrest/hamcrest-all/1.1/hamcrest-all-1.1.jar"/>
+        <pathelement location="../../../../.m2/repository/commons-lang/commons-lang/2.5/commons-lang-2.5.jar"/>
+        <pathelement location="../../../../.m2/repository/commons-collections/commons-collections/3.2.1/commons-collections-3.2.1.jar"/>
+        <pathelement location="../../../../.m2/repository/commons-configuration/commons-configuration/1.6/commons-configuration-1.6.jar"/>
+        <pathelement location="../../../../.m2/repository/commons-digester/commons-digester/1.8/commons-digester-1.8.jar"/>
+        <pathelement location="../../../../.m2/repository/commons-beanutils/commons-beanutils-core/1.8.0/commons-beanutils-core-1.8.0.jar"/>
+        <pathelement location="../../../../.m2/repository/org/jmock/jmock/2.5.1/jmock-2.5.1.jar"/>
+        <pathelement location="../../../../.m2/repository/org/hamcrest/hamcrest-library/1.1/hamcrest-library-1.1.jar"/>
+        <pathelement location="../../../../.m2/repository/org/jmock/jmock-junit4/2.5.1/jmock-junit4-2.5.1.jar"/>
+        <pathelement location="../../../../.m2/repository/junit/junit-dep/4.4/junit-dep-4.4.jar"/>
+        <pathelement location="../../../../.m2/repository/org/jmock/jmock-legacy/2.5.1/jmock-legacy-2.5.1.jar"/>
+        <pathelement location="../../../../.m2/repository/org/objenesis/objenesis/1.0/objenesis-1.0.jar"/>
+        <pathelement location="../../../../.m2/repository/cglib/cglib-nodep/2.1_3/cglib-nodep-2.1_3.jar"/>
+        <pathelement location="../../../../.m2/repository/jep/jep/2.4.1/jep-2.4.1.jar"/>
+        <pathelement location="../../../../.m2/repository/commons-io/commons-io/1.4/commons-io-1.4.jar"/>
+        <pathelement location="../../../../.m2/repository/org/apache/velocity/velocity/1.5/velocity-1.5.jar"/>
+        <pathelement location="../../../../.m2/repository/oro/oro/2.0.8/oro-2.0.8.jar"/>
+        <pathelement location="../../../../.m2/repository/commons-beanutils/commons-beanutils/1.8.0/commons-beanutils-1.8.0.jar"/>
+        <pathelement location="../../../../.m2/repository/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar"/>
+        <pathelement location="../../../../.m2/repository/xml-apis/xml-apis/1.0.b2/xml-apis-1.0.b2.jar"/>
+        <pathelement location="../../../../.m2/repository/commons-cli/commons-cli/1.2/commons-cli-1.2.jar"/>
+        <pathelement location="../../../../.m2/repository/com/google/code/gson/gson/2.6.2/gson-2.6.2.jar"/>
+        <pathelement location="../../../../.m2/repository/com/google/guava/guava/19.0/guava-19.0.jar"/>
+        <pathelement location="../../../../.m2/repository/org/antlr/antlr4/4.5.3/antlr4-4.5.3.jar"/>
+        <pathelement location="../../../../.m2/repository/args4j/args4j-tools/2.33/args4j-tools-2.33.jar"/>
+        <pathelement location="../../../../.m2/repository/args4j/args4j/2.33/args4j-2.33.jar"/>
+        <pathelement location="../../../../../../usr/lib/jvm/java-8-oracle/lib/tools.jar"/>
+        <pathelement location="../../../../.m2/repository/org/antlr/antlr4-runtime/4.6/antlr4-runtime-4.6.jar"/>
+    </path>
+    <path id="run.SpecInvariantWriter.classpath">
+        <path refid="jconsume2.classpath"/>
+        <path refid="Maven Dependencies.libraryclasspath"/>
+    </path>
+    <path id="run.ProgramInstrumentatorForDaikonMain AnnotationExample.classpath">
+        <path refid="jconsume2.classpath"/>
+        <path refid="Maven Dependencies.libraryclasspath"/>
+    </path>
+    <path id="run.jconsume2.classpath">
+        <path refid="jconsume2.classpath"/>
+        <path refid="Maven Dependencies.libraryclasspath"/>
+    </path>
+    <path id="run.BarvinokCalculatorWithLazyAsMaxStrategyTest.classpath">
+        <path refid="jconsume2.classpath"/>
+        <path refid="Maven Dependencies.libraryclasspath"/>
+    </path>
+    <path id="run.AnnotationExample ir memory.classpath">
+        <path refid="jconsume2.classpath"/>
+        <path refid="Maven Dependencies.libraryclasspath"/>
+    </path>
+    <path id="run.ExamplesTest.classpath">
+        <path refid="jconsume2.classpath"/>
+        <path refid="Maven Dependencies.libraryclasspath"/>
+    </path>
+    <path id="run.ListAddExample.classpath">
+        <path refid="jconsume2.classpath"/>
+        <path refid="Maven Dependencies.libraryclasspath"/>
+    </path>
+    <path id="run.AnnotationExample.classpath">
+        <path refid="jconsume2.classpath"/>
+        <path refid="Maven Dependencies.libraryclasspath"/>
+    </path>
+    <path id="run.ProgramInstrumentatorForDaikonMain ParametricArray.classpath">
+        <path refid="jconsume2.classpath"/>
+        <path refid="Maven Dependencies.libraryclasspath"/>
+    </path>
+    <path id="run.MST ir memory.classpath">
+        <path refid="jconsume2.classpath"/>
+        <path refid="Maven Dependencies.libraryclasspath"/>
+    </path>
+    <path id="run.PaperEscapeTest.classpath">
+        <path refid="jconsume2.classpath"/>
+        <path refid="Maven Dependencies.libraryclasspath"/>
+    </path>
+    <path id="run.CSReader.classpath">
+        <path refid="jconsume2.classpath"/>
+        <path refid="Maven Dependencies.libraryclasspath"/>
+    </path>
+    <path id="run.New_configuration.classpath">
+        <path refid="jconsume2.classpath"/>
+        <path refid="Maven Dependencies.libraryclasspath"/>
+    </path>
+    <path id="run.Example escape annotation.classpath">
+        <path refid="jconsume2.classpath"/>
+        <path refid="Maven Dependencies.libraryclasspath"/>
+    </path>
+    <path id="run.ExamplesTest (1).classpath">
+        <path refid="jconsume2.classpath"/>
+        <path refid="Maven Dependencies.libraryclasspath"/>
+    </path>
+    <path id="run.SpecInvariantWriter AnnotationExample.classpath">
+        <path refid="jconsume2.classpath"/>
+        <path refid="Maven Dependencies.libraryclasspath"/>
+    </path>
+    <path id="run.Ins2 SpecInvariantWriter.classpath">
+        <path refid="jconsume2.classpath"/>
+        <path refid="Maven Dependencies.libraryclasspath"/>
+    </path>
+    <path id="run.FileLocationStrategyTest.classpath">
+        <path refid="jconsume2.classpath"/>
+        <path refid="Maven Dependencies.libraryclasspath"/>
+    </path>
+    <path id="run.Example01.classpath">
+        <path refid="jconsume2.classpath"/>
+        <path refid="Maven Dependencies.libraryclasspath"/>
+    </path>
+    <path id="run.SpecInvariantWriter MST.classpath">
+        <path refid="jconsume2.classpath"/>
+        <path refid="Maven Dependencies.libraryclasspath"/>
+    </path>
+    <path id="run.Em3d ir memory.classpath">
+        <path refid="jconsume2.classpath"/>
+        <path refid="Maven Dependencies.libraryclasspath"/>
+    </path>
+    <path id="run.SpecInvariantWriter Em3d.classpath">
+        <path refid="jconsume2.classpath"/>
+        <path refid="Maven Dependencies.libraryclasspath"/>
+    </path>
+    <path id="run.SpecInvariantWriter ParametricArray.classpath">
+        <path refid="jconsume2.classpath"/>
+        <path refid="Maven Dependencies.libraryclasspath"/>
+    </path>
+    <path id="run.InvariantReader.classpath">
+        <path refid="jconsume2.classpath"/>
+        <path refid="Maven Dependencies.libraryclasspath"/>
+    </path>
+    <path id="run.ProgramInstrumentatorForDaikonMain Em3d.classpath">
+        <path refid="jconsume2.classpath"/>
+        <path refid="Maven Dependencies.libraryclasspath"/>
+    </path>
+    <target name="init">
+        <mkdir dir="target/test-classes"/>
+        <mkdir dir="target/classes"/>
+        <copy includeemptydirs="false" todir="target/test-classes">
+            <fileset dir="src/test/resources">
+                <exclude name="**/*.java"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="target/classes">
+            <fileset dir="src/main/examples">
+                <include name="**/*.java"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="target/classes">
+            <fileset dir="src/main/java">
+                <include name="**/*.java"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="target/test-classes">
+            <fileset dir="src/test/java">
+                <include name="**/*.java"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="target/classes">
+            <fileset dir="src/jpfHelper/src">
+                <include name="**/*.java"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="target/classes">
+            <fileset dir="src/main/generated-sources">
+                <include name="**/*.java"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="target/classes">
+            <fileset dir=".">
+                <include name="config.properties"/>
+                <include name="config.madeja.properties"/>
+                <exclude name="**/*.java"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="target/classes">
+            <fileset dir="src/main/resources">
+                <include name="**"/>
+                <exclude name="**/*.java"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="target/classes">
+            <fileset dir="bin">
+                <include name="barvinok.sh"/>
+                <exclude name="**/*.java"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="target/test-classes"/>
+        <delete dir="target/classes"/>
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="target/test-classes" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src/test/resources"/>
+            <src path="src/test/java"/>
+            <include name="**/*.java"/>
+            <exclude name="**/*.java"/>
+            <classpath refid="jconsume2.classpath"/>
+        </javac>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="target/classes" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src/main/examples"/>
+            <src path="src/main/java"/>
+            <src path="src/jpfHelper/src"/>
+            <src path="src/main/generated-sources"/>
+            <src path="."/>
+            <src path="src/main/resources"/>
+            <src path="bin"/>
+            <include name="**/*.java"/>
+            <include name="**/*.java"/>
+            <include name="**/*.java"/>
+            <include name="**/*.java"/>
+            <include name="config.properties"/>
+            <include name="config.madeja.properties"/>
+            <include name="**"/>
+            <include name="barvinok.sh"/>
+            <exclude name="**/*.java"/>
+            <exclude name="**/*.java"/>
+            <exclude name="**/*.java"/>
+            <classpath refid="jconsume2.classpath"/>
+        </javac>
+    </target>
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+        <copy todir="${ant.library.dir}">
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </copy>
+        <unzip dest="${ant.library.dir}">
+            <patternset includes="jdtCompilerAdapter.jar"/>
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </unzip>
+    </target>
+    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+        <antcall target="build"/>
+    </target>
+    <target name="SpecInvariantWriter">
+        <java classname="ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.invariantwriter.SpecInvariantWriter" failonerror="true" fork="yes">
+            <arg line="/home/billy/Projects/git/jconsume/java-project/out/ar.uba.dc.annotations.AnnotationExample/ar.uba.dc.annotations.AnnotationExample /home/billy/Projects/git/jconsume/java-project/invariants/spec/fullreferences"/>
+            <classpath refid="run.SpecInvariantWriter.classpath"/>
+        </java>
+    </target>
+    <target name="ProgramInstrumentatorForDaikonMain AnnotationExample">
+        <java classname="ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.ProgramInstrumentatorForDaikonMain" failonerror="true" fork="yes">
+            <arg line="ar.uba.dc.annotations.AnnotationExample -soot-classpath /usr/lib/jvm/java-8-oracle/jre/lib/rt.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jce.jar:/home/billy/Projects/git/jconsume/java-project/target/classes:/home/billy/Projects/git/jconsume/java-project/src/main/java"/>
+            <classpath refid="run.ProgramInstrumentatorForDaikonMain AnnotationExample.classpath"/>
+        </java>
+    </target>
+    <target name="jconsume2">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="ar.uba.dc.analysis.IntraproceduralSuit" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.analysis.common.method.information.RuleBasedMethodInformationProviderTest" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.analysis.escape.IntraproceduralTest" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.analysis.escape.PaperEscapeTest" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.analysis.escape.summary.io.reader.XMLReaderTest" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.analysis.memory.IntraproceduralTest" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.analysis.memory.summary.io.reader.XMLReaderTest" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.barvinok.BarvinokCalculatorBindingProblemsTest" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.barvinok.BarvinokCalculatorSuit" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.barvinok.BarvinokCalculatorWithAddAsMaxStrategyTest" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.barvinok.BarvinokCalculatorWithLazyAsMaxStrategyTest" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.barvinok.BarvinokExpectationsTest" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.barvinok.BarvinokUtilsTest" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.barvinok.expression.operation.impl.BindingValidatorSuit" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.barvinok.expression.operation.impl.DefaultDomainUnifierTest" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.barvinok.expression.operation.impl.DefaultKeyGeneratorTest" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.barvinok.expression.operation.impl.JEPExpressionMapperSuit" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.barvinok.expression.operation.impl.ToStringParserVisitorTest" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.barvinok.expression.operation.impl.binding.ExceptionalBindingValidatorTest" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.barvinok.expression.operation.impl.binding.OptimisticBindingValidatorTest" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.barvinok.expression.operation.impl.binding.PesimisticBindingValidatorTest" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.barvinok.expression.operation.impl.mapper.JEPExpressionMapperForInvariantsTest" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.barvinok.expression.operation.impl.mapper.JEPExpressionMapperForPiecewiseQuasipolynomialTest" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.barvinok.syntax.IsccSyntaxTest" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.barvinok.syntax.OmegaSyntaxTest" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.config.BeanFactorySuit" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.config.factory.ContainerBeanFactoryTest" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.config.factory.ReferenceBeanFactoryTest" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.config.factory.SingletonBeanFactoryTest" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.invariant.simple.reader.XStreamSimpleReaderTest" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.invariant.spec.SpecSuit" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.invariant.spec.compiler.FastSpecCompilerTest" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.invariant.spec.compiler.FullReferencesSpecCompilerTest" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.invariant.spec.compiler.SimpleReferenceSpecCompilerTest" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.invariant.spec.compiler.constraints.JEPConstraintsParserTest" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.invariant.spec.compiler.constraints.RegexpConstraintsParserTest" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.invariant.spec.compiler.constraints.resolver.RegexpReferenceResolverTest" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.invariant.spec.reader.XStreamSpecReaderTest" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.regression.ExamplesTest" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.soot.TestSootExpectations" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.soot.xstream.TypeConverterTest" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.tools.instrumentation.resource.tracker.runtime.HeapJVMTITest" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.util.collections.CircularStackTest" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.util.comparator.InclusionComparatorTest" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.util.location.FileLocationStrategyTest" todir="${junit.output.dir}"/>
+            <test name="ar.uba.dc.util.location.FullPackageLocationStrategyTest" todir="${junit.output.dir}"/>
+            <classpath refid="run.jconsume2.classpath"/>
+        </junit>
+    </target>
+    <target name="BarvinokCalculatorWithLazyAsMaxStrategyTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="ar.uba.dc.barvinok.BarvinokCalculatorWithLazyAsMaxStrategyTest" todir="${junit.output.dir}"/>
+            <classpath refid="run.BarvinokCalculatorWithLazyAsMaxStrategyTest.classpath"/>
+        </junit>
+    </target>
+    <target name="AnnotationExample ir memory">
+        <java classname="ar.uba.dc.analysis.common.MainRunner" failonerror="true" fork="yes">
+            <arg line="--program &quot;ar.uba.dc.annotations.AnnotationExample&quot; --ir --memory --config &quot;config.properties&quot; --main &quot;void main(java.lang.String[])&quot;"/>
+            <classpath refid="run.AnnotationExample ir memory.classpath"/>
+        </java>
+    </target>
+    <target name="ExamplesTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="ar.uba.dc.analysis.automaticinvariants.ExamplesTest" todir="${junit.output.dir}"/>
+            <classpath refid="run.ExamplesTest.classpath"/>
+        </junit>
+    </target>
+    <target name="ListAddExample">
+        <java classname="ar.uba.dc.annotations.ListAddExample" failonerror="true" fork="yes">
+            <classpath refid="run.ListAddExample.classpath"/>
+        </java>
+    </target>
+    <target name="AnnotationExample">
+        <java classname="ar.uba.dc.annotations.AnnotationExample" failonerror="true" fork="yes">
+            <classpath refid="run.AnnotationExample.classpath"/>
+        </java>
+    </target>
+    <target name="ProgramInstrumentatorForDaikonMain ParametricArray">
+        <java classname="ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.ProgramInstrumentatorForDaikonMain" failonerror="true" fork="yes">
+            <arg line="ar.uba.dc.basic.ParametricArray -soot-classpath /usr/lib/jvm/java-8-oracle/jre/lib/rt.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jce.jar:/home/billy/Projects/git/jconsume/java-project/target/classes:/home/billy/Projects/git/jconsume/java-project/src/main/java"/>
+            <classpath refid="run.ProgramInstrumentatorForDaikonMain ParametricArray.classpath"/>
+        </java>
+    </target>
+    <target name="MST ir memory">
+        <java classname="ar.uba.dc.analysis.common.MainRunner" failonerror="true" fork="yes">
+            <arg line="--program &quot;ar.uba.dc.jolden.mst.MST&quot; --ir --memory --config &quot;config.properties&quot; --main &quot;void main(java.lang.String[])&quot;"/>
+            <classpath refid="run.MST ir memory.classpath"/>
+        </java>
+    </target>
+    <target name="PaperEscapeTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="ar.uba.dc.analysis.escape.PaperEscapeTest" todir="${junit.output.dir}"/>
+            <classpath refid="run.PaperEscapeTest.classpath"/>
+        </junit>
+    </target>
+    <target name="CSReader">
+        <java classname="ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.CSReader" failonerror="true" fork="yes">
+            <classpath refid="run.CSReader.classpath"/>
+        </java>
+    </target>
+    <target name="New_configuration">
+        <java classname="ar.uba.dc.analysis.common.MainRunner" failonerror="true" fork="yes">
+            <classpath refid="run.New_configuration.classpath"/>
+        </java>
+    </target>
+    <target name="Example escape annotation">
+        <java classname="ar.uba.dc.analysis.common.MainRunner" failonerror="true" fork="yes">
+            <arg line="--program &quot;ar.uba.dc.annotations.ListInterface.Example01&quot; --ir --memory --config &quot;config.properties&quot; --main &quot;void main(java.lang.String[])&quot;"/>
+            <classpath refid="run.Example escape annotation.classpath"/>
+        </java>
+    </target>
+    <target name="ExamplesTest (1)">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="ar.uba.dc.regression.ExamplesTest" todir="${junit.output.dir}"/>
+            <classpath refid="run.ExamplesTest (1).classpath"/>
+        </junit>
+    </target>
+    <target name="SpecInvariantWriter AnnotationExample">
+        <java classname="ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.invariantwriter.SpecInvariantWriter" failonerror="true" fork="yes">
+            <arg line="/home/billy/Projects/git/jconsume/java-project/out/ar.uba.dc.annotations.AnnotationExample/ar.uba.dc.annotations.AnnotationExample /home/billy/Projects/git/jconsume/java-project/invariants/spec/fullreferences"/>
+            <classpath refid="run.SpecInvariantWriter AnnotationExample.classpath"/>
+        </java>
+    </target>
+    <target name="Ins2 SpecInvariantWriter">
+        <java classname="ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.invariantwriter.SpecInvariantWriter" failonerror="true" fork="yes">
+            <arg line="/home/billy/Projects/git/jconsume/java-project/out/ar.uba.dc.daikon.Ins2/ar.uba.dc.daikon.Ins2 /home/billy/Projects/git/jconsume/java-project/invariants/spec/fullreferences"/>
+            <classpath refid="run.Ins2 SpecInvariantWriter.classpath"/>
+        </java>
+    </target>
+    <target name="FileLocationStrategyTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="ar.uba.dc.util.location.FileLocationStrategyTest" todir="${junit.output.dir}"/>
+            <classpath refid="run.FileLocationStrategyTest.classpath"/>
+        </junit>
+    </target>
+    <target name="Example01">
+        <java classname="ar.uba.dc.annotations.ListInterface.Example01" failonerror="true" fork="yes">
+            <classpath refid="run.Example01.classpath"/>
+        </java>
+    </target>
+    <target name="SpecInvariantWriter MST">
+        <java classname="ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.invariantwriter.SpecInvariantWriter" failonerror="true" fork="yes">
+            <arg line="/home/billy/Projects/git/jconsume/java-project/out/ar.uba.dc.jolden.mst.MST/ar.uba.dc.jolden.mst.MST /home/billy/Projects/git/jconsume/java-project/invariants/spec/fullreferences"/>
+            <classpath refid="run.SpecInvariantWriter MST.classpath"/>
+        </java>
+    </target>
+    <target name="Em3d ir memory">
+        <java classname="ar.uba.dc.analysis.common.MainRunner" failonerror="true" fork="yes">
+            <arg line="--program &quot;ar.uba.dc.jolden.em3d.Em3d&quot; --ir --memory --config &quot;config.properties&quot; --main &quot;void main(java.lang.String[])&quot;"/>
+            <classpath refid="run.Em3d ir memory.classpath"/>
+        </java>
+    </target>
+    <target name="SpecInvariantWriter Em3d">
+        <java classname="ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.invariantwriter.SpecInvariantWriter" failonerror="true" fork="yes">
+            <arg line="/home/billy/Projects/git/jconsume/java-project/out/ar.uba.dc.jolden.em3d.Em3d/ar.uba.dc.jolden.em3d.Em3d /home/billy/Projects/git/jconsume/java-project/invariants/spec/fullreferences"/>
+            <classpath refid="run.SpecInvariantWriter Em3d.classpath"/>
+        </java>
+    </target>
+    <target name="SpecInvariantWriter ParametricArray">
+        <java classname="ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.invariantwriter.SpecInvariantWriter" failonerror="true" fork="yes">
+            <arg line="/home/billy/Projects/git/jconsume/java-project/out/ar.uba.dc.basic.ParametricArray/ar.uba.dc.basic.ParametricArray /home/billy/Projects/git/jconsume/java-project/invariants/spec/fullreferences"/>
+            <classpath refid="run.SpecInvariantWriter ParametricArray.classpath"/>
+        </java>
+    </target>
+    <target name="InvariantReader">
+        <java classname="ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.InvariantReader" failonerror="true" fork="yes">
+            <classpath refid="run.InvariantReader.classpath"/>
+        </java>
+    </target>
+    <target name="ProgramInstrumentatorForDaikonMain Em3d">
+        <java classname="ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.ProgramInstrumentatorForDaikonMain" failonerror="true" fork="yes">
+            <arg line="ar.uba.dc.jolden.em3d.Em3d -soot-classpath /usr/lib/jvm/java-8-oracle/jre/lib/rt.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jce.jar:/home/billy/Projects/git/jconsume/java-project/target/classes:/home/billy/Projects/git/jconsume/java-project/src/main/java"/>
+            <classpath refid="run.ProgramInstrumentatorForDaikonMain Em3d.classpath"/>
+        </java>
+    </target>
+    <target name="junitreport">
+        <junitreport todir="${junit.output.dir}">
+            <fileset dir="${junit.output.dir}">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report format="frames" todir="${junit.output.dir}"/>
+        </junitreport>
+    </target>
+</project>
