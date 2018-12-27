@@ -22,6 +22,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.parser.Tag;
 import org.jsoup.select.Elements;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import soot.SootMethod;
@@ -39,7 +40,7 @@ import ar.uba.dc.config.ContextFactory;
 import ar.uba.dc.soot.DirectedCallGraph;
 import ar.uba.dc.soot.SootUtils;
 
-
+@Ignore
 @SuppressWarnings("unused")
 public class ExamplesTest {
 	
