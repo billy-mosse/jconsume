@@ -1,5 +1,6 @@
 package ar.uba.dc.config;
 
+import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
@@ -7,6 +8,7 @@ import org.junit.runners.Suite.SuiteClasses;
 import ar.uba.dc.config.factory.ContainerBeanFactoryTest;
 import ar.uba.dc.config.factory.ReferenceBeanFactoryTest;
 import ar.uba.dc.config.factory.SingletonBeanFactoryTest;
+@Ignore
 
 @RunWith(Suite.class)
 @SuiteClasses({	ContainerBeanFactoryTest.class, 

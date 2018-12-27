@@ -20,6 +20,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.theories.Theories;
@@ -40,6 +41,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+@Ignore
 @RunWith(Theories.class)
 @SuppressWarnings("unused")
 public class PaperEscapeTest {
@@ -58,7 +60,7 @@ public class PaperEscapeTest {
 	  public TemporaryFolder folder= new TemporaryFolder();
 	
 	
-	public void testProgram_i(int i)
+	public void testProgram(int i)
 	{
 		String[] args = {"--program", "ar.uba.dc.paper.Program" + i , "--config", "config.properties", "--main", "\"void main(java.lang.String[])\"", "--ir"};
 		MainRunner.main(args);
@@ -194,7 +196,7 @@ public class PaperEscapeTest {
 	@Test
 	public void Program4() {
 		
-		testProgram_i(4);
+		testProgram(4);
 	}
 	
 	@Test

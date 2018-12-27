@@ -2,7 +2,10 @@ package ar.uba.dc.util.comparator;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+
+import org.junit.Ignore;
 import org.junit.Test;
+@Ignore
 
 public class InclusionComparatorTest {
 	

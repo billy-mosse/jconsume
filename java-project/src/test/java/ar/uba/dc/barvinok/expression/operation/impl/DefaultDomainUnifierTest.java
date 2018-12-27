@@ -5,9 +5,12 @@ import static org.hamcrest.MatcherAssert.*;
 
 import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import ar.uba.dc.barvinok.expression.operation.DomainUnifier;
+
+@Ignore
 
 public class DefaultDomainUnifierTest {
 

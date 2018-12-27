@@ -15,6 +15,7 @@ import org.jmock.Mockery;
 import org.jmock.integration.junit4.JUnit4Mockery;
 import org.jmock.lib.legacy.ClassImposteriser;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import soot.SootMethod;
@@ -36,6 +37,7 @@ import ar.uba.dc.invariant.spec.compiler.exceptions.UnidentifiedInvariantExcepti
 import ar.uba.dc.invariant.spec.compiler.exceptions.UnknownInvariantException;
 import ar.uba.dc.invariant.spec.compiler.exceptions.UnknownParameterException;
 import ar.uba.dc.invariant.spec.reader.XStreamSpecReader;
+@Ignore
 
 public class SimpleReferenceSpecCompilerTest {
 

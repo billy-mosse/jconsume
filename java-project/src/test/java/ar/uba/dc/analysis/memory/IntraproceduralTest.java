@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import soot.SootMethod;
@@ -25,6 +26,7 @@ import ar.uba.dc.config.ContextFactory;
 import ar.uba.dc.soot.DirectedCallGraph;
 import ar.uba.dc.soot.SootUtils;
 
+@Ignore
 @SuppressWarnings("unused")
 public class IntraproceduralTest {
 

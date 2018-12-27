@@ -6,7 +6,9 @@ import static org.hamcrest.Matchers.is;
 
 import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+@Ignore
 
 public class RegexpReferenceResolverTest {
 

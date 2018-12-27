@@ -1,5 +1,6 @@
 package ar.uba.dc.invariant.spec;
 
+import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
@@ -20,6 +21,8 @@ import ar.uba.dc.invariant.spec.reader.XStreamSpecReaderTest;
 				RegexpReferenceResolverTest.class,
 				JEPConstraintsParserTest.class,
 				RegexpConstraintsParserTest.class })
+@Ignore
+
 public class SpecSuit {
 
 }

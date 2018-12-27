@@ -7,6 +7,7 @@ import static org.hamcrest.Matchers.is;
 
 import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import ar.uba.dc.barvinok.expression.DomainSet;
@@ -15,6 +16,7 @@ import ar.uba.dc.barvinok.expression.QuasiPolynomial;
 import ar.uba.dc.barvinok.expression.operation.BindingException;
 import ar.uba.dc.barvinok.expression.operation.BindingValidator;
 import ar.uba.dc.barvinok.expression.operation.impl.PesimisticBindingValidator;
+@Ignore
 
 public class PesimisticBindingValidatorTest {
 	

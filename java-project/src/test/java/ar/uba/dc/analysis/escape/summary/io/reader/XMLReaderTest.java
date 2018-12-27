@@ -11,6 +11,7 @@ import java.util.Iterator;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import soot.Local;
@@ -29,6 +30,7 @@ import ar.uba.dc.soot.SootUtils;
 import ar.uba.dc.soot.StatementId;
 import ar.uba.dc.util.collections.CircularStack;
 
+@Ignore
 public class XMLReaderTest {
 
 	private XMLReader reader;

@@ -8,10 +8,12 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.invariant.spec.reader.XStreamSpecReader;
+@Ignore
 
 public class XStreamSimpleReaderTest {
 

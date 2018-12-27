@@ -7,6 +7,7 @@ import static org.hamcrest.Matchers.not;
 
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import soot.Body;
@@ -16,6 +17,7 @@ import soot.Unit;
 import soot.jimple.Stmt;
 import soot.toolkits.graph.ExceptionalUnitGraph;
 import soot.toolkits.graph.PseudoTopologicalOrderer;
+@Ignore
 
 public class TestSootExpectations {
 

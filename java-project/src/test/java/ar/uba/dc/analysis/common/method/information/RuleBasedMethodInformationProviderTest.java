@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import soot.SootMethod;
@@ -12,7 +13,7 @@ import ar.uba.dc.analysis.common.method.information.rules.RuleSetReader;
 import ar.uba.dc.analysis.common.method.information.rules.XMLRuleSetRepository;
 import ar.uba.dc.soot.SootUtils;
 
-//TODO signum es un metodo existente?
+@Ignore
 public class RuleBasedMethodInformationProviderTest {
 	
 	private RuleBasedMethodInformationProvider provider;

@@ -6,10 +6,12 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.nfunk.jep.ParseException;
 
 import ar.uba.dc.invariant.spec.compiler.constraints.parser.JEPConstraintsParser;
+@Ignore
 
 public class JEPConstraintsParserTest {
 

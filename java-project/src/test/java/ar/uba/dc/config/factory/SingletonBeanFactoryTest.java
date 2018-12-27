@@ -15,6 +15,7 @@ import org.apache.commons.configuration.beanutils.BeanHelper;
 import org.apache.commons.configuration.beanutils.DefaultBeanFactory;
 import org.apache.commons.configuration.beanutils.XMLBeanDeclaration;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import ar.uba.dc.barvinok.calculators.ConstantCalculator;
@@ -33,6 +34,8 @@ import ar.uba.dc.util.location.FileLocationStrategy;
  * 
  * @author testis
  */
+@Ignore
+
 public class SingletonBeanFactoryTest {
 
 	protected XMLConfiguration config;

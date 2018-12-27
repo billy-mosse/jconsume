@@ -13,12 +13,14 @@ import java.util.TreeSet;
 
 import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import ar.uba.dc.barvinok.expression.PiecewiseQuasipolynomial;
 import ar.uba.dc.barvinok.expression.QuasiPolynomial;
 import ar.uba.dc.barvinok.expression.operation.impl.DefaultKeyGenerator;
 import ar.uba.dc.barvinok.expression.operation.impl.JEPExpressionMapper;
+@Ignore
 
 public class JEPExpressionMapperForPiecewiseQuasipolynomialTest {
 

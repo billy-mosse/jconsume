@@ -7,12 +7,14 @@ import static org.hamcrest.Matchers.not;
 
 import java.util.Iterator;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.theories.DataPoints;
 import org.junit.experimental.theories.Theories;
 import org.junit.experimental.theories.Theory;
 import org.junit.runner.RunWith;
 
+@Ignore
 
 @RunWith(Theories.class)
 public class CircularStackTest {

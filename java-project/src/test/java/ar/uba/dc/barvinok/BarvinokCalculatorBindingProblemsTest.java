@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.hamcrest.core.IsInstanceOf;
+import org.junit.Ignore;
 import org.junit.experimental.theories.DataPoints;
 import org.junit.experimental.theories.Theories;
 import org.junit.experimental.theories.Theory;
@@ -35,6 +36,7 @@ import ar.uba.dc.barvinok.syntax.IsccSyntax;
 import ar.uba.dc.barvinok.syntax.OmegaSyntax;
 import ar.uba.dc.util.ConsoleException;
 
+@Ignore
 @RunWith(Theories.class)
 public class BarvinokCalculatorBindingProblemsTest {
 

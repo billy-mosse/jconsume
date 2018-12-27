@@ -14,6 +14,7 @@ import org.apache.commons.configuration.beanutils.BeanDeclaration;
 import org.apache.commons.configuration.beanutils.BeanHelper;
 import org.apache.commons.configuration.beanutils.XMLBeanDeclaration;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import ar.uba.dc.analysis.common.SummaryWriter;
@@ -22,6 +23,7 @@ import ar.uba.dc.analysis.memory.impl.summary.io.writer.GraphvizWriter;
 import ar.uba.dc.analysis.memory.impl.summary.io.writer.NullWriter;
 import ar.uba.dc.analysis.memory.impl.summary.io.writer.XMLWriter;
 import ar.uba.dc.analysis.memory.summary.MemorySummary;
+@Ignore
 
 public class ContainerBeanFactoryTest {
 

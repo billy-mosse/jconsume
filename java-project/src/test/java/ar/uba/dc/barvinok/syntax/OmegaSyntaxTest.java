@@ -7,12 +7,14 @@ import static org.hamcrest.Matchers.is;
 
 import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import ar.uba.dc.barvinok.BarvinokSyntax;
 import ar.uba.dc.barvinok.BarvinokUtils;
 import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.barvinok.expression.PiecewiseQuasipolynomial;
+@Ignore
 
 public class OmegaSyntaxTest {
 

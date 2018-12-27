@@ -7,6 +7,7 @@ import java.io.StringReader;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import ar.uba.dc.invariant.spec.bean.CallSiteSpecification;
@@ -15,6 +16,7 @@ import ar.uba.dc.invariant.spec.bean.CreationSiteSpecification;
 import ar.uba.dc.invariant.spec.bean.InvariantSpecification;
 import ar.uba.dc.invariant.spec.bean.MethodSpecification;
 import ar.uba.dc.invariant.spec.bean.Specification;
+@Ignore
 
 public class XStreamSpecReaderTest {
 	

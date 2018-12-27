@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.apache.commons.lang.StringUtils;
+import org.junit.Ignore;
 import org.junit.experimental.theories.DataPoints;
 import org.junit.experimental.theories.Theories;
 import org.junit.experimental.theories.Theory;
@@ -28,6 +29,7 @@ import ar.uba.dc.barvinok.expression.operation.impl.JEPExpressionMapper;
 import ar.uba.dc.barvinok.expression.operation.impl.ToStringParserVisitor;
 import ar.uba.dc.barvinok.syntax.IsccSyntax;
 
+@Ignore
 @RunWith(Theories.class)
 public class BarvinokCalculatorWithLazyAsMaxStrategyTest {
 

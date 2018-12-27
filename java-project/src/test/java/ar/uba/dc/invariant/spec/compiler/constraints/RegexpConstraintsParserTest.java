@@ -9,11 +9,13 @@ import static org.hamcrest.Matchers.notNullValue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.nfunk.jep.ParseException;
 
 import ar.uba.dc.invariant.spec.compiler.constraints.parser.RegexpConstraintsParser;
 import ar.uba.dc.invariant.spec.compiler.constraints.resolver.RegexpReferenceResolver;
+@Ignore
 
 public class RegexpConstraintsParserTest {
 

@@ -2,7 +2,9 @@ package ar.uba.dc.tools.instrumentation.resource.tracker.runtime;
 
 import junit.framework.Assert;
 
+import org.junit.Ignore;
 import org.junit.Test;
+@Ignore
 
 public class HeapJVMTITest {
 	

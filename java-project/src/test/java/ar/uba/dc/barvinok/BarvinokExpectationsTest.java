@@ -8,10 +8,12 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import ar.uba.dc.util.ConsoleException;
 
+@Ignore
 public class BarvinokExpectationsTest {
 
 	private CommandLineBarvinokExecutor executor;
