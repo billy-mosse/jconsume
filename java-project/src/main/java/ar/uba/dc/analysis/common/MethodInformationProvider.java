@@ -13,7 +13,7 @@ public interface MethodInformationProvider {
 
 	Boolean hasConservativaGraph(SootMethod method);
 	
-	Boolean hasNonConservativaGraph(SootMethod method);
+	Boolean hasNonConservativeGraph(SootMethod method);
 
 	Boolean isExcluded(SootMethod method);	
 
@@ -21,7 +21,7 @@ public interface MethodInformationProvider {
 
 	Boolean hasFreshGraph(IntermediateRepresentationMethod ir_method);
 
-	Boolean hasConservativaGraph(IntermediateRepresentationMethod ir_method);
+	Boolean hasConservativeGraph(IntermediateRepresentationMethod ir_method);
 	
 	Boolean hasNonConservativeGraph(IntermediateRepresentationMethod ir_method);
 

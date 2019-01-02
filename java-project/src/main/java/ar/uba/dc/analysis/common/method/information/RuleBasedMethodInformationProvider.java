@@ -29,10 +29,10 @@ public class RuleBasedMethodInformationProvider implements MethodInformationProv
 	protected RuleSet rules;
 
 	public Boolean hasConservativaGraph(SootMethod method) {
-		return commonHasConservativaGraph(method.getDeclaringClass().toString(), method.getName());
+		return commonHasConservativeGraph(method.getDeclaringClass().toString(), method.getName());
 	}
 
-	public Boolean commonHasConservativaGraph(String methodClass, String methodName) {
+	public Boolean commonHasConservativeGraph(String methodClass, String methodName) {
 		if (rules == null) {
 			init();
 		}
@@ -54,11 +54,11 @@ public class RuleBasedMethodInformationProvider implements MethodInformationProv
 	}
 	
 
-	public Boolean hasNonConservativaGraph(SootMethod method) {
-		return commonHasNonConservativaGraph(method.getDeclaringClass().toString(), method.getName());
+	public Boolean hasNonConservativeGraph(SootMethod method) {
+		return commonHasNonConservativeGraph(method.getDeclaringClass().toString(), method.getName());
 	}
 	
-	public Boolean commonHasNonConservativaGraph(String methodClass, String methodName) {
+	public Boolean commonHasNonConservativeGraph(String methodClass, String methodName) {
 		if (rules == null) {
 			init();
 		}
@@ -153,15 +153,15 @@ public class RuleBasedMethodInformationProvider implements MethodInformationProv
 	}
 
 	@Override
-	public Boolean hasConservativaGraph(IntermediateRepresentationMethod ir_method) {
+	public Boolean hasConservativeGraph(IntermediateRepresentationMethod ir_method) {
 		
 
-		return commonHasConservativaGraph(ir_method.getDeclaringClass(), ir_method.getName());	}
+		return commonHasConservativeGraph(ir_method.getDeclaringClass(), ir_method.getName());	}
 
 	@Override
 	public Boolean hasNonConservativeGraph(IntermediateRepresentationMethod ir_method) {
 
-		return commonHasNonConservativaGraph(ir_method.getDeclaringClass(), ir_method.getName());
+		return commonHasNonConservativeGraph(ir_method.getDeclaringClass(), ir_method.getName());
 	}
 
 	@Override

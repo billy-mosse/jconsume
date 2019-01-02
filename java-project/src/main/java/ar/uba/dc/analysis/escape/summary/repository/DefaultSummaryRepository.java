@@ -33,7 +33,7 @@ public class DefaultSummaryRepository implements SummaryRepository<EscapeSummary
     		log.debug("Method is conservaitve");
     	}
     	
-    	if (methodInformationProvider.hasNonConservativaGraph(method)) {
+    	if (methodInformationProvider.hasNonConservativeGraph(method)) {
     		// impure with side-effect, unless otherwise specified
     		elem = summaryFactory.conservativeGraph(method, true);
     		log.debug("Method is non conservaitve");

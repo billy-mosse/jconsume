@@ -355,7 +355,7 @@ public class Instrumenter  extends BodyTransformer {
 			residualPartition = GlobalNode.node;
     	}
     	
-    	if (informationProvider.hasNonConservativaGraph(method)) {
+    	if (informationProvider.hasNonConservativeGraph(method)) {
     		log.debug("NON CONSERVATIVE GRAPH: " + callStmt);
     		residualPartition = GlobalNode.node;
     	}  

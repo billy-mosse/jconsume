@@ -31,7 +31,7 @@ public class PaperDefaultSummaryRepository implements SummaryRepository<PaperMem
     		log.debug("Method is fresh");
     	}
     	
-    	if (methodInformationProvider.hasConservativaGraph(method)) {
+    	if (methodInformationProvider.hasConservativeGraph(method)) {
     		elem = summaryFactory.conservativeGraph(method, false);
     		log.debug("Method is conservaitve");
     	}

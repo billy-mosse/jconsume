@@ -123,7 +123,7 @@ public class DefaultMethodInformationProvider implements MethodInformationProvid
 	    return true;
 	}
 
-	public Boolean hasNonConservativaGraph(SootMethod method) {
+	public Boolean hasNonConservativeGraph(SootMethod method) {
 		return inArray(method.getDeclaringClass().toString(), method.getName(), impureMethods);
 	}
 	
@@ -139,7 +139,7 @@ public class DefaultMethodInformationProvider implements MethodInformationProvid
 		return inArray(ir_method.getDeclaringClass(), ir_method.getName(), impureMethods);
 	}
 	
-	public Boolean hasConservativaGraph(IntermediateRepresentationMethod ir_method) {
+	public Boolean hasConservativeGraph(IntermediateRepresentationMethod ir_method) {
 		return inArray(ir_method.getDeclaringClass(), ir_method.getName(), alterMethods);
 	}
 
