@@ -54,6 +54,12 @@ public class IntermediateRepresentationMethod {
 
 	protected String subSignature;
 
+	public IntermediateRepresentationMethod(String methodClass, String methodName)
+	{
+		this.declaringClass = methodClass;
+		this.name = methodName;
+	}
+	
 	public void setSubSignature(String subSignature) {
 		this.subSignature = subSignature;
 	}

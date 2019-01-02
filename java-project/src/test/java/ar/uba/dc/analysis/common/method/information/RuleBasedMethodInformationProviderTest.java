@@ -9,11 +9,12 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import soot.SootMethod;
+import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
 import ar.uba.dc.analysis.common.method.information.rules.RuleSetReader;
 import ar.uba.dc.analysis.common.method.information.rules.XMLRuleSetRepository;
 import ar.uba.dc.soot.SootUtils;
 
-@Ignore
+//@Ignore
 public class RuleBasedMethodInformationProviderTest {
 	
 	private RuleBasedMethodInformationProvider provider;
@@ -22,14 +23,16 @@ public class RuleBasedMethodInformationProviderTest {
 	public void setUp() {
 		XMLRuleSetRepository repository = new XMLRuleSetRepository();
 		repository.setReader(new RuleSetReader());
-		repository.setRulesFile(Thread.currentThread().getContextClassLoader().getResource("unanalizable_rules.xml").getFile());
+		//repository.setRulesFile(Thread.currentThread().getContextClassLoader().getResource("unanalizable_rules.xml").getFile());
+		
+		repository.setRulesFile("unanalizable_rules.xml");
 		provider = new RuleBasedMethodInformationProvider();
 		provider.setRepository(repository);
 	}
 
 	@Test
 	public void cacheWorksWithNull() {
-		SootMethod method = SootUtils.getMethod("java.lang.Integer", "int signum(int)");
+		IntermediateRepresentationMethod method = new IntermediateRepresentationMethod("java.lang.Integer", "signum");
 				
 		boolean result = provider.isAnalyzable(method);
 		
@@ -42,29 +45,32 @@ public class RuleBasedMethodInformationProviderTest {
 	
 	@Test
 	public void testMethodClasifications() {
-		SootMethod prueWithConsume = SootUtils.getMethod("java.lang.Integer", "java.lang.Integer valueOf(java.lang.String)");
-		SootMethod prueWithoutConsume = SootUtils.getMethod("java.lang.StringBuilder", "java.lang.String toString()");
-		SootMethod alter = SootUtils.getMethod("java.lang.System", "void arraycopy(java.lang.Object,int,java.lang.Object,int,int)");
-		SootMethod impure = SootUtils.getMethod("java.io.BufferedReader", "int read()");
 		
-		assertThat(provider.isAnalyzable(prueWithConsume), is(equalTo(false)));
-		assertThat(provider.hasFreshGraph(prueWithConsume), is(equalTo(true)));
-		assertThat(provider.hasConservativaGraph(prueWithConsume), is(equalTo(false)));
-		assertThat(provider.hasNonConservativaGraph(prueWithConsume), is(equalTo(false)));
+		//We don't really need to create an ir_method
 		
-		assertThat(provider.isAnalyzable(prueWithoutConsume), is(equalTo(false)));
-		assertThat(provider.hasFreshGraph(prueWithoutConsume), is(equalTo(true)));
-		assertThat(provider.hasConservativaGraph(prueWithoutConsume), is(equalTo(false)));
-		assertThat(provider.hasNonConservativaGraph(prueWithoutConsume), is(equalTo(false)));
+		IntermediateRepresentationMethod pureWithConsume = new IntermediateRepresentationMethod("java.lang.Integer", "valueOf");
+		IntermediateRepresentationMethod pureWithoutConsume = new IntermediateRepresentationMethod("java.lang.StringBuilder", "toString");
+		IntermediateRepresentationMethod alter = new IntermediateRepresentationMethod("java.lang.System", "arraycopy");
+		IntermediateRepresentationMethod impure = new IntermediateRepresentationMethod("java.io.BufferedReader", "read");
+		
+		assertThat(provider.isAnalyzable(pureWithConsume), is(equalTo(false)));
+		assertThat(provider.hasFreshGraph(pureWithConsume), is(equalTo(true)));
+		assertThat(provider.hasConservativeGraph(pureWithConsume), is(equalTo(false)));
+		assertThat(provider.hasNonConservativeGraph(pureWithConsume), is(equalTo(false)));
+		
+		assertThat(provider.isAnalyzable(pureWithoutConsume), is(equalTo(false)));
+		assertThat(provider.hasFreshGraph(pureWithoutConsume), is(equalTo(true)));
+		assertThat(provider.hasConservativeGraph(pureWithoutConsume), is(equalTo(false)));
+		assertThat(provider.hasNonConservativeGraph(pureWithoutConsume), is(equalTo(false)));
 		
 		assertThat(provider.isAnalyzable(alter), is(equalTo(false)));
 		assertThat(provider.hasFreshGraph(alter), is(equalTo(false)));
-		assertThat(provider.hasConservativaGraph(alter), is(equalTo(true)));
-		assertThat(provider.hasNonConservativaGraph(alter), is(equalTo(false)));
+		assertThat(provider.hasConservativeGraph(alter), is(equalTo(true)));
+		assertThat(provider.hasNonConservativeGraph(alter), is(equalTo(false)));
 		
 		assertThat(provider.isAnalyzable(impure), is(equalTo(false)));
 		assertThat(provider.hasFreshGraph(impure), is(equalTo(false)));
-		assertThat(provider.hasConservativaGraph(impure), is(equalTo(false)));
-		assertThat(provider.hasNonConservativaGraph(impure), is(equalTo(true)));
+		assertThat(provider.hasConservativeGraph(impure), is(equalTo(false)));
+		assertThat(provider.hasNonConservativeGraph(impure), is(equalTo(true)));
 	}
 }
