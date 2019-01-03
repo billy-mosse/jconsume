@@ -1,0 +1,1000 @@
+  988  ls
+  989  git status
+  990  git diff
+  991  ls
+  992  git status
+  993  git diff src/main/examples/ar/uba/dc/jolden/em3d/
+  994  git add src/main/examples/ar/uba/dc/jolden/em3d/
+  995  git status
+  996  git diff out/daikon.sh
+  997  git commit -m "annotations for Em3d"
+  998  git status
+  999  git diff out/spec.sh
+ 1000  git add out/spec.sh out/daikon.sh
+ 1001  git diff bin/barvinok.sh
+ 1002  git add bin/barvinok.sh 
+ 1003  git status
+ 1004  git commit -m "small changes in scripts"
+ 1005  git diff src/main/java/ar/uba/dc/analysis/automaticinvariants/instrumentation/daikon/InvariantReader.java
+ 1006  git add src/main/java/ar/uba/dc/analysis/automaticinvariants/instrumentation/daikon/InvariantReader.java
+ 1007  git commit -m "added filter to daikon invariants"
+ 1008  git diff src/main/java/ar/uba/dc/analysis/automaticinvariants/instrumentation/daikon/InstrumentationSiteInvariantsReader.java
+ 1009  git add src/main/java/ar/uba/dc/analysis/automaticinvariants/instrumentation/daikon/InstrumentationSiteInvariantsReader.java src/main/java/ar/uba/dc/analysis/automaticinvariants/instrumentation/daikon/CreationSiteMapInfo.java src/main/java/ar/uba/dc/analysis/automaticinvariants/instrumentation/daikon/MethodInstrumenterForDaikon.java 
+ 1010  git diff src/main/java/ar/uba/dc/analysis/automaticinvariants/instrumentation/daikon/ProgramInstrumentatorForDaikonMain.java
+ 1011  git add src/main/java/ar/uba/dc/analysis/automaticinvariants/instrumentation/daikon/ProgramInstrumentatorForDaikonMain.java
+ 1012  git status
+ 1013  git diff src/main/java/ar/uba/dc/analysis/automaticinvariants/instrumentation/daikon/invariantwriter/SpecInvariantWriter.java
+ 1014  git add src/main/java/ar/uba/dc/analysis/automaticinvariants/instrumentation/daikon/invariantwriter/SpecInvariantWriter.java
+ 1015  git status
+ 1016  git add src/main/java/ar/uba/dc/analysis/common/method/information/JsonInstrumentationSiteInvariantsReader.java src/main/java/ar/uba/dc/analysis/common/method/information/JsonInstrumentationSiteInvariantsWriter.java
+ 1017  git diff src/main/java/ar/uba/dc/analysis/automaticinvariants/instrumentation/daikon/invariantwriter/ConstraintUtils.java
+ 1018  git add src/main/java/ar/uba/dc/analysis/automaticinvariants/instrumentation/daikon/invariantwriter/ConstraintUtils.java
+ 1019  git commit -m "Annotations"
+ 1020  git status
+ 1021  git diff src/main/java/ar/uba/dc/analysis/escape/InterproceduralAnalysis.java
+ 1022  git add src/main/java/ar/uba/dc/analysis/escape/InterproceduralAnalysis.java
+ 1023  git commit -m "comments"
+ 1024  git status
+ 1025  git diff src/main/java/ar/uba/dc/analysis/memory/PaperIntraproceduralAnalysis.java
+ 1026  git checkout src/main/java/ar/uba/dc/analysis/memory/PaperIntraproceduralAnalysis.java
+ 1027  git status
+ 1028  git diff .classpath
+ 1029  ls
+ 1030  git status
+ 1031  git diff .project
+ 1032  export JAVA_HOME=/usr/lib/jvm/java-8-oracle/
+ 1033  git diff .project
+ 1034  mvn clean package
+ 1035  cat $HOME/.mavenrc
+ 1036  echo $HOME
+ 1037  echo $JAVA_HOME
+ 1038  mvn -source 8 clean package
+ 1039  mvn source 8 clean package
+ 1040  subl .
+ 1041  mvn clean package
+ 1042  mvn clean package -Dmaven.test.skip=true
+ 1043  ls
+ 1044  find . -name *.jar
+ 1045  cd target/
+ 1046  ls
+ 1047  cd ..
+ 1048  ls
+ 1049  cd docker
+ 1050  ls
+ 1051  vim DockerFile
+ 1052  ls
+ 1053  mv DockerFile Dockerfile
+ 1054  docker build -t jconsume2-img
+ 1055  docker build -t jconsume2-img .
+ 1056  vim Dockerfile 
+ 1057  docker build -t jconsume2-img .
+ 1058  cp ../target/original-jconsume2-0.0.1.jar .
+ 1059  vim Dockerfile 
+ 1060  docker build -t jconsume2-img .
+ 1061  git status
+ 1062  cat build.xml
+ 1063  git add build.xml 
+ 1064  git commit -m "Old tests: first version"
+ 1065  git push jconsume master
+ 1066  history | grep short
+ 1067  git rev-parse --short HEAD
+ 1068  shorthash
+ 1069  ant test
+ 1070  export JAVA_HOME=/usr/lib/jvm/java-8-oracle/
+ 1071  ant test
+ 1072  cat build.xml
+ 1073  vim build.xml 
+ 1074  ant test
+ 1075  ant clean
+ 1076  ant test
+ 1077  ant compile
+ 1078  mvn test
+ 1079  ls
+ 1080  vim .travis.yml 
+ 1081  mvn verify
+ 1082  git add .travis.yml 
+ 1083  cat .travis.yml 
+ 1084  git commit -m "travis now using maven"
+ 1085  git push jconsume master
+ 1086  shorthash
+ 1087  vim build.sh
+ 1088  java -version
+ 1089  ls
+ 1090  vim .travis.yml 
+ 1091  git add .travis.yml 
+ 1092  git commit -m "travis: use maven, second attempt"
+ 1093  git push jconsume master
+ 1094  shorthash
+ 1095  git add build.sh
+ 1096  git commit -m "build script for travis"
+ 1097  git push jconsume master
+ 1098  ls
+ 1099  cat .travis.yml 
+ 1100  cd ..
+ 1101  cat .travis.yml 
+ 1102  rm .travis.yml 
+ 1103  git rm .travis.yml
+ 1104  git commit
+ 1105  git push jconsume master
+ 1106  mvn clean verify
+ 1107  cd java-project/
+ 1108  mvn clean verify
+ 1109  ls
+ 1110  ls junit
+ 1111  find . -name junit
+ 1112  cd ..
+ 1113  find . -name junit
+ 1114  cd -
+ 1115  ant build
+ 1116  ls
+ 1117  mkdir build
+ 1118  cp build.xml build
+ 1119  cd build
+ 1120  ls
+ 1121  cd ..
+ 1122  git add build
+ 1123  git commit -m "build folder"
+ 1124  git push jconsume master
+ 1125  vim build.xml
+ 1126  rm build
+ 1127  rm build.xml
+ 1128  vim build.xml
+ 1129  git add build.xml
+ 1130  git commit -m "travis build script"
+ 1131  git push jconsume master
+ 1132  git log
+ 1133  ant test
+ 1134  git log
+ 1135  ls
+ 1136  rm build.xml
+ 1137  rm -R build
+ 1138  ls
+ 1139  cd ..
+ 1140  ls
+ 1141  cd j
+ 1142  cd java-project/
+ 1143  git rm build.xml build
+ 1144  git rm -r build.xml build
+ 1145  git commit -m "deleted build files and starting again"
+ 1146  git push jconsume master
+ 1147  ls
+ 1148  ls .travis.yml 
+ 1149  git mv .travis.yml ..
+ 1150  ls
+ 1151  cd ..
+ 1152  ls
+ 1153  ls .travis.yml 
+ 1154  vim .travis.yml 
+ 1155  git add .travis.yml 
+ 1156  git commit -m "added cd command as the project is one level down from git repository directory"
+ 1157  ls
+ 1158  git push jconsume master
+ 1159  vim .travis.yml 
+ 1160  cat .travis.yml 
+ 1161  git add .travis.yml 
+ 1162  git commit -m "corrected name of the project for travis install"
+ 1163  git push jconsume master
+ 1164  ls
+ 1165  cd java-project/
+ 1166  mvn clean install
+ 1167  mvn clean
+ 1168  mvn install
+ 1169  history | grep install
+ 1170  history | grep test
+ 1171  mvn clean verify
+ 1172  cd ..
+ 1173  vim .travis.yml 
+ 1174  git add .travis.yml 
+ 1175  git commit -m "travis install script: clean verify instead of clean install"
+ 1176  git push jconsume master
+ 1177  vim .travis.yml 
+ 1178  git add .travis.yml 
+ 1179  git commit -m "travis script: sudo true"
+ 1180  git push jconsume master
+ 1181  mvn dependency:purge-local-repository
+ 1182  cd java-project/
+ 1183  mvn 
+ 1184  mvn dependency:purge-local-repository -X
+ 1185  git add pom.xml 
+ 1186  git commit -m "pom xml working"
+ 1187  git push jconsume master
+ 1188  git log
+ 1189  ls
+ 1190  cd ..
+ 1191  ls
+ 1192  cat dependencies/install.sh 
+ 1193  ls
+ 1194  cd dependencies/
+ 1195  ls
+ 1196  vim install.sh 
+ 1197  ls
+ 1198  cd ..
+ 1199  vim .travis.yml 
+ 1200  git add .travis.yml 
+ 1201  git commit -m "added installation of dependencies for project"
+ 1202  git push jconsume master
+ 1203  git log
+ 1204  vim .travis.yml 
+ 1205  cat .travis.yml 
+ 1206  git add .travis.yml 
+ 1207  git commit -m "fixed installation of external jars"
+ 1208  ·git push jconsume master
+ 1209  ls
+ 1210  cd dependencies/
+ 1211  ls
+ 1212  cat install.sh 
+ 1213  ls -lhrt
+ 1214  subl -a install.sh 
+ 1215  sh install.sh 
+ 1216  cdj
+ 1217  mvn clean install
+ 1218  mvn compile
+ 1219  cd ..
+ 1220  cd dependencies/
+ 1221  ls
+ 1222  cat install.sh 
+ 1223  mvn compile
+ 1224  cdj
+ 1225  mvn compile
+ 1226  cp ~/Downloads/soot-trunk.jar ../dependencies/
+ 1227  cd ../dependencies/
+ 1228  ls
+ 1229  cp install.sh install2.sh
+ 1230  vim install2.sh 
+ 1231  subl -a install2.sh 
+ 1232  ls
+ 1233  ls sootlib/
+ 1234  ls
+ 1235  sh install
+ 1236  mvn install:install-file -Dfile=soot-trunk.jar -DgroupId=ca.mcgill.sable -DartifactId=soot -Dversion=billy -Dpackaging=jar -DgeneratePom=true
+ 1237  cdj
+ 1238  mvn compile
+ 1239  cd ..
+ 1240  ls
+ 1241  cd dependencies/
+ 1242  ls
+ 1243  mv install2.sh install.sh
+ 1244  git add install.sh ../java-project/pom.xml 
+ 1245  git commit -m "Install
+ 1246  git commit
+ 1247  git push jconsume master
+ 1248  ls
+ 1249  git add soot-trunk.jar 
+ 1250  git status .
+ 1251  git commit -m "added external (soot trunk) jar to git. TODO: check version"
+ 1252  git push jconsume master
+ 1253  cd build
+ 1254  ls
+ 1255  cd bin
+ 1256  ls
+ 1257  cd tools/
+ 1258  ls
+ 1259  cat in
+ 1260  cd ..
+ 1261  find . -name install*
+ 1262  ls
+ 1263  cd ..
+ 1264  ls
+ 1265  cd bin
+ 1266  ls
+ 1267  find . -name install*
+ 1268  cd dependencies/
+ 1269  ls
+ 1270  cat install.sh 
+ 1271  sh install.sh 
+ 1272  echo $JAVA_HOME
+ 1273  export $JAVA_HOME=/usr/lib/jvm/java-8-oracle/
+ 1274  export JAVA_HOME=/usr/lib/jvm/java-8-oracle/
+ 1275  cat install.sh 
+ 1276  cat install.sh  | grep heros
+ 1277  cdj
+ 1278  git diff pom.xml
+ 1279  ls
+ 1280  cd ..
+ 1281  cd dependencies/
+ 1282  ls
+ 1283  find . -name nfunk*
+ 1284  cd jeplib/
+ 1285  ls
+ 1286  cd ..
+ 1287  ls
+ 1288  sh install2.sh 
+ 1289  cdj
+ 1290  cd ..
+ 1291  cd dependencies/
+ 1292  ls
+ 1293  cdj
+ 1294  ls full_analysis.sh 
+ 1295  git add full_analysis.sh 
+ 1296  git commit
+ 1297  git status
+ 1298  git diff src/main/java/ar/uba/dc/analysis/automaticinvariants/instrumentation/daikon/ProgramInstrumentatorForDaikonMain.java
+ 1299  git add src/test/java/ar/uba/dc/regression/ExamplesTest.java
+ 1300  git commit -m "Ignore non ready test"
+ 1301  git push jconsume master
+ 1302  git status
+ 1303  git add src/test
+ 1304  git commit
+ 1305  git reset src/test/resources/unanalizable_rules.xml
+ 1306  git commit
+ 1307  git push jconsume master
+ 1308  ·git tag travis_compile_working
+ 1309  git log
+ 1310  git rebase -i 8ece1beb4fb92e2fb3d808df92c66d08d1feb98a^
+ 1311  git status
+ 1312  cat ../install.sh
+ 1313  git stash
+ 1314  git rebase -i 8ece1beb4fb92e2fb3d808df92c66d08d1feb98a^
+ 1315  git push jconsume master
+ 1316  git stash apply
+ 1317  cd docker/
+ 1318  ls
+ 1319  rm jconsume2-0.0.1.jar 
+ 1320  rm -R META-INF/
+ 1321  rm Dockerfile2 
+ 1322  history | grep jar
+ 1323  subl
+ 1324  cdj
+ 1325  mvn package
+ 1326  ls
+ 1327  cd target/
+ 1328  ls -lhrt
+ 1329  cp jconsume2-0.0.1.jar ../docker
+ 1330  cd ../docker/
+ 1331  ls
+ 1332  vim Dockerfile 
+ 1333  docker build -t jconsume2-img .
+ 1334  ls
+ 1335  vim Dockerfile 
+ 1336  docker pull 
+ 1337  vim Dockerfile 
+ 1338  docker build -t gmosse/jconsume2-img .
+ 1339  ls
+ 1340  cp Dockerfile ..
+ 1341  cd ..
+ 1342  ls
+ 1343  vim Dockerfile 
+ 1344  ls target/
+ 1345  vim Dockerfile 
+ 1346  docker build -f Dockerfile -t jconsume2-img .
+ 1347  $ docker run -p 8080:8080 -t jconsume2-img
+ 1348  docker run -p 8080:8080 -t jconsume2-img
+ 1349  docker run -p 8080:8080 -t jconsume2-img --program "ar.uba.dc.jolden.em3d.Em3d" --ir --memory --config "config.properties" --main "void main(java.lang.String[])"
+ 1350  ls
+ 1351  ls -lhrt
+ 1352  vim Dockerfile 
+ 1353  java -jar target/jconsume2-0.0.1.jar 
+ 1354  java -jar target/jconsume2-0.0.1.jar --program "ar.uba.dc.jolden.em3d.Em3d" --ir --memory --config "config.properties" --main "void main(java.lang.String[])"
+ 1355  java -jar target/jconsume2-0.0.1.jar -program "ar.uba.dc.jolden.em3d.Em3d" -ir -memory -config "config.properties" -main "void main(java.lang.String[])"
+ 1356  java -program "ar.uba.dc.jolden.em3d.Em3d" -ir -memory -config "config.properties" -main "void main(java.lang.String[])" -jar target/jconsume2-0.0.1.jar 
+ 1357  java --program "ar.uba.dc.jolden.em3d.Em3d" --ir --memory --config "config.properties" --main "void main(java.lang.String[])" -jar target/jconsume2-0.0.1.jar 
+ 1358  java '--program "ar.uba.dc.jolden.em3d.Em3d" --ir --memory --config "config.properties" --main "void main(java.lang.String[])"' -jar target/jconsume2-0.0.1.jar 
+ 1359  java '--program ar.uba.dc.jolden.em3d.Em3d' -jar target/jconsume2-0.0.1.jar 
+ 1360  java -jar target/jconsume2-0.0.1.jar --program ar.uba.dc.jolden.em3d.Em3d
+ 1361  java -jar target/jconsume2-0.0.1.jar -program ar.uba.dc.jolden.em3d.Em3d
+ 1362  java -jar target/jconsume2-0.0.1.jar -mainClass ar.uba.dc.jolden.em3d.Em3d
+ 1363  mvn clean package
+ 1364  docker build -f Dockerfile -t jconsume2-img .
+ 1365  java -jar target/jconsume2-0.0.1.jar -mainClass ar.uba.dc.jolden.em3d.Em3d
+ 1366  java --program "ar.uba.dc.jolden.em3d.Em3d" --ir --memory --config "config.properties" --main "void main(java.lang.String[])" -jar target/jconsume2-0.0.1.jar 
+ 1367  java -jar target/jconsume2-0.0.1.jar --program "ar.uba.dc.jolden.em3d.Em3d" --ir --memory --config "config.properties" --main "void main(java.lang.String[])"
+ 1368  ·java -jar target/jconsume2-0.0.1.jar --program "ar.uba.dc.jolden.em3d.Em3d" --ir --memory --config "config.properties" --main "void main(java.lang.String[])"
+ 1369  ·java -jar target/jconsume2-0.0.1.jar --program "ar.uba.dc.paper.Program1" --ir --memory --config "config.properties" --main "void main(java.lang.String[])"
+ 1370  java -jar target/jconsume2-0.0.1.jar --program "ar.uba.dc.paper.Program1" --ir --memory --config "config.properties" --main "void main(java.lang.String[])"
+ 1371  #java -jar target/jconsume2-0.0.1.jar --program "ar.uba.dc.paper.Program1" --ir --memory --config "config.properties" --main "void main(java.lang.String[])"
+ 1372  ls
+ 1373  ·java -jar target/jconsume2-0.0.1.jar --program "ar.uba.dc.jolden.em3d.Em3d" --ir --memory --config "config.properties" --main "void main(java.lang.String[])"
+ 1374  java -jar target/jconsume2-0.0.1.jar --program "ar.uba.dc.jolden.em3d.Em3d" --ir --memory --config "config.properties" --main "void main(java.lang.String[])"
+ 1375  mvn clean package
+ 1376  java -jar target/jconsume2-0.0.1.jar --program "ar.uba.dc.jolden.em3d.Em3d" --ir --memory --config "config.properties" --main "void main(java.lang.String[])"
+ 1377  ls
+ 1378  vim target/jconsume2-0.0.1.jar 
+ 1379  ls
+ 1380  ls -lhrt
+ 1381  vim Dockerfile 
+ 1382  docker build -f Dockerfile -t jconsume2-img .
+ 1383  vim Dockerfile 
+ 1384  docker build -f Dockerfile -t jconsume2-img .
+ 1385  docker build -f Dockerfile -t jconsume2-img .
+ 1386  ls invariants
+ 1387  ls
+ 1388  docker build -f docker-files/Dockerfile .
+ 1389  docker build -f Dockerfile -t jconsume2-img ..
+ 1390  vim Dockerfile 
+ 1391  docker build -f Dockerfile -t jconsume2-img ..
+ 1392  vim Dockerfile 
+ 1393  docker build -f Dockerfile -t jconsume2-img ..
+ 1394  java -jar target/jconsume2-0.0.1.jar --program "ar.uba.dc.jolden.em3d.Em3d" --ir --memory --config "config.properties" --main "void main(java.lang.String[])"
+ 1395  sh full_analysis.sh "ar.uba.dc.jolden.em3d.Em3d" 10
+ 1396  ls
+ 1397  ls out
+ 1398  sh full_analysis.sh "ar.uba.dc.jolden.em3d.Em3d" 10
+ 1399  cat ii
+ 1400  vim ii
+ 1401  subl -a ii
+ 1402  sh full_analysis.sh "ar.uba.dc.jolden.em3d.Em3d" 10
+ 1403  ls
+ 1404  find instrum*
+ 1405  find . -name instrum*
+ 1406  cat out/instrumenta.log 
+ 1407  sh full_analysis.sh "ar.uba.dc.jolden.em3d.Em3d" 10
+ 1408  cat out/instrumenta.log 
+ 1409  sh full_analysis.sh "ar.uba.dc.jolden.em3d.Em3d" 10
+ 1410  cat out/instrumenta.log 
+ 1411  mvn clean install
+ 1412  cd ..
+ 1413  cd dependencies/
+ 1414  sh install.sh 
+ 1415  cd ..
+ 1416  cd java-project/
+ 1417  mvn clean install
+ 1418  sh full_analysis.sh "ar.uba.dc.jolden.em3d.Em3d" 10
+ 1419  mvn clean install
+ 1420  mvn jar
+ 1421  mvn package
+ 1422  ls
+ 1423  docker build -f Dockerfile -t jconsume2-img ..
+ 1424  docker attach jconsume2-img
+ 1425  docker ls
+ 1426  docker image ls
+ 1427  docker exec -it jconsume2-img /bin/bash
+ 1428  docker run -p 8080:8080 -t jconsume2-img --program "ar.uba.dc.jolden.em3d.Em3d" --ir --memory --config "config.properties" --main "void main(java.lang.String[])"
+ 1429  vim Dockerfile 
+ 1430  docker build -f Dockerfile -t jconsume2-img ..
+ 1431  docker exec -i -t jconsume2-img /bin/bash
+ 1432  docker run -p 8080:8080 -t jconsume2-img --program "ar.uba.dc.jolden.em3d.Em3d" --ir --memory --config "config.properties" --main "void main(java.lang.String[])"
+ 1433  ls
+ 1434  ls target/
+ 1435  ls target/classes/
+ 1436  vim Dockerfile 
+ 1437  docker build -f Dockerfile -t jconsume2-img ..
+ 1438  ls src/main/examples
+ 1439  vim Dockerfile 
+ 1440  docker build -f Dockerfile -t jconsume2-img .
+ 1441  docker run -p 8080:8080 -t jconsume2-img --program "ar.uba.dc.jolden.em3d.Em3d" --ir --memory --config "config.properties" --main "void main(java.lang.String[])"
+ 1442  docker exec -i -t jconsume2-img /bin/bash
+ 1443  docker run
+ 1444  docker run jconsume2-img
+ 1445  docker start
+ 1446  docker start jconsume2-img
+ 1447  docker run -ti jconsume2-img sh
+ 1448  docker ps
+ 1449  docker start -ai jconsume2-img
+ 1450  docker run -d jconsume2-img
+ 1451  ls
+ 1452  docker ps
+ 1453  docker images
+ 1454  docker ps -a
+ 1455  docker start jconsume2-img
+ 1456  docker images
+ 1457  docker start suspicious_curran
+ 1458  docker create
+ 1459  docker create jconsume2-img
+ 1460  docker start 84ea32fdab952518ac5b8930c6a165a66ced0246a6b24a6a762fd0b576ffc3f6
+ 1461  docker start -a -i 84ea32fdab952518ac5b8930c6a165a66ced0246a6b24a6a762fd0b576ffc3f6
+ 1462  docker create -t -i jconsume2-img
+ 1463  docker start -a -i 2c5b3c8846815fe057e5ac0057e68ec2fed4620a9cefd005c0d6af5e81acd38e
+ 1464  docker create -t -i jconsume2-img bash
+ 1465  docker start -a -i 50b7672a847e50cd581384e5847f18ad14f7f231a47297202798913a7f2aa1af
+ 1466  docker run -ti jconsume2-img invariants_IM.sh
+ 1467  docker create -t -i jconsume2-img bash
+ 1468  docker run -ti 19d49922069ae152ad9e7350dee4938978b9d40f5cb7e6e4376b88dd039c1718 invariants_IM.sh
+ 1469  docker run -it jconsume2-img /bin/bash
+ 1470  #docker build -f Dockerfile -t jconsume2-img ..
+ 1471  docker run -it jconsume2-img /bin/bash
+ 1472  docker run -it jconsume2-img
+ 1473  vim Dockerfile 
+ 1474  docker build -f Dockerfile -t jconsume2-img ..
+ 1475  docker run -it jconsume2-img /bin/bash
+ 1476  docker build -f Dockerfile -t jconsume2-img ..
+ 1477  docker run -it jconsume2-img /bin/bash
+ 1478  docker build -f Dockerfile -t jconsume2-img ..
+ 1479  docker run -it jconsume2-img /bin/bash
+ 1480  docker build -f Dockerfile -t jconsume2-img ..
+ 1481  docker run -it jconsume2-img /bin/bash
+ 1482  ls
+ 1483  vim Dockerfile 
+ 1484  subl -a Dockerfile 
+ 1485  docker build -f Dockerfile -t jconsume2-img ..
+ 1486  docker run -it jconsume2-img /bin/bash
+ 1487  ls
+ 1488  #docker build -f Dockerfile -t jconsume2-img ..
+ 1489  docker build --rm .
+ 1490  docker build -f Dockerfile -t jconsume2-img ..
+ 1491  docker run -it jconsume2-img /bin/bash
+ 1492  docker build -f Dockerfile -t jconsume2-img ..
+ 1493  docker run -it jconsume2-img /bin/bash
+ 1494  docker build -f Dockerfile -t jconsume2-img ..
+ 1495  docker run -it jconsume2-img /bin/bash
+ 1496  docker build -f Dockerfile -t jconsume2-img ..
+ 1497  docker run -it jconsume2-img /bin/bash
+ 1498  docker build -f Dockerfile -t jconsume2-img ..
+ 1499  docker run -it jconsume2-img /bin/bash
+ 1500  docker build -f Dockerfile -t jconsume2-img ..
+ 1501  docker run -it jconsume2-img /bin/bash
+ 1502  docker build -f Dockerfile -t jconsume2-img ..
+ 1503  ls /
+ 1504  docker build -f Dockerfile -t jconsume2-img ..
+ 1505  docker run -it jconsume2-img /bin/bash
+ 1506  docker build -f Dockerfile -t jconsume2-img ..
+ 1507  docker run -it jconsume2-img /bin/bash
+ 1508  docker images -a
+ 1509  docker rmi jconsume2-img
+ 1510  docker system prune
+ 1511  docker build -f Dockerfile -t jconsume2-img ..
+ 1512  sudo docker run -it jconsume2-img /bin/bash
+ 1513  docker rmi jconsume2-img
+ 1514  docker run -it jconsume2-img /bin/bash
+ 1515  docker run --help
+ 1516  docker images
+ 1517  #sudo docker run -it jconsume2-img /bin/bas
+ 1518  docker ps -a
+ 1519  docker images
+ 1520  docker run -it jessie /bin/bas
+ 1521  docker run -it 732adb35a151 /bin/bas
+ 1522  docker image ls
+ 1523  docker build -f Dockerfile -t jconsume2-img ..
+ 1524  docker container ls 
+ 1525  history | grep create
+ 1526  docker create -t -i jconsume2 bash
+ 1527  docker create -t -i jconsume2-img bash
+ 1528  sudo docker create -t -i jconsume2-img bash
+ 1529  exit
+ 1530  vim Docker_README.md
+ 1531  ls
+ 1532  ls *.sh
+ 1533  cd invariants
+ 1534  ls
+ 1535  cd ..
+ 1536  ls
+ 1537  cd out
+ 1538  ls
+ 1539  cd ..
+ 1540  ls
+ 1541  ls results/
+ 1542  ls barvinok
+ 1543  ls barvinok-0.39/
+ 1544  ls
+ 1545  ls iscc
+ 1546  ls
+ 1547  ls bin/
+ 1548  ls
+ 1549  vim Docker_README.md 
+ 1550  history | grep full
+ 1551  cp invariants_IM.sh docker_invariants.sh
+ 1552  cp full_analysis.sh docker_full_analysis.sh
+ 1553  cp out/daikon.sh out/docker_daikon.sh
+ 1554  cp memory.sh docker_memory.sh
+ 1555  ls
+ 1556  mv docker_invariants.sh docker_invariants_IM.sh
+ 1557  sh full_analysis.sh "ar.uba.dc.jolden.em3d.Em3d" 10
+ 1558  ls
+ 1559  cat install_daikon.sh 
+ 1560  ls
+ 1561  cat barvinok.sh
+ 1562  ls
+ 1563  cd barvinok-0.39/
+ 1564  ls
+ 1565  cd ..
+ 1566  ls
+ 1567  ls *.sh
+ 1568  cd ..
+ 1569  ls
+ 1570  ls *barvinok*
+ 1571  find . -name *barvinok*
+ 1572  ls
+ 1573  ls install_all.sh
+ 1574  cat install_all.sh
+ 1575  cp install_all.sh docker_install_all.sh
+ 1576  vim docker_install_all.sh 
+ 1577  subl -a docker_install_all.sh 
+ 1578  cd java-project/
+ 1579  ls
+ 1580  cd bin
+ 1581  ls
+ 1582  vim iscc
+ 1583  ./iscc
+ 1584  ls /usr/bin/ld
+ 1585  cd /usr/bin/ld
+ 1586  vim /usr/bin/ld
+ 1587  ./usr/bin/ld
+ 1588  /usr/bin/ld
+ 1589  ls -lhrt /usr/bin/ld
+ 1590  ls /usr/local
+ 1591  ls /usr/local/bin
+ 1592  ./iscc
+ 1593  ls
+ 1594  ls tools
+ 1595  cd ..
+ 1596  ls
+ 1597  ls iscc
+ 1598  find . -name iscc
+ 1599  #sh full_analysis.sh "ar.uba.dc.paper.Program1" 10
+ 1600  cd ..
+ 1601  subl -a install_all.sh
+ 1602  history | grep build
+ 1603  subl -a Dockerfile
+ 1604  sudo nautilus .
+ 1605  ls
+ 1606  cd ~
+ 1607  cd ..
+ 1608  ls
+ 1609  cd ..
+ 1610  ls
+ 1611  cd home
+ 1612  ls
+ 1613  sudo dropbox start
+ 1614  ls
+ 1615  chmod +777 Dropbox
+ 1616  sudo chmod +777 Dropbox
+ 1617  dropbox stop
+ 1618  ls
+ 1619  rm -R Dropbox
+ 1620  sudo rm -R Dropbox
+ 1621  ls
+ 1622  sudo rm -R Dropbox
+ 1623  ls
+ 1624  rm Defensa
+ 1625  ls
+ 1626  rm Defensa 
+ 1627  sudo rm Defensa 
+ 1628  dropbox start
+ 1629  dropbox clean start
+ 1630  ls
+ 1631  dropbox start
+ 1632  history
+ 1633  sudo dropbox start
+ 1634  ls
+ 1635  sudo chown billy Dropbox_backup_con_funcional/
+ 1636  cd Bi
+ 1637  ls
+ 1638  cdbilly
+ 1639  ls
+ 1640  cd billy/
+ 1641  ls
+ 1642  nohup nautilus .
+ 1643  cd Downloads/
+ 1644  nohup nautilus .
+ 1645  cd ~
+ 1646  cd ..
+ 1647  ls
+ 1648  cd Dropbox_backup_con_funcional/
+ 1649  ls
+ 1650  cd Dropbox/
+ 1651  ls
+ 1652  cd Dropbox/
+ 1653  ls
+ 1654  cd Dropbox/
+ 1655  ls
+ 1656  sudo cd Dropbox/
+ 1657  ls
+ 1658  sudo cd Dropbox/
+ 1659  ls
+ 1660  sudo cd Dropbox/
+ 1661  ñs
+ 1662  sudo nautilus .
+ 1663  ls
+ 1664  sudo subl Dropbox/
+ 1665  cd ~
+ 1666  cd Downloads/
+ 1667  ls
+ 1668  subl Magma\ Z2s\ Additive\ Codes
+ 1669  cd /home
+ 1670  ls
+ 1671  cd Dropbox_backup_con_funcional/
+ 1672  ls
+ 1673  sudo chown -R billy Dropbox
+ 1674  ls
+ 1675  cd Dropbox/
+ 1676  ls
+ 1677  dropbox start
+ 1678  dropbox clean start
+ 1679  dropbox stop
+ 1680  dropbox start
+ 1681  dropbox restart
+ 1682  dropbox start
+ 1683  htop
+ 1684  docker rm -f $(docker ps -a -q)
+ 1685  docker rmi -f $(docker images -q)
+ 1686  docker restart
+ 1687  docker restart jconsume2-img
+ 1688  docker build -t jconsume2-img .
+ 1689  docker build -t jconsume2-img ..
+ 1690  ls
+ 1691  ls Dockerfile 
+ 1692  cd ..
+ 1693  ls
+ 1694  cd java-project/
+ 1695  docker build -t jconsume2-img ..
+ 1696  docker build -t jconsume2-img .
+ 1697  ls
+ 1698  ls Dockerfile 
+ 1699  ls Dockerfile
+ 1700  vim Dockerfile
+ 1701  docker build -t jconsume2-img ..
+ 1702  ls docker
+ 1703  vim Dockerfile
+ 1704  cd docker
+ 1705  ls
+ 1706  vim Dockerfile 
+ 1707  cd ..
+ 1708  rm -R docker
+ 1709  ls
+ 1710  vim Dockerfile
+ 1711  docker build -t jconsume2-img .
+ 1712  mv Dockerfile ..
+ 1713  ls
+ 1714  cd ..
+ 1715  docker build -t jconsume2-img .
+ 1716  history | grep docker
+ 1717  docker build -t jconsume2-img .
+ 1718  docker pull
+ 1719  docker build -f Dockerfile -t jconsume2-img .
+ 1720  docker create -t -i jconsume2-img bash
+ 1721  docker-compose build
+ 1722  docker container prune
+ 1723  docker create -t -i jconsume2-img bash
+ 1724  docker create -t jconsume2-img bash
+ 1725  docker create -t jconsume2
+ 1726  docker create -t jconsume2 .
+ 1727  docker images
+ 1728  docker build -f Dockerfile -t jconsume2-img .
+ 1729  docker run hello-world
+ 1730  docker image ls
+ 1731  cdj
+ 1732  cat Dock
+ 1733  find . -name Dockerfile
+ 1734  cd docker
+ 1735  ls
+ 1736  vim Dockerfile 
+ 1737  docker image ls
+ 1738  docker build -t jconsume2-img
+ 1739  echo $JAVA_HOME
+ 1740  vim Dockerfile 
+ 1741  ls
+ 1742  java -jar original-jconsume2-0.0.1.jar
+ 1743  vim META-INF/MANIFEST.MF
+ 1744  ls
+ 1745  vim META-INF/MANIFEST.MF
+ 1746  nano META-INF/MANIFEST.MF
+ 1747  mkdir META-INF
+ 1748  cd META-INF/
+ 1749  vim MANIFEST.MF
+ 1750  subl
+ 1751  cd ..
+ 1752  subl .
+ 1753  ls
+ 1754  cd docker
+ 1755  ls
+ 1756  vim original-jconsume2-0.0.1.jar 
+ 1757  history | grep jar
+ 1758  cdj
+ 1759  mvn package
+ 1760  export JAVA_HOME=/usr/lib/jvm/java-8-oracle/jre/
+ 1761  mvn package
+ 1762  mvn package -Dmaven.test.skip=true
+ 1763  ls
+ 1764  ls -lhrt
+ 1765  cd target/
+ 1766  ls
+ 1767  ls -lhrt
+ 1768  mv jconsume2-0.0.1.jar ../docker/
+ 1769  cd ../docker/
+ 1770  ls
+ 1771  rm original-jconsume2-0.0.1.jar 
+ 1772  ls
+ 1773  vim Dockerfile 
+ 1774  ls
+ 1775  cd ..
+ 1776  ls
+ 1777  cd target/
+ 1778  ls
+ 1779  ls MET
+ 1780  ls MET*
+ 1781  ls .MET*
+ 1782  ls
+ 1783  cd ..
+ 1784  ls
+ 1785  cd docker/
+ 1786  ls
+ 1787  mv jconsume2-0.0.1.jar ../target/
+ 1788  ls
+ 1789  vim Dockerfile 
+ 1790  docker build -t jconsume2-img
+ 1791  docker build --help
+ 1792  history | grep docker
+ 1793  docker build -t jconsume2-img
+ 1794  docker build -t jconsume2-img .
+ 1795  mv ../target/jconsume2-0.0.1.jar .
+ 1796  vim Dockerfile 
+ 1797  docker build -t jconsume2-img .
+ 1798  ls
+ 1799  mv Dockerfile Dockerfile2
+ 1800  vim Dockerfile
+ 1801  $ docker build -f Dockerfile -t demo/maven:3.3-jdk-8 .
+ 1802  docker build -f Dockerfile -t demo/maven:3.3-jdk-8 .
+ 1803  cdj
+ 1804  vim .travis.yml
+ 1805  git add .travis.yml 
+ 1806  git commit -m "travis yml file"
+ 1807  git push jconsume master
+ 1808  git branch
+ 1809  vim .travis.yml
+ 1810  ls
+ 1811  ls -lhrt
+ 1812  cp .travis.yml ..
+ 1813  cd ..
+ 1814  ls
+ 1815  git add .travis.yml 
+ 1816  git commit -m "travis file copied to another location"
+ 1817  git push jconsume master
+ 1818  cd java-project/
+ 1819  ls
+ 1820  vim .travis.yml 
+ 1821  git add .travis.yml 
+ 1822  git commit -m "travis: only build master"
+ 1823  git push jconsume master
+ 1824  cat .travis.yml 
+ 1825  eclipse
+ 1826  history | grep docker
+ 1827  cd /
+ 1828  ls
+ 1829  cd home
+ 1830  ls
+ 1831  dropbox
+ 1832  dropbox start
+ 1833  dropbox running
+ 1834  driobix status
+ 1835  cd /
+ 1836  ls
+ 1837  cd home
+ 1838  ls
+ 1839  dropbox start
+ 1840  dropbox clean start
+ 1841  cdj
+ 1842  ls
+ 1843  history | grep docker
+ 1844  docker build -t jconsume2-img
+ 1845  cd ..
+ 1846  docker build -t jconsume2-img
+ 1847  docker build -t jconsume2-img .
+ 1848  docker image ls
+ 1849  docker create -t jconsume-img .
+ 1850  docker system prune
+ 1851  docker start jconsume2-img
+ 1852  docker create -t jconsume-img .
+ 1853  docker build -t jconsume2-img .
+ 1854  cdj
+ 1855  sh full_analysis.sh "ar.uba.dc.paper.Program1" 10
+ 1856  sh full_analysis.sh "ar.uba.dc.mst.MST" 10
+ 1857  sh full_analysis.sh "ar.uba.dc.jolden.mst.MST" 10
+ 1858  ls /home/billy/Projects/git/jconsume/java-project/target/test-classes/unanalizable_rules.xml
+ 1859  ls -lh /home/billy/Projects/git/jconsume/java-project/target/test-classes/unanalizable_rules.xml
+ 1860  cat /home/billy/Projects/git/jconsume/java-project/target/test-classes/unanalizable_rules.xml
+ 1861  subl
+ 1862  ls
+ 1863  git status .
+ 1864  git add src/test/java/ar/uba/dc/analysis/common/method/information/RuleBasedMethodInformationProviderTest.java
+ 1865  git add src/main/java/ar/uba/dc/analysis/common/intermediate_representation/IntermediateRepresentationMethod.java
+ 1866  gut cinnut -m "RuleBasedMethodInformationProviderTest updated"
+ 1867  gut commit -m "RuleBasedMethodInformationProviderTest updated"
+ 1868  git add src/test/java/ar/uba/dc/analysis/common/method/information/RuleBasedMethodInformationProviderTest.java
+ 1869  git commit -m "RuleBasedMethodInformationProviderTest updated"
+ 1870  git status .
+ 1871  git diff src/main/java/ar/uba/dc/tools/instrumentation/resource/tracker/Instrumenter.java
+ 1872  git add src/main/java/ar/uba/dc/tools/instrumentation/resource/tracker/Instrumenter.java src/main/java/ar/uba/dc/analysis/memory/impl/summary/repository/PaperDefaultSummaryRepository.java src/main/java/ar/uba/dc/analysis/memory/impl/summary/repository/DefaultSummaryRepository.java src/main/java/ar/uba/dc/analysis/escape/summary/repository/DefaultSummaryRepository.java src/main/java/ar/uba/dc/analysis/common/method/information/RuleBasedMethodInformationProvider.java src/main/java/ar/uba/dc/analysis/common/method/information/DefaultMethodInformationProvider.java src/main/java/ar/uba/dc/analysis/common/MethodInformationProvider.java
+ 1873  git commit -m "an old typo (conservativa)"
+ 1874  cd target/classes/
+ 1875  ls
+ 1876  cd src
+ 1877  cd ar/uba/dc/
+ 1878  ls
+ 1879  cd jolden/
+ 1880  ls
+ 1881  cd ..
+ 1882  find . -name rinard
+ 1883  cd rinard/
+ 1884  ls
+ 1885  cd ..
+ 1886  cd tacas
+ 1887  ls
+ 1888  find . -name tacas
+ 1889  cd ..
+ 1890  cdj
+ 1891  find . -name tacas
+ 1892  cd target/classes/
+ 1893  ls
+ 1894  cd ar/uba/dc/
+ 1895  find . -name poly*
+ 1896  cd ..
+ 1897  pwd
+ 1898  cd ..
+ 1899  gitk test.properties
+ 1900  gitk
+ 1901  gitk .
+ 1902  gitk test.properties
+ 1903  gitk test.properties .
+ 1904  gitk
+ 1905  git log test.properties
+ 1906  git show test.properties
+ 1907  gitk test.properies
+ 1908  gitk test.properties
+ 1909  gitk --follow test.properties
+ 1910  ls
+ 1911  gitk full_analysis.sh
+ 1912  cd target/classes/
+ 1913  ls
+ 1914  cd ar/uba/dc/
+ 1915  cd rinard/
+ 1916  ls
+ 1917  rm *
+ 1918  cd $EX
+ 1919  ls
+ 1920  cd rinard/
+ 1921  ls
+ 1922  cdj
+ 1923  mvn compile
+ 1924  export JAVA_HOME=/usr/lib/jvm/java-8-oracle/jre/
+ 1925  mvn compile
+ 1926  cd ..
+ 1927  ls
+ 1928  #docker create --name jconsume
+ 1929  history | grep docker
+ 1930  docker create --name jconsume2-img -p 80:80
+ 1931  docker create --name jconsume2-img -p 80:80 .
+ 1932  docker build -t jconsume2-img .
+ 1933  docker create -t -i jconsume2-img bash
+ 1934  docker build -t jconsume2-img .
+ 1935  cdj
+ 1936  pwd
+ 1937  docker create -t -i jconsume2-img bash
+ 1938  docker build -t jconsume2-img .
+ 1939  cd ..
+ 1940  ls
+ 1941  ls Dockerfile 
+ 1942  docker build -t jconsume2-img .
+ 1943  docker create -t -i jconsume2-img bash
+ 1944  docker build -t jconsume2-img .
+ 1945  cd java-project/
+ 1946  mvn clean install
+ 1947  mvn eclipse:clean
+ 1948  mvn clean compile
+ 1949  mvn install
+ 1950  mvn clean compile
+ 1951  mvn install
+ 1952  mvn compile
+ 1953  mvn clean
+ 1954  mvn install
+ 1955  mvn install -X
+ 1956  git diff pom.xml
+ 1957  cp pom.xml BACKUP_pom.xml
+ 1958  git checkout pom.xml
+ 1959  mvn compile
+ 1960  mvn install
+ 1961  ls
+ 1962  meld pom.xml BACKUP_pom.xml 
+ 1963  mvn eclipse:clean
+ 1964  mvn compile
+ 1965  mvn clean install
+ 1966  sh full_analysis.sh 
+ 1967  ls target/classes/
+ 1968  sh full_analysis.sh "ar.uba.dc.jolden.mst.MST" 10
+ 1969  cd ..
+ 1970  ls
+ 1971  docker build -t jconsume2-img .
+ 1972  #sh full_analysis.sh "ar.uba.dc.jolden.mst.MST" 10
+ 1973  history | grep docker
+ 1974  docker system prune
+ 1975  docker build -t jconsume2-img .
+ 1976  docker build -t jconsume .
+ 1977  sudo vim /etc/environment
+ 1978  cd dependencies/
+ 1979  ls
+ 1980  vim install.sh
+ 1981  eclipse
+ 1982  eclipse -clean
+ 1983  cdj
+ 1984  cd ..
+ 1985  ls
+ 1986  docker build -t jconsume .
+ 1987  history > history.log
