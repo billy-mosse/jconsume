@@ -15,7 +15,7 @@
   		<plugin>
   			<groupId>org.apache.maven.plugins</groupId>
   			<artifactId>maven-compiler-plugin</artifactId>
-  			<version>3.1</version>
+  			<version>3.6.1</version>
   			<configuration>
           		<source>1.8</source>
           		<target>1.8</target>
@@ -389,9 +389,15 @@
   	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <antlr4.visitor>true</antlr4.visitor>
     <antlr4.listener>true</antlr4.listener>
+    <maven.compiler.source>1.7</maven.compiler.source>
+    <maven.compiler.target>1.7</maven.compiler.target>
   </properties>
   
   <developers>
+    <developer>
+      <name>Guillermo Mosse</name>
+      <email>gmosse@dc.uba.ar</email>
+    </developer>
   	<developer>
   		<name>Martin Rouaux</name>
   		<email>mrouaux@dc.uba.ar</email>

@@ -11,11 +11,11 @@ echo Ejecutando Chicory
 
 #DAIKON_JAR=../utils/daikon/daikon4.jar
 
-JAVA_HOME=/usr/lib/jvm/java-8-oracle/jre/bin
+JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre/bin
 
-PROJECT_FOLDER=$HOME/Projects/git/jconsume/java-project
+PROJECT_FOLDER=$HOME/Projects/jconsume/java-project
 
-DAIKON_JAR=~/Programs/daikon/daikon-5.5.14/daikon.jar
+DAIKON_JAR=$HOME/Programs/daikon/daikon-5.5.14/daikon.jar
 
 #$CLASSPATH=$CLASSPATH:/usr/lib/jvm/java-7-oracle/lib/tools.jar:/home/billy/Projects/git/jconsume-global/jconsume-global/src/examples:/home/billy/Projects/git/jconsume-global/jconsume-global/bin/pruebas:/home/billy/Projects/git/jconsume-global/jconsume-global/src/pruebas:/home/billy/Projects/git/jconsume-global/jconsume-global/out:/home/billy/Projects/git/jconsume-global/jconsume-global/src:/home/billy/Projects/git/jconsume-global/jconsume-global:/home/billy/Projects/git/jconsume-global/jconsume-global/bin/examples:/home/billy/Projects/git/jconsume-global/jconsume-global/bin:/usr/lib/jvm/java-7-oracle/bin:.:
 
@@ -25,11 +25,11 @@ DAIKON_JAR=~/Programs/daikon/daikon-5.5.14/daikon.jar
 #JAVA4CP=$JAVA4HOME/bundle/Classes/classes.jar
 
 
-#CLASSPATH=$DAIKON_JAR:/usr/lib/jvm/java-8-oracle/lib/tools.jar:/usr/lib/jvm/java-8-oracle/jre/bin/jre/lib/rt.jar:/home/billy/Projects/git/jconsume-global/jconsume-global/src/:/home/billy/Projects/git/jconsume-global/jconsume-global/out/:/home/billy/Projects/git/jconsume-global/jconsume-global/src/main/examples/:$JAVA4CP:.
+#CLASSPATH=$DAIKON_JAR:/usr/lib/jvm/java-8-openjdk-amd64/lib/tools.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/jre/lib/rt.jar:/home/billy/Projects/git/jconsume-global/jconsume-global/src/:/home/billy/Projects/git/jconsume-global/jconsume-global/out/:/home/billy/Projects/git/jconsume-global/jconsume-global/src/main/examples/:$JAVA4CP:.
 
 
 
-CLASSPATH=$DAIKON_JAR:/usr/lib/jvm/java-8-oracle/jre/bin/jre/lib/rt.jar:/usr/lib/jvm/java-8-oracle/jre/bin/lib/tools.jar:$PROJECT_FOLDER/out/$1/:$PROJECT_FOLDER/src/main/examples/
+CLASSPATH=$DAIKON_JAR:/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/jre/lib/rt.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/lib/tools.jar:$PROJECT_FOLDER/out/$1/:$PROJECT_FOLDER/src/main/examples/
 
 
 #echo "DynComp"

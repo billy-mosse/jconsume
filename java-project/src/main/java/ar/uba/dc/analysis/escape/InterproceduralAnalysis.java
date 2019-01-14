@@ -262,13 +262,15 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 	public void analyseCall(Box<EscapeSummary> src, Stmt callStmt, Box<EscapeSummary> dst) {
 		log.debug(" | | |- Analyse call: " + callStmt);
 		
+		
+		//trustInterfaceSummaries=true;
 		if (trustInterfaceSummaries && (callStmt.getInvokeExpr() instanceof InterfaceInvokeExpr)) {
 			log.debug(" | | | |- Trust interface mode is enabled. Searching interface summary");
 			
 			EscapeSummary summary = repository.get(callStmt.getInvokeExpr().getMethod());
 			
 			if (summary != null) {
-				log.debug(" | | | | |- Summary found. Retriving it");
+				log.debug(" | | | | |- Summary found. Retreiving it");
 				unanalysed.put(callStmt.getInvokeExpr().getMethod(), summary);
 				Box<EscapeSummary> temp = new Box<EscapeSummary>(newInitialSummary(src.getValue().getTarget()));
 				summaryApplier.applySummary(src, callStmt, summary, temp);
@@ -285,11 +287,12 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 		
 		int mergedSummaries = 0;
 		dst.setValue(newInitialSummary(src.getValue().getTarget()));
+		
+		//mergea los PTG de los callees con src
 		while (it.hasNext()) {
 			Edge edge = it.next();
 			SootMethod m = edge.tgt();
 			if (implementation == null || implementation.equals(m.getDeclaringClass())) {
-				//Comente la parte de que se excluyan los metodos de java., pero tal vez no deberia, porque hay un monton de metodos que ahora se analizan que no voy a resolver con notaciones.
 				if (!methodInformationProvider.isExcluded(m)) {
 					//TODO: ver que pasa con iterator!
 					
@@ -309,6 +312,7 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 						throw new RuntimeException("Escape summary for method [" + m.getSignature() + "] not found. Is this method unanalizable?");
 					}
 		
+					//supongo que mergea el summary del callee con src?
 					summaryApplier.applySummary(src, callStmt, summary, temp);
 					dst.getValue().union(temp.getValue());
 					log.debug(" | | | |- Merge finished");
