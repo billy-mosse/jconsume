@@ -50,4 +50,10 @@ protected ParametricExpressionFactory expressionFactory;
 	public void setSymbolicCalculator(SymbolicCalculator symbolicCalculator) {
 		this.symbolicCalculator = symbolicCalculator;
 	}
+
+	@Override
+	public ParametricExpression getNonHTMLMemReq(MemorySummary summary) {
+		// Hack
+		return getMemReq(summary);
+	}
 }

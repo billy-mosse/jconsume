@@ -11,6 +11,7 @@ import org.apache.commons.lang.StringUtils;
 
 import ar.uba.dc.analysis.memory.expression.ParametricExpression;
 import ar.uba.dc.analysis.memory.impl.BarvinokParametricExpression;
+import ar.uba.dc.analysis.memory.impl.madeja.PaperMemorySummary;
 import ar.uba.dc.analysis.memory.summary.MemReqSummarizer;
 import ar.uba.dc.analysis.memory.summary.MemorySummary;
 import ar.uba.dc.analysis.memory.summary.ResidualSummarizer;
@@ -37,6 +38,11 @@ public class EscapeBasedMemorySummaryInterpreter implements MemorySummaryInterpr
 		return expressionToString(residualSummarizer.getResidual(summary));
 	}
 	
+	@Override
+	public String getNonHTMLResidual(MemorySummary summary) {
+		return expressionToNonHTMLString(residualSummarizer.getResidual(summary));
+	}
+	
 	protected String expressionToString(ParametricExpression expr) {
 		String result = null;
 		
@@ -56,6 +62,34 @@ public class EscapeBasedMemorySummaryInterpreter implements MemorySummaryInterpr
 			
 			if (parts.size() > 1) {
 				result = "<ul><li>" + StringUtils.join(parts, "</li><li>") + "</li></ul>";
+			} else {
+				result = parts.getFirst();
+			}
+		} else {
+			result = expr.toString();
+		}
+		return result;
+	}
+	
+	protected String expressionToNonHTMLString(ParametricExpression expr) {
+		String result = null;
+		
+		if (expr instanceof BarvinokParametricExpression) {
+			BarvinokParametricExpression paramExpr = (BarvinokParametricExpression) expr;
+			LinkedList<String> parts = new LinkedList<String>(); 
+			
+			for (QuasiPolynomial q : paramExpr.getExpression().getPieces()) {
+				if (!q.getPolynomial().equals("0")) {
+					parts.add(q.asString());
+				}
+			}
+			
+			if (parts.isEmpty()) {
+				parts.add("0");
+			}
+			
+			if (parts.size() > 1) {
+				result = StringUtils.join(parts, ";");
 			} else {
 				result = parts.getFirst();
 			}
@@ -141,4 +175,11 @@ public class EscapeBasedMemorySummaryInterpreter implements MemorySummaryInterpr
 	public String getMemReq(MemorySummary summary) {
 		return this.expressionToString(this.memReqSummarizer.getMemReq(summary));
 	}
+
+	@Override
+	public String getNonHTMLMemReq(MemorySummary summary) {
+		return this.expressionToNonHTMLString(this.memReqSummarizer.getNonHTMLMemReq(summary));
+	}
+
+	
 }

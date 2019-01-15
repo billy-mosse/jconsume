@@ -36,10 +36,19 @@ public class HtmlPaperReportHelper {
 		return interpreter.getResidual(summary);
 	}
 
+
+	public String getNonHTMLResidual(PaperMemorySummary summary) {
+		return interpreter.getNonHTMLResidual(summary);
+	}
+	
 	public String getMemReq(PaperMemorySummary summary) {
 		return interpreter.getMemReq(summary);
 	}
 
+	public String getNonHTMLMemoryRequirement(
+			PaperMemorySummary summary) {
+		return interpreter.getNonHTMLMemReq(summary);
+	}
 	
 	public boolean hasEscapeDetail(PaperMemorySummary summary) {
 		return interpreter.hasEscapeDetail(summary);
@@ -60,4 +69,6 @@ public class HtmlPaperReportHelper {
 	public Map<String, String> getResidualPartitions(PaperMemorySummary summary) {
 		return interpreter.getResidualPartitions(summary);
 	}
+
+	
 }

@@ -1,19 +1,30 @@
 package ar.uba.dc.analysis.memory.impl.report.html;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
+import java.util.SortedSet;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.FileFilterUtils;
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 
+import com.google.gson.Gson;
+
+import ar.uba.dc.analysis.memory.expression.ParametricExpression;
 import ar.uba.dc.analysis.memory.impl.ReportWriter;
 import ar.uba.dc.analysis.memory.impl.madeja.PaperMemorySummary;
 import ar.uba.dc.analysis.memory.summary.MemorySummary;
@@ -73,7 +84,56 @@ public class HtmlPaperReportWriter implements ReportWriter<String, PaperMemorySu
 		} catch (Exception e) {
 			log.error("No fue posible generar el reporte: " + e.getMessage());
 		}
+		
+		
+		
+		JsonReportWriter jsonWriter = new JsonReportWriter();
+		jsonWriter.build();
+		
+		String location = reportFolder + "/report.json";
+		log.debug("Writing JSON output...");
+		
+		File srcFile = new File(location);
+		
+				
+		try {
+			//xstream.toXML(ir_method, new FileWriter(srcFile, false));
+			//PrintWriter writer = new PrintWriter(srcFile, "UTF-8");
+			//writer.println(ir_method.toHumanReadableString());
+			//writer.close();
+			
+            //BufferedWriter bwr = new BufferedWriter(new FileWriter(srcFile));
+            
+            BufferedWriter bwr = new BufferedWriter
+            	    (new OutputStreamWriter(new FileOutputStream(srcFile),"UTF-8"));
+            
+            for (Entry<String, SortedSet<PaperMemorySummary>> item : ds.getClassIndex().entrySet()) {
+    		    String className = item.getKey();
+    		    JsonClassSummary jsonClassSummary = new JsonClassSummary(className);
+    		    
+    		    //Hack: por que es un sorted set? no deberia haber un solo memory summary por metodo?
+    		    SortedSet<PaperMemorySummary> paperMemorySummaries = item.getValue();
+    		    
+    		    for(PaperMemorySummary paperMemorySummary : paperMemorySummaries){
+    		    	String rsd = ((HtmlPaperReportHelper)context.get("helper")).getNonHTMLResidual(paperMemorySummary);
+    		    	String memoryRequirement = ((HtmlPaperReportHelper)context.get("helper")).getNonHTMLMemoryRequirement(paperMemorySummary);
+    		    	String parameters = paperMemorySummary.getParameters().toString();
+    		    	JsonMethodSummary jsonMethodSummary = new JsonMethodSummary(parameters, paperMemorySummary.getTarget().getName(), memoryRequirement, rsd);
+    		    	jsonClassSummary.addJsonMemorySummary(jsonMethodSummary);
+    		    }    		    
+    		    
+    		    String s =  StringEscapeUtils.unescapeJava(jsonWriter.gson.toJson(jsonClassSummary)); 
+    	        bwr.write(s);
+    		}     
+            bwr.flush();
+            bwr.close();
+		}
+        catch(Exception e )
+        {	
+        	log.error("No fue posible generar el reporte en formato JSON: " + e.getMessage());
+        }
 	}
+
 
 	protected boolean init() {
 		if (!initialized) {

@@ -77,6 +77,36 @@ public class SummaryInterpreter  implements MemorySummaryInterpreter<MemorySumma
 		}
 		return result;
 	}
+	
+	protected String expressionToNonHTMLString(ParametricExpression expr) {
+		String result = null;
+		
+		if (expr instanceof BarvinokParametricExpression) {
+			BarvinokParametricExpression paramExpr = (BarvinokParametricExpression) expr;
+			LinkedList<String> parts = new LinkedList<String>(); 
+			
+			for (QuasiPolynomial q : paramExpr.getExpression().getPieces()) {
+				if (!q.getPolynomial().equals("0")) {
+					parts.add(q.asString());
+				}
+			}
+			
+			if (parts.isEmpty()) {
+				parts.add("0");
+			}
+			
+			if (parts.size() > 1) {
+				result = StringUtils.join(parts, ";");
+			} else {
+				result = parts.getFirst();
+			}
+		} else {
+			result = expr.toString();
+		}
+		return result;
+	}
+	
+	
 	@Override
 	public String getEscapeDetail(MemorySummary summary) {
 		// TODO Auto-generated method stub
@@ -127,6 +157,17 @@ public class SummaryInterpreter  implements MemorySummaryInterpreter<MemorySumma
 		//BILLY, cambiado
 		ParametricExpression memReq = this.memReqSummarizer.getMemReq(summary);
 		return this.isccFormat ? memReq.toString() : expressionToString(memReq);
+	}
+
+	@Override
+	public String getNonHTMLResidual(MemorySummary summary) {
+		return expressionToNonHTMLString(residualSummarizer.getResidual(summary));
+	}
+
+	@Override
+	public String getNonHTMLMemReq(MemorySummary summary) {
+		ParametricExpression memReq = this.memReqSummarizer.getMemReq(summary);
+		return this.isccFormat ? memReq.toString() : expressionToNonHTMLString(memReq);
 	}
 	
 	

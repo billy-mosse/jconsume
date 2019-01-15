@@ -50,6 +50,12 @@ public class PaperSummaryInterpreter  implements MemorySummaryInterpreter<PaperM
 		return expressionToString(residualSummarizer.getResidual(summary));
 	}
 	
+	@Override
+	public String getNonHTMLResidual(PaperMemorySummary summary) {
+		return expressionToNonHTMLString(residualSummarizer.getResidual(summary));
+	}
+	
+	
 	protected String expressionToString2(ParametricExpression expr) {
 		return expr.toString();
 	}
@@ -73,6 +79,34 @@ public class PaperSummaryInterpreter  implements MemorySummaryInterpreter<PaperM
 			
 			if (parts.size() > 1) {
 				result = "<ul><li>" + StringUtils.join(parts, "</li><li>") + "</li></ul>";
+			} else {
+				result = parts.getFirst();
+			}
+		} else {
+			result = expr.toString();
+		}
+		return result;
+	}
+	
+	protected String expressionToNonHTMLString(ParametricExpression expr) {
+		String result = null;
+		
+		if (expr instanceof BarvinokParametricExpression) {
+			BarvinokParametricExpression paramExpr = (BarvinokParametricExpression) expr;
+			LinkedList<String> parts = new LinkedList<String>(); 
+			
+			for (QuasiPolynomial q : paramExpr.getExpression().getPieces()) {
+				if (!q.getPolynomial().equals("0")) {
+					parts.add(q.asString());
+				}
+			}
+			
+			if (parts.isEmpty()) {
+				parts.add("0");
+			}
+			
+			if (parts.size() > 1) {
+				result = StringUtils.join(parts, ";");
 			} else {
 				result = parts.getFirst();
 			}
@@ -134,6 +168,12 @@ public class PaperSummaryInterpreter  implements MemorySummaryInterpreter<PaperM
 		//BILLY, cambiado
 		ParametricExpression memReq = this.memReqSummarizer.getMemReq(summary);
 		return this.isccFormat ? memReq.toString() : expressionToString(memReq);
+	}
+
+	@Override
+	public String getNonHTMLMemReq(PaperMemorySummary summary) {
+		ParametricExpression memReq = this.memReqSummarizer.getMemReq(summary);
+		return this.isccFormat ? memReq.toString() : expressionToNonHTMLString(memReq);
 	}
 	
 	

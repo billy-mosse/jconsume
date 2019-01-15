@@ -39,6 +39,11 @@ public class EscapeBasedPaperMemorySummaryInterpreter implements MemorySummaryIn
 		return expressionToString(residualSummarizer.getResidual(summary));
 	}
 	
+	@Override
+	public String getNonHTMLResidual(PaperMemorySummary summary) {
+		return expressionToNonHTMLString(residualSummarizer.getResidual(summary));
+	}
+	
 	protected String expressionToString(ParametricExpression expr) {
 		String result = null;
 		
@@ -58,6 +63,34 @@ public class EscapeBasedPaperMemorySummaryInterpreter implements MemorySummaryIn
 			
 			if (parts.size() > 1) {
 				result = "<ul><li>" + StringUtils.join(parts, "</li><li>") + "</li></ul>";
+			} else {
+				result = parts.getFirst();
+			}
+		} else {
+			result = expr.toString();
+		}
+		return result;
+	}
+	
+	protected String expressionToNonHTMLString(ParametricExpression expr) {
+		String result = null;
+		
+		if (expr instanceof BarvinokParametricExpression) {
+			BarvinokParametricExpression paramExpr = (BarvinokParametricExpression) expr;
+			LinkedList<String> parts = new LinkedList<String>(); 
+			
+			for (QuasiPolynomial q : paramExpr.getExpression().getPieces()) {
+				if (!q.getPolynomial().equals("0")) {
+					parts.add(q.asString());
+				}
+			}
+			
+			if (parts.isEmpty()) {
+				parts.add("0");
+			}
+			
+			if (parts.size() > 1) {
+				result = StringUtils.join(parts, ";") ;
 			} else {
 				result = parts.getFirst();
 			}
@@ -142,5 +175,10 @@ public class EscapeBasedPaperMemorySummaryInterpreter implements MemorySummaryIn
 	@Override
 	public String getMemReq(PaperMemorySummary summary) {
 		return this.expressionToString(this.memReqSummarizer.getMemReq(summary));
+	}
+	
+	@Override
+	public String getNonHTMLMemReq(PaperMemorySummary summary) {
+		return this.expressionToNonHTMLString(this.memReqSummarizer.getMemReq(summary));
 	}
 }
