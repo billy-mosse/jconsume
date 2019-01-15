@@ -19,7 +19,9 @@ The document is divided in several sections:
 	5) Tool configuration (in construction)
 	6) Execution
 		6.1) Introduction
-		6.2) Some examples
+		6.2) Docker!
+		6.3) Some examples
+
 
 
 Description
@@ -220,6 +222,45 @@ Daikon will run the program several times with different parameters (assigned by
 Execution
 =======================
 
+
+Docker! 
+--------
+
+Download the docker image with the command:
+
+```docker pull gmosse/jconsume-1```
+
+Create the container:
+
+```docker create gmosse/jconsume-1```
+
+
+Jump in:
+
+```docker exec -i -t #container_id /bin/bash```
+
+You are now inside the container. The project is located in /root/Projects/jconsume/java-project. Let's compile and run an example:
+
+```cd /root/Projects/jconsume/java-project/src/main/examples```
+```javac -g ar/uba/dc/jolden/mst/*.java```
+
+```cd /root/Projects/jconsume/java-project```
+
+
+This command runs the full analysis. The number 10 is related to the amount of iterations daikon does to find invariants.
+```./full_analysis.sh "ar.uba.dc.jolden.mst.MST" 10```
+
+
+The results are stored in results/rinard/report. There are two formats: html and json.
+
+```cd results/rinard/report```
+
+You can check the json format reading this file:
+
+```cat report.json```
+
+
+
 Here we'll present several analysis of toy examples and some of real programs (Em3d and MST).
 
 Toy examples
@@ -231,7 +272,7 @@ The simplest example: a for loop from 1 to n.
 
 Just go to java-project and run the following command:
 
-```sh full_analysis.sh "ar.uba.dc.daikon.Ins0" 10```
+```./full_analysis.sh "ar.uba.dc.daikon.Ins0" 10```
 
 The second parameter is for how many runs of the program (with increasing numeric parameters) are used to infer likely loop invariants.
 
@@ -245,7 +286,7 @@ This example is pretty similar to Ins0, but the loop goes up to the field of an 
 
 As with Ins0, just go to java-project and run the following command:
 
-```sh full_analysis.sh "ar.uba.dc.daikon.Ins1" 10```
+```./full_analysis.sh "ar.uba.dc.daikon.Ins1" 10```
 
 This will calculate what we call the loop invariants [TODO explain elsewhere] and then use them to calculate the memory consumption of the program.
 
@@ -310,7 +351,7 @@ This is a real world program! It's part of the Jolden benchmark.
 
 Go to java-project and just run the following command:
 
-```sh full_analysis.sh "ar.uba.dc.jolden.mst.MST" 5```
+```./full_analysis.sh "ar.uba.dc.jolden.mst.MST" 5```
 
 As daikon, the tool we use to generate program invariants, isn't exhaustive (no tool can be), sometimes we need to *annotate* them. An example of this feature can be seen in the constructor of the Vertex class of MST. There, you can find a InstrumentationSiteInvariantList with only one annotated invariant, that establishes a linear relationship between numvert and a temporal variable. The name of the temporal variable can be obtained from the file we generated with daikon, that is, Vertex.spec.
 
@@ -360,7 +401,7 @@ This is another real world program, also part of the Jolden benchmark.
 
 Go to java-project and just run the following command:
 
-```sh full_analysis.sh "ar.uba.dc.jolden.mst.MST" 5```
+```./full_analysis.sh "ar.uba.dc.jolden.mst.MST" 5```
 
 As it happened with MST, this program also has annotated invariants not captured by daikon. There are three of them: two for the method create(), and one for compute().
 
@@ -429,7 +470,7 @@ Then go again to jconsume/java-project and run the following command:
 
 ```sh memory.sh --program "ar.uba.dc.paper.Program1" --ir --memory```-->
 
-```sh full_analysis.sh --program "ar.uba.dc.paper.Program1" --ir --memory```
+```./full_analysis.sh --program "ar.uba.dc.paper.Program1" --ir --memory```
 
 This generates the memory consumption analysis. Results can be seen in java-project/results/rinard/report_ar.uba.dc.paper.Program1/index.html
 
@@ -442,3 +483,9 @@ Same as before, but change the 1 for a 2.
 
 
 <!-- <> Test -->
+
+
+
+
+
+
