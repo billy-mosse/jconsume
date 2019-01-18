@@ -16,6 +16,7 @@ import org.junit.Test;
 import org.junit.experimental.theories.Theories;
 import org.junit.runner.RunWith;
 
+import soot.Scene;
 import soot.SootMethod;
 import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.options.Options;
@@ -28,9 +29,12 @@ import ar.uba.dc.soot.Box;
 import ar.uba.dc.soot.DirectedCallGraph;
 import ar.uba.dc.soot.SootUtils;
 
+//Tira error, ver https://github.com/Sable/soot/issues/874
+
+//java.lang.RuntimeException: Failed to convert <java.util.stream.FindOps: java.util.stream.TerminalOp makeRef(boolean)>
+
 @RunWith(Theories.class)
 @SuppressWarnings("unused")
-@Ignore
 
 //TODO no estan los ejemplos? por alguna razon no anda.
 public class IntraproceduralTest {
@@ -41,15 +45,32 @@ public class IntraproceduralTest {
 	@Before
 	public void setUp() {
 		Options.v().set_whole_program(true);
+		Options.v().set_asm_backend(true);
+		Options.v().set_java_version(7);
+		
+		
+		
+		//Options.v().set_version(true);
+		
 		ctx = ContextFactory.getContext("test.properties");
-		SootUtils.setClasspath(ctx);
+		
+		//workaround choto https://github.com/Sable/soot/issues/874, sino no anda
+		String t = "/usr/lib/jvm/java-7-oracle/jre/lib/rt.jar:/usr/lib/jvm/java-7-oracle/jre/lib/jce.jar:/home/billy/Projects/git/jconsume/java-project/target/classes/../classes";
+		//Scene.v().setSootClassPath(t);
+		
+		
 		//hack choto:
-		//String basePath = ctx.getString("project.classes.classpath") + "/escape/summary/";
-		String basePath = "/home/billy/Projects/git/jconsume/java-project/target/test-classes/escape/summary/";
+		Scene.v().setSootClassPath(t);
+
+		String basePath = ctx.getString("project.classes.classpath") + "/escape/summary/";
+		//String basePath = "/home/billy/Projects/git/jconsume/java-project/target/test-classes/escape/summary/";
 		location.put(SootUtils.getMethod("ar.uba.dc.simple.EjemploSimple01", "void main(java.lang.String[])"), basePath + "ejemplosimple01");
 		location.put(SootUtils.getMethod("ar.uba.dc.rinard.BasicTest", "void main(java.lang.String[])"), basePath + "rinard");
-		location.put(SootUtils.getMethod("ar.uba.dc.jolden.mst.MST", "void main(java.lang.String[])"), basePath + "mst");
-		location.put(SootUtils.getMethod("ar.uba.dc.tacas.Snippet01", "void main(java.lang.String[])"), basePath + "tacas");
+		//location.put(SootUtils.getMethod("ar.uba.dc.jolden.mst.MST", "void main(java.lang.String[])"), basePath + "mst");
+		
+		//this one got lost
+		//location.put(SootUtils.getMethod("ar.uba.dc.tacas.Snippet01", "void main(java.lang.String[])"), basePath + "tacas");
+		
 		location.put(SootUtils.getMethod("ar.uba.dc.basic.polymorphism.expectation.BasicTest", "void main(java.lang.String[])"), basePath + "algoritmo");
 	}
 	
@@ -57,8 +78,8 @@ public class IntraproceduralTest {
 		return new SootMethod[] {
 			SootUtils.getMethod("ar.uba.dc.simple.EjemploSimple01", "void main(java.lang.String[])"),
 			SootUtils.getMethod("ar.uba.dc.rinard.BasicTest", "void main(java.lang.String[])"),
-			SootUtils.getMethod("ar.uba.dc.jolden.mst.MST", "void main(java.lang.String[])"),
-			SootUtils.getMethod("ar.uba.dc.tacas.Snippet01", "void main(java.lang.String[])"),
+			//SootUtils.getMethod("ar.uba.dc.jolden.mst.MST", "void main(java.lang.String[])"),
+			//SootUtils.getMethod("ar.uba.dc.tacas.Snippet01", "void main(java.lang.String[])"),
 			SootUtils.getMethod("ar.uba.dc.basic.polymorphism.expectation.BasicTest", "void main(java.lang.String[])")
 		};
 	}
@@ -83,6 +104,7 @@ public class IntraproceduralTest {
 		
 		System.setProperty("escape.summary.repository.layout", "Folder");
 		for (SootMethod method : methods()) {
+			System.out.println(" -- Working with: " + method.toString());
 			for (Integer sensitivity : sensitivitiesForMethod.get(method)) {
 				System.setProperty("escape.summary.repository.dir", location.get(method) + "-k-" + Integer.toString(sensitivity, 10));
 				System.setProperty("escape.sensitivity", Integer.toString(sensitivity, 10));
@@ -92,6 +114,9 @@ public class IntraproceduralTest {
 				System.setProperty("escape.summary.unanalized.enabled", "false");
 				System.setProperty("escape.interprocedural.include.captured.nodes.from.callee.into.caller", "true");
 				ctx = ContextFactory.getContext("test.properties");
+				
+				
+				
 				CallGraph cg = SootUtils.getCallGraph(method.getDeclaringClass().getName(), method.getSubSignature(), ctx);
 				
 				SummaryRepository<EscapeSummary, SootMethod> repository = ctx.getFactory().getEscapeRepository();
