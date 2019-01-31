@@ -6,13 +6,13 @@ import java.util.Map;
 
 import ar.uba.dc.barvinok.expression.PiecewiseQuasipolynomial;
 
-public class AnnotationsContainer {
+public class MemoryAnnotationsContainer {
 	
-	public AnnotationsContainer()
+	public MemoryAnnotationsContainer()
 	{
-		this.annotations = new HashMap<String, Annotation>();
+		this.annotations = new HashMap<String, MemoryAnnotation>();
 	}
 	
-	public Map<String, Annotation> annotations; //key=method signature
+	public Map<String, MemoryAnnotation> annotations; //key=method signature
 	//creo que ya tenia una manera de obtener la firma en otro lado
 }

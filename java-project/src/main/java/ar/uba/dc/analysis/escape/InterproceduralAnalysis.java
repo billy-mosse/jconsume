@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
@@ -26,20 +26,18 @@ import ar.uba.dc.analysis.common.SummaryReader;
 import ar.uba.dc.analysis.common.SummaryRepository;
 import ar.uba.dc.analysis.common.SummaryWriter;
 import ar.uba.dc.analysis.common.code.MethodDecorator;
+import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
+import ar.uba.dc.analysis.common.intermediate_representation.io.writer.JsonIRWriter;
+import ar.uba.dc.analysis.common.method.information.JsonBasedEscapeAnnotationsProvider;
+import ar.uba.dc.analysis.escape.summary.EscapeAnnotation;
+import ar.uba.dc.analysis.escape.summary.EscapeAnnotationsSummaryFactory;
 import ar.uba.dc.analysis.escape.summary.repository.RAMSummaryRepository;
-import ar.uba.dc.analysis.memory.LifeTimeOracle;
 import ar.uba.dc.analysis.memory.PaperInterproceduralAnalysis;
 import ar.uba.dc.analysis.memory.impl.summary.EscapeBasedLifeTimeOracle;
+import ar.uba.dc.invariant.InvariantProvider;
 import ar.uba.dc.soot.Box;
 import ar.uba.dc.util.Timer;
 
-import ar.uba.dc.invariant.InvariantProvider;
-
-import java.util.List;
-
-
-import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
-import ar.uba.dc.analysis.common.intermediate_representation.io.writer.JsonIRWriter;
 
 public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis implements CallAnalyzer {
 	
@@ -62,9 +60,14 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 	protected SummaryWriter<IntermediateRepresentationMethod> irWriter;
 
 	private SummaryWriter<IntermediateRepresentationMethod> ihrWriter;
-	
+
 	private SummaryWriter<IntermediateRepresentationMethod> jsonIrWriter;
 	
+	private JsonBasedEscapeAnnotationsProvider jsonBasedEscapeAnnotationsProvider;
+	
+	
+	private EscapeAnnotationsSummaryFactory escapeAnnotationsSummaryFactory;
+
 	protected SummaryReader<IntermediateRepresentationMethod> irReader;	
 	
 	protected SummaryApplier summaryApplier;
@@ -195,6 +198,12 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 	}
 	
 	protected void internalDoAnalysis() {
+		
+		
+		this.jsonBasedEscapeAnnotationsProvider.fetchAnnotations(this.mainClass);
+		
+		
+		
 		SortedSet<SootMethod> queue = new TreeSet<SootMethod>(getOrderComparator());
 
 		
@@ -208,6 +217,8 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 
 		Map<SootMethod, Integer> nb = new HashMap<SootMethod, Integer>(); // only for debug pretty-printing
 
+		//OJO que procesa solo metodos no filtrados (no abstractos, no nativos, etc). Ver la clase DirectedCallGraph.
+		
 		// fixpoint iterations
 		while (!queue.isEmpty()) {
 			SootMethod m = queue.first();
@@ -227,9 +238,21 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 					log.info(" |- processing " + m.toString() + " (" + nb.get(m) + "-st time)");
 	
 					Box<EscapeSummary> destBox = new Box<EscapeSummary>(newSummary);
+					
+					//Hace un analisis intraprocedural del metodo
+					//incluye combinar los análisis de los callees
+					//Usa DefaultInterproceduralMapper, DefaultSummaryApplier, DefaultSummaryCombiner 
 					analyseMethod(m, destBox);
+					
 					if (!oldSummary.equals(destBox.getValue())) {
 						// summary for m changed!
+						
+
+						//en el fondo no esta recorriendo los metodos en orden topologico?
+						//"cambiar" es que no es un summary trivial, no?
+						//salvo que haya recursion
+						
+						//P_0 - n -> L_1, se lee como que P_0 apunta a L_1 via el field n.
 						data.put(m, destBox.getValue());
 						List<SootMethod> l = directedCallGraph.getPredsOf(m);
 						queue.addAll(l);
@@ -269,7 +292,7 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 			
 			EscapeSummary summary = repository.get(callStmt.getInvokeExpr().getMethod());
 			
-			if (summary != null) {
+			if (summary != null ) {
 				log.debug(" | | | | |- Summary found. Retreiving it");
 				unanalysed.put(callStmt.getInvokeExpr().getMethod(), summary);
 				Box<EscapeSummary> temp = new Box<EscapeSummary>(newInitialSummary(src.getValue().getTarget()));
@@ -277,7 +300,31 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 				dst.getValue().union(temp.getValue());
 				return;
 			} else {
-				log.debug(" | | | | |- Escape summary not found. Continue with call analysis");
+				
+				
+				EscapeAnnotation escapeAnnotation = jsonBasedEscapeAnnotationsProvider.get(callStmt.getInvokeExpr().getMethod().getName());
+				if(escapeAnnotation != null)
+				{
+					
+				}
+				else
+				{
+					log.debug(" | | | | |- Escape summary not found. Continue with call analysis");
+				}
+				
+				//aca deberia usar anotaciones.
+				//annotationRepository deberia tener cargados los summaries calculados en base a las anotaciones
+				/*
+				 *
+				 * EscapeSummary annotatedSummary = annotationRepository.get(callStmt.getInvokeExpr().getMethod())
+				 *  //OJO que EscapeSummary tiene que extenderse y permitir omega nodes
+				 *  //
+				 * 
+				 * 
+				 */
+				
+				
+				
 			}		
 		}
 		
@@ -287,6 +334,7 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 		
 		int mergedSummaries = 0;
 		dst.setValue(newInitialSummary(src.getValue().getTarget()));
+		
 		
 		//mergea los PTG de los callees con src
 		while (it.hasNext()) {
@@ -302,6 +350,10 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 					EscapeSummary summary = data.get(m);
 		
 					if (summary == null) {
+						
+						
+						//Aca agarra de unanalizable methods.
+						//por ejemplo, List add es anotado como fresh, asi que crea un PTG sin omega nodes.
 						summary = repository.get(m);
 						if (summary != null) {
 							unanalysed.put(m, summary);
@@ -513,5 +565,23 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 
 	public void setJsonIRWriter(SummaryWriter<IntermediateRepresentationMethod> jsonIRWriter) {
 		this.jsonIrWriter = jsonIRWriter;
+	}
+
+	public JsonBasedEscapeAnnotationsProvider getJsonBasedEscapeAnnotationsProvider() {
+		return jsonBasedEscapeAnnotationsProvider;
+	}
+
+	public void setJsonBasedEscapeAnnotationsProvider(
+			JsonBasedEscapeAnnotationsProvider jsonBasedEscapeAnnotationsProvider) {
+		this.jsonBasedEscapeAnnotationsProvider = jsonBasedEscapeAnnotationsProvider;
+	}
+	
+	public EscapeAnnotationsSummaryFactory getEscapeAnnotationsSummaryFactory() {
+		return escapeAnnotationsSummaryFactory;
+	}
+
+	public void setEscapeAnnotationsSummaryFactory(
+			EscapeAnnotationsSummaryFactory escapeAnnotationsSummaryFactory) {
+		this.escapeAnnotationsSummaryFactory = escapeAnnotationsSummaryFactory;
 	}
 }

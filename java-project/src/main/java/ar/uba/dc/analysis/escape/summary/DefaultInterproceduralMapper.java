@@ -20,6 +20,11 @@ import ar.uba.dc.soot.SootUtils;
 import ar.uba.dc.util.collections.map.HashMultiMap;
 import ar.uba.dc.util.collections.map.MultiMap;
 
+/**
+ * This class follows the notation from the paper: Pointer and Escape Analysis for Multithreaded Programs
+ * @author billy
+ *
+ */
 public class DefaultInterproceduralMapper implements InterproceduralMapper {
 
 	/**
@@ -39,15 +44,22 @@ public class DefaultInterproceduralMapper implements InterproceduralMapper {
 		// many times, we need to copy sets cause we mutate them within
 		// iterators
 		boolean hasChanged = true;
+		//fixed point algorithm
 		while (hasChanged) { // (2) & (3) rules fixpoint
 			hasChanged = false;
 			hasChanged = rule_2(callerSummary, calleeSummary, mu) || hasChanged;
 			hasChanged = rule_3(calleeSummary, mu) || hasChanged;
+			
+			
+			//aca deberia agregar las reglas nuevas.
 		}
 		
 		return mu;
 	}
 
+	//Constraint 1 maps each parameter node from the
+	//callee to the nodes from the caller that represent the actual
+	//parameters at the call site.
 	@SuppressWarnings("unchecked")
 	protected void rule_1(Stmt callStmt, EscapeSummary callerGraph, MultiMap<Node, Node> mu) {
 		Local varCallOn = SootUtils.getVariableTargetOfCall(callStmt.getInvokeExpr());
@@ -58,6 +70,8 @@ public class DefaultInterproceduralMapper implements InterproceduralMapper {
 			if (arg instanceof Local) {
 				Local localArg = (Local) arg;
 				if (localArg.getType() instanceof RefLikeType) {
+					
+					//hace la regla 1, de hacer que los parametros aputnen a lo que correspondan.
 					mu.putAll(Cache.cacheNode(new ParamNode(nb)), callerGraph.nodesPointedBy(localArg));
 				}
 			}
@@ -69,15 +83,34 @@ public class DefaultInterproceduralMapper implements InterproceduralMapper {
 		}
 	}
 	
+	//Constraint 2 matches outside
+	//edges read by the callee against corresponding inside edges
+	//from the caller.
 	protected boolean rule_2(EscapeSummary callerGraph, EscapeSummary calleeGraph, MultiMap<Node, Node> mu) {
 		boolean hasChanged = false;
 		// (2)
+		
+		//for all callee nodes n1...
 		for (Node n1 : new LinkedList<Node>(mu.keySet())) {
+			
+			//and for all caller nodes n3=mu(n1),
+			//so, for all nodes in the caller that come from a node in the callee
 			for (Node n3 : new LinkedList<Node>(mu.get(n1))) {
+				
+				//we check the edges n1->n2 out of the nodes n1 in the callee
 				for (Edge e12 : calleeGraph.getEdgesOutOf(n1)) {
+					
+					//but only the outside edges
 					if (!e12.isInside()) {
+						
+						//for those inside edges, we get edges n3->n4 in the caller,
+						//that is, edges mu(n1) -> n4 in the caller
 						for (Edge e34 : callerGraph.getEdgesOutOf(n3)) {
+							
+							//but only the inside edges
 							if (e34.isInside() && e12.getField().equals(e34.getField())) {
+								
+								//this is actually rule (5) of the whaley paper.
 								if (mu.put(e12.getTarget(), e34.getTarget())) {
 									hasChanged = true;
 								}
@@ -91,6 +124,9 @@ public class DefaultInterproceduralMapper implements InterproceduralMapper {
 		return hasChanged;
 	}
 	
+	//Constraint 3 matches outside edges from the
+	//callee against inside edges from the callee to model aliasing
+	//between callee nodes.
 	protected boolean rule_3(EscapeSummary calleeGraph, MultiMap<Node, Node> mu) {
 		boolean hasChanged = false;
 

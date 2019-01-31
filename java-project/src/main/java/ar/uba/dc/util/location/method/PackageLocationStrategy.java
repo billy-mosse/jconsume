@@ -45,4 +45,10 @@ public class PackageLocationStrategy extends AbstractMethodLocationStrategy {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public String getEscapeAnnotationsLocation(String mainClass) {
+		// TODO Auto-generated method stub
+		throw new java.lang.UnsupportedOperationException();
+	}
 }

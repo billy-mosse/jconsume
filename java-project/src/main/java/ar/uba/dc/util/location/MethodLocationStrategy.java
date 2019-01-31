@@ -46,4 +46,5 @@ public interface MethodLocationStrategy {
 	
 	public String getJsonIRLocation(AnnotationSiteInvariantForJson siteInvariant, String mainClass);
 	
+	public String getEscapeAnnotationsLocation(String mainClass);
 }

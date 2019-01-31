@@ -3,8 +3,8 @@ package ar.uba.dc.analysis.common.method.information;
 import ar.uba.dc.barvinok.expression.PiecewiseQuasipolynomial;
 
 //podria tener mas cosas, como ser puro y eso
-public class Annotation {
-	public Annotation(PiecewiseQuasipolynomial consumption) {
+public class MemoryAnnotation {
+	public MemoryAnnotation(PiecewiseQuasipolynomial consumption) {
 		this.consumption = consumption;
 	}
 

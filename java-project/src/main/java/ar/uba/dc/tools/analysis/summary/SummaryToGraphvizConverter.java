@@ -130,6 +130,12 @@ public class SummaryToGraphvizConverter {
 					// TODO Auto-generated method stub
 					return null;
 				}
+
+				@Override
+				public String getEscapeAnnotationsLocation(String mainClass) {
+					// TODO Auto-generated method stub
+					throw new java.lang.UnsupportedOperationException();
+				}
 				
 				
 			};
@@ -197,6 +203,13 @@ public class SummaryToGraphvizConverter {
 						String mainClass) {
 					// TODO Auto-generated method stub
 					return null;
+				}
+
+
+				@Override
+				public String getEscapeAnnotationsLocation(String mainClass) {
+					// TODO Auto-generated method stub
+					throw new java.lang.UnsupportedOperationException();
 				}
 				
 			};

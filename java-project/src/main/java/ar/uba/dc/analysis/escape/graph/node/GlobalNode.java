@@ -1,5 +1,7 @@
 package ar.uba.dc.analysis.escape.graph.node;
 
+import org.jboss.util.NotImplementedException;
+
 import soot.SootClass;
 import soot.SootMethod;
 import ar.uba.dc.analysis.escape.graph.Node;
@@ -85,6 +87,16 @@ public class GlobalNode implements Node {
 	@Override
 	public int compareTo(Node o) {
 		return this.toString().compareTo(o.toString());
+	}
+	
+	@Override
+	public boolean isOmega() {
+		throw new NotImplementedException();
+	}
+
+	@Override
+	public boolean isFresh() {
+		throw new NotImplementedException();
 	}
 	
 }

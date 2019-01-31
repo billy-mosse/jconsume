@@ -21,6 +21,19 @@ public interface Node extends Cloneable, Comparable<Node> {
 
     /** Is it a parameter or this node ? */
     public boolean isParam();
+    
+    /** Is it an omega node, as in the iwako paper ?
+     * omega nodes are created when building PTGs for unanalyzable methods with a Write annotation for a parameter,
+     * and they spread during the escape analysis
+     *  */
+    public boolean isOmega();    
+    
+    /** Is it a fresh node, as in the iwako paper?
+     * fresh nodes are created when building PTGs for unanalyzable methods with a Fresh annotation (for the return value)
+     * For now, new fields are added when more information is available (new rules N°5), but that's an ugly patch. What's best would be to determine the complete structure of the node
+     * with more powerful annotations.
+     * */
+    public boolean isFresh();
 
 	public void changeContext(StatementId callStmtId);
 	

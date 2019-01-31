@@ -48,7 +48,15 @@ public class ClassNameLocationStrategy extends AbstractMethodLocationStrategy {
 	public String getJsonIRLocation(
 			AnnotationSiteInvariantForJson siteInvariant, String mainClass) {
 		//TODO method name es un nombre incorrecto
-		return getBasePath() +  "/siteInvatiants/" + siteInvariant.getMethodName();
+		
+		//Aca habia un typo, decia siteInvatiants.
+		return getBasePath() +  "/siteInvariants/" + siteInvariant.getMethodName();
+	}
+
+	@Override
+	public String getEscapeAnnotationsLocation(String mainClass) {
+		// TODO cual es el base path?
+		return getBasePath() +  "/annotations/" + mainClass + ".json";
 	}
 
 }

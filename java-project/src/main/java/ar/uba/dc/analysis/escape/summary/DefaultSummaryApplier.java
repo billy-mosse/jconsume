@@ -39,6 +39,10 @@ public class DefaultSummaryApplier implements SummaryApplier {
 		MultiMap<Node, Node> mu = mapper.buildMapping(callerGraph, callStmt, summary);
 		
 		// extend mu into mu'
+		
+		//The algorithm next extends μ to μ 0 to ensure that all
+		//nodes from the callee (except the parameter nodes) appear
+		//in the new parallel interaction graph:
 		for (Node n : summary.getNodes()) {
 			if (!n.isParam()) {
 				mu.put(n, n);

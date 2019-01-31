@@ -32,9 +32,9 @@ import ar.uba.dc.analysis.common.intermediate_representation.IRUtils;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
 import ar.uba.dc.analysis.common.intermediate_representation.io.reader.JsonIRReader;
 import ar.uba.dc.analysis.common.intermediate_representation.io.reader.XMLReader;
-import ar.uba.dc.analysis.common.method.information.Annotation;
-import ar.uba.dc.analysis.common.method.information.AnnotationsContainer;
-import ar.uba.dc.analysis.common.method.information.MethodAnnotationsHelper;
+import ar.uba.dc.analysis.common.method.information.MemoryAnnotation;
+import ar.uba.dc.analysis.common.method.information.MemoryAnnotationsContainer;
+import ar.uba.dc.analysis.common.method.information.MethodMemoryAnnotationsHelper;
 import ar.uba.dc.analysis.escape.InterproceduralAnalysis;
 import ar.uba.dc.analysis.memory.callanalyzer.PaperCallAnalyzer;
 import ar.uba.dc.analysis.memory.expression.ParametricExpression;
@@ -72,14 +72,14 @@ public class PaperInterproceduralAnalysis {
 	protected SummaryReader<IntermediateRepresentationMethod> jsonIRReader;
 	private String mainClass;
 	
-	protected SummaryReader<AnnotationsContainer> jsonAnnotationsReader;
+	protected SummaryReader<MemoryAnnotationsContainer> jsonMemoryAnnotationsReader;
 	
-	public SummaryReader<AnnotationsContainer> getJsonAnnotationsReader() {
-		return jsonAnnotationsReader;
+	public SummaryReader<MemoryAnnotationsContainer> getJsonMemoryAnnotationsReader() {
+		return jsonMemoryAnnotationsReader;
 	}
 
-	public void setJsonAnnotationsReader(SummaryReader<AnnotationsContainer> jsonAnnotationsReader) {
-		this.jsonAnnotationsReader = jsonAnnotationsReader;
+	public void setJsonMemoryAnnotationsReader(SummaryReader<MemoryAnnotationsContainer> jsonMemoryAnnotationsReader) {
+		this.jsonMemoryAnnotationsReader = jsonMemoryAnnotationsReader;
 	}
 	
 	
@@ -103,7 +103,7 @@ public class PaperInterproceduralAnalysis {
 	protected ParametricExpressionFactory expressionFactory;
 	protected SymbolicCalculator symbolicCalculator;
 	
-	protected MethodAnnotationsHelper methodAnnotationsHelper;
+	protected MethodMemoryAnnotationsHelper methodAnnotationsHelper;
 	
 	protected SummaryRepository<PaperMemorySummary, IntermediateRepresentationMethod> defaultSummaryRepository;
 	protected SummaryRepository<PaperMemorySummary, IntermediateRepresentationMethod> annotationsSummaryRepository;
@@ -466,12 +466,12 @@ public class PaperInterproceduralAnalysis {
 		}
 	}
 	
-	protected HashMap<String, Annotation> annotations;
+	protected HashMap<String, MemoryAnnotation> annotations;
 	
 	public void getAnnotations(String basePath)
 	{
 		
-		HashMap<String, Annotation> annotations = new HashMap<String, Annotation>();
+		HashMap<String, MemoryAnnotation> annotations = new HashMap<String, MemoryAnnotation>();
 				
 		String loc = basePath + "annotations/" + getMainClass() + "/";
 		
@@ -480,7 +480,7 @@ public class PaperInterproceduralAnalysis {
 		
 		
 		List<File> files = new ArrayList<File>();
-		AnnotationsContainer annContainer = new AnnotationsContainer();
+		MemoryAnnotationsContainer annContainer = new MemoryAnnotationsContainer();
 
 		File directory = new File(loc);
 		if(directory.exists())
@@ -496,9 +496,9 @@ public class PaperInterproceduralAnalysis {
 				if (fileEntry.exists()) {
 					try {
 						
-						annContainer = jsonAnnotationsReader.read(new FileReader(fileEntry));
+						annContainer = jsonMemoryAnnotationsReader.read(new FileReader(fileEntry));
 						
-						this.methodAnnotationsHelper = new MethodAnnotationsHelper(annContainer);
+						this.methodAnnotationsHelper = new MethodMemoryAnnotationsHelper(annContainer);
 						
 					} catch (FileNotFoundException e) {
 						log.error("Error al recuperar el summary de escape para el metodo [" + fileEntry.toString() + "] a xml: " + e.getMessage(), e);

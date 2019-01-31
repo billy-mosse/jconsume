@@ -52,19 +52,19 @@ import com.google.gson.reflect.TypeToken;
 
 
 //TODO lo voy a tener que llamar al principio y tener un mapa
-public class JsonAnnotationsReader implements SummaryReader<AnnotationsContainer> {
-	private static Log log = LogFactory.getLog(JsonAnnotationsReader.class);
+public class JsonMemoryAnnotationsReader implements SummaryReader<MemoryAnnotationsContainer> {
+	private static Log log = LogFactory.getLog(JsonMemoryAnnotationsReader.class);
 
 protected Gson gson;
 	
-	public JsonAnnotationsReader() {
+	public JsonMemoryAnnotationsReader() {
 		GsonBuilder builder = new GsonBuilder().setPrettyPrinting();
 		
 		
 		//builder.registerTypeAdapter(IntermediateRepresentationParameterWithType.class, new IntermediateRepresentationParameterWithTypeSerializer());
 		//builder.registerTypeAdapter(IntermediateRepresentationMethodBody.class, new IntermediateRepresentationMethodBodySerializer());	
 		//builder.registerTypeAdapter(Line.class, new LineSerializer());
-		builder.registerTypeAdapter(AnnotationsContainer.class, new AnnotationsContainerDeserializer());
+		builder.registerTypeAdapter(MemoryAnnotationsContainer.class, new AnnotationsContainerDeserializer());
 		//builder.registerTypeAdapter(Invocation.class, new InvocationSerializer());
 		//builder.registerTypeAdapter(DefaultIntermediateRepresentationParameter.class, new DefaultIntermediateRepresentationParameterSerializer());
 		
@@ -75,11 +75,11 @@ protected Gson gson;
 	
 
 	@Override
-	public AnnotationsContainer read(Reader reader) {
+	public MemoryAnnotationsContainer read(Reader reader) {
 		
 
 		try {
-			AnnotationsContainer m = this.gson.fromJson(reader, AnnotationsContainer.class); 
+			MemoryAnnotationsContainer m = this.gson.fromJson(reader, MemoryAnnotationsContainer.class); 
 			return m;
 		} catch (Exception e) {
 			log.error("Error. " + e.getMessage(), e);
@@ -89,18 +89,18 @@ protected Gson gson;
 	}
 	
 	
-	public static class AnnotationsContainerDeserializer implements JsonDeserializer<AnnotationsContainer> 
+	public static class AnnotationsContainerDeserializer implements JsonDeserializer<MemoryAnnotationsContainer> 
 	{
 	    
 		@Override
-		public AnnotationsContainer deserialize(JsonElement json, Type type,
+		public MemoryAnnotationsContainer deserialize(JsonElement json, Type type,
 		        JsonDeserializationContext context) throws JsonParseException {
-			AnnotationsContainer container = new AnnotationsContainer();
+			MemoryAnnotationsContainer container = new MemoryAnnotationsContainer();
 			
 			JsonObject jobject = (JsonObject) json;
 			JsonArray jbindingPairs = jobject.get("annotations").getAsJsonArray();
 			
-			Map<String, Annotation> mapAnnotations = new HashMap<String,Annotation>();
+			Map<String, MemoryAnnotation> mapAnnotations = new HashMap<String,MemoryAnnotation>();
 			
 			for(int i = 0; i < jbindingPairs.size(); i++)
 			{
@@ -112,7 +112,7 @@ protected Gson gson;
 				PiecewiseQuasipolynomial consumption = new PiecewiseQuasipolynomial(sConsumption);
 				//TODO encapsular
 				
-				Annotation annotation = new Annotation(consumption);
+				MemoryAnnotation annotation = new MemoryAnnotation(consumption);
 				container.annotations.put(class_name + "." + method_name , annotation);
 			}
 			

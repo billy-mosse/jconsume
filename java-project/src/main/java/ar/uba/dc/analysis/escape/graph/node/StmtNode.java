@@ -45,6 +45,12 @@ public class StmtNode implements Node {
 	/** true if an inside node, false if an load node */
     private boolean inside;
 
+    /** true if an omega node, false if it is not */
+    private boolean omega;
+    
+    /** true if a fresh node, false if it is not */
+    private boolean fresh;
+
     /** contexto del nodo. Es el stack con los {@link Stmt} de soot que representan los calls por los que fue pasando el nodo desde su creacion. */
     private CircularStack<StatementId> context;
     
@@ -209,5 +215,18 @@ public class StmtNode implements Node {
 			}
 		}
 		return ret;
-	}	
+	}
+	
+	@Override
+	public boolean isOmega() {
+		return omega;
+	}
+
+	
+	//que uso para representar un inside node correspondiente a un metodo no analizable?
+	@Override
+	public boolean isFresh() {
+		return false;
+		//return fresh;
+	}
 }

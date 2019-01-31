@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
+import org.jboss.util.NotImplementedException;
 
 import soot.SootClass;
 import soot.SootMethod;
@@ -24,8 +25,9 @@ public class ContainerNode implements Node {
     private static int n = 0;*/
 	
     private Set<Node> id;
-    
+
     private boolean inside;
+    
     
     private CircularStack<StatementId> context;
     
@@ -172,5 +174,17 @@ public class ContainerNode implements Node {
 			}
 		}
 		return ret;
+	}
+
+	@Override
+	public boolean isOmega() {
+		//si alguno es omega, el container node es omega?
+		throw new NotImplementedException();
+	}
+
+	@Override
+	public boolean isFresh() {
+		//si alguno es fresh, el container node es fresh? 
+		throw new NotImplementedException();
 	}
 }

@@ -17,21 +17,21 @@ import ar.uba.dc.analysis.memory.impl.madeja.PaperMemorySummary;
 import ar.uba.dc.barvinok.expression.PiecewiseQuasipolynomial;
 import ar.uba.dc.barvinok.expression.QuasiPolynomial;
 
-//TODO cambiar el nombre
-public class MethodAnnotationsHelper {
+//TODO cambiar el nombre. Esto es anotaciones de memoria nomas.
+public class MethodMemoryAnnotationsHelper {
 
-	private static Log log = LogFactory.getLog(MethodAnnotationsHelper.class);
+	private static Log log = LogFactory.getLog(MethodMemoryAnnotationsHelper.class);
 
 	private String mainClass;
 	
 	//Por ahora voy a asumir que son memory summaries.
-	private AnnotationsContainer annotationsContainer;
+	private MemoryAnnotationsContainer annotationsContainer;
 	
-	public MethodAnnotationsHelper(String mainClass) {
+	public MethodMemoryAnnotationsHelper(String mainClass) {
 		this.setMainClass(mainClass);
 	}
 
-	public MethodAnnotationsHelper(AnnotationsContainer annotationsContainer) {
+	public MethodMemoryAnnotationsHelper(MemoryAnnotationsContainer annotationsContainer) {
 		this.setAnnotationsContainer(annotationsContainer);
 	}
 
@@ -51,7 +51,7 @@ public class MethodAnnotationsHelper {
 	
 	public PaperMemorySummary get(IntermediateRepresentationMethod ir_method)
 	{
-		Annotation annotation;
+		MemoryAnnotation annotation;
 		try
 		{
 			if(this.annotationsContainer != null)
@@ -79,11 +79,11 @@ public class MethodAnnotationsHelper {
 		
 	}
 
-	public AnnotationsContainer getAnnotationsContainer() {
+	public MemoryAnnotationsContainer getAnnotationsContainer() {
 		return annotationsContainer;
 	}
 
-	public void setAnnotationsContainer(AnnotationsContainer annotationsContainer) {
+	public void setAnnotationsContainer(MemoryAnnotationsContainer annotationsContainer) {
 		this.annotationsContainer = annotationsContainer;
 	}
 	

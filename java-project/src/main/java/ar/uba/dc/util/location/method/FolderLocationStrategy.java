@@ -46,4 +46,10 @@ public class FolderLocationStrategy extends AbstractMethodLocationStrategy {
 		// TODO Auto-generated method stub
 		throw new java.lang.UnsupportedOperationException();
 	}
+
+	@Override
+	public String getEscapeAnnotationsLocation(String mainClass) {
+		// TODO Auto-generated method stub
+		throw new java.lang.UnsupportedOperationException();
+	}
 }

@@ -191,6 +191,11 @@ public class RepositoryCorrector extends BodyTransformer {
 						// TODO Auto-generated method stub
 						return null;
 					}
+					@Override
+					public String getEscapeAnnotationsLocation(String mainClass) {
+						// TODO Auto-generated method stub
+						throw new java.lang.UnsupportedOperationException();
+					}
 				};
 				writer.setLocationStrategy(strategy);
 				writer.write(summary);

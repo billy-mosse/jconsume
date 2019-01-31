@@ -69,6 +69,12 @@ public class EscapeSummary {
 	public SootMethod getTarget() {
 		return target;
 	}
+	
+	//for debug purposes
+	public String toString()
+	{
+		return this.target.toString();
+	}
 
 	/**
 	 * Replace the current summary with its union with value. value is not modified.

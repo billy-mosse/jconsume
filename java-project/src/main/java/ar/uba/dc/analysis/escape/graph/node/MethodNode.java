@@ -3,6 +3,8 @@ package ar.uba.dc.analysis.escape.graph.node;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jboss.util.NotImplementedException;
+
 import soot.SootClass;
 import soot.SootMethod;
 import soot.jimple.Stmt;
@@ -28,6 +30,8 @@ public class MethodNode implements Node {
     /** Method that created the node */
 	private SootMethod id;
 	
+	private boolean omega;
+	
 	/** contexto del nodo. Es el stack con los {@link Stmt} de soot que representan los calls por los que fue pasando el nodo desde su creacion. */
     private CircularStack<StatementId> context;
 	
@@ -44,7 +48,14 @@ public class MethodNode implements Node {
     	this(id, new CircularStack<StatementId>(sensitivity));
     }
 	
-    public String toString() { 
+    public MethodNode(SootMethod id, int sensitivity, boolean omega) {
+    	this(id, sensitivity);
+    	
+    	//If method is not fresh then return value is an omega node.
+    	this.omega=omega;
+	}
+
+	public String toString() { 
     	return "M_" + nMap.get(id);
     }
     
@@ -125,6 +136,16 @@ public class MethodNode implements Node {
 	@Override
 	public int compareTo(Node o) {
 		return this.toString().compareTo(o.toString());
+	}
+
+	@Override
+	public boolean isOmega() {
+		throw new NotImplementedException();
+	}
+
+	@Override
+	public boolean isFresh() {
+		throw new NotImplementedException();
 	}
 	
 }
