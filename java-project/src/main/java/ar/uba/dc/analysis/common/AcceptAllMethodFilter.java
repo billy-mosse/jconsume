@@ -12,7 +12,16 @@ public class AcceptAllMethodFilter implements SootMethodFilter {
 
 	public static final SootMethodFilter INSTANCE = new AcceptAllMethodFilter();
 
-	public boolean want(SootMethod method) {
+	
+	@Override
+	public boolean want(SootMethod method, String mainClass) {
+		// TODO Auto-generated method stub
 		return true;
+	}
+
+	@Override
+	public void build(String mainClass) {
+		// TODO Auto-generated method stub
+		
 	}
 }

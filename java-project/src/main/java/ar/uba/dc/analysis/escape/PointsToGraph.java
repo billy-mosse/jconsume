@@ -12,6 +12,7 @@ import ar.uba.dc.analysis.escape.graph.Cache;
 import ar.uba.dc.analysis.escape.graph.Edge;
 import ar.uba.dc.analysis.escape.graph.Node;
 import ar.uba.dc.analysis.escape.graph.node.GlobalNode;
+import ar.uba.dc.analysis.escape.graph.node.ParamNode;
 import ar.uba.dc.soot.StatementId;
 import ar.uba.dc.util.collections.graph.DirectedGraph;
 import ar.uba.dc.util.collections.map.HashMultiMap;
@@ -338,7 +339,8 @@ public class PointsToGraph {
 	public Set<Node> getParameterNodes() {
 		return new HashSet<Node>(paramNodes);
 	}
-
+	
+	
 	public void returnNodes(Set<Node> nodes) {
 		ret.addAll(nodes);
 	}

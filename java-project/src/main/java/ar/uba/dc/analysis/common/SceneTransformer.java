@@ -53,7 +53,7 @@ public class SceneTransformer extends soot.SceneTransformer {
 	
 		log.info("Running " +  phaseName + " phase for [" + mainClass + "] and method [" + methodSignature + "]");
 	
-		this.analysis.run(Scene.v().getCallGraph(), context.getFactory().getDirectedGraphMethodFilter(), main);
+		this.analysis.run(Scene.v().getCallGraph(), context.getFactory().getDirectedGraphMethodFilter(), main, mainClass);
 	
 		analysisTimer.stop();
 	

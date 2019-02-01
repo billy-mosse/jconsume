@@ -56,12 +56,14 @@ public class DirectedCallGraph implements DirectedGraph<SootMethod> {
 	 * 
 	 * @param heads - is a List of SootMethod
 	 */
-	public DirectedCallGraph(CallGraph cg, SootMethodFilter filter, SootMethod head) {
+	public DirectedCallGraph(CallGraph cg, SootMethodFilter filter, SootMethod head, String mainClass) {
 		// filter heads by filter
 		List<SootMethod> filteredHeads = new LinkedList<SootMethod>();
 		
+		filter.build(mainClass);
+		
 		//isConcrete returns true if this method is not phantom, abstract or native
-		if (head.isConcrete() && filter.want(head)) {
+		if (head.isConcrete() && filter.want(head, mainClass)) {
 			filteredHeads.add(head);
 		}
 		
@@ -92,7 +94,7 @@ public class DirectedCallGraph implements DirectedGraph<SootMethod> {
 				while (itt.hasNext()) {
 					Edge edge = itt.next();
 					SootMethod mm = (SootMethod) edge.tgt();
-					boolean keep = mm.isConcrete() && filter.want(mm);
+					boolean keep = mm.isConcrete() && filter.want(mm, mainClass);
 					log.debug(" |  |- " + mm.toString() + (keep ? "" : " (filtered out)"));
 					if (keep) {
 						if (this.nodes.add(mm)) {

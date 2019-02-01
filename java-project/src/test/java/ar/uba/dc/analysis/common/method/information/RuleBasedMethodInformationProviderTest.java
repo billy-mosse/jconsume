@@ -14,7 +14,6 @@ import ar.uba.dc.analysis.common.method.information.rules.RuleSetReader;
 import ar.uba.dc.analysis.common.method.information.rules.XMLRuleSetRepository;
 import ar.uba.dc.soot.SootUtils;
 
-//@Ignore
 public class RuleBasedMethodInformationProviderTest {
 	
 	private RuleBasedMethodInformationProvider provider;

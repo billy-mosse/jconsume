@@ -56,7 +56,7 @@ public class MethodNode implements Node {
 	}
 
 	public String toString() { 
-    	return "M_" + nMap.get(id);
+    	return (omega? "[W] " : "") + "M_" + nMap.get(id);
     }
     
     public String toJsonString() { 

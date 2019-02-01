@@ -58,13 +58,13 @@ public class StandAloneRunner {
 			log.info("Running escape analysis");
 			t.start();
 			ar.uba.dc.analysis.escape.InterproceduralAnalysis anEscapeAnalysis = context.getFactory().getEscapeAnalysis();
-			anEscapeAnalysis.run(cg, filter, methodUnderAnalysis);
+			anEscapeAnalysis.run(cg, filter, methodUnderAnalysis, className);
 			t.stop();
 			log.info("Escape analysis took " + t.getElapsedTime() + " (" + t.getElapsedSeconds() + " seconds)");
 		}
 		
 		ar.uba.dc.analysis.memory.InterproceduralAnalysis anMemoryAnalysis = context.getFactory().getMemoryAnalysis();
-		anMemoryAnalysis.run(cg, filter, methodUnderAnalysis);
+		anMemoryAnalysis.run(cg, filter, methodUnderAnalysis, className);
 		
 		globalTimer.stop();
 		

@@ -56,7 +56,7 @@ public class ClassNameLocationStrategy extends AbstractMethodLocationStrategy {
 	@Override
 	public String getEscapeAnnotationsLocation(String mainClass) {
 		// TODO cual es el base path?
-		return getBasePath() +  "/annotations/" + mainClass + ".json";
+		return getBasePath() +  mainClass + ".json";
 	}
 
 }

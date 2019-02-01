@@ -11,6 +11,7 @@ import soot.SootMethod;
  */
 public interface SootMethodFilter {
 
-    public boolean want(SootMethod method);
+    public boolean want(SootMethod method, String mainClass);
+    public void build(String mainClass);
 
 }

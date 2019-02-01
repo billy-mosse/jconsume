@@ -60,7 +60,7 @@
 				</repository>
 			</method-information-provider>
 			<json-based-escape-annotations-provider config-class="ar.uba.dc.analysis.common.method.information.JsonBasedEscapeAnnotationsProvider" >
-				<locationStrategy config-class="ar.uba.dc.util.location.method.${escape.summary.output.layout}LocationStrategy" extension=".json" basePath="${escape.summary.repository.dir}" />
+				<locationStrategy config-class="ar.uba.dc.util.location.method.${escape.summary.output.layout}LocationStrategy" extension=".json" basePath="${annotations.repository.dir}" />
 			</json-based-escape-annotations-provider>
 		</common><!-- ${escape.summary.annotations.dir} -->
 
@@ -103,8 +103,6 @@
 
 
 				<jsonBasedEscapeAnnotationsProvider config-class="ar.uba.dc.analysis.common.method.information.JsonBasedEscapeAnnotationsProvider" config-factory="custom" config-ref-to="analysis.common.json-based-escape-annotations-provider"/>
-
-				<escapeAnnotationsSummaryFactory config-class="ar.uba.dc.analysis.escape.summary.EscapeAnnotationsSummaryFactory" config-factory="custom" config-scope="singleton" />
 
 				<irWriter config-class="ar.uba.dc.analysis.escape.summary.io.writer.ChainWriter" config-factory="container" config-source="analysis.escape.writers" config-select-key="escape.summary.printer" config-default="irxml" config-scope="singleton" />
 
@@ -434,11 +432,14 @@
 				<methodInformationProvider config-class="ar.uba.dc.analysis.common.MethodInformationProvider" config-factory="custom" config-ref-to="analysis.common.method-information-provider"/>
 				<escapeRepository config-class="ar.uba.dc.analysis.common.SummaryRepository" config-factory="custom" config-ref-to="analysis.escape.repositories.repository" />
 				<memoryRepository config-class="ar.uba.dc.analysis.common.SummaryRepository" config-factory="custom" config-ref-to="analysis.memory.repositories.repository" />
+				<jsonBasedEscapeAnnotationsProviderFilter config-class="ar.uba.dc.analysis.common.method.information.JsonBasedEscapeAnnotationsProvider" config-factory="custom" config-ref-to="analysis.common.json-based-escape-annotations-provider"/>
 			</method-filter>
 			
 			<edge-filter config-class="ar.uba.dc.soot.AnalizableSrcEdgePredicate">
 				<provider config-class="ar.uba.dc.analysis.common.MethodInformationProvider" config-factory="custom" config-ref-to="analysis.common.method-information-provider" />
 			</edge-filter>
+
+
 		</callgraph>
 	</soot>
 </config>

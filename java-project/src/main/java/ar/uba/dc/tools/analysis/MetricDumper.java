@@ -59,7 +59,7 @@ public class MetricDumper {
 		log.info("Building directed callgraph");
 		
 		SootMethodFilter filter = context.getFactory().getDirectedGraphMethodFilter();
-		DirectedCallGraph dgFiltered = new DirectedCallGraph(cg, filter, methodUnderAnalysis);
+		DirectedCallGraph dgFiltered = new DirectedCallGraph(cg, filter, methodUnderAnalysis, className);
 		
 		MetricDumper instance = new MetricDumper();
 		instance.doMetrics(dgFiltered);

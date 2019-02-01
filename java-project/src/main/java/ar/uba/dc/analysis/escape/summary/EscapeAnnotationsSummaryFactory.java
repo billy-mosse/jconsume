@@ -15,11 +15,6 @@ public class EscapeAnnotationsSummaryFactory {
 	{
 		EscapeSummary summary = new EscapeSummary(method);
 		
-		
-		//TODO cambiar por un objeto anotacion de verdad
-		String var = null;
-		EscapeSummary g = new EscapeSummary(method);
-		
 		//boolean isOmega = var.contains("Fresh");
 		
 		
@@ -31,8 +26,8 @@ public class EscapeAnnotationsSummaryFactory {
 			if (method.getReturnType() instanceof RefLikeType) {				
 				//el tercer
 				Node n = new MethodNode(method, sensitivity, true);
-				g.addReturned(n);
-				g.add(n);
+				summary.addReturned(n);
+				summary.add(n);
 			}
 			else
 			{
@@ -41,9 +36,9 @@ public class EscapeAnnotationsSummaryFactory {
 		}
 		else
 		{
-			Node n = new MethodNode(method, sensitivity, false);
-			g.addReturned(n);
-			g.add(n);
+			Node n = new MethodNode(method, sensitivity, true);
+			summary.addReturned(n);
+			summary.add(n);
 		}
 		
 	
@@ -53,6 +48,12 @@ public class EscapeAnnotationsSummaryFactory {
 		{
 			boolean isOmega= annotation.isWritableParameter(i);	
 			ParamNode p = new ParamNode(i, isOmega);
+			
+			//que onda los mutated?
+			
+			//si el nodo es parametro automaticamente lo agrega a paramNodes
+			summary.add(p);
+
 			//no se si hace falta crear los local edges
 		}
 

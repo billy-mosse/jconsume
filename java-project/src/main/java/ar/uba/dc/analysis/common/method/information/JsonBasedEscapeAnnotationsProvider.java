@@ -1,35 +1,26 @@
 package ar.uba.dc.analysis.common.method.information;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.Reader;
-import java.lang.reflect.Type;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import soot.SootMethod;
+import ar.uba.dc.analysis.common.SummaryRepository;
 import ar.uba.dc.analysis.common.intermediate_representation.io.writer.JsonIRWriter;
+import ar.uba.dc.analysis.escape.EscapeSummary;
 import ar.uba.dc.analysis.escape.summary.DefaultEscapeAnnotation;
 import ar.uba.dc.analysis.escape.summary.EscapeAnnotation;
-import ar.uba.dc.barvinok.expression.PiecewiseQuasipolynomial;
 import ar.uba.dc.util.location.MethodLocationStrategy;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
 
-public class JsonBasedEscapeAnnotationsProvider {
+public class JsonBasedEscapeAnnotationsProvider{
 
 	private Map<String, EscapeAnnotation> annotations;
 	
@@ -121,6 +112,10 @@ public class JsonBasedEscapeAnnotationsProvider {
 			return null;
 		}
 		
+	}
+
+	public boolean hasAnnotationFor(String name) {
+		return annotations.containsKey(name);
 	}
 	
 	/*

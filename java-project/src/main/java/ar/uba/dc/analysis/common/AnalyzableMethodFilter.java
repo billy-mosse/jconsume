@@ -4,6 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import soot.SootMethod;
+import ar.uba.dc.analysis.common.method.information.JsonBasedEscapeAnnotationsProvider;
 import ar.uba.dc.analysis.escape.EscapeSummary;
 import ar.uba.dc.analysis.memory.summary.MemorySummary;
 import ar.uba.dc.soot.SootMethodFilter;
@@ -17,9 +18,11 @@ public class AnalyzableMethodFilter implements SootMethodFilter {
 	
 	private SummaryRepository<EscapeSummary, SootMethod> escapeRepository;
 	
-	private SummaryRepository<MemorySummary, SootMethod>memoryRepository;
+	private SummaryRepository<MemorySummary, SootMethod> memoryRepository;
 	
 	private MethodInformationProvider methodInformationProvider;
+	
+	private JsonBasedEscapeAnnotationsProvider jsonBasedEscapeAnnotationsProviderFilter;
 	
 	private boolean includeKnownMethod;
 	
@@ -27,19 +30,30 @@ public class AnalyzableMethodFilter implements SootMethodFilter {
 		super();
 	}
 	
+	public void build(String mainClass)
+	{
+		this.jsonBasedEscapeAnnotationsProviderFilter.fetchAnnotations(mainClass);
+	}
+	
 	public AnalyzableMethodFilter(MethodInformationProvider provider) {
 		this.methodInformationProvider = provider;
 	}
 
-	public boolean want(SootMethod method) {
+	public boolean want(SootMethod method, String mainClass) {
 		boolean isAnalyzable = methodInformationProvider.isAnalyzable(method);
 		boolean hasSummary = alreadyHasSummary(method); 
+		
+		boolean hasAnnotation = alreadyHasAnnotation(method, mainClass);
 		
 		if (log.isDebugEnabled()) {
 			log.debug("Want [" + method + "]? isAnalizable [" + isAnalyzable + "] - includeKnown [" + includeKnownMethod  + "] - hasSummary [" + hasSummary + "]");
 		}
 		
-		return isAnalyzable && (includeKnownMethod || !hasSummary);
+		return isAnalyzable && (includeKnownMethod || !hasSummary) && !hasAnnotation;
+	}
+
+	private boolean alreadyHasAnnotation(SootMethod method, String mainClass) {
+		return jsonBasedEscapeAnnotationsProviderFilter.hasAnnotationFor(method.getDeclaringClass().toString() + "." + method.getName());
 	}
 
 	private boolean alreadyHasSummary(SootMethod method) {
@@ -67,6 +81,16 @@ public class AnalyzableMethodFilter implements SootMethodFilter {
 
 	public void setIncludeKnownMethod(boolean includeKnownMethod) {
 		this.includeKnownMethod = includeKnownMethod;
+	}	
+
+	public JsonBasedEscapeAnnotationsProvider getJsonBasedEscapeAnnotationsProviderFilter() {
+		return jsonBasedEscapeAnnotationsProviderFilter;
 	}
+
+	public void setJsonBasedEscapeAnnotationsProviderFilter(
+			JsonBasedEscapeAnnotationsProvider jsonBasedEscapeAnnotationsProviderFilter) {
+		this.jsonBasedEscapeAnnotationsProviderFilter = jsonBasedEscapeAnnotationsProviderFilter;
+	}
+
 
 }

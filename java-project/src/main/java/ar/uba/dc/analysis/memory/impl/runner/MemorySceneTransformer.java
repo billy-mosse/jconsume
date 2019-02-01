@@ -53,7 +53,7 @@ public class MemorySceneTransformer extends SceneTransformer {
 		
 		log.info("Running memory analysis for [" + mainClass + "] and method [" + methodSignature + "]");
 		
-		anMemoryAnalysis.run(Scene.v().getCallGraph(), context.getFactory().getDirectedGraphMethodFilter(), main);
+		anMemoryAnalysis.run(Scene.v().getCallGraph(), context.getFactory().getDirectedGraphMethodFilter(), main, mainClass);
 		
 		analysisTimer.stop();
 		

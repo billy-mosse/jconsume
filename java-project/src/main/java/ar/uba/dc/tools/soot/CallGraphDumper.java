@@ -50,7 +50,7 @@ public class CallGraphDumper {
 		SootMethod methodUnderAnalysis = SootUtils.getMethod(className, methodSignature);		
 		
 		if (cg.size() <= CALL_GRAPH_SIZE_LIMITE) {
-			DirectedCallGraph dg = new DirectedCallGraph(cg, AcceptAllMethodFilter.INSTANCE, methodUnderAnalysis);
+			DirectedCallGraph dg = new DirectedCallGraph(cg, AcceptAllMethodFilter.INSTANCE, methodUnderAnalysis, className);
 			dgPrinter.print("CallGraph", methodUnderAnalysis, dg);
 		} else {
 			log.info("CallGraph is too large, it has [" + cg.size() + "] methods. Could not generate the graph");
@@ -59,7 +59,7 @@ public class CallGraphDumper {
 		log.info("Building directed callgraph");
 		
 		SootMethodFilter filter = context.getFactory().getDirectedGraphMethodFilter();
-		DirectedCallGraph dgFiltered = new DirectedCallGraph(cg, filter, methodUnderAnalysis);
+		DirectedCallGraph dgFiltered = new DirectedCallGraph(cg, filter, methodUnderAnalysis, className);
 		
 		log.info("Dumping directed callgraph");
 		

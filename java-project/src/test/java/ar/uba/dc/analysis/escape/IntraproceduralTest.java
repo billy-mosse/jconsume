@@ -127,7 +127,7 @@ public class IntraproceduralTest {
 				inter.setCallGraph(cg);
 				inter.init();
 				
-				DirectedCallGraph dg = new DirectedCallGraph(cg, ctx.getFactory().getDirectedGraphMethodFilter(), method);
+				DirectedCallGraph dg = new DirectedCallGraph(cg, ctx.getFactory().getDirectedGraphMethodFilter(), method, method.getDeclaringClass().getName());
 				
 				Orderer<SootMethod> o = new PseudoTopologicalOrderer<SootMethod>();
 				for (SootMethod m : o.newList(dg, true)) {

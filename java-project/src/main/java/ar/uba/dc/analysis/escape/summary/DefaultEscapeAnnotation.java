@@ -8,15 +8,16 @@ public class DefaultEscapeAnnotation implements EscapeAnnotation, Comparable<Def
 	
 	protected String name;
 	protected boolean fresh;
-	protected boolean omega;
 	
-	public boolean isOmega() {
-		return omega;
+	/*protected boolean pure;
+	
+	public boolean isPure() {
+		return pure;
 	}
 
-	public void setOmega(boolean omega) {
-		this.omega = omega;
-	}
+	public void setPure(boolean pure) {
+		this.pure = pure;
+	}*/
 
 	protected List<Integer> writableParameters;
 	
@@ -34,14 +35,14 @@ public class DefaultEscapeAnnotation implements EscapeAnnotation, Comparable<Def
 
 	public boolean isFresh()
 	{
-		throw new NotImplementedException();
+		return fresh;
 	}
 	
 	//La anotacion pure equivale a que no haya writable parameters. Es totalmente redundante.
 	//public boolean isPure();
 	public boolean isWritableParameter(int i)
 	{
-		throw new NotImplementedException();
+		return this.writableParameters.contains(i);
 	}
 
 	@Override

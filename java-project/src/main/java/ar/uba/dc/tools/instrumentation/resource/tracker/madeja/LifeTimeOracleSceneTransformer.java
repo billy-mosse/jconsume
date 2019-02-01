@@ -68,7 +68,7 @@ public class LifeTimeOracleSceneTransformer extends SceneTransformer {
 		log.info("Running memory analysis for [" + mainClass + "] and method [" + methodSignature + "]");
 		
 	
-		analysis.run(Scene.v().getCallGraph(), context.getFactory().getDirectedGraphMethodFilter(), main);
+		analysis.run(Scene.v().getCallGraph(), context.getFactory().getDirectedGraphMethodFilter(), main, mainClass);
 		
 		analysisTimer.stop();
 		

@@ -60,7 +60,7 @@ public class EscapeSceneTransformer extends SceneTransformer {
 		
 		log.info("Running escape analysis for [" + mainClass + "] and method [" + methodSignature + "]");
 		
-		analysis.run(Scene.v().getCallGraph(), context.getFactory().getDirectedGraphMethodFilter(), main, debugIR);
+		analysis.run(Scene.v().getCallGraph(), context.getFactory().getDirectedGraphMethodFilter(), main, debugIR, mainClass);
 		
 		analysisTimer.stop();
 		

@@ -25,17 +25,17 @@ public abstract class AbstractInterproceduralAnalysis {
 	protected String mainClass; 
 	protected boolean debugIR;
 	
-	public void run(CallGraph cg, SootMethodFilter filter, SootMethod head)
+	public void run(CallGraph cg, SootMethodFilter filter, SootMethod head, String mainClass)
 	{
-		run(cg,filter,head,false);
+		run(cg,filter,head,false, mainClass);
 	}
 	
-	public void run(CallGraph cg, SootMethodFilter filter, SootMethod head, boolean debugIR) {
+	public void run(CallGraph cg, SootMethodFilter filter, SootMethod head, boolean debugIR, String mainClass) {
 		Timer t = new Timer();
 		t.start();
 		log.debug("Building directed callgraph");
 		this.callGraph = cg;
-		this.directedCallGraph = new DirectedCallGraph(cg, filter, head);
+		this.directedCallGraph = new DirectedCallGraph(cg, filter, head, mainClass);
 		this.debugIR = debugIR;
 		t.stop();
 		log.debug("Building directed callgraph took " + t.getElapsedTime() + " (" + t.getElapsedSeconds() + " seconds)");

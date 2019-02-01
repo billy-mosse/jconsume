@@ -30,7 +30,6 @@ import ar.uba.dc.soot.SootUtils;
 import ar.uba.dc.soot.StatementId;
 import ar.uba.dc.util.collections.CircularStack;
 
-@Ignore
 public class XMLReaderTest {
 
 	private XMLReader reader;
@@ -64,6 +63,8 @@ public class XMLReaderTest {
 	
 	@Test
 	public void thisNodeAndParamsWithSomeRelations() throws FileNotFoundException {		
+		
+		//no anda, ver https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&ved=2ahUKEwi86qrI0c_fAhWGWpAKHRQcB2kQFjAAegQICRAB&url=https%3A%2F%2Fgithub.com%2FSable%2Fsoot%2Fissues%2F195&usg=AOvVaw0YoWUBqCqilW1QwzBzAq2p
 		EscapeSummary summary = reader.read(new FileReader(getXML("thisAndParamNodeWithSomeRelations.xml")));
 		
 		// Target

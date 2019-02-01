@@ -60,7 +60,7 @@ public class StandAloneRunner {
 		log.info("Building Callgraph took " + t.getElapsedTime() + " (" + t.getElapsedSeconds() + " seconds)");
 		
 		InterproceduralAnalysis anAnalysis = context.getFactory().getEscapeAnalysis();
-		anAnalysis.run(cg, context.getFactory().getDirectedGraphMethodFilter(), SootUtils.getMethod(className, methodSignature));
+		anAnalysis.run(cg, context.getFactory().getDirectedGraphMethodFilter(), SootUtils.getMethod(className, methodSignature), className);
 		analysisTimer.stop();
 		
 		log.info("Finish. Took " + analysisTimer.getElapsedTime() + " (" + analysisTimer.getElapsedSeconds() + " seconds)");

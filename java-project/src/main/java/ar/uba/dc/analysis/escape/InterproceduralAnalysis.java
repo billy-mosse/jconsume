@@ -65,7 +65,6 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 	
 	private JsonBasedEscapeAnnotationsProvider jsonBasedEscapeAnnotationsProvider;
 	
-	
 	private EscapeAnnotationsSummaryFactory escapeAnnotationsSummaryFactory;
 
 	protected SummaryReader<IntermediateRepresentationMethod> irReader;	
@@ -199,6 +198,8 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 	
 	protected void internalDoAnalysis() {
 		
+		//esto deberia ir al factory config, pero bueno!
+		escapeAnnotationsSummaryFactory = new EscapeAnnotationsSummaryFactory();
 		
 		this.jsonBasedEscapeAnnotationsProvider.fetchAnnotations(this.mainClass);
 		
@@ -302,15 +303,15 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 			} else {
 				
 				
-				EscapeAnnotation escapeAnnotation = jsonBasedEscapeAnnotationsProvider.get(callStmt.getInvokeExpr().getMethod().getName());
+				/*EscapeAnnotation escapeAnnotation = jsonBasedEscapeAnnotationsProvider.get(callStmt.getInvokeExpr().getMethod().getName());
 				if(escapeAnnotation != null)
 				{
 					
-				}
-				else
-				{
+				}*/
+				//else
+				//{
 					log.debug(" | | | | |- Escape summary not found. Continue with call analysis");
-				}
+				//}
 				
 				//aca deberia usar anotaciones.
 				//annotationRepository deberia tener cargados los summaries calculados en base a las anotaciones
@@ -330,6 +331,8 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 		
 		SootClass implementation = polymorphismResolver.getTarget(callStmt, src.getValue());
 		
+		
+		//No lo hace en orden topologico porque soporta recursion - por eso es un analisis de punto fijo.
 		Iterator<Edge> it = callGraph.edgesOutOf(callStmt);
 		
 		int mergedSummaries = 0;
@@ -350,13 +353,20 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 					EscapeSummary summary = data.get(m);
 		
 					if (summary == null) {
-						
-						
-						//Aca agarra de unanalizable methods.
-						//por ejemplo, List add es anotado como fresh, asi que crea un PTG sin omega nodes.
-						summary = repository.get(m);
-						if (summary != null) {
-							unanalysed.put(m, summary);
+
+						EscapeAnnotation annotation = jsonBasedEscapeAnnotationsProvider.get(m.getDeclaringClass() + "." + m.getName());
+						if(annotation != null)
+						{
+							summary = escapeAnnotationsSummaryFactory.buildPTG(m, annotation);
+						}
+						else
+						{
+							//Aca agarra de unanalizable methods.
+							//por ejemplo, List add es anotado como fresh, asi que crea un PTG sin omega nodes.
+							summary = repository.get(m);
+							if (summary != null) {
+								unanalysed.put(m, summary);
+							}
 						}
 					}
 		
