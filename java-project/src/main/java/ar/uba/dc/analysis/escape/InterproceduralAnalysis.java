@@ -198,6 +198,8 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 	
 	protected void internalDoAnalysis() {
 		
+		//top bottom analysis
+		
 		//esto deberia ir al factory config, pero bueno!
 		escapeAnnotationsSummaryFactory = new EscapeAnnotationsSummaryFactory();
 		
@@ -223,48 +225,62 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 		// fixpoint iterations
 		while (!queue.isEmpty()) {
 			SootMethod m = queue.first();
-			log.debug("Processing " + m.toString());
-			queue.remove(m); 
-			if (analyseKnownMethods || !repository.contains(m)) {
-				EscapeSummary newSummary = newInitialSummary(m);
-				EscapeSummary oldSummary = data.get(m);
-	
-				if (nb.containsKey(m)) {
-					nb.put(m, new Integer(nb.get(m).intValue() + 1)); //Le suma 1.
-				} else {
-					nb.put(m, new Integer(1));
-				}
+			
+			//if the metho has an annotation then it is not analyzed
+			EscapeAnnotation annotation = jsonBasedEscapeAnnotationsProvider.get(m.getDeclaringClass() + "." + m.getName());
+			if(annotation != null)
+			{
+				EscapeSummary summary = escapeAnnotationsSummaryFactory.buildPTG(m, annotation);
 				
-				if (recursionWatchDog == INFINITE || nb.get(m) <= recursionWatchDog) {
-					log.info(" |- processing " + m.toString() + " (" + nb.get(m) + "-st time)");
-	
-					Box<EscapeSummary> destBox = new Box<EscapeSummary>(newSummary);
+				//so that it becomes available next time
+				data.put(m, summary);
+			}
+			else
+			{
+				log.debug("Processing " + m.toString());
+				queue.remove(m); 
+				if (analyseKnownMethods || !repository.contains(m)) {
+					EscapeSummary newSummary = newInitialSummary(m);
+					EscapeSummary oldSummary = data.get(m);
+		
+					if (nb.containsKey(m)) {
+						nb.put(m, new Integer(nb.get(m).intValue() + 1)); //Le suma 1.
+					} else {
+						nb.put(m, new Integer(1));
+					}
 					
-					//Hace un analisis intraprocedural del metodo
-					//incluye combinar los análisis de los callees
-					//Usa DefaultInterproceduralMapper, DefaultSummaryApplier, DefaultSummaryCombiner 
-					analyseMethod(m, destBox);
-					
-					if (!oldSummary.equals(destBox.getValue())) {
-						// summary for m changed!
+					if (recursionWatchDog == INFINITE || nb.get(m) <= recursionWatchDog) {
+						log.info(" |- processing " + m.toString() + " (" + nb.get(m) + "-st time)");
+		
+						Box<EscapeSummary> destBox = new Box<EscapeSummary>(newSummary);
 						
+						//Hace un analisis intraprocedural del metodo
+						//incluye combinar los análisis de los callees
+						//Usa DefaultInterproceduralMapper, DefaultSummaryApplier, DefaultSummaryCombiner 
+						analyseMethod(m, destBox);
+						
+						if (!oldSummary.equals(destBox.getValue())) {
+							// summary for m changed!
+							
 
-						//en el fondo no esta recorriendo los metodos en orden topologico?
-						//"cambiar" es que no es un summary trivial, no?
-						//salvo que haya recursion
-						
-						//P_0 - n -> L_1, se lee como que P_0 apunta a L_1 via el field n.
-						data.put(m, destBox.getValue());
-						List<SootMethod> l = directedCallGraph.getPredsOf(m);
-						queue.addAll(l);
+							//en el fondo no esta recorriendo los metodos en orden topologico?
+							//"cambiar" es que no es un summary trivial, no?
+							//salvo que haya recursion
+							
+							//P_0 - n -> L_1, se lee como que P_0 apunta a L_1 via el field n.
+							data.put(m, destBox.getValue());
+							List<SootMethod> l = directedCallGraph.getPredsOf(m);
+							queue.addAll(l);
+						}
+					} else {
+						//esto es para salir del punto fijo.
+						log.info(" |- Avoid processing " + m.toString() + ". Recursion Watchdog is set to [" + recursionWatchDog + "] and the method has been processed [" + (nb.get(m) - 1) + "] times");
 					}
 				} else {
-					//esto es para salir del punto fijo.
-					log.info(" |- Avoid processing " + m.toString() + ". Recursion Watchdog is set to [" + recursionWatchDog + "] and the method has been processed [" + (nb.get(m) - 1) + "] times");
+					log.info(" |- Avoid processing " + m.toString()  + ". Repository contains summary for it and analyseKnownMethods is set to false.");
 				}
-			} else {
-				log.info(" |- Avoid processing " + m.toString()  + ". Repository contains summary for it and analyseKnownMethods is set to false.");
 			}
+			
 		}
 	}
 	
@@ -351,13 +367,15 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 					log.debug(" | | | |- mergin with [" + m.getDeclaringClass().getName() + ": " + m.getSubSignature() + "]");
 					Box<EscapeSummary> temp = new Box<EscapeSummary>(newInitialSummary(src.getValue().getTarget()));
 					EscapeSummary summary = data.get(m);
-		
+					
 					if (summary == null) {
-
 						EscapeAnnotation annotation = jsonBasedEscapeAnnotationsProvider.get(m.getDeclaringClass() + "." + m.getName());
 						if(annotation != null)
 						{
 							summary = escapeAnnotationsSummaryFactory.buildPTG(m, annotation);
+							
+							//so that it becomes available next time
+							data.put(m, summary);
 						}
 						else
 						{
@@ -366,7 +384,7 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 							summary = repository.get(m);
 							if (summary != null) {
 								unanalysed.put(m, summary);
-							}
+							}	
 						}
 					}
 		

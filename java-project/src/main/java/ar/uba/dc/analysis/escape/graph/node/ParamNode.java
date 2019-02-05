@@ -17,7 +17,8 @@ public class ParamNode implements Node {
 
 	private int id;
 	
-	private boolean omega;
+	//TODO change to private
+	public boolean omega;
     
     public ParamNode(int id) { 
     	this.id = id; 
@@ -118,5 +119,10 @@ public class ParamNode implements Node {
 	@Override
 	public boolean isFresh() {
 		return false;
+	}
+
+	@Override
+	public void convertToOmegaNode() {
+		this.omega = true;		
 	}
 }

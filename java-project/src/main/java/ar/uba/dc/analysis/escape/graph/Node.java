@@ -57,4 +57,7 @@ public interface Node extends Cloneable, Comparable<Node> {
 	public boolean accept(Node escapeNode);
 	
 	public int getNumber();
+
+	public void convertToOmegaNode();
+	
 }

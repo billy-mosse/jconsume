@@ -8,4 +8,6 @@ public interface EscapeAnnotation{
 	//La anotacion pure equivale a que no haya writable parameters. Es totalmente redundante.
 	//public boolean isPure();
 	public boolean isWritableParameter(int i);
+	
+	public List<Integer> getWritableParameters();
 }

@@ -178,13 +178,28 @@ public class ContainerNode implements Node {
 
 	@Override
 	public boolean isOmega() {
-		//si alguno es omega, el container node es omega?
-		throw new NotImplementedException();
+		//somos conservadores: si algun nodo es omega, devolvemos true.
+		//lo peor que puede pasar es que obtengamos una sobreaproximacion.
+		for(Node n : this.id)
+		{
+			if (n.isOmega())
+				return true;
+		}
+		return false;
 	}
 
 	@Override
 	public boolean isFresh() {
 		//si alguno es fresh, el container node es fresh? 
+		//no creo que esto suceda jamas, igual...
 		throw new NotImplementedException();
+	}
+
+	@Override
+	public void convertToOmegaNode() {
+		throw new NotImplementedException();
+
+		// TODO Auto-generated method stub
+		
 	}
 }

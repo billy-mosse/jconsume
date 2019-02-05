@@ -6,7 +6,7 @@ import java.util.Map;
 public class Cache {
 
 	/**
-	 * Caching: this semm to actually improve both speed and memory consumption!
+	 * Caching: this seems to actually improve both speed and memory consumption!
 	 */
 	private static final Map<Edge, Edge> edgeCache = new HashMap<Edge, Edge>();
 	private static final Map<Node, Node> nodeCache = new HashMap<Node, Node>();

@@ -58,7 +58,13 @@ public class StatementVisitor implements StmtSwitch {
 		this.callAnalyzer = analyzer;
 	}
 	
+	/**
+	 * En ambos casos se deberia considerar lo siguiente:
+	 * si la asignacion se le esta haciendo a un nodo N que apunta via un eje "?" a otro nodo,
+	 * podría darse la posibilidad de que se esté updateando ese otro nodo también.
+	 */
 	public void caseAssignStmt(AssignStmt stmt) {
+		
 		if (stmt.containsInvokeExpr()) {
 			log.debug(" | | |- call: " + stmt.getInvokeExpr().getMethod().getDeclaringClass().getName() + " " + stmt.getInvokeExpr().getMethod().getSubSignature().toString());
 			callAnalyzer.analyseCall(in, stmt, out);

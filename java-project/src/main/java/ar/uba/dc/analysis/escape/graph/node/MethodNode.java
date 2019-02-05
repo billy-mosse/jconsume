@@ -30,7 +30,8 @@ public class MethodNode implements Node {
     /** Method that created the node */
 	private SootMethod id;
 	
-	private boolean omega;
+	public boolean omega;
+	private boolean fresh;
 	
 	/** contexto del nodo. Es el stack con los {@link Stmt} de soot que representan los calls por los que fue pasando el nodo desde su creacion. */
     private CircularStack<StatementId> context;
@@ -140,12 +141,16 @@ public class MethodNode implements Node {
 
 	@Override
 	public boolean isOmega() {
-		throw new NotImplementedException();
+		return this.omega;
 	}
 
 	@Override
 	public boolean isFresh() {
-		throw new NotImplementedException();
+		return this.fresh;
 	}
-	
+
+	@Override
+	public void convertToOmegaNode() {
+		this.omega = true;		
+	}	
 }

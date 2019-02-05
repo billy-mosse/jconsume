@@ -6,6 +6,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import org.jboss.util.NotImplementedException;
+
 import soot.Local;
 import soot.RefLikeType;
 import soot.Value;
@@ -51,11 +53,24 @@ public class DefaultInterproceduralMapper implements InterproceduralMapper {
 			hasChanged = rule_3(calleeSummary, mu) || hasChanged;
 			
 			
+			//nuevas reglas
+			hasChanged = new_rule_1(calleeSummary, callerSummary, mu) || hasChanged;
+			hasChanged = new_rule_2(calleeSummary, mu) || hasChanged;
+			
+			//Notar que esta regla es con el caller summary. No es un typo
+			hasChanged = new_rule_3(callerSummary, mu) || hasChanged;
+			
+			hasChanged = new_rule_4(calleeSummary, callerSummary, mu) || hasChanged;
+			hasChanged = new_rule_5(calleeSummary, callerSummary, mu) || hasChanged;
+			
+			
 			//aca deberia agregar las reglas nuevas.
 		}
 		
 		return mu;
 	}
+
+	
 
 	//Constraint 1 maps each parameter node from the
 	//callee to the nodes from the caller that represent the actual
@@ -166,6 +181,189 @@ public class DefaultInterproceduralMapper implements InterproceduralMapper {
 									}
 								}
 							}
+						}
+					}
+				}
+			}
+		}
+		
+		return hasChanged;
+	}
+	
+	/**
+	 * For every ? edge to an omega node, we propagate that edge in the caller transitevely through the fields of the omega node 
+	 * */
+	private boolean new_rule_1(EscapeSummary calleeGraph, EscapeSummary callerGraph,
+			MultiMap<Node, Node> mu) {
+		
+		
+		
+
+		boolean hasChanged = false;
+		for(Node n1 : calleeGraph.getEdgesSources())
+		{
+			
+			//n1.belongsTo();
+			
+			for(Edge e12: calleeGraph.getEdgesOutOf(n1))
+			{
+				Node n2 = e12.getTarget();
+				if(e12.getField().equals("?") && n2.isOmega())
+				{
+					for(Node n3: mu.get(n1))
+					{
+						for(Node n4: mu.get(n2))
+						{
+							for(Edge e45 : callerGraph.getEdgesOutOf(n4))
+							{
+								//esta bien que sean outside edges tambien? creo que si.
+								//Edge e35 = new Edge(n3, "?", e45.getTarget(), e45.isInside());
+								
+								boolean contains = calleeGraph.getEdgesOutOf(n3).contains(new Edge(n3, "?", e45.getTarget(), e45.isInside()));
+								
+								if(!contains)
+								{
+									calleeGraph.relate(n3, "?", e45.getTarget(), e45.isInside());
+									hasChanged = true;
+								}
+							}
+						}
+					}
+				}
+				
+			}
+				/*Node n1;
+			calleeGraph.getEdgesOutOf(n1);
+			
+			for(Edge e: calleeGraph.getEdgesOutOf(n1))
+			{
+				Node n2 = e.getTarget();
+				if(e.getField().equals("?") && 	)
+				{
+					
+				}
+			}*/
+			
+		}
+		
+		
+		// TODO Auto-generated method stub
+		return hasChanged;
+	}
+	
+	private boolean new_rule_2(EscapeSummary calleeGraph,
+			MultiMap<Node, Node> mu) {
+		// TODO Auto-generated method stub
+		
+		/*
+		 * This rule should copy the "?" edges to the caller.
+		 * As for now these edges are not special, it does nothing (as another rules already takes care of the general case).
+		 * */
+		
+		return false;
+	}
+	
+	/**
+	 * Si n1 -?-> n2, y ademas n1 -f-> n3, entonces n1 puede alcanzar a n2 a través un field de n3, así que se agrega el field n3 -?-> n2.
+	 */
+	private boolean new_rule_3(EscapeSummary callerGraph,
+			MultiMap<Node, Node> mu) {
+		
+		boolean hasChanged = false;
+		for(Node n1: callerGraph.getEdgesSources())
+		{
+			for(Edge n12 : callerGraph.getEdgesOutOf(n1))
+			{
+				if(n12.getField().equals("?"))
+				{
+					Node n2 = n12.getTarget();
+					for(Edge n13 : callerGraph.getEdgesOutOf(n1))
+					{
+						Node n3 = n13.getTarget();
+						
+						boolean contains = callerGraph.getEdgesOutOf(n3).contains(new Edge(n3, "?", n2, n13.isInside()));
+						if(!n2.equals(n3) && !contains)
+						{
+							callerGraph.relate(n3, "?", n2, n13.isInside());
+							hasChanged = true;
+						}
+					}
+				}
+			}
+		}
+	
+		
+		return hasChanged;
+	}
+	
+	/**
+	 * Converts outside nodes reached by omega nodes via "?" fields, to omega nodes.
+	 * @param calleeGraph
+	 * @param mu
+	 * @return
+	 */
+	private boolean new_rule_4(EscapeSummary calleeGraph, EscapeSummary callerGraph,
+			MultiMap<Node, Node> mu) {
+		
+		boolean hasChanged = false;
+		for(Node n1: calleeGraph.getEdgesSources())
+		{
+			if(n1.isOmega())
+			{
+				for(Node n2 : mu.get(n1))
+				{
+					for(Edge n23 : callerGraph.getEdgesOutOf(n2))
+					{
+						if(n23.getField().equals("?"))
+						{
+							Node n3 = n23.getTarget();
+							if(!n3.isInside())
+							{
+								n3.convertToOmegaNode();
+								hasChanged = true;
+							}
+						}
+						
+						
+					}
+				}
+			}
+		}
+		// TODO Auto-generated method stub
+		return hasChanged;
+	}
+	
+	private boolean new_rule_5(EscapeSummary calleeGraph, EscapeSummary callerGraph,
+			MultiMap<Node, Node> mu) {
+		boolean hasChanged = false;
+		for(Node n1: calleeGraph.getEdgesSources())
+		{
+			for(Edge e12 : calleeGraph.getEdgesOutOf(n1))
+			{
+				if(!e12.isInside())
+				{
+					Node n2 = e12.getTarget();
+					for(Node n3 : mu.get(n1))
+					{
+						if (n3.isFresh())
+						{
+							Node n4 = n2.clone();						
+							
+							boolean contains = callerGraph.getEdgesOutOf(n3).contains(new Edge(n3, e12.getField(), n4, true));							
+							
+							if(contains)
+							{
+								callerGraph.add(n4);
+								callerGraph.relate(n3,  e12.getField(), n4, true);
+								
+								hasChanged = true;
+							}
+							
+							//ACA FALTA UN CAMBIO DE CONTEXTO, supongo que al mismo contexto que n1.
+							//me parece que deberia crear un nuevo metodo de los nodos que haga eso...
+							
+							//arreglar cuando tenga un ejemplo hecho.
+							throw new NotImplementedException();
 						}
 					}
 				}

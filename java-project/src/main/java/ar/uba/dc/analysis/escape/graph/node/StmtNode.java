@@ -46,7 +46,7 @@ public class StmtNode implements Node {
     private boolean inside;
 
     /** true if an omega node, false if it is not */
-    private boolean omega;
+    public boolean omega;
     
     /** true if a fresh node, false if it is not */
     private boolean fresh;
@@ -228,5 +228,10 @@ public class StmtNode implements Node {
 	public boolean isFresh() {
 		return false;
 		//return fresh;
+	}
+
+	@Override
+	public void convertToOmegaNode() {
+		this.omega = true;		
 	}
 }

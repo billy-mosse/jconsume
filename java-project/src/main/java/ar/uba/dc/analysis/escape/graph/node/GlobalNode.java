@@ -98,5 +98,10 @@ public class GlobalNode implements Node {
 	public boolean isFresh() {
 		throw new NotImplementedException();
 	}
+	@Override
+	public void convertToOmegaNode() {
+		throw new NotImplementedException();
+	
+	}
 	
 }

@@ -116,6 +116,8 @@ public class PointsToGraph {
 		log.debug(" | | | |- strong update of [" + variable.getName() + "] with [" + with.getName() + "]");
 		remove(variable);
 		localsPutAll(variable, locals.get(with));
+		
+		//no se si aca tambien deberiamos hacer lo de los "?". Creo que no.
 	}
 	
 	public void strongUpdate(Local variable, Node node) {
@@ -152,9 +154,27 @@ public class PointsToGraph {
 	 * @param rightVar
 	 */
 	public void weakUpdate(Local leftVar, String field, Local rightVar) {
-		for (Node nodeLeft : locals.get(leftVar)) {
-			for (Node nodeRight : locals.get(rightVar)) {
-				graph.add(Cache.cacheEdge(new Edge(nodeLeft, field, nodeRight, true)));
+		for (Node nodeLeft : locals.get(leftVar)) {		
+			weakUpdate(nodeLeft, field, rightVar);
+		
+		}
+		
+	}
+	
+	public void weakUpdate(Node nodeLeft, String field, Local rightVar)
+	{
+		for (Node nodeRight : locals.get(rightVar)) {
+			graph.add(Cache.cacheEdge(new Edge(nodeLeft, field, nodeRight, true)));
+		}
+		//Si nodeLeft apunta via "?" a otros nodos, se hace lo mismo con esos nodos
+		//creo que con esto alcanza
+		for(Edge eFromNodeLeft : graph.getEdgesOutOf(nodeLeft))
+		{
+			if(eFromNodeLeft.getField().equals("?"))
+			{
+				Node n = eFromNodeLeft.getTarget();
+				if(!n.equals(nodeLeft))
+					weakUpdate(n, field, rightVar);
 			}
 		}
 	}

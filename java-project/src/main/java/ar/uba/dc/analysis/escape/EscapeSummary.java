@@ -145,10 +145,25 @@ public class EscapeSummary {
 	 */
 	public void mutateField(Local left, String field) {
 		log.debug(" | | |- field " + field + " of " + left.getName() + " has mutated");
-
 		for (Node leftNode : ptg.getNodesPointedBy(left)) {
-			if (!leftNode.isInside()) {
-				mutated.put(leftNode, field);
+			mutateField(leftNode, field);			
+		}
+	}
+	
+	public void mutateField(Node leftNode, String field)
+	{
+		if (!leftNode.isInside()) {
+			mutated.put(leftNode, field);
+		}
+		
+		//Si nodeLeft apunta via "?" a otros nodos, se hace lo mismo con esos nodos
+		for(Edge eFromNodeLeft : this.getEdgesOutOf(leftNode))
+		{
+			if(eFromNodeLeft.getField().equals("?"))
+			{
+				Node n = eFromNodeLeft.getTarget();
+				if(!n.equals(leftNode))
+					mutateField(n, field);
 			}
 		}
 	}
@@ -174,8 +189,24 @@ public class EscapeSummary {
 	public void mutateStaticField(String field) {
 		log.debug(" | | |- " + field + " has mutated");  
 		Node node = GlobalNode.node;
+		mutateStaticField(node, field);		
+	}
+	
+	public void mutateStaticField(Node node, String field)
+	{
 		mutated.put(node, field);
 		ptg.add(node);
+		
+		//no se si GLB puede apuntar a otros nodos,...pero por las dudas...
+		for(Edge eFromNodeLeft : this.getEdgesOutOf(node))
+		{
+			if(eFromNodeLeft.getField().equals("?"))
+			{
+				Node n = eFromNodeLeft.getTarget();
+				if(!n.equals(node))
+					mutateField(n, field);
+			}
+		}
 	}
 	
 	/**
