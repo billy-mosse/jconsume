@@ -35,7 +35,7 @@ public class DefaultInterproceduralMapper implements InterproceduralMapper {
 	 * @author testis
 	 */
 	@Override
-	public MultiMap<Node, Node> buildMapping(EscapeSummary callerSummary, Stmt callStmt, EscapeSummary calleeSummary) {
+	public MultiMap<Node, Node> buildMappingAndApplyRules(EscapeSummary callerSummary, Stmt callStmt, EscapeSummary calleeSummary) {
 		MultiMap<Node, Node> mu = new HashMultiMap<Node, Node>();
 
 		// compute mapping relation g -> this
@@ -53,7 +53,7 @@ public class DefaultInterproceduralMapper implements InterproceduralMapper {
 			hasChanged = rule_3(calleeSummary, mu) || hasChanged;
 			
 			
-			//nuevas reglas
+			//new rules. HACK: these rules also relate edges now, like in Whaley's paper (they don't just build MU).
 			hasChanged = new_rule_1(calleeSummary, callerSummary, mu) || hasChanged;
 			hasChanged = new_rule_2(calleeSummary, mu) || hasChanged;
 			
@@ -219,11 +219,11 @@ public class DefaultInterproceduralMapper implements InterproceduralMapper {
 								//esta bien que sean outside edges tambien? creo que si.
 								//Edge e35 = new Edge(n3, "?", e45.getTarget(), e45.isInside());
 								
-								boolean contains = calleeGraph.getEdgesOutOf(n3).contains(new Edge(n3, "?", e45.getTarget(), e45.isInside()));
+								boolean contains = callerGraph.getEdgesOutOf(n3).contains(new Edge(n3, "?", e45.getTarget(), e45.isInside()));
 								
 								if(!contains)
 								{
-									calleeGraph.relate(n3, "?", e45.getTarget(), e45.isInside());
+									callerGraph.relate(n3, "?", e45.getTarget(), e45.isInside());
 									hasChanged = true;
 								}
 							}
@@ -265,6 +265,7 @@ public class DefaultInterproceduralMapper implements InterproceduralMapper {
 	
 	/**
 	 * Si n1 -?-> n2, y ademas n1 -f-> n3, entonces n1 puede alcanzar a n2 a través un field de n3, así que se agrega el field n3 -?-> n2.
+	 * OJO que si n1 -?-> n1, eso hace que todos sus fields puedan apuntar a n1.
 	 */
 	private boolean new_rule_3(EscapeSummary callerGraph,
 			MultiMap<Node, Node> mu) {
@@ -272,20 +273,23 @@ public class DefaultInterproceduralMapper implements InterproceduralMapper {
 		boolean hasChanged = false;
 		for(Node n1: callerGraph.getEdgesSources())
 		{
-			for(Edge n12 : callerGraph.getEdgesOutOf(n1))
+			if(n1.isOmega())
 			{
-				if(n12.getField().equals("?"))
+				for(Edge n12 : callerGraph.getEdgesOutOf(n1))
 				{
-					Node n2 = n12.getTarget();
-					for(Edge n13 : callerGraph.getEdgesOutOf(n1))
+					if(n12.getField().equals("?"))
 					{
-						Node n3 = n13.getTarget();
-						
-						boolean contains = callerGraph.getEdgesOutOf(n3).contains(new Edge(n3, "?", n2, n13.isInside()));
-						if(!n2.equals(n3) && !contains)
+						Node n2 = n12.getTarget();
+						for(Edge n13 : callerGraph.getEdgesOutOf(n1))
 						{
-							callerGraph.relate(n3, "?", n2, n13.isInside());
-							hasChanged = true;
+							Node n3 = n13.getTarget();
+							
+							boolean contains = callerGraph.getEdgesOutOf(n3).contains(new Edge(n3, "?", n2, n13.isInside()));
+							if(!n2.equals(n3) && !contains)
+							{
+								callerGraph.relate(n3, "?", n2, n13.isInside());
+								hasChanged = true;
+							}
 						}
 					}
 				}

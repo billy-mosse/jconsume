@@ -47,6 +47,5 @@ public class DefaultSummaryCombiner implements SummaryCombiner {
 		for (Node n : calleeSummary.getEscapeGlobaly()) {
 			callerSummary.nodesEscapeGlobaly(mu.get(n));
 		}
-	}
-	
+	}	
 }

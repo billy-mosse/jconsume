@@ -36,7 +36,7 @@ public class DefaultSummaryApplier implements SummaryApplier {
 		
 		// compute mapping relation g -> this
 		// ///////////////////////////////////
-		MultiMap<Node, Node> mu = mapper.buildMapping(callerGraph, callStmt, summary);
+		MultiMap<Node, Node> mu = mapper.buildMappingAndApplyRules(callerGraph, callStmt, summary);
 		
 		// extend mu into mu'
 		
@@ -89,13 +89,15 @@ public class DefaultSummaryApplier implements SummaryApplier {
 
 		for (Node n : summary.getMutatedNodes()) {
 			for (Node nn : mu.get(n)) {
+				
+				//por que pide que no sea un inside no? porque si no no hace falta mutarlo?
 				if (callerGraph.getNodes().contains(nn) && !nn.isInside()) {
 					for (String f : summary.getMutatedFieldsOf(n)) {
 						callerGraph.addMutated(nn, f);
 					}
 				}
 			}
-		}			
+		}
 				
 		dest.setValue(callerGraph);
 	}

@@ -7,6 +7,6 @@ import ar.uba.dc.util.collections.map.MultiMap;
 
 public interface InterproceduralMapper {
 
-	MultiMap<Node, Node> buildMapping(EscapeSummary callerSummary, Stmt callStmt, EscapeSummary calleeSummary);
+	MultiMap<Node, Node> buildMappingAndApplyRules(EscapeSummary callerSummary, Stmt callStmt, EscapeSummary calleeSummary);
 
 }

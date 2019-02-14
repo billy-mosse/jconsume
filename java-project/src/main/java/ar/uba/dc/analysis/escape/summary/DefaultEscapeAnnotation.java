@@ -12,6 +12,15 @@ public class DefaultEscapeAnnotation implements EscapeAnnotation, Comparable<Def
 	
 	protected String name;
 	protected boolean fresh;
+	protected String signature;
+
+	public String getSignature() {
+		return signature;
+	}
+
+	public void setSignature(String signature) {
+		this.signature = signature;
+	}
 
 	protected ListDIParameters relevantParameters;
 	
