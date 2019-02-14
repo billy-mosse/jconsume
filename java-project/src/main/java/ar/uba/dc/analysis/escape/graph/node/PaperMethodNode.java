@@ -27,7 +27,6 @@ public class PaperMethodNode implements PaperNode {
 	 */
 	
 	
-	
     /*private static final Map<String, Integer> nMap = new HashMap<String, Integer>();
     private static int n = 0;*/
 	
@@ -36,6 +35,8 @@ public class PaperMethodNode implements PaperNode {
 	
     /** Method that created the node */
 	private int id;
+	private boolean omega;
+	private boolean fresh;
 	
 	/** contexto del nodo. Es el stack con los {@link Stmt} de soot que representan los calls por los que fue pasando el nodo desde su creacion. */
     private CircularStack<String> context;
@@ -135,6 +136,16 @@ public class PaperMethodNode implements PaperNode {
 	public boolean accept(PaperNode escapeNode) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public boolean isOmega() {
+		return omega;
+	}
+
+	@Override
+	public boolean isFresh() {
+		return fresh;
 	}
 	
 }

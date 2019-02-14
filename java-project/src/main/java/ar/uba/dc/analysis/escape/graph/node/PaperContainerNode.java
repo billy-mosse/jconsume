@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
+import org.jboss.util.NotImplementedException;
 
 import soot.SootClass;
 import soot.SootMethod;
@@ -146,6 +147,18 @@ public class PaperContainerNode implements PaperNode {
 		}
 		
 		return ret;
+	}
+
+
+	@Override
+	public boolean isOmega() {
+		throw new NotImplementedException();
+	}
+
+
+	@Override
+	public boolean isFresh() {
+		throw new NotImplementedException();
 	}
 
 }

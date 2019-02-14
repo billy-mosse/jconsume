@@ -33,7 +33,7 @@ public class PaperStmtNode implements PaperNode {
 	protected int id;
 	protected boolean isInside;
     protected CircularStack<String> context;
-
+    protected boolean omega;
 	  
 	public PaperStmtNode(StmtNode origNode, CircularStack<String> context) {
 		this.id = origNode.getNumber();
@@ -120,5 +120,15 @@ public class PaperStmtNode implements PaperNode {
     	} else {
     		return "L_" + id;
     	}
+	}
+
+	@Override
+	public boolean isOmega() {
+		return omega;
+	}
+
+	@Override
+	public boolean isFresh() {
+		return false;
 	}
 }

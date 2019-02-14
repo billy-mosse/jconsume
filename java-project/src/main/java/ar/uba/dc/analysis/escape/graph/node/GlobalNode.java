@@ -14,6 +14,8 @@ import ar.uba.dc.util.collections.CircularStack;
 public class GlobalNode implements Node {
 	
 	public static GlobalNode node = new GlobalNode();
+	
+	private boolean omega;
 
 	public String toString() { 
     	return "GBL"; 
@@ -91,17 +93,15 @@ public class GlobalNode implements Node {
 	
 	@Override
 	public boolean isOmega() {
-		throw new NotImplementedException();
+		return omega;
 	}
 
 	@Override
 	public boolean isFresh() {
-		throw new NotImplementedException();
+		return false;
 	}
 	@Override
 	public void convertToOmegaNode() {
-		throw new NotImplementedException();
-	
-	}
-	
+		throw new NotImplementedException();	
+	}	
 }

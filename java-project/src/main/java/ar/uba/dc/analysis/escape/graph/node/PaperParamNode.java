@@ -1,5 +1,7 @@
 package ar.uba.dc.analysis.escape.graph.node;
 
+import org.jboss.util.NotImplementedException;
+
 import soot.SootClass;
 import soot.SootMethod;
 import ar.uba.dc.analysis.common.Invocation;
@@ -17,6 +19,8 @@ import ar.uba.dc.util.collections.CircularStack;
 public class PaperParamNode implements PaperNode {
 
 	private int id;
+	
+	private boolean omega;
     
     public PaperParamNode(int id) { 
     	this.id = id; 
@@ -88,6 +92,16 @@ public class PaperParamNode implements PaperNode {
 	public CircularStack<String> getContext() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	@Override
+	public boolean isOmega() {
+		return omega;
+	}
+
+	@Override
+	public boolean isFresh() {
+		return false;
 	}
 	
 }

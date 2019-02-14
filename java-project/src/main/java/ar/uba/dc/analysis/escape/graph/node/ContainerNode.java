@@ -27,6 +27,7 @@ public class ContainerNode implements Node {
     private Set<Node> id;
 
     private boolean inside;
+    private boolean omega;
     
     
     private CircularStack<StatementId> context;
@@ -192,14 +193,12 @@ public class ContainerNode implements Node {
 	public boolean isFresh() {
 		//si alguno es fresh, el container node es fresh? 
 		//no creo que esto suceda jamas, igual...
-		throw new NotImplementedException();
+		//throw new NotImplementedException();
+		return false;
 	}
 
 	@Override
 	public void convertToOmegaNode() {
-		throw new NotImplementedException();
-
-		// TODO Auto-generated method stub
-		
+		this.omega = true;		
 	}
 }

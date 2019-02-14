@@ -18,6 +18,7 @@ import ar.uba.dc.util.collections.CircularStack;
 public class PaperGlobalNode implements PaperNode {
 	
 	public static PaperGlobalNode node = new PaperGlobalNode();
+	private boolean omega;
 
 	public String toString() { 
     	return "GBL"; 
@@ -25,6 +26,7 @@ public class PaperGlobalNode implements PaperNode {
 	public String toJsonString() { 
     	return this.toString(); 
     }
+	
 
     public int hashCode() { 
     	//wut.
@@ -85,5 +87,15 @@ public class PaperGlobalNode implements PaperNode {
 	public void changeContext(String invocation) {
 		// no hacemos nada
 		
+	}
+	
+	@Override
+	public boolean isOmega() {
+		return omega;
+	}
+
+	@Override
+	public boolean isFresh() {
+		return false;
 	}
 }

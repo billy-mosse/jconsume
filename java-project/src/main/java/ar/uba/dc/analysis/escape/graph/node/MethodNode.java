@@ -55,6 +55,13 @@ public class MethodNode implements Node {
     	//If method is not fresh then return value is an omega node.
     	this.omega=omega;
 	}
+    
+    public MethodNode(SootMethod id, int sensitivity, boolean omega, boolean fresh) {
+    	this(id, sensitivity, omega);
+    	
+    	//If method is not fresh then return value is an omega node.
+    	this.fresh=fresh;
+	}
 
 	public String toString() { 
     	return (omega? "[W] " : "") + "M_" + nMap.get(id);
@@ -63,8 +70,6 @@ public class MethodNode implements Node {
     public String toJsonString() { 
     	return this.toString();
     }
-    
-    
 
     public int hashCode() { 
     	return id.hashCode() + context.hashCode(); 
