@@ -43,13 +43,14 @@ public class AnalyzableMethodFilter implements SootMethodFilter {
 		boolean isAnalyzable = methodInformationProvider.isAnalyzable(method);
 		boolean hasSummary = alreadyHasSummary(method); 
 		
+		//al final no los filtramos porque queremos que este en la lista para cuando escribamos el lenguaje intermedio
 		boolean hasAnnotation = alreadyHasAnnotation(method, mainClass);
 		
 		if (log.isDebugEnabled()) {
 			log.debug("Want [" + method + "]? isAnalizable [" + isAnalyzable + "] - includeKnown [" + includeKnownMethod  + "] - hasSummary [" + hasSummary + "]");
 		}
 		
-		return isAnalyzable && (includeKnownMethod || !hasSummary) && !hasAnnotation;
+		return isAnalyzable && (includeKnownMethod || !hasSummary);// && !hasAnnotation;
 	}
 
 	private boolean alreadyHasAnnotation(SootMethod method, String mainClass) {

@@ -197,7 +197,7 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 	}
 	
 	protected void internalDoAnalysis() {
-		
+
 		//top bottom analysis
 		
 		//esto deberia ir al factory config, pero bueno!
@@ -225,8 +225,9 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 		// fixpoint iterations
 		while (!queue.isEmpty()) {
 			SootMethod m = queue.first();
+			queue.remove(m);
 			
-			//if the metho has an annotation then it is not analyzed
+			//if the method has an annotation then it is not analyzed
 			EscapeAnnotation annotation = jsonBasedEscapeAnnotationsProvider.get(m.getDeclaringClass() + "." + m.getName());
 			if(annotation != null)
 			{
@@ -238,7 +239,6 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 			else
 			{
 				log.debug("Processing " + m.toString());
-				queue.remove(m); 
 				if (analyseKnownMethods || !repository.contains(m)) {
 					EscapeSummary newSummary = newInitialSummary(m);
 					EscapeSummary oldSummary = data.get(m);

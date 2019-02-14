@@ -85,7 +85,7 @@ public class JsonBasedEscapeAnnotationsProvider{
 			location = locationStrategy.getEscapeAnnotationsLocation(mainClass);
 		else
 		{
-			location = location + mainClass;
+			location = location + mainClass + ".json";
 		}
 		Reader reader;
 		try {
@@ -206,9 +206,9 @@ public class JsonBasedEscapeAnnotationsProvider{
 			
 			String name = jobject.get("name").getAsString();
 			annotation.setName(name);
-						
 			
 			
+			annotation.setSignature(jobject.get("signature").getAsString());			
 			
 			Integer[] writableParameters = context.deserialize(jobject.get("writableParameters"), Integer[].class);
 			annotation.setWritableParameters(List.from(writableParameters));
