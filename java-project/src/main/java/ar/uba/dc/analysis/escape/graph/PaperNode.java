@@ -12,6 +12,12 @@ public interface PaperNode extends Cloneable {
     /** Is it an inside node ? */
     public boolean isInside();
 
+    /** Is it an omega node ? */
+    public boolean isOmega();
+    
+    /** Is it a fresh node ? */
+    public boolean isFresh();
+
     /** Is it a load node ? */
     public boolean isLoad();
 

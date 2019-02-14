@@ -168,13 +168,16 @@ public class PointsToGraph {
 		}
 		//Si nodeLeft apunta via "?" a otros nodos, se hace lo mismo con esos nodos
 		//creo que con esto alcanza
-		for(Edge eFromNodeLeft : graph.getEdgesOutOf(nodeLeft))
+		if(nodeLeft.isOmega())
 		{
-			if(eFromNodeLeft.getField().equals("?"))
+			for(Edge eFromNodeLeft : graph.getEdgesOutOf(nodeLeft))
 			{
-				Node n = eFromNodeLeft.getTarget();
-				if(!n.equals(nodeLeft))
-					weakUpdate(n, field, rightVar);
+				if(eFromNodeLeft.getField().equals("?"))
+				{
+					Node n = eFromNodeLeft.getTarget();
+					if(!n.equals(nodeLeft))
+						weakUpdate(n, field, rightVar);
+				}
 			}
 		}
 	}

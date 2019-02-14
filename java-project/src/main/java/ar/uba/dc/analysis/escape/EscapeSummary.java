@@ -31,22 +31,34 @@ public class EscapeSummary {
 	protected SootMethod target;
 	protected PointsToGraph ptg;
 	protected MultiMap<Node, String> mutated;	// node -> field such that (node,field) is
+	protected boolean isArtificial;
 	
 	public EscapeSummary() {
 		this.target = null;
 		this.ptg = new PointsToGraph();
 		this.mutated = new HashMultiMap<Node, String>();
+		this.isArtificial = false;
+	}
+
+	public boolean isArtificial() {
+		return isArtificial;
+	}
+
+	public void setArtificial(boolean isArtificial) {
+		this.isArtificial = isArtificial;
 	}
 
 	public EscapeSummary(SootMethod target) {
 		this();
 		this.target = target;
+		this.isArtificial = false;
 	}
 	
 	public EscapeSummary(EscapeSummary value) {
 		target = value.target;
 		ptg = new PointsToGraph(value.ptg);
 		mutated = new HashMultiMap<Node, String>(value.mutated);
+		isArtificial = value.isArtificial;
 	}
 
 	@Override
