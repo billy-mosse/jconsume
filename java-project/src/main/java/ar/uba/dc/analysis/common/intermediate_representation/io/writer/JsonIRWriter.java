@@ -107,7 +107,7 @@ public class JsonIRWriter implements SummaryWriter<IntermediateRepresentationMet
 		
 	public void write(IntermediateRepresentationMethod ir_method, boolean debug) {
 		
-		log.debug("estoy escribiendo el metodo " + ir_method.toString());
+		log.debug("Estoy escribiendo el metodo " + ir_method.toString());
 		
 		String location = locationStrategy.getJsonIRLocation(ir_method, mainClass);
 		log.debug("Location for summary: [" + location + "]");
@@ -137,9 +137,9 @@ public class JsonIRWriter implements SummaryWriter<IntermediateRepresentationMet
             bwr.close();
 
 		} catch (IOException e) {
-			log.error("Error al imprimir el summary para el metodo [" + ir_method.getName() + "] a xml: " + e.getMessage(), e);
+			log.error("Error al imprimir el summary para el metodo [" + ir_method.getName() + "] a json: " + e.getMessage(), e);
 		} catch(Exception e) {
-			log.error("Que carajo esta pasando??");
+			log.error("Error");
 		}
 	}
 
@@ -202,10 +202,6 @@ public class JsonIRWriter implements SummaryWriter<IntermediateRepresentationMet
 	        
 	        result.add("relevant_parameters", relevant_parameters);
 	        result.add("body", context.serialize(ir_method.getBody()));
-	        
-	        
-	        
-	        
 	        
 	        
 	        return result;

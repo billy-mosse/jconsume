@@ -4,11 +4,22 @@ import java.util.List;
 
 import org.apache.commons.lang.NotImplementedException;
 
+import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.DIParameter;
+import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.ListDIParameters;
+import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.SimpleDIParameter;
+
 public class DefaultEscapeAnnotation implements EscapeAnnotation, Comparable<DefaultEscapeAnnotation>{
 	
 	protected String name;
 	protected boolean fresh;
+
+	protected ListDIParameters relevantParameters;
 	
+	public void setRelevantParameters(ListDIParameters relevantParameters) {
+		this.relevantParameters = relevantParameters;
+	}
+
+	protected ListDIParameters parameters;
 	/*protected boolean pure;
 	
 	public boolean isPure() {
@@ -18,6 +29,10 @@ public class DefaultEscapeAnnotation implements EscapeAnnotation, Comparable<Def
 	public void setPure(boolean pure) {
 		this.pure = pure;
 	}*/
+
+	public void setParameters(ListDIParameters parameters) {
+		this.parameters = parameters;
+	}
 
 	protected List<Integer> writableParameters;
 	
@@ -32,6 +47,10 @@ public class DefaultEscapeAnnotation implements EscapeAnnotation, Comparable<Def
 
 	public void setFresh(boolean fresh) {
 		this.fresh = fresh;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public boolean isFresh()
@@ -54,7 +73,15 @@ public class DefaultEscapeAnnotation implements EscapeAnnotation, Comparable<Def
 	public String getName()
 	{
 		return this.name;
-	}	
-	
-	
+	}
+
+	@Override
+	public ListDIParameters getRelevantParameters() {
+		return this.relevantParameters;
+	}
+
+	@Override
+	public ListDIParameters getParameters() {
+		return this.parameters;
+	}
 }
