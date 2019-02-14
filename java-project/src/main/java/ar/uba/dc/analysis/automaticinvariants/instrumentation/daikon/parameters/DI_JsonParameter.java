@@ -28,8 +28,20 @@ import soot.jimple.StaticInvokeExpr;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-public class DI_SimpleParameter extends DIParameter {
+public class DI_JsonParameter extends DIParameter {
 
-	public List<DI_SimpleParameter> fields;
+	public List<DI_JsonParameter> fields;
+	public List<DI_JsonParameter> getFields() {
+		return fields;
+	}
+	public void setFields(List<DI_JsonParameter> fields) {
+		this.fields = fields;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	public String name;
 }
