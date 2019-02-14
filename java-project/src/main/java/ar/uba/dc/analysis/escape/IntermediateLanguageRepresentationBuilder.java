@@ -2,6 +2,7 @@ package ar.uba.dc.analysis.escape;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -22,6 +23,7 @@ import ar.uba.dc.analysis.common.code.MethodDecorator;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationBodyBuilder;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethodBuilder;
+import ar.uba.dc.analysis.escape.graph.Node;
 //import ar.uba.dc.analysis.common.AbstractInterproceduralAnalysis.IntComparator;
 import ar.uba.dc.analysis.escape.summary.repository.RAMSummaryRepository;
 import ar.uba.dc.analysis.memory.LifeTimeOracle;
@@ -30,6 +32,7 @@ import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartitionBinding;
 import ar.uba.dc.analysis.memory.impl.summary.SimplePaperPointsToHeapPartition;
 import ar.uba.dc.invariant.InvariantProvider;
 import ar.uba.dc.invariant.spec.SpecInvariantProvider;
+import ar.uba.dc.invariant.spec.compiler.constraints.parser.DerivedVariable;
 import soot.SootMethod;
 import soot.jimple.toolkits.callgraph.CallGraph;
 
@@ -106,19 +109,36 @@ public class IntermediateLanguageRepresentationBuilder {
 			order++;
 			log.info(" |- processing " + method.toString());
 			
-			//Use una clase distinta a MethodBody porque quiero tener guardados los news/calls ordenados para el IR.
-			//En un ppio pense que esto era necesario para obtener la info de invariantes, pero eso es mentira
-			
-			//El MethodBody guarda los news y calls por separado y prefiero no procesarlos por separado
-			BasicMethodBody methodBody = methodDecorator.decorate_for_IR(method);
-			
-			System.out.println(method.toString());
-			
-			//al final no necesito queue
-			IntermediateRepresentationMethod m = irbuilder.buildMethod(methodBody, order, ir_methods, queue);
-			
-			//convertRichPaperPointsToHeapPartitionsToSimplePaperPointsToHeapPartition(m);
-			ir_methods.add(m);
+			EscapeSummary summary = data.get(method);
+			if(summary.isArtificial)
+			{
+				IntermediateRepresentationMethod m = new IntermediateRepresentationMethod(method, order);
+				Map<Node, Integer> numbers = new HashMap<Node, Integer>();
+				m.setNodesInfo(summary, numbers);
+				m.setDeclaringClass(method.getDeclaringClass().toString());
+				m.setName(method.getName());
+				//no se si esto esta bien
+				m.setNewRelevantParameters(new HashSet<DerivedVariable>());
+				m.setDeclaration(method.getDeclaration());
+				//m.setRelevantParameters(relevant_parameters)
+				ir_methods.add(m);
+			}
+			else
+			{
+				//Use una clase distinta a MethodBody porque quiero tener guardados los news/calls ordenados para el IR.
+				//En un ppio pense que esto era necesario para obtener la info de invariantes, pero eso es mentira
+				
+				//El MethodBody guarda los news y calls por separado y prefiero no procesarlos por separado
+				BasicMethodBody methodBody = methodDecorator.decorate_for_IR(method);
+				
+				System.out.println(method.toString());
+				
+				//al final no necesito queue
+				IntermediateRepresentationMethod m = irbuilder.buildMethod(methodBody, order, ir_methods, queue);
+				
+				//convertRichPaperPointsToHeapPartitionsToSimplePaperPointsToHeapPartition(m);
+				ir_methods.add(m);
+			}
 		}
 		
 		log.debug(ir_methods.toString());

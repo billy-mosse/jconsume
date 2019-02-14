@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AnnotationSiteInvariantForJson {
-	//String type; //vacio si es CallSite, CS si es creation site
-    //int index;
     
 	public AnnotationSiteInvariantForJson()
 	{
