@@ -22,6 +22,7 @@ import ar.uba.dc.analysis.common.MethodInformationProvider;
 import ar.uba.dc.analysis.common.SummaryRepository;
 import ar.uba.dc.analysis.common.code.CallStatement;
 import ar.uba.dc.analysis.common.code.MethodDecorator;
+import ar.uba.dc.analysis.common.method.information.JsonBasedEscapeAnnotationsProvider;
 import ar.uba.dc.analysis.memory.expression.ParametricExpressionFactory;
 import ar.uba.dc.analysis.memory.impl.ReportWriter;
 import ar.uba.dc.analysis.memory.impl.madeja.PaperMemorySummary;
@@ -75,6 +76,18 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis {
 	
 	protected ReportWriter<String, PaperMemorySummary> reportWriter;
 	
+	//esto al final no lo tenemos que usar...me parece
+	protected JsonBasedEscapeAnnotationsProvider jsonBasedEscapeAnnotationsProvider;
+	
+	public JsonBasedEscapeAnnotationsProvider getJsonBasedEscapeAnnotationsProvider() {
+		return jsonBasedEscapeAnnotationsProvider;
+	}
+
+	public void setJsonBasedEscapeAnnotationsProvider(
+			JsonBasedEscapeAnnotationsProvider jsonBasedEscapeAnnotationsProvider) {
+		this.jsonBasedEscapeAnnotationsProvider = jsonBasedEscapeAnnotationsProvider;
+	}
+
 	@Override
 	protected void doAnalysis() {
 		init();
@@ -97,6 +110,9 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis {
 		
 		//Llamadas a inicializadores de clase
 		this.clinit = new HashSet<SootMethod>();
+		
+		this.jsonBasedEscapeAnnotationsProvider.fetchAnnotations(mainClass);
+		
 	}
 	
 	protected void internalDoAnalysis() {		
@@ -106,8 +122,11 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis {
 		for (SootMethod methodUnderAnalysis : queue) {
 			if (analyseKnownMethods || !repository.contains(methodUnderAnalysis)) {
 				log.info(" |- processing " + methodUnderAnalysis.toString());
+
 				
-				//Esto no podria estar afuera?
+				//if(this.jsonBasedEscapeAnnotationsProvider.get(methodUnderAnalysis.getDeclaringClass().toString() + "." + methodUnderAnalysis.getName()))
+				
+				//Esto no podria estar afuera? Bueno, no, por lo de analyzedNews por ejemplo.
 				IntraproceduralAnalysis analysis = new IntraproceduralAnalysis(this, expressionFactory, summaryFactory, methodDecorator, countingTheory, lifeTimeOracle, symbolicCalculator);
 				MemorySummary summary = analysis.run(methodUnderAnalysis);
 				this.analyzedNewStaments += analysis.getAnalyzedNews();

@@ -29,6 +29,10 @@ public class IntermediateRepresentationMethodBuilder {
 	private IntermediateRepresentationBodyBuilder irbody_builder;
 	
 	private InvariantProvider invariantProvider;
+	public InvariantProvider getInvariantProvider() {
+		return invariantProvider;
+	}
+
 	protected RAMSummaryRepository data;
 
 
