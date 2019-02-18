@@ -475,7 +475,7 @@ Then go again to jconsume/java-project and run the following command:
 
 This generates the memory consumption analysis. Results can be seen in java-project/results/rinard/report_ar.uba.dc.paper.Program1/index.html
 
-**Porgram 2**
+**Program 2**
 
 Same as before, but change the 1 for a 2.
 
