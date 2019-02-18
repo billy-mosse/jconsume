@@ -13,6 +13,8 @@ public class DefaultEscapeAnnotation implements EscapeAnnotation, Comparable<Def
 	protected String name;
 	protected boolean fresh;
 	protected String signature;
+	protected ListDIParameters relevantParameters;
+	protected ListDIParameters parameters;
 
 	public String getSignature() {
 		return signature;
@@ -22,13 +24,11 @@ public class DefaultEscapeAnnotation implements EscapeAnnotation, Comparable<Def
 		this.signature = signature;
 	}
 
-	protected ListDIParameters relevantParameters;
 	
 	public void setRelevantParameters(ListDIParameters relevantParameters) {
 		this.relevantParameters = relevantParameters;
 	}
 
-	protected ListDIParameters parameters;
 	/*protected boolean pure;
 	
 	public boolean isPure() {
@@ -92,5 +92,12 @@ public class DefaultEscapeAnnotation implements EscapeAnnotation, Comparable<Def
 	@Override
 	public ListDIParameters getParameters() {
 		return this.parameters;
+	}
+
+	@Override
+	public String getClassName() {
+		return this.signature.substring(1,
+				this.signature.indexOf(':')
+				);
 	}
 }

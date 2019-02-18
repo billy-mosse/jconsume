@@ -4,24 +4,37 @@ public class TestAnnotation04 {
 
 	public static void main(String[] args)
 	{
-		Integer var = mainParameters(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
-	}	
+		MyInteger var = new MyInteger();
+		MyInteger var2 = new MyInteger();
+		var.f = Integer.parseInt(args[0]);
+		var2.f = Integer.parseInt(args[1]);
+		var.g.f = 4;
+		var2.g.f = 4;
+		MyInteger v1 = mainParameters(var, var2);
+		f();
+	}
 	
-	public static Integer mainParameters(Integer k, Integer l)
+	
+	public static void f()
 	{
-		Integer result = 0;
-		for(int i = 1; i < k; i++)
+		
+	}
+	
+	public static MyInteger mainParameters(MyInteger k, MyInteger l)
+	{
+		MyInteger result = new MyInteger();
+		for(int i = 1; i < k.f; i++)
 		{
-			result += max(k, l);
+			result.f += max(k, l).f;
 		}
 		return result;
 	}
 	
-	public static java.lang.Integer max(Integer k, Integer l)
+	public static MyInteger max(MyInteger kk, MyInteger ll)
 	{
-		if(k > l)
-			return k;
+		if(kk.f > ll.f && kk.g.f > ll.g.f)
+			return kk;
 		else
-			return l;
+			return ll;
 	}
 }

@@ -23,6 +23,7 @@ import java.util.Vector;
 
 import ar.uba.dc.analysis.automaticinvariants.inductives.InductivesFinder;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.DIParameter;
+import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.DI_JsonParameter;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.DI_Object;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.DI_Value;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.ListDIParameters;
@@ -32,7 +33,9 @@ import ar.uba.dc.analysis.automaticinvariants.regions.CreationSiteInfo;
 import ar.uba.dc.analysis.common.Invocation;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
 import ar.uba.dc.analysis.common.intermediate_representation.io.writer.JsonIRWriter.InvocationSerializer;
+import ar.uba.dc.analysis.common.method.information.JsonBasedEscapeAnnotationsProvider;
 import ar.uba.dc.analysis.common.method.information.JsonInstrumentationSiteInvariantsWriter;
+import ar.uba.dc.analysis.escape.summary.EscapeAnnotation;
 import ar.uba.dc.annotations.AnnotationSiteInvariantForJson;
 import soot.MethodOrMethodContext;
 import soot.PackManager;
@@ -40,6 +43,7 @@ import soot.Scene;
 import soot.SootClass;
 import soot.SootMethod;
 import soot.Transform;
+import soot.JastAddJ.ThisAccess;
 import soot.jimple.internal.JimpleLocal;
 import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.jimple.toolkits.callgraph.Edge;
@@ -51,6 +55,7 @@ import java.util.Deque;
 import java.util.ArrayDeque;
 
 import org.apache.commons.lang.StringEscapeUtils;
+import org.jboss.util.NotImplementedException;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -76,6 +81,18 @@ public class ProgramInstrumentatorForDaikonMain {
 	private static Map<String,InstrumentedMethodClass> instrumentedMethodClasses = new HashMap<String,InstrumentedMethodClass>();
 	public static boolean inductivesAsRelevants = false;
 
+	private static Set<EscapeAnnotation> annotatedMethods;
+
+	
+	public static Set<EscapeAnnotation> getAnnotatedMethods() {
+		return annotatedMethods;
+	}
+	public static void setAnnotatedMethods(Set<EscapeAnnotation> annotatedMethods) {
+		ProgramInstrumentatorForDaikonMain.annotatedMethods = annotatedMethods;
+	}
+
+	private static JsonBasedEscapeAnnotationsProvider jsonBasedEscapeAnnotationsProvider;
+	
 	public static boolean isInCG(SootMethod m)
 	{
 		ProgramInstrumentatorForDaikonMain.computeReachableMethods();
@@ -105,11 +122,41 @@ public class ProgramInstrumentatorForDaikonMain {
 		}
 	}
 
-	private static boolean isNotAnalyzable(String srcClass, String srcSig) {
+	
+	private static boolean isNotAnalyzable(String srcClass, String srcSig, String methodName) {
+		
+		//si tiene anotacion entonces no se deberia analizar
+		System.out.println(methodName);
+		EscapeAnnotation annotation = jsonBasedEscapeAnnotationsProvider.get(methodName); 
+		if (annotation != null)
+		{
+			/* Si el no analizable es SRC entonces dale, lo filtro y agrego (despues de este filtro y antes del analisis) 
+			 * la info de los relevant parameters a las estructuras correspondientes.
+			 * Si es el target, me parece que no tengo que filtrarlo. Tal vez deberia agregarlo a una lista especial y usar esa info
+			 * para hacer algo "distinto" en el call.
+			 */
+			
+			
+			/**
+			 * Recordar que lo de los relevant parameters sirve para la propagacion para arriba en el callgraph, lo cual es neceario.
+			 * Por otro lado, los memory summaries nos dicen el consumo. El default podria ser #objetos creados.
+			 * Deberia cambiar de lugar lo que tengo ahora de memory summaries.			 *  
+			 */
+			
+			
+			
+			
+			//to Process later
+			annotatedMethods.add(annotation);
+			return true;
+		}
+		
 		boolean srcNotAnalyzable =  srcClass.indexOf("java.")!=-1 
     		|| srcClass.indexOf("javax.")!=-1
     		|| srcClass.indexOf("sun.")!=-1;
+		
 		boolean sigNotAnalyzable = srcSig.indexOf("init>")!=-1;
+		
 		return srcNotAnalyzable ;
 	}
 	
@@ -123,9 +170,13 @@ public class ProgramInstrumentatorForDaikonMain {
     	String tgtClass = tgtSig.substring(0,tgtSig.indexOf(":"));
     	String srcSig  =  e.getSrc().method().getSignature();
     	String srcClass = srcSig.substring(0,srcSig.indexOf(":"));
-    	boolean srcNotAnalyzable = isNotAnalyzable(srcClass, srcSig);
+
+    	String srcName = e.getSrc().method().getDeclaringClass() + "." + e.getTgt().method().getName();
+    	String tgtName = e.getSrc().method().getDeclaringClass() + "." + e.getTgt().method().getName(); 
     	
-    	boolean tgtNotAnalyzable = isNotAnalyzable(tgtClass, tgtSig);
+    	boolean srcNotAnalyzable = isNotAnalyzable(srcClass, srcSig, srcName);
+    	
+    	boolean tgtNotAnalyzable = isNotAnalyzable(tgtClass, tgtSig, tgtName);
     	if(tgtSig.indexOf("crypto")!=-1 || srcSig.indexOf("crypto")!=-1)
     		System.out.print("");
         return srcNotAnalyzable || tgtNotAnalyzable;	
@@ -141,18 +192,35 @@ public class ProgramInstrumentatorForDaikonMain {
 			System.exit(0);
 		}
 		
+		
+		String mainClassAndName = args[0];
+		
+		jsonBasedEscapeAnnotationsProvider = new JsonBasedEscapeAnnotationsProvider("src/main/resources/annotations/escape/");
+		jsonBasedEscapeAnnotationsProvider.fetchAnnotations(mainClassAndName);
+		annotatedMethods = new HashSet<EscapeAnnotation>();
+		
+		if(mainClassAndName.contains("."))
+		{
+			//
+			mainClass = mainClassAndName.substring(0, mainClassAndName.lastIndexOf("."));
+			//pwIM.println("package " + mainClass + ";");
+		}
+		
+		
+		ReachableMethods.setEdgePredicate(new EdgePredicate() {
+        	@Override
+			public boolean want(Edge e) {
+        		return !IsFiltered(e);
+        	}
+		});
+		
 		Scene.v().addBasicClass("ar.uba.dc.analysis.automaticinvariants.VarTest",SootClass.SIGNATURES);
 		
 		//Scene.v().addBasicClass("VarTest",SootClass.SIGNATURES);
 		//Scene.v().addBasicClass("ar.uba.dc.daikon.RichNumberPublic",SootClass.SIGNATURES);
 		
         //EdgeFilter ef = new EdgeFilter(pred);
-        ReachableMethods.setEdgePredicate(new EdgePredicate() {
-        	@Override
-			public boolean want(Edge e) {
-        		return !IsFiltered(e);
-        	}
-		});
+        
 		
 //		Scene.v().addBasicClass("sun.reflect.generics.repository.ClassRepository",SootClass.SIGNATURES);
 //		Scene.v().addBasicClass("java.lang.Class$EnclosingMethodInfo",SootClass.SIGNATURES);
@@ -211,7 +279,6 @@ public class ProgramInstrumentatorForDaikonMain {
 				"-f", "c", //J es jimple, j es jimp (jimple simplificado)
 				"-d", fullOutputDir,
 
-				//"-version",
 				"-p", "cg", "enabled:true",
 				
 				
@@ -226,7 +293,7 @@ public class ProgramInstrumentatorForDaikonMain {
 				 
 				
 				 //lo deje a ver que pasa
-				 //"-asm-backend",	
+				 "-asm-backend",	
 				 //"-version",
 				 
 				 //This option sets the JDK version of the standard library being analyzed so that Soot can simulate the native methods in the specific version of the library.
@@ -427,7 +494,7 @@ public class ProgramInstrumentatorForDaikonMain {
 	      //  sootOpt.set_java_version(soot.options.Options.java_version_1_7);
 	        
 	        
-	        sootOpt.set_asm_backend(true);
+	        //sootOpt.set_asm_backend(true);
 	        //esto lo saque porque sino no anda pero estoy usando la version incorrecta de soot
 	        //sootOpt.set_asm_backend(true);      
 	        //sootOpt.set_keep_offset(true);
@@ -445,21 +512,40 @@ public class ProgramInstrumentatorForDaikonMain {
 	        
 
 			
-			
 	        
 			soot.Main.main(opts);
+			
+			
+			
+			//MethodInstrumenterForDaikon.getInstance().getRelevantsMap().put(srcSig, annotation.get)
+			for(EscapeAnnotation annotation : annotatedMethods)
+			{
+				//para hacer el binding en el .cs
+				MethodInstrumenterForDaikon.getInstance().getRelevantsMap().put(annotation.getSignature(), annotation.getRelevantParameters());
+				
+				ListDIParameters parametersInit = new ListDIParameters();
+				Iterator it = annotation.getParameters().iterator();
+				while(it.hasNext())
+				{
+					DI_JsonParameter jsonParameter = ((DI_JsonParameter) it.next()).clone();
+					jsonParameter.name = jsonParameter.name + "_init";
+					parametersInit.add(jsonParameter);
+				}
+				MethodMapInfo m = new MethodMapInfo(annotation.getParameters(), parametersInit, annotation.getClassName());
+				
+				
+				MethodInstrumenterForDaikon.getInstance().getMethodMap().put(annotation.getSignature(), m);
+				
+				//add relevant parameters and parameters to corresponding lists
+
+			}
+			
 			
 			
 			//Scene.v().addClass(IntrumentedMethodClass);
 			
 			
-			mainClass = args[0];
 			
-			if(mainClass.contains("."))
-			{
-				mainClass = mainClass.substring(0, mainClass.lastIndexOf("."));
-				//pwIM.println("package " + mainClass + ";");
-			}
 			
 			
 			
@@ -819,7 +905,7 @@ public class ProgramInstrumentatorForDaikonMain {
 			System.out.println();
 		}
 		*/
-		ListDIParametersNoRep relevant_variables_callee = (ListDIParametersNoRep) relevantsMap.get(callInfo.getCallee());
+		ListDIParameters relevant_variables_callee = (ListDIParameters) relevantsMap.get(callInfo.getCallee());
 		
 		for(; itA.hasNext();)
 		{
@@ -954,8 +1040,16 @@ public class ProgramInstrumentatorForDaikonMain {
 								
 								for(Object o : element.toListOnlyFieldEnterizedVariables())
 								{
-									JimpleLocal dip = (JimpleLocal) o;
-									String fullName = dip.toString();
+									String fullName;
+									if(o.getClass().equals(String.class))
+									{
+										fullName = (String) o;
+									}
+									else
+									{
+										JimpleLocal jlocal = (JimpleLocal) o;
+										fullName = jlocal.toString();
+									}
 									String notBase = fullName.substring(fullName.indexOf(element.getName()) + element.getName().length());
 									boolean contains = false;
 									for(Object item : paramInitFil)
@@ -971,7 +1065,7 @@ public class ProgramInstrumentatorForDaikonMain {
 										argFil.add(argName + notBase);
 										paramFil.add(pName + notBase);
 									}
-									new_relevant.derivedFields.add(notBase);
+									new_relevant.derivedFields.add(notBase);									
 
 								}
 								

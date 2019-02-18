@@ -13,11 +13,14 @@ public interface EscapeAnnotation{
 	
 	public List<Integer> getWritableParameters();
 
+	//los relevant parameters son de tipo DI_JsonParameter
 	public ListDIParameters getRelevantParameters();
 
 	public ListDIParameters getParameters();
 	
 	public String getSignature();
+
+	public String getClassName();
 	
 	//public String[] getRelevantParameters();
 }

@@ -6,6 +6,7 @@ import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -74,7 +75,7 @@ public class JsonBasedEscapeAnnotationsProvider{
 		
 
 		//builder.registerTypeAdapter(ListDIParameters.class, new ListDIParametersDeserializer());
-		builder.registerTypeAdapter(EscapeAnnotation.class, new EscapeAnnotationDeserializer());
+		builder.registerTypeAdapter(DefaultEscapeAnnotation.class, new DefaultEscapeAnnotationDeserializer());
 		builder.registerTypeAdapter(DI_JsonParameter.class, new DI_JsonParameterDeserializer());
 		
 		
@@ -190,11 +191,11 @@ public class JsonBasedEscapeAnnotationsProvider{
 		
 	}	*/
 	
-	public static class EscapeAnnotationDeserializer implements JsonDeserializer<EscapeAnnotation> 
+	public static class DefaultEscapeAnnotationDeserializer implements JsonDeserializer<DefaultEscapeAnnotation> 
 	{
 	    
 		@Override
-		public EscapeAnnotation deserialize(JsonElement json, Type type,
+		public DefaultEscapeAnnotation deserialize(JsonElement json, Type type,
 		        JsonDeserializationContext context) throws JsonParseException {
 			JsonObject jobject = (JsonObject) json;			
 			
@@ -215,20 +216,30 @@ public class JsonBasedEscapeAnnotationsProvider{
 
 			JsonArray jrelevantParams = jobject.get("relevantParameters").getAsJsonArray();
 			ListDIParameters lRelevantParams = new ListDIParameters();
+			int size = jrelevantParams.size();
 			for(int i = 0;  i < jrelevantParams.size(); i++)
 			{
 				DI_JsonParameter jsonParameter = context.deserialize(jrelevantParams.get(i), DI_JsonParameter.class);
+				
+				//el nombre deberia ser completo?
+				//jsonParameter.setName(name + "." + jsonParameter.getName());
 				lRelevantParams.add(jsonParameter);
 			}			
 			annotation.setRelevantParameters(lRelevantParams);
+			
+			
+			updateParamsNames(lRelevantParams);
 			
 			JsonArray jParams = jobject.get("parameters").getAsJsonArray();
 			ListDIParameters lParams = new ListDIParameters();
 			for(int i = 0;  i < jParams.size(); i++)
 			{
 				DI_JsonParameter jsonParameter = context.deserialize(jParams.get(i), DI_JsonParameter.class);
+				//jsonParameter.setName(name + "." + jsonParameter.getName());
 				lParams.add(jsonParameter);
 			}
+			
+			updateParamsNames(lParams);
 			
 			annotation.setParameters(lParams);
 			
@@ -238,6 +249,32 @@ public class JsonBasedEscapeAnnotationsProvider{
 		}
 	}
 	
+	
+	//prefix always ends with a dot, for an easier implementation
+	public static void visit(DI_JsonParameter jsonParameter, String prefix)
+	{		
+		Iterator<DI_JsonParameter> it = jsonParameter.getDerivedVariables2().iterator();
+		while(it.hasNext())
+		{
+			DI_JsonParameter param = it.next();
+			
+			//las que no son hojas tambien necesitan updetearse, me parece
+			param.name = prefix + param.name; 
+			String new_prefix = param.name + ".";
+			visit(param, new_prefix);
+		}		
+	}
+	
+	
+	public static void updateParamsNames(ListDIParameters params)
+	{
+		Iterator<DI_JsonParameter> it = params.iterator();
+		while(it.hasNext())
+		{
+			DI_JsonParameter param = it.next();
+			visit(param, param.name + ".");
+		}
+	}
 	
 	/*public static class ListDIParametersDeserializer implements JsonDeserializer<ListDIParameters> 
 	{
@@ -271,15 +308,16 @@ public class JsonBasedEscapeAnnotationsProvider{
 			
 			jsonParameter.name = jobject.get("name").getAsString();
 			JsonArray jfields = jobject.get("fields").getAsJsonArray();
-			ArrayList<DI_JsonParameter> fields = new ArrayList<DI_JsonParameter>();
+			ListDIParameters fields = new ListDIParameters();
 			
 			for(int i = 0;  i < jfields.size(); i++)
 			{
 				//recursive
 				DI_JsonParameter jsonParameterField = context.deserialize(jfields.get(i), DI_JsonParameter.class);
+				//jsonParameterField.name = jsonParameter.name + "." + jsonParameterField.name; 
 				fields.add(jsonParameterField);
 			}	
-			jsonParameter.setFields(fields);
+			jsonParameter.setDerivedVarsForSpec(fields);
 			
 			return jsonParameter; 
 			

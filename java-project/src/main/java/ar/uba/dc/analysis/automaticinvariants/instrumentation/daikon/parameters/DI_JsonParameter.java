@@ -6,6 +6,7 @@
  */
 package ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -30,12 +31,17 @@ import soot.jimple.StaticInvokeExpr;
  */
 public class DI_JsonParameter extends DIParameter {
 
-	public List<DI_JsonParameter> fields;
-	public List<DI_JsonParameter> getFields() {
-		return fields;
+	// es un objeto recursivo para representar objetos con fields.
+	// Si, por ejemplo, a es un DI_JsonParameter con field b, y b tiene field c, y c no tiene fields,
+	//  entonces el relevant parameter ENTERIZADO es a.b.c
+	//
+	
+	//public List<DI_JsonParameter> derivedVariablesForSpec;
+	public List<DI_JsonParameter> getDerivedVarsForSpec() {
+		return derivedVarsForSpec;
 	}
-	public void setFields(List<DI_JsonParameter> fields) {
-		this.fields = fields;
+	public void setDerivedVarsForSpec(ListDIParameters fields) {
+		this.derivedVarsForSpec = fields;
 	}
 	public String getName() {
 		return name;
@@ -44,4 +50,12 @@ public class DI_JsonParameter extends DIParameter {
 		this.name = name;
 	}
 	public String name;
+	
+	public DI_JsonParameter clone()
+	{
+		DI_JsonParameter clone = new DI_JsonParameter();
+		clone.setName(this.name);
+		clone.setDerivedVarsForSpec(this.derivedVarsForSpec);
+		return clone;
+	}
 }

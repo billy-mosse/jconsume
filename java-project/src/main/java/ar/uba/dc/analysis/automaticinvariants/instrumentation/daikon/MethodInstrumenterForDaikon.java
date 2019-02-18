@@ -30,6 +30,7 @@ import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.ListNoRep;
 import ar.uba.dc.analysis.automaticinvariants.pruebas.GLVMain;
 import ar.uba.dc.analysis.automaticinvariants.pruebas.GlobalLive;
+import ar.uba.dc.analysis.escape.summary.EscapeAnnotation;
 import ar.uba.dc.annotations.AnnotationSiteInvariantForJson;
 import ar.uba.dc.annotations.InstrumentationSiteInvariant;
 import soot.Body;
@@ -437,7 +438,33 @@ class MethodInstrumenterForDaikon extends LoopFinder {
 		synchronized (getInstance()) {
 			
 			if(!ProgramInstrumentatorForDaikonMain.isInCG(body.getMethod()))
+			{
+				String signature = body.getMethod().getSignature();
+				for(EscapeAnnotation annotation : ProgramInstrumentatorForDaikonMain.getAnnotatedMethods())
+				{
+					if(annotation.getSignature().equals(signature))
+					{
+						//aunque no procese el metodo, tengo que agregar los parametros!
+						
+						ListDIParameters lParameters = extractMethodParams(body);
+						//creo que esto no hace falta
+						lParameters.addToBody(body);
+						
+						List code = new Vector();
+						
+						ListDIParameters lParametersInit = generateParametersInitsWithCode(body, lParameters, code);
+						
+						
+						
+						
+						String nameClass = body.getMethod().getDeclaringClass().getName();
+						if (methodMap.get(signature) == null) {
+							methodMap.put(signature, new MethodMapInfo(lParameters,lParametersInit,nameClass ) );
+						}
+					}
+				}
 				return;
+			}
 		
 			if(body.getMethod().toString().equals("dummyMethodForInstrumentation"))
 			{

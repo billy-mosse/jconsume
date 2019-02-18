@@ -156,9 +156,19 @@ public abstract class DIParameter  {
 			res = getDerivedVariables2().toListOnlyEnterizedVariables();
 		else
 		{
-			String t = getLocal().getType().toString();
-			if(t.equals("int") || t.equals("long") || t.equals("java.lang.Integer"))
-				res.add(getLocal());
+			if(this.getClass().equals(DI_JsonParameter.class))
+			{
+				//asumimos que las hojas son enteras
+				//esto va a fallar porque deberiamos devolver un local pero bueno				
+				res.add(this.getName());
+				return res;
+			}
+			else
+			{
+				String t = getLocal().getType().toString();
+				if(t.equals("int") || t.equals("long") || t.equals("java.lang.Integer"))
+					res.add(getLocal());
+			}
 		}
 		
 		
