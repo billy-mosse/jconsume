@@ -7,6 +7,7 @@
 package ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
@@ -16,6 +17,7 @@ import soot.Local;
 import soot.Type;
 
 
+import soot.Body;
 import soot.Local;
 import soot.SootMethod;
 import soot.Type;
@@ -37,6 +39,11 @@ public class DI_JsonParameter extends DIParameter {
 	//
 	
 	//public List<DI_JsonParameter> derivedVariablesForSpec;
+	
+	public DI_JsonParameter()
+	{
+		this.derivedVarsForSpec = new ListDIParameters();
+	}
 	public List<DI_JsonParameter> getDerivedVarsForSpec() {
 		return derivedVarsForSpec;
 	}
@@ -58,4 +65,11 @@ public class DI_JsonParameter extends DIParameter {
 		clone.setDerivedVarsForSpec(this.derivedVarsForSpec);
 		return clone;
 	}
+	
+	@Override
+	public void addToBody(Body body)
+	{
+		//no nos importa hacer nada con metodos no analizables
+	}
+
 }

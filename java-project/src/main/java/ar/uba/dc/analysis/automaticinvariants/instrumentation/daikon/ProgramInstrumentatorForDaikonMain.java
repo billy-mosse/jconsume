@@ -55,7 +55,6 @@ import java.util.Deque;
 import java.util.ArrayDeque;
 
 import org.apache.commons.lang.StringEscapeUtils;
-import org.jboss.util.NotImplementedException;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -91,7 +90,7 @@ public class ProgramInstrumentatorForDaikonMain {
 		ProgramInstrumentatorForDaikonMain.annotatedMethods = annotatedMethods;
 	}
 
-	private static JsonBasedEscapeAnnotationsProvider jsonBasedEscapeAnnotationsProvider;
+	public static JsonBasedEscapeAnnotationsProvider jsonBasedEscapeAnnotationsProvider;
 	
 	public static boolean isInCG(SootMethod m)
 	{
@@ -123,10 +122,15 @@ public class ProgramInstrumentatorForDaikonMain {
 	}
 
 	
-	private static boolean isNotAnalyzable(String srcClass, String srcSig, String methodName) {
+	public static boolean isAnnotated(String methodName)
+	{
+		EscapeAnnotation annotation = jsonBasedEscapeAnnotationsProvider.get(methodName);
+		return annotation != null;
+	}
+	
+	public static boolean isNotAnalyzable(String srcClass, String srcSig, String methodName) {
 		
 		//si tiene anotacion entonces no se deberia analizar
-		System.out.println(methodName);
 		EscapeAnnotation annotation = jsonBasedEscapeAnnotationsProvider.get(methodName); 
 		if (annotation != null)
 		{
@@ -293,7 +297,7 @@ public class ProgramInstrumentatorForDaikonMain {
 				 
 				
 				 //lo deje a ver que pasa
-				 "-asm-backend",	
+				 //"-asm-backend",	
 				 //"-version",
 				 
 				 //This option sets the JDK version of the standard library being analyzed so that Soot can simulate the native methods in the specific version of the library.

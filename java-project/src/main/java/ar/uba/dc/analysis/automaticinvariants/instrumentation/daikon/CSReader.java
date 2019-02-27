@@ -63,11 +63,11 @@ public class CSReader{
 	
 	public Set getCSs(String m, CCReader ccr)
 	{
-		Set CSs = null; 
+		Set CSs = new HashSet();
+
 		Set allISs =(Set)methodsMap.get(m);
 		if(allISs!=null)
 		{
-			CSs = new HashSet();
 			for (Iterator iter = allISs.iterator(); iter.hasNext();) {
 				String sCS=(String)iter.next();
 				CreationSiteMapInfo cs = getCS(sCS);

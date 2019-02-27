@@ -6,18 +6,26 @@
  */
 package ar.uba.dc.analysis.automaticinvariants.pruebas;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.ProgramInstrumentatorForDaikonMain;
+import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.DI_JsonParameter;
 import ar.uba.dc.analysis.automaticinvariants.pruebas.FieldRefWrapper;
 import ar.uba.dc.analysis.automaticinvariants.pruebas.GLVMain;
 import ar.uba.dc.analysis.automaticinvariants.pruebas.GlobalLive;
+import ar.uba.dc.analysis.escape.summary.EscapeAnnotation;
+import soot.AbstractSootFieldRef;
+import soot.AbstractValueBox;
 import soot.Body;
 import soot.Local;
 import soot.RefLikeType;
 import soot.ResolutionFailedException;
+import soot.Scene;
+import soot.SootFieldRef;
 import soot.SootMethod;
 import soot.Unit;
 import soot.Value;
@@ -32,6 +40,7 @@ import soot.jimple.InstanceInvokeExpr;
 import soot.jimple.InvokeExpr;
 import soot.jimple.SpecialInvokeExpr;
 import soot.jimple.Stmt;
+import soot.jimple.internal.JimpleLocalBox;
 import soot.toolkits.graph.CompleteUnitGraph;
 import soot.toolkits.graph.UnitGraph;
 import soot.toolkits.scalar.ArraySparseSet;
@@ -158,60 +167,115 @@ public class GlobalLiveAnalysis  extends BackwardFlowAnalysis 	{
 			
 			GlobalLive glvCallee = 		
 				(GlobalLive)GLVMain.analysisCache.get(callee);
-			if(callee.hasActiveBody())
+			if(!ProgramInstrumentatorForDaikonMain.isAnnotated(callee.getDeclaringClass().toString() + "." + callee.getName()))
 			{
-				Body bCallee = callee.getActiveBody();
-				if(bCallee instanceof BafBody)
+				if(callee.hasActiveBody())
 				{
-					System.out.print("");
-				}
-				
-				Chain unitsCallee = bCallee.getUnits();
-				
-				if(glvCallee==null)
-				{
-					if(!GLVMain.alreadyAnalyzedMethods.contains(callee))
+					Body bCallee = callee.getActiveBody();
+					if(bCallee instanceof BafBody)
 					{
-						GLVMain.alreadyAnalyzedMethods.add(callee);
-						if(!GLVMain.stack.contains(callee))
-						{
-							GLVMain.stack.push(callee);
-							glvCallee = new GlobalLive(new CompleteUnitGraph(bCallee));
-							GLVMain.stack.pop();
-						}
-						else return retSet; 
+						System.out.print("");
 					}
-					else 
-						return retSet;
-				}
-				if(unitsCallee!=null)
-				{
-					// System.out.println(unitsCallee);
-					Unit firstStmt = (Unit)unitsCallee.getFirst();
-					List liveCallee = glvCallee.getLiveLocalsBefore(firstStmt);
-					if(liveCallee!=null)
+					
+					Chain unitsCallee = bCallee.getUnits();
+					
+					
+					//...esto va a hacer que se rompa todo.
+					if(!ProgramInstrumentatorForDaikonMain.isAnnotated(callee.getDeclaringClass().toString() + "." + callee.getName()))
 					{
-						// System.out.println(ie+":"+liveCallee);
-						if(thisRef!=null)
-							analyzeParameter(retSet, glvCallee, liveCallee, glvCallee.getThisRef(), thisRef);
-						for(int i=0;i<ie.getArgCount();i++)
+						if(glvCallee==null)
 						{
-							Value arg = ie.getArg(i);
-							Value parameter = (Value)glvCallee.getParameters().get(i);
-							analyzeParameter(retSet, glvCallee, liveCallee, parameter, arg);
+							if(!GLVMain.alreadyAnalyzedMethods.contains(callee))
+							{
+								GLVMain.alreadyAnalyzedMethods.add(callee);
+								if(!GLVMain.stack.contains(callee))
+								{
+									GLVMain.stack.push(callee);
+									glvCallee = new GlobalLive(new CompleteUnitGraph(bCallee));
+									GLVMain.stack.pop();
+								}
+								else return retSet; 
+							}
+							else 
+								return retSet;
+						}
+					
+						if(unitsCallee!=null)
+						{
+							// System.out.println(unitsCallee);
+							Unit firstStmt = (Unit)unitsCallee.getFirst();
+							List liveCallee = null;
 							
+							
+							liveCallee= glvCallee.getLiveLocalsBefore(firstStmt);
+							
+							
+							
+							if(liveCallee!=null)
+							{
+								// System.out.println(ie+":"+liveCallee);
+								if(thisRef!=null)
+									analyzeParameter(retSet, glvCallee, liveCallee, glvCallee.getThisRef(), thisRef);
+								for(int i=0;i<ie.getArgCount();i++)
+								{
+									Value arg = ie.getArg(i);
+									Value parameter = (Value)glvCallee.getParameters().get(i);
+									analyzeParameter(retSet, glvCallee, liveCallee, parameter, arg);
+									
+								}
+							}
 						}
 					}
 				}
 			}
-			}
-			catch(ResolutionFailedException crfe)
+			else
 			{
-				System.out.println("Fallo en getMethod!");
-			}
-			// TODO Auto-generated method stub
-			return retSet;
+				List parameters = new ArrayList();
+				for(int i=0;i<callee.getParameterCount();i++)
+		        {					
+		        	Local p = callee.getActiveBody().getParameterLocal(i);
+		        	parameters.add(i,p);
+		        }
+				
+				EscapeAnnotation annotation = ProgramInstrumentatorForDaikonMain.jsonBasedEscapeAnnotationsProvider.get(callee.getDeclaringClass().toString() + "." + callee.getName());
+
+				Iterator it = annotation.getRelevantParameters().iterator();
+				while(it.hasNext())
+				{
+					DI_JsonParameter jsonParameter = (DI_JsonParameter) it.next();
+					String name = jsonParameter.name;
+					
+					for(int i=0;i<ie.getArgCount();i++)
+					{
+						Value arg = ie.getArg(i);
+						
+						Value parameter = (Value)parameters.get(i);
+						if(name.equals(parameter.toString()))
+						{
+							Iterator it_derived = jsonParameter.getDerivedVariables2().iterator();
+							while(it_derived.hasNext())
+							{
+								DI_JsonParameter jsonField = (DI_JsonParameter) it_derived.next();
+								
+								int posDot = jsonField.name.indexOf('.');
+								String field = jsonField.name.substring(posDot+1);
+								pushAnnotatedRelevantParameterFieldsToArg(retSet, field, arg);
+							}							
+						}
+						//Falta procesar el parametro THIS
+						//deberia agregar a retSet la base tambien?
+					}
+				}
+				
+			}			
 		}
+		catch(ResolutionFailedException crfe)
+		{
+			System.out.println("Fallo en getMethod!");
+		}
+		// TODO Auto-generated method stub
+		return retSet;
+	}
 
 		/**
 		 * @param retSet
@@ -232,8 +296,10 @@ public class GlobalLiveAnalysis  extends BackwardFlowAnalysis 	{
 						InstanceFieldRef ifr = (InstanceFieldRef)live;
 						if(ifr.getBase().equals(parameter))
 						{
+							//le paso los fields vivos al argumento - creo.
 							InstanceFieldRef ifrClone = (InstanceFieldRef)ifr.clone();
 							ifrClone.setBase(arg);
+							
 							if(!retSet.contains(ifrClone))
 								retSet.add(ifrClone);
 						}
@@ -242,6 +308,29 @@ public class GlobalLiveAnalysis  extends BackwardFlowAnalysis 	{
 				// for(int j=0;j<glvCallee.getParameters().size())
 				
 			}
+		}
+		
+		/**
+		 * The function should add b.f to retSet
+		 * @param retSet
+		 * @param relevantParameter. Example: a.f
+		 * @param arg. Example: b
+		 */
+		private void pushAnnotatedRelevantParameterFieldsToArg(FlowSet retSet, String relevantField, Value arg)
+		{
+			//InstanceFieldRef ifr = arg;
+			
+			AbstractSootFieldRef ref = new AbstractSootFieldRef(Scene.v().getSootClass("java.lang.Integer"), relevantField, Scene.v().getType("int"), false);
+			JimpleLocalBox v = new JimpleLocalBox(arg);
+			InstanceFieldRef ifr = new FieldRefWrapper(v, ref); 
+			ifr.setBase(arg);
+			
+			//AbstractSootFieldRef ref = null;
+			
+			//Por ahora los parametros relevantes pueden ser solo enteros
+			
+			//ifr.setFieldRef(relevantParameterRef);
+			retSet.add(ifr);
 		}
 
 		/**

@@ -23,6 +23,7 @@ import ar.uba.dc.analysis.automaticinvariants.inductives.InductivesFinder;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.DIParameter;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.DIParameterFactory;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.DI_Iterator;
+import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.DI_JsonParameter;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.DI_Object;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.DI_Value;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.ListDIParameters;
@@ -137,8 +138,6 @@ class MethodInstrumenterForDaikon extends LoopFinder {
 	
 	
 	private List instrumentationSiteInvariants = new ArrayList<InstrumentationSiteInvariant>();
-	
-	
 	/**
 	 * @param body
 	 * @return
@@ -149,25 +148,33 @@ class MethodInstrumenterForDaikon extends LoopFinder {
 	//y otro que guarde los enterizados
 	private ListDIParameters extractMethodParams(Body body)
 	{
-		ListDIParameters info2 = new ListDIParameters();
-		GlobalLive analisisVivas = (GlobalLive) GLVMain.analysisCache.get(body.getMethod());
-		List parameters = analisisVivas.getParameters();
-		List lives = analisisVivas.getLiveInitialFlow();
-		
-		//hack feo....es realmente inductivesfilter el tipo?
-		//no entiendo que hace este if.
-		if(analisisVivas.getThisRef()!=null) // && body.getMethod().getName().indexOf("<init>")==-1
+		if(ProgramInstrumentatorForDaikonMain.isAnnotated(body.getMethod().getDeclaringClass().toString() + "." + body.getMethod().getName()))
 		{
-			addParameter(body, info2, (InductivesFilter) analisisVivas, lives, analisisVivas.getThisRef(),analisisVivas.getThisRef(), false);
+			EscapeAnnotation annotation = ProgramInstrumentatorForDaikonMain.jsonBasedEscapeAnnotationsProvider.get(body.getMethod().getDeclaringClass().toString() + "." + body.getMethod().getName());
+
+			//ojo que son DI_JsonParameters
+			return annotation.getRelevantParameters();
 		}
-		for (Iterator iter = parameters.iterator(); iter.hasNext();) {
-			Local parameter = (Local) iter.next();
-			addParameter(body, info2, (InductivesFilter) analisisVivas, lives, parameter,parameter, false);
+		else
+		{
+			ListDIParameters info2 = new ListDIParameters();
+			GlobalLive analisisVivas = (GlobalLive) GLVMain.analysisCache.get(body.getMethod());
+			List parameters = analisisVivas.getParameters();
+			List lives = analisisVivas.getLiveInitialFlow();
+			
+			//hack feo....es realmente inductivesfilter el tipo?
+			//no entiendo que hace este if.
+			if(analisisVivas.getThisRef()!=null) // && body.getMethod().getName().indexOf("<init>")==-1
+			{
+				addParameter(body, info2, (InductivesFilter) analisisVivas, lives, analisisVivas.getThisRef(),analisisVivas.getThisRef(), false);
+			}
+			for (Iterator iter = parameters.iterator(); iter.hasNext();) {
+				Local parameter = (Local) iter.next();
+				addParameter(body, info2, (InductivesFilter) analisisVivas, lives, parameter,parameter, false);
+			}
+			
+			return info2;
 		}
-		
-		
-		
-		return info2;
 	}
 	
 	
@@ -844,6 +851,8 @@ class MethodInstrumenterForDaikon extends LoopFinder {
 	 * @return
 	 */
 	private ListDIParameters generateParametersInitsWithCode(Body body, ListDIParameters lParameters, List code) {
+
+		boolean isAnnotated = ProgramInstrumentatorForDaikonMain.isAnnotated(body.getMethod().getDeclaringClass().toString() + "." + body.getMethod().getName());
 		ListDIParameters lParametersInit = new ListDIParameters();
 	
 		for(Iterator itParam = lParameters.iterator(); itParam.hasNext(); )
@@ -861,10 +870,14 @@ class MethodInstrumenterForDaikon extends LoopFinder {
 				filter = paramObject.getFields();
 			}
 			
-
+			Type type;
+			if(isAnnotated)
+				type= Scene.v().getType("int");
+			else
+				type = param.getLocal().getType();
 
 			varInit = DIParameterFactory.createDIParameter(param.getName()+"_init",
-					                                       param.getLocal().getType(), filter,
+					                                       type, filter,
 														   body, true);
 			if(varInit!=null)
 			{
@@ -872,7 +885,11 @@ class MethodInstrumenterForDaikon extends LoopFinder {
 				// DIEGO Agregado 
 				code.addAll(param.codeForVar());
 				// 
-				code.addAll(Utils.codeForAssig(param.getLocal(),varInit.getLocal()));
+				
+				//si es un parametro anotado no necesitamos instrumentar el body ya que no vamos a necesitar analizarlo con soot
+				if(!isAnnotated)
+					code.addAll(Utils.codeForAssig(param.getLocal(),varInit.getLocal()));
+				
 				lParametersInit.add(varInit);
 			}
 		}
@@ -964,7 +981,7 @@ class MethodInstrumenterForDaikon extends LoopFinder {
 		
 		boolean isIterator = false;
 		
-		Stmt loopHeader = getLoopHeader(s);
+		Stmt loopHeader = getLoopHeader(s, body);
 		
 		System.out.println("Procesando:"+Utils.getLineNumber(s));
 		// Limpia los contadores de iteradores viejos
@@ -1229,6 +1246,9 @@ class MethodInstrumenterForDaikon extends LoopFinder {
 		int i=0;
 		
 		List args = ie.getArgs();
+		
+		//si el metodo es no analizable el analisis de vivas no deberia procesarlo...
+		
 		
  		GlobalLive analisisVivasCaller = (GlobalLive) GLVMain.analysisCache.get(body.getMethod());
 		List livesCaller = analisisVivasCaller.getLiveLocalsBefore(s);
@@ -2046,10 +2066,11 @@ class MethodInstrumenterForDaikon extends LoopFinder {
 	}
 	
 		
-	void inductiveAnalysis(Stmt s, LiveLocals analisisVivas)
+	void inductiveAnalysis(Stmt s, LiveLocals analisisVivas, Body body)
 	{
 		List vivas;
-		Collection loops = loops();
+		Collection loops = this.getLoops(body);
+
 
 		System.out.println("Eli:"+loops);
 		//for (Iterator iter = loops.keySet().iterator(); iter.hasNext();) {
@@ -2071,10 +2092,10 @@ class MethodInstrumenterForDaikon extends LoopFinder {
 		System.out.println("Eli3:"+dominator.getDominators(s));
 	
 	}
-	Stmt getLoopHeader(Stmt s)
+	Stmt getLoopHeader(Stmt s, Body body)
 	{
 		Stmt loopHeader = null;
-		Collection loops = this.loops();
+		Collection loops = this.getLoops(body);
 
 		if(loops!=null)
 		{

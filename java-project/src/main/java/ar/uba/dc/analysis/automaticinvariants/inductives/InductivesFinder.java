@@ -9,7 +9,12 @@ import java.util.Map;
 import java.util.Vector;
 
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.ProgramInstrumentatorForDaikonMain;
+
+
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.Utils;
+
+
+
 import ar.uba.dc.analysis.automaticinvariants.pruebas.GlobalLive;
 import soot.Body;
 import soot.Local;
@@ -102,7 +107,7 @@ public class InductivesFinder extends LoopFinder implements InductivesFilter{
 			
 			GlobalLive gl = new GlobalLive(unitGraph);
 			
-			NewInductivesAnalysis iAna  = new NewInductivesAnalysis(unitGraph,loops(),gl, blockGraph);
+			NewInductivesAnalysis iAna  = new NewInductivesAnalysis(unitGraph,this.getLoops(body),gl, blockGraph);
 			
 			System.out.println("Metodo:"+body.getMethod().getSignature());
 			
@@ -111,6 +116,8 @@ public class InductivesFinder extends LoopFinder implements InductivesFilter{
 			
 			for (Iterator iter = units.snapshotIterator(); iter.hasNext();) {
 				Stmt s = (Stmt) iter.next();
+				
+				
 				String is = Utils.getLineNumber(s);
 				String prefijo = body.getMethod().getDeclaringClass().toString();
 				
@@ -155,19 +162,21 @@ public class InductivesFinder extends LoopFinder implements InductivesFilter{
 		}
 	}
 	
-	boolean isLoopHeader(Stmt s)
+	boolean isLoopHeader(Stmt s, Body body)
 	    {
-	    	return getLoopHeader(s)==s;
+	    	return getLoopHeader(s, body)==s;
 	    }
 	    boolean isConditional(Stmt s)
 	    {
 	    	return s instanceof IfStmt;  
 	    }
 	        
-	    Stmt getLoopHeader(Stmt s)
+	    Stmt getLoopHeader(Stmt s, Body body)
 		{
 			Stmt loopHeader = null;
-			Collection loops = loops();
+			
+			
+			Collection loops =  this.getLoops(body);
 //			for (Iterator iter = loops.keySet().iterator(); iter.hasNext();) {
 //				Stmt header = (Stmt) iter.next();
 //				List loopStmts= (List)loops.get(header);

@@ -1,3 +1,4 @@
+
 package ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.invariantwriter;
 
 import java.io.File;
@@ -6,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -34,6 +36,8 @@ import ar.uba.dc.analysis.common.Invocation;
 import ar.uba.dc.analysis.common.Line;
 import ar.uba.dc.analysis.common.intermediate_representation.IRUtils;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
+import ar.uba.dc.analysis.common.method.information.JsonBasedEscapeAnnotationsProvider;
+import ar.uba.dc.analysis.escape.summary.EscapeAnnotation;
 import ar.uba.dc.analysis.memory.PaperInterproceduralAnalysis.NotDAGException;
 import ar.uba.dc.annotations.AnnotationSiteInvariantForJson;
 import ar.uba.dc.annotations.InstrumentationSiteInvariant;
@@ -72,6 +76,8 @@ public class SpecInvariantWriter {
 	InstrumentationSiteInvariantsReader anr = new InstrumentationSiteInvariantsReader();
 	InductivesReader indr = new InductivesReader();
 
+	
+	
 	String strClass;
 	String destinationPath;
 	PrintStream out;
@@ -116,6 +122,23 @@ public class SpecInvariantWriter {
 			siw.destinationPath = args[1];
 
 		
+		String mainClass = args[0].substring(posClass);
+		
+		String location;
+		if(args[0].contains("out"))
+		{
+			location = "src/main/resources/annotations/escape";
+		}
+		else
+		{
+			location = "../src/main/resources/annotations/escape";
+		}
+		
+		
+		JsonBasedEscapeAnnotationsProvider jsonBasedEscapeAnnotationProvider = new JsonBasedEscapeAnnotationsProvider(location);
+		jsonBasedEscapeAnnotationProvider.fetchAnnotations(mainClass);
+		
+		
 		System.out.println(siw.destinationPath);
 		siw.fetchInvariants();
 		// TO-DO: sacar el nombre de la clase del string
@@ -132,7 +155,7 @@ public class SpecInvariantWriter {
 		// siw.out = System.out;
 		
 		
-		siw.writeSpecs();
+		siw.writeSpecs(jsonBasedEscapeAnnotationProvider);
 
 	}
 	
@@ -248,14 +271,29 @@ public class SpecInvariantWriter {
 		}
 	}
 	
-	private List<SpecMethod> getTopologicallyOrderedMethods()
+	private List<SpecMethod> getTopologicallyOrderedMethods(JsonBasedEscapeAnnotationsProvider jsonBasedEscapeAnnotationsProvider)
 	{
 		Set ms = csr.getMethods();
+		
+		
+		
+		//		//ar.uba.dc.annotations.TestAnnotation05_<ar.uba.dc.annotations.TestAnnotation05: java.lang.Integer mainParameters(java.lang.Integer,java.lang.Integer)>
+
+		
 		Stack<SpecMethod> unordered_methods = new Stack<SpecMethod>();
 		Map<String, SpecMethod> unorderedMethodMap = new HashMap<String, SpecMethod>();
 		
+		Set<String> methodNames = new HashSet(ms);
+		
+		
+		Collection<EscapeAnnotation> annotatedMethods = jsonBasedEscapeAnnotationsProvider.getAnnotations();
+		for(EscapeAnnotation annotation : annotatedMethods)
+		{
+			methodNames.add(annotation.getClassName() + "_" + annotation.getSignature());
+		}
+		
 		//Primero obtengo los metodos
-		for (Object o : ms) {
+		for (Object o : methodNames) {
 			SpecMethod m = new SpecMethod();
 			String classAndMethod = (String) o;
 			m.setClassAndMethod(classAndMethod);
@@ -303,7 +341,7 @@ public class SpecInvariantWriter {
 		
 	}
 
-	private void writeSpecs() {
+	private void writeSpecs(JsonBasedEscapeAnnotationsProvider jsonBasedEscapeAnnotationsProvider) {
 		xmlSpec = new XMLSpecWriter();
 		// xmlSpec.writeXmlHeader();
 		String currentClass = "";
@@ -314,7 +352,7 @@ public class SpecInvariantWriter {
 		
 		
 		
-		List<SpecMethod> orderedMethods = getTopologicallyOrderedMethods();
+		List<SpecMethod> orderedMethods = getTopologicallyOrderedMethods(jsonBasedEscapeAnnotationsProvider);
 		
 		//List ordered_methods = topologicalOrder(ms);
 		for (SpecMethod m : orderedMethods) {

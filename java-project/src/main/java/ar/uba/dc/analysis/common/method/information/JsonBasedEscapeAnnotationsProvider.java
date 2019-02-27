@@ -4,27 +4,22 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.Reader;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import soot.SootMethod;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.DI_JsonParameter;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.ListDIParameters;
-import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.SimpleDIParameter;
-import ar.uba.dc.analysis.common.Invocation;
-import ar.uba.dc.analysis.common.SummaryRepository;
-import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
-import ar.uba.dc.analysis.common.intermediate_representation.io.reader.JsonIRReader.IntermediateRepresentationMethodDeserializer;
 import ar.uba.dc.analysis.common.intermediate_representation.io.writer.JsonIRWriter;
-import ar.uba.dc.analysis.escape.EscapeSummary;
 import ar.uba.dc.analysis.escape.summary.DefaultEscapeAnnotation;
 import ar.uba.dc.analysis.escape.summary.EscapeAnnotation;
-import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.util.location.MethodLocationStrategy;
 
 import com.google.gson.Gson;
@@ -35,7 +30,6 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import com.sun.tools.javac.util.List;
 
 public class JsonBasedEscapeAnnotationsProvider{
 
@@ -67,6 +61,12 @@ public class JsonBasedEscapeAnnotationsProvider{
 	public JsonBasedEscapeAnnotationsProvider(String location)
 	{
 		this.location = location;
+	}
+	
+	
+	public Collection<EscapeAnnotation> getAnnotations()
+	{
+		return this.annotations.values();
 	}
 	
 	public void fetchAnnotations(String mainClass)
@@ -208,11 +208,17 @@ public class JsonBasedEscapeAnnotationsProvider{
 			String name = jobject.get("name").getAsString();
 			annotation.setName(name);
 			
+			int maxLive= jobject.get("maxLive").getAsInt();
+			annotation.setMaxLive(maxLive);			
+			
+			int escape= jobject.get("escape").getAsInt();
+			annotation.setEscape(escape);
+			
 			
 			annotation.setSignature(jobject.get("signature").getAsString());			
 			
 			Integer[] writableParameters = context.deserialize(jobject.get("writableParameters"), Integer[].class);
-			annotation.setWritableParameters(List.from(writableParameters));
+			annotation.setWritableParameters(Arrays.asList(writableParameters));
 
 			JsonArray jrelevantParams = jobject.get("relevantParameters").getAsJsonArray();
 			ListDIParameters lRelevantParams = new ListDIParameters();
