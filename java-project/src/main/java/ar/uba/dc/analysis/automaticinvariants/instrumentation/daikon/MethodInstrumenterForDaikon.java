@@ -1241,58 +1241,73 @@ class MethodInstrumenterForDaikon extends LoopFinder {
 		Vector res = new Vector();
 		InvokeExpr ie = s.getInvokeExpr();
 		try {
-		SootMethod m = ie.getMethod();
-		
-		int i=0;
-		
-		List args = ie.getArgs();
-		
-		//si el metodo es no analizable el analisis de vivas no deberia procesarlo...
-		
-		
- 		GlobalLive analisisVivasCaller = (GlobalLive) GLVMain.analysisCache.get(body.getMethod());
-		List livesCaller = analisisVivasCaller.getLiveLocalsBefore(s);
-		
-		GlobalLive analisisVivasCallee = (GlobalLive) GLVMain.analysisCache.get(m);
-		
-		if(analisisVivasCallee==null)
-			return info2;
-		
-		List livesCallee = analisisVivasCallee.getLiveInitialFlow();
-		
-		Local calleeThisRef = analisisVivasCallee.getThisRef();
-		List parameters = analisisVivasCallee.getParameters();
-		List argsParamMap = new Vector();
-		
-		
-		
-		if(ie instanceof InstanceInvokeExpr)
-		{
-			InstanceInvokeExpr iie = (InstanceInvokeExpr)ie;
-			Value argThis=iie.getBase();
-			addParameter(body, info2, (InductivesFilter) analisisVivasCallee, livesCallee, (Local)argThis,analisisVivasCallee.getThisRef(), false);
-		}
-		i=0;
-		for (Iterator iter = args.iterator(); iter.hasNext();) {
-			Value arg = (Value) iter.next();
-			if(arg instanceof Local)
+			SootMethod m = ie.getMethod();
+			
+			int i=0;
+			
+			List args = ie.getArgs();
+			
+			if(ProgramInstrumentatorForDaikonMain.isAnnotated(m.getDeclaringClass() + "." + m.getName()))
 			{
-				Local lArg = (Local)arg;
-				addParameter(body, info2, (InductivesFilter) analisisVivasCallee, livesCallee, lArg,(Local)parameters.get(i), false);
+				for (Iterator iter = args.iterator(); iter.hasNext();) {
+					Value arg = (Value) iter.next();
+					DIParameter dip = DIParameterFactory.createDIParameter2((Local)arg,new ArrayList(),body,true);
+					info2.add(dip);
+				}
+				
+				return info2;
 			}
 			else
 			{
-				info2.add(new DI_Value(arg));
+			
+			
+				//si el metodo es no analizable el analisis de vivas no deberia procesarlo...
+				
+				
+		 		GlobalLive analisisVivasCaller = (GlobalLive) GLVMain.analysisCache.get(body.getMethod());
+				List livesCaller = analisisVivasCaller.getLiveLocalsBefore(s);
+				
+				GlobalLive analisisVivasCallee = (GlobalLive) GLVMain.analysisCache.get(m);
+				
+				if(analisisVivasCallee==null)
+					return info2;
+				
+				List livesCallee = analisisVivasCallee.getLiveInitialFlow();
+				
+				Local calleeThisRef = analisisVivasCallee.getThisRef();
+				List parameters = analisisVivasCallee.getParameters();
+				List argsParamMap = new Vector();
+				
+				
+				
+				if(ie instanceof InstanceInvokeExpr)
+				{
+					InstanceInvokeExpr iie = (InstanceInvokeExpr)ie;
+					Value argThis=iie.getBase();
+					addParameter(body, info2, (InductivesFilter) analisisVivasCallee, livesCallee, (Local)argThis,analisisVivasCallee.getThisRef(), false);
+				}
+				i=0;
+				for (Iterator iter = args.iterator(); iter.hasNext();) {
+					Value arg = (Value) iter.next();
+					if(arg instanceof Local)
+					{
+						Local lArg = (Local)arg;
+						addParameter(body, info2, (InductivesFilter) analisisVivasCallee, livesCallee, lArg,(Local)parameters.get(i), false);
+					}
+					else
+					{
+						info2.add(new DI_Value(arg));
+					}
+					i++;
+				}	
 			}
-			i++;
-		}
 		}
 		catch(ResolutionFailedException crfe)
 		{
 			return info2;
 		}
 		return info2;
-	}
+	}	
 	
 	
 	

@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
-import org.jboss.util.NotImplementedException;
 
 import soot.SootClass;
 import soot.SootMethod;

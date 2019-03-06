@@ -32,6 +32,8 @@ public class EscapeSummary {
 	protected PointsToGraph ptg;
 	protected MultiMap<Node, String> mutated;	// node -> field such that (node,field) is
 	protected boolean isArtificial;
+	protected int maxLive;
+	protected int escape;
 	
 	public EscapeSummary() {
 		this.target = null;
@@ -410,4 +412,25 @@ public class EscapeSummary {
 	public void setLocalsPointingTo(ContainerNode node, Set<Local> localPointingToNode) {
 		ptg.setLocalsPointingTo(node, localPointingToNode);		
 	}
+	
+	public int getMaxLive()
+	{
+		return this.maxLive;
+	}
+	
+	public int getEscape()
+	{
+		return this.escape;
+	}
+	
+	public void setMaxLive(int maxLive)
+	{
+		this.maxLive = maxLive;
+	}
+	
+	public void setEscape(int escape)
+	{
+		this.escape = escape;
+	}
+	
 }

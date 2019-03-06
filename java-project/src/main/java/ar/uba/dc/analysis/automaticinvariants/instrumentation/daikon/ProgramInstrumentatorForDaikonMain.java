@@ -1156,7 +1156,9 @@ public class ProgramInstrumentatorForDaikonMain {
 										paramFil.add(pName + notBase);
 									}
 									
-									new_relevant.derivedFields.add(notBase);									
+									//HACK. Problema: cuando hay dos niveles de fields pasa algo raro.
+									//Me parece que hay un error escondido
+									new_relevant.derivedFields.add(notBase.replaceAll(".", "__f__"));									
 									
 								}
 								

@@ -3,7 +3,6 @@ package ar.uba.dc.analysis.escape.graph.node;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.jboss.util.NotImplementedException;
 
 import soot.SootClass;
 import soot.SootMethod;

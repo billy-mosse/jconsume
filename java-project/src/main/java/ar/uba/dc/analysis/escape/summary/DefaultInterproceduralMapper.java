@@ -6,8 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import org.jboss.util.NotImplementedException;
-
+import org.apache.commons.lang.NotImplementedException;
 import soot.Local;
 import soot.RefLikeType;
 import soot.Value;

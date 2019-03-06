@@ -8,6 +8,8 @@ public class TestAnnotation04 {
 		MyInteger var2 = new MyInteger();
 		var.f = Integer.parseInt(args[0]);
 		var2.f = Integer.parseInt(args[1]);
+		var.g = new MyInteger();
+		var2.g = new MyInteger();
 		var.g.f = 4;
 		var2.g.f = 4;
 		MyInteger v1 = mainParameters(var, var2);
@@ -24,7 +26,7 @@ public class TestAnnotation04 {
 	{
 		MyInteger result = new MyInteger();
 		for(int i = 1; i < k.f; i++)
-		{
+		{			
 			result.f += max(k, l).f;
 		}
 		return result;

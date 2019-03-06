@@ -3,7 +3,7 @@ package ar.uba.dc.invariant.spec.compiler.constraints.parser;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.jboss.util.NotImplementedException;
+import org.apache.commons.lang.NotImplementedException;
 import org.nfunk.jep.JEP;
 import org.nfunk.jep.Node;
 import org.nfunk.jep.ParseException;

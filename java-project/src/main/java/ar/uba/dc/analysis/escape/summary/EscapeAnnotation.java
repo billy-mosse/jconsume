@@ -21,6 +21,12 @@ public interface EscapeAnnotation{
 	public String getSignature();
 
 	public String getClassName();
+
+	public boolean isArtificial();
+	
+	public int getMaxLive();
+	
+	public int getEscape();
 	
 	//public String[] getRelevantParameters();
 }

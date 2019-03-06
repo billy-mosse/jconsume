@@ -271,12 +271,17 @@ public class PaperInterproceduralAnalysis {
 			
 		while(li.hasNext())
 		{
-			IntermediateRepresentationMethod ir_method = (IntermediateRepresentationMethod) li.next();
+			IntermediateRepresentationMethod ir_method = (IntermediateRepresentationMethod) li.next();			
+			
+			//si no tenemos la implementacion del metodo...que hacemos?
+			//deberiamos poder simular...cosas...
+			//deberiamos
 			try{
 				log.debug("Processing " + IRUtils.key(ir_method) + "...");				
 				
 				PaperIntraproceduralAnalysis analysis = new PaperIntraproceduralAnalysis(this, summaryFactory, countingTheory, expressionFactory, symbolicCalculator, badLines, badLinesCalls);
 				//PaperIntraproceduralAnalysis analysis = new PaperIntraproceduralAnalysis();
+				
 				PaperMemorySummary summary = analysis.run(ir_method);
 				data.put(IRUtils.key(ir_method), summary);				
 			}

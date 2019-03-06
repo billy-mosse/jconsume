@@ -28,21 +28,24 @@ public class MethodNodeConverter extends AbstractNodeWithContextConverter implem
 	public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
 		MethodNode node = (MethodNode) source;
 		writer.startNode("method-id");
-			context.convertAnother(node.getId());
-			writer.addAttribute(mapper.serializedMember(MethodNode.class, "omega"), Boolean.toString(node.isOmega()));
-			writer.addAttribute(mapper.serializedMember(MethodNode.class, "fresh"), Boolean.toString(node.isFresh()));
+		context.convertAnother(node.getId());
+		writer.addAttribute(mapper.serializedMember(MethodNode.class, "omega"), Boolean.toString(node.isOmega()));
+		writer.addAttribute(mapper.serializedMember(MethodNode.class, "fresh"), Boolean.toString(node.isFresh()));
 		writer.endNode();
 		writeContext(node.getContext(), context, writer);
 	}
 
 	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
-		reader.moveDown();
-			SootMethod id = (SootMethod) readItem(reader, context, null);
-		reader.moveUp();
+
 
 		String omega = reader.getAttribute(mapper.serializedMember(MethodNode.class, "omega"));
 		String fresh = reader.getAttribute(mapper.serializedMember(MethodNode.class, "fresh"));
 		
+		
+		reader.moveDown();
+			SootMethod id = (SootMethod) readItem(reader, context, null);
+		reader.moveUp();
+
 		reader.moveDown();
 			LinkedList<StatementId> statements = new LinkedList<StatementId>();
 			Integer sensitivity = readContext(statements, reader, context);

@@ -24,4 +24,9 @@ public class IntermediateRepresentationMethodBody {
 	public void setLines(Set<Line> lines) {
 		this.lines = lines;
 	}
+	
+	public void addLine(Line line) {
+		this.lines.add(line);
+	}
+
 }

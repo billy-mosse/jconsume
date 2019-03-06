@@ -169,7 +169,7 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 			IntermediateLanguageRepresentationBuilder irBuilder = new IntermediateLanguageRepresentationBuilder(data, order, repository, methodInformationProvider, 
 					methodDecorator,
 																												invariantProvider, outputFolder, callGraph, mainClass, 
-																												lifetimeOracle);
+																												lifetimeOracle, jsonBasedEscapeAnnotationsProvider);
 			ir_methods = irBuilder.buildIntermediateLanguageRepresentation();
 			
 			internalWriteIntermediateRepresentation();

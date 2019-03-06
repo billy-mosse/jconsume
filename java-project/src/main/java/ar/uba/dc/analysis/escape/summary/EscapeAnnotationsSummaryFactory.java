@@ -31,6 +31,7 @@ public class EscapeAnnotationsSummaryFactory {
 		if(annotation.isFresh()){				
 			if (method.getReturnType() instanceof RefLikeType) {				
 				//el tercer
+				//es un omega node
 				n = new MethodNode(method, sensitivity, true);
 				summary.addReturned(n);
 				summary.add(n);
@@ -58,11 +59,16 @@ public class EscapeAnnotationsSummaryFactory {
 			//no se si hace falta crear los local edges
 			if(annotation.isFresh())
 			{
+				//si es fresh el nodo, que es un inside node,
+				//puede acceder a todos los parametros.
+				//esto hace que una variable muerta de fuera del metodo pueda ser atrapada por el nodo que se retorna
 				if(n != null)
 					summary.relate(n, "?", p, true);
 			}
 			else
 			{
+				//el return puede ser cualquier parametro				
+				//TODO: chequear tipos?
 				if(method.getReturnType() instanceof RefLikeType)
 					summary.addReturned(p);
 			}
@@ -89,9 +95,12 @@ public class EscapeAnnotationsSummaryFactory {
 			for(Node r : summary.getReturnedNodes())
 			{
 				//Edge e = new Edge(wp, "?", r, true);
-				summary.relate(wp,"?",r, true);					
+				summary.relate(wp,"?",r, true);
 			}			
 		}
+		
+		summary.setEscape(annotation.getEscape());
+		summary.setMaxLive(annotation.getMaxLive());
 			
 		return summary;		
 	}

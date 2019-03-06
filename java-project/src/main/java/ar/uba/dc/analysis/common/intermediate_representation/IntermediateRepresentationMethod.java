@@ -107,6 +107,7 @@ public class IntermediateRepresentationMethod {
 	public void setEscapeNodes(Set<PaperPointsToHeapPartition> escapeNodes) {
 		this.escapeNodes = escapeNodes;
 	}
+	
 
 	public IntermediateRepresentationMethod() {
 

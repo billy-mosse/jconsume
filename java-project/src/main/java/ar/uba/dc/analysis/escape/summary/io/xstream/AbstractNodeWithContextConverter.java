@@ -44,12 +44,14 @@ public abstract class AbstractNodeWithContextConverter extends AbstractCollectio
 		
 		if (temp != null) {
 			sensitivity = Integer.valueOf(temp);
-		}
 		
-		while (reader.hasMoreChildren()) {
-			reader.moveDown();
-				statements.add((StatementId) readItem(reader, context, null));
-			reader.moveUp();
+			//HACK. Puse este while dentro del IF
+			while (reader.hasMoreChildren()) {
+				reader.moveDown();
+					statements.add((StatementId) readItem(reader, context, null));
+				reader.moveUp();
+			}
+		
 		}
 		
 		return sensitivity;

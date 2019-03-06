@@ -31,12 +31,17 @@ public class RichPaperPointsToHeapPartition implements PaperPointsToHeapPartitio
 	
 	public static Integer counter = 0;
 
-	protected PaperNode node;	
+	protected PaperNode node;
 	private String belongsTo;
 	public Integer number;
 	
 	//puede ser null si es un NEW
 	protected IntStringId comesFrom;
+	
+	public RichPaperPointsToHeapPartition(Integer number)
+	{
+		this.number = number;
+	}
 	
 	public PaperNode getNode() {
 		return node;
@@ -220,6 +225,11 @@ public class RichPaperPointsToHeapPartition implements PaperPointsToHeapPartitio
 	@Override
 	public int compareTo(PaperPointsToHeapPartition o) {
 		return this.number.compareTo(o.getNumber());
+	}
+
+	@Override
+	public void setNumber(int number) {
+		this.number = number;
 	}
 
 }

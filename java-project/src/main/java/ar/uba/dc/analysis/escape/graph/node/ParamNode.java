@@ -1,7 +1,5 @@
 package ar.uba.dc.analysis.escape.graph.node;
 
-import org.jboss.util.NotImplementedException;
-
 import soot.SootClass;
 import soot.SootMethod;
 import ar.uba.dc.analysis.escape.graph.Node;

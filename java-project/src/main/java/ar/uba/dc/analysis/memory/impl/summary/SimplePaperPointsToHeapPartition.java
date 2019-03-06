@@ -52,5 +52,9 @@ public class SimplePaperPointsToHeapPartition implements PaperPointsToHeapPartit
 	public int compareTo(PaperPointsToHeapPartition o) {
 		return this.number.compareTo(o.getNumber());
 	}
-	
+
+	@Override
+	public void setNumber(int number) {
+		this.number = number;		
+	}	
 }

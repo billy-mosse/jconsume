@@ -99,7 +99,7 @@
 							 recursionWatchDog="${escape.recursion.watchdog}"
 							 simplifySummary="${escape.simplify.summary}">
 				<data config-class="ar.uba.dc.analysis.escape.summary.repository.RAMSummaryRepository" config-factory="custom" config-ref-to="analysis.escape.repositories.ram" />
-				<summaryWriter config-class="ar.uba.dc.analysis.escape.summary.io.writer.ChainWriter" config-factory="container" config-source="analysis.escape.writers" config-select-key="escape.summary.printer" config-default="null" config-scope="singleton" />
+				<summaryWriter config-class="ar.uba.dc.analysis.escape.summary.io.writer.ChainWriter" config-factory="container" config-source="analysis.escape.writers" config-select-key="escape.summary.printer" config-default="xml" config-scope="singleton" />
 
 
 				<jsonBasedEscapeAnnotationsProvider config-class="ar.uba.dc.analysis.common.method.information.JsonBasedEscapeAnnotationsProvider" config-factory="custom" config-ref-to="analysis.common.json-based-escape-annotations-provider"/>
@@ -190,6 +190,7 @@
 					<expressionFactory config-class="ar.uba.dc.analysis.memory.impl.BarvinokParametricExpressionFactory" />
 					<invariantProvider config-class="ar.uba.dc.invariant.InvariantProvider" config-factory="custom" config-ref-to="invariants.provider.${invariants.provider}" />
 				</summaryFactory>
+				<jsonBasedEscapeAnnotationsProvider config-class="ar.uba.dc.analysis.common.method.information.JsonBasedEscapeAnnotationsProvider" config-factory="custom" config-ref-to="analysis.common.json-based-escape-annotations-provider"/>
 				<methodDecorator config-class="ar.uba.dc.analysis.common.code.impl.DefaultMethodDecorator" />
 				<countingTheory config-class="ar.uba.dc.analysis.memory.CountingTheory" config-factory="custom" config-ref-to="analysis.memory.barvinok-calculator-adapter" />
 				<lifeTimeOracle config-class="ar.uba.dc.analysis.memory.impl.summary.EscapeBasedLifeTimeOracle" sensitivity="${escape.sensitivity}">

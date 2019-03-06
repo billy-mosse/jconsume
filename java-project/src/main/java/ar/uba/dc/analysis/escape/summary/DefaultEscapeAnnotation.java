@@ -15,6 +15,10 @@ public class DefaultEscapeAnnotation implements EscapeAnnotation, Comparable<Def
 	protected String signature;
 	protected ListDIParameters relevantParameters;
 	protected ListDIParameters parameters;
+	
+	protected boolean isArtificial;
+	protected int maxLive;
+	protected int escape;
 
 	public String getSignature() {
 		return signature;
@@ -99,5 +103,40 @@ public class DefaultEscapeAnnotation implements EscapeAnnotation, Comparable<Def
 		return this.signature.substring(1,
 				this.signature.indexOf(':')
 				);
+	}
+	
+	
+	public int getMaxLive()
+	{
+		return this.maxLive;
+	}
+	
+	public int getEscape()
+	{
+		return this.escape;
+	}
+	
+	public void setMaxLive(int maxLive)
+	{
+		this.maxLive = maxLive;
+	}
+	
+	public void setEscape(int escape)
+	{
+		this.escape = escape;
+	}
+	
+	
+	public boolean getIsArtificial() {
+		return isArtificial;
+	}
+
+	public void setIsArtificial(boolean isArtificial) {
+		this.isArtificial = isArtificial;
+	}
+
+	@Override
+	public boolean isArtificial() {
+		return getIsArtificial();
 	}
 }
