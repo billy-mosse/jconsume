@@ -30,6 +30,7 @@ import ar.uba.dc.soot.SootUtils;
 import ar.uba.dc.soot.StatementId;
 import ar.uba.dc.util.collections.CircularStack;
 
+@Ignore
 public class XMLReaderTest {
 
 	private XMLReader reader;

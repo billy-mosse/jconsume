@@ -179,10 +179,10 @@
 		</package>
 		
 		<!-- Para correr: em3d -->
-		<!-- <package name="java." type="startsWith">
+		<package name="java." type="startsWith">
 			<method name="hasMoreElements" type="equals" />
 			<method name="nextElement" type="equals" />
-		</package>
+		</package><!--
 		
 		<package name="sun." type="startsWith">
 			<method name="hasMoreElements" type="equals" />
@@ -270,9 +270,9 @@
 	<!-- Exlcuyo todo java nativo -->
 	<rule name="methods that should be exlcuded from the analysis" type="exclude">
 		
-		<package name="java." type="startsWith">
+		<!--<package name="java." type="startsWith">
 			<method name="" type="startsWith" />
-		</package>
+		</package>-->
 		
 		<package name="sun." type="startsWith">
 			<method name="" type="startsWith" />
