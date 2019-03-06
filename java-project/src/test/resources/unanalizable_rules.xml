@@ -196,10 +196,10 @@
 		</package>
 		
 		<!-- Para correr: em3d -->
-		<!-- <package name="java." type="startsWith">
+		 <package name="java." type="startsWith">
 			<method name="hasMoreElements" type="equals" />
 			<method name="nextElement" type="equals" />
-		</package>
+		</package><!--
 		
 		<package name="sun." type="startsWith">
 			<method name="hasMoreElements" type="equals" />
