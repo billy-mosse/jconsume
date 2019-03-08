@@ -7,11 +7,9 @@ import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartitionBinding;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
-import java.security.GeneralSecurityException;
 
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.logging.Log;
@@ -19,6 +17,7 @@ import org.apache.commons.logging.LogFactory;
 
 import ar.uba.dc.analysis.common.Invocation;
 import ar.uba.dc.analysis.common.Line;
+import ar.uba.dc.analysis.common.LineWithConsumption;
 import ar.uba.dc.analysis.common.SummaryWriter;
 import ar.uba.dc.analysis.escape.EscapeSummary;
 import ar.uba.dc.analysis.escape.graph.PaperNode;
@@ -86,6 +85,8 @@ public class JsonIRWriter implements SummaryWriter<IntermediateRepresentationMet
 		{
 			builder.registerTypeAdapter(Line.class, new LineMinimalisticSerializer());
 		}
+		
+		builder.registerTypeAdapter(LineWithConsumption.class, new LineWithConsumptionSerializer());
 		
 		builder.registerTypeAdapter(Invocation.class, new InvocationSerializer());
 		//builder.registerTypeAdapter(IntermediateRepresentationParameter.class, new DefaultIntermediateRepresentationParameterSerializer());
@@ -171,6 +172,9 @@ public class JsonIRWriter implements SummaryWriter<IntermediateRepresentationMet
 	        result.add("declaring_class", new JsonPrimitive(ir_method.getDeclaringClass()));
 
 	        result.add("declaration", new JsonPrimitive(ir_method.getDeclaration()));	
+	        
+
+			result.add("requirements", context.serialize(ir_method.getMethodRequirements()));
 
 	        JsonArray escapeNodes = new JsonArray();
 	        
@@ -271,15 +275,49 @@ public class JsonIRWriter implements SummaryWriter<IntermediateRepresentationMet
 	    }
 	}
 	
+	public static class LineWithConsumptionSerializer implements JsonSerializer<Line> 
+	{
+	    
+		public JsonElement serialize(final Line line, final Type type, final JsonSerializationContext context) {
+			JsonObject result = new JsonObject();
+						
+			LineWithConsumption lineWithConsumption = (LineWithConsumption) line;
+			result.add("consumption", context.serialize(lineWithConsumption.getConsumption()));
+			
+						
+			result.add("binding", context.serialize(line.getBinding()));
+
+			result.add("ir_name", new JsonPrimitive( line.getIrName()));
+			result.add("ir_class", new JsonPrimitive( line.getIrClass()));
+			
+			
+			//result.add("magical_stmt_name", new JsonPrimitive( line.magicalStmtName));
+			
+			//result.add("line_number", new JsonPrimitive( line.getLineNumber()));
+			
+			JsonArray arr = new JsonArray();
+			
+			for(Invocation i : line.getInvocations())
+			{
+				arr.add(context.serialize(i));
+			}
+			
+			result.add("invocations", arr);
+			
+			
+	        return result;
+	    }
+	}
+	
+	
 	public static class LineMinimalisticSerializer implements JsonSerializer<Line> 
 	{
 	    
 		public JsonElement serialize(final Line line, final Type type, final JsonSerializationContext context) {
 			JsonObject result = new JsonObject();
 						
-			//TODO: Hacer que las flechas se vean bien
-			result.add("invariant", context.serialize(line.getInvariant()));
-			
+
+			result.add("invariant", context.serialize(line.getInvariant()));				
 			
 			result.add("binding", context.serialize(line.getBinding()));
 

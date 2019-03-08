@@ -3,6 +3,8 @@ package ar.uba.dc.barvinok.expression;
 import java.util.Set;
 import java.util.TreeSet;
 
+import ar.uba.dc.analysis.memory.expression.ParametricExpression;
+import ar.uba.dc.analysis.memory.impl.BarvinokParametricExpression;
 import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
 import ar.uba.dc.barvinok.expression.operation.DomainUnifier;
 import ar.uba.dc.barvinok.expression.operation.impl.DefaultDomainUnifier;
@@ -51,5 +53,27 @@ public class DomainSetUtils {
 		}
 		return new_vars;
 	}
+	
+	
+	
+	//Esto no se va a poder hacer porque barvinok solo soporta cosas lineales
+	//mejor...hacer un LineWithConsumption o algo asi
+	/*public static String dummyInvariantFromParametricExpression(ParametricExpression expr)
+	{
+		DomainSet inv = new DomainSet();
+		
+		inv.addAllParameters(expr.getParameters());
+		BarvinokParametricExpression bexpr = (BarvinokParametricExpression) expr;
+		
+		for( QuasiPolynomial q : bexpr.getExpression().getPieces())
+		{
+			QuasiPolynomial
+			q.getPolynomial();
+			q.getConstraints();
+		}
+		
+		return null;
+		
+	}*/
 	
 }

@@ -161,7 +161,7 @@ public class DomainSet {
 		String vars = StringUtils.join(variables, ",");
 		String inds = StringUtils.join(inductives, ",");
 		
-		if (params.length() > 0) {
+		if (params.length() > 0 || true) {
 			ret += "[" + params + "] -> ";
 		}
 		
@@ -169,7 +169,7 @@ public class DomainSet {
 		
 		
 		//cambio importante: estabamos tomando las variables como inductivas!
-		if (vars.length() > 0) {
+		if (vars.length() > 0 || true) {
 			ret += "[" + inds + "]: ";
 		} 
 		

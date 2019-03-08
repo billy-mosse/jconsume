@@ -30,11 +30,14 @@ import com.google.gson.JsonPrimitive;
 
 import ar.uba.dc.analysis.common.Invocation;
 import ar.uba.dc.analysis.common.Line;
+import ar.uba.dc.analysis.common.LineWithConsumption;
 import ar.uba.dc.analysis.common.SummaryReader;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationParameter;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethodBody;
 import ar.uba.dc.analysis.escape.graph.PaperNode;
+import ar.uba.dc.analysis.memory.expression.ParametricExpression;
+import ar.uba.dc.analysis.memory.impl.BarvinokParametricExpression;
 import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
 import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartitionBinding;
 import ar.uba.dc.analysis.memory.impl.summary.SimplePaperPointsToHeapPartition;
@@ -135,6 +138,10 @@ protected Gson gson;
 			    m.setParameters(parameters);
 		    }
 		    
+			DomainSet methodRequirements = context.deserialize(jobject.get("requirements"), DomainSet.class);
+			m.setMethodRequirements(methodRequirements);
+			
+			
 		    Set<String> relevant_parameters = new TreeSet<String>();
 		    JsonArray jrelevant_parameters = jobject.get("relevant_parameters").getAsJsonArray();
 		    for(int i = 0; i < jrelevant_parameters.size(); i++)
@@ -239,9 +246,21 @@ protected Gson gson;
 			
 			
 			//TODO: agregar inductives y toda la bola
-			DomainSet invariant = context.deserialize(jobject.get("invariant"), DomainSet.class);
 			
-			line.setInvariant(invariant);
+			JsonElement jconsumption = jobject.get("consumption");
+			if(jconsumption != null)
+			{
+				line = new LineWithConsumption();
+				BarvinokParametricExpression consumption = context.deserialize(jconsumption, BarvinokParametricExpression.class);
+				((LineWithConsumption)line).setConsumption(consumption);
+			}
+			else
+			{
+				DomainSet invariant = context.deserialize(jobject.get("invariant"), DomainSet.class);
+				line.setInvariant(invariant);
+			}
+			
+			
 
 			if(jobject.has("name"))
 				line.setName(jobject.get("name").getAsString());

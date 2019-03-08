@@ -19,6 +19,8 @@ import ar.uba.dc.analysis.escape.graph.node.GlobalNode;
 import ar.uba.dc.analysis.escape.graph.node.ParamNode;
 import ar.uba.dc.analysis.escape.graph.node.StmtNode;
 import ar.uba.dc.analysis.escape.graph.node.ThisNode;
+import ar.uba.dc.analysis.memory.expression.ParametricExpression;
+import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.soot.StatementId;
 import ar.uba.dc.util.collections.map.HashMultiMap;
 import ar.uba.dc.util.collections.map.MultiMap;
@@ -32,9 +34,14 @@ public class EscapeSummary {
 	protected PointsToGraph ptg;
 	protected MultiMap<Node, String> mutated;	// node -> field such that (node,field) is
 	protected boolean isArtificial;
-	protected int maxLive;
-	protected int escape;
+	protected ParametricExpression maxLive;
+	protected ParametricExpression escape;
+	protected DomainSet methodRequirements;
 	
+	public DomainSet getMethodRequirements() {
+		return methodRequirements;
+	}
+
 	public EscapeSummary() {
 		this.target = null;
 		this.ptg = new PointsToGraph();
@@ -413,24 +420,29 @@ public class EscapeSummary {
 		ptg.setLocalsPointingTo(node, localPointingToNode);		
 	}
 	
-	public int getMaxLive()
+	public ParametricExpression getMaxLive()
 	{
 		return this.maxLive;
 	}
 	
-	public int getEscape()
+	public ParametricExpression getEscape()
 	{
 		return this.escape;
 	}
 	
-	public void setMaxLive(int maxLive)
+	public void setMaxLive(ParametricExpression maxLive)
 	{
 		this.maxLive = maxLive;
 	}
 	
-	public void setEscape(int escape)
+	public void setEscape(ParametricExpression escape)
 	{
 		this.escape = escape;
+	}
+
+	public void setMethodRequirements(DomainSet methodRequirements) {
+		this.methodRequirements = methodRequirements;
+		
 	}
 	
 }

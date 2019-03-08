@@ -12,11 +12,13 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.apache.commons.lang.NotImplementedException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import ar.uba.dc.analysis.common.Invocation;
 import ar.uba.dc.analysis.common.Line;
+import ar.uba.dc.analysis.common.LineWithConsumption;
 import ar.uba.dc.analysis.common.MethodInformationProvider;
 import ar.uba.dc.analysis.common.SummaryRepository;
 import ar.uba.dc.analysis.common.code.BasicMethodBody;
@@ -34,10 +36,15 @@ import ar.uba.dc.analysis.escape.summary.EscapeAnnotation;
 //import ar.uba.dc.analysis.common.AbstractInterproceduralAnalysis.IntComparator;
 import ar.uba.dc.analysis.escape.summary.repository.RAMSummaryRepository;
 import ar.uba.dc.analysis.memory.LifeTimeOracle;
+import ar.uba.dc.analysis.memory.expression.ParametricExpression;
+import ar.uba.dc.analysis.memory.expression.ParametricExpressionFactory;
+import ar.uba.dc.analysis.memory.expression.ParametricExpressionUtils;
+import ar.uba.dc.analysis.memory.impl.BarvinokCalculatorAdapter;
 import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
 import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartitionBinding;
 import ar.uba.dc.analysis.memory.impl.summary.RichPaperPointsToHeapPartition;
 import ar.uba.dc.analysis.memory.impl.summary.SimplePaperPointsToHeapPartition;
+import ar.uba.dc.barvinok.BarvinokCalculator;
 import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.invariant.InvariantProvider;
 import ar.uba.dc.invariant.spec.SpecInvariantProvider;
@@ -67,6 +74,8 @@ public class IntermediateLanguageRepresentationBuilder {
 	protected IntermediateRepresentationMethodBuilder irbuilder;
 	protected IntermediateRepresentationBodyBuilder irbody_builder;
 	protected String mainClass;
+	protected BarvinokCalculatorAdapter barvinokCalculatorAdapter;
+	
 	private JsonBasedEscapeAnnotationsProvider jsonBasedEscapeAnnotationsProvider;
 
 	protected CallGraph callGraph;
@@ -77,7 +86,8 @@ public class IntermediateLanguageRepresentationBuilder {
 	
 	public IntermediateLanguageRepresentationBuilder(RAMSummaryRepository data, Map<SootMethod, Integer> order, SummaryRepository<EscapeSummary, SootMethod> repository, 
 			MethodInformationProvider methodInformationProvider, MethodDecorator methodDecorator, InvariantProvider invariantProvider, 
-			String outputFolder, CallGraph callGraph, String mainClass, LifeTimeOracle lifetimeOracle, JsonBasedEscapeAnnotationsProvider jsonBasedEscapeAnnotationsProvider)
+			String outputFolder, CallGraph callGraph, String mainClass, LifeTimeOracle lifetimeOracle, JsonBasedEscapeAnnotationsProvider jsonBasedEscapeAnnotationsProvider,
+			BarvinokCalculatorAdapter barvinokCalculatorAdapter)
 	{
 		this.data=data;
 		this.order = order;
@@ -90,6 +100,7 @@ public class IntermediateLanguageRepresentationBuilder {
 		this.mainClass = mainClass;
 		this.lifetimeOracle = lifetimeOracle;
 		this.jsonBasedEscapeAnnotationsProvider = jsonBasedEscapeAnnotationsProvider;
+		this.barvinokCalculatorAdapter = barvinokCalculatorAdapter;
 	}
 	
 
@@ -145,13 +156,16 @@ public class IntermediateLanguageRepresentationBuilder {
 				
 				
 				//no se si esto esta bien
-				m.setNewRelevantParameters(new HashSet<DerivedVariable>());
 				m.setDeclaration(method.getDeclaration());
 				
 				//TODO crear metodo que reciba un intermediate representation method (& subsignature)
 				//EscapeAnnotation annotation = jsonBasedEscapeAnnotationsProvider.get(m.getDeclaration());
 				
 				m.setRelevantParameters(this.invariantProvider.getRelevantParameters(method));
+				
+				m.setNewRelevantParameters(new HashSet<DerivedVariable>());
+				
+				m.setMethodRequirements(summary.getMethodRequirements());
 				
 				//SootMethod sm = new SootMethod();
 				//sm.set...
@@ -170,6 +184,8 @@ public class IntermediateLanguageRepresentationBuilder {
 				IntermediateRepresentationMethodBody body = new IntermediateRepresentationMethodBody();
 
 				//I add a NEW associated to a hp for every escaping object 
+				
+				
 				
 				if(m.getEscapeNodes().size() > 0)
 				{					
@@ -192,42 +208,43 @@ public class IntermediateLanguageRepresentationBuilder {
 					{
 						//creo escape NEWs y los asigno a un solo nodo que escapa.
 						escapeNodes.add(hp_method);
-						for(i = 0; i < summary.getEscape(); i++)
-						{												
+											
 							
-							
-							Invocation invocation = new Invocation();
-							Line line = new Line();
-							
-							line.setInvariant(new DomainSet());
-							
-							line.setName("new");
-							line.setIrName("new");
-							
-							line.setIrClass(""); //I dont care
-							line.magicalStmtName = "";
-							invocation.setIsReturnRefLikeType(false);
-							invocation.setClass_called("");
-							invocation.setCalled_implementation_signature("");
-							invocation.setParameters(new HashSet());
-							invocation.setHpBindings(new HashSet());
-							invocation.setNameCalled("");
-							
-							List<Invocation> invocations = new ArrayList<Invocation>();
-							
-							
-							///////por donde escapa el objeto creado por el NEW? Por ejemplo, si hay varios parametros....
-							//creo que a partir de por donde escapa el return value....deberia....hacer que apunte a eso?
-							//por ejemplo, si escapa a traves de M_0, ese es el SH...pero que pasa si escapa a traves de un parametro?
-							//ademas un parametro es un outside node y el paper dice que los subheap descriptors son todos inside nodes. mhm.
-							invocation.setHeapPartition(hp_method);
-							
-							invocations.add(invocation);
-							line.setInvocations(invocations);
 						
-							
-							body.addLine(line);
-						}
+						Invocation invocation = new Invocation();
+						LineWithConsumption line = new LineWithConsumption();
+						
+						
+						line.setConsumption(summary.getEscape());
+						//line.setInvariant(new DomainSet());
+						
+						line.setName("new");
+						line.setIrName("new");
+						
+						line.setIrClass(""); //I dont care
+						line.magicalStmtName = "";
+						invocation.setIsReturnRefLikeType(false);
+						invocation.setClass_called("");
+						invocation.setCalled_implementation_signature("");
+						invocation.setParameters(new HashSet());
+						invocation.setHpBindings(new HashSet());
+						invocation.setNameCalled("");
+						
+						List<Invocation> invocations = new ArrayList<Invocation>();
+						
+						
+						///////por donde escapa el objeto creado por el NEW? Por ejemplo, si hay varios parametros....
+						//creo que a partir de por donde escapa el return value....deberia....hacer que apunte a eso?
+						//por ejemplo, si escapa a traves de M_0, ese es el SH...pero que pasa si escapa a traves de un parametro?
+						//ademas un parametro es un outside node y el paper dice que los subheap descriptors son todos inside nodes. mhm.
+						invocation.setHeapPartition(hp_method);
+						
+						invocations.add(invocation);
+						line.setInvocations(invocations);
+					
+						
+						body.addLine(line);
+						
 						m.setEscapeNodes(escapeNodes);	
 						nodes.addAll(escapeNodes);
 					}	
@@ -241,38 +258,47 @@ public class IntermediateLanguageRepresentationBuilder {
 	
 				
 					//I add a NEW associated to a hp for every other object
-					for(int j = i+1; j <= summary.getMaxLive(); j++)
-					{
-						//PaperPointsToHeapPartition hp = new RichPaperPointsToHeapPartition(j);
-						
-						non_escaping.setNumber(1);
-						Invocation invocation = new Invocation();
-						Line line = new Line();
-						line.setInvariant(new DomainSet());
-						
-						line.setName("new");
-						line.setIrName("new");
-						line.setIrClass(""); //I dont care
-						line.magicalStmtName = "";
-						invocation.setIsReturnRefLikeType(false);
-						List<Invocation> invocations = new ArrayList<Invocation>();
-						invocation.setHeapPartition(non_escaping);
-						invocation.setClass_called("");
-						invocation.setCalled_implementation_signature("");
-						invocation.setParameters(new HashSet());
-						invocation.setHpBindings(new HashSet());
-						invocation.setNameCalled("");
-						
-						
-						
-						invocations.add(invocation);
+				
+					//PaperPointsToHeapPartition hp = new RichPaperPointsToHeapPartition(j);
+					
+					non_escaping.setNumber(1);
+					Invocation invocation = new Invocation();
+					LineWithConsumption line = new LineWithConsumption();
+					
+					
 
-						line.setInvocations(invocations);
-	
-						body.addLine(line);
-						nodes.add(non_escaping);
+					//esta bien que lo que anote sea maxlive y escape,
+					//pero el nodo que tengo que crear aca tiene que tener la resta entre maxlive y rsd
+					
+					ParametricExpression maxLiveMinusEscape = barvinokCalculatorAdapter.substract(summary.getMaxLive(), summary.getEscape());
+					
+					line.setConsumption(maxLiveMinusEscape);
+					line.setInvariant(new DomainSet());
+					
+					line.setName("new");
+					line.setIrName("new");
+					line.setIrClass(""); //I dont care
+					line.magicalStmtName = "";
+					line.setConsumption(summary.getEscape());
+					invocation.setIsReturnRefLikeType(false);
+					List<Invocation> invocations = new ArrayList<Invocation>();
+					invocation.setHeapPartition(non_escaping);
+					invocation.setClass_called("");
+					invocation.setCalled_implementation_signature("");
+					invocation.setParameters(new HashSet());
+					invocation.setHpBindings(new HashSet());
+					invocation.setNameCalled("");
+					
+					
+					
+					invocations.add(invocation);
+
+					line.setInvocations(invocations);
+
+					body.addLine(line);
+					nodes.add(non_escaping);
 						
-					}
+					
 				}
 				m.setBody(body);				
 			}

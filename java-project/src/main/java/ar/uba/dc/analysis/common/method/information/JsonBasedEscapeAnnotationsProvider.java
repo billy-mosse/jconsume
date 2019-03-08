@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -20,6 +21,7 @@ import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.
 import ar.uba.dc.analysis.common.intermediate_representation.io.writer.JsonIRWriter;
 import ar.uba.dc.analysis.escape.summary.DefaultEscapeAnnotation;
 import ar.uba.dc.analysis.escape.summary.EscapeAnnotation;
+import ar.uba.dc.barvinok.expression.DomainSet;
 import ar.uba.dc.util.location.MethodLocationStrategy;
 
 import com.google.gson.Gson;
@@ -77,6 +79,7 @@ public class JsonBasedEscapeAnnotationsProvider{
 		//builder.registerTypeAdapter(ListDIParameters.class, new ListDIParametersDeserializer());
 		builder.registerTypeAdapter(DefaultEscapeAnnotation.class, new DefaultEscapeAnnotationDeserializer());
 		builder.registerTypeAdapter(DI_JsonParameter.class, new DI_JsonParameterDeserializer());
+		builder.registerTypeAdapter(DomainSet.class, new DomainSetDeserializer());
 		
 		
 		
@@ -148,7 +151,7 @@ public class JsonBasedEscapeAnnotationsProvider{
 			return annotationsMap;
 
 		} catch (Exception e) {
-			//log.error("Error. " + e.getMessage(), e);
+			log.error("Error. " + e.getMessage(), e);
 			return null;
 		}
 		
@@ -208,14 +211,19 @@ public class JsonBasedEscapeAnnotationsProvider{
 			String name = jobject.get("name").getAsString();
 			annotation.setName(name);
 			
-			int maxLive= jobject.get("maxLive").getAsInt();
-			annotation.setMaxLive(maxLive);			
+			String maxLive= jobject.get("maxLive").getAsString();
+			annotation.setMaxLiveFromString(maxLive);			
 			
-			int escape= jobject.get("escape").getAsInt();
-			annotation.setEscape(escape);
+			String escape= jobject.get("escape").getAsString();
+			annotation.setEscapeFromString(escape);
 			
+
+			annotation.setSignature(jobject.get("signature").getAsString());	
 			
-			annotation.setSignature(jobject.get("signature").getAsString());			
+			DomainSet requirements = context.deserialize(jobject.get("requirements"), DomainSet.class);
+			
+			annotation.setMethodRequirements(requirements);			
+			
 			
 			Integer[] writableParameters = context.deserialize(jobject.get("writableParameters"), Integer[].class);
 			annotation.setWritableParameters(Arrays.asList(writableParameters));
@@ -251,6 +259,33 @@ public class JsonBasedEscapeAnnotationsProvider{
 			
 			
 			return annotation;
+			
+		}
+	}
+	
+	public static class DomainSetDeserializer implements JsonDeserializer<DomainSet> 
+	{
+	    
+		@Override
+		public DomainSet deserialize(JsonElement json, Type type,
+		        JsonDeserializationContext context) throws JsonParseException {
+			JsonObject jobject = (JsonObject) json;
+			DomainSet invariant = new DomainSet();
+			
+			Set<String> variables = new TreeSet<String>();
+			
+			JsonArray arr = jobject.get("variables").getAsJsonArray();
+			
+			for(int i = 0; i < arr.size(); i ++)
+			{
+				variables.add(arr.get(i).getAsString());
+			}
+			
+			
+			String barbinok_expression = jobject.get("expression").getAsString();
+			invariant = new DomainSet(barbinok_expression , variables, true);
+
+			return invariant;
 			
 		}
 	}

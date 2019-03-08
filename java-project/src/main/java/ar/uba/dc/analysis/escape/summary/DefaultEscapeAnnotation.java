@@ -7,6 +7,9 @@ import org.apache.commons.lang.NotImplementedException;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.DIParameter;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.ListDIParameters;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.SimpleDIParameter;
+import ar.uba.dc.analysis.memory.expression.ParametricExpression;
+import ar.uba.dc.analysis.memory.impl.BarvinokParametricExpression;
+import ar.uba.dc.barvinok.expression.DomainSet;
 
 public class DefaultEscapeAnnotation implements EscapeAnnotation, Comparable<DefaultEscapeAnnotation>{
 	
@@ -16,9 +19,19 @@ public class DefaultEscapeAnnotation implements EscapeAnnotation, Comparable<Def
 	protected ListDIParameters relevantParameters;
 	protected ListDIParameters parameters;
 	
+	protected DomainSet methodRequirements;
+	
+	public DomainSet getMethodRequirements() {
+		return methodRequirements;
+	}
+
+	public void setMethodRequirements(DomainSet methodRequirements) {
+		this.methodRequirements = methodRequirements;
+	}
+
 	protected boolean isArtificial;
-	protected int maxLive;
-	protected int escape;
+	protected ParametricExpression maxLive;
+	protected ParametricExpression escape;
 
 	public String getSignature() {
 		return signature;
@@ -106,24 +119,25 @@ public class DefaultEscapeAnnotation implements EscapeAnnotation, Comparable<Def
 	}
 	
 	
-	public int getMaxLive()
+	public ParametricExpression getMaxLive()
 	{
 		return this.maxLive;
 	}
 	
-	public int getEscape()
+	public ParametricExpression getEscape()
 	{
 		return this.escape;
 	}
 	
-	public void setMaxLive(int maxLive)
+	public void setMaxLiveFromString(String maxLive)
 	{
-		this.maxLive = maxLive;
+		
+		this.maxLive = new BarvinokParametricExpression(maxLive);
 	}
 	
-	public void setEscape(int escape)
+	public void setEscapeFromString(String escape)
 	{
-		this.escape = escape;
+		this.escape = new BarvinokParametricExpression(escape);
 	}
 	
 	
@@ -139,4 +153,5 @@ public class DefaultEscapeAnnotation implements EscapeAnnotation, Comparable<Def
 	public boolean isArtificial() {
 		return getIsArtificial();
 	}
+
 }

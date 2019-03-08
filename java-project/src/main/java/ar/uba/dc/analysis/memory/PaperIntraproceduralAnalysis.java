@@ -13,6 +13,7 @@ import org.apache.commons.logging.LogFactory;
 
 import ar.uba.dc.analysis.common.Invocation;
 import ar.uba.dc.analysis.common.Line;
+import ar.uba.dc.analysis.common.LineWithConsumption;
 import ar.uba.dc.analysis.common.LineWithParent;
 import ar.uba.dc.analysis.common.code.NewStatement;
 import ar.uba.dc.analysis.common.intermediate_representation.IntermediateRepresentationMethod;
@@ -168,11 +169,16 @@ public class PaperIntraproceduralAnalysis {
 			 * Hago el bound, pregunto si escapa, y si escapa voy acumulando
 			 */
 			
-			
-			
-			log.debug(" | |- Processing statement " + newLine.toHumanReadableString());
-			
-			ParametricExpression bound = ct.count(newLine);
+			ParametricExpression bound;
+			if(newLine.getClass().equals(LineWithConsumption.class))
+			{
+				bound = ((LineWithConsumption)newLine).getConsumption();
+			}
+			else
+			{
+				log.debug(" | |- Processing statement " + newLine.toHumanReadableString());
+				bound = ct.count(newLine);
+			}
 			
 			if (BarvinokParametricExpressionUtils.isInfinite(bound))
 			{

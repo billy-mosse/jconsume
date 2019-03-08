@@ -33,10 +33,13 @@ import ar.uba.dc.analysis.escape.summary.EscapeAnnotation;
 import ar.uba.dc.analysis.escape.summary.EscapeAnnotationsSummaryFactory;
 import ar.uba.dc.analysis.escape.summary.repository.RAMSummaryRepository;
 import ar.uba.dc.analysis.memory.PaperInterproceduralAnalysis;
+import ar.uba.dc.analysis.memory.impl.BarvinokCalculatorAdapter;
 import ar.uba.dc.analysis.memory.impl.summary.EscapeBasedLifeTimeOracle;
 import ar.uba.dc.invariant.InvariantProvider;
 import ar.uba.dc.soot.Box;
 import ar.uba.dc.util.Timer;
+import ar.uba.dc.util.location.MethodLocationStrategy;
+import ar.uba.dc.util.location.method.ClassNameLocationStrategy;
 
 
 public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis implements CallAnalyzer {
@@ -44,6 +47,9 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 	private static Log log = LogFactory.getLog(InterproceduralAnalysis.class);
 	
 	private static final int INFINITE = -1;
+	
+	protected ClassNameLocationStrategy locationStrategy;
+
 	
 	// Tiene los summaries que se fueron generando durante la corrida del analisis. No tiene los summaries
 	// de los metodos no analizables que se fueron utilizando.
@@ -109,6 +115,8 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 	
 	protected PaperInterproceduralAnalysis paperInterproceduralAnalysis;
 	
+	protected BarvinokCalculatorAdapter barvinokCalculatorAdapter;
+	
 	
 	/*protected LifeTimeOracle lifeTimeOracle ;
 	
@@ -120,6 +128,15 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 	public void setLifeTimeOracle(LifeTimeOracle lifeTimeOracle) {
 		this.lifeTimeOracle = lifeTimeOracle;
 	}*/
+
+	public BarvinokCalculatorAdapter getBarvinokCalculatorAdapter() {
+		return barvinokCalculatorAdapter;
+	}
+
+	public void setBarvinokCalculatorAdapter(
+			BarvinokCalculatorAdapter barvinokCalculatorAdapter) {
+		this.barvinokCalculatorAdapter = barvinokCalculatorAdapter;
+	}
 
 	@Override
 	protected void doAnalysis() {
@@ -169,7 +186,8 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 			IntermediateLanguageRepresentationBuilder irBuilder = new IntermediateLanguageRepresentationBuilder(data, order, repository, methodInformationProvider, 
 					methodDecorator,
 																												invariantProvider, outputFolder, callGraph, mainClass, 
-																												lifetimeOracle, jsonBasedEscapeAnnotationsProvider);
+																												lifetimeOracle, jsonBasedEscapeAnnotationsProvider,
+																												barvinokCalculatorAdapter);
 			ir_methods = irBuilder.buildIntermediateLanguageRepresentation();
 			
 			internalWriteIntermediateRepresentation();
@@ -454,6 +472,8 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 		log.debug("Done");*/
 		log.info("Writing JSON Intermediate Representation...");
 
+		((JsonIRWriter)jsonIrWriter).setLocationStrategy(locationStrategy);
+		
 		jsonIrWriter.setMainClass(this.mainClass);
 		
 		if(jsonIrWriter.getClass() == JsonIRWriter.class)
@@ -611,5 +631,14 @@ public class InterproceduralAnalysis extends AbstractInterproceduralAnalysis imp
 	public void setEscapeAnnotationsSummaryFactory(
 			EscapeAnnotationsSummaryFactory escapeAnnotationsSummaryFactory) {
 		this.escapeAnnotationsSummaryFactory = escapeAnnotationsSummaryFactory;
+	}
+	
+	public ClassNameLocationStrategy getLocationStrategy() {
+		return locationStrategy;
+	}
+
+
+	public void setLocationStrategy(ClassNameLocationStrategy locationStrategy) {
+		this.locationStrategy = locationStrategy;
 	}
 }

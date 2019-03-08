@@ -9,7 +9,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import ar.uba.dc.analysis.common.SummaryWriter;
-import ar.uba.dc.analysis.escape.EscapeSummary;
 import ar.uba.dc.analysis.escape.summary.io.xstream.XStreamFactory;
 import ar.uba.dc.util.location.MethodLocationStrategy;
 

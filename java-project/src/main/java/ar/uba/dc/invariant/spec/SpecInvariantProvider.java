@@ -122,7 +122,12 @@ public class SpecInvariantProvider implements InvariantProvider {
 		
 		if (invariantProvider == null || !invariantProvider.forClass(sootClass.getName())) {
 				// Obtenemos de donde sacar el archivo con la especificacion de invariantes para la clase que necesitamos
-			String specFile = locationStrategy.getLocation(sootClass);
+			
+			
+			//HACK substring
+			String specFile = locationStrategy.getLocation(sootClass).substring(7);
+			
+			//System.out.println(System.getProperty("user.dir"));
 				// Es el ultimo archivo que leimos? De ser asi no hace falta recargar la especificacion 
 			if (lastFilePathUsed == null || !lastFilePathUsed.equals(specFile)) {
 				lastFilePathUsed = specFile;

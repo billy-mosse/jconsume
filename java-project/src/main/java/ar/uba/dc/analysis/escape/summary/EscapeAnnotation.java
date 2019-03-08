@@ -3,6 +3,7 @@ package ar.uba.dc.analysis.escape.summary;
 import java.util.List;
 
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.ListDIParameters;
+import ar.uba.dc.analysis.memory.expression.ParametricExpression;
 
 public interface EscapeAnnotation{
 	public boolean isFresh();
@@ -21,12 +22,13 @@ public interface EscapeAnnotation{
 	public String getSignature();
 
 	public String getClassName();
+	
 
 	public boolean isArtificial();
 	
-	public int getMaxLive();
+	public ParametricExpression getMaxLive();
 	
-	public int getEscape();
+	public ParametricExpression getEscape();
 	
 	//public String[] getRelevantParameters();
 }

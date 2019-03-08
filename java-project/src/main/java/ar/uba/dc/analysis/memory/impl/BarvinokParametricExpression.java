@@ -13,6 +13,11 @@ public class BarvinokParametricExpression implements ParametricExpression {
 		this.expr = polynomials;
 	}
 	
+	public BarvinokParametricExpression(String polynomial)
+	{
+		this.expr = new PiecewiseQuasipolynomial(polynomial);
+	}
+	
 	@Override
 	public int hashCode() {
 		return expr.hashCode(); 

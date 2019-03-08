@@ -101,7 +101,12 @@ public class EscapeAnnotationsSummaryFactory {
 		
 		summary.setEscape(annotation.getEscape());
 		summary.setMaxLive(annotation.getMaxLive());
-			
+		
+		if(annotation.getClass().equals(DefaultEscapeAnnotation.class))
+		{
+			summary.setMethodRequirements(((DefaultEscapeAnnotation)annotation).getMethodRequirements());
+		}
+		
 		return summary;		
 	}
 }
