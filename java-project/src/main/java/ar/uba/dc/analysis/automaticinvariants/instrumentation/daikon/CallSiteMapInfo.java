@@ -6,8 +6,12 @@
  */
 package ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
+
+import soot.jimple.internal.JimpleLocal;
 
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.CallSiteMapInfo;
 
@@ -34,8 +38,28 @@ public class CallSiteMapInfo {
 	public CallSiteMapInfo(List args, List params, List paramsInit, String methodCallee, String classCallee) {
 		super();
 		this.args = args;
-		this.params = params;
-		this.paramsInit= paramsInit;
+		
+		Iterator it = params.iterator();
+		List<String> params2 = new ArrayList<String>();
+		while(it.hasNext())
+		{
+			Object o = it.next();
+			String param = o.toString().replaceAll("\\.", "__f__");
+			params2.add(param);
+		}
+		
+		Iterator itInit = paramsInit.iterator();
+		List<String> params2Init = new ArrayList<String>();
+		while(itInit.hasNext())
+		{
+			Object o = itInit.next();
+			String paramInit = o.toString().replaceAll("\\.", "__f__");
+			params2Init.add(paramInit);
+		}
+		
+		
+		this.params = params2;
+		this.paramsInit= params2Init;
 		this.methodCallee = methodCallee;
 		this.classCallee = classCallee;
 	}
@@ -44,7 +68,7 @@ public class CallSiteMapInfo {
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
-	@Override
+	@Override 
 	public String toString() {
 		String res="";
 		res = args + ";" + methodCallee + ";" + params+";"+paramsInit+";"+classCallee;
