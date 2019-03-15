@@ -1,6 +1,7 @@
 package ar.uba.dc.analysis.memory.callanalyzer;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
@@ -106,7 +107,26 @@ public class PaperCallAnalyzer {
 				
 				if(rsdFromPartition != null)
 				{	
-					if(!DomainSetUtils.removePrefix(invariant.getVariables()).containsAll(rsdFromPartition.getParameters()))
+					Set s = DomainSetUtils.removePrefix(invariant.getVariables());
+					Set params = rsdFromPartition.getParameters();
+					
+					Set<String> new_params = new TreeSet<String>();
+					
+					//hack, lo mas prolijo seria borrar los parametros vacios
+					boolean containsAll = true;
+					Iterator<String> it = params.iterator();
+					while(it.hasNext())
+					{
+						String param = it.next();
+						if(param.length() > 0)
+						{
+							new_params.add(param);
+						}
+					}
+					params = new_params;
+					containsAll = s.containsAll(params);
+								
+					if(!containsAll)
 					{
 						log.error("Falta el binding! " + invariant.toString());
 						log.error(rsdFromPartition.toString());

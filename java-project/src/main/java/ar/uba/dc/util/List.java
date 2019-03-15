@@ -15,6 +15,15 @@ public class List {
 		this.head = new Cell(e, this.head);
 		this.size++;
 	}
+	
+	public void addAll(List l) {
+		Iterator it = l.iterator();
+		while(it.hasNext())
+		{
+			Object o = it.next();
+			this.add(o);
+		}
+	}
 
 	/**
 	 * @temporal: 0

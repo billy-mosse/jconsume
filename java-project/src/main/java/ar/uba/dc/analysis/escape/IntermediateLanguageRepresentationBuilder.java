@@ -148,6 +148,9 @@ public class IntermediateLanguageRepresentationBuilder {
 				
 				//el consumo anotado deberia ser parametrico y deberia crear un solo nodo con un invariante dummy.
 				
+				System.out.println(summary.getEscaping());
+				
+				
 				m = new IntermediateRepresentationMethod(method, order);
 				Map<Node, Integer> numbers = new HashMap<Node, Integer>();
 				m.setNodesInfo(summary, numbers);
@@ -194,14 +197,20 @@ public class IntermediateLanguageRepresentationBuilder {
 					
 					while(it.hasNext())
 					{
+						
 						PaperPointsToHeapPartition hp_escape = it.next();
 
-						//HACK: el HP es el primero (method node si el metodo no analizable fue anotado como fresh,
-						//o el primer parametro, si no.
-						hp_method = hp_escape;
-						hp_method.setNumber(i);
-						i +=1;
-						break;
+						//medio hackoso: si hay un methd node, ie, el metodo es anotado como fresh,
+						//entonces hacemos como que los objetos escapan por ahi.
+						//si no hay, se los dejamos al ultimo (parameter) node.
+						if(hp_escape.toString().contains("M") || !it.hasNext())
+						{
+							hp_method = hp_escape;
+							hp_method.setNumber(i);
+							i +=1;
+							break;
+						}
+						
 						
 					}
 					if(hp_method != null)
