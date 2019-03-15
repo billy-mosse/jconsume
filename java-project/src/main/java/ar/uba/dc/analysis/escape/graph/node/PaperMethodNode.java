@@ -133,9 +133,8 @@ public class PaperMethodNode implements PaperNode {
 	}*/
 
 	@Override
-	public boolean accept(PaperNode escapeNode) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean accept(PaperNode node) {
+		return this.equals(node);
 	}
 
 	@Override
