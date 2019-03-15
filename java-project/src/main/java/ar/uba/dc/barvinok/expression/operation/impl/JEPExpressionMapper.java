@@ -54,36 +54,45 @@ public class JEPExpressionMapper implements ExpressionMapper {
 		Set<String> params = new TreeSet<String>();
 		String actualKey = keyGenerator.getInitialKey(mapping);
 		for (String target : invariant.getParameters()) {
-			if (!inverseMapping.containsKey(target)) {
-				actualKey = keyGenerator.getNextKey(actualKey);
-				params.add(actualKey);
-				mapping.put(actualKey, target);
-				inverseMapping.put(target, actualKey);
-			} else {
-				params.add(inverseMapping.get(target));
-			}			
+			if(target.length() > 0)
+			{
+				if (!inverseMapping.containsKey(target)) {
+					actualKey = keyGenerator.getNextKey(actualKey);
+					params.add(actualKey);
+					mapping.put(actualKey, target);
+					inverseMapping.put(target, actualKey);
+				} else {
+					params.add(inverseMapping.get(target));
+				}
+			}
 		}
 		
 		Set<String> variables = new TreeSet<String>();
 		for (String target : invariant.getVariables()) {
-			if (!inverseMapping.containsKey(target)) {
-				actualKey = keyGenerator.getNextKey(actualKey);
-				variables.add(actualKey);
-				mapping.put(actualKey, target);
-				inverseMapping.put(target, actualKey);
-			} else {
-				variables.add(inverseMapping.get(target));
+			if(target.length() > 0)
+			{
+				if (!inverseMapping.containsKey(target)) {
+					actualKey = keyGenerator.getNextKey(actualKey);
+					variables.add(actualKey);
+					mapping.put(actualKey, target);
+					inverseMapping.put(target, actualKey);
+				} else {
+					variables.add(inverseMapping.get(target));
+				}
 			}
 		}
 		Set<String> inductives = new TreeSet<String>();
 		for (String target : invariant.getInductives()) {
-			if (!inverseMapping.containsKey(target)) {
-				actualKey = keyGenerator.getNextKey(actualKey);
-				inductives.add(actualKey);
-				mapping.put(actualKey, target);
-				inverseMapping.put(target, actualKey);
-			} else {
-				inductives.add(inverseMapping.get(target));
+			if(target.length() > 0)
+			{
+				if (!inverseMapping.containsKey(target)) {
+					actualKey = keyGenerator.getNextKey(actualKey);
+					inductives.add(actualKey);
+					mapping.put(actualKey, target);
+					inverseMapping.put(target, actualKey);
+				} else {
+					inductives.add(inverseMapping.get(target));
+				}
 			}
 		}
 		
