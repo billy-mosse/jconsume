@@ -2084,7 +2084,7 @@ class MethodInstrumenterForDaikon extends LoopFinder {
 	void inductiveAnalysis(Stmt s, LiveLocals analisisVivas, Body body)
 	{
 		List vivas;
-		Collection loops = this.getLoops(body);
+		Collection loops = loops();
 
 
 		System.out.println("Eli:"+loops);
@@ -2110,7 +2110,7 @@ class MethodInstrumenterForDaikon extends LoopFinder {
 	Stmt getLoopHeader(Stmt s, Body body)
 	{
 		Stmt loopHeader = null;
-		Collection loops = this.getLoops(body);
+		Collection loops = loops();
 
 		if(loops!=null)
 		{

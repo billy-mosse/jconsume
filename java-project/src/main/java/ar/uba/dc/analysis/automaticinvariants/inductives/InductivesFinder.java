@@ -1,12 +1,19 @@
 package ar.uba.dc.analysis.automaticinvariants.inductives;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Vector;
+
+import org.apache.commons.lang.NotImplementedException;
 
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.ProgramInstrumentatorForDaikonMain;
 
@@ -20,6 +27,7 @@ import soot.Body;
 import soot.Local;
 import soot.Scene;
 import soot.SootClass;
+import soot.Unit;
 import soot.Value;
 import soot.jimple.IfStmt;
 import soot.jimple.InstanceFieldRef;
@@ -30,6 +38,9 @@ import soot.toolkits.graph.BlockGraph;
 import soot.toolkits.graph.ClassicCompleteBlockGraph;
 import soot.toolkits.graph.CompleteUnitGraph;
 import soot.toolkits.graph.DominatorsFinder;
+import soot.toolkits.graph.ExceptionalUnitGraph;
+import soot.toolkits.graph.MHGDominatorsFinder;
+import soot.toolkits.graph.UnitGraph;
 import soot.toolkits.scalar.FlowSet;
 import soot.util.Chain;
 
@@ -72,6 +83,8 @@ public class InductivesFinder extends LoopFinder implements InductivesFilter{
 	 * Lo que yo deberia hacer es...guardar los parametros relevantes aparte? como hago eso?
 	 * puedo ir guardando aparte cada vez que aparece un field de parametro que es "inductivo"
 	 */
+	
+	
 	@Override
 	protected void internalTransform(Body body, String arg1, Map arg2) {
 		
@@ -81,6 +94,15 @@ public class InductivesFinder extends LoopFinder implements InductivesFilter{
 
 			if(!ProgramInstrumentatorForDaikonMain.isInCG(body.getMethod()))
 				return;
+			
+		    //Map<Stmt, List<Stmt>> loops = new HashMap<Stmt, List<Stmt>>();
+		    
+			/*if(super.getLoops(body) != null && super.getLoops(body).size() == 0)
+			{	
+				throw new NotImplementedException();
+				//aca esta pasando algo raro. No busca los loops de mainParameters :(
+				//dice que es []
+			}*/
 			super.internalTransform(body, arg1, arg2);
 			SootClass sClass = body.getMethod().getDeclaringClass();
 			
@@ -106,8 +128,13 @@ public class InductivesFinder extends LoopFinder implements InductivesFilter{
 			}
 			
 			GlobalLive gl = new GlobalLive(unitGraph);
+			//Collection loops = super.loops();
 			
-			NewInductivesAnalysis iAna  = new NewInductivesAnalysis(unitGraph,this.getLoops(body),gl, blockGraph);
+
+			NewInductivesAnalysis iAna  = new NewInductivesAnalysis(unitGraph,
+					//this.getLoops(body),
+					loops(),					
+					gl, blockGraph);
 			
 			System.out.println("Metodo:"+body.getMethod().getSignature());
 			
@@ -176,7 +203,7 @@ public class InductivesFinder extends LoopFinder implements InductivesFilter{
 			Stmt loopHeader = null;
 			
 			
-			Collection loops =  this.getLoops(body);
+			Collection loops =  loops();//this.getLoops(body);
 //			for (Iterator iter = loops.keySet().iterator(); iter.hasNext();) {
 //				Stmt header = (Stmt) iter.next();
 //				List loopStmts= (List)loops.get(header);
