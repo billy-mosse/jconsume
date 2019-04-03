@@ -1,5 +1,6 @@
 package ar.uba.dc.analysis.escape.summary;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -209,10 +210,17 @@ public class DefaultInterproceduralMapper implements InterproceduralMapper {
 				Node n2 = e12.getTarget();
 				if(e12.getField().equals("?") && n2.isOmega())
 				{
+					LinkedList<Node> sourceNodes = new LinkedList<Node>();
+					ArrayList<Node> processedNodes = new ArrayList<Node>();
+					ArrayList<Node> usedSourceNodes = new ArrayList<Node>();
+					sourceNodes.addAll(mu.get(n2));
 					for(Node n3: mu.get(n1))
-					{
-						for(Node n4: mu.get(n2))
+					{						
+						while(!sourceNodes.isEmpty())
 						{
+							//para meterse en profundidad.
+							Node n4 = sourceNodes.pop();
+							usedSourceNodes.add(n4);
 							for(Edge e45 : callerGraph.getEdgesOutOf(n4))
 							{
 								//esta bien que sean outside edges tambien? creo que si.
@@ -223,6 +231,13 @@ public class DefaultInterproceduralMapper implements InterproceduralMapper {
 								if(!contains)
 								{
 									callerGraph.relate(n3, "?", e45.getTarget(), e45.isInside());
+									processedNodes.add(e45.getTarget());
+									
+									if(!usedSourceNodes.contains(e45.getTarget()))
+									{
+										sourceNodes.add(e45.getTarget());
+									}
+									
 									hasChanged = true;
 								}
 							}
