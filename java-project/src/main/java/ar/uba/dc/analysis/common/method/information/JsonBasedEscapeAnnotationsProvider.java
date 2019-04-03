@@ -194,6 +194,19 @@ public class JsonBasedEscapeAnnotationsProvider{
 		
 	}	*/
 	
+	
+	
+	private static String getNameFromSignature(String signature)
+	{
+		//<ar.uba.dc.annotations.Demo03: ar.uba.dc.annotations.MyInteger doSomething(ar.uba.dc.annotations.MyInteger)>
+		String[] parts = signature.split(" ");
+		String className = parts[0];
+		className = className.substring(1, className.length()-1);
+		String name = parts[2].substring(0, parts[2].indexOf("("));
+		
+		return className + "." + name;
+	}
+	
 	public static class DefaultEscapeAnnotationDeserializer implements JsonDeserializer<DefaultEscapeAnnotation> 
 	{
 	    
@@ -208,8 +221,7 @@ public class JsonBasedEscapeAnnotationsProvider{
 			Boolean fresh = jobject.get("fresh").getAsBoolean();
 			annotation.setFresh(fresh);
 			
-			String name = jobject.get("name").getAsString();
-			annotation.setName(name);
+		
 			
 			String maxLive= jobject.get("maxLive").getAsString();
 			annotation.setMaxLiveFromString(maxLive);			
@@ -218,11 +230,14 @@ public class JsonBasedEscapeAnnotationsProvider{
 			annotation.setEscapeFromString(escape);
 			
 
-			annotation.setSignature(jobject.get("signature").getAsString());	
+			String signature = jobject.get("signature").getAsString();
+			annotation.setSignature(signature);
 			
-			DomainSet requirements = context.deserialize(jobject.get("requirements"), DomainSet.class);
+			annotation.setName(getNameFromSignature(signature));
 			
-			annotation.setMethodRequirements(requirements);			
+			//DomainSet requirements = context.deserialize(jobject.get("requirements"), DomainSet.class);
+			
+			annotation.setMethodRequirements(new DomainSet());			
 			
 			
 			Integer[] writableParameters = context.deserialize(jobject.get("writableParameters"), Integer[].class);
