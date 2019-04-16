@@ -98,7 +98,7 @@ sed -i -e 's/#/_/g' $PROJECT_FOLDER/out/$FULLNAMETEST/$FULLNAMETEST.cc
 sed -i -e 's/#/_/g' $PROJECT_FOLDER/out/$FULLNAMETEST/$FULLNAMETEST.indFake
 
 
-javac -g $FULLNAMETEST/$MYPATH/InstrumentedMethod.java || die "Problema en Phase 2"
+find $PROJECT_FOLDER/out/$FULLNAMETEST -name InstrumentedMethod.java -exec javac -g {} \;
 
 
 echo Phase 3: Daikon for generating invariants
