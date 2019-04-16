@@ -40,11 +40,12 @@ ADD java-project/ii $JCONSUME_PATH/ii
 
 ADD java-project/docker_memory.sh $JCONSUME_PATH/out/memory.sh
 ADD java-project/barvinok.sh $JCONSUME_PATH/barvinok.sh
+
 ADD java-project/invariants $JCONSUME_PATH/invariants
 RUN mkdir $JCONSUME_PATH/out/daikon-output
 ADD java-project/results $JCONSUME_PATH/results
 ADD java-project/bin $JCONSUME_PATH/bin
-RUN mv $JCONSUME_PATH/bin/docker_barvinok.sh $JCONSUME_PATH/bin/barvinok.sh
+#RUN mv $JCONSUME_PATH/bin/docker_barvinok.sh $JCONSUME_PATH/bin/barvinok.sh
 
 #Hack
 RUN mkdir -p $JCONSUME_PATH/target/classes
@@ -82,3 +83,5 @@ ADD java-project/target/classes/ar/uba/dc/analysis/automaticinvariants/VarTest.c
 
 #no se si esto es realmente necesario.
 ADD java-project/site $JCONSUME_PATH/
+
+ADD java-project/bin/docker_barvinok.sh $JCONSUME_PATH/bin/barvinok.sh
