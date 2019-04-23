@@ -335,7 +335,7 @@ public class DefaultInterproceduralMapper implements InterproceduralMapper {
 						if(n23.getField().equals("?"))
 						{
 							Node n3 = n23.getTarget();
-							if(!n3.isInside())
+							if(!n3.isInside() && !n3.isOmega())
 							{
 								n3.convertToOmegaNode();
 								hasChanged = true;
