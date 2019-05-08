@@ -13,7 +13,7 @@ public class ThisNode extends ParamNode {
 
 	public static ThisNode node = new ThisNode();
 	
-	private ThisNode() { 
+	public ThisNode() { 
     	super(-1); 
     }
 

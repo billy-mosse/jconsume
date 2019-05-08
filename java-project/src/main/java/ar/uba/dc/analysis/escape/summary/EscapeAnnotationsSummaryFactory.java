@@ -13,6 +13,7 @@ import ar.uba.dc.analysis.escape.graph.Edge;
 import ar.uba.dc.analysis.escape.graph.Node;
 import ar.uba.dc.analysis.escape.graph.node.MethodNode;
 import ar.uba.dc.analysis.escape.graph.node.ParamNode;
+import ar.uba.dc.analysis.escape.graph.node.ThisNode;
 
 public class EscapeAnnotationsSummaryFactory {
 	
@@ -41,6 +42,15 @@ public class EscapeAnnotationsSummaryFactory {
 		//PARTE DE ANOTACION WRITE	
 
 		List<ParamNode> writableParameterNodes = new ArrayList<ParamNode>();
+		
+		
+		//this node es el 0
+		ThisNode t = new ThisNode();
+		if(annotation.thisIsWritable())
+			writableParameterNodes.add(t);
+		
+		summary.add(t);
+		
 		for(int i = 0; i < method.getParameterCount(); i++)
 		{
 			//todos deberian ser omega nodes porque no tenemos control sobre ellos?

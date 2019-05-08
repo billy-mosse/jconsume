@@ -272,6 +272,8 @@ public class PaperCallAnalyzer {
 		RichPaperPointsToHeapPartition richHpCallee = (RichPaperPointsToHeapPartition) hpCallee;
 		
 		if (richHpCallee.getNode().isParam()) {
+			//no entiendo
+			//ver figura 5 del paper de iwako.
 			return null;
 		}
 		

@@ -19,6 +19,8 @@ public class DefaultEscapeAnnotation implements EscapeAnnotation, Comparable<Def
 	protected ListDIParameters relevantParameters;
 	protected ListDIParameters parameters;
 	
+	protected boolean thisIsWritable;
+	
 	protected DomainSet methodRequirements;
 	
 	public DomainSet getMethodRequirements() {
@@ -153,5 +155,15 @@ public class DefaultEscapeAnnotation implements EscapeAnnotation, Comparable<Def
 	public boolean isArtificial() {
 		return getIsArtificial();
 	}
+	
+	
+	public boolean thisIsWritable()
+	{
+		return this.thisIsWritable;
+	}
 
+	public void setThisIsWritable(boolean thisIsWritable)
+	{
+		this.thisIsWritable = thisIsWritable;
+	}
 }
