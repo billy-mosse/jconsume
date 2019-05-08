@@ -3,6 +3,7 @@ package ar.uba.dc.analysis.escape.summary.io.writer;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
@@ -16,6 +17,7 @@ import ar.uba.dc.analysis.common.SummaryWriter;
 import ar.uba.dc.analysis.escape.EscapeSummary;
 import ar.uba.dc.analysis.escape.graph.Edge;
 import ar.uba.dc.analysis.escape.graph.Node;
+import ar.uba.dc.analysis.escape.graph.node.StmtNode;
 import ar.uba.dc.util.ConsoleException;
 import ar.uba.dc.util.ConsoleUtils;
 import ar.uba.dc.util.location.MethodLocationStrategy;
@@ -49,15 +51,30 @@ public class GraphvizWriter implements SummaryWriter<EscapeSummary> {
 		plot(dot, summary);
 	}
 	
+	
+	
+	
 	private void fillDotGraph(EscapeSummary summary, DotGraph out) {
 		Map<Node, String> nodeId = new HashMap<Node, String>();
 		int id = 0;
+		
+		Set<Node> escaping = summary.getEscaping();
 
 		// add nodes
 		for (Node n : summary.getNodes()) {
 			String label = "N" + "_" + id;
+			
+			String label_to_show = n.toString();
+			
+			if(n.getClass().equals(StmtNode.class))
+			{
+				StmtNode stmtNode = (StmtNode) n;
+				label_to_show += "(" + stmtNode.getLineNumber() + ")";
+			}
+				
+			
 			DotGraphNode node = out.drawNode(label);
-			node.setLabel(n.toString());
+			node.setLabel(label_to_show);
 			if (!n.isInside()) {
 				node.setStyle("dashed");
 				node.setAttribute("color", "gray50");
@@ -65,6 +82,11 @@ public class GraphvizWriter implements SummaryWriter<EscapeSummary> {
 			if (summary.escapeGlobal(n)) {
 				node.setAttribute("fontcolor", "red");
 			}
+			//hack
+			if(escaping.contains(n))
+				node.setAttribute("fontcolor", "blue");
+
+			
 			nodeId.put(n, label);
 			id++;
 		}

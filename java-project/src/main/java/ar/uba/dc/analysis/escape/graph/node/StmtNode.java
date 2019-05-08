@@ -2,6 +2,8 @@ package ar.uba.dc.analysis.escape.graph.node;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -13,6 +15,8 @@ import soot.Value;
 import soot.jimple.AssignStmt;
 import soot.jimple.NewExpr;
 import soot.jimple.Stmt;
+import soot.tagkit.LineNumberTag;
+import soot.tagkit.Tag;
 import ar.uba.dc.analysis.escape.graph.Node;
 import ar.uba.dc.soot.StatementId;
 import ar.uba.dc.util.collections.CircularStack;
@@ -54,10 +58,24 @@ public class StmtNode implements Node {
     /** contexto del nodo. Es el stack con los {@link Stmt} de soot que representan los calls por los que fue pasando el nodo desde su creacion. */
     private CircularStack<StatementId> context;
     
+    private int lineNumber;
+    
     private StmtNode(StatementId id, boolean inside, CircularStack<StatementId> context) {
     	this.id = id;
     	this.inside = inside;
     	this.context = context;
+    	
+    	
+    	int lineNumber = -1;
+    	for (Iterator j = id.getId().getTags().iterator(); j.hasNext(); ) {
+		    Tag tag = (Tag)j.next();
+		    if (tag instanceof LineNumberTag) {		    	
+		    	lineNumber = ((LineNumberTag) tag).getLineNumber();
+		    }    	
+    	}
+    	
+    	this.lineNumber = lineNumber;
+    	
 		if (!nMap.containsKey(id)) { 
 			nMap.put(id, new Integer(n)); 
 			n++; 
@@ -77,7 +95,15 @@ public class StmtNode implements Node {
 		
     }
     
-    public StmtNode(StatementId id, boolean inside, int sensitivity) {
+    public int getLineNumber() {
+		return lineNumber;
+	}
+
+	public void setLineNumber(int lineNumber) {
+		this.lineNumber = lineNumber;
+	}
+
+	public StmtNode(StatementId id, boolean inside, int sensitivity) {
     	this(id, inside, new CircularStack<StatementId>(sensitivity));
     }
     

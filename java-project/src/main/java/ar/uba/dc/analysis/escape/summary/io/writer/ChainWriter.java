@@ -19,6 +19,7 @@ public class ChainWriter implements SummaryWriter<EscapeSummary>, Container<Summ
 
 	public void write(EscapeSummary summary) {
 		for (SummaryWriter<EscapeSummary> writer : writers) {
+
 			writer.write(summary);
 		}
 	}
