@@ -178,11 +178,11 @@ public class EscapeSummary {
 		}
 		
 		//Si nodeLeft apunta via "?" a otros nodos, se hace lo mismo con esos nodos
-		for(Edge eFromNodeLeft : this.getEdgesOutOf(leftNode))
+		for(Edge eFromLeftNode : this.getEdgesOutOf(leftNode))
 		{
-			if(eFromNodeLeft.getField().equals("?"))
+			if(eFromLeftNode.getField().equals("?"))
 			{
-				Node n = eFromNodeLeft.getTarget();
+				Node n = eFromLeftNode.getTarget();
 				if(!n.equals(leftNode))
 					mutateField(n, field);
 			}

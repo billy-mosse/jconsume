@@ -288,7 +288,6 @@ public class IntermediateLanguageRepresentationBuilder {
 					line.setIrName("new");
 					line.setIrClass(""); //I dont care
 					line.magicalStmtName = "";
-					line.setConsumption(summary.getEscape());
 					invocation.setIsReturnRefLikeType(false);
 					List<Invocation> invocations = new ArrayList<Invocation>();
 					invocation.setHeapPartition(non_escaping);
