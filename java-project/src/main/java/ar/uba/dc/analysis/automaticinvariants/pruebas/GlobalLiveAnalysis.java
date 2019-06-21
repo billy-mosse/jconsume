@@ -177,51 +177,48 @@ public class GlobalLiveAnalysis  extends BackwardFlowAnalysis 	{
 					Chain unitsCallee = bCallee.getUnits();
 					
 					
-					//...esto va a hacer que se rompa todo.
-					if(!ProgramInstrumentatorForDaikonMain.isAnnotated(callee.getDeclaringClass().toString() + "." + callee.getName()))
+					if(glvCallee==null)
 					{
-						if(glvCallee==null)
+						if(!GLVMain.alreadyAnalyzedMethods.contains(callee))
 						{
-							if(!GLVMain.alreadyAnalyzedMethods.contains(callee))
+							GLVMain.alreadyAnalyzedMethods.add(callee);
+							if(!GLVMain.stack.contains(callee))
 							{
-								GLVMain.alreadyAnalyzedMethods.add(callee);
-								if(!GLVMain.stack.contains(callee))
-								{
-									GLVMain.stack.push(callee);
-									glvCallee = new GlobalLive(new CompleteUnitGraph(bCallee));
-									GLVMain.stack.pop();
-								}
-								else return retSet; 
+								GLVMain.stack.push(callee);
+								glvCallee = new GlobalLive(new CompleteUnitGraph(bCallee));
+								GLVMain.stack.pop();
 							}
-							else 
-								return retSet;
+							else return retSet; 
 						}
-					
-						if(unitsCallee!=null)
+						else 
+							return retSet;
+					}
+				
+					if(unitsCallee!=null)
+					{
+						// System.out.println(unitsCallee);
+						Unit firstStmt = (Unit)unitsCallee.getFirst();
+						List liveCallee = null;
+						
+						
+						liveCallee= glvCallee.getLiveLocalsBefore(firstStmt);
+						
+						
+						
+						if(liveCallee!=null)
 						{
-							// System.out.println(unitsCallee);
-							Unit firstStmt = (Unit)unitsCallee.getFirst();
-							List liveCallee = null;
-							
-							
-							liveCallee= glvCallee.getLiveLocalsBefore(firstStmt);
-							
-							
-							
-							if(liveCallee!=null)
+							// System.out.println(ie+":"+liveCallee);
+							if(thisRef!=null)
+								analyzeParameter(retSet, glvCallee, liveCallee, glvCallee.getThisRef(), thisRef);
+							for(int i=0;i<ie.getArgCount();i++)
 							{
-								// System.out.println(ie+":"+liveCallee);
-								if(thisRef!=null)
-									analyzeParameter(retSet, glvCallee, liveCallee, glvCallee.getThisRef(), thisRef);
-								for(int i=0;i<ie.getArgCount();i++)
-								{
-									Value arg = ie.getArg(i);
-									Value parameter = (Value)glvCallee.getParameters().get(i);
-									analyzeParameter(retSet, glvCallee, liveCallee, parameter, arg);
-									
-								}
+								Value arg = ie.getArg(i);
+								Value parameter = (Value)glvCallee.getParameters().get(i);
+								analyzeParameter(retSet, glvCallee, liveCallee, parameter, arg);
+								
 							}
 						}
+						
 					}
 				}
 			}
