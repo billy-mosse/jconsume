@@ -107,6 +107,8 @@ public class HtmlPaperReportWriter implements ReportWriter<String, PaperMemorySu
             BufferedWriter bwr = new BufferedWriter
             	    (new OutputStreamWriter(new FileOutputStream(srcFile),"UTF-8"));
             
+            bwr.write("[");
+            
             for (Entry<String, SortedSet<PaperMemorySummary>> item : ds.getClassIndex().entrySet()) {
     		    String className = item.getKey();
     		    JsonClassSummary jsonClassSummary = new JsonClassSummary(className);
@@ -125,6 +127,8 @@ public class HtmlPaperReportWriter implements ReportWriter<String, PaperMemorySu
     		    String s =  StringEscapeUtils.unescapeJava(jsonWriter.gson.toJson(jsonClassSummary)); 
     	        bwr.write(s);
     		}     
+            
+            bwr.write("]");
             bwr.flush();
             bwr.close();
 		}
