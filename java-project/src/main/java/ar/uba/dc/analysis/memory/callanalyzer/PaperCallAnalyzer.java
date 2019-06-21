@@ -98,7 +98,6 @@ public class PaperCallAnalyzer {
 				//Obtengo el rsd del callee asociado a ese nodo
 				ParametricExpression rsdFromPartition = invocationSummary.getResidual(calleePartition);
 				
-				
 				if(rsdFromPartition == null)
 				{
 					log.debug(invocation.toString());

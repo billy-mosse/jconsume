@@ -60,6 +60,7 @@ public class StmtNode implements Node {
     
     private int lineNumber;
     
+    
     private StmtNode(StatementId id, boolean inside, CircularStack<StatementId> context) {
     	this.id = id;
     	this.inside = inside;

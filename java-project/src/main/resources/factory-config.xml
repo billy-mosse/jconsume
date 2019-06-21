@@ -217,7 +217,7 @@
 						<memReqSummarizer 	config-class="ar.uba.dc.analysis.memory.summary.MemReqSummarizer" config-factory="custom" config-ref-to="analysis.memory.memreq-summarizer" />
 						<escapeLocationStrategy config-class="ar.uba.dc.util.location.method.${escape.summary.output.layout}LocationStrategy" extension=".gif" basePath="${escape.summary.output.dir}" />
 						<memoryLocationStrategy config-class="ar.uba.dc.util.location.method.${memory.summary.output.layout}LocationStrategy" extension=".gif" basePath="${memory.summary.output.dir}" />
-						<reportEscapeLocationStrategy config-class="ar.uba.dc.util.location.method.FolderLocationStrategy" extension=".gif" basePath="${memory.report.output.dir}/images/escape" />
+						<reportEscapeLocationStrategy config-class="ar.uba.dc.util.location.method.FolderLocationStrategy" extension=".gif" basePath="${user.dir}/images/escape" />
 						<reportMemoryLocationStrategy config-class="ar.uba.dc.util.location.method.FolderLocationStrategy" extension=".gif" basePath="${memory.report.output.dir}/images/memory" />
 					</interpreter>
 				</reportWriter>
@@ -259,7 +259,7 @@
 									<memReqSummarizer config-class="ar.uba.dc.analysis.memory.summary.PaperMemReqSummarizer" config-factory="custom" config-ref-to="analysis.memory.paper-memreq-summarizer" />
 									<escapeLocationStrategy config-class="ar.uba.dc.util.location.method.${escape.summary.output.layout}LocationStrategy" extension=".gif" basePath="${escape.summary.output.dir}" />
 									<memoryLocationStrategy config-class="ar.uba.dc.util.location.method.${memory.summary.output.layout}LocationStrategy" extension=".gif" basePath="${memory.summary.output.dir}" />
-									<reportEscapeLocationStrategy config-class="ar.uba.dc.util.location.method.FolderLocationStrategy" extension=".gif" basePath="${memory.report.output.dir}/images/escape" />
+									<reportEscapeLocationStrategy config-class="ar.uba.dc.util.location.method.FolderLocationStrategy" extension=".gif" basePath="${user.dir}/images/escape" />
 									<reportMemoryLocationStrategy config-class="ar.uba.dc.util.location.method.FolderLocationStrategy" extension=".gif" basePath="${memory.report.output.dir}/images/memory" />
 								</interpreter>
 							</reportWriter>

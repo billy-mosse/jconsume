@@ -75,7 +75,7 @@ public class DefaultSummaryApplier implements SummaryApplier {
 			}
 		}				
 
-		if (!combineCapturedNodes) {
+ 		if (!combineCapturedNodes) {
 			escaping = summary.getEscaping();
 			for (Node calleeNode : summary.getNodes()) {
 				if (!escaping.contains(calleeNode)) {

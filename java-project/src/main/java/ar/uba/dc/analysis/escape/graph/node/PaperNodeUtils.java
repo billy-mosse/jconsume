@@ -43,6 +43,11 @@ public class PaperNodeUtils {
 			GlobalNode gNode = (GlobalNode) origNode;
 			return new PaperGlobalNode();
 		}
+		else if(origNode.getClass() == ArtificialNode.class)
+		{
+			ArtificialNode aNode = (ArtificialNode) origNode;
+			return new PaperArtificialNode(aNode.id, aNode.methodName);
+		}		
 		else
 		{
 			throw new NotImplementedException(origNode.getClass());

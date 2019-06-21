@@ -42,6 +42,7 @@ import ar.uba.dc.analysis.memory.expression.ParametricExpressionUtils;
 import ar.uba.dc.analysis.memory.impl.BarvinokCalculatorAdapter;
 import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartition;
 import ar.uba.dc.analysis.memory.impl.summary.PaperPointsToHeapPartitionBinding;
+import ar.uba.dc.analysis.memory.impl.summary.PointsToHeapPartition;
 import ar.uba.dc.analysis.memory.impl.summary.RichPaperPointsToHeapPartition;
 import ar.uba.dc.analysis.memory.impl.summary.SimplePaperPointsToHeapPartition;
 import ar.uba.dc.barvinok.BarvinokCalculator;
@@ -186,13 +187,14 @@ public class IntermediateLanguageRepresentationBuilder {
 				
 				IntermediateRepresentationMethodBody body = new IntermediateRepresentationMethodBody();
 
-				//I add a NEW associated to a hp for every escaping object 
+				//I add a NEW associated to a hp for every escaping object 			
 				
 				
 				
 				if(m.getEscapeNodes().size() > 0)
 				{					
 					PaperPointsToHeapPartition hp_method = null;
+					List<PaperPointsToHeapPartition> hp_params = new ArrayList<PaperPointsToHeapPartition>();
 					Iterator<PaperPointsToHeapPartition> it = m.getEscapeNodes().iterator();
 					
 					while(it.hasNext())
@@ -208,7 +210,15 @@ public class IntermediateLanguageRepresentationBuilder {
 							hp_method = hp_escape;
 							hp_method.setNumber(i);
 							i +=1;
-							break;
+							//saco el break para el experimento
+							//break;
+						}
+						
+						if(hp_escape.toString().contains("A_0"))
+						{
+							hp_escape.setNumber(i);
+							hp_params.add(hp_escape);
+							i = i+1;
 						}
 						
 						
@@ -217,8 +227,9 @@ public class IntermediateLanguageRepresentationBuilder {
 					{
 						//creo escape NEWs y los asigno a un solo nodo que escapa.
 						escapeNodes.add(hp_method);
-											
-							
+						
+						
+						
 						
 						Invocation invocation = new Invocation();
 						LineWithConsumption line = new LineWithConsumption();
@@ -250,36 +261,85 @@ public class IntermediateLanguageRepresentationBuilder {
 						
 						invocations.add(invocation);
 						line.setInvocations(invocations);
-					
 						
-						body.addLine(line);
+						//////////////////////experimento
+						for(PaperPointsToHeapPartition hp_param : hp_params)
+						{
+							escapeNodes.add(hp_param);
+
+							body.addLine(line);
+							
+							
+							Invocation invocation2 = new Invocation();
+							LineWithConsumption line2 = new LineWithConsumption();
+							
+							
+							ParametricExpression esc = summary.getEscape();
+							line2.setConsumption(summary.getEscape());
+							//line.setInvariant(new DomainSet());
+							
+							List<Invocation> invocations2 = new ArrayList<Invocation>();
+
+							line2.setName("new");
+							line2.setIrName("new");
+							
+							line2.setIrClass(""); //I dont care
+							line2.magicalStmtName = "";
+							invocation2.setIsReturnRefLikeType(false);
+							invocation2.setClass_called("");
+							invocation2.setCalled_implementation_signature("");
+							invocation2.setParameters(new HashSet());
+							invocation2.setHpBindings(new HashSet());
+							invocation2.setNameCalled("");
+							
+							///////por donde escapa el objeto creado por el NEW? Por ejemplo, si hay varios parametros....
+							//creo que a partir de por donde escapa el return value....deberia....hacer que apunte a eso?
+							//por ejemplo, si escapa a traves de M_0, ese es el SH...pero que pasa si escapa a traves de un parametro?
+							//ademas un parametro es un outside node y el paper dice que los subheap descriptors son todos inside nodes. mhm.
+							invocation2.setHeapPartition(hp_param);
+							invocations2.add(invocation2);
+							//////////////////////
+								
+							line2.setInvocations(invocations2);
+						
+							
+							body.addLine(line2);
+						}
+							
 						
 						m.setEscapeNodes(escapeNodes);	
 						nodes.addAll(escapeNodes);
 					}	
 				}
+				
+				
+				
+				
 				if(m.getNodes().size() > 0)
 				{				
 					//me parece que deberia crear un inside node para simular cuantos objetos escapan
 					//y por donde.
-					PaperNode n = new PaperStmtNode(0,  true, new CircularStack<String>());
+					
+					CircularStack<String> context = new CircularStack<String>();
+					context.push(m.getName());
+					PaperNode n = new PaperStmtNode(0, true, context);
 					PaperPointsToHeapPartition non_escaping = new RichPaperPointsToHeapPartition(n, m.getName());
-	
 				
 					//I add a NEW associated to a hp for every other object
 				
 					//PaperPointsToHeapPartition hp = new RichPaperPointsToHeapPartition(j);
 					
-					non_escaping.setNumber(1);
+					non_escaping.setNumber(i);
 					Invocation invocation = new Invocation();
 					LineWithConsumption line = new LineWithConsumption();
 					
-					
-
 					//esta bien que lo que anote sea maxlive y escape,
 					//pero el nodo que tengo que crear aca tiene que tener la resta entre maxlive y rsd
-					
+
 					ParametricExpression maxLiveMinusEscape = barvinokCalculatorAdapter.substract(summary.getMaxLive(), summary.getEscape());
+					
+					//HACK PARA LA DEMO TODO SACAR
+					maxLiveMinusEscape = barvinokCalculatorAdapter.substract(maxLiveMinusEscape, summary.getEscape());
 					
 					line.setConsumption(maxLiveMinusEscape);
 					line.setInvariant(new DomainSet());

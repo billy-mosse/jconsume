@@ -11,8 +11,10 @@ import soot.SootMethod;
 import ar.uba.dc.analysis.escape.EscapeSummary;
 import ar.uba.dc.analysis.escape.graph.Edge;
 import ar.uba.dc.analysis.escape.graph.Node;
+import ar.uba.dc.analysis.escape.graph.node.ArtificialNode;
 import ar.uba.dc.analysis.escape.graph.node.MethodNode;
 import ar.uba.dc.analysis.escape.graph.node.ParamNode;
+import ar.uba.dc.analysis.escape.graph.node.StmtNode;
 import ar.uba.dc.analysis.escape.graph.node.ThisNode;
 
 public class EscapeAnnotationsSummaryFactory {
@@ -20,6 +22,11 @@ public class EscapeAnnotationsSummaryFactory {
 	private static int sensitivity = -1;
 	private static Log log = LogFactory.getLog(EscapeAnnotationsSummaryFactory.class);
 	
+	
+	private boolean isUnreachable(ParamNode p, EscapeAnnotation annotation)
+	{
+		return annotation.getUnreachables().contains(p.getIndex());
+	}
 	public EscapeSummary buildPTG(SootMethod method, EscapeAnnotation annotation)
 	{
 		//TODO: que pasa si this es tambien parametro?
@@ -28,8 +35,11 @@ public class EscapeAnnotationsSummaryFactory {
 		summary.setArtificial(true);
 		//boolean isOmega = var.contains("Fresh");
 		
+		
+		
+		//aca es donde deberiamos poner por donde escapan los objetos.
 		Node n = null;
-		if(annotation.isFresh()){				
+		if(!annotation.getType().equals("nonFresh")){				
 			if (method.getReturnType() instanceof RefLikeType) {				
 				//el tercer
 				//es un omega node
@@ -38,6 +48,8 @@ public class EscapeAnnotationsSummaryFactory {
 				summary.add(n);
 			}
 		}
+		
+		
 	
 		//PARTE DE ANOTACION WRITE	
 
@@ -46,10 +58,16 @@ public class EscapeAnnotationsSummaryFactory {
 		
 		//this node es el 0
 		ThisNode t = new ThisNode();
-		if(annotation.thisIsWritable())
-			writableParameterNodes.add(t);
-		
-		summary.add(t);
+		if(!method.isStatic())
+		{
+			if(annotation.thisIsWritable())
+				writableParameterNodes.add(t);
+			
+			if(annotation.getType().equals("fresh"))
+				summary.relate(n, "?", t, true);
+	
+				summary.add(t);
+		}
 		
 		for(int i = 0; i < method.getParameterCount(); i++)
 		{
@@ -57,9 +75,16 @@ public class EscapeAnnotationsSummaryFactory {
 			//igual no afecta si no les llegan edges.
 			ParamNode p = new ParamNode(i, true);
 			
+			if(i==0)
+			{
+				ArtificialNode s = new ArtificialNode(i, method.getName());
+				summary.add(s);
+				summary.relate(p, "?", s, true);
+			}
+			
+			
 			if(annotation.isWritableParameter(i))
 				writableParameterNodes.add(p);
-			
 			
 			//que onda los mutated?
 			
@@ -67,20 +92,25 @@ public class EscapeAnnotationsSummaryFactory {
 			summary.add(p);
 			
 			//no se si hace falta crear los local edges
-			if(annotation.isFresh())
+			if(annotation.getType().equals("fresh"))
 			{
 				//si es fresh el nodo, que es un inside node,
 				//puede acceder a todos los parametros.
 				//esto hace que una variable muerta de fuera del metodo pueda ser atrapada por el nodo que se retorna
-				if(n != null)
+				if(n != null && !isUnreachable(p, annotation))
 					summary.relate(n, "?", p, true);
+				
+				
 			}
 			else
 			{
-				//el return puede ser cualquier parametro				
-				//TODO: chequear tipos?
-				if(method.getReturnType() instanceof RefLikeType)
-					summary.addReturned(p);
+				if(annotation.getType().equals("nonFresh"))
+				{
+					//el return puede ser cualquier parametro
+					//TODO: chequear tipos?
+					if(method.getReturnType() instanceof RefLikeType)
+						summary.addReturned(p);
+				}
 			}
 		}
 
@@ -95,8 +125,9 @@ public class EscapeAnnotationsSummaryFactory {
 			for(Node p : summary.getParameterNodes())
 			{
 				//Edge e = new Edge(wp, "?", p, true);
-				
-				summary.relate(wp, "?", p, true);
+				ParamNode pp = (ParamNode) p;
+				if(!isUnreachable(pp, annotation))
+					summary.relate(wp, "?", p, true);
 				//summary.getEdgesOutOf(wp).add(e);
 				
 			}
@@ -105,6 +136,7 @@ public class EscapeAnnotationsSummaryFactory {
 			for(Node r : summary.getReturnedNodes())
 			{
 				//Edge e = new Edge(wp, "?", r, true);
+				
 				summary.relate(wp,"?",r, true);
 			}			
 		}

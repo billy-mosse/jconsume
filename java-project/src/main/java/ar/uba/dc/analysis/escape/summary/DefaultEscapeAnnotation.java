@@ -7,6 +7,7 @@ import org.apache.commons.lang.NotImplementedException;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.DIParameter;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.ListDIParameters;
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.SimpleDIParameter;
+import ar.uba.dc.analysis.escape.graph.node.ParamNode;
 import ar.uba.dc.analysis.memory.expression.ParametricExpression;
 import ar.uba.dc.analysis.memory.impl.BarvinokParametricExpression;
 import ar.uba.dc.barvinok.expression.DomainSet;
@@ -14,10 +15,11 @@ import ar.uba.dc.barvinok.expression.DomainSet;
 public class DefaultEscapeAnnotation implements EscapeAnnotation, Comparable<DefaultEscapeAnnotation>{
 	
 	protected String name;
-	protected boolean fresh;
+	protected String type;//Fresh, wFresh, nonFresh
 	protected String signature;
 	protected ListDIParameters relevantParameters;
 	protected ListDIParameters parameters;
+	
 	
 	protected boolean thisIsWritable;
 	
@@ -63,6 +65,7 @@ public class DefaultEscapeAnnotation implements EscapeAnnotation, Comparable<Def
 	}
 
 	protected List<Integer> writableParameters;
+	protected List<Integer> unreachables;
 	
 	@Override
 	public List<Integer> getWritableParameters() {
@@ -73,17 +76,17 @@ public class DefaultEscapeAnnotation implements EscapeAnnotation, Comparable<Def
 		this.writableParameters = writableParameters;
 	}
 
-	public void setFresh(boolean fresh) {
-		this.fresh = fresh;
+	public void setType(String fresh) {
+		this.type = fresh;
 	}
 	
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	public boolean isFresh()
+	public String getType()
 	{
-		return fresh;
+		return type;
 	}
 	
 	//La anotacion pure equivale a que no haya writable parameters. Es totalmente redundante.
@@ -166,4 +169,15 @@ public class DefaultEscapeAnnotation implements EscapeAnnotation, Comparable<Def
 	{
 		this.thisIsWritable = thisIsWritable;
 	}
+
+	@Override
+	public List<Integer> getUnreachables() {
+		return this.unreachables;
+	}
+	
+	public void setUnreachables(List<Integer> unreachables)
+	{
+		this.unreachables = unreachables;
+	}
+
 }

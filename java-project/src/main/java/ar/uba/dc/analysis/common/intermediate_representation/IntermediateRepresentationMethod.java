@@ -283,7 +283,7 @@ public class IntermediateRepresentationMethod {
 		TreeSet<Node> allOrderedNodes = new TreeSet<Node>(allNodes);
 		TreeSet<Node> allOrderedEscapingNodes = new TreeSet<Node>(escaping);
 				
-		this.nodes = new TreeSet<PaperPointsToHeapPartition>();
+ 		this.nodes = new TreeSet<PaperPointsToHeapPartition>();
 
 		for (Node n : allOrderedNodes) {
 

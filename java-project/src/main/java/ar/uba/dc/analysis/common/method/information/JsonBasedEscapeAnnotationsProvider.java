@@ -218,13 +218,16 @@ public class JsonBasedEscapeAnnotationsProvider{
 			DefaultEscapeAnnotation annotation = new DefaultEscapeAnnotation();		
 			
 			
-			Boolean fresh = jobject.get("fresh").getAsBoolean();
-			annotation.setFresh(fresh);
+			String type2 = jobject.get("type").getAsString();
+			annotation.setType(type2);
 			
 		
-			
+
 			String maxLive= jobject.get("maxLive").getAsString();
 			annotation.setMaxLiveFromString(maxLive);			
+			
+			boolean thisIsWritable = jobject.get("thisIsWritable").getAsBoolean();
+			annotation.setThisIsWritable(thisIsWritable);			
 			
 			String escape= jobject.get("escape").getAsString();
 			annotation.setEscapeFromString(escape);
@@ -242,6 +245,10 @@ public class JsonBasedEscapeAnnotationsProvider{
 			
 			Integer[] writableParameters = context.deserialize(jobject.get("writableParameters"), Integer[].class);
 			annotation.setWritableParameters(Arrays.asList(writableParameters));
+			
+			
+			Integer[] unreachables = context.deserialize(jobject.get("unreachables"), Integer[].class);
+			annotation.setUnreachables(Arrays.asList(unreachables));
 
 			JsonArray jrelevantParams = jobject.get("relevantParameters").getAsJsonArray();
 			ListDIParameters lRelevantParams = new ListDIParameters();
@@ -254,8 +261,7 @@ public class JsonBasedEscapeAnnotationsProvider{
 				//jsonParameter.setName(name + "." + jsonParameter.getName());
 				lRelevantParams.add(jsonParameter);
 			}			
-			annotation.setRelevantParameters(lRelevantParams);
-			
+			annotation.setRelevantParameters(lRelevantParams);			
 			
 			updateParamsNames(lRelevantParams);
 			
