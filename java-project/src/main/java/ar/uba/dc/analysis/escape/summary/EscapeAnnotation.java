@@ -3,10 +3,10 @@ package ar.uba.dc.analysis.escape.summary;
 import java.util.List;
 
 import ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.parameters.ListDIParameters;
+import ar.uba.dc.analysis.escape.graph.node.ParamNode;
 import ar.uba.dc.analysis.memory.expression.ParametricExpression;
 
 public interface EscapeAnnotation{
-	public boolean isFresh();
 	
 	//La anotacion pure equivale a que no haya writable parameters. Es totalmente redundante.
 	//public boolean isPure();
@@ -30,5 +30,10 @@ public interface EscapeAnnotation{
 	
 	public ParametricExpression getEscape();
 	
+	public boolean thisIsWritable();
+
+	public List<Integer> getUnreachables();
+	
+	public String getType();
 	//public String[] getRelevantParameters();
 }
