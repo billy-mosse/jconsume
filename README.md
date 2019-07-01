@@ -263,9 +263,9 @@ You can check the json format reading this file:
 
 ```cat report.json```
 
-Here we'll present several analysis of toy examples and some of real programs (Em3d and MST).
+Here we'll present several analysis of toy examples, examples from the [original paper](https://www.sciencedirect.com/science/article/pii/S0167642313003298) and some of real world programs (Em3d and MST).
 
-Toy examples
+Examples
 --------
 
 **Ins0**
@@ -338,14 +338,41 @@ Then go again to jconsume/java-project and run the following command:
 
 This generates the memory consumption analysis. Results can be seen in java-project/results/rinard/report_ar.uba.dc.daikon.Ins4/index.html
 
-TODO: add the graph format.
+______________________________________________
+
+**Paper programs**
+
+The paper also has some simple examples. They are implemented and can be automatically analyzed; just follow the instructions:
+
+**Program 1**
+
+Go to java-project and run the following command:
+
+```./full_analysis.sh --program "ar.uba.dc.paper.Program1" --ir --memory```
+
+This generates the memory consumption analysis. Results can be seen in java-project/results/rinard/report_ar.uba.dc.paper.Program1/index.html
+
+You can also see the result of the escape analysis in java-project/images/escape. It is based on a Points to Graph analysis. For more information, check the paper.
+
+Programs 2 and 3 are similar.
+
+**Program4**
+
+For this program, we had to introduce a new parameter bounding the size of test's lists, as described by the corresponding section of the paper. In particular, we needed to annotate that the third callsite had the extra constraint l.size == maxSize, with maxSize being a new method parameter. The annotation used was the following:
+
+@InstrumentationSiteInvariantList(invariants={
+			@InstrumentationSiteInvariant(
+			isCallSite=true,
+			index=3,
+			constraints={"l.size == maxSize", "l.size >= 0"},
+		    newRelevantParameters={"maxSize"}, newInductives = {  }, newVariables = {  })}
+	)
+
+Notice that the annotation can be added to the source code. Feel free to try other annotations on your own programs.
 
 ______________________________________________
 
-There are more toy examples, under the name Ins#n ¡Explore them! We will continue to add an explain them soon.
--->
-
-______________________________________________
+**Real world programs**
 
 **MST**
 
@@ -445,43 +472,7 @@ There. Now you can run ```sh memory.sh "ar.uba.dc.jolden.em3d.Em3d"``` and you'l
 
 
 
-______________________________________________
 
-**Paper programs**
-
-The paper also has some simple examples. They are implemented and can be automatically analyzed; just follow the instructions:
-
-**Program 1**
-
-Go to java-project and run the following command:
-
-<!--```sh invariants_IM.sh "ar.uba.dc.paper.Program1" 10```
-
-This generates automatic invariants for the classes used in invariants/spec/fullreferences/
-
-Ins4 uses ListC.class and there is an inductive variable that must be removed. We are currently tweaking the inductives analysis. In the future it will output a more adjusted over approximation of inductive variables.
-
-Go to java-project/spec/fullreferences/ar/uba/dc/paper/Program1.spec and:
-
-
-
-Remove ```\_\_r1\_\_f\_\_size``` from CreationSite #0 and CallSite #0 of void "line(ar.uba.dc.paper.A[][],int)"" 
-
-
-Then go again to jconsume/java-project and run the following command:
-
-```sh memory.sh --program "ar.uba.dc.paper.Program1" --ir --memory```-->
-
-```./full_analysis.sh --program "ar.uba.dc.paper.Program1" --ir --memory```
-
-This generates the memory consumption analysis. Results can be seen in java-project/results/rinard/report_ar.uba.dc.paper.Program1/index.html
-
-**Program 2**
-
-Same as before, but change the 1 for a 2.
-
-(To be continued)
-<!--Run ```invariants_IM.sh``` with the corresponding parameters and remove ```result``` as an inductive from CreationSite #2 in Op.spec. The file is in the same directory as Program2.spec (which should have just been generated) and Program1.spec (generated before).-->
 
 
 <!-- <> Test -->
