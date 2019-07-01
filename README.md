@@ -14,9 +14,9 @@ The document is divided in several sections:
 		2.1) Maven
 		2.2) Barvinok
 		2.3) Graphviz
-	3) Project's structure (in construction)
-	4) Developed tools (in construction)
-	5) Tool configuration (in construction)
+	3) Project's structure
+	4) Developed tools
+	5) Tool configuration
 	6) Execution
 		6.1) Introduction
 		6.2) Docker!
