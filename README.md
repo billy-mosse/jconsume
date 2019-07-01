@@ -290,14 +290,9 @@ As with Ins0, just go to java-project and run the following command:
 
 ```./full_analysis.sh "ar.uba.dc.daikon.Ins1" 10```
 
-This will calculate what we call the loop invariants [TODO explain elsewhere] and then use them to calculate the memory consumption of the program.
-
 Results can be seen in java-project/results/rinard/report_ar.uba.dc.daikon.Ins1/index.html
 
-
-**Ins#N, with #N ranging from 1 to 25.**
-
-Feel free to explore them!
+More examples starting with Ins can be explored.
 
 <!--Ins3 is temporarily unavailable; descriptions for each example will be added soon. -->
 
@@ -305,38 +300,7 @@ Feel free to explore them!
 
 <!-- This generates automatic invariants for the classes used in invariants/spec/fullreferences/
 
-Ins4 uses ListC.class and there is an inductive variable that must be removed. We are currently tweaking th inductives analysis. In the future it will output a more adjusted over approximation of inductive variables.
-
-Go to java-project/spec/fullreferences/ar/uba/dc/daikon/Ins2.spec and remove ```__r0__f__elementData__f__size``` as an inductive.
-
-Then go again to jconsume/java-project and run the following command:
-
-```sh memory.sh --program "ar.uba.dc.daikon.Ins2" --ir --memory```
-
-This generates the memory consumption analysis. Results can be seen in java-project/results/rinard/report_ar.uba.dc.daikon.Ins4/index.html-->
-
-
 <!--______________________________________________
-
-
-**Ins4**:
-
-Go to java-project and run the following command:
-
-```sh invariants_IM.sh "ar.uba.dc.daikon.Ins4" 10```
-
-This generates automatic invariants for the classes used in invariants/spec/fullreferences/
-
-Ins4 uses ListC.class and there is an inductive variable that must be removed. We are currently tweaking th inductives analysis. In the future it will output a more adjusted over approximation of inductive variables.
-
-Go to java-project/spec/fullreferences/ar/uba/dc/util/ListC.spec and remove ```this__f__size``` as an inductive everywhere.
-
-
-Then go again to jconsume/java-project and run the following command:
-
-```sh memory.sh --program "ar.uba.dc.daikon.Ins4" --ir --memory```
-
-This generates the memory consumption analysis. Results can be seen in java-project/results/rinard/report_ar.uba.dc.daikon.Ins4/index.html
 
 ______________________________________________
 
