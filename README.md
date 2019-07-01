@@ -11,16 +11,17 @@ The document is divided in several sections:
 
 	1) Description
 	2) Dependencies
-		2.1) Maven
-		2.2) Barvinok
-		2.3) Graphviz
+		2.1) Docker
+		2.2) VirtualBox
+		2.3) Maven
+		2.4) Barvinok
+		2.5) Graphviz
 	3) Project's structure
-	4) Developed tools
-	5) Tool configuration
-	6) Execution
-		6.1) Introduction
-		6.2) Docker!
-		6.3) Some examples
+	4) Tool configuration
+	5) Execution
+		5.1) Introduction
+		5.2) Docker
+		5.3) Some examples
 
 
 
@@ -111,10 +112,9 @@ Graphviz
 
 To generate summaries in a graph format the tool uses the dot command included in graphviz. Install it from http://www.graphviz.org/
 
-Eclipse
-=======================
+A note about Eclipse:
 
-If you run the tool from eclipse instead of from the command line, you have to replace soot's ReachableMethods.class by our custom one, that is located in target/lasses/soot/jimple/toolkits/callgraph. For that, you have to add it as a User Entry in Classpath and then put it first in Order and Export.
+If you run the tool from eclipse (or other IDEs) instead of from the command line, you have to replace soot's ReachableMethods.class by our custom one, that is located in target/lasses/soot/jimple/toolkits/callgraph. For that, you have to add it as a User Entry in Classpath and then put it first in Order and Export.
 
 
 
