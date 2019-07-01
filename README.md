@@ -27,7 +27,7 @@ The document is divided in several sections:
 Description
 ============
 
-JConsume 2.0 is a memory consumption analyzer for Java bytecode. It computes parametric expressions that over approximate the maximum number of simultaneously live objects ever created by a method, where by live we mean irreclaimable by any garbage collector. Computing the number of live objects is a key underlying step in all client analysis techniques aiming at computing dynamic-memory requirements.
+JConsume (2.0) is a memory consumption analyzer for Java bytecode. It computes parametric expressions that over approximate the maximum number of simultaneously live objects ever created by a method, where by live we mean irreclaimable by any garbage collector. Computing the number of live objects is a key underlying step in all client analysis techniques aiming at computing dynamic-memory requirements.
 
 JConsume implements a new compositional quantitative analysis aimed at inferring non-linear upper-bounds on the number of irreclaimable objects that may be stored in the heap at any point in the execution of Java-like programs, including polymorphism and implicit memory management. The analysis is based on the compositional construction of live objects summaries for every method under analysis. More concretely, it over-approximates both a) the maximum amount of fresh objects which are simultaneously alive during the execution of the method and b) the number of created objects that may remain alive after the method finishes its execution.
 
@@ -38,27 +38,45 @@ For more information, see http://lafhis.dc.uba.ar/users/~diegog/JConsume2/ and t
 Dependencies
 ============
 
+Docker
+--------
+
+Install docker. Then, download the docker image with the command:
+
+```docker pull gmosse/jconsume-1```
+
+Create the container:
+
+```docker create gmosse/jconsume-1```
+
+This command will return you a container_id.
+
+Jump in:
+
+```docker exec -i -t #container_id /bin/bash```
+
+You are now inside the container. The project is located in /root/Projects/jconsume/java-project.
+
+VirtualBox:
+--------
+
 This section describes the dependencies of the project. A step-by-step description of the commands used to successfully install the tool in an openSUSE 64-bit Virtual Machine can be found in install_all.sh. The steps should be really similar in any Linux distribution.
 
 The steps would be:
 
 1) Download Virtualbox or the corresponding program you use to manage VM's in your OS.
 
-2) Download Ubuntu. I used this one: https://www.ubuntu.com/download/desktop/thank-you?version=18.04&architecture=amd64
+2) Download an Ubuntu image. For example: https://www.ubuntu.com/download/desktop/thank-you?version=18.04&architecture=amd64.
 
-3) Create the VM
+3) Create the VM.
 
-4) Log in
+4) Log in.
 
-5) Download git with sudo apt-get install git
+5) Download git with ```sudo apt-get install git```.
 
-6) Clone the repository from https://github.com/billy-mosse/jconsume with the command
+6) Clone the repository from https://github.com/billy-mosse/jconsume with the command ```git clone https://github.com/billy-mosse/jconsume.git```
 
-```git clone https://github.com/billy-mosse/jconsume.git```
-
-I ran first ```mkdir -p ~/Projects/git; cd ~Projects/git``` so that the repository would be there.
-
-7) Run the script install.sh. Maybe an error will be thrown when installing GMP, but it doesn't matter. If it happens, remove the -e flag from the script so that it doesn't stop and resume the installation.
+7) Run the script install_all.sh. Maybe an error will be thrown when installing GMP, but it doesn't matter. If it happens, remove the -e flag from the script so that it doesn't stop and resume the installation.
 
 
 Maven
@@ -222,25 +240,10 @@ Daikon will run the program several times with different parameters (assigned by
 Execution
 =======================
 
-
-Docker! 
+Docker
 --------
 
-Install docker. Then, download the docker image with the command:
-
-```docker pull gmosse/jconsume-1```
-
-Create the container:
-
-```docker create gmosse/jconsume-1```
-
-This command will return you a container_id.
-
-Jump in:
-
-```docker exec -i -t #container_id /bin/bash```
-
-You are now inside the container. The project is located in /root/Projects/jconsume/java-project. Let's compile and run an example:
+For how to access our container, see the previous section. Let's compile and run an example:
 
 ```cd /root/Projects/jconsume/java-project/src/main/examples```
 ```javac -g ar/uba/dc/jolden/mst/*.java```
@@ -259,8 +262,6 @@ The results are stored in results/rinard/report. There are two formats: html and
 You can check the json format reading this file:
 
 ```cat report.json```
-
-TODO: merge this with the examples subsection.
 
 Here we'll present several analysis of toy examples and some of real programs (Em3d and MST).
 
