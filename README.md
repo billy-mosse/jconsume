@@ -348,43 +348,6 @@ Go to java-project and just run the following command:
 
 As daikon, the tool we use to generate program invariants, isn't exhaustive (no tool can be), sometimes we need to *annotate* them. An example of this feature can be seen in the constructor of the Vertex class of MST. There, you can find a InstrumentationSiteInvariantList with only one annotated invariant, that establishes a linear relationship between numvert and a temporal variable. The name of the temporal variable can be obtained from the file we generated with daikon, that is, Vertex.spec.
 
-<!--
-```sh invariants_IM.sh "ar.uba.dc.daikon.Ins4" 10```
-
-This generates automatic invariants for the classes used in invariants/spec/fullreferences/
-
-Go to java-project/spec/fullreferences/ar/uba/dc/jolden/mst. Several inductive variables need to be removed from different files:
-
-
-| File | Method | Site | Inductives |
-| ------------- | ------------- | -------------| ------------- |
-| MST.spec | ar.uba.dc.jolden.mst.BlueReturn BlueRule(ar.uba.dc.jolden.mst.Vertex,ar.uba.dc.jolden.mst.Vertex) | CreationSite #0 | \_\_r5\_\_f\_\_array\_\_f\_\_size, \_\_r5\_\_f\_\_size, \_\_r20\_\_f\_\_mindist, \_\_r1\_\_f\_\_size, \_\_r17\_\_f\_\_mindist, \_\_r1\_\_f\_\_array\_\_f\_\_size, vlist\_\_f\_\_mindist |
-| MST.spec | void mainParameters(int,boolean,boolean) | CreationSite #0 | \_\_r16\_\_f\_\_count, \_\_r16\_\_f\_\_value\_\_f\_\_size, \_\_r12\_\_f\_\_count, \_\_r12\_\_f\_\_value\_\_f\_\_size, \_\_r8\_\_f\_\_count, \_\_r8\_\_f\_\_value\_\_f\_\_size, \_\_r3\_\_f\_\_count, \_\_r3\_\_f\_\_value\_\_f\_\_size, pVertices, \_\_r25\_\_f\_\_count, \_\_r25\_\_f\_\_value\_\_f\_\_size |
-| MST.spec | void mainParameters(int,boolean,boolean) | CreationSite #1 | \_\_r16\_\_f\_\_count, \_\_r16\_\_f\_\_value\_\_f\_\_size, \_\_l0, \_\_r12\_\_f\_\_count, \_\_r12\_\_f\_\_value\_\_f\_\_size, \_\_r8 |\_\_f\_\_count, \_\_r8\_\_f\_\_value\_\_f\_\_size, \_\_r3\_\_f\_\_count, \_\_r3\_\_f\_\_value\_\_f\_\_size
-| MST.spec | void parseCmdLine(java.lang.String[]) | CreationSite #0 | arg\_\_f\_\_value\_\_f\_\_size |
-| MST.spec | void parseCmdLine(java.lang.String[]) | CallSite #1 | arg\_\_f\_\_value\_\_f\_\_size, i |
-| Graph.spec | void &lt;init&gt;(int) | CreationSite #0 | numvert__f__size |
-| Graph.spec | void addEdges(int) | CreationSite #0 | \_r1\_\_f\_\_array\_\_f\_\_size, \_\_r1\_\_f\_\_size, \_\_i0 | 
-| Graph.spec | void addEdges(int) | CallSite #3 | \_\_r1\_\_f\_\_array\_\_f\_\_size, \_\_r1\_\_f\_\_size |
-| Hashtable.spec | void &lt;init&gt;(int) | CreationSite #0 | \_\_i0\_\_f\_\_size |
-| Vertex.spec | void &lt;init&gt;(ar.uba.dc.jolden.mst.Vertex,int) | CallSite #1 | \_\_i0 |
-
-
-TODO: explain what you must do with addEdges CallSite #3 binding 
-
-In Graph.spec, method void "addEdges(int)", CallSite #3 (callee is "ar.uba.dc.jolden.mst.Hashtable: void put(java.lang.Object,java.lang.Object)"), the binding needs the following change:
-
-```__r1__f__array__f__size``` to ```this__f__nodes__f__size```
-
-This is not a bug but an automated feature that is missing in the code.
-
-
-After doing all this, go again to jconsume/java-project and run the following command:
-
-```sh memory.sh --program "ar.uba.dc.jolden.mst.MST" --ir --memory```
-
-This generates the memory consumption analysis.-->
-
 Results can be seen in java-project/results/rinard/report_ar.uba.dc.jolden.mst.MST/index.html. They can be compared with our paper "Summary-based inference of quantitative bounds of live heap objects" (Braberman, Garbervetsky, Hym, Yovine).
 
 
@@ -397,52 +360,3 @@ Go to java-project and just run the following command:
 ```./full_analysis.sh "ar.uba.dc.jolden.mst.MST" 5```
 
 As it happened with MST, this program also has annotated invariants not captured by daikon. There are three of them: two for the method create(), and one for compute().
-
-<!--
-Go to java-project and just run the following command:
-
-```sh invariants_IM.sh "ar.uba.dc.jolden.em3d.Em3d" 5```
-
-This time 2 manual fixed are needed.
-
-Now go to the invariants folder (jconsume/java-project/invariants/spec/fullreferences/ar/uba/dc/jolden/em3d).
-
-Open the BiGraph.spec file and find the ```compute``` method. Add the following relevant parameter: ```this_init__f__eNodes__f__fromCount```
-
-(You just need to add ```<relevant-parameters>this_init__f__eNodes__f__fromCount</relevant-parameters>``` before the first instrumentation site)
-
-This relevant parameter will have to be bound with a variable in the caller, so you need to open Em3d.spec, find the ```mainParameters``` method. There's a call to the ```compute``` method there. Add the following binding (just below the constraints):
-
-
-```<binding>$t.this_init__f__eNodes__f__fromCount == __r0__f__eNodes__f__fromCount</binding>```
-
-(or the name of the variable bounded by numNodes_init instead of ```__r0__f__eNodes__f__fromCount``` if it was named differently, as it depends on how the jimple was generated)
-
-Finally, go back to the Bigraph.spec. The ```create``` method has 2 calls to ```makeFromNodes```, and the binding is wrong.
-
-So change 
-
-```<binding>$t.this_init__f__fromCount == n1__f__fromCount</binding>```
-
-
-to
-
-```<binding>$t.this_init__f__fromCount == numDegree</binding>```
-
-in both calls.
-
-There. Now you can run ```sh memory.sh "ar.uba.dc.jolden.em3d.Em3d"``` and you'll get the memory consumption. The results can be compared with the paper, just like MST.
---->
-
-
-
-
-
-
-<!-- <> Test -->
-
-
-
-
-
-
