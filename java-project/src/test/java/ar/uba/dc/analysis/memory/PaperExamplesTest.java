@@ -24,6 +24,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.jsoup.Jsoup;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import soot.SootMethod;
@@ -62,6 +63,7 @@ public class PaperExamplesTest {
 	}
 	
 	
+	@Ignore
 	@Test
 	public void Program01()  {
 		//String[] args = {"--config", "config.properties", "--main", "void main(java.lang.String[])", "--program", "ar.uba.dc.paper.Program1", "--ir", "--memory"};
