@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/billy-mosse/jconsume.svg?branch=master)](https://travis-ci.org/billy-mosse/jconsume)
+
 Authors: Diego Garbervetsky and Guillermo Mosse
 
 Collaborators: Matias Grunberg, Gaston Krasny, Martin Rouaux and Edgardo Zoppi.
