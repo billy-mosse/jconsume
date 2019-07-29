@@ -1,9 +1,6 @@
 package ar.uba.dc.annotations.demo;
 
-import java.util.Iterator;
-
 import ar.uba.dc.annotations.MyInteger;
-import ar.uba.dc.util.ListE;
 
 public class Demo05 {
 

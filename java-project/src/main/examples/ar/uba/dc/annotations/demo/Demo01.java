@@ -1,10 +1,8 @@
 package ar.uba.dc.annotations.demo;
 
 
-import java.util.ArrayList;
 import ar.uba.dc.annotations.MyInteger;
 
-import ar.uba.dc.util.List;
 
 public class Demo01 {
 

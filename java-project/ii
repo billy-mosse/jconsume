@@ -13,4 +13,4 @@ JAVA4BIN=$JAVA4HOME/bin
 echo $JAVA4BIN/java -cp $CLASSPATH -Xmx400m ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.ProgramInstrumentatorForDaikonMain $FULLNAMETEST -soot-classpath /usr/lib/jvm/java-8-oracle/jre/lib/rt.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jce.jar:$PROJECT_FOLDER/target/classes:$PROJECT_FOLDER/src/main/java
 
 
-$JAVA4BIN/java -cp $CLASSPATH -Xmx400m ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.ProgramInstrumentatorForDaikonMain $FULLNAMETEST -soot-classpath /usr/lib/jvm/java-8-oracle/jre/lib/rt.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jce.jar:$PROJECT_FOLDER/target/classes:$PROJECT_FOLDER/src/main/java
+$JAVA4BIN/java -cp $CLASSPATH -Xmx400m ar.uba.dc.analysis.automaticinvariants.instrumentation.daikon.ProgramInstrumentatorForDaikonMain $FULLNAMETEST -soot-classpath /usr/lib/jvm/java-8-oracle/jre/lib/rt.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jce.jar:$PROJECT_FOLDER/target/classes:$PROJECT_FOLDER/src/main/java > instrumentation.log

@@ -5,6 +5,8 @@ import java.util.LinkedList;
 
 import java.util.List;
 
+import ar.uba.dc.annotations.InstrumentationSiteInvariant;
+import ar.uba.dc.annotations.InstrumentationSiteInvariantList;
 import ar.uba.dc.util.ListE;
 
 
@@ -62,6 +64,13 @@ public class Program4
 		return Program3.map(cp, op); // ML: 5 L + 4. Esc: 5 L + 1
 	}
 
+	@InstrumentationSiteInvariantList(invariants={
+			@InstrumentationSiteInvariant(
+			isCallSite=true,
+			index=3,
+			constraints={"l.size == maxSize", "l.size >= 0"},
+		    newRelevantParameters={"maxSize"}, newInductives = {  }, newVariables = {  })}
+	)
 	public static ListE test(List ls, Op op){
 		ListE res = new ListE();//0
 		Iterator it = ls.iterator();//1

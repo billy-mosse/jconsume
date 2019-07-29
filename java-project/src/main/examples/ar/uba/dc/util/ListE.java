@@ -23,6 +23,14 @@ public class ListE implements Collection{
 		return true;
 	}
 
+	public void addAll(ListE l) {
+		Iterator it = l.iterator();
+		while(it.hasNext())
+		{
+			Object o = it.next();
+			this.add(o);
+		}
+	}
 	/**
 	 * @temporal: 0
 	 * @residual: 1
