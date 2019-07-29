@@ -11,6 +11,7 @@ import java.util.Set;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import ar.uba.dc.analysis.common.MainRunner;
@@ -23,6 +24,7 @@ import ar.uba.dc.analysis.memory.impl.runner.MainSootRunner;
 import ar.uba.dc.config.Context;
 import ar.uba.dc.config.ContextFactory;
 import ar.uba.dc.soot.SootUtils;
+
 
 public class AnnotationsTest {
 
@@ -52,7 +54,7 @@ public class AnnotationsTest {
 		MainSootRunner.main(values, context);
 	}
 	
-	@Ignore
+	
 	@Test
 	public void AnnotationsTest01() throws FileNotFoundException
 	{
@@ -98,6 +100,7 @@ public class AnnotationsTest {
 		assertThat(summaryMainParameters.ptg.getReturnedNodes().size(), is(equalTo(0)));
 				
 	}
+	
 	
 	@Ignore
 	@Test
