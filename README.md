@@ -362,3 +362,15 @@ Go to java-project and just run the following command:
 ```./full_analysis.sh "ar.uba.dc.jolden.mst.MST" 5```
 
 As it happened with MST, this program also has annotated invariants not captured by daikon. There are three of them: two for the method create(), and one for compute().
+
+______________________________________________
+
+**Escape Annotations**
+
+In the src/main/resources/annotations/escape folder you can see examples for annotations one can manually introduce for unanalyzable methods. These annotations share their ideas from the paper [Annotations for (more) precise points-to analysis
+](https://www.microsoft.com/en-us/research/publication/annotations-for-more-precise-points-to-analysis/), by Diego Garbervetsky, Francesco Logozzo, Michael Barnett, belonging to Microsoft Research. The annotations include:
+
+- Memory and escape consumption.
+- Relevant parameters.
+- Whether the method can access this/the parameters.
+- Whether this/the parameters can be overwritten by other variables.
