@@ -32,6 +32,9 @@ CLASSPATH=$CLASSPATH_JCONSUME:$CLASSPATH_ECLIPSE
 $JAVA4BIN/java -cp $CLASSPATH -Xmx400m "ar.uba.dc.analysis.common.MainRunner" "--config" "config.properties" "--main" "\"void main(java.lang.String[])\"" $*
 
 
+
+mkdir -p results/rinard/historical_reports
+
 cd results/rinard
 
 DATE_WITH_TIME=`date "+%Y%m%d-%H%M%S"`
