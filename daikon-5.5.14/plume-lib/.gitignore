@@ -1,0 +1,40 @@
+*.class
+*.elc
+*~
+TAGS
+bin/google-java-format-1.0-all-deps.jar
+java/.run-google-java-format/
+java/.class-files-timestamp
+java/.javadoc-timestamp
+java/.optionsdoc-timestamp
+java/.test-timestamp
+java/Makefile.user
+java/api
+java/ical4j.properties
+java/jacoco.exec
+java/lib/error_prone_ant-2.0.21.jar
+java/lookup.html
+java/lookup.jar
+java/lookup.txt
+java/plume.jar
+java/plume.tar.gz
+java/plume-core.jar
+java/src/plume/.javadoc-timestamp
+java/src/plume/MathMDE.java
+java/src/plume/WeakIdentityHashMap.java-JDK6
+java/src/plume/lookup.jar
+java/src/plume/task_manager.jar
+java/src/plume/utilMDE.jar
+java/task_manager.jar
+tests/checklink-persistent-errors-test/errors1.output
+tests/checklink-persistent-errors-test/errors2.output
+tests/sort-directory-order-test/lines1.output
+
+# Ignore Eclipse output
+bin-eclipse/
+
+syntax: regexp
+# Not a glob because it starts with # which looks like a comment.
+(.*/)?\#[^/]*\#$
+(.*/)?\.\#.*
+plume-lib-[0-9.]*.tar.gz

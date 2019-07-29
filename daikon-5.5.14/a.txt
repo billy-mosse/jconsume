@@ -1,0 +1,918 @@
+./plume-lib/emacs/prog-modes-mde.el:    (add-hook 'write-contents-hooks 'check-for-string-equality)
+./plume-lib/emacs/prog-modes-mde.el:(defun check-for-string-equality ()
+./plume-lib/emacs/prog-modes-mde.el:  "Complain if Java strings are being compared for pointer equality.
+./plume-lib/emacs/prog-modes-mde.el:              (if (not (y-or-n-p "Strings being compared with pointer equality; save anyway? "))
+./plume-lib/emacs/prog-modes-mde.el:          (error "Strings being compared with pointer equality"))))
+./plume-lib/java/src/plume/Hasher.java:   * The equality function over the objects being hashed.
+./plume-lib/java/src/plume/Hasher.java:   * <p>Has nothing to do with testing Hashers themselves for equality.
+./plume-lib/java/src/plume/Hasher.java:   * @param o1 the first value to test for equality
+./plume-lib/java/src/plume/Hasher.java:   * @param o2 the second value to test for equality
+./plume-lib/java/src/plume/WeakHasherMap.java:     * keys and comparing them for equality.
+./plume-lib/java/src/plume/Intern.java:  // They can be looked up using a non-interned value; equality tests know
+./plume-lib/java/src/plume/Triple.java:  @SuppressWarnings("interning") // equality testing optimization
+./plume-lib/java/src/plume/ArraysMDE.java:   * Searches for the first occurrence of the given element in the array, testing for equality using
+./plume-lib/java/src/plume/ArraysMDE.java:   * Searches for the first occurrence of the given element in the array, testing for equality using
+./plume-lib/java/src/plume/ArraysMDE.java:   * Searches for the first occurrence of the given element in the list, testing for equality using
+./plume-lib/java/src/plume/ArraysMDE.java:   * Searches for the first occurrence of the given element in the list, testing for equality using
+./plume-lib/java/src/plume/ArraysMDE.java:   * Searches for the first occurrence of the given element in the array, testing for equality using
+./plume-lib/java/src/plume/ArraysMDE.java:   * Searches for the first occurrence of the given element in the array, testing for equality using
+./plume-lib/java/src/plume/ArraysMDE.java:   * Searches for the first occurrence of the given element in the list, testing for equality using
+./plume-lib/java/src/plume/ArraysMDE.java:   * Searches for the first occurrence of the given element in the list, testing for equality using
+./plume-lib/java/src/plume/ArraysMDE.java:   * testing for equality using the equals method.
+./plume-lib/java/src/plume/ArraysMDE.java:   * testing for equality using == (not the equals method).
+./plume-lib/java/src/plume/ArraysMDE.java:   * testing for equality using the equals method.
+./plume-lib/java/src/plume/ArraysMDE.java:   * testing for equality using == (not the equals method).
+./plume-lib/java/src/plume/ArraysMDE.java:   * testing for equality using the equals method.
+./plume-lib/java/src/plume/ArraysMDE.java:   * testing for equality using == (not the equals method).
+./plume-lib/java/src/plume/ArraysMDE.java:   * for equality using the equals method.
+./plume-lib/java/src/plume/ArraysMDE.java:   * for equality using == (not the equals method).
+./plume-lib/java/src/plume/ArraysMDE.java:   * of the first, testing for equality using the equals method.
+./plume-lib/java/src/plume/ArraysMDE.java:   * of the first, testing for equality using == (not the equals method).
+./plume-lib/java/src/plume/ArraysMDE.java:   * of the first, testing for equality using the equals method.
+./plume-lib/java/src/plume/ArraysMDE.java:   * of the first, testing for equality using == (not the equals method).
+./plume-lib/java/src/plume/ArraysMDE.java:   * of the first, testing for equality using the equals method.
+./plume-lib/java/src/plume/ArraysMDE.java:   * of the first, testing for equality using == (not the equals method).
+./plume-lib/java/src/plume/ArraysMDE.java:   * of the first, testing for equality using the equals method.
+./plume-lib/java/src/plume/ArraysMDE.java:   * of the first, testing for equality using == (not the equals method).
+./plume-lib/java/src/plume/ArraysMDE.java:   * {@code equals()} (which tests reference equality).
+./plume-lib/java/src/plume/ArraysMDE.java:   * {@code equals()} (which tests reference equality).
+./plume-lib/java/src/plume/ArraysMDE.java:   * {@code equals()} (which tests reference equality).
+./plume-lib/java/src/plume/ArraysMDE.java:   * to {@code equals()} (which tests reference equality).
+./plume-lib/java/src/plume/FuzzyFloat.java: * <p>Floating point numbers are compared for equality by dividing them by one another and comparing
+./plume-lib/java/src/plume/FuzzyFloat.java:   * Test d1 and d2 for equality using the current ratio. Two NaN floats are not considered equal
+./plume-lib/java/src/plume/FuzzyFloat.java:   * Test d1 and d2 for non-equality using the current ratio.
+./plume-lib/java/src/plume/WeakIdentityHashMap.java: *  <li> uses of object equality (.equals) are replaced by identity checks (==)</li>
+./plume-lib/java/src/plume/WeakIdentityHashMap.java:     * Check for equality of non-null reference x and possibly-null y.  Uses
+./plume-lib/java/src/plume/WeakIdentityHashMap.java:     * identity equality.
+./plume-lib/java/src/plume/Pair.java:  @SuppressWarnings("interning") // equality testing optimization
+./plume-lib/java/src/plume/UtilMDE.java:      @SuppressWarnings("interning") // check for equality to a special value
+./plume-lib/java/src/plume/UtilMDE.java:   * Determines deep equality for the elements.
+./plume-lib/java/src/plume/WeakIdentityPair.java: * with weak pointers, and its equals() method uses object equality to compare its elements.
+./plume-lib/java/src/plume/TestPlume.java:            throw new Error("Expected inequality, saw " + nums[i] + " % " + m + " = " + r);
+./plume-lib/java/src/plume/TestPlume.java:    //test equality for a variety of postive and negative numbers
+./fjalar/valgrind/cachegrind/cg_main.c:// - it also allows equality checks just by pointer comparison, which
+./fjalar/valgrind/cachegrind/cg_main.c:      // pointer comparison rather than strcmp() to test for equality, which
+./fjalar/valgrind/docs/internals/3_1_BUGSTATUS.txt:pending   pending   117362   partially defined equality
+./fjalar/valgrind/memcheck/tests/vbit-test/irops.c:  { DEFOP(Iop_ExpCmpNE8,  UNDEF_UNKNOWN), }, // exact (expensive) equality
+./fjalar/valgrind/memcheck/tests/vbit-test/irops.c:  { DEFOP(Iop_ExpCmpNE16, UNDEF_UNKNOWN), }, // exact (expensive) equality
+./fjalar/valgrind/memcheck/tests/vbit-test/irops.c:  { DEFOP(Iop_ExpCmpNE32, UNDEF_UNKNOWN), }, // exact (expensive) equality
+./fjalar/valgrind/memcheck/tests/vbit-test/irops.c:  { DEFOP(Iop_ExpCmpNE64, UNDEF_UNKNOWN), }, // exact (expensive) equality
+./fjalar/valgrind/memcheck/mc_errors.c:      // Perhaps we should also check the addrinfo.akinds for equality.
+./fjalar/valgrind/memcheck/mc_translate.c:      introducing an explicit equality test into the translation.
+./fjalar/valgrind/memcheck/mc_translate.c:         /* be lazy.  Could define equality for these, but they never
+./fjalar/valgrind/fjalar/mc_errors.c:      // Perhaps we should also check the addrinfo.akinds for equality.
+./fjalar/valgrind/fjalar/mc_translate.c:      introducing an explicit equality test into the translation.
+./fjalar/valgrind/fjalar/mc_translate.c:         /* be lazy.  Could define equality for these, but they never
+./fjalar/valgrind/exp-sgcheck/sg_main.c:/* Compare two Invars for equality. */
+./fjalar/valgrind/include/pub_tool_hashtable.h:   the full element to be compared for equality, not only the key.
+./fjalar/valgrind/include/pub_tool_hashtable.h:   element in the key, and have the comparison function checking for equality
+./fjalar/valgrind/include/pub_tool_hashtable.h:   key equality. */
+./fjalar/valgrind/include/pub_tool_execontext.h:// equality.
+./fjalar/valgrind/coregrind/m_deduppoolalloc.c:      for key equality, it is likely that it is the 'good' element.
+./fjalar/valgrind/coregrind/m_transtab.c:         equality defined by (TTEntry,offset).  Hence the out_edges
+./fjalar/valgrind/coregrind/m_execontext.c:   duplicates, and so exact equality can be quickly done as equality
+./fjalar/valgrind/VEX/priv/guest_amd64_toIR.c:         64x2 equality comparison */
+./fjalar/valgrind/VEX/priv/ir_opt.c:   establishing equality. */
+./fjalar/valgrind/VEX/priv/ir_opt.c:   establishing IRExpr equality for a given sameIRExprs invocation. */
+./fjalar/valgrind/VEX/priv/ir_opt.c:      paranoidly, to reliably establish equality/non-equality. */
+./fjalar/valgrind/VEX/priv/ir_opt.c:      equality/non-equality. */
+./fjalar/valgrind/VEX/pub/libvex_ir.h:   - eqIRFoo is a structural equality predicate for IRFoos.
+./fjalar/valgrind/VEX/pub/libvex_ir.h:/* Compare two IRConsts for equality */
+./fjalar/valgrind/helgrind/hg_basics.h:/* When comparing race errors for equality, should the race address be
+./fjalar/valgrind/helgrind/libhb_core.c:   Used for OldRef hashtable (which already verifies equality of the
+./fjalar/valgrind/auxprogs/compare-build-logs:# compares the compiler invocations for equality. Equality is defined
+./fjalar/valgrind/mpi/libmpiwrap.c:/* It's critical that we can do equality on MPI_Requests.
+./fjalar/valgrind/mpi/libmpiwrap.c:   types that support assignment and equality operations."  Hence the
+Binary file ./java/daikon/PptSliceEquality$VarInfoAndComparability.class matches
+./java/daikon/Debug.java:      if (v.equalitySet != null) {
+./java/daikon/Debug.java:        evars = v.equalitySet.getVars();
+./java/daikon/Debug.java:   * Variables will match if they are in the same equality set. The information is written as:
+./java/daikon/Debug.java:   * equality sets.
+./java/daikon/Debug.java:          // Get the matching equality set
+./java/daikon/Debug.java:          if (vis[k].equalitySet != null) {
+./java/daikon/Debug.java:            evars = vis[k].equalitySet.getVars();
+./java/daikon/Debug.java:          // If there is an equality set
+./java/daikon/Debug.java:            // Loop through each variable in the equality set
+./java/daikon/Debug.java:          } else { // sometimes, no equality set
+./java/daikon/Debug.java:            if (v.equalitySet != null) {
+./java/daikon/Debug.java:      if (v.equalitySet != null) {
+Binary file ./java/daikon/MergeInvariants.class matches
+./java/daikon/PptSlice0.java:  // We'd like to use a more sophisticated equality check and hashCode
+./java/daikon/PptSlice0.java:    // hashCode is cached to make equality checks faster.
+Binary file ./java/daikon/PptTopLevel.class matches
+./java/daikon/MergeInvariants.java:      // Remove all of the slices, equality sets, to start
+./java/daikon/MergeInvariants.java:        if (child.equality_view == null) {
+./java/daikon/MergeInvariants.java:              "equality_view == null in child ppt: "
+./java/daikon/MergeInvariants.java:        } else if (child.equality_view.invs == null) {
+./java/daikon/MergeInvariants.java:              "equality_view.invs == null in child ppt: "
+./java/daikon/MergeInvariants.java:        // Remove the equality invariants added during equality post
+./java/daikon/MergeInvariants.java:        child.remove_equality_invariants();
+./java/daikon/MergeInvariants.java:        child_split.ppts[jj].remove_equality_invariants();
+Binary file ./java/daikon/PrintInvariants.class matches
+./java/daikon/VarComparability.java:   * In general, if two items are comparable, they can be placed in the same equality set. This is
+./java/daikon/VarComparability.java:  public boolean equality_set_ok(
+Binary file ./java/daikon/PptTopLevel$Stats.class matches
+./java/daikon/simplify/Lemma.java:        "lexical equality of singleton sequences",
+Binary file ./java/daikon/simplify/Lemma.class matches
+./java/daikon/VarInfoAux.java:  // Two variables should not be put in the same equality set unless they have the same flags.  For
+./java/daikon/VarInfoAux.java:  // another variable.  Then NonZero will not be instantiated over "this", and when the equality set
+./java/daikon/VarInfoAux.java:  // check equality for every aux field that might affect methods such as instantiate_ok.
+./java/daikon/PptSlice.java:   * Remove repeated entries in a permutation. The repeats are a consequence of equality
+./java/daikon/PptSlice.java:   * optimization: a VarInfo may be a destination more than once due to equality splitting. The fix
+./java/daikon/PptSlice.java:    // rule.  Post processing of equality sets creates equality invariants between the
+./java/daikon/PptSlice.java:    // various members of the equality set.  Thus one non-leader is acceptable
+./java/daikon/PptSlice.java:    // in binary (two variable) slices if it is in the same equality set as the
+./java/daikon/PptSlice.java:      // System.out.printf ("equality set for vi %s = %s\n", vi, vi.equalitySet);
+Binary file ./java/daikon/Daikon.class matches
+./java/daikon/DynamicConstants.java:                "Not instantiating slice " + c1.vi.equalitySet.size());
+./java/daikon/DynamicConstants.java:    // equality invariant, since that is assumed to exist in many places.
+./java/daikon/DynamicConstants.java:        ppt.create_equality_inv(con.vi, con.vi, con.count);
+Binary file ./java/daikon/DaikonSimple.class matches
+Binary file ./java/daikon/DaikonSimple$SimpleProcessor.class matches
+Binary file ./java/daikon/DynamicConstants.class matches
+./java/daikon/PptRelation.java:   * Like parentVar(VarInfo), but if no parent is found, tries every variable in the equality set
+./java/daikon/PptRelation.java:    if (childVar.equalitySet == null) {
+./java/daikon/PptRelation.java:    for (VarInfo v : childVar.equalitySet.getVars()) {
+./java/daikon/PptRelation.java:   * equality sets of the child. The variables are the corresponding parent variables and not the
+./java/daikon/PptRelation.java:    if (child.equality_view == null) {
+./java/daikon/PptRelation.java:          "child.equality_view == null for child ppt: "
+./java/daikon/PptRelation.java:    if (child.equality_view.invs == null) {
+./java/daikon/PptRelation.java:          "child.equality_view.invs == null for child ppt: "
+./java/daikon/PptRelation.java:    // Loop through each equality set in the child
+./java/daikon/PptRelation.java:    for (Invariant inv : child.equality_view.invs) {
+./java/daikon/PptRelation.java:      debug.fine("-- processing equality set " + e);
+./java/daikon/PptRelation.java:      // Build each combination of variables in the equality set and produce
+./java/daikon/PptRelation.java:    // Debug print the equality sets for each ppt
+./java/daikon/PptRelation.java:        debug.fine(ppt.name() + " equality sets: " + ppt.equality_sets_txt());
+./java/daikon/PptRelation.java:    // Loop over each ppt and create an equality view and invariants for
+./java/daikon/PptRelation.java:      if ((ppt.children.size() == 0) && (ppt.equality_view == null)) {
+./java/daikon/PptRelation.java:        ppt.equality_view = new PptSliceEquality(ppt);
+./java/daikon/PptRelation.java:        ppt.equality_view.instantiate_invariants();
+./java/daikon/PptRelation.java:    // Debug print the equality sets for each ppt
+./java/daikon/PptRelation.java:        debug.fine(ppt.name() + " equality sets: " + ppt.equality_sets_txt());
+./java/daikon/test/SampleTester.commands:  # note that x and y are in the same equality set
+./java/daikon/test/SampleTester.commands:  # x and y are no longer in the same equality set
+./java/daikon/test/SampleTester.test:# has to do (x, x, z) instead of (x, y, z) because of equality sets, not broken
+./java/daikon/test/FormatTestCase.java:        // Intern all objects that can be interned because some equality
+./java/daikon/VarInfo.java:   * Which equality group this belongs to. Replaces equal_to. Never null after this is put inside
+./java/daikon/VarInfo.java:   * equalitySet.
+./java/daikon/VarInfo.java:  public Equality equalitySet;
+./java/daikon/VarInfo.java:   * <p><b>Do not test equality! Only use its .name slot.</b>
+./java/daikon/VarInfo.java:    equalitySet = vi.equalitySet;
+./java/daikon/VarInfo.java:      result.equalitySet = vi.equalitySet;
+./java/daikon/VarInfo.java:        + (",equal_to=" + (equalitySet == null ? "null" : equalitySet.toString()))
+./java/daikon/VarInfo.java:   * In any case, the variable must have a postState VarInfoName, and equality invariants need to
+./java/daikon/VarInfo.java:        Global.debugSuppressParam.fine("Saw equality.  Derived worth printing.");
+./java/daikon/VarInfo.java:        Global.debugSuppressParam.fine("Didn't see equality in base, so uninteresting");
+./java/daikon/VarInfo.java:        PrintInvariants.debugFiltering.fine("  didn't see equality in base");
+./java/daikon/VarInfo.java:  /** Whether this VarInfo is the leader of its equality set. */
+./java/daikon/VarInfo.java:    if (equalitySet == null) return true;
+./java/daikon/VarInfo.java:    return (equalitySet.leader() == this);
+./java/daikon/VarInfo.java:    if (equalitySet == null) {
+./java/daikon/VarInfo.java:      System.out.println("equality sets = " + ppt.equality_sets_txt());
+./java/daikon/VarInfo.java:      assert equalitySet != null
+./java/daikon/VarInfo.java:    return equalitySet.leader();
+./java/daikon/VarInfo.java:    assert equalitySet != null;
+./java/daikon/VarInfo.java:    return this.equalitySet == other.equalitySet;
+./java/daikon/VarInfo.java:   * Class used to contain a pair of VarInfos and their sample count. Currently used for equality
+./java/daikon/VarInfo.java:   * Returns the number of elements in the variable's equality set. Returns 1 if the equality
+./java/daikon/VarInfo.java:  public int get_equalitySet_size() {
+./java/daikon/VarInfo.java:    if (equalitySet == null) {
+./java/daikon/VarInfo.java:      return equalitySet.size();
+./java/daikon/VarInfo.java:   * Returns the vars_info in the variable's equality set. Returns a set with just itself if the
+./java/daikon/VarInfo.java:   * equality optimization is turned off.
+./java/daikon/VarInfo.java:  public Set<VarInfo> get_equalitySet_vars() {
+./java/daikon/VarInfo.java:    if (equalitySet == null) {
+./java/daikon/VarInfo.java:      return equalitySet.getVars();
+./java/daikon/VarInfo.java:   * Returns the leader in the variable's equality set. Returns itself if the equality optimization
+./java/daikon/VarInfo.java:  public VarInfo get_equalitySet_leader() {
+./java/daikon/VarInfo.java:    // if (equalitySet == null && VarInfo.use_equality_optimization == false) {  // match } for vim
+./java/daikon/VarInfo.java:    if (equalitySet == null) {
+./java/daikon/VarInfo.java:      return equalitySet.leader();
+./java/daikon/VarInfoName.java:    if (node == replacement) // "interned": equality optimization pattern
+./java/daikon/VarInfoName.java:    if (node == replacement) // "interned": equality optimization pattern
+./java/daikon/VarInfoName.java:    return ((other == this) // "interned": equality optimization pattern
+./java/daikon/VarInfoName.java:  @SuppressWarnings("interning") // equality checking pattern, etc.
+./java/daikon/VarInfoName.java:  @SuppressWarnings("interning") // equality checking pattern, etc.
+./java/daikon/VarInfoName.java:  @SuppressWarnings("interning") // equality checking pattern, etc.
+./java/daikon/VarInfoName.java:  @SuppressWarnings("interning") // equality checking pattern, etc.
+Binary file ./java/daikon/VarComparabilityImplicit.class matches
+./java/daikon/tools/ExtractConsequent.java:   * be detected. However it tries not to be smart ... If there is more than one inequality in the
+./java/daikon/tools/ExtractConsequent.java:    if (contains_exactly_one(condition, inequality_pattern)) {
+./java/daikon/tools/ExtractConsequent.java:  static Pattern gteq_pattern, lteq_pattern, neq_pattern, inequality_pattern;
+./java/daikon/tools/ExtractConsequent.java:      inequality_pattern = Pattern.compile("[\\!<>]=");
+Binary file ./java/daikon/tools/ExtractConsequent.class matches
+./java/daikon/Daikon.java:   * Whether to use the "new" equality set mechanism for handling equality, using canonicals to have
+./java/daikon/Daikon.java:   * instantiation of invariants only over equality sets.
+./java/daikon/Daikon.java:  public static boolean use_equality_optimization = true;
+./java/daikon/Daikon.java:   * Boolean. Controls whether the Daikon optimizations (equality sets, suppressions) are undone at
+./java/daikon/Daikon.java:  /** Prints out statistics concerning equality sets, suppressions, etc. */
+./java/daikon/Daikon.java:      // Initialize equality sets on leaf nodes
+./java/daikon/Daikon.java:      // System.out.printf ("initialized equality %s for ppt %s%n",
+./java/daikon/Daikon.java:      //                    ppt.equality_view, ppt.name());
+./java/daikon/Daikon.java:          // Don't inherit the entry variable's equalitySet.
+./java/daikon/Daikon.java:          exit_vars[j].equalitySet = es;
+./java/daikon/Daikon.java:    //       PptSliceEquality.print_equality_stats (debugStats, all_ppts);
+./java/daikon/Daikon.java:    // Print equality set info
+./java/daikon/Daikon.java:    //       if ((ppt.equality_view == null) || (ppt.equality_view.invs == null))
+./java/daikon/Daikon.java:    //       for (Invariant inv : ppt.equality_view.invs) {
+./java/daikon/Daikon.java:    //       System.out.printf ("    equality set = %s", e);
+./java/daikon/Daikon.java:    if (Daikon.use_equality_optimization && !Daikon.dkconfig_undo_opts) {
+./java/daikon/Daikon.java:        // ppt.equality_view can be null here
+./java/daikon/Daikon.java:    // Debug print information about equality sets
+./java/daikon/Daikon.java:        debugEquality.fine(ppt.name() + ": " + ppt.equality_sets_txt());
+./java/daikon/Daikon.java:  /** Initialize the equality sets for each variable. */
+./java/daikon/Daikon.java:    if (!Daikon.use_equality_optimization) return;
+./java/daikon/Daikon.java:    // Create the initial equality sets
+./java/daikon/Daikon.java:    ppt.equality_view = new PptSliceEquality(ppt);
+./java/daikon/Daikon.java:    assert ppt.equality_view != null : "@AssumeAssertion(nullness): checker bug in flow";
+./java/daikon/Daikon.java:    ppt.equality_view.instantiate_invariants();
+./java/daikon/Daikon.java:   * Undoes the invariants suppressed for the dynamic constant, suppression and equality set
+./java/daikon/Daikon.java:    //undo equality sets
+./java/daikon/Daikon.java:      PptSliceEquality sliceEquality = ppt.equality_view;
+./java/daikon/Daikon.java:      // some program points have no equality sets?
+./java/daikon/Daikon.java:          // Create new equality sets for all of the non-equal vars
+./java/daikon/Daikon.java:          // Add all of the new equality sets to our list
+Binary file ./java/daikon/suppress/NISuppressee.class matches
+./java/daikon/suppress/NISuppression.java:      assert ppt.equality_view != null : "@AssumeAssertion(nullness): need to check justification";
+./java/daikon/suppress/NISuppression.java:      assert ppt.equality_view != null : "@AssumeAssertion(nullness): need to check justification";
+./java/daikon/suppress/NIS.java:              "ppt %s, comparability %s has %s equality invs%n",
+./java/daikon/suppress/NISuppressee.java:  //     VarInfo leaders[] = ppt.equality_view.get_leaders_sorted();
+./java/daikon/suppress/NISuppressee.java:  /*@RequiresNonNull("#2.equality_view")*/
+./java/daikon/suppress/NISuppressee.java:    VarInfo leaders[] = ppt.equality_view.get_leaders_sorted();
+Binary file ./java/daikon/suppress/NISuppression.class matches
+./java/daikon/suppress/NISuppressionSet.java:    assert ppt.equality_view != null
+./java/daikon/suppress/NISuppressionSet.java:        VarInfo[] leaders = ppt.equality_view.get_leaders_sorted();
+./java/daikon/suppress/NISuppressionSet.java:        VarInfo[] leaders = ppt.equality_view.get_leaders_sorted();
+./java/daikon/suppress/NISuppressionSet.java:        VarInfo[] leaders = ppt.equality_view.get_leaders_sorted();
+Binary file ./java/daikon/suppress/NISuppressionSet.class matches
+./java/daikon/suppress/suppression-notes.txt: (x = y is handled by equality)
+./java/daikon/suppress/package.html:<li> A mechanism for (efficiently) handling equality.
+./java/daikon/util/Hasher.java:   * The equality function over the objects being hashed.
+./java/daikon/util/Hasher.java:   * <p>Has nothing to do with testing Hashers themselves for equality.
+./java/daikon/util/Hasher.java:   * @param o1 the first value to test for equality
+./java/daikon/util/Hasher.java:   * @param o2 the second value to test for equality
+./java/daikon/util/WeakHasherMap.java:     * keys and comparing them for equality.
+Binary file ./java/daikon/util/TestPlume$1TestNonModulus.class matches
+./java/daikon/util/Intern.java:  // They can be looked up using a non-interned value; equality tests know
+./java/daikon/util/Triple.java:  @SuppressWarnings("interning") // equality testing optimization
+./java/daikon/util/ArraysMDE.java:   * Searches for the first occurrence of the given element in the array, testing for equality using
+./java/daikon/util/ArraysMDE.java:   * Searches for the first occurrence of the given element in the array, testing for equality using
+./java/daikon/util/ArraysMDE.java:   * Searches for the first occurrence of the given element in the list, testing for equality using
+./java/daikon/util/ArraysMDE.java:   * Searches for the first occurrence of the given element in the list, testing for equality using
+./java/daikon/util/ArraysMDE.java:   * Searches for the first occurrence of the given element in the array, testing for equality using
+./java/daikon/util/ArraysMDE.java:   * Searches for the first occurrence of the given element in the array, testing for equality using
+./java/daikon/util/ArraysMDE.java:   * Searches for the first occurrence of the given element in the list, testing for equality using
+./java/daikon/util/ArraysMDE.java:   * Searches for the first occurrence of the given element in the list, testing for equality using
+./java/daikon/util/ArraysMDE.java:   * testing for equality using the equals method.
+./java/daikon/util/ArraysMDE.java:   * testing for equality using == (not the equals method).
+./java/daikon/util/ArraysMDE.java:   * testing for equality using the equals method.
+./java/daikon/util/ArraysMDE.java:   * testing for equality using == (not the equals method).
+./java/daikon/util/ArraysMDE.java:   * testing for equality using the equals method.
+./java/daikon/util/ArraysMDE.java:   * testing for equality using == (not the equals method).
+./java/daikon/util/ArraysMDE.java:   * for equality using the equals method.
+./java/daikon/util/ArraysMDE.java:   * for equality using == (not the equals method).
+./java/daikon/util/ArraysMDE.java:   * of the first, testing for equality using the equals method.
+./java/daikon/util/ArraysMDE.java:   * of the first, testing for equality using == (not the equals method).
+./java/daikon/util/ArraysMDE.java:   * of the first, testing for equality using the equals method.
+./java/daikon/util/ArraysMDE.java:   * of the first, testing for equality using == (not the equals method).
+./java/daikon/util/ArraysMDE.java:   * of the first, testing for equality using the equals method.
+./java/daikon/util/ArraysMDE.java:   * of the first, testing for equality using == (not the equals method).
+./java/daikon/util/ArraysMDE.java:   * of the first, testing for equality using the equals method.
+./java/daikon/util/ArraysMDE.java:   * of the first, testing for equality using == (not the equals method).
+./java/daikon/util/ArraysMDE.java:   * {@code equals()} (which tests reference equality).
+./java/daikon/util/ArraysMDE.java:   * {@code equals()} (which tests reference equality).
+./java/daikon/util/ArraysMDE.java:   * {@code equals()} (which tests reference equality).
+./java/daikon/util/ArraysMDE.java:   * to {@code equals()} (which tests reference equality).
+./java/daikon/util/FuzzyFloat.java: * <p>Floating point numbers are compared for equality by dividing them by one another and comparing
+./java/daikon/util/FuzzyFloat.java:   * Test d1 and d2 for equality using the current ratio. Two NaN floats are not considered equal
+./java/daikon/util/FuzzyFloat.java:   * Test d1 and d2 for non-equality using the current ratio.
+./java/daikon/util/WeakIdentityHashMap.java: *  <li> uses of object equality (.equals) are replaced by identity checks (==)</li>
+./java/daikon/util/WeakIdentityHashMap.java:     * Check for equality of non-null reference x and possibly-null y.  Uses
+./java/daikon/util/WeakIdentityHashMap.java:     * identity equality.
+./java/daikon/util/Pair.java:  @SuppressWarnings("interning") // equality testing optimization
+./java/daikon/util/UtilMDE.java:      @SuppressWarnings("interning") // check for equality to a special value
+./java/daikon/util/UtilMDE.java:   * Determines deep equality for the elements.
+./java/daikon/util/WeakIdentityPair.java: * with weak pointers, and its equals() method uses object equality to compare its elements.
+./java/daikon/util/TestPlume.java:            throw new Error("Expected inequality, saw " + nums[i] + " % " + m + " = " + r);
+./java/daikon/util/TestPlume.java:    //test equality for a variety of postive and negative numbers
+./java/daikon/dcomp/DCRuntime.java:   * because of how equality sets are handled.
+./java/daikon/Quant.java.jpp: * <p>Whenever a method involves comparing two elements for equality, this is always "==" equality
+Binary file ./java/daikon/PptRelation.class matches
+./java/daikon/PptTopLevel.java:  /** Number of invariants after equality set processing for the last sample. */
+./java/daikon/PptTopLevel.java:  /** Number of slices after equality set processing for the last sample. */
+./java/daikon/PptTopLevel.java:  /** Debug tracer for up-merging equality sets. */
+./java/daikon/PptTopLevel.java:  // Daikon.using_DaikonSimple==true or Daikon.use_equality_optimization==false.
+./java/daikon/PptTopLevel.java:  public /*@MonotonicNonNull*/ PptSliceEquality equality_view;
+./java/daikon/PptTopLevel.java:  /** The canonical VarInfo for the equality. */
+./java/daikon/PptTopLevel.java:  public Set<VarInfo> redundant_invs_equality = new LinkedHashSet<VarInfo>(0);
+./java/daikon/PptTopLevel.java:   * Add the sample to the equality sets, dynamic constants, and invariants at this program point.
+./java/daikon/PptTopLevel.java:    // Add the samples to all of the equality sets, breaking sets as required
+./java/daikon/PptTopLevel.java:    if (Daikon.use_equality_optimization) {
+./java/daikon/PptTopLevel.java:      assert equality_view != null
+./java/daikon/PptTopLevel.java:          : "@AssumeAssertion(nullness): dependent: non-null if use_equality_optimization==true";
+./java/daikon/PptTopLevel.java:      weakened_invs.addAll(equality_view.add(vt, count));
+./java/daikon/PptTopLevel.java:                  + slice.var_infos[0].equalitySet.shortString());
+./java/daikon/PptTopLevel.java:    // Build a new discardString that includes the variable equality
+./java/daikon/PptTopLevel.java:    // Build a new discardString that includes the variable equality
+./java/daikon/PptTopLevel.java:   * Returns whether or not the specified variables are equal (ie, an equality invariant exists
+./java/daikon/PptTopLevel.java:    // System.out.printf ("checking equality on %s and %s%n", v1, v2);
+./java/daikon/PptTopLevel.java:    // Don't create a slice with the same variables if the equality
+./java/daikon/PptTopLevel.java:      if ((var1 == var2) && (var1.get_equalitySet_size() == 1)) {
+./java/daikon/PptTopLevel.java:   *   <li>Each var is the same and its equality set has only two variables
+./java/daikon/PptTopLevel.java:   *   <li>Two of the vars are the same and its equality has only one variable. (This last one is
+./java/daikon/PptTopLevel.java:    // only two vars in the equality set
+./java/daikon/PptTopLevel.java:    if ((v1 == v2) && (v2 == v3) && (v1.get_equalitySet_size() <= 2)) {
+./java/daikon/PptTopLevel.java:    // is only one variable in its equality set
+./java/daikon/PptTopLevel.java:      if (((v1 == v2) || (v1 == v3)) && (v1.get_equalitySet_size() == 1)) {
+./java/daikon/PptTopLevel.java:      if ((v2 == v3) && (v2.get_equalitySet_size() == 1)) {
+./java/daikon/PptTopLevel.java:   * etc. b) Pivot uninteresting parameter VarInfos so that each equality set contains only the
+./java/daikon/PptTopLevel.java:    assert equality_view != null : "ppt = " + ppt_name + " children = " + children;
+./java/daikon/PptTopLevel.java:    assert equality_view != null : "@AssumeAssertion(nullness): application invariant";
+./java/daikon/PptTopLevel.java:    List<Invariant> equalityInvs = equality_view.invs;
+./java/daikon/PptTopLevel.java:    // Pivot invariants to new equality leaders if needed, if old
+./java/daikon/PptTopLevel.java:    for (Invariant inv : equalityInvs) {
+./java/daikon/PptTopLevel.java:    // Add specific equality invariants for each member of the
+./java/daikon/PptTopLevel.java:    // equality set
+./java/daikon/PptTopLevel.java:    for (Invariant inv : equalityInvs) {
+./java/daikon/PptTopLevel.java:      // Replace parwise equality with an equivalence set
+./java/daikon/PptTopLevel.java:      redundant_invs_equality.add(((Equality) inv).leader());
+./java/daikon/PptTopLevel.java:    // System.out.printf ("equality for %s = %s\n", this, equality_view);
+./java/daikon/PptTopLevel.java:    if (equality_view != null) equality_view.repCheck();
+./java/daikon/PptTopLevel.java:   * Returns a string version of all of the equality sets for this ppt. The string is of the form
+./java/daikon/PptTopLevel.java:   * [a,b], [c,d] where a,b and c,d are each in an equality set. Should be used only for debugging.
+./java/daikon/PptTopLevel.java:  public String equality_sets_txt() {
+./java/daikon/PptTopLevel.java:    if (equality_view == null) return "null";
+./java/daikon/PptTopLevel.java:    for (Invariant inv : equality_view.invs) {
+./java/daikon/PptTopLevel.java:   * <p>First, equality sets are created for this ppt. These are the intersection of the equality
+./java/daikon/PptTopLevel.java:   * equality sets and build the invariants for each slice.
+./java/daikon/PptTopLevel.java:      assert equality_view != null : "children.size() == 0 and equality_view == null for " + this;
+./java/daikon/PptTopLevel.java:      assert equality_view != null : this;
+./java/daikon/PptTopLevel.java:    // Create the (empty) equality view for this ppt
+./java/daikon/PptTopLevel.java:    assert (equality_view == null) : name() + ": " + equality_view;
+./java/daikon/PptTopLevel.java:    equality_view = new PptSliceEquality(this);
+./java/daikon/PptTopLevel.java:    // equality sets.
+./java/daikon/PptTopLevel.java:        // System.out.printf ("First child equality set: %s\n",
+./java/daikon/PptTopLevel.java:        //                     c1.child.equality_view);
+./java/daikon/PptTopLevel.java:          debugMerge.fine("child " + c1.child.name() + " equality = " + emap);
+./java/daikon/PptTopLevel.java:      equality_view.instantiate_invariants();
+./java/daikon/PptTopLevel.java:      debugMerge.fine("Found equality pairs ");
+./java/daikon/PptTopLevel.java:    // Build actual equality sets that match the pairs we found
+./java/daikon/PptTopLevel.java:    equality_view.instantiate_from_pairs(emap_keySet);
+./java/daikon/PptTopLevel.java:      debugMerge.fine("Built equality sets ");
+./java/daikon/PptTopLevel.java:      for (Invariant inv : equality_view.invs) {
+./java/daikon/PptTopLevel.java:    // System.out.printf ("New equality set = %s\n", equality_view);
+./java/daikon/PptTopLevel.java:      debugTimeMerge.fine("    equality sets etc = " + watch.stop_start());
+./java/daikon/PptTopLevel.java:  /*@RequiresNonNull("equality_view")*/
+./java/daikon/PptTopLevel.java:    List<VarInfo> non_missing_leaders = new ArrayList<VarInfo>(equality_view.invs.size());
+./java/daikon/PptTopLevel.java:    for (Invariant inv : equality_view.invs) {
+./java/daikon/PptTopLevel.java:   * <p>The corresponding parent variable can match ANY of the members of an equality set. For
+./java/daikon/PptTopLevel.java:   * example, suppose that the child is EXIT with variable A, with equality set members {A,
+./java/daikon/PptTopLevel.java:   * invariants over A where A is an equality set with B, and A and B were in different equality
+./java/daikon/PptTopLevel.java:      for (Iterator<VarInfo> k = cv.equalitySet.getVars().iterator(); k.hasNext(); ) {
+./java/daikon/PptTopLevel.java:      // Make sure that the parent equality set is a subset of the child
+./java/daikon/PptTopLevel.java:      // equality set
+./java/daikon/PptTopLevel.java:        for (VarInfo test_pv : pv.equalitySet.getVars()) {
+./java/daikon/PptTopLevel.java:            System.out.println("pv.equalitySet = " + pv.equalitySet);
+./java/daikon/PptTopLevel.java:            System.out.println("cv.equalitySet = " + cv.equalitySet);
+./java/daikon/PptTopLevel.java:                    + " is not in the same child equality set as "
+./java/daikon/PptTopLevel.java:          debugConditional.fine("child equality set = " + rel.child.equality_sets_txt());
+./java/daikon/PptTopLevel.java:      debugConditional.fine("After merge, equality set = " + ppt_cond.equality_sets_txt());
+./java/daikon/PptTopLevel.java:    equality_view = null;
+./java/daikon/PptTopLevel.java:      var_infos[i].equalitySet = null;
+./java/daikon/PptTopLevel.java:   * Remove the equality invariants added during equality post processing. These are not over
+./java/daikon/PptTopLevel.java:  public void remove_equality_invariants() {
+./java/daikon/PptTopLevel.java:   * Create an equality invariant over the specified variables. Samples should be the number of
+./java/daikon/PptTopLevel.java:  public PptSlice create_equality_inv(VarInfo v1, VarInfo v2, int samples) {
+./java/daikon/PptTopLevel.java:      throw new Error("No known Comparison invariant to convert equality into");
+./java/daikon/PptTopLevel.java:    /** number of equality sets */
+./java/daikon/PptTopLevel.java:    /** total number of variables in all equality sets */
+./java/daikon/PptTopLevel.java:      if (ppt.equality_view != null) {
+./java/daikon/PptTopLevel.java:        for (Invariant inv : ppt.equality_view.invs) {
+./java/daikon/PptTopLevel.java:                v.name() + "/" + v.equalitySet.getVars().size() + "/" + v.file_rep_type + " ");
+./java/daikon/PptTopLevel.java:   * Print statistics concerning equality sets over the entire set of ppts to the specified logger.
+./java/daikon/PptTopLevel.java:  public static void print_equality_stats(Logger log, PptMap all_ppts) {
+./java/daikon/PptTopLevel.java:    double equality_set_cnt = 0;
+./java/daikon/PptTopLevel.java:      double avg_equality_cnt = 0;
+./java/daikon/PptTopLevel.java:      double avg_vars_per_equality = 0;
+./java/daikon/PptTopLevel.java:        avg_equality_cnt += stats.set_cnt;
+./java/daikon/PptTopLevel.java:        equality_set_cnt += stats.set_cnt;
+./java/daikon/PptTopLevel.java:      avg_equality_cnt = avg_equality_cnt / sample_cnt;
+./java/daikon/PptTopLevel.java:      if (avg_equality_cnt > 0) avg_vars_per_equality = avg_var_cnt / avg_equality_cnt;
+./java/daikon/PptTopLevel.java:              + dfmt.format(avg_equality_cnt)
+./java/daikon/PptTopLevel.java:              + dfmt.format(avg_vars_per_equality)
+./java/daikon/split/SplitterJavaSource.java:   * "_identity" if it is a variable representing the array for equality tests or "_array" if it is
+Binary file ./java/daikon/split/PptSplitter.class matches
+./java/daikon/split/PptSplitter.java:  /*@RequiresNonNull({"parent.equality_view", "NIS.all_suppressions", "NIS.suppressor_map"})*/
+./java/daikon/split/PptSplitter.java:  /*@RequiresNonNull("parent.equality_view")*/
+./java/daikon/split/PptSplitter.java:      if (pchild.equality_view == null) {
+./java/daikon/split/PptSplitter.java:        assert child_ppt.equality_view != null : child_ppt.name();
+./java/daikon/split/PptSplitter.java:        assert parent.equality_view != null : parent.name();
+./java/daikon/split/PptSplitter.java:        // Look for an equality invariant in the non-canonical slice (if any).
+./java/daikon/split/PptSplitter.java:        // Note that only an equality invariant can exist in a non-canonical
+./java/daikon/split/PptSplitter.java:        // form (which for equality invariants will always be of the form
+./java/daikon/split/PptSplitter.java:                System.out.println(" -- equality set = " + cvi.equalitySet.shortString());
+./java/daikon/split/PptSplitter.java:  /*@RequiresNonNull("parent.equality_view")*/
+./java/daikon/split/PptSplitter.java:    VarInfo[] leaders = parent.equality_view.get_leaders_sorted();
+Binary file ./java/daikon/VarInfo.class matches
+./java/daikon/asm/DSForest.java: * partition must be non-equal, where equality is determined according to the equals/hashCode
+Binary file ./java/daikon/Debug.class matches
+Binary file ./java/daikon/PptSliceEquality.class matches
+./java/daikon/Quant.java: * <p>Whenever a method involves comparing two elements for equality, this is always "==" equality
+./java/daikon/Quant.java:   * For equality, "lexically" and "pairwise" are the same.
+./java/daikon/Quant.java:   * For equality, "lexically" and "pairwise" are the same.
+./java/daikon/Quant.java:   * For equality, "lexically" and "pairwise" are the same.
+./java/daikon/Quant.java:   * For equality, "lexically" and "pairwise" are the same.
+./java/daikon/Quant.java:   * For equality, "lexically" and "pairwise" are the same.
+./java/daikon/Quant.java:   * For equality, "lexically" and "pairwise" are the same.
+./java/daikon/Quant.java:   * For equality, "lexically" and "pairwise" are the same.
+./java/daikon/Quant.java:   * For equality, "lexically" and "pairwise" are the same.
+./java/daikon/Quant.java:   * For equality, "lexically" and "pairwise" are the same.
+./java/daikon/Quant.java:   * For equality, "lexically" and "pairwise" are the same.
+./java/daikon/VarComparabilityImplicit.java:    return equality_set_ok(o);
+./java/daikon/VarComparabilityImplicit.java:   * comparability value) can't be included in the same equality set as those with positive values.
+./java/daikon/VarComparabilityImplicit.java:  public boolean equality_set_ok(
+./java/daikon/VarComparabilityImplicit.java:              .equality_set_ok(type2.indexType(type2.dimensions - 1))
+./java/daikon/VarComparabilityImplicit.java:          && type1.elementType().equality_set_ok(type2.elementType()));
+./java/daikon/PptSliceEquality.java:   * If true, create one equality set for each variable. This has the effect of turning the equality
+./java/daikon/PptSliceEquality.java:          && vi.comparability.equality_set_ok(o.vi.comparability)
+./java/daikon/PptSliceEquality.java:  /** Actually instantiate the equality sets. */
+./java/daikon/PptSliceEquality.java:   * Instantiate the full equality sets from a set of variable pairs where each member of a pair is
+./java/daikon/PptSliceEquality.java:    // Loop through each variable, building the appropriate equality set
+./java/daikon/PptSliceEquality.java:    // equality set (albeit with only the one variable)
+./java/daikon/PptSliceEquality.java:      if (v.equalitySet != null) {
+./java/daikon/PptSliceEquality.java:      v.equalitySet = eq;
+./java/daikon/PptSliceEquality.java:  //    - Loop through each equality set
+./java/daikon/PptSliceEquality.java:  //        - Create new equality sets (call createEqualityInvs)
+./java/daikon/PptSliceEquality.java:    // Loop through each existing equality invariant
+./java/daikon/PptSliceEquality.java:        // Create new equality sets for all of the non-equal vars
+./java/daikon/PptSliceEquality.java:                    + nileader.equalitySet
+./java/daikon/PptSliceEquality.java:    // Add all of the new equality sets to our list
+./java/daikon/PptSliceEquality.java:   * Any variables that are out of bounds are forced into a separate equality set (since they no
+./java/daikon/PptSliceEquality.java:   *     of canonical that were equal to leader, representing their own newly-created equality sets.
+./java/daikon/PptSliceEquality.java:        // This is called here because breaking up the equality set may
+./java/daikon/PptSliceEquality.java:   * copyInvsFromLeader so that each new equality set that spawned off leader has the correct
+./java/daikon/PptSliceEquality.java:                "Created slice " + newSlice + " Leader equality set = " + soFar[0].equalitySet);
+./java/daikon/PptSliceEquality.java:  /** Returns an array of all of the leaders sorted by varinfo_index for this equality view. */
+./java/daikon/QuantBody.java.jpp:   * For equality, "lexically" and "pairwise" are the same.
+./java/daikon/PrintInvariants.java:  /** Debug tracer for printing equality. */
+./java/daikon/PrintInvariants.java:  public static final Logger debugPrintEquality = Logger.getLogger("daikon.print.equality");
+./java/daikon/PrintInvariants.java:      // here.  For now we use the equality invariant between the
+./java/daikon/PrintInvariants.java:      String class_name = ((inv instanceof Equality) ? "'equality'" : inv.getClass().getName());
+./java/daikon/PrintInvariants.java:      debugPrint.fine((ppt.equality_view == null) ? "null" : ppt.equality_view.toString());
+./java/daikon/PrintInvariants.java:    // Count invariants again, adjusting the count for equality sets
+./java/daikon/PrintInvariants.java:          cnt = cnt * vi.get_equalitySet_size();
+./java/daikon/PrintInvariants.java:    System.out.printf("%d invariants with equality removed\n", inv_cnt);
+./java/daikon/DaikonSimple.java:   * <p>Difference from Daikon's mainHelper: turn off optimization flags (equality, dynamic
+./java/daikon/DaikonSimple.java:    Daikon.use_equality_optimization = false;
+./java/daikon/DaikonSimple.java:   *   <li>canonical (leader of equality set) check of variables is turned off because every
+./java/daikon/DaikonSimple.java:   *       variable is in its own equality set
+./java/daikon/DaikonSimple.java:            exit_vars[j].equalitySet = null;
+Binary file ./java/daikon/VarComparability.class matches
+Binary file ./java/daikon/inv/Invariant.class matches
+Binary file ./java/daikon/inv/Equality.class matches
+./java/daikon/inv/ternary/threeScalar/LinearTernary.java.jpp:    // can't be reliably performed with equality sets (just because
+./java/daikon/inv/ternary/threeScalar/FunctionBinaryGeneric.java.jpp:    #define FACTORY1          equality_suppress_repeated_arg
+./java/daikon/inv/ternary/threeScalar/FunctionBinaryGeneric.java.jpp:    #define FACTORY2          equality_suppress_distinct_args
+./java/daikon/inv/ternary/threeScalar/FunctionBinaryGeneric.java.jpp:    #define FACTORY3          equality_suppress_min_max
+./java/daikon/inv/ternary/threeScalar/FunctionBinaryGeneric.java.jpp:    #define FACTORY1          equality_suppress_repeated_arg
+./java/daikon/inv/ternary/threeScalar/FunctionBinaryGeneric.java.jpp:    #define FACTORY2          equality_suppress_distinct_args
+./java/daikon/inv/ternary/threeScalar/LinearTernary.java:    // can't be reliably performed with equality sets (just because
+./java/daikon/inv/ternary/threeScalar/LinearTernaryFloat.java:    // can't be reliably performed with equality sets (just because
+./java/daikon/inv/IsEqualityComparison.java: * This does not consider PairwiseIntComparison to be an equality invariant.
+./java/daikon/inv/Equality.java:// displaying several equality Comparison invariants ("x == y", "x ==
+./java/daikon/inv/Equality.java:// during checking.  During printing, however, equality invariants may
+./java/daikon/inv/Equality.java:   * The Set of VarInfos that this represents equality for. Can change over time as this invariant
+./java/daikon/inv/Equality.java:    // ensure well-formedness and set equality slots
+./java/daikon/inv/Equality.java:      vi.equalitySet = this;
+./java/daikon/inv/Equality.java:    // Print the equality statements, stating expressible ones first.
+./java/daikon/inv/Equality.java:   *     quite wrong to leave variables in the same equality set when one is missing and the other
+./java/daikon/inv/Equality.java:   *     is not. Its possible we should go farther and break out of the equality set any variable
+./java/daikon/inv/Equality.java:      // The values differ.  Remove this from the equality set.
+./java/daikon/inv/Equality.java:      parent.create_equality_inv(leader, varArray[i], numSamples());
+./java/daikon/inv/equality-notes.txt:Notes on equality as copied from a draft.  Incomplete.
+./java/daikon/inv/equality-notes.txt:equality specially.  This serves to save space and time in two ways.
+./java/daikon/inv/equality-notes.txt:equality set: 1) Rather than having $O(v^2)$ two-way equality invariants,
+./java/daikon/inv/equality-notes.txt:each equality set.
+./java/daikon/inv/equality-notes.txt:over any one of them.  Normally, we would need 10 equality invariants
+./java/daikon/inv/equality-notes.txt:to express the equality, and then 4 invariants to show $f$ held on
+./java/daikon/inv/equality-notes.txt:time.  With the use of equality sets, we have one equality set, which
+./java/daikon/inv/equality-notes.txt:``leader'' of the equality set.  The total check time drops to 5
+./java/daikon/inv/equality-notes.txt:The basic equality optimization is summarized as follows:
+./java/daikon/inv/equality-notes.txt:placed into the same equality set.  Each equality set has a leader
+./java/daikon/inv/equality-notes.txt:At every sample during checking, each equality set is first checked to
+./java/daikon/inv/equality-notes.txt:see if its members are still equal.  If not, new equality sets are
+./java/daikon/inv/equality-notes.txt:budded off by the values seen at the sample.  Each new equality set
+./java/daikon/inv/equality-notes.txt:are checked after the equality sets have been checked.
+./java/daikon/inv/equality-notes.txt:As needed by the user, the equality sets can, at the end of the run
+./java/daikon/inv/equality-notes.txt:equality invariants between the leader of each equality set and its
+./java/daikon/inv/equality-notes.txt:new leaders.  $d$ is a variable that was not in the origial equality
+./java/daikon/inv/equality-notes.txt:set ${a, b, c}$ (but is a leader of its own equality set).  The
+./java/daikon/inv/equality-notes.txt:For each old equality set that splits off, we instantiate invariants
+./java/daikon/inv/equality-notes.txt:and $X$ be the leaders outside of the old equality set.  The
+./java/daikon/inv/binary/twoScalar/FloatLessThan.java:      // This might never get invoked, as equality is printed out specially.
+./java/daikon/inv/binary/twoScalar/FloatLessThan.java:      if ((s1 != null) && (s2 != null) && (s1.equalitySet == s2.equalitySet)) {
+Binary file ./java/daikon/inv/binary/twoScalar/IntLessEqual.class matches
+./java/daikon/inv/binary/twoScalar/IntGreaterThan.java:      // This might never get invoked, as equality is printed out specially.
+./java/daikon/inv/binary/twoScalar/IntGreaterThan.java:      if ((s1 != null) && (s2 != null) && (s1.equalitySet == s2.equalitySet)) {
+./java/daikon/inv/binary/twoScalar/IntEqual.java:  public boolean is_equality_inv() {
+./java/daikon/inv/binary/twoScalar/IntEqual.java:      // It's an equality invariant.  I ought to use the actual ranges somehow.
+./java/daikon/inv/binary/twoScalar/IntEqual.java:      // equality non-transitive.
+./java/daikon/inv/binary/twoScalar/IntEqual.java:   * Since this invariant can be a postProcessed equality, we have to handle isObvious especially to
+./java/daikon/inv/binary/twoScalar/IntEqual.java:   * rather than the cartesian product on the equality set.
+./java/daikon/inv/binary/twoScalar/IntEqual.java:    if (var1().equalitySet == var2().equalitySet) {
+./java/daikon/inv/binary/twoScalar/IntEqual.java:   * Since this invariant can be a postProcessed equality, we have to handle isObvious especially to
+./java/daikon/inv/binary/twoScalar/IntEqual.java:   * rather than the cartesian product on the equality set.
+./java/daikon/inv/binary/twoScalar/IntEqual.java:    if (var1().equalitySet == var2().equalitySet) {
+./java/daikon/inv/binary/twoScalar/IntEqual.java:      // This might never get invoked, as equality is printed out specially.
+./java/daikon/inv/binary/twoScalar/IntEqual.java:      if ((s1 != null) && (s2 != null) && (s1.equalitySet == s2.equalitySet)) {
+./java/daikon/inv/binary/twoScalar/IntEqual.java:   * If the equality is between two array size variables, check to see if the underlying arrays are
+Binary file ./java/daikon/inv/binary/twoScalar/IntLessThan.class matches
+Binary file ./java/daikon/inv/binary/twoScalar/IntGreaterThan.class matches
+./java/daikon/inv/binary/twoScalar/IntComparisons.java.jpp:    // can't be reliability performed with equality sets (just because
+./java/daikon/inv/binary/twoScalar/IntComparisons.java.jpp:  public boolean is_equality_inv() {
+./java/daikon/inv/binary/twoScalar/IntComparisons.java.jpp:      // It's an equality invariant.  I ought to use the actual ranges somehow.
+./java/daikon/inv/binary/twoScalar/IntComparisons.java.jpp:      // equality non-transitive.
+./java/daikon/inv/binary/twoScalar/IntComparisons.java.jpp:   * Since this invariant can be a postProcessed equality, we have to handle isObvious especially to
+./java/daikon/inv/binary/twoScalar/IntComparisons.java.jpp:   * rather than the cartesian product on the equality set.
+./java/daikon/inv/binary/twoScalar/IntComparisons.java.jpp:    if (var1().equalitySet == var2().equalitySet) {
+./java/daikon/inv/binary/twoScalar/IntComparisons.java.jpp:   * Since this invariant can be a postProcessed equality, we have to handle isObvious especially to
+./java/daikon/inv/binary/twoScalar/IntComparisons.java.jpp:   * rather than the cartesian product on the equality set.
+./java/daikon/inv/binary/twoScalar/IntComparisons.java.jpp:    if (var1().equalitySet == var2().equalitySet) {
+./java/daikon/inv/binary/twoScalar/IntComparisons.java.jpp:      // This might never get invoked, as equality is printed out specially.
+./java/daikon/inv/binary/twoScalar/IntComparisons.java.jpp:      if ((s1 != null) && (s2 != null) && (s1.equalitySet == s2.equalitySet)) {
+./java/daikon/inv/binary/twoScalar/IntComparisons.java.jpp:   * If the equality is between two array size variables, check to see if the underlying arrays are
+Binary file ./java/daikon/inv/binary/twoScalar/FloatLessThan.class matches
+Binary file ./java/daikon/inv/binary/twoScalar/IntGreaterEqual.class matches
+Binary file ./java/daikon/inv/binary/twoScalar/FloatGreaterThan.class matches
+./java/daikon/inv/binary/twoScalar/IntNonEqual.java:      // This might never get invoked, as equality is printed out specially.
+./java/daikon/inv/binary/twoScalar/IntNonEqual.java:      if ((s1 != null) && (s2 != null) && (s1.equalitySet == s2.equalitySet)) {
+./java/daikon/inv/binary/twoScalar/FloatGreaterEqual.java:      // This might never get invoked, as equality is printed out specially.
+./java/daikon/inv/binary/twoScalar/FloatGreaterEqual.java:      if ((s1 != null) && (s2 != null) && (s1.equalitySet == s2.equalitySet)) {
+./java/daikon/inv/binary/twoScalar/FloatLessEqual.java:      // This might never get invoked, as equality is printed out specially.
+./java/daikon/inv/binary/twoScalar/FloatLessEqual.java:      if ((s1 != null) && (s2 != null) && (s1.equalitySet == s2.equalitySet)) {
+Binary file ./java/daikon/inv/binary/twoScalar/IntEqual.class matches
+./java/daikon/inv/binary/twoScalar/IntLessThan.java:      // This might never get invoked, as equality is printed out specially.
+./java/daikon/inv/binary/twoScalar/IntLessThan.java:      if ((s1 != null) && (s2 != null) && (s1.equalitySet == s2.equalitySet)) {
+./java/daikon/inv/binary/twoScalar/FloatNonEqual.java:      // This might never get invoked, as equality is printed out specially.
+./java/daikon/inv/binary/twoScalar/FloatNonEqual.java:      if ((s1 != null) && (s2 != null) && (s1.equalitySet == s2.equalitySet)) {
+Binary file ./java/daikon/inv/binary/twoScalar/FloatLessEqual.class matches
+Binary file ./java/daikon/inv/binary/twoScalar/FloatGreaterEqual.class matches
+Binary file ./java/daikon/inv/binary/twoScalar/IntNonEqual.class matches
+./java/daikon/inv/binary/twoScalar/FloatGreaterThan.java:      // This might never get invoked, as equality is printed out specially.
+./java/daikon/inv/binary/twoScalar/FloatGreaterThan.java:      if ((s1 != null) && (s2 != null) && (s1.equalitySet == s2.equalitySet)) {
+Binary file ./java/daikon/inv/binary/twoScalar/FloatNonEqual.class matches
+./java/daikon/inv/binary/twoScalar/Numeric.java.jpp:   * Each combination of the above must be considered in creating the equality invariant. Not all
+./java/daikon/inv/binary/twoScalar/FloatEqual.java:  public boolean is_equality_inv() {
+./java/daikon/inv/binary/twoScalar/FloatEqual.java:      // It's an equality invariant.  I ought to use the actual ranges somehow.
+./java/daikon/inv/binary/twoScalar/FloatEqual.java:      // equality non-transitive.
+./java/daikon/inv/binary/twoScalar/FloatEqual.java:   * Since this invariant can be a postProcessed equality, we have to handle isObvious especially to
+./java/daikon/inv/binary/twoScalar/FloatEqual.java:   * rather than the cartesian product on the equality set.
+./java/daikon/inv/binary/twoScalar/FloatEqual.java:    if (var1().equalitySet == var2().equalitySet) {
+./java/daikon/inv/binary/twoScalar/FloatEqual.java:   * Since this invariant can be a postProcessed equality, we have to handle isObvious especially to
+./java/daikon/inv/binary/twoScalar/FloatEqual.java:   * rather than the cartesian product on the equality set.
+./java/daikon/inv/binary/twoScalar/FloatEqual.java:    if (var1().equalitySet == var2().equalitySet) {
+./java/daikon/inv/binary/twoScalar/FloatEqual.java:      // This might never get invoked, as equality is printed out specially.
+./java/daikon/inv/binary/twoScalar/FloatEqual.java:      if ((s1 != null) && (s2 != null) && (s1.equalitySet == s2.equalitySet)) {
+./java/daikon/inv/binary/twoScalar/FloatEqual.java:   * If the equality is between two array size variables, check to see if the underlying arrays are
+./java/daikon/inv/binary/twoScalar/IntLessEqual.java:      // This might never get invoked, as equality is printed out specially.
+./java/daikon/inv/binary/twoScalar/IntLessEqual.java:      if ((s1 != null) && (s2 != null) && (s1.equalitySet == s2.equalitySet)) {
+Binary file ./java/daikon/inv/binary/twoScalar/FloatEqual.class matches
+./java/daikon/inv/binary/twoScalar/IntGreaterEqual.java:      // This might never get invoked, as equality is printed out specially.
+./java/daikon/inv/binary/twoScalar/IntGreaterEqual.java:      if ((s1 != null) && (s2 != null) && (s1.equalitySet == s2.equalitySet)) {
+Binary file ./java/daikon/inv/binary/twoSequence/SeqSeqIntGreaterThan.class matches
+Binary file ./java/daikon/inv/binary/twoSequence/SeqSeqFloatGreaterThan.class matches
+./java/daikon/inv/binary/twoSequence/SubSequenceFloat.java:        if (supervar_part.get_equalitySet_leader() == subvar) {
+Binary file ./java/daikon/inv/binary/twoSequence/SeqSeqIntLessThan.class matches
+./java/daikon/inv/binary/twoSequence/SeqSeqStringLessEqual.java:      // non equality comparisons don't make sense if the arrays aren't ordered
+./java/daikon/inv/binary/twoSequence/SeqSeqStringLessEqual.java:   * Since this invariant can be a postProcessed equality, we have to handle isObvious especially to
+./java/daikon/inv/binary/twoSequence/SeqSeqStringLessEqual.java:    if (var1().equalitySet == var2().equalitySet) {
+./java/daikon/inv/binary/twoSequence/SeqSeqStringLessEqual.java:   * Since this invariant can be a postProcessed equality, we have to handle isObvious especially to
+./java/daikon/inv/binary/twoSequence/SeqSeqStringLessEqual.java:    if (var1().equalitySet == var2().equalitySet) {
+Binary file ./java/daikon/inv/binary/twoSequence/SeqSeqFloatEqual.class matches
+Binary file ./java/daikon/inv/binary/twoSequence/SuperSequenceFloat.class matches
+./java/daikon/inv/binary/twoSequence/SuperSequenceFloat.java:        if (supervar_part.get_equalitySet_leader() == subvar) {
+Binary file ./java/daikon/inv/binary/twoSequence/SeqSeqStringEqual.class matches
+./java/daikon/inv/binary/twoSequence/PairwiseNumericInt.java:   * Each combination of the above must be considered in creating the equality invariant. Not all
+./java/daikon/inv/binary/twoSequence/SubSequence.java.jpp:        if (supervar_part.get_equalitySet_leader() == subvar) {
+./java/daikon/inv/binary/twoSequence/SeqSeqStringGreaterEqual.java:      // non equality comparisons don't make sense if the arrays aren't ordered
+./java/daikon/inv/binary/twoSequence/SeqSeqStringGreaterEqual.java:   * Since this invariant can be a postProcessed equality, we have to handle isObvious especially to
+./java/daikon/inv/binary/twoSequence/SeqSeqStringGreaterEqual.java:    if (var1().equalitySet == var2().equalitySet) {
+./java/daikon/inv/binary/twoSequence/SeqSeqStringGreaterEqual.java:   * Since this invariant can be a postProcessed equality, we have to handle isObvious especially to
+./java/daikon/inv/binary/twoSequence/SeqSeqStringGreaterEqual.java:    if (var1().equalitySet == var2().equalitySet) {
+./java/daikon/inv/binary/twoSequence/SeqSeqIntLessThan.java:      // non equality comparisons don't make sense if the arrays aren't ordered
+./java/daikon/inv/binary/twoSequence/SeqSeqIntLessThan.java:   * Since this invariant can be a postProcessed equality, we have to handle isObvious especially to
+./java/daikon/inv/binary/twoSequence/SeqSeqIntLessThan.java:    if (var1().equalitySet == var2().equalitySet) {
+./java/daikon/inv/binary/twoSequence/SeqSeqIntLessThan.java:   * Since this invariant can be a postProcessed equality, we have to handle isObvious especially to
+./java/daikon/inv/binary/twoSequence/SeqSeqIntLessThan.java:    if (var1().equalitySet == var2().equalitySet) {
+./java/daikon/inv/binary/twoSequence/SeqSeqFloatGreaterEqual.java:      // non equality comparisons don't make sense if the arrays aren't ordered
+./java/daikon/inv/binary/twoSequence/SeqSeqFloatGreaterEqual.java:   * Since this invariant can be a postProcessed equality, we have to handle isObvious especially to
+./java/daikon/inv/binary/twoSequence/SeqSeqFloatGreaterEqual.java:    if (var1().equalitySet == var2().equalitySet) {
+./java/daikon/inv/binary/twoSequence/SeqSeqFloatGreaterEqual.java:   * Since this invariant can be a postProcessed equality, we have to handle isObvious especially to
+./java/daikon/inv/binary/twoSequence/SeqSeqFloatGreaterEqual.java:    if (var1().equalitySet == var2().equalitySet) {
+./java/daikon/inv/binary/twoSequence/PairwiseIntEqual.java:      // It's an equality invariant
+./java/daikon/inv/binary/twoSequence/SeqSeqIntEqual.java:    // It's an equality invariant
+./java/daikon/inv/binary/twoSequence/SeqSeqIntEqual.java:   * Since this invariant can be a postProcessed equality, we have to handle isObvious especially to
+./java/daikon/inv/binary/twoSequence/SeqSeqIntEqual.java:    if (var1().equalitySet == var2().equalitySet) {
+./java/daikon/inv/binary/twoSequence/SeqSeqIntEqual.java:   * Since this invariant can be a postProcessed equality, we have to handle isObvious especially to
+./java/daikon/inv/binary/twoSequence/SeqSeqIntEqual.java:    if (var1().equalitySet == var2().equalitySet) {
+./java/daikon/inv/binary/twoSequence/SeqSeqFloatLessEqual.java:      // non equality comparisons don't make sense if the arrays aren't ordered
+./java/daikon/inv/binary/twoSequence/SeqSeqFloatLessEqual.java:   * Since this invariant can be a postProcessed equality, we have to handle isObvious especially to
+./java/daikon/inv/binary/twoSequence/SeqSeqFloatLessEqual.java:    if (var1().equalitySet == var2().equalitySet) {
+./java/daikon/inv/binary/twoSequence/SeqSeqFloatLessEqual.java:   * Since this invariant can be a postProcessed equality, we have to handle isObvious especially to
+./java/daikon/inv/binary/twoSequence/SeqSeqFloatLessEqual.java:    if (var1().equalitySet == var2().equalitySet) {
+./java/daikon/inv/binary/twoSequence/SeqSeqIntGreaterEqual.java:      // non equality comparisons don't make sense if the arrays aren't ordered
+./java/daikon/inv/binary/twoSequence/SeqSeqIntGreaterEqual.java:   * Since this invariant can be a postProcessed equality, we have to handle isObvious especially to
+./java/daikon/inv/binary/twoSequence/SeqSeqIntGreaterEqual.java:    if (var1().equalitySet == var2().equalitySet) {
+./java/daikon/inv/binary/twoSequence/SeqSeqIntGreaterEqual.java:   * Since this invariant can be a postProcessed equality, we have to handle isObvious especially to
+./java/daikon/inv/binary/twoSequence/SeqSeqIntGreaterEqual.java:    if (var1().equalitySet == var2().equalitySet) {
+./java/daikon/inv/binary/twoSequence/PairwiseNumericFloat.java:   * Each combination of the above must be considered in creating the equality invariant. Not all
+./java/daikon/inv/binary/twoSequence/SeqSeqStringEqual.java:    // It's an equality invariant
+./java/daikon/inv/binary/twoSequence/SeqSeqStringEqual.java:   * Since this invariant can be a postProcessed equality, we have to handle isObvious especially to
+./java/daikon/inv/binary/twoSequence/SeqSeqStringEqual.java:    if (var1().equalitySet == var2().equalitySet) {
+./java/daikon/inv/binary/twoSequence/SeqSeqStringEqual.java:   * Since this invariant can be a postProcessed equality, we have to handle isObvious especially to
+./java/daikon/inv/binary/twoSequence/SeqSeqStringEqual.java:    if (var1().equalitySet == var2().equalitySet) {
+./java/daikon/inv/binary/twoSequence/SeqSeqFloatEqual.java:    // It's an equality invariant
+./java/daikon/inv/binary/twoSequence/SeqSeqFloatEqual.java:   * Since this invariant can be a postProcessed equality, we have to handle isObvious especially to
+./java/daikon/inv/binary/twoSequence/SeqSeqFloatEqual.java:    if (var1().equalitySet == var2().equalitySet) {
+./java/daikon/inv/binary/twoSequence/SeqSeqFloatEqual.java:   * Since this invariant can be a postProcessed equality, we have to handle isObvious especially to
+./java/daikon/inv/binary/twoSequence/SeqSeqFloatEqual.java:    if (var1().equalitySet == var2().equalitySet) {
+./java/daikon/inv/binary/twoSequence/SeqSeqStringGreaterThan.java:      // non equality comparisons don't make sense if the arrays aren't ordered
+./java/daikon/inv/binary/twoSequence/SeqSeqStringGreaterThan.java:   * Since this invariant can be a postProcessed equality, we have to handle isObvious especially to
+./java/daikon/inv/binary/twoSequence/SeqSeqStringGreaterThan.java:    if (var1().equalitySet == var2().equalitySet) {
+./java/daikon/inv/binary/twoSequence/SeqSeqStringGreaterThan.java:   * Since this invariant can be a postProcessed equality, we have to handle isObvious especially to
+./java/daikon/inv/binary/twoSequence/SeqSeqStringGreaterThan.java:    if (var1().equalitySet == var2().equalitySet) {
+./java/daikon/inv/binary/twoSequence/SubSet.java.jpp:      // can't be reliability performed with equality sets (just because
+./java/daikon/inv/binary/twoSequence/SubSequence.java:        if (supervar_part.get_equalitySet_leader() == subvar) {
+Binary file ./java/daikon/inv/binary/twoSequence/SeqSeqFloatGreaterEqual.class matches
+./java/daikon/inv/binary/twoSequence/PairwiseFloatEqual.java:      // It's an equality invariant
+Binary file ./java/daikon/inv/binary/twoSequence/SeqSeqIntGreaterEqual.class matches
+./java/daikon/inv/binary/twoSequence/SeqSeqIntLessEqual.java:      // non equality comparisons don't make sense if the arrays aren't ordered
+./java/daikon/inv/binary/twoSequence/SeqSeqIntLessEqual.java:   * Since this invariant can be a postProcessed equality, we have to handle isObvious especially to
+./java/daikon/inv/binary/twoSequence/SeqSeqIntLessEqual.java:    if (var1().equalitySet == var2().equalitySet) {
+./java/daikon/inv/binary/twoSequence/SeqSeqIntLessEqual.java:   * Since this invariant can be a postProcessed equality, we have to handle isObvious especially to
+./java/daikon/inv/binary/twoSequence/SeqSeqIntLessEqual.java:    if (var1().equalitySet == var2().equalitySet) {
+Binary file ./java/daikon/inv/binary/twoSequence/SubSequence.class matches
+Binary file ./java/daikon/inv/binary/twoSequence/SeqSeqIntLessEqual.class matches
+./java/daikon/inv/binary/twoSequence/SuperSequence.java:        if (supervar_part.get_equalitySet_leader() == subvar) {
+./java/daikon/inv/binary/twoSequence/SeqSeqIntGreaterThan.java:      // non equality comparisons don't make sense if the arrays aren't ordered
+./java/daikon/inv/binary/twoSequence/SeqSeqIntGreaterThan.java:   * Since this invariant can be a postProcessed equality, we have to handle isObvious especially to
+./java/daikon/inv/binary/twoSequence/SeqSeqIntGreaterThan.java:    if (var1().equalitySet == var2().equalitySet) {
+./java/daikon/inv/binary/twoSequence/SeqSeqIntGreaterThan.java:   * Since this invariant can be a postProcessed equality, we have to handle isObvious especially to
+./java/daikon/inv/binary/twoSequence/SeqSeqIntGreaterThan.java:    if (var1().equalitySet == var2().equalitySet) {
+Binary file ./java/daikon/inv/binary/twoSequence/SeqSeqStringLessEqual.class matches
+./java/daikon/inv/binary/twoSequence/SeqSeqStringLessThan.java:      // non equality comparisons don't make sense if the arrays aren't ordered
+./java/daikon/inv/binary/twoSequence/SeqSeqStringLessThan.java:   * Since this invariant can be a postProcessed equality, we have to handle isObvious especially to
+./java/daikon/inv/binary/twoSequence/SeqSeqStringLessThan.java:    if (var1().equalitySet == var2().equalitySet) {
+./java/daikon/inv/binary/twoSequence/SeqSeqStringLessThan.java:   * Since this invariant can be a postProcessed equality, we have to handle isObvious especially to
+./java/daikon/inv/binary/twoSequence/SeqSeqStringLessThan.java:    if (var1().equalitySet == var2().equalitySet) {
+Binary file ./java/daikon/inv/binary/twoSequence/SuperSequence.class matches
+Binary file ./java/daikon/inv/binary/twoSequence/SeqSeqIntEqual.class matches
+Binary file ./java/daikon/inv/binary/twoSequence/SeqSeqStringGreaterThan.class matches
+Binary file ./java/daikon/inv/binary/twoSequence/SeqSeqStringGreaterEqual.class matches
+./java/daikon/inv/binary/twoSequence/SeqSeqFloatLessThan.java:      // non equality comparisons don't make sense if the arrays aren't ordered
+./java/daikon/inv/binary/twoSequence/SeqSeqFloatLessThan.java:   * Since this invariant can be a postProcessed equality, we have to handle isObvious especially to
+./java/daikon/inv/binary/twoSequence/SeqSeqFloatLessThan.java:    if (var1().equalitySet == var2().equalitySet) {
+./java/daikon/inv/binary/twoSequence/SeqSeqFloatLessThan.java:   * Since this invariant can be a postProcessed equality, we have to handle isObvious especially to
+./java/daikon/inv/binary/twoSequence/SeqSeqFloatLessThan.java:    if (var1().equalitySet == var2().equalitySet) {
+Binary file ./java/daikon/inv/binary/twoSequence/SeqSeqStringLessThan.class matches
+Binary file ./java/daikon/inv/binary/twoSequence/SeqSeqFloatLessThan.class matches
+./java/daikon/inv/binary/twoSequence/SeqSeqFloatGreaterThan.java:      // non equality comparisons don't make sense if the arrays aren't ordered
+./java/daikon/inv/binary/twoSequence/SeqSeqFloatGreaterThan.java:   * Since this invariant can be a postProcessed equality, we have to handle isObvious especially to
+./java/daikon/inv/binary/twoSequence/SeqSeqFloatGreaterThan.java:    if (var1().equalitySet == var2().equalitySet) {
+./java/daikon/inv/binary/twoSequence/SeqSeqFloatGreaterThan.java:   * Since this invariant can be a postProcessed equality, we have to handle isObvious especially to
+./java/daikon/inv/binary/twoSequence/SeqSeqFloatGreaterThan.java:    if (var1().equalitySet == var2().equalitySet) {
+./java/daikon/inv/binary/twoSequence/SeqComparison.java.jpp:      // non equality comparisons don't make sense if the arrays aren't ordered
+./java/daikon/inv/binary/twoSequence/SeqComparison.java.jpp:    // It's an equality invariant
+./java/daikon/inv/binary/twoSequence/SeqComparison.java.jpp:   * Since this invariant can be a postProcessed equality, we have to handle isObvious especially to
+./java/daikon/inv/binary/twoSequence/SeqComparison.java.jpp:    if (var1().equalitySet == var2().equalitySet) {
+./java/daikon/inv/binary/twoSequence/SeqComparison.java.jpp:   * Since this invariant can be a postProcessed equality, we have to handle isObvious especially to
+./java/daikon/inv/binary/twoSequence/SeqComparison.java.jpp:    if (var1().equalitySet == var2().equalitySet) {
+Binary file ./java/daikon/inv/binary/twoSequence/SubSequenceFloat.class matches
+./java/daikon/inv/binary/twoSequence/PairwiseString.java:   * Each combination of the above must be considered in creating the equality invariant. Not all
+Binary file ./java/daikon/inv/binary/twoSequence/SeqSeqFloatLessEqual.class matches
+./java/daikon/inv/binary/twoSequence/PairwiseStringEqual.java:      // It's an equality invariant
+./java/daikon/inv/binary/twoSequence/PairwiseIntComparison.java.jpp:      // It's an equality invariant
+./java/daikon/inv/binary/twoString/StringEqual.java:  public boolean is_equality_inv() {
+./java/daikon/inv/binary/twoString/StringEqual.java:      // It's an equality invariant.  I ought to use the actual ranges somehow.
+./java/daikon/inv/binary/twoString/StringEqual.java:      // equality non-transitive.
+./java/daikon/inv/binary/twoString/StringEqual.java:   * Since this invariant can be a postProcessed equality, we have to handle isObvious especially to
+./java/daikon/inv/binary/twoString/StringEqual.java:   * rather than the cartesian product on the equality set.
+./java/daikon/inv/binary/twoString/StringEqual.java:    if (var1().equalitySet == var2().equalitySet) {
+./java/daikon/inv/binary/twoString/StringEqual.java:   * Since this invariant can be a postProcessed equality, we have to handle isObvious especially to
+./java/daikon/inv/binary/twoString/StringEqual.java:   * rather than the cartesian product on the equality set.
+./java/daikon/inv/binary/twoString/StringEqual.java:    if (var1().equalitySet == var2().equalitySet) {
+./java/daikon/inv/binary/twoString/StringEqual.java:   * If the equality is between two array size variables, check to see if the underlying arrays are
+Binary file ./java/daikon/inv/binary/twoString/StringEqual.class matches
+./java/daikon/inv/binary/sequenceScalar/SeqFloatEqual.java:      // It's an equality invariant.  I ought to use the actual ranges somehow.
+./java/daikon/inv/binary/sequenceScalar/SeqFloatEqual.java:      // equality non-transitive.
+./java/daikon/inv/binary/sequenceScalar/SeqFloatEqual.java:    // doesn't need to explicitly ignore oher members of the equality set
+./java/daikon/inv/binary/sequenceScalar/SeqIntLessEqual.java:    // doesn't need to explicitly ignore oher members of the equality set
+./java/daikon/inv/binary/sequenceScalar/SeqIntGreaterThan.java:    // doesn't need to explicitly ignore oher members of the equality set
+./java/daikon/inv/binary/sequenceScalar/SeqIntGreaterEqual.java:    // doesn't need to explicitly ignore oher members of the equality set
+./java/daikon/inv/binary/sequenceScalar/SeqFloatLessThan.java:    // doesn't need to explicitly ignore oher members of the equality set
+./java/daikon/inv/binary/sequenceScalar/SeqFloatGreaterThan.java:    // doesn't need to explicitly ignore oher members of the equality set
+./java/daikon/inv/binary/sequenceScalar/SeqFloatGreaterEqual.java:    // doesn't need to explicitly ignore oher members of the equality set
+./java/daikon/inv/binary/sequenceScalar/SeqFloatLessEqual.java:    // doesn't need to explicitly ignore oher members of the equality set
+./java/daikon/inv/binary/sequenceScalar/SeqIntComparison.java.jpp:      // It's an equality invariant.  I ought to use the actual ranges somehow.
+./java/daikon/inv/binary/sequenceScalar/SeqIntComparison.java.jpp:      // equality non-transitive.
+./java/daikon/inv/binary/sequenceScalar/SeqIntComparison.java.jpp:    // doesn't need to explicitly ignore oher members of the equality set
+./java/daikon/inv/binary/sequenceScalar/SeqIntEqual.java:      // It's an equality invariant.  I ought to use the actual ranges somehow.
+./java/daikon/inv/binary/sequenceScalar/SeqIntEqual.java:      // equality non-transitive.
+./java/daikon/inv/binary/sequenceScalar/SeqIntEqual.java:    // doesn't need to explicitly ignore oher members of the equality set
+./java/daikon/inv/binary/sequenceScalar/SeqIntLessThan.java:    // doesn't need to explicitly ignore oher members of the equality set
+./java/daikon/inv/Invariant.java:  /** Debug tracer for printing equality invariants. */
+./java/daikon/inv/Invariant.java:  public static final Logger debugPrintEquality = Logger.getLogger("daikon.print.equality");
+./java/daikon/inv/Invariant.java:   * (when only equality is possible), LinearBinary, FunctionUnary. OneOf is treated differently, as
+./java/daikon/inv/Invariant.java:      // that anymore, because with equality, invariants may get
+./java/daikon/inv/Invariant.java:      // that anymore, because with equality, invariants may get
+./java/daikon/inv/Invariant.java:      // Put equality invariants first
+./java/daikon/inv/Invariant.java:   * Return true if this invariant and all equality combinations of its member variables are
+./java/daikon/inv/Invariant.java:  // of VarInfos and their equality set, so a possible conservative
+./java/daikon/inv/Invariant.java:      if (ppt.var_infos[i].equalitySet.getVars().size() > 1) {
+./java/daikon/inv/Invariant.java:   * Return true if this invariant and some equality combinations of its member variables are
+./java/daikon/inv/Invariant.java:   * the equality combinations aren't interesting.
+./java/daikon/inv/Invariant.java:   *     The contains variables that are elementwise in the same equality set as this.ppt.var_infos.
+./java/daikon/inv/Invariant.java:      for (VarInfo vi : vis[position].get_equalitySet_vars()) {
+./java/daikon/inv/Invariant.java:   * such invariants for the purpose of equality set processing, but they aren't intended for
+./java/daikon/inv/Invariant.java:   * Return true if this invariant and some equality combinations of its member variables are
+./java/daikon/inv/Invariant.java:   * the equality combinations aren't interesting.
+./java/daikon/inv/Invariant.java:   *     The contains variables that are elementwise in the same equality set as this.ppt.var_infos.
+./java/daikon/inv/Invariant.java:   * Recurse through vis (an array of leaders) and generate the cartesian product of their equality
+./java/daikon/inv/Invariant.java:   * sets; in other words, every combination of one element from each equality set. For each such
+./java/daikon/inv/Invariant.java:      for (VarInfo vi : vis[position].get_equalitySet_vars()) {
+./java/daikon/inv/Invariant.java:      // of the form f(a, a, a) because of equality sets.
+./java/daikon/inv/Invariant.java:   * Class used as a key to store invariants in a MAP where their equality depends on the invariant
+./java/daikon/inv/Comparison.java:   * If the invariant is a equality invariant, then its confidence. Otherwise,
+./java/daikon/inv/DiscardInfo.java:   * Adds an equality string to the discardString for each variable in in vis which is different
+./java/daikon/inv/filter/ReadonlyPrestateFilter.java:        PrintInvariants.debugFiltering.fine("\tUnmodRPF thinks this isn't an equality comparison");
+./java/daikon/inv/filter/ParentFilter.java:                inv.ppt.var_infos[j], inv.ppt.var_infos[j].get_equalitySet_vars(), rel);
+./java/daikon/inv/filter/ParentFilter.java:            for (VarInfo evi : inv.ppt.var_infos[j].get_equalitySet_vars()) {
+./java/daikon/inv/filter/ParentFilter.java:              System.out.printf("      Equality set: %s%n", v.equalitySet.shortString());
+./java/daikon/inv/filter/ParentFilter.java:            for (VarInfo evi : cvi.get_equalitySet_vars()) {
+./java/daikon/inv/filter/UnmodifiedVariableEqualityFilter.java:            "\tUnmodVarEqF thinks this isn't an equality comparison");
+./java/daikon/inv/filter/InvariantFilters.java:   * This function takes a list of invariants, finds the equality Comparison invariants (x==y,
+Binary file ./java/daikon/inv/filter/UnmodifiedVariableEqualityFilter.class matches
+Binary file ./java/daikon/inv/filter/ReadonlyPrestateFilter.class matches
+Binary file ./java/daikon/inv/filter/ParentFilter.class matches
+./java/daikon/inv/Implication.java:   * Return true if the right side of the implication and some equality combinations of its member
+./java/daikon/inv/Implication.java:   * occurance means all the equality combinations aren't interesting.
+./java/daikon/inv/Implication.java:   * Return true if the rightr side of the implication some equality combinations of its member
+./java/daikon/inv/Implication.java:   * all the equality combinations aren't interesting.
+./java/daikon/inv/unary/OneOf.java.jpp:  #define COMMENT No "EQUALS(a,b)" because we intern and so can use equality tests
+Binary file ./java/daikon/inv/unary/sequence/SeqIndexIntNonEqual.class matches
+./java/daikon/inv/unary/sequence/SeqIndexIntGreaterEqual.java:    // We have to check for the same equality set here, because
+./java/daikon/inv/unary/sequence/SeqIndexIntGreaterEqual.java:    // isObviousDynamically is called for each member of the equality set.
+./java/daikon/inv/unary/sequence/SeqIndexIntGreaterEqual.java:    // We don't want other members of our own equality set to make this obvious
+./java/daikon/inv/unary/sequence/SeqIndexIntGreaterEqual.java:      if (vi.equalitySet == seqvar.equalitySet) {
+Binary file ./java/daikon/inv/unary/sequence/SeqIndexIntLessThan.class matches
+Binary file ./java/daikon/inv/unary/sequence/SeqIndexIntGreaterThan.class matches
+./java/daikon/inv/unary/sequence/SeqIndexFloatNonEqual.java:    // We have to check for the same equality set here, because
+./java/daikon/inv/unary/sequence/SeqIndexFloatNonEqual.java:    // isObviousDynamically is called for each member of the equality set.
+./java/daikon/inv/unary/sequence/SeqIndexFloatNonEqual.java:    // We don't want other members of our own equality set to make this obvious
+./java/daikon/inv/unary/sequence/SeqIndexFloatNonEqual.java:      if (vi.equalitySet == seqvar.equalitySet) {
+Binary file ./java/daikon/inv/unary/sequence/SeqIndexFloatEqual.class matches
+./java/daikon/inv/unary/sequence/EltwiseIntLessThan.java:  /** Non-equality EltwiseIntLessThan invariants are only valid on integral types */
+./java/daikon/inv/unary/sequence/EltwiseIntComparisons.java.jpp:   * Represents equality between adjacent elements (x[i], x[i+1]) of a PRIMITIVE sequence. Prints as
+./java/daikon/inv/unary/sequence/EltwiseIntComparisons.java.jpp:  /** Non-equality CLASSNAME invariants are only valid on integral types */
+Binary file ./java/daikon/inv/unary/sequence/SeqIndexIntGreaterEqual.class matches
+Binary file ./java/daikon/inv/unary/sequence/SeqIndexFloatNonEqual.class matches
+./java/daikon/inv/unary/sequence/SeqIndexIntEqual.java:    // We have to check for the same equality set here, because
+./java/daikon/inv/unary/sequence/SeqIndexIntEqual.java:    // isObviousDynamically is called for each member of the equality set.
+./java/daikon/inv/unary/sequence/SeqIndexIntEqual.java:    // We don't want other members of our own equality set to make this obvious
+./java/daikon/inv/unary/sequence/SeqIndexIntEqual.java:      if (vi.equalitySet == seqvar.equalitySet) {
+Binary file ./java/daikon/inv/unary/sequence/SeqIndexIntLessEqual.class matches
+./java/daikon/inv/unary/sequence/SeqIndexIntNonEqual.java:    // We have to check for the same equality set here, because
+./java/daikon/inv/unary/sequence/SeqIndexIntNonEqual.java:    // isObviousDynamically is called for each member of the equality set.
+./java/daikon/inv/unary/sequence/SeqIndexIntNonEqual.java:    // We don't want other members of our own equality set to make this obvious
+./java/daikon/inv/unary/sequence/SeqIndexIntNonEqual.java:      if (vi.equalitySet == seqvar.equalitySet) {
+./java/daikon/inv/unary/sequence/SeqIndexComparison.java.jpp:    // We have to check for the same equality set here, because
+./java/daikon/inv/unary/sequence/SeqIndexComparison.java.jpp:    // isObviousDynamically is called for each member of the equality set.
+./java/daikon/inv/unary/sequence/SeqIndexComparison.java.jpp:    // We don't want other members of our own equality set to make this obvious
+./java/daikon/inv/unary/sequence/SeqIndexComparison.java.jpp:      if (vi.equalitySet == seqvar.equalitySet) {
+./java/daikon/inv/unary/sequence/SeqIndexIntGreaterThan.java:    // We have to check for the same equality set here, because
+./java/daikon/inv/unary/sequence/SeqIndexIntGreaterThan.java:    // isObviousDynamically is called for each member of the equality set.
+./java/daikon/inv/unary/sequence/SeqIndexIntGreaterThan.java:    // We don't want other members of our own equality set to make this obvious
+./java/daikon/inv/unary/sequence/SeqIndexIntGreaterThan.java:      if (vi.equalitySet == seqvar.equalitySet) {
+./java/daikon/inv/unary/sequence/EltwiseIntGreaterEqual.java:  /** Non-equality EltwiseIntGreaterEqual invariants are only valid on integral types */
+./java/daikon/inv/unary/sequence/EltwiseIntLessEqual.java:  /** Non-equality EltwiseIntLessEqual invariants are only valid on integral types */
+./java/daikon/inv/unary/sequence/SeqIndexIntLessEqual.java:    // We have to check for the same equality set here, because
+./java/daikon/inv/unary/sequence/SeqIndexIntLessEqual.java:    // isObviousDynamically is called for each member of the equality set.
+./java/daikon/inv/unary/sequence/SeqIndexIntLessEqual.java:    // We don't want other members of our own equality set to make this obvious
+./java/daikon/inv/unary/sequence/SeqIndexIntLessEqual.java:      if (vi.equalitySet == seqvar.equalitySet) {
+Binary file ./java/daikon/inv/unary/sequence/SeqIndexFloatGreaterThan.class matches
+Binary file ./java/daikon/inv/unary/sequence/SeqIndexIntEqual.class matches
+./java/daikon/inv/unary/sequence/SeqIndexFloatEqual.java:    // We have to check for the same equality set here, because
+./java/daikon/inv/unary/sequence/SeqIndexFloatEqual.java:    // isObviousDynamically is called for each member of the equality set.
+./java/daikon/inv/unary/sequence/SeqIndexFloatEqual.java:    // We don't want other members of our own equality set to make this obvious
+./java/daikon/inv/unary/sequence/SeqIndexFloatEqual.java:      if (vi.equalitySet == seqvar.equalitySet) {
+Binary file ./java/daikon/inv/unary/sequence/SeqIndexFloatLessEqual.class matches
+Binary file ./java/daikon/inv/unary/sequence/SeqIndexFloatLessThan.class matches
+./java/daikon/inv/unary/sequence/SeqIndexFloatGreaterThan.java:    // We have to check for the same equality set here, because
+./java/daikon/inv/unary/sequence/SeqIndexFloatGreaterThan.java:    // isObviousDynamically is called for each member of the equality set.
+./java/daikon/inv/unary/sequence/SeqIndexFloatGreaterThan.java:    // We don't want other members of our own equality set to make this obvious
+./java/daikon/inv/unary/sequence/SeqIndexFloatGreaterThan.java:      if (vi.equalitySet == seqvar.equalitySet) {
+./java/daikon/inv/unary/sequence/SeqIndexFloatGreaterEqual.java:    // We have to check for the same equality set here, because
+./java/daikon/inv/unary/sequence/SeqIndexFloatGreaterEqual.java:    // isObviousDynamically is called for each member of the equality set.
+./java/daikon/inv/unary/sequence/SeqIndexFloatGreaterEqual.java:    // We don't want other members of our own equality set to make this obvious
+./java/daikon/inv/unary/sequence/SeqIndexFloatGreaterEqual.java:      if (vi.equalitySet == seqvar.equalitySet) {
+./java/daikon/inv/unary/sequence/EltwiseIntEqual.java:   * Represents equality between adjacent elements (x[i], x[i+1]) of a long sequence. Prints as
+./java/daikon/inv/unary/sequence/EltwiseIntEqual.java:  /** Non-equality EltwiseIntEqual invariants are only valid on integral types */
+./java/daikon/inv/unary/sequence/EltwiseFloatLessEqual.java:  /** Non-equality EltwiseFloatLessEqual invariants are only valid on integral types */
+./java/daikon/inv/unary/sequence/EltwiseFloatGreaterThan.java:  /** Non-equality EltwiseFloatGreaterThan invariants are only valid on integral types */
+./java/daikon/inv/unary/sequence/SeqIndexFloatLessEqual.java:    // We have to check for the same equality set here, because
+./java/daikon/inv/unary/sequence/SeqIndexFloatLessEqual.java:    // isObviousDynamically is called for each member of the equality set.
+./java/daikon/inv/unary/sequence/SeqIndexFloatLessEqual.java:    // We don't want other members of our own equality set to make this obvious
+./java/daikon/inv/unary/sequence/SeqIndexFloatLessEqual.java:      if (vi.equalitySet == seqvar.equalitySet) {
+./java/daikon/inv/unary/sequence/EltwiseFloatGreaterEqual.java:  /** Non-equality EltwiseFloatGreaterEqual invariants are only valid on integral types */
+./java/daikon/inv/unary/sequence/SeqIndexFloatLessThan.java:    // We have to check for the same equality set here, because
+./java/daikon/inv/unary/sequence/SeqIndexFloatLessThan.java:    // isObviousDynamically is called for each member of the equality set.
+./java/daikon/inv/unary/sequence/SeqIndexFloatLessThan.java:    // We don't want other members of our own equality set to make this obvious
+./java/daikon/inv/unary/sequence/SeqIndexFloatLessThan.java:      if (vi.equalitySet == seqvar.equalitySet) {
+Binary file ./java/daikon/inv/unary/sequence/SeqIndexFloatGreaterEqual.class matches
+./java/daikon/inv/unary/sequence/EltwiseIntGreaterThan.java:  /** Non-equality EltwiseIntGreaterThan invariants are only valid on integral types */
+./java/daikon/inv/unary/sequence/SeqIndexIntLessThan.java:    // We have to check for the same equality set here, because
+./java/daikon/inv/unary/sequence/SeqIndexIntLessThan.java:    // isObviousDynamically is called for each member of the equality set.
+./java/daikon/inv/unary/sequence/SeqIndexIntLessThan.java:    // We don't want other members of our own equality set to make this obvious
+./java/daikon/inv/unary/sequence/SeqIndexIntLessThan.java:      if (vi.equalitySet == seqvar.equalitySet) {
+./java/daikon/inv/unary/sequence/EltwiseFloatLessThan.java:  /** Non-equality EltwiseFloatLessThan invariants are only valid on integral types */
+./java/daikon/inv/unary/sequence/EltwiseFloatEqual.java:   * Represents equality between adjacent elements (x[i], x[i+1]) of a double sequence. Prints as
+./java/daikon/inv/unary/sequence/EltwiseFloatEqual.java:  /** Non-equality EltwiseFloatEqual invariants are only valid on integral types */
+./java/daikon/derive/binary/SequencesJoin.java: * equality style invariants across the data structure rather than just one slice of it. Works for
+./java/daikon/derive/binary/SequencesJoin.java.jpp: * equality style invariants across the data structure rather than just one slice of it. Works for
+./java/daikon/derive/binary/SequencesJoinFloat.java: * equality style invariants across the data structure rather than just one slice of it. Works for
+./doc/developer.html:With the equality sets optimization (see <a href="#Equality-optimization">Equality optimization</a>),
+./doc/developer.html:non-instantiation can only happen if all equality permutations are
+./doc/developer.html:checks; it can be called at the end without reference to equality sets.
+./doc/developer.html:<a name="index-equality-optimization"></a>
+./doc/developer.html:N(N-1)/2 pairwise invariants to represent the equality within the
+./doc/developer.html:equality specially.
+./doc/developer.html:are placed in <em>equality sets</em>.  An equality set can hold an
+./doc/developer.html:equality invariants.  Every equality set has a leader or
+./doc/developer.html:Non-equality invariants are only instantiated and checked on the
+./doc/developer.html:command line with the <samp>--noequality</samp> flag.
+./doc/developer.html:<tr><td></td><td valign="top"><a href="#index-equality-optimization">equality optimization</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Equality-optimization">Equality optimization</a></td></tr>
+./doc/config-options.texinfo:Boolean. Controls whether the Daikon optimizations (equality sets, suppressions) are undone at
+./doc/config-options.texinfo:If true, create one equality set for each variable. This has the effect of turning the equality
+./doc/daikon.texinfo:* Object inequality::
+./doc/daikon.texinfo:You can control which variables are in an equality set;
+./doc/daikon.texinfo:@node       Object inequality
+./doc/daikon.texinfo:@subsection Object inequality
+./doc/daikon.texinfo:reading, so they are compared with a ``fuzzy'' rather than exact equality test.
+./doc/CHANGES:    in DBC and JML output.  The new version uses equality invariants
+./doc/CHANGES:    Fixed a problem in the equality set optimization that caused
+./doc/www/pubs-sources/index-headfoot.html:called "observations", they include equality (x = y), range (-10 &lt;= x &lt;=
+./doc/www/pubs-sources/index-headfoot.html:10), non-null (x != null), equality (.equals), and properties gleaned from
+./doc/invariants-doc.texinfo:Represents equality between adjacent elements (x[i], x[i+1]) of a double sequence. Prints as
+./doc/invariants-doc.texinfo:Represents equality between adjacent elements (x[i], x[i+1]) of a long sequence. Prints as
+./doc/daikon.html:      <li><a name="toc-Object-inequality-1" href="#Object-inequality">5.4.4 Object inequality</a></li>
+./doc/daikon.html:<tr><td align="left" valign="top">&bull; <a href="#Object-inequality" accesskey="4">Object inequality</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+./doc/daikon.html:<p>You can control which variables are in an equality set;
+./doc/daikon.html:Next: <a href="#Object-inequality" accesskey="n" rel="next">Object inequality</a>, Previous: <a href="#Equal-variables" accesskey="p" rel="previous">Equal variables</a>, Up: <a href="#Interpreting-output" accesskey="u" rel="up">Interpreting output</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#General-Index" title="Index" rel="index">Index</a>]</p>
+./doc/daikon.html:<a name="Object-inequality"></a>
+./doc/daikon.html:<a name="Object-inequality-1"></a>
+./doc/daikon.html:<h4 class="subsection">5.4.4 Object inequality</h4>
+./doc/daikon.html:<dd><p>Represents equality between adjacent elements (x[i], x[i+1]) of a double sequence. Prints as
+./doc/daikon.html:<dd><p>Represents equality between adjacent elements (x[i], x[i+1]) of a long sequence. Prints as
+./doc/daikon.html:<dd><p>Boolean. Controls whether the Daikon optimizations (equality sets, suppressions) are undone at
+./doc/daikon.html:<dd><p>If true, create one equality set for each variable. This has the effect of turning the equality
+./doc/daikon.html:reading, so they are compared with a &ldquo;fuzzy&rdquo; rather than exact equality test.
+./doc/daikon/Object-inequality.html:<title>The Daikon Invariant Detector User Manual: Object inequality</title>
+./doc/daikon/Object-inequality.html:<meta name="description" content="The Daikon Invariant Detector User Manual: Object inequality">
+./doc/daikon/Object-inequality.html:<meta name="keywords" content="The Daikon Invariant Detector User Manual: Object inequality">
+./doc/daikon/Object-inequality.html:<meta http-equiv="Refresh" content="0; url=Daikon-output.html#Object-inequality">
+./doc/daikon/Object-inequality.html:<p>The node you are looking for is at <a href="Daikon-output.html#Object-inequality">Object inequality</a>.</p>
+./doc/daikon/Enhancing-Daikon-output.html:<dd><p>Boolean. Controls whether the Daikon optimizations (equality sets, suppressions) are undone at
+./doc/daikon/Enhancing-Daikon-output.html:<dd><p>If true, create one equality set for each variable. This has the effect of turning the equality
+./doc/daikon/index.html:      <li><a name="toc-Object-inequality-1" href="Daikon-output.html#Object-inequality">5.4.4 Object inequality</a></li>
+./doc/daikon/Tools.html:reading, so they are compared with a &ldquo;fuzzy&rdquo; rather than exact equality test.
+./doc/daikon/Daikon-output.html:<tr><td align="left" valign="top">&bull; <a href="#Object-inequality" accesskey="4">Object inequality</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+./doc/daikon/Daikon-output.html:<p>You can control which variables are in an equality set;
+./doc/daikon/Daikon-output.html:Next: <a href="#Object-inequality" accesskey="n" rel="next">Object inequality</a>, Previous: <a href="#Equal-variables" accesskey="p" rel="previous">Equal variables</a>, Up: <a href="#Interpreting-output" accesskey="u" rel="up">Interpreting output</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="General-Index.html#General-Index" title="Index" rel="index">Index</a>]</p>
+./doc/daikon/Daikon-output.html:<a name="Object-inequality"></a>
+./doc/daikon/Daikon-output.html:<a name="Object-inequality-1"></a>
+./doc/daikon/Daikon-output.html:<h4 class="subsection">5.4.4 Object inequality</h4>
+./doc/daikon/Daikon-output.html:<dd><p>Represents equality between adjacent elements (x[i], x[i+1]) of a double sequence. Prints as
+./doc/daikon/Daikon-output.html:<dd><p>Represents equality between adjacent elements (x[i], x[i+1]) of a long sequence. Prints as
+./doc/developer/General-Index.html:<tr><td></td><td valign="top"><a href="Daikon-internals.html#index-equality-optimization">equality optimization</a>:</td><td>&nbsp;</td><td valign="top"><a href="Daikon-internals.html#Equality-optimization">Equality optimization</a></td></tr>
+./doc/developer/Daikon-internals.html:With the equality sets optimization (see <a href="#Equality-optimization">Equality optimization</a>),
+./doc/developer/Daikon-internals.html:non-instantiation can only happen if all equality permutations are
+./doc/developer/Daikon-internals.html:checks; it can be called at the end without reference to equality sets.
+./doc/developer/Daikon-internals.html:<a name="index-equality-optimization"></a>
+./doc/developer/Daikon-internals.html:N(N-1)/2 pairwise invariants to represent the equality within the
+./doc/developer/Daikon-internals.html:equality specially.
+./doc/developer/Daikon-internals.html:are placed in <em>equality sets</em>.  An equality set can hold an
+./doc/developer/Daikon-internals.html:equality invariants.  Every equality set has a leader or
+./doc/developer/Daikon-internals.html:Non-equality invariants are only instantiated and checked on the
+./doc/developer/Daikon-internals.html:command line with the <samp>--noequality</samp> flag.
+./doc/developer.texinfo:With the equality sets optimization (@pxref{Equality optimization}),
+./doc/developer.texinfo:non-instantiation can only happen if all equality permutations are
+./doc/developer.texinfo:checks; it can be called at the end without reference to equality sets.
+./doc/developer.texinfo:@cindex equality optimization
+./doc/developer.texinfo:N(N-1)/2 pairwise invariants to represent the equality within the
+./doc/developer.texinfo:equality specially.
+./doc/developer.texinfo:are placed in @dfn{equality sets}.  An equality set can hold an
+./doc/developer.texinfo:equality invariants.  Every equality set has a leader or
+./doc/developer.texinfo:Non-equality invariants are only instantiated and checked on the
+./doc/developer.texinfo:command line with the @option{--noequality} flag.
+./doc/developer.texinfo:@c  LocalWords:  isObviousDynamically Toh Win's nohierarchy noequality diffs pl

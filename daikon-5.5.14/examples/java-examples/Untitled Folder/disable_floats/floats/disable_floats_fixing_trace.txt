@@ -1,0 +1,20 @@
+Daikon version 5.5.14, released October 3, 2017; http://plse.cs.washington.edu/daikon.
+Reading declaration files Processing trace data; reading 1 dtrace file:
+
+===========================================================================
+floats.FloatsProgram.main(java.lang.String[]):::ENTER
+args has only one value
+args.getClass().getName() == java.lang.String[].class
+args[] contains no nulls and has only one value, of length 1
+args[] elements has only one value
+args[].toString == [--omit-var=$]
+args[].toString elements == "--omit-var=$"
+size(args[]) == 1
+===========================================================================
+floats.FloatsProgram.main(java.lang.String[]):::EXIT
+args[] == orig(args[])
+args[] contains no nulls and has only one value, of length 1
+args[] elements has only one value
+args[].toString == [--omit-var=$]
+args[].toString elements == "--omit-var=$"
+Exiting Daikon.

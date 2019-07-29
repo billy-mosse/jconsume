@@ -1,0 +1,17 @@
+Daikon version 5.5.14, released October 3, 2017; http://plse.cs.washington.edu/daikon.
+Reading declaration files Processing trace data; reading 1 dtrace file:
+Exception in thread "main" java.lang.Error: java.lang.Error: Can't create ValueSet for floats.FloatsProgram.t with rep type double
+	at daikon.FileIO.read_data_trace_files(FileIO.java:932)
+	at daikon.FileIO.read_data_trace_files(FileIO.java:898)
+	at daikon.Daikon.process_data(Daikon.java:2014)
+	at daikon.Daikon.mainHelper(Daikon.java:560)
+	at daikon.Daikon.main(Daikon.java:454)
+Caused by: java.lang.Error: Can't create ValueSet for floats.FloatsProgram.t with rep type double
+	at daikon.inv.ValueSet.factory(ValueSet.java:68)
+	at daikon.PptTopLevel.init_vars(PptTopLevel.java:398)
+	at daikon.PptTopLevel.<init>(PptTopLevel.java:336)
+	at daikon.FileIO.read_ppt_decl(FileIO.java:410)
+	at daikon.FileIO.read_data_trace_record(FileIO.java:1511)
+	at daikon.FileIO.read_data_trace_file(FileIO.java:1380)
+	at daikon.FileIO.read_data_trace_files(FileIO.java:916)
+	... 4 more
