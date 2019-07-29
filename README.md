@@ -11,23 +11,24 @@ The document is divided in several sections:
 
 	1) Description
 	2) Dependencies
-		2.1) Maven
-		2.2) Barvinok
-		2.3) Graphviz
-	3) Project's structure (in construction)
-	4) Developed tools (in construction)
-	5) Tool configuration (in construction)
-	6) Execution
-		6.1) Introduction
-		6.2) Docker!
-		6.3) Some examples
+		2.1) Docker
+		2.2) VirtualBox
+		2.3) Maven
+		2.4) Barvinok
+		2.5) Graphviz
+	3) Project's structure
+	4) Tool configuration
+	5) Execution
+		5.1) Introduction
+		5.2) Docker
+		5.3) Some examples
 
 
 
 Description
 ============
 
-JConsume 2.0 is a memory consumption analyzer for Java bytecode. It computes parametric expressions that over approximate the maximum number of simultaneously live objects ever created by a method, where by live we mean irreclaimable by any garbage collector. Computing the number of live objects is a key underlying step in all client analysis techniques aiming at computing dynamic-memory requirements.
+JConsume (2.0) is a memory consumption analyzer for Java bytecode. It computes parametric expressions that over approximate the maximum number of simultaneously live objects ever created by a method, where by live we mean irreclaimable by any garbage collector. Computing the number of live objects is a key underlying step in all client analysis techniques aiming at computing dynamic-memory requirements.
 
 JConsume implements a new compositional quantitative analysis aimed at inferring non-linear upper-bounds on the number of irreclaimable objects that may be stored in the heap at any point in the execution of Java-like programs, including polymorphism and implicit memory management. The analysis is based on the compositional construction of live objects summaries for every method under analysis. More concretely, it over-approximates both a) the maximum amount of fresh objects which are simultaneously alive during the execution of the method and b) the number of created objects that may remain alive after the method finishes its execution.
 
@@ -38,27 +39,45 @@ For more information, see http://lafhis.dc.uba.ar/users/~diegog/JConsume2/ and t
 Dependencies
 ============
 
+Docker
+--------
+
+Install docker. Then, download the docker image with the command:
+
+```docker pull gmosse/jconsume-1```
+
+Create the container:
+
+```docker create gmosse/jconsume-1```
+
+This command will return you a container_id.
+
+Jump in:
+
+```docker exec -i -t #container_id /bin/bash```
+
+You are now inside the container. The project is located in /root/Projects/jconsume/java-project.
+
+VirtualBox:
+--------
+
 This section describes the dependencies of the project. A step-by-step description of the commands used to successfully install the tool in an openSUSE 64-bit Virtual Machine can be found in install_all.sh. The steps should be really similar in any Linux distribution.
 
 The steps would be:
 
 1) Download Virtualbox or the corresponding program you use to manage VM's in your OS.
 
-2) Download Ubuntu. I used this one: https://www.ubuntu.com/download/desktop/thank-you?version=18.04&architecture=amd64
+2) Download an Ubuntu image. For example: https://www.ubuntu.com/download/desktop/thank-you?version=18.04&architecture=amd64.
 
-3) Create the VM
+3) Create the VM.
 
-4) Log in
+4) Log in.
 
-5) Download git with sudo apt-get install git
+5) Download git with ```sudo apt-get install git```.
 
-6) Clone the repository from https://github.com/billy-mosse/jconsume with the command
+6) Clone the repository from https://github.com/billy-mosse/jconsume with the command ```git clone https://github.com/billy-mosse/jconsume.git```
 
-```git clone https://github.com/billy-mosse/jconsume.git```
-
-I ran first ```mkdir -p ~/Projects/git; cd ~Projects/git``` so that the repository would be there.
-
-7) Run the script install.sh. Maybe an error will be thrown when installing GMP, but it doesn't matter. If it happens, remove the -e flag from the script so that it doesn't stop and resume the installation.
+7) Run the script install_all.sh. Maybe an error will be thrown when installing GMP, but it doesn't matter. If it happens, remove the -e flag from the script so that it doesn't stop and resume the installation.
 
 
 Maven
@@ -93,10 +112,9 @@ Graphviz
 
 To generate summaries in a graph format the tool uses the dot command included in graphviz. Install it from http://www.graphviz.org/
 
-Eclipse
-=======================
+A note about Eclipse:
 
-If you run the tool from eclipse instead of from the command line, you have to replace soot's ReachableMethods.class by our custom one, that is located in target/lasses/soot/jimple/toolkits/callgraph. For that, you have to add it as a User Entry in Classpath and then put it first in Order and Export.
+If you run the tool from eclipse (or other IDEs) instead of from the command line, you have to replace soot's ReachableMethods.class by our custom one, that is located in target/lasses/soot/jimple/toolkits/callgraph. For that, you have to add it as a User Entry in Classpath and then put it first in Order and Export.
 
 
 
@@ -222,25 +240,10 @@ Daikon will run the program several times with different parameters (assigned by
 Execution
 =======================
 
-
-Docker! 
+Docker
 --------
 
-Install docker. Then, download the docker image with the command:
-
-```docker pull gmosse/jconsume-1```
-
-Create the container:
-
-```docker create gmosse/jconsume-1```
-
-This command will return you a container_id.
-
-Jump in:
-
-```docker exec -i -t #container_id /bin/bash```
-
-You are now inside the container. The project is located in /root/Projects/jconsume/java-project. Let's compile and run an example:
+For how to access our container, see the previous section. Let's compile and run an example:
 
 ```cd /root/Projects/jconsume/java-project/src/main/examples```
 ```javac -g ar/uba/dc/jolden/mst/*.java```
@@ -260,11 +263,9 @@ You can check the json format reading this file:
 
 ```cat report.json```
 
-TODO: merge this with the examples subsection.
+Here we'll present several analysis of toy examples, examples from the [original paper](https://www.sciencedirect.com/science/article/pii/S0167642313003298) and some of real world programs (Em3d and MST).
 
-Here we'll present several analysis of toy examples and some of real programs (Em3d and MST).
-
-Toy examples
+Examples
 --------
 
 **Ins0**
@@ -289,14 +290,9 @@ As with Ins0, just go to java-project and run the following command:
 
 ```./full_analysis.sh "ar.uba.dc.daikon.Ins1" 10```
 
-This will calculate what we call the loop invariants [TODO explain elsewhere] and then use them to calculate the memory consumption of the program.
-
 Results can be seen in java-project/results/rinard/report_ar.uba.dc.daikon.Ins1/index.html
 
-
-**Ins#N, with #N ranging from 1 to 25.**
-
-Feel free to explore them!
+More examples starting with Ins can be explored.
 
 <!--Ins3 is temporarily unavailable; descriptions for each example will be added soon. -->
 
@@ -304,47 +300,43 @@ Feel free to explore them!
 
 <!-- This generates automatic invariants for the classes used in invariants/spec/fullreferences/
 
-Ins4 uses ListC.class and there is an inductive variable that must be removed. We are currently tweaking th inductives analysis. In the future it will output a more adjusted over approximation of inductive variables.
-
-Go to java-project/spec/fullreferences/ar/uba/dc/daikon/Ins2.spec and remove ```__r0__f__elementData__f__size``` as an inductive.
-
-Then go again to jconsume/java-project and run the following command:
-
-```sh memory.sh --program "ar.uba.dc.daikon.Ins2" --ir --memory```
-
-This generates the memory consumption analysis. Results can be seen in java-project/results/rinard/report_ar.uba.dc.daikon.Ins4/index.html-->
-
-
 <!--______________________________________________
 
+______________________________________________
 
-**Ins4**:
+**Paper programs**
+
+The paper also has some simple examples. They are implemented and can be automatically analyzed; just follow the instructions:
+
+**Program 1**
 
 Go to java-project and run the following command:
 
-```sh invariants_IM.sh "ar.uba.dc.daikon.Ins4" 10```
+```./full_analysis.sh --program "ar.uba.dc.paper.Program1" --ir --memory```
 
-This generates automatic invariants for the classes used in invariants/spec/fullreferences/
+This generates the memory consumption analysis. Results can be seen in java-project/results/rinard/report_ar.uba.dc.paper.Program1/index.html
 
-Ins4 uses ListC.class and there is an inductive variable that must be removed. We are currently tweaking th inductives analysis. In the future it will output a more adjusted over approximation of inductive variables.
+You can also see the result of the escape analysis in java-project/images/escape. It is based on a Points to Graph analysis. For more information, check the paper.
 
-Go to java-project/spec/fullreferences/ar/uba/dc/util/ListC.spec and remove ```this__f__size``` as an inductive everywhere.
+Programs 2 and 3 are similar.
 
+**Program4**
 
-Then go again to jconsume/java-project and run the following command:
+For this program, we had to introduce a new parameter bounding the size of test's lists, as described by the corresponding section of the paper. In particular, we needed to annotate that the third callsite had the extra constraint l.size == maxSize, with maxSize being a new method parameter. The annotation used was the following:
 
-```sh memory.sh --program "ar.uba.dc.daikon.Ins4" --ir --memory```
+@InstrumentationSiteInvariantList(invariants={
+			@InstrumentationSiteInvariant(
+			isCallSite=true,
+			index=3,
+			constraints={"l.size == maxSize", "l.size >= 0"},
+		    newRelevantParameters={"maxSize"}, newInductives = {  }, newVariables = {  })}
+	)
 
-This generates the memory consumption analysis. Results can be seen in java-project/results/rinard/report_ar.uba.dc.daikon.Ins4/index.html
-
-TODO: add the graph format.
+Notice that the annotation can be added to the source code. Feel free to try other annotations on your own programs.
 
 ______________________________________________
 
-There are more toy examples, under the name Ins#n ¡Explore them! We will continue to add an explain them soon.
--->
-
-______________________________________________
+**Real world programs**
 
 **MST**
 
@@ -355,43 +347,6 @@ Go to java-project and just run the following command:
 ```./full_analysis.sh "ar.uba.dc.jolden.mst.MST" 5```
 
 As daikon, the tool we use to generate program invariants, isn't exhaustive (no tool can be), sometimes we need to *annotate* them. An example of this feature can be seen in the constructor of the Vertex class of MST. There, you can find a InstrumentationSiteInvariantList with only one annotated invariant, that establishes a linear relationship between numvert and a temporal variable. The name of the temporal variable can be obtained from the file we generated with daikon, that is, Vertex.spec.
-
-<!--
-```sh invariants_IM.sh "ar.uba.dc.daikon.Ins4" 10```
-
-This generates automatic invariants for the classes used in invariants/spec/fullreferences/
-
-Go to java-project/spec/fullreferences/ar/uba/dc/jolden/mst. Several inductive variables need to be removed from different files:
-
-
-| File | Method | Site | Inductives |
-| ------------- | ------------- | -------------| ------------- |
-| MST.spec | ar.uba.dc.jolden.mst.BlueReturn BlueRule(ar.uba.dc.jolden.mst.Vertex,ar.uba.dc.jolden.mst.Vertex) | CreationSite #0 | \_\_r5\_\_f\_\_array\_\_f\_\_size, \_\_r5\_\_f\_\_size, \_\_r20\_\_f\_\_mindist, \_\_r1\_\_f\_\_size, \_\_r17\_\_f\_\_mindist, \_\_r1\_\_f\_\_array\_\_f\_\_size, vlist\_\_f\_\_mindist |
-| MST.spec | void mainParameters(int,boolean,boolean) | CreationSite #0 | \_\_r16\_\_f\_\_count, \_\_r16\_\_f\_\_value\_\_f\_\_size, \_\_r12\_\_f\_\_count, \_\_r12\_\_f\_\_value\_\_f\_\_size, \_\_r8\_\_f\_\_count, \_\_r8\_\_f\_\_value\_\_f\_\_size, \_\_r3\_\_f\_\_count, \_\_r3\_\_f\_\_value\_\_f\_\_size, pVertices, \_\_r25\_\_f\_\_count, \_\_r25\_\_f\_\_value\_\_f\_\_size |
-| MST.spec | void mainParameters(int,boolean,boolean) | CreationSite #1 | \_\_r16\_\_f\_\_count, \_\_r16\_\_f\_\_value\_\_f\_\_size, \_\_l0, \_\_r12\_\_f\_\_count, \_\_r12\_\_f\_\_value\_\_f\_\_size, \_\_r8 |\_\_f\_\_count, \_\_r8\_\_f\_\_value\_\_f\_\_size, \_\_r3\_\_f\_\_count, \_\_r3\_\_f\_\_value\_\_f\_\_size
-| MST.spec | void parseCmdLine(java.lang.String[]) | CreationSite #0 | arg\_\_f\_\_value\_\_f\_\_size |
-| MST.spec | void parseCmdLine(java.lang.String[]) | CallSite #1 | arg\_\_f\_\_value\_\_f\_\_size, i |
-| Graph.spec | void &lt;init&gt;(int) | CreationSite #0 | numvert__f__size |
-| Graph.spec | void addEdges(int) | CreationSite #0 | \_r1\_\_f\_\_array\_\_f\_\_size, \_\_r1\_\_f\_\_size, \_\_i0 | 
-| Graph.spec | void addEdges(int) | CallSite #3 | \_\_r1\_\_f\_\_array\_\_f\_\_size, \_\_r1\_\_f\_\_size |
-| Hashtable.spec | void &lt;init&gt;(int) | CreationSite #0 | \_\_i0\_\_f\_\_size |
-| Vertex.spec | void &lt;init&gt;(ar.uba.dc.jolden.mst.Vertex,int) | CallSite #1 | \_\_i0 |
-
-
-TODO: explain what you must do with addEdges CallSite #3 binding 
-
-In Graph.spec, method void "addEdges(int)", CallSite #3 (callee is "ar.uba.dc.jolden.mst.Hashtable: void put(java.lang.Object,java.lang.Object)"), the binding needs the following change:
-
-```__r1__f__array__f__size``` to ```this__f__nodes__f__size```
-
-This is not a bug but an automated feature that is missing in the code.
-
-
-After doing all this, go again to jconsume/java-project and run the following command:
-
-```sh memory.sh --program "ar.uba.dc.jolden.mst.MST" --ir --memory```
-
-This generates the memory consumption analysis.-->
 
 Results can be seen in java-project/results/rinard/report_ar.uba.dc.jolden.mst.MST/index.html. They can be compared with our paper "Summary-based inference of quantitative bounds of live heap objects" (Braberman, Garbervetsky, Hym, Yovine).
 
@@ -405,88 +360,3 @@ Go to java-project and just run the following command:
 ```./full_analysis.sh "ar.uba.dc.jolden.mst.MST" 5```
 
 As it happened with MST, this program also has annotated invariants not captured by daikon. There are three of them: two for the method create(), and one for compute().
-
-<!--
-Go to java-project and just run the following command:
-
-```sh invariants_IM.sh "ar.uba.dc.jolden.em3d.Em3d" 5```
-
-This time 2 manual fixed are needed.
-
-Now go to the invariants folder (jconsume/java-project/invariants/spec/fullreferences/ar/uba/dc/jolden/em3d).
-
-Open the BiGraph.spec file and find the ```compute``` method. Add the following relevant parameter: ```this_init__f__eNodes__f__fromCount```
-
-(You just need to add ```<relevant-parameters>this_init__f__eNodes__f__fromCount</relevant-parameters>``` before the first instrumentation site)
-
-This relevant parameter will have to be bound with a variable in the caller, so you need to open Em3d.spec, find the ```mainParameters``` method. There's a call to the ```compute``` method there. Add the following binding (just below the constraints):
-
-
-```<binding>$t.this_init__f__eNodes__f__fromCount == __r0__f__eNodes__f__fromCount</binding>```
-
-(or the name of the variable bounded by numNodes_init instead of ```__r0__f__eNodes__f__fromCount``` if it was named differently, as it depends on how the jimple was generated)
-
-Finally, go back to the Bigraph.spec. The ```create``` method has 2 calls to ```makeFromNodes```, and the binding is wrong.
-
-So change 
-
-```<binding>$t.this_init__f__fromCount == n1__f__fromCount</binding>```
-
-
-to
-
-```<binding>$t.this_init__f__fromCount == numDegree</binding>```
-
-in both calls.
-
-There. Now you can run ```sh memory.sh "ar.uba.dc.jolden.em3d.Em3d"``` and you'll get the memory consumption. The results can be compared with the paper, just like MST.
---->
-
-
-
-______________________________________________
-
-**Paper programs**
-
-The paper also has some simple examples. They are implemented and can be automatically analyzed; just follow the instructions:
-
-**Program 1**
-
-Go to java-project and run the following command:
-
-<!--```sh invariants_IM.sh "ar.uba.dc.paper.Program1" 10```
-
-This generates automatic invariants for the classes used in invariants/spec/fullreferences/
-
-Ins4 uses ListC.class and there is an inductive variable that must be removed. We are currently tweaking the inductives analysis. In the future it will output a more adjusted over approximation of inductive variables.
-
-Go to java-project/spec/fullreferences/ar/uba/dc/paper/Program1.spec and:
-
-
-
-Remove ```\_\_r1\_\_f\_\_size``` from CreationSite #0 and CallSite #0 of void "line(ar.uba.dc.paper.A[][],int)"" 
-
-
-Then go again to jconsume/java-project and run the following command:
-
-```sh memory.sh --program "ar.uba.dc.paper.Program1" --ir --memory```-->
-
-```./full_analysis.sh --program "ar.uba.dc.paper.Program1" --ir --memory```
-
-This generates the memory consumption analysis. Results can be seen in java-project/results/rinard/report_ar.uba.dc.paper.Program1/index.html
-
-**Program 2**
-
-Same as before, but change the 1 for a 2.
-
-(To be continued)
-<!--Run ```invariants_IM.sh``` with the corresponding parameters and remove ```result``` as an inductive from CreationSite #2 in Op.spec. The file is in the same directory as Program2.spec (which should have just been generated) and Program1.spec (generated before).-->
-
-
-<!-- <> Test -->
-
-
-
-
-
-
