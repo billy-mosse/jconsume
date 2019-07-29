@@ -214,6 +214,7 @@ public class BarvinokCalculatorBindingProblemsTest {
 		}
 	}
 	
+	@Ignore
 	@Theory
 	public void throwExceptionWithOptimisticBindingValidatorIfParametersIsPartOfPolynomial(CommandLineCalculator calc) {
 		calc.setBindingValidator(new OptimisticBindingValidator());
