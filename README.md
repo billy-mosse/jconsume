@@ -265,7 +265,7 @@ You can check the json format reading this file:
 
 ```cat report.json```
 
-Here we'll present several analysis of toy examples, examples from the [original paper](https://www.sciencedirect.com/science/article/pii/S0167642313003298) and some of real world programs (Em3d and MST).
+Here we'll present several analysis of toy examples, examples from the [original paper](https://www.sciencedirect.com/science/article/pii/S0167642313003298) some of real world programs (Em3d and MST), and point to examples that require some annotations to be processed.
 
 Examples
 --------
@@ -294,16 +294,13 @@ As with Ins0, just go to java-project and run the following command:
 
 Results can be seen in java-project/results/rinard/report_ar.uba.dc.daikon.Ins1/index.html
 
-More examples starting with Ins can be explored.
+More examples (also starting with Ins) can be explored in the correspondir folder.
 
 <!--Ins3 is temporarily unavailable; descriptions for each example will be added soon. -->
 
 <!-- Some examples need to be ran in two parts, as the inductives analaysis overapproximates the set of inductive variables. For example, consider the following example: -->
 
 <!-- This generates automatic invariants for the classes used in invariants/spec/fullreferences/
-
-<!--______________________________________________
-
 ______________________________________________
 
 **Paper programs**
