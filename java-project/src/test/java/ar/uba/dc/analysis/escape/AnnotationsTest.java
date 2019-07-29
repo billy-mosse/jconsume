@@ -52,6 +52,7 @@ public class AnnotationsTest {
 		MainSootRunner.main(values, context);
 	}
 	
+	@Ignore
 	@Test
 	public void AnnotationsTest01() throws FileNotFoundException
 	{
@@ -98,7 +99,7 @@ public class AnnotationsTest {
 				
 	}
 	
-	
+	@Ignore
 	@Test
 	public void AnnotationsTest02() throws FileNotFoundException
 	{
