@@ -300,7 +300,6 @@ More examples (also starting with Ins) can be explored in the correspondir folde
 
 <!-- Some examples need to be ran in two parts, as the inductives analaysis overapproximates the set of inductive variables. For example, consider the following example: -->
 
-<!-- This generates automatic invariants for the classes used in invariants/spec/fullreferences/
 ______________________________________________
 
 **Paper programs**
