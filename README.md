@@ -46,11 +46,11 @@ Docker
 
 Install docker. Then, download the docker image with the command:
 
-```docker pull gmosse/jconsume-1```
+```docker pull gmosse/jconsume```
 
 Create the container:
 
-```docker create gmosse/jconsume-1```
+```docker create gmosse/jconsume```
 
 This command will return you a container_id.
 
