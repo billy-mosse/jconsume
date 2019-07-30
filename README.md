@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/billy-mosse/jconsume.svg?branch=master)](https://travis-ci.org/billy-mosse/jconsume)
+
 Authors: Diego Garbervetsky and Guillermo Mosse
 
 Collaborators: Matias Grunberg, Gaston Krasny, Martin Rouaux and Edgardo Zoppi.
@@ -44,11 +46,11 @@ Docker
 
 Install docker. Then, download the docker image with the command:
 
-```docker pull gmosse/jconsume-1```
+```docker pull gmosse/jconsume```
 
 Create the container:
 
-```docker create gmosse/jconsume-1```
+```docker create gmosse/jconsume```
 
 This command will return you a container_id.
 
@@ -263,7 +265,7 @@ You can check the json format reading this file:
 
 ```cat report.json```
 
-Here we'll present several analysis of toy examples, examples from the [original paper](https://www.sciencedirect.com/science/article/pii/S0167642313003298) and some of real world programs (Em3d and MST).
+Here we'll present several analysis of toy examples, examples from the [original paper](https://www.sciencedirect.com/science/article/pii/S0167642313003298) some of real world programs (Em3d and MST), and point to examples that require some annotations to be processed.
 
 Examples
 --------
@@ -292,15 +294,11 @@ As with Ins0, just go to java-project and run the following command:
 
 Results can be seen in java-project/results/rinard/report_ar.uba.dc.daikon.Ins1/index.html
 
-More examples starting with Ins can be explored.
+More examples (also starting with Ins) can be explored in the correspondir folder.
 
 <!--Ins3 is temporarily unavailable; descriptions for each example will be added soon. -->
 
 <!-- Some examples need to be ran in two parts, as the inductives analaysis overapproximates the set of inductive variables. For example, consider the following example: -->
-
-<!-- This generates automatic invariants for the classes used in invariants/spec/fullreferences/
-
-<!--______________________________________________
 
 ______________________________________________
 
@@ -360,3 +358,17 @@ Go to java-project and just run the following command:
 ```./full_analysis.sh "ar.uba.dc.jolden.mst.MST" 5```
 
 As it happened with MST, this program also has annotated invariants not captured by daikon. There are three of them: two for the method create(), and one for compute().
+
+______________________________________________
+
+**Escape Annotations**
+
+In the src/main/resources/annotations/escape folder you can see examples for annotations one can manually introduce for unanalyzable methods. These annotations share their ideas from the paper [Annotations for (more) precise points-to analysis
+](https://www.microsoft.com/en-us/research/publication/annotations-for-more-precise-points-to-analysis/), by Diego Garbervetsky, Francesco Logozzo, Michael Barnett, belonging to Microsoft Research. The annotations include:
+
+- Memory and escape consumption.
+- Relevant parameters.
+- Whether the method can access this/the parameters.
+- Whether this/the parameters can be overwritten by other variables.
+
+The examples mainly correspond to the ar.uba.dc.annotations.escape package.
