@@ -370,3 +370,5 @@ In the src/main/resources/annotations/escape folder you can see examples for ann
 - Relevant parameters.
 - Whether the method can access this/the parameters.
 - Whether this/the parameters can be overwritten by other variables.
+
+The examples mainly correspond to the ar.uba.dc.annotations.escape package.
