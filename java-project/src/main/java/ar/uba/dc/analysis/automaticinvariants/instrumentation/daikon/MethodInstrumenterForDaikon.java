@@ -15,8 +15,8 @@ import java.util.Vector;
 import org.apache.commons.lang.StringUtils;
 import org.jf.dexlib2.iface.AnnotationElement;
 
-import com.sun.codemodel.internal.JAssignment;
-import com.sun.jdi.ArrayType;
+//import com.sun.codemodel.internal.JAssignment;
+//import com.sun.jdi.ArrayType;
 
 import ar.uba.dc.analysis.automaticinvariants.inductives.InductivesFilter;
 import ar.uba.dc.analysis.automaticinvariants.inductives.InductivesFinder;

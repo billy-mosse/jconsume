@@ -6,7 +6,7 @@ import org.apache.commons.logging.LogFactory;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 
-import com.sun.tools.internal.jxc.ap.Options;
+//import com.sun.tools.internal.jxc.ap.Options;
 
 import soot.G;
 import soot.Main;

@@ -2,7 +2,7 @@ package ar.uba.dc.analysis.automaticinvariants.pruebas;
 
 import java.util.LinkedList;
 
-import com.sun.javadoc.Type;
+//import com.sun.javadoc.Type;
 
 import soot.G;
 import soot.Modifier;
